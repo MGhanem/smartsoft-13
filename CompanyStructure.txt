@@ -34,3 +34,8 @@ Mail: omar.mohy-eldin@student.guc.edu.eg
 Role: member
 Interested in: programming
 -------------------------------------
+Name: Mirna Yacout
+Mail: mirna.gmail@gmail.com
+Role: member
+Interested in: sports
+-------------------------------------
