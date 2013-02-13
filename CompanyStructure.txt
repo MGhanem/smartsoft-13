@@ -3,5 +3,9 @@ Name: Ali El Zoheiry
 Mail: Ali.elzoheiry@gmail.com
 Role: Member
 Interested in: SE
-
+-------------------------------------
+Name: Kareem Ali
+Mail: lkareem.alil@gmail.com
+Role: Member
+Interested in: bely masafat tawela
 -------------------------------------
