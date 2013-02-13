@@ -29,3 +29,8 @@ Mail: amr.abdelraouf93@gmail.com
 Role: Team Leader
 Interested in: Steak and the occasional barbeque rib
 -------------------------------------
+Name: Omar Hossam
+Mail: omar.mohy-eldin@student.guc.edu.eg
+Role: member
+Interested in: programming
+-------------------------------------
