@@ -69,3 +69,8 @@ Mail: mostafa.a.hassaan@gmail.com
 Role: Member
 Interested in: SE
 -------------------------------------
+Name: Mohamed Ashraf
+Mail: mohamed.ashraf.213@gmail.com
+Role: Teamleader
+Intrested in: SE
+-------------------------------------
