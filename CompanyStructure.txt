@@ -14,3 +14,8 @@ Mail: ghanem.adam@gmail.com
 Role: Manager/Team Leader
 Interested in: CSEN603 
 -------------------------------------
+Name: Khloud Khalid
+Mail: khloud.khalid7@gmail.com
+Role: Member
+Interested in: SE
+-------------------------------------
