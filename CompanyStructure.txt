@@ -1,7 +1,7 @@
 -------------------------------------
-Name:
-Mail:
-Role:
-Interested in:
+Name: Ali El Zoheiry
+Mail: Ali.elzoheiry@gmail.com
+Role: Member
+Interested in: SE
 
 -------------------------------------
