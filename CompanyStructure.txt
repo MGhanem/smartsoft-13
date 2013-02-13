@@ -24,3 +24,8 @@ Mail: karimfarid.naggar@gmail.com
 Role: member
 Interested in: prime numbers
 -------------------------------------
+Name: Amr Abdelraouf
+Mail: amr.abdelraouf93@gmail.com
+Role: Team Leader
+Interested in: Steak and the occasional barbeque rib
+-------------------------------------
