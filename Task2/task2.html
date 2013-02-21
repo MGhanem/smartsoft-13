@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <style type="text/css">
+</style>
+<script>
+  $(function() {
+	$("#ex").click(function () {
+      $(this).hide("explode", 1000);
+});
+ });
+  </script>
+</head>
+<style type="text/css">
+.name{
+	font-family: Arial;
+	font-style: bold;
+	font-size: 60px;
+	color:rgb(186,192,261);
+}
+.info{
+	font-size: 20px;
+	font-family: Arial;
+}
+.upd{
+	font-size: 15px;
+	color: blue;
+}
+.updfee{
+	font-size: 15px;
+}
+</style>
+<body >
+	<table border="1" style="background-color:rgb(241,243,248);">
+  	<tr width="500">
+    	<td><img src="media/pic.png" width="300" /></td>
+    	<td width="1000" valign="top" style="padding: 20px;">
+    		<div class="name" align="middle">
+    		Salma Farag Galal
+    		<hr>
+    		</div>
+    		<div class="info">
+    		<div>
+    			Gender: Female
+    		</div>
+    		<div>
+    			Location: London, England
+    		</div>
+    		<div>
+    			Studying: Psychology at Cambridge University
+    		</div>
+    		<div>
+    			About me: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    			consequat.
+    		</div>
+    	</div>
+	</td>
+  </tr>
+</table>
+<table border=1 style="background-color:rgb(247,249,251);">
+    		<tr width="1500">
+    	<td width="800" height="280" valign="top" style="padding: 20px;">
+    		<div class="upd">
+    		Salma's Updates
+    		</div>
+    		<hr>
+    		<div>
+    			<ul class="updfee">
+    				<ol><img src="media/thumb.png" width=30/>Salma is now friends with Mr Hazelnut.</ol>
+    				<ol><img src="media/thumb.png" width=30/>Salma updated her status.</ol>
+    				<ol><img src="media/thumb.png" width=30/>Salma added "Computer Science" to her interests.</ol>
+    			</ul>
+    		</div></td>
+    	<td width="400" valign="top" style="padding: 20px"><div class="upd">
+    		Salma's Followers
+    		</div>
+    		<hr>
+    		<table>
+    			<tr>
+    				<td id="1" onclick="set(1);"><img src="media/fr1.jpg" width=80/></td>
+    				<td id="2" onclick="set(2);"><img src="media/fr2.jpg" width=80/></td>
+    				<td id="3" onclick="set(3);"><img src="media/fr3.jpg" width=80/></td>
+    		</tr>
+    		<tr>
+    			<td id="4" onclick="set(4);"><img src="media/fr4.jpg" width=80/></td>
+    			<td id="5" onclick="set(5);"><img src="media/fr5.jpg" width=80/></td>
+    			<td id="6" onclick="set(6);"><img src="media/fr6.jpg" width=80/></td>
+    		</tr>
+    		</table>
+    		Click a follower
+    		<script>
+    			function set(id){
+    				switch(id){
+    					case 1:document.getElementById(id).innerHTML = "Joker"; break;
+    					case 2:document.getElementById(id).innerHTML = "Mickey Mouse"; break;
+    					case 3:document.getElementById(id).innerHTML = "Mrs Wiggly"; break;
+    					case 4:document.getElementById(id).innerHTML = "Mr Penguin"; break;
+    					case 5:document.getElementById(id).innerHTML = "Batman"; break;
+    					case 6:document.getElementById(id).innerHTML = "Bobby"; break
+    					break;
+    				}
+    			}
+    		</script>
+    	<td width="300" valign="top" style="padding: 20px"><div class="upd">
+    		Ads
+    		<img src="media/ads.gif" width=300 id="ex"/>
+    	</td>
+    	</table>
+</body>
+</html>
