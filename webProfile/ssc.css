@@ -1,0 +1,18 @@
+body {
+	font-family: Helvetica;
+}
+
+h1 {
+	color: rgb(0,195,0);
+}
+
+h4{
+	margin: 0px;
+	color: black;
+}
+
+span {
+	color: orange;
+	font-weight: bold;
+	margin-top: 0px;
+}
