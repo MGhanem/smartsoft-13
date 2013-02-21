@@ -1,0 +1,107 @@
+*{
+	background: #463e41;
+}
+.pp{
+	position: relative;
+	width: 150px;
+	left: 520px;
+	z-index: 3;
+	bottom: 100px;
+
+}
+.cover{
+	position: relative;
+	z-index: 1;
+}
+
+.pp2{
+	width: 150px;
+	margin-left: 500px;
+}
+
+.bp{
+	width: 180px;
+}
+
+.bp2 {
+	width: 180px;
+}
+
+textarea{
+	background: #ebdde2;
+	border: thick;
+	border-style: double;
+	border-color: #000000;
+}
+
+
+.data{
+	font-size: 26;
+	color: #ebdde2; 	
+}
+
+.b1{
+	height: 40px;
+	width: 300px;
+	background: #ebdde2;
+	margin-left: 65px;
+	text-transform: uppercase;
+}
+
+.sky{
+	width: 180px;
+}
+
+.whis{
+	width: 135px;
+}
+
+.goog2{
+	position: relative;
+	width: 160px;
+	right: -645px;
+	height: 145px;
+}
+.goog1{
+	position: relative;
+	width: 180px;
+	top: 135px;
+	right: 685px;
+}
+
+.build{
+	position: relative;
+	width: 135px;
+	left: 850px;
+}
+
+.navigation li{
+	display: inline;
+	padding: 20px;
+	border : 2px solid white;
+}
+.navigation li:last-child {
+	border: 2px solid white;
+}
+
+.navigation{
+	text-align: center;
+	background: #463e41;
+}
+.navigation a{
+	color: lightblue;
+}
+
+.links{	
+	position: relative;
+	bottom: 70px;
+}
+
+
+.tap{
+	border: 2px solid white;
+	font-size: 250;
+	font-family: helvetica;
+	text-align: center;
+	color: white;
+}
