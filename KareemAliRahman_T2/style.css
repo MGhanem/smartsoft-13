@@ -1,0 +1,68 @@
+body {
+  font-family: Helvetica;
+  background-color: orange;
+}
+ul.navigation {
+  list-style: none;
+  text-align: center;
+  background: #dff;
+  padding: 20px;
+  font-family:serif;
+  font-size: 20;
+}
+ul.navigation li {
+  display: inline;
+}
+ul.navigation li a {
+  padding: 30px;
+  border-right: 3px solid orange;
+}
+ul.navigation li:last-child a{
+	border-right: none;
+	
+}
+h1{
+	color:#444;
+}
+button{
+	height: 50px;
+	width: 80px;
+}
+button.button1{
+	height: 70px;
+	width: 150px;
+	font-size: 25;
+	background-color: yellow;
+}
+.game{
+	display: inline;
+	text-align: center;
+}
+.clock{
+	color: red;
+}
+.update{
+	color:green;
+}
+.Header{
+	color:#222;
+	font-size: 25;
+	font-family: monospace;
+	font-style:italic;
+	font-weight:bold;
+}
+h3{
+	font-weight: bold;
+	font-size: 30;
+}
+.information{
+	font-size: 25;
+	background-color: #ddd;
+}
+.img{
+	height: 20;
+	width: 20;
+	margin-right: 5px;
+	float: right;
+}
+
