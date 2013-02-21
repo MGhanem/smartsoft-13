@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Page</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+function toggle(source) {
+	document.getElementById('pic').src = source;
+}
+</script>
+</head>
+<body>
+	<a id ="picture"> <img id = "pic" src="mypic.jpg" width="300px" height="300px"> </a>
+<p class = "contactInfo">Amr Hatem Abdelraouf<br>Studies at GUC faculity of Media Engineering and Technology<br>amr.abdelraouf93@gmail.com</p>
+<div class="imgList">
+<ul class = "picStream">
+<li><img src="pic1.jpg" width="100px" height="100px" onClick = "toggle('pic1.jpg')"></li>
+<li><img src="pic2.jpg" width="100px" height="100px" onClick = "toggle('pic2.jpg')"></li>
+<li><img src="pic3.jpg" width="100px" height="100px" onClick = "toggle('pic3.jpg')"></li>
+<li><img src="pic4.jpg" width="100px" height="100px" onClick = "toggle('pic4.jpg')"></li>
+<li><img src="pic5.jpg" width="100px" height="100px" onClick = "toggle('pic5.jpg')"></li>
+<li><img src="pic6.jpg" width="100px" height="100px" onClick = "toggle('pic6.jpg')"></li>
+<li><img src="pic7.jpg" width="100px" height="100px" onClick = "toggle('pic7.jpg')"></li>
+<li><img src="pic8.jpg" width="100px" height="100px" onClick = "toggle('pic8.jpg')"></li>
+<li><img src="pic9.jpg" width="100px" height="100px" onClick = "toggle('pic9.jpg')"></li>
+
+</ul>
+</div>
+
+</body>
+</html>

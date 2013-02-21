@@ -1,0 +1,27 @@
+p.contactInfo {
+	font-family: Helvetica;
+	color: #000080;
+	background-color: #b0e0e6;
+	padding: 20px;
+}
+
+dt.blueCSS {
+ 	font-family: Helvetica;
+	color: #000080;
+ }
+
+ ul.picStream {
+  list-style: none;
+  text-align: center;
+  padding: 10px;
+}
+
+ul.picStream li {
+  display: inline;
+  padding: 5px;
+}
+
+img {
+	background-color: rgba(176,224,230,1);
+	padding: 10px;
+}
