@@ -1,0 +1,92 @@
+/* The Navigator*/
+ul.navigation li{
+	display: inline;
+	font-size: 40pt;
+	font-family: lucida;
+	margin: 60px;
+	border-bottom: 2pt solid black;
+}
+
+ul.navigation{
+	list-style: none;
+	text-align: center;
+  	background: rgba(256,256,256,0.3);
+  	padding: 10px;
+  	width: 990px;
+  	margin: auto; 
+}
+
+/* The Basic Info Pane*/
+div h1{
+	font-family: lucida;
+	font-size: 30pt;
+	font-weight: normal;
+}	
+
+div.basic_info ul{
+	font-family: helvetica;
+	list-style: none;
+	font-size: 20pt;
+}
+
+div.basic_info table{
+	margin: auto;
+}
+
+#info_cell{
+	background: rgba(256,256,256,0.3);
+	padding: 10px;
+}
+
+#name_cell{
+	padding: 35px;
+}
+
+/* The About Pane*/
+div.about ul{
+	font-family: helvetica;
+	list-style: none;
+	font-size: 20pt;
+}
+
+div.about table{
+	margin: auto;
+}
+
+#info_cell{
+	background: rgba(256,256,256,0.3);
+	padding: 10px;
+	width: 550px;
+}
+
+#name_cell{
+	padding: 35px;
+}
+
+/* The Contact Me Pane*/	
+dl{
+	font-family: helvetica;
+	list-style: none;
+	font-size: 20pt;
+}
+
+div.contact_me table{
+	margin: auto;
+}
+
+#info_cell{
+	background: rgba(256,256,256,0.3);
+	padding: 10px;
+}
+
+#name_cell{
+	padding: 35px;
+}
+
+a{
+	color: rgba(0,0,0,0.7); 
+}
+
+body{
+	/*background: navy;*/
+}
