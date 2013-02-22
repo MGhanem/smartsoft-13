@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mohamed Tamer</title>
+	<style type="text/css">
+	ol.navigation {
+		list-style: none;
+
+	}
+	body {
+		background-color: #457896
+	}
+	h1.header {
+		text-align: center;
+		color: #ccc;
+	}
+	</style>
+	<script type="text/javascript">
+		if (document.images)
+	 	{
+	     img1on= new Image(100,100);
+	     img1on.src="hulk.jpg";  
+
+	     img1off= new Image(100,100);
+	     img1off.src="photo.jpg";
+	 	}
+
+		function change(imgName)
+	 	{
+	   if (document.images)
+	      {
+	         imgOn=eval(imgName + "on.src");
+	         document[imgName].src= imgOn;
+	      }
+	 	}
+
+		function changeback(imgName)
+	 	{
+	   		if (document.images)
+	      	{
+	        imgOff=eval(imgName + "off.src");
+	        document[imgName].src= imgOff;
+	      	}
+	 	}
+	</script>
+</head>
+<body>
+	<h1 class="header">Welcome to my web page</h1>
+	<A onMouseover="change('img1')" onMouseout="changeback('img1')">
+	<img src="photo.jpg" name="img1">
+	<h3>hover over the image with your mouse</h3>
+	<ol class="navigation">
+		<li>name: Mohamed Tamer</li>
+		<li>id: 22-4708</li>
+		<li>Company: Smart-soft</li>
+		<li>Interests: Coding, sports, music</li>		
+	</ol>
+</body>
+</html>
