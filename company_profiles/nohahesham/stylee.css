@@ -1,0 +1,13 @@
+*{
+	background-color: #A8A8A8 ;
+}
+h1.first{
+	font-size: 20px;
+    text-align: center;
+    font-family: Helvetica;
+}
+h4.tag{
+	margin-bottom: 1px;
+	font-family: Helvetica;
+	font-size: 15px;
+}

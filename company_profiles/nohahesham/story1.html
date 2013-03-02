@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="stylee.css"/>
+	<script>
+	function Hideme()
+	{
+		document.getElementById("me").innerHTML=Date();
+	}
+	
+	
+
+	</script>
+
+</head>
+<body>
+	<h1 class="first">My Profile</h1>
+	<img src="pic/profile2.jpg" border=3px id="img" style="visibility:visible"/>
+
+
+	<div>
+		<h4 class="tag"><strong>Name:</strong>Noha Hesham</h4>
+		<h4 class="tag"><strong>Age:</strong>20 years</h4>
+		<h4 class="tag"><strong>Occupation:</strong>Student in the German University In Cairo</h4>
+		<h4 class="tag"><strong>Major:</strong>Computer Science</h4>
+
+	</div>
+
+	<p id="me">Display current date</p>
+
+	<button type="button" onclick="Hideme()"> click here</button>
+	
+
+</body>
+</html>

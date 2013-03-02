@@ -1,0 +1,88 @@
+<html>
+<head>
+	<title>profile page</title>
+	<link rel="stylesheet" type="text/css" href="Style.css">
+	<script type="text/javascript">
+
+	//alert("Hello and welcome to my profile, there are a couple of things you can do here. You can type something in the textbox and click submit or you can try clicking on any picture and see what happens");
+	function print_stuff () {
+		alert("Look Down");
+		document.getElementById('stuff').innerHTML = document.getElementById('ta').value;
+	}
+
+	function changePic(num){
+		if(num == 1){
+			document.getElementById('first').src = "images/profile_pic_2.jpg"
+		}
+		else if(num == 2){
+			document.getElementById('first').src = "images/baby_pic.jpg"
+		}
+		else if(num == 3){
+			document.getElementById('first').src = "images/baby_pic_2.jpg"
+		}
+		else if(num == 4){
+			document.getElementById('first').src = "images/sky.jpg"
+		}
+		else if(num == 5){
+			document.getElementById('first').src = "images/whiskey.jpg"
+		}
+		else if(num == 6){
+			document.getElementById('first').src = "images/google1.jpg"
+		}
+		else if(num == 7){
+			document.getElementById('first').src = "images/google2.jpg"
+		}
+		else if(num == 8){
+			document.getElementById('first').src = "images/building.jpg"
+		}
+	}
+
+	</script>
+</head>
+<body>
+	<center>
+		<img class="cover" src="images/Cover_pic.jpg">
+	</center>
+	<img id="first" class="pp" src="images/profile_pic.jpg">
+
+	<img id="second" class="pp2" src="images/profile_pic_2.jpg"onclick="changePic(1)">
+	<img "id=third" class="bp" src="images/baby_pic.jpg" onclick="changePic(2)">
+	<img class="bp2" src="images/baby_pic_2.jpg" onclick="changePic(3)">
+	<img class="sky" src="images/sky.jpg" onclick="changePic(4)">
+	<img class="whis" src="images/whiskey.jpg" onclick="changePic(5)">
+	<img class="goog1" src="images/google1.jpg" onclick="changePic(6)">
+	<br>
+	<img class="goog2" src="images/google2.jpg" onclick="changePic(7)">
+	<img class="build" src="images/building.jpg" onclick="changePic(8)">
+
+	<div>
+		<form action="#">
+			<dl>
+				<dt class="data">Tell us what you are up to</dt>
+				<dd><textarea id="ta" rows ="7" cols="40" ></textarea></dd>
+				<button class="b1" onclick="print_stuff()">Submit</button>
+
+
+			</dl>
+
+
+		</form>
+	</div>
+		<div class="links">
+		
+			<ul class="navigation">
+				<li><a href="http://www.facebook.com/Zoheiry7">Facebook Profile</a></li>
+				<li><a href="http://instagram.com/alizoh">Instagram Profile</a></li>
+				<li><a href="http://www.youtube.com/user/alizoh77">YouTube account</a></li>	
+			</ul>
+		</div>
+
+		<div class = "tap">
+			<center>
+			<p id="stuff"></p>
+		</center>
+		</div>
+
+	
+</body>
+</html>

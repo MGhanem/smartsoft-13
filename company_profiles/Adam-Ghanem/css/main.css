@@ -1,0 +1,148 @@
+body {
+	font-family: 'Lato';
+	background-color: #486c80;
+	margin: 0;
+	padding: 0;
+}
+
+div.header-background {
+	height: 178px;
+	background-color: rgba(37,39,40, 0.45);
+}
+
+div.header-background img {
+	width: 640px;
+	margin-top: 22px;
+	margin-bottom: 22px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+div.container {
+	width: 840px;
+	background-color: rgba(142,176,191,0.45);
+	margin-top: 58px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 280px;
+}
+
+div.container img {
+	height: 280px;
+	width: 280px;
+	float: left;
+}
+
+div.container div.name {
+	color: white;
+	font-size: 44;
+	text-align: center;
+	padding-top: 30px;
+}
+
+div.container div.motto {
+	font-family: 'Open Sans';
+	font-weight: 100;
+	color: white;
+	font-size: 24;
+	text-align: center;
+	font-style: italic;
+	font-weight: 50;
+	padding-top: 14px;
+}
+
+div.container div.company {
+	color: white;
+	font-size: 34;
+	text-align: center;
+	padding-top: 20px;
+}
+
+div.container div.position {
+	font-family: 'Open Sans';
+	font-weight: 100;
+	color: white;
+	font-size: 22;
+	font-style: italic;
+	text-align: center;
+	padding-top: 20px;
+}
+
+div.twitter-box {
+	width: 840px;
+	background-color: rgba(142,176,191,0.45);
+	margin-top: 58px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 220px;
+	margin-bottom: 58px;
+}
+
+div.twitter-box img {
+	height: 100px;
+	width: 100px;
+}
+
+div.twitter-box div.tweet {
+	font-family: 'Open Sans';
+	font-weight: 100;
+	font-style: italic;
+	color: white;
+	font-size: 46;
+}
+
+div.footer-background {
+	height: 178px;
+	background-color: rgba(37,39,40, 0.45);
+}
+
+div.footer-background ul.contacts {
+	padding-top: 22px;
+	color: white;
+	font-size: 28;
+	list-style-type: none;
+}
+
+div.footer-background ul.contacts li {
+	display: inline;
+	margin-right: 180px;
+}
+
+div.footer-background ul.contacts li:first-child {
+	margin-left: 105px;
+	display: inline;
+	margin-right: 180px;
+}
+
+a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	color: rgb(37,39,40)
+}
+
+div.footer-background div.footer-name {
+	color: white;
+	font-size: 28;
+}
+
+div.footer-background div.me {
+	font-family: 'Open Sans';
+	font-weight: 100;
+	color: white;
+	font-size: 18;
+	text-align: center;
+	font-style: italic;
+	font-weight: 50;
+	padding-top: 14px;
+	padding-bottom: 20px;
+}
+

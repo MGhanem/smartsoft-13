@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+	<title>SE|SE|SE</title>
+	<style>
+		body {
+			width: 960px;
+			height: 620px;
+			margin: auto;
+			padding: 20px;
+			border: solid 3px black;
+			border-radius: 1em;
+		}
+		#pp {
+			width: 250px;
+			height: 200px;
+			float: left;
+		}
+		nav {
+			display: inline-block;
+		}
+		nav li{
+			display: inline-block;
+			width: 60px;
+		}
+		li a {
+			text-decoration: none;
+			text-align: center;
+			display: block;
+			border: solid 1px black;
+			border-radius: 0.3em;
+			color: black;
+		}
+
+		li a:link{background-color: rgba(210, 255, 190, 0.4);}
+		li a:visited{background-color: rgba(210, 255, 190, 0.4);}
+		li a:hover{background-color: rgba(110, 155, 150, 0.4);}
+
+		form {
+			width: 250px;
+			padding: 5px;
+			display: inline-block;
+			float: right;
+		}
+		input[type="search"] {
+			width: 180px;
+		}
+		div.newpost {
+			width: 680px;
+			height: 135px;
+			border: solid 1px black;
+			border-radius: 0.5em;
+			float: right;
+		}
+		div.newpost form {
+			width: 670px;
+			height: 120px;
+		}
+		div.newpost textarea {
+			width: 665px;
+			height: 80px;
+			resize: none;
+		}
+		div.newpost input[type=submit] {
+			margin-top: 2px;
+			float: right;
+			width: 100px;
+			height: 30px;
+		}
+		section.feed {
+			margin-top: 165px;
+			width: 960px;
+			height: 370px;
+			border: solid 1px black;
+			border-radius: 0.5em;
+			overflow: auto;
+		}
+		section.feed article {
+			width: 910px;
+		}
+		div.post {
+			width: 910px;
+			margin: 10px;
+			padding: 5px;
+			border: solid 1px black;
+			border-radius: 0.5em;
+		}
+		div.post h3 {
+			display: inline-block;
+			margin-right: 30px;
+			max-width: 800px;
+		}
+		footer {
+			margin-top: 10px;
+			width: 960px;
+			height: 30px;
+			border: solid 1px black;
+			border-radius: 0.5em;
+			text-align: center;
+			padding-top: 5px;
+		}
+	</style>
+	<script src="jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("input[type='checkbox']").on("click", function(){
+					if($("input[type='checkbox']").is(":checked"))
+						$("mark").text("MET website");
+					else
+						$("mark").text("The web");
+			});
+			$("form").mouseenter(function(){
+				$(this).css("border-radius", "0.5em");
+				$(this).css("background", "rgba(210, 250, 240, 0.6)");
+			});
+			$("form").mouseleave(function(){
+				$(this).css("border-radius", "none");
+				$(this).css("background", "white");
+			});
+			$.ajax({
+				type: "GET",
+				url: "data.xml",
+				dataType: "xml",
+				success: function(xml) {
+					$(xml).find('post').each(function(){
+						var title = $(this).find("title").text();
+						var date = $(this).find("date").text();
+						var article = $(this).find("article").text();
+						$("<div class='post'></div>").html("<h3>"+title+"</h3><date>"+date+"</date><article>"+article+"</article>").appendTo("section.feed");
+					});
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<a href="#"><img src="./monkey.jpg" alt="monkey" id="pp"></a>
+	<nav>
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Friends</a></li>
+			<li><a href="#">Pictures</a></li>
+			<li><a href="#">Videos</a></li>
+			<li><a href="#">Privacy</a></li>
+			<li><a href="#">Log out</a></li>
+		</ul>
+	</nav>
+	<form method="get" action="http://www.google.com/search">
+		<input name="q" type="search" maxlength="255" required placeholder="looking for something?" x-webkit-speech>
+		<input type="submit" value="Google">
+		<div>
+		<input type="checkbox"  name="sitesearch"
+ 		value="met.guc.edu.eg" checked>
+ 		<span>search <mark>MET website</mark></span>
+ 		</div>
+	</form>
+	<div class="newpost">
+		<form>
+			<textarea placeholder="new status?"></textarea>
+			<input type="submit" value="post">
+		</form>
+	</div>
+	<section class="feed">
+	</section>
+	<footer>
+		<span>Copyrights reserved Monkey LTD</span>
+	</footer>
+</body>
+</html>
