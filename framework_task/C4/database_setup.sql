@@ -19,6 +19,8 @@
 -- Table structure for table `lists`
 --
 
+CREATE DATABASE IF NOT EXISTS `task`;
+
 DROP TABLE IF EXISTS `lists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
