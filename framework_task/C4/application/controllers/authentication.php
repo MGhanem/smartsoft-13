@@ -16,10 +16,10 @@ class authentication extends CI_controller{
          $userNew=$this->input->post('userName');
          $passwordNew=$this->input->post('password');
          $passwordCheck = $this->input->post('passwordC');
-         $newUser.username($userNew);
-         $newUser.password ($passwordNew);
-         if($newUser.save()){
-         	show_404();
+         $newUser->username = $userNew;
+         $newUser->password = $passwordNew;
+         if($newUser->save()){
+         	echo 'Esht3alat';
          }
 
 
