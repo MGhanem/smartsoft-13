@@ -3,8 +3,7 @@ class Tasklist extends CI_Controller {
 
 	public function index()
 	{
-		
-		
+		$this->viewAll();
 	}
 	
 	public function create($listName, $ownerID)
@@ -13,6 +12,7 @@ class Tasklist extends CI_Controller {
         $list-> name = $listName;
         $list-> owner_id= $ownerID;
         $list-> save();
+        $this->viewAll();
       
 
 
@@ -51,7 +51,16 @@ class Tasklist extends CI_Controller {
 		$list = new List_model();
 		$list->get_by_id($listID);
 		$list->delete();
+		$this->viewAll();
 
+
+	}
+
+	public function deleteAll(){
+		$list = new List_model();
+        $list->get();
+       	$list->delete_all();
+       	$this->viewAll();
 
 	}
 	
