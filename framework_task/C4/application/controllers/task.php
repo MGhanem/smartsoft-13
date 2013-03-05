@@ -18,7 +18,7 @@ class Task extends CI_Controller {
       $task->text = $this->input->post('text');
       $list = new List_model($list_id);
       if($task->save(array('list'=>$list))) {
-        echo "Task saved with id $task->id!";
+        redirect("/tasklist/view/$list_id");
       } else {
         echo 'Task not saved';
       }
@@ -41,7 +41,7 @@ class Task extends CI_Controller {
     if($this->input->post('text') !== False) {
       $task->text = $this->input->post('text');
       if($task->save()) {
-        echo "Task saved with id $task->id!";
+        redirect("/tasklist/view/".$task->list->id);
       } else {
         echo 'Task not saved';
       }
