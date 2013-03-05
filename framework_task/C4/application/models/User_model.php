@@ -8,6 +8,7 @@ class User_model extends DataMapper{
 		parent::__construct($id);
 	}
 
+
 }
 
 ?>
