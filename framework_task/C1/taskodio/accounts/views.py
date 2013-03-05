@@ -9,9 +9,9 @@ def signin(request):
 	})
 	return HttpResponse(template.render(context))
 
-def signup(request):
+def register(request):
 	title = 'this is the signup page'
-	template = loader.get_template('accounts/signup.html')
+	template = loader.get_template('accounts/register.html')
 	context = Context({
 		'title': title,
 	})
