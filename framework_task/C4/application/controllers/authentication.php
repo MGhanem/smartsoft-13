@@ -4,7 +4,6 @@ class authentication extends CI_controller{
     public function __construct()
         {
              parent::__construct();
-             $this->load->library('session');
         }
 
 
@@ -18,14 +17,14 @@ class authentication extends CI_controller{
         $u = new User_model();
         $userIn=$this->input->post('nameSign');
         $passwordIn=$this->input->post('passwordSign');
-        if ($userIn != "" & $passwordIn != ""){
-        $u->where('username', $userIn);
-        $u->where('password', $passwordIn);
-        $u->get();
-        // Remove the next echo and add redirection to the following page
-        echo $u->id;
-        $userId = $u->id;
-        $this->session->set_userdata('user_id', $userId);
+        if ($userIn != "" && $passwordIn != ""){
+          $u->where('username', $userIn);
+          $u->where('password', $passwordIn);
+          $u->get();
+          // Remove the next echo and add redirection to the following page
+          echo $u->id;
+          $userId = $u->id;
+          $this->session->set_userdata('user_id', $userId);
         }
         else{
            $this->load->view('SignInView'); 
@@ -57,7 +56,7 @@ class authentication extends CI_controller{
 
     }
 
-    public function signOut() {
+    public function signout() {
         $this->session->sess_destroy();
 
     }
