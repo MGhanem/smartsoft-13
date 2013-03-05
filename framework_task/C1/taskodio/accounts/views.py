@@ -1,9 +1,10 @@
 from django.http import HttpResponse
-from django.template import Context, loader, RequestContext
-from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.template import Context, loader, RequestContext
+from django.contrib.auth import authenticate, login
 from lists import views
+
 
 # Just renders the sign IN page template
 def signin(request):
@@ -22,6 +23,24 @@ def register(request):
 		'title': title,
 	})
 	return HttpResponse(template.render(context))
+
+def log_in(request):
+	username=request.POST['username']
+	password=request.POST['password']
+	template = loader.get_template('accounts/signin.html')
+
+	if not username or not password:
+		context = Context({
+			'errors': "Please enter a valid username and password.",
+		})
+		return HttpResponse(template.render(context))
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		login(request, user)
+		return HttpResponse("you are a valid user (you are in database)")
+	else:
+		context=Context({'errors':"Username , or password are not in database"})
+		return HttpResponse(template.render(context))
 
 # actual sign up action
 # cases
@@ -60,3 +79,4 @@ def signup(request):
 	new_user.save();
 
 	return HttpResponse("Hello, %s" % new_user.username)
+

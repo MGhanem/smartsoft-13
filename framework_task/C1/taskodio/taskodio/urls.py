@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^lists/', include('lists.urls', namespace="lists")),
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url('register/', views.register, name="register"),
-    url('signin/', views.signin, name="signin"),
+    url(r'^signin/', views.signin, name="signin"),
+
 )
