@@ -6,7 +6,7 @@
 </head>
 
 <Div align = 'right'>
-<form action="/index.php/authentication/loadReg">
+<form action="/index.php/authentication/signUp">
 <span>Don't have an account?!!</span>
 <button style="display:inline;" onClick = "" >SignUp</button>
 </form>
@@ -19,7 +19,7 @@
 	 <dd><input type="text" width:250px placeholder="name" name="nameSign" style="display:inline;"></dd>
 
 	 <dt>Password</dt>
-	 <dd><input type="text" width:250px placeholder="password" name="passwordSign" style="display:inline;"></dd>
+	 <dd><input type="password" width:250px placeholder="password" name="passwordSign" style="display:inline;"></dd>
 
 	</dl>
       <button>SignIn</button>

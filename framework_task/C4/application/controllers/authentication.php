@@ -4,6 +4,7 @@ class authentication extends CI_controller{
     public function __construct()
         {
              parent::__construct();
+             $this->load->helper('url');
         }
 
 
@@ -17,26 +18,26 @@ class authentication extends CI_controller{
         $u = new User_model();
         $userIn=$this->input->post('nameSign');
         $passwordIn=$this->input->post('passwordSign');
-        if ($userIn != "" && $passwordIn != ""){
+        if ($userIn != "" & $passwordIn != ""){
           $u->where('username', $userIn);
           $u->where('password', $passwordIn);
           $u->get();
-          // Remove the next echo and add redirection to the following page
-          echo $u->id;
           $userId = $u->id;
           $this->session->set_userdata('user_id', $userId);
+          redirect('/tasklist/viewall');
         }
         else{
-           $this->load->view('SignInView'); 
+          echo'Your username or password seems to be wrong .. please try again.';
+          $this->load->view('SignInView'); 
         }
     }
     
 
-    public function loadReg(){
-             $this->load->view('registerationView');
-    }
-
     public function signUp() {
+         if ( ! isset($_POST['userName'])){
+         $this->load->view('registerationView');
+         } 
+         else{
          $newUser = new User_model();
          $userNew=$this->input->post('userName');
          $passwordNew=$this->input->post('password');
@@ -44,14 +45,22 @@ class authentication extends CI_controller{
          $newUser->username = $userNew;
          $newUser->password = $passwordNew;
          if($newUser->save()){
-         	echo'Congratulations! You have successfully registered to our system';
+         	//echo'Congratulations! You have successfully registered to our system';
+             $userId = $newUser->id;
+             $this->session->set_userdata('user_id', $userId);
+             echo $this->session->userdata('user_id');
+             redirect('/tasklist/viewall');
+
          }
          else{
             echo'registeration failed .. please try registering again';
+            $this->load->view('registerationView');
          }
         }
         else{
-           echo 'Registeration Fields are empty .. please try again'; 
+           echo 'Registeration Fields are empty!! .. please fill in all the fields and then try again';
+           $this->load->view('registerationView'); 
+            }
         }
 
     }
