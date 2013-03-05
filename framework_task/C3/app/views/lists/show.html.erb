@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @list.name %>
+</p>
+<h2>Tasks</h2>
+<%= render @list.tasks %>
+<h2>Add a task:</h2>
+<%= render "tasks/form" %>
+
+
+<%= link_to 'Edit', edit_list_path(@list) %> |
+<%= link_to 'Back', lists_path %>

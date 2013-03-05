@@ -1,0 +1,5 @@
+  <p>
+    <%= task.name %> <%= link_to 'Delete', [task.list, task],
+               :confirm => 'Are you sure?',
+               :method => :delete %>
+  </p>
