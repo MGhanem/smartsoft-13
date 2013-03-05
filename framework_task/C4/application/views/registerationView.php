@@ -8,10 +8,10 @@
             <td>Name: </td><td><input type="text" name="userName"></td>
         </tr>
         <tr>
-            <td>Password: </td><td><input type="text" name="password"></td>
+            <td>Password: </td><td><input type="password" name="password"></td>
         </tr>
         <tr>
-            <td></td><td><input type="submit" name="addProduct" value="register"><td>
+            <td><input type="submit" name="addProduct" value="register"></td>
         </tr>
     </table>
 </form>
