@@ -40,6 +40,7 @@ class Task extends CI_Controller {
 
 	public function delete($task_id)
 	{
+    $user_id = $this->session->userdata('user_id');
     $task = new Task_model($task_id);
     if(!$task->exists()) {
       redirect('/tasklist/viewall');
@@ -61,6 +62,7 @@ class Task extends CI_Controller {
 
 	public function edit($task_id)
 	{
+    $user_id = $this->session->userdata('user_id');
     $task = new Task_model($task_id);
     if(!$task->exists()) {
       redirect('/tasklist/viewall');
