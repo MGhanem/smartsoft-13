@@ -9,6 +9,7 @@
 --
 
 CREATE DATABASE IF NOT EXISTS `task`;
+USE task;
 
 DROP TABLE IF EXISTS `lists`;
 CREATE TABLE `lists` (
@@ -55,7 +56,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `list_shared_with_user`;
-CREATE TABLE `users` (
+CREATE TABLE `list_shared_with_user` (
   `shared_owner_id` int(11),
   `list_id` int(11) NOT NULL
 )
