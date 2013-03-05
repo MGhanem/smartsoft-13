@@ -1,17 +1,17 @@
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from accounts import views
 
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'taskodio.views.home', name='home'),
     # url(r'^taskodio/', include('taskodio.foo.urls')),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'^lists/', include('lists.urls', namespace="lists")),
+    url(r'^accounts/', include('accounts.urls', namespace="accounts")),
+    url('register/', views.register, name="register"),
+    url('signin/', views.signin, name="signin"),
 )
