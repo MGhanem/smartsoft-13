@@ -5,14 +5,7 @@
 <body>
   <a href="/index.php/tasklist/viewall/">Back</a>
   <br />
-	<?php
-        echo 'Name: ' . $list->name . '<br />';
-        echo 'Owner ID: ' . $list->owner_id . '<br /><br />';
-	?>
-
-	<br>
-	<h3>Tasks:</h3>
-	<br>
+	<h3><?php echo $list->name; ?></h3>
   <ul>
 	<?php
 		foreach ($task as $Task_model) {
@@ -26,6 +19,8 @@
   <?php }?>
   </ul>
   <a href="/index.php/task/create/<?php echo $list->id;?>">Create New Task</a>
+  <br >
+  <br >
 	<form  action="/index.php/tasklist/delete/<?php echo $list->id;?>">­
     <input type="Submit" value="Delete List">
   </form>
