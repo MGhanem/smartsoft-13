@@ -22,10 +22,34 @@ class Task extends CI_Controller {
 		echo 'Hello World!';
 	}
 	
-	public function edit()
+	//used to edit the text of a certain task within a list
+	public function edit($taskID, $newTask)
 	{
-		echo 'Hello World!';
+		$task = new Task_model();
+		$task = get_by_id($taskID);
+		$task->name = $newTask;
+		echo 'successfully changed';
+		//redirect('index.php/tasklist/viewAll');
 	}
+
+	//Marks a certain task as done
+	public function mark_done($taskID)
+	{
+		$task = new Task_model();
+		$task = get_by_id($taskID);
+		if($task->done)
+		{
+			echo 'Already marked as done';
+		}
+		else
+		{
+			$task->done = 1;
+			echo 'Task marked successfully';
+		}
+		//redirect('index.php/tasklist/viewAll');
+	}
+
+
 	
 }
 ?>
