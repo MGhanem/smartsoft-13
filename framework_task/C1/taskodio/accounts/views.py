@@ -96,5 +96,10 @@ def profile(request):
 		})
 		template = loader.get_template('accounts/profile.html')
 		return HttpResponse(template.render(context))
+	else:
+		context = Context({
 
-	return HttpResponse("You are not logged in so you can't display your profile")
+			'not_signed_in_error': "You are not signed in, please sign in."
+		})
+		template = loader.get_template('accounts/profile.html')
+		return HttpResponse(template.render(context))
