@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-
 from accounts import views
+from lists import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,5 +14,5 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url('register/', views.register, name="register"),
     url(r'^signin/', views.signin, name="signin"),
-
+    url(r'^lists/', views.list_manage, name='list_manage'),
 )

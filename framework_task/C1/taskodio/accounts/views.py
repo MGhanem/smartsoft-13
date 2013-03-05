@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.template import Context, loader, RequestContext
 from django.contrib.auth import authenticate, login
-from lists import views
+
 
 
 # Just renders the sign IN page template
