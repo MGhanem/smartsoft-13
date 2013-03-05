@@ -89,10 +89,10 @@ def log_out(request):
 	# will change later to redirect to the landing page
 
 def profile(request):
-	user = request.user
-	if user is not None:
+	u = request.user
+	if u is not None:
 		context = Context({
-			'username': user.username,
+			'user': u,
 		})
 		template = loader.get_template('accounts/profile.html')
 		return HttpResponse(template.render(context))
