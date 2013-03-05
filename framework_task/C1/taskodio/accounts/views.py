@@ -88,4 +88,13 @@ def log_out(request):
 	# just a dummy redirect to test functionality
 	# will change later to redirect to the landing page
 
+def profile(request):
+	user = request.user
+	if user is not None:
+		context = Context({
+			'username': user.username,
+		})
+		template = loader.get_template('accounts/profile.html')
+		return HttpResponse(template.render(context))
 
+	return HttpResponse("You are not logged in so you can't display your profile")
