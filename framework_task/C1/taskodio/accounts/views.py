@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import Context, loader
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 def signin(request):
 	title = 'this is the signin page'
@@ -18,7 +18,7 @@ def register(request):
 	})
 	return HttpResponse(template.render(context))
 
-def login(request):
+def log_in(request):
 	username=request.POST['username']
 	password=request.POST['password']
 	template = loader.get_template('accounts/signin.html')
@@ -30,6 +30,7 @@ def login(request):
 		return HttpResponse(template.render(context))
 	user = authenticate(username=username, password=password)
 	if user is not None:
+		login(request, user)
 		return HttpResponse("you are a valid user (you are in database)")
 	else:
 		context=Context({'errors':"Username , or password are not in database"})
