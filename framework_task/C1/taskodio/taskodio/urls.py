@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url('register/', views.register, name="register"),
     url('signin/', views.signin, name="signin"),
+
 )
