@@ -5,7 +5,11 @@
 <body>
   <a href="/index.php/tasklist/viewall/">Back</a>
   <br />
-	<h3><?php echo $list->name; ?></h3>
+  <br />
+	<h3 style='display:inline;'><?php echo $list->name; ?></h3>
+  <span>
+    <a href="/index.php/tasklist/edit/<?php echo $list->id; ?>">edit name</a>
+  </span>
   <ul>
 	<?php
 		foreach ($task as $Task_model) {
