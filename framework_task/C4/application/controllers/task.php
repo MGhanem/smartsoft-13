@@ -53,22 +53,28 @@ class Task extends CI_Controller {
       $this->load->view('task_edit', $data);
     }
 
+	}
 	//Marks a certain task as done
 	public function mark_done($taskID)
 	{
 		$task = new Task_model();
-		$task = get_by_id($taskID);
-		if($task->done)
+		$task->where('id',$taskID)->get();
+		if($task->done == 0)
 		{
-			echo 'Already marked as done';
-		}
-		else
-		{
+			//echo 'Task marked successfully';
 			$task->done = 1;
-			echo 'Task marked successfully';
+			$task->save();
+			return true;
 		}
-		//redirect('index.php/tasklist/viewAll');
+		return false;
 	}
+
+	public function viewAll(){
+			$task = new Task_model();
+	        $task->get();
+	        $data["task"] = $task;
+	        return $data;
+		}
 
 
 	
