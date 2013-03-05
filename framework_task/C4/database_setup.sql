@@ -77,7 +77,7 @@ CREATE TABLE `tasks` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `list_id` int(11) unsigned,
   `text` varchar(255) NOT NULL,
-  `done` bit(1) DEFAULT 0,
+  `done` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
