@@ -6,13 +6,23 @@ class Task extends CI_Controller {
     $this->load->helper('url');
   }
 
-	public function index()
-	{
-		echo 'Hello World!';
-	}
-	
 	public function create($list_id)
 	{
+    $user_id = $this->session->userdata('user_id');
+    $list = new List_model($list_id);
+    if(!$list->exists()) {
+      redirect('/tasklist/viewall');
+      return;
+    }
+    if($user_id !== False) {
+      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
+    } else {
+      redirect('/authentication/signin/');
+      return;
+    }
     if($this->input->post('text') !== False) {
       $task = new Task_model();
       $task->text = $this->input->post('text');
@@ -27,20 +37,49 @@ class Task extends CI_Controller {
       $this->load->view('task_create', $data);
     }
 	}
-	
+
 	public function delete($task_id)
 	{
     $task = new Task_model($task_id);
+    if(!$task->exists()) {
+      redirect('/tasklist/viewall');
+      return;
+    }
+    $list = new List_model($task->list_id);
+    if($user_id !== False) {
+      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
+    } else {
+      redirect('/authentication/signin/');
+      return;
+    }
     $task->delete();
-    redirect('/tasklist/'.$task->list->id);
+    redirect('/tasklist/view/'.$list->id);
 	}
-	
+
 	public function edit($task_id)
 	{
     $task = new Task_model($task_id);
+    if(!$task->exists()) {
+      redirect('/tasklist/viewall');
+      return;
+    }
+    $list = new List_model($task->list_id);
+    if($user_id !== False) {
+      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
+    } else {
+      redirect('/authentication/signin/');
+      return;
+    }
     if($this->input->post('text') !== False) {
       $task->text = $this->input->post('text');
       if($task->save()) {
+        $task->list->get();
         redirect("/tasklist/view/".$task->list->id);
       } else {
         echo 'Task not saved';
@@ -51,7 +90,7 @@ class Task extends CI_Controller {
       $this->load->view('task_edit', $data);
     }
 	}
-	
+
 }
 ?>
 
