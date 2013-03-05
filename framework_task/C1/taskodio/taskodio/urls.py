@@ -12,8 +12,8 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^lists/', include('lists.urls', namespace="lists")),
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
-    url('register/', views.register, name="register"),
+    url(r'^register/', views.register, name="register"),
     url(r'^signin/', views.signin, name="signin"),
-    
+
 
 )
