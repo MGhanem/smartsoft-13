@@ -14,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url(r'^register/', views.register, name="register"),
     url(r'^signin/', views.signin, name="signin"),
-
+    url(r'^signout/', views.log_out, name='logout'),
 
 )
