@@ -13,11 +13,6 @@ class Tasklist extends CI_Controller {
         $list-> owner_id= $ownerID;
         $list-> save();
         $this->viewAll();
-      
-
-
-       
-        
 	}
 
 	public function viewAll(){
@@ -25,10 +20,6 @@ class Tasklist extends CI_Controller {
         $list->get();
         $data["list"] = $list;
         $this->load->view('all_lists.php', $data);
-       	
-
-		
-
 	}
 
 	public function view($listID){
@@ -36,24 +27,16 @@ class Tasklist extends CI_Controller {
 		$list->where('id', $listID)->get();
 
 		$data["list"] = $list;
-        $this->load->view('single_list.php', $data);
-
-
-
-		
+    $this->load->view('single_list.php', $data);
 	}
 
 	
 	public function delete($listID)
 	{	
-
-		
 		$list = new List_model();
 		$list->get_by_id($listID);
 		$list->delete();
 		$this->viewAll();
-
-
 	}
 
 	public function deleteAll(){
@@ -63,8 +46,17 @@ class Tasklist extends CI_Controller {
        	$this->viewAll();
 
 	}
-	
-	
-	
+
+  public function edit($list_id) {
+    $list = new List_model($list_id);
+    if($this->input->post('name') !== False) {
+      $list->name = $this->input->post('name');
+      $list->save();
+      redirect("/tasklist/$list_id");
+    } else {
+      $data['list'] = $list;
+      $this->load->view('list_edit', $data);
+    }
+  }
 }
 ?>
