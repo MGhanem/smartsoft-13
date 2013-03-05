@@ -24,10 +24,14 @@ class Tasklist extends CI_Controller {
 
 	public function view($listID){
 		$list = new List_model();
+		$task = new Task_model();
 		$list->where('id', $listID)->get();
-
+		$task->where('list_id', $listID)->get();
 		$data["list"] = $list;
-    $this->load->view('single_list.php', $data);
+		$data["task"] = $task;
+   		$this->load->view('single_list.php', $data);
+    	
+
 	}
 
 	
