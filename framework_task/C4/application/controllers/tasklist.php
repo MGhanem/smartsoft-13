@@ -9,10 +9,10 @@ class Tasklist extends CI_Controller {
 	public function create($listName, $ownerID)
 	{
 		$list = new List_model();
-        $list-> name = $listName;
-        $list-> owner_id= $ownerID;
-        $list-> save();
-        $this->viewAll();
+    $list-> name = $listName;
+    $list-> owner_id= $ownerID;
+    $list-> save();
+    $this->viewAll();
 	}
 
 	public function viewAll(){
