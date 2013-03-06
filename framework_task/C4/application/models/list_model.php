@@ -4,6 +4,7 @@ class List_model extends DataMapper {
   
   var $table="lists";
 
+
   var $has_one = array(
   	'owner'=>array(
   		'class'=>'User_model',
@@ -24,14 +25,20 @@ class List_model extends DataMapper {
   			'class'=>'Task_model', 
   			'other_field'=>'list')
   		);  
- 
-  
-  
 
   public function __construct($id=Null) {
     parent::__construct($id);
   }
-  
+
+  public function shared_with($user_id) {
+    $this->shared_owner->get();
+    foreach($this->shared_owner as $owner) {
+      if($owner->id == $user_id) {
+        return True;
+      }
+    }
+    return False;
+  }
 }
 
 ?>
