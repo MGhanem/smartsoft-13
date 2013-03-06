@@ -13,5 +13,6 @@ from lists import views
 # )
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
-	url(r'^new_list/', views.new_list, name='index'),
+	url('new_list/', views.new_list, name='index'),
+	url('lists/new_list/create_list/', views.create_list, name='create_list'),
 )
