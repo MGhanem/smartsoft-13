@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class List(models.Model):
 	title = models.CharField(max_length=200)
 	owner = models.ForeignKey(User)
+	
 
 class Task(models.Model):
 	title = models.CharField(max_length=200)

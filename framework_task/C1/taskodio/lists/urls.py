@@ -12,5 +12,8 @@ from lists import views
 #     url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
 # )
 urlpatterns = patterns('',
-	 url(r'^$', views.list_manage, name='list_manage'),
+	 url('', views.view_lists, name='list_manage'),
+	 url('lists/create_list/', views.create_list, name='create_list'),
+	 url('lists/view_lists/', views.view_lists, name='view_lists'),
+
 )

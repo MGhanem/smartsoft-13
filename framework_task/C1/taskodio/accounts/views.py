@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render,render_to_response, redirect
 from django.contrib.auth.models import User
 from django.template import Context, loader, RequestContext
 from django.contrib.auth import authenticate, login
@@ -37,7 +37,11 @@ def log_in(request):
 	user = authenticate(username=username, password=password)
 	if user is not None:
 		login(request, user)
-		return HttpResponse("you are a valid user (you are in database)")
+		list_name_set=user.list_set.all()
+		context = Context({'user':user,'list_name_set': list_name_set,
+
+		})
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
 		context=Context({'errors':"Username , or password are not in database"})
 		return HttpResponse(template.render(context))
