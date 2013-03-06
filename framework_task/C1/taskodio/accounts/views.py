@@ -5,7 +5,6 @@ from django.template import Context, loader, RequestContext
 from django.contrib.auth import authenticate, login, logout
 from lists import views
 
-
 # Just renders the sign IN page template
 def signin(request):
 	title = 'this is the signin page'
@@ -79,6 +78,7 @@ def signup(request):
 	new_user.save();
 
 	return HttpResponse("Hello, %s" % new_user.username)
+	
 # s3
 # method that is responsible for destroying the current user session
 def log_out(request):
