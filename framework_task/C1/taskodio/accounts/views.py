@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.template import Context, loader, RequestContext
 from django.contrib.auth import authenticate, login, logout
@@ -89,17 +89,13 @@ def log_out(request):
 	# will change later to redirect to the landing page
 
 def profile(request):
-	u = request.user
-	if u is not None:
+	if not request.user.is_authenticated():
 		context = Context({
-			'user': u,
+			'not_signed_in_error': "You are not signedin, please sign in to view this page.",
 		})
-		template = loader.get_template('accounts/profile.html')
-		return HttpResponse(template.render(context))
+		return render_to_response('accounts/profile.html', context, RequestContext(request))
 	else:
 		context = Context({
-
-			'not_signed_in_error': "You are not signed in, please sign in."
+			'user': request.user,
 		})
-		template = loader.get_template('accounts/profile.html')
-		return HttpResponse(template.render(context))
+		return render_to_response('accounts/profile.html', context, RequestContext(request))
