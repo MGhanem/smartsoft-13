@@ -1,10 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.template import Context, loader, RequestContext
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from lists import views
-
 
 # Just renders the sign IN page template
 def signin(request):
@@ -41,7 +40,7 @@ def log_in(request):
 	else:
 		context=Context({'errors':"Username , or password are not in database"})
 		return HttpResponse(template.render(context))
-
+# s2
 # actual sign up action
 # cases
 # 1.username might already exist
@@ -79,4 +78,24 @@ def signup(request):
 	new_user.save();
 
 	return HttpResponse("Hello, %s" % new_user.username)
+	
+# s3
+# method that is responsible for destroying the current user session
+def log_out(request):
+	username = request.user.username
+	logout(request)
+	return HttpResponse("You have successfully logged out, %s" % username) 
+	# just a dummy redirect to test functionality
+	# will change later to redirect to the landing page
 
+def profile(request):
+	if not request.user.is_authenticated():
+		context = Context({
+			'not_signed_in_error': "You are not signedin, please sign in to view this page.",
+		})
+		return render_to_response('accounts/profile.html', context, RequestContext(request))
+	else:
+		context = Context({
+			'user': request.user,
+		})
+		return render_to_response('accounts/profile.html', context, RequestContext(request))
