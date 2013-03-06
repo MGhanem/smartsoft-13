@@ -28,9 +28,7 @@ def new_list(request):
 		})
 		return render_to_response('lists/new_list.html', context, RequestContext(request))
 
-# def create_list(request):
-# 	return HttpResponse("You!")
-
+# s5 create list action from the new list view form
 def create_list(request):
 # 	# if user is not authenticated
 	# return HttpResponse("FUCK!")
