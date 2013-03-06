@@ -1,15 +1,17 @@
 from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render, render_to_response
+from django.contrib.auth import authenticate, login
 from lists.models import List
+from django.contrib.auth.models import User
 
-# /lists
-def index(request):
-	title = 'All Lists'
-	template = loader.get_template('lists/index.html')
+
+def list_manage(request):
+	template = loader.get_template('lists/list_manage.html')
 	context = Context({
-		'title': title,
-	})
+			'error': 'The email you have entered is already in use.',
+			'user': request.user
+		})
 	return HttpResponse(template.render(context))
 
 # s5 create list view redirect
@@ -57,3 +59,21 @@ def create_list(request):
 				return HttpResponse("You have succesffuly created the list %s" % new_list.title)
 				# send a dummy response saying that here we will create a list by
 				# --- by that name
+
+
+#s4
+def view_lists(request):
+	if request.user.is_authenticated():
+		user = request.user
+		list_name_set = user.list_set.all()
+		context = Context({'list_name_set': list_name_set,})
+		#return HttpResponse(list_name_set.all())
+		# return render(request, 'lists/list_manage.html', context)
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
+	else:
+		list_name_set = user.list_set.all()
+		context = Context({
+			'list_name_set': list_name_set,
+			'user': user,
+		})
+		return render(request,'lists/list_manage.html',context)
