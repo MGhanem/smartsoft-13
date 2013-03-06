@@ -1,0 +1,16 @@
+<h1>List page.....Hello, {{ user.username }}</h1>
+
+<form action="/lists/create_list/" method="post">
+	<input type="text" placeholder="list name" name="list_name">
+	<input type="submit" value="Create new List">
+</form>
+<hr>
+{% if list_name_set %}
+    <ul>
+    {% for list in list_name_set %}
+        <li>{{ list.title }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No lists are available.</p>
+{% endif %}
