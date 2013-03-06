@@ -9,3 +9,13 @@ def index(request):
 		'title': title,
 	})
 	return HttpResponse(template.render(context))
+
+# s5 create list view redirect
+def new_list(request):
+	title = 'Create a new list'
+	context = Context({
+		'title': title
+	})
+	template = loader.get_template('lists/new_list.html')
+	return HttpResponse(template.render(context))
+
