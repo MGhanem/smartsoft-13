@@ -18,7 +18,7 @@ class authentication extends CI_controller{
         $u = new User_model();
         $userIn=$this->input->post('nameSign');
         $passwordIn=$this->input->post('passwordSign');
-        if ($userIn != "" & $passwordIn != ""){
+        if ($userIn !== False && $passwordIn !== False){
           $u->where('username', $userIn);
           $u->where('password', $passwordIn);
           $u->get();
@@ -27,7 +27,6 @@ class authentication extends CI_controller{
           redirect('/tasklist/viewall');
         }
         else{
-          echo'Your username or password seems to be wrong .. please try again.';
           $this->load->view('SignInView'); 
         }
     }
