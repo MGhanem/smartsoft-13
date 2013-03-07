@@ -54,6 +54,31 @@ class Tasklist extends CI_Controller {
 
 	}
 
+	public function share_list($user_name, $list_id)
+	{
+		$list = new List_model();
+		$user = new User_model();
+		$list->where('id', $list_id)->get();
+		$user->where('username',$user_name)->get();
+		if(empty($user->id)){
+			echo 'Sorry! User not registered';
+		}
+		else{
+			$list->save(array('shared_owner'=>$user));
+			echo 'Share Successful';
+		}
+	}
+
+	public function delete_share($user_name, $list_id)
+	{
+		$list = new List_model();
+		$user = new User_model();
+		$user->where('username',$user_name)->get();
+		$list->where('id', $list_id)->get();
+		$list->delete(array('shared_owner'=>$user));
+		echo 'Deletion Successful';
+	}
+
   public function edit($list_id) {
     $user_id = $this->session->userdata('user_id');
     $list = new List_model($list_id);
@@ -83,5 +108,6 @@ class Tasklist extends CI_Controller {
       $this->load->view('list_edit', $data);
     }
   }
+
 }
 ?>
