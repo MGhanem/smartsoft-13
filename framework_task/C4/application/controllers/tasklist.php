@@ -62,6 +62,7 @@ class Tasklist extends CI_Controller {
       return;
     }
     if($user_id !== False) {
+      $user = new User_model($user_id);
       if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
         redirect('/tasklist/viewall');
         return;
@@ -77,6 +78,8 @@ class Tasklist extends CI_Controller {
       redirect("/tasklist/view/$list_id");
     } else {
       $data['list'] = $list;
+      $data["username"] = $user->username;
+      $data["title"] = 'Edit a list';
       $this->load->view('list_edit', $data);
     }
   }
