@@ -13,13 +13,20 @@
   <ul>
 	<?php
 		foreach ($task as $Task_model) {
+            if($Task_model->done == 0){
+                $is_done = "mark_done";
+             }else{
+                $is_done = "unmark";
+             } 
+
             echo '<li>' . $Task_model->text?>
             <a href="/index.php/task/edit/<?php echo
             $Task_model->id;?>">edit</a>
             <a href="/index.php/task/delete/<?php echo
             $Task_model->id;?>">delete</a>
+            <a href="/index.php/task/mark_done/<?php echo 
+            $Task_model->id;?>"><?php echo $is_done ?></a>
             </li>
-
   <?php }?>
   </ul>
   <a href="/index.php/task/create/<?php echo $list->id;?>">Create New Task</a>
