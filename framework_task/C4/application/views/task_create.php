@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Create a new Task</title>
-</head>
-<body>
   <form action="/index.php/task/create/<?php echo $list_id; ?>" method="post">
    <span>Task: </span>
    <input type="text" name="text" value="" />

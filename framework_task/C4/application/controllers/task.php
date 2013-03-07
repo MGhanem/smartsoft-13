@@ -15,6 +15,7 @@ class Task extends CI_Controller {
       return;
     }
     if($user_id !== False) {
+      $user = new User_model($user_id);
       if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
         redirect('/tasklist/viewall');
         return;
@@ -34,6 +35,9 @@ class Task extends CI_Controller {
       }
     } else {
       $data["list_id"] = $list_id;
+      $data["title"] = 'New task';
+      $data['username'] = $user->username;
+      $this->load->view('header', $data);
       $this->load->view('task_create', $data);
     }
 	}
@@ -70,6 +74,7 @@ class Task extends CI_Controller {
     }
     $list = new List_model($task->list_id);
     if($user_id !== False) {
+      $user = new User_model($user_id);
       if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
         redirect('/tasklist/viewall');
         return;
@@ -89,6 +94,9 @@ class Task extends CI_Controller {
     } else {
       $data["task_id"] = $task_id;
       $data["text"] = $task->text;
+      $data["title"] = 'Edit task';
+      $data["username"] = $user->username;
+      $this->load->view('header', $data);
       $this->load->view('task_edit', $data);
     }
 
