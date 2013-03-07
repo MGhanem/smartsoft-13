@@ -9,3 +9,4 @@ class Task(models.Model):
 	list = models.ForeignKey(List)
 	title = models.CharField(max_length=200)
 	done = models.BooleanField(default=False)
+	desc= models.CharField(max_length=300)

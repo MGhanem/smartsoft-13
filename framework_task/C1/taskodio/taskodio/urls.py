@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-
 from accounts import views
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -10,11 +10,11 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url('', include('lists.urls', namespace="lists")),
+    url(r'^lists/', include('lists.urls', namespace="lists")),
+    url(r'^$', include('lists.urls', namespace="lists")),
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url(r'^register/', views.register, name="register"),
     url(r'^signin/', views.signin, name="signin"),
     url(r'^signout/', views.log_out, name='logout'),
     url(r'^profile/', views.profile, name='profile'),
-
 )
