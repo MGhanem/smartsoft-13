@@ -103,12 +103,65 @@ def list_details(request, list_id):
 			})
 			return render_to_response('lists/view_list.html',context,RequestContext(request)) 
 
-def edit_task(request,task_id):
-	return HttpResponse("editing")
+def save_edit_task(request,list_id,task_id):
+	#return HttpResponse("dsfmncejs")
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(pk=list_id)
+		tasks_set=list1.task_set.all()
+		new_name=request.POST['new_name']
+		new_desc=request.POST['new_desc']
+		if not new_name or not new_desc:
+			context=({'list1':list1,'tasks_set':tasks_set,
+				'detail':"enter a valid info."})
+			return render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			edited_task=Task.objects.all().get(pk=task_id)
+			edited_task.title=new_name
+			edited_task.desc=new_desc
+			edited_task.save()
+			context=({'list1':list1,'tasks_set':tasks_set,
+				'detail':"Your Task has been edited successfully."})
+			return render_to_response('lists/view_list.html',context
+				,RequestContext(request))
+	return HttpResponse("Your not even authenticated, how the hell you got here.")
 
-def delete_task(request,task_id):
-	return HttpResponse("editing")
 
+
+
+def edit_task(request,list_id,task_id):
+	#return HttpResponse(task_id)
+	#return HttpResponse(Task.objects.all().get(id=task_id).id)
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		tasks_set=list1.task_set.all()
+		context=Context({'list1':list1,'tasks_set':tasks_set,
+			'detail':"",'edited_task_id':task_id,})
+		return render_to_response('lists/view_list.html',context,RequestContext(request))
+	return HttpResponse("error")
+def delete_task(request,list_id,task_id):
+	#return HttpResponse("editing")
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		Task.objects.all().get(pk=task_id).delete()
+		context = Context({'detail': "Your task has been deleted successfully",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+		return  render_to_response('lists/view_list.html',context,RequestContext(request))
+	else:
+		return HttpResponse("you are not even authenticated, how the hell have you got here.")
+
+def change_state(request,list_id,task_id):
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		edited_task=Task.objects.all().get(pk=task_id)
+		edited_task.done=not edited_task.done
+		edited_task.save()
+		context = Context({'detail': "Your task has been edited successfully",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+		return  render_to_response('lists/view_list.html',context,RequestContext(request))
 
 def create_task(request,list_id):
 	if request.user.is_authenticated():
