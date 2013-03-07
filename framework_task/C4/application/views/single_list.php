@@ -25,8 +25,16 @@
   <a href="/index.php/task/create/<?php echo $list->id;?>">Create New Task</a>
   <br >
   <br >
-	<form  action="/index.php/tasklist/delete/<?php echo $list->id;?>">­
+  <form action="/index.php/tasklist/delete/<?php echo $list->id;?>">
     <input type="Submit" value="Delete List">
   </form>
+  <h3>Shared Owners:</h3>
+  <?php
+      foreach ($shared_owner as $User_model) {
+              echo '<li>' . $User_model->username; ?>
+              <a href="/index.php/tasklist/delete_share/<?php echo
+              $User_model->id;?>/<?php echo $list->id?>">delete</a>
+              </li>
+    <?php }?>
 </body>
 </html>
