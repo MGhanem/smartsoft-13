@@ -55,12 +55,6 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `list_shared_with_user`;
-CREATE TABLE `list_shared_with_user` (
-  `shared_owner_id` int(11),
-  `list_id` int(11) NOT NULL
-);
-
 INSERT INTO lists (name, owner_id) VALUES 
 ('NM List',1),
 ('NZ List',2),

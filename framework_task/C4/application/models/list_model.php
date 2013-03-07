@@ -15,10 +15,10 @@ class List_model extends DataMapper {
   var $has_many = array(
   	'shared_owner'=>array(
   		'class'=>'User_model',
-      'join_self_as' => 'user',
-      'join_other_as' => 'list',
+      'join_self_as' => 'list',
+      'join_other_as' => 'user',
       'join_table' => 'lists_users',
-  		'other_field' => 'shared_list',
+  		'other_field' => 'shared_lists',
   		'cascade_delete' => FALSE
   		),
   	'task'=>array(
