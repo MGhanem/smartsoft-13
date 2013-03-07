@@ -11,8 +11,6 @@
 CREATE DATABASE IF NOT EXISTS `task`;
 USE task;
 
-Use 'task';
-
 DROP TABLE IF EXISTS `lists`;
 CREATE TABLE `lists` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -57,10 +55,23 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `list_shared_with_user`;
-CREATE TABLE `list_shared_with_user` (
-  `shared_owner_id` int(11),
-  `list_id` int(11) NOT NULL
-)
+INSERT INTO lists (name, owner_id) VALUES 
+('NM List',1),
+('NZ List',2),
+('MA List',3),
+('MH List',4);
+
+INSERT INTO tasks (list_id, text, done) VALUES
+(1,'Buy Supplies',0),
+(1,'Fix Windows',1),
+(2,'Do smth',0),
+(3,'Do smth',0),
+(4,'Do smth',0);
+
+INSERT INTO users (username, password) VALUES 
+('NM','123'),
+('NZ','123'),
+('MA','123'),
+('MH','123');
 
 -- Dump completed on 2013-03-03 16:46:02
