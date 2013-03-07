@@ -41,7 +41,7 @@ div.nav span {
 }
 
 div.lists {
-	height: 200px;
+	height: 400px;
 	padding-top: 20px;
 }
 
@@ -72,5 +72,21 @@ div.nav a:hover {
 
 div.nav a:visted {
 	color: white;
+	text-decoration: none;
+}
+
+div.lists a {
+	color: #2A7E68;
+	font-size:20px;
+	text-decoration: none;
+}
+
+div.lists a:hover {
+	color: #2A7E68;
+	text-decoration: none;
+}
+
+div.lists a:visted {
+	color: #2A7E68;
 	text-decoration: none;
 }

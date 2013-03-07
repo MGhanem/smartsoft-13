@@ -14,8 +14,8 @@
                         $this->User->create();
                         if ($this->User->save($this->request->data)) {
                               $this->Session->setFlash('Welcome '.$this->request->data['username'].'!');
-                              $this->Session->write('user', $this->request->data['username']);
-                              $this->redirect(array('controller' => 'Lists', action => 'home'));
+                              $this->Session->write('user', $record['User']['user_id']);
+                              $this->redirect(array('controller' => 'Checklists', action => 'home'));
                         } else {
                             $this->Session->setFlash('malacious else');
                             $this->redirect(array('action' => 'signup'));
@@ -39,8 +39,9 @@
         if($this->request->isPost()){
             if ($this->User->findByUsernameAndPassword($this->request->data['username'],$this->request->data['password'])) {
                 $this->Session->setFlash('Welcome '.$this->request->data['username'].'!');
-                $this->Session->write('user', $this->request->data['username']);
-                $this->redirect(array('controller' => 'Lists' , 'action' => 'home'));
+                $record = $this->User->findByUsernameAndPassword($this->request->data['username'],$this->request->data['password']);
+                $this->Session->write('user', $record['User']['user_id']);
+                $this->redirect(array('controller' => 'Checklists' , 'action' => 'home'));
             } else {
                 $this->Session->setFlash('Incorrect username or password');
                 $this->redirect(array('action' => 'index'));
