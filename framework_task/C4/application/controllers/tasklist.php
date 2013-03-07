@@ -39,7 +39,8 @@ class Tasklist extends CI_Controller {
 	public function viewAll(){
 		$list = new List_model();
 		$user_id = $this->session->userdata('user_id');
-		    $list->where('owner_id', $user_id)->get();
+		if($user_id != FALSE){
+		$list->where('owner_id', $user_id)->get();
 		    $user = new User_model;
 		    $user->where('id', $user_id)->get();
 		    $data["title"] = 'Lists';
@@ -47,6 +48,14 @@ class Tasklist extends CI_Controller {
         $data["list"] = $list;
         $this->load->view('header', $data);
         $this->load->view('all_lists.php', $data);
+        }
+        else {
+      redirect('/authentication/signin/');
+      return;
+    }
+        
+        
+       
         
 	}
 
@@ -58,10 +67,18 @@ class Tasklist extends CI_Controller {
 		$user = new User_model;
 		$user_id = $this->session->userdata('user_id');
 		$user->where('id', $user_id)->get();
+		
+		if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
 		$data["title"] = 'Lists';
     $data['username'] = $user->username;
 		$data["list"] = $list;
 		$data["task"] = $task;
+		
+		
+		
 		$this->load->view('header', $data);
     $this->load->view('single_list.php', $data);
 	}
