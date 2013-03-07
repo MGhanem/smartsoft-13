@@ -92,40 +92,57 @@ class Tasklist extends CI_Controller {
 		$this->viewAll();
 	}
 
-	public function share_list($user_name, $list_id)
+	public function share_list()
 	{	
 		$user_id = $this->session->userdata('user_id');
 	    $task = new Task_model();
 	    $list = new List_model($list_id);
-	    if(!$list->exists()) {
+	    if(!$list->exists()) 
+	    {
 	      redirect('/tasklist/viewall');
 	      return;
 	    }
-	    if($user_id !== False) {
+	    if($user_id !== False) 
+	    {
 	      $user = new User_model($user_id);
 	      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
 	        redirect('/tasklist/viewall');
 	        return;
 	      }
-	    } else {
+	    }
+	    else 
+	    {
 	      redirect('/authentication/signin/');
 	      return;
 	    }
-		$share_user = new User_model();
-		$share_user->where('username',$user_name)->get();
-		if(empty($share_user->id)){
-			echo 'Sorry! User not registered';
-		}
-		else{
-			$list->save(array('shared_owner'=>$share_user));
-		}
-		$data["title"] = 'Lists';
-   		$data['username'] = $user->username;
-		$data["list"] = $list;
-		$data["task"] = $task;
-		$data["shared_owner"] = $share_user->username;
-		$this->load->view('header', $data);
-   		$this->load->view('single_list.php', $data);	
+	    if($this->input->post('share') !== False)
+	    {
+	    	$user_name = $this->input->post('share');
+	    	$share_user = new User_model();
+	    	$share_user->where('username', $user_name);
+	    	if($list->save(array("shared_owner"=>$share_user)))
+	    	{
+	    		$data["title"] = 'Lists';
+			    $data['username'] = $user->username;
+			    $data["list"] = $list->id;
+			    $data["task"] = $task;
+			    $data["shared_owner"] = $share_user->username;
+			    $this->load->view('header', $data);
+    			$this->load->view('single_list.php', $data);
+	    	}
+	    	else
+	    	{
+	    		echo "Share Unsuccessful";
+	    		redirect('/tasklist/viewall');
+	    	}
+	    }
+	    else
+	    {
+	    	$data["title"] = 'Share List:';
+		    $data['username'] = $user->username;
+		    $this->load->view('header', $data);
+		    $this->load->view('share_list', $data);
+	    }
 	}
 
 	public function delete_share($user_name, $list_id)

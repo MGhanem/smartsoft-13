@@ -43,5 +43,6 @@
               $User_model->id;?>/<?php echo $list->id?>">delete</a>
               </li>
     <?php }?>
+  <a href="/index.php/tasklist/share_list/">Share List with Friends</a>
 </body>
 </html>
