@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `list_shared_with_user`;
 CREATE TABLE `list_shared_with_user` (
   `shared_owner_id` int(11),
   `list_id` int(11) NOT NULL
-)
+);
 
 INSERT INTO lists (name, owner_id) VALUES 
 ('NM List',1),
