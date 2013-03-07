@@ -11,7 +11,9 @@
     <ul>
     {% for list in list_name_set %}
 
-        <li>{{ list.title }} <a href="/lists/{{ list.id }}/edit">Edit</a> <a href="/lists/{{list.id}}/delete"> Delete</a> </li>
+        <li><a href="/lists/{{list.id}}">{{list.title}}</a> 
+        	<a href="/lists/{{ list.id }}/edit">Edit</a> 
+        	<a href="/lists/{{list.id}}/delete"> Delete</a> </li>
       
     {% endfor %}
     </ul>

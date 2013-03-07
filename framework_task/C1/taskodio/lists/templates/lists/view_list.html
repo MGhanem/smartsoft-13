@@ -1,0 +1,13 @@
+<h1>{{ list1.title }}</h1>
+<hr>
+{% if tasks_set %}
+    <ul>
+    {% for task in tasks_set %}
+        <li>{{task.title}}  {{task.desc}}  {{task.done}}
+        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit">Edit</a> 
+        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete">Delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
