@@ -1,5 +1,5 @@
 <h1>List page.....Hello, {{ user.username }}</h1>
-
+{% if detail_error %}<p><strong> {{ detail_strong }}</strong></p> {% endif %}
 <form action="/lists/create_list/" method="post">
 	<input type="text" placeholder="list name" name="list_name">
 	<input type="submit" value="Create new List">
