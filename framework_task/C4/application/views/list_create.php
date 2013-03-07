@@ -1,7 +1,7 @@
-  <form action="/index.php/task/create/>" method="post">
+  <form action="/index.php/tasklist/create/>" method="post">
    <span>List: </span>
    <input type="text" name="name" value="" />
-   <input type="submit" name="submit" value="Add Task" />
+   <input type="submit" name="submit" value="Add list" />
   </form>
 </body>
 </html>

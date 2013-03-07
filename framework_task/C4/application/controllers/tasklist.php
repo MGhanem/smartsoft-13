@@ -14,19 +14,23 @@ class Tasklist extends CI_Controller {
 	public function create()
 	{
 		$user_id = $this->session->userdata('user_id');
+		$user = new User_model;
+		$user->where('id', $user_id)->get();
+		
     
    
    
-    if($this->input->post('text') !== False) {
+    if($this->input->post('name') !== False) {
       $list = new List_model();
       $list->name = $this->input->post('name');
-      $list->owner_id = $user_id;
-      $list->save();
+      $list->save(array("owner"=>$user));
+      $this->viewAll();
+      
 
-    } else {git add
+    } else {
      
       $data["title"] = 'New list';
-      
+      $data['username'] = $user->username;
       $this->load->view('header', $data);
       $this->load->view('list_create', $data);
     }
@@ -36,8 +40,14 @@ class Tasklist extends CI_Controller {
 		$list = new List_model();
 		$user_id = $this->session->userdata('user_id');
 		    $list->where('owner_id', $user_id)->get();
+		    $user = new User_model;
+		    $user->where('id', $user_id)->get();
+		    $data["title"] = 'Lists';
+        $data['username'] = $user->username;
         $data["list"] = $list;
+        $this->load->view('header', $data);
         $this->load->view('all_lists.php', $data);
+        
 	}
 
 	public function view($listID){
@@ -45,8 +55,14 @@ class Tasklist extends CI_Controller {
 		$task = new Task_model();
 		$list->where('id', $listID)->get();
 		$task->where('list_id', $listID)->get();
+		$user = new User_model;
+		$user_id = $this->session->userdata('user_id');
+		$user->where('id', $user_id)->get();
+		$data["title"] = 'Lists';
+    $data['username'] = $user->username;
 		$data["list"] = $list;
 		$data["task"] = $task;
+		$this->load->view('header', $data);
     $this->load->view('single_list.php', $data);
 	}
 
@@ -59,13 +75,7 @@ class Tasklist extends CI_Controller {
 		$this->viewAll();
 	}
 
-	public function deleteAll(){
-		$list = new List_model();
-        $list->get();
-       	$list->delete_all();
-       	$this->viewAll();
-
-	}
+	
 
 	public function share_list($user_name, $list_id)
 	{

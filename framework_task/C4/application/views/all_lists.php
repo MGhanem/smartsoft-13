@@ -20,18 +20,16 @@
         	echo 'This user has no lists.';
         }
         else{
-        	?>
-        	<form action="/index.php/tasklist/deleteall/">
-		    <input type="Submit" value="Delete all lists">
-		    </form>
-
-		    <?php
+        	
         }
 		
 	
 	
 	
      ?>
+     
+     <br>
+     <br>
      
      
      <a href="/index.php/tasklist/create/">Create New List</a>
