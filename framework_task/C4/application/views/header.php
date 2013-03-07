@@ -10,4 +10,3 @@
   href="/index.php/authentication/signout"> Sign out </a></p>
   <?php } ?>
   <br>
-  <br>
