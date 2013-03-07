@@ -179,4 +179,3 @@ def delete_list(request, list_id):
 					'detail_error': errors,
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
-			
