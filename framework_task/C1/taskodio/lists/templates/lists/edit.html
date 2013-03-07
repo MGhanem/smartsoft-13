@@ -1,0 +1,10 @@
+{{title}}
+{% if errors %}
+	<p><strong>{{ errors }}</strong></p> 
+{% endif %}
+<br>
+<form action="/lists/{{list.id}}/edit_list/" method="post">
+	<input type="text" placeholder="{{list.title}}" name="list_title">
+	<input type="submit" value="Edit">
+</form>
+

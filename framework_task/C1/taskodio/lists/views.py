@@ -99,6 +99,51 @@ def list_details(request, list_id):
 			context = Context({'list_name_set': list_name_set,})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
+
+def edit_list(request, list_id):
+	if request.user.is_authenticated():
+		new_title = request.POST['list_title']
+		l = List.objects.get(pk=list_id)
+		if(len(new_title) < 1):
+			context = Context({
+				'errors': "please make sure you enter a new list name",
+				'list': l,
+			})
+			return render_to_response('lists/edit.html', context, RequestContext(request))
+		else:
+			user = request.user
+			list_name_set = user.list_set.all()
+			l = List.objects.get(pk=list_id)
+			l.title = new_title
+			l.save()
+			# will change this later to redirect to
+			# the list page actually where
+			# the tasks will exist
+			# todo
+			context = Context({
+				'list': l,
+				'success': "You have succesfuly changed the list name.",
+				'list_name_set': list_name_set,
+				'user': user
+			})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+	else:
+		context = Context({
+			'errors': "please Signin before you can edit a list",
+			'list': l,
+		})
+		return render_to_response('lists/edit.html', context, RequestContext(request))
+
+# lists/1/edit redirects to the form where 
+# he can edit the list name of id 1
+def edit(request, list_id):
+	l = List.objects.get(pk=list_id)
+	context = Context({
+		'list': l,
+	})
+	return render_to_response('lists/edit.html', context, RequestContext(request))
+
+
 #s6 deleting lists
 def delete_list(request, list_id):
 	if not request.user.is_authenticated():
@@ -117,11 +162,15 @@ def delete_list(request, list_id):
 		else:
 			l = List.objects.get(pk=list_id)
 			if(l.user.id == request.user.id):
+				user = request.user
+				list_name_set = user.list_set.all()
 				l_name = l.title
 				l.delete()
-				errors = "You have successfuly deleted the list %s" % l_name
+				success = "You have successfuly deleted the list %s" % l_name
 				context = Context({
-					'detail_error': errors,
+					'list_name_set': list_name_set,
+					'user': user,
+					'success': success	
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 			else:
@@ -130,4 +179,4 @@ def delete_list(request, list_id):
 					'detail_error': errors,
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
-				
+			
