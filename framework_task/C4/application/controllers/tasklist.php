@@ -11,18 +11,31 @@ class Tasklist extends CI_Controller {
 		$this->viewAll();
 	}
 
-	public function create($listName, $ownerID)
+	public function create()
 	{
-		$list = new List_model();
-    $list-> name = $listName;
-    $list-> owner_id= $ownerID;
-    $list-> save();
-    $this->viewAll();
+		$user_id = $this->session->userdata('user_id');
+    
+   
+   
+    if($this->input->post('text') !== False) {
+      $list = new List_model();
+      $list->name = $this->input->post('name');
+      $list->owner_id = $user_id;
+      $list->save();
+
+    } else {git add
+     
+      $data["title"] = 'New list';
+      
+      $this->load->view('header', $data);
+      $this->load->view('list_create', $data);
+    }
 	}
 
 	public function viewAll(){
 		$list = new List_model();
-        $list->get();
+		$user_id = $this->session->userdata('user_id');
+		    $list->where('owner_id', $user_id)->get();
         $data["list"] = $list;
         $this->load->view('all_lists.php', $data);
 	}

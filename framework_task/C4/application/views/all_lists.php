@@ -32,6 +32,11 @@
 	
 	
      ?>
+     
+     
+     <a href="/index.php/tasklist/create/">Create New List</a>
+     
+     
 
      
 
