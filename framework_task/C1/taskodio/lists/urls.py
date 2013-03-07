@@ -20,4 +20,5 @@ urlpatterns = patterns('',
 	url('lists/create_list/', views.create_list, name='create_list'),
 	url('lists/view_lists/', views.view_lists, name='view_lists'),
 	url(r'^(?P<list_id>\d+)/$', views.list_details, name='list_detail'),
+	url(r'^(?P<list_id>\d+)/delete/', views.delete_list, name='delete_list'),
 )

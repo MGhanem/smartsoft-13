@@ -98,3 +98,36 @@ def list_details(request, list_id):
 			detail_error = "The list you're trying to access does not exist."
 			context = Context({'list_name_set': list_name_set,})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+
+#s6 deleting lists
+def delete_list(request, list_id):
+	if not request.user.is_authenticated():
+		errors = "You must be logged in to delete a list"
+		context = Context({
+			'errors': errors,
+		})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+	else:
+		if (List.objects.filter(pk=list_id).count()<1):
+			errors = "List does not exist."
+			context = Context({
+				'detail_error': errors,
+				})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+		else:
+			l = List.objects.get(pk=list_id)
+			if(l.user.id == request.user.id):
+				l_name = l.title
+				l.delete()
+				errors = "You have successfuly deleted the list %s" % l_name
+				context = Context({
+					'detail_error': errors,
+					})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
+			else:
+				errors = "You cannot delete a list that's not yours"
+				context = Context({
+					'detail_error': errors,
+					})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
+				
