@@ -142,3 +142,40 @@ def edit(request, list_id):
 		'list': l,
 	})
 	return render_to_response('lists/edit.html', context, RequestContext(request))
+
+
+#s6 deleting lists
+def delete_list(request, list_id):
+	if not request.user.is_authenticated():
+		errors = "You must be logged in to delete a list"
+		context = Context({
+			'errors': errors,
+		})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+	else:
+		if (List.objects.filter(pk=list_id).count()<1):
+			errors = "List does not exist."
+			context = Context({
+				'detail_error': errors,
+				})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+		else:
+			l = List.objects.get(pk=list_id)
+			if(l.user.id == request.user.id):
+				user = request.user
+				list_name_set = user.list_set.all()
+				l_name = l.title
+				l.delete()
+				success = "You have successfuly deleted the list %s" % l_name
+				context = Context({
+					'list_name_set': list_name_set,
+					'user': user,
+					'success': success	
+					})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
+			else:
+				errors = "You cannot delete a list that's not yours"
+				context = Context({
+					'detail_error': errors,
+					})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))

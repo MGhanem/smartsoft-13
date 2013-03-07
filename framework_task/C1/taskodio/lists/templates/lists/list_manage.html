@@ -1,6 +1,7 @@
 <h1>List page.....Hello, {{ user.username }}</h1>
 {% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
 {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
+
 <form action="/lists/create_list/" method="post">
 	<input type="text" placeholder="list name" name="list_name">
 	<input type="submit" value="Create new List">
@@ -9,7 +10,9 @@
 {% if list_name_set %}
     <ul>
     {% for list in list_name_set %}
-        <li>{{ list.title }} <a href="/lists/{{ list.id }}/edit">Edit</a></li>
+
+        <li>{{ list.title }} <a href="/lists/{{ list.id }}/edit">Edit</a> <a href="/lists/{{list.id}}/delete"> Delete</a> </li>
+      
     {% endfor %}
     </ul>
 {% else %}
