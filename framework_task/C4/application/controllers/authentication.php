@@ -4,7 +4,6 @@ class authentication extends CI_controller{
     public function __construct()
         {
              parent::__construct();
-             $this->load->library('session');
              $this->load->helper('url');
         }
 
@@ -20,16 +19,16 @@ class authentication extends CI_controller{
         $userIn=$this->input->post('nameSign');
         $passwordIn=$this->input->post('passwordSign');
         if ($userIn != "" & $passwordIn != ""){
-        $u->where('username', $userIn);
-        $u->where('password', $passwordIn);
-        $u->get();
-        $userId = $u->id;
-        $this->session->set_userdata('user_id', $userId);
-        redirect('/tasklist/viewall');
+          $u->where('username', $userIn);
+          $u->where('password', $passwordIn);
+          $u->get();
+          $userId = $u->id;
+          $this->session->set_userdata('user_id', $userId);
+          redirect('/tasklist/viewall');
         }
         else{
-        echo'Your username or password seems to be wrong .. please try again.';
-        $this->load->view('SignInView'); 
+          echo'Your username or password seems to be wrong .. please try again.';
+          $this->load->view('SignInView'); 
         }
     }
     
@@ -66,7 +65,7 @@ class authentication extends CI_controller{
 
     }
 
-    public function signOut() {
+    public function signout() {
         $this->session->sess_destroy();
 
     }

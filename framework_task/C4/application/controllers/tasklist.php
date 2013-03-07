@@ -1,18 +1,23 @@
 <?php
 class Tasklist extends CI_Controller {
 
+  public function __construct() {
+    parent::__construct();
+    $this->load->helper('url');
+  }
+
 	public function index()
 	{
 		$this->viewAll();
 	}
-	
+
 	public function create($listName, $ownerID)
 	{
 		$list = new List_model();
-        $list-> name = $listName;
-        $list-> owner_id= $ownerID;
-        $list-> save();
-        $this->viewAll();
+    $list-> name = $listName;
+    $list-> owner_id= $ownerID;
+    $list-> save();
+    $this->viewAll();
 	}
 
 	public function viewAll(){
@@ -29,9 +34,7 @@ class Tasklist extends CI_Controller {
 		$task->where('list_id', $listID)->get();
 		$data["list"] = $list;
 		$data["task"] = $task;
-   		$this->load->view('single_list.php', $data);
-    	
-
+    $this->load->view('single_list.php', $data);
 	}
 
 	
@@ -51,16 +54,57 @@ class Tasklist extends CI_Controller {
 
 	}
 
+	public function share_list($user_name, $list_id)
+	{
+		$list = new List_model();
+		$user = new User_model();
+		$list->where('id', $list_id)->get();
+		$user->where('username',$user_name)->get();
+		if(empty($user->id)){
+			echo 'Sorry! User not registered';
+		}
+		else{
+			$list->save(array('shared_owner'=>$user));
+			echo 'Share Successful';
+		}
+	}
+
+	public function delete_share($user_name, $list_id)
+	{
+		$list = new List_model();
+		$user = new User_model();
+		$user->where('username',$user_name)->get();
+		$list->where('id', $list_id)->get();
+		$list->delete(array('shared_owner'=>$user));
+		echo 'Deletion Successful';
+	}
+
   public function edit($list_id) {
+    $user_id = $this->session->userdata('user_id');
     $list = new List_model($list_id);
+    if(!$list->exists()) {
+      redirect('/tasklist/viewall');
+      return;
+    }
+    if($user_id !== False) {
+      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
+    } else {
+      redirect('/authentication/signin/');
+      return;
+    }
+
     if($this->input->post('name') !== False) {
       $list->name = $this->input->post('name');
       $list->save();
-      redirect("/tasklist/$list_id");
+      redirect("/tasklist/view/$list_id");
     } else {
       $data['list'] = $list;
       $this->load->view('list_edit', $data);
     }
   }
+
 }
 ?>
