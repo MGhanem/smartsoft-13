@@ -1,0 +1,5 @@
+  <p>
+    <%= task.name %> <%= link_to 'Delete', [task.list, task],
+               :confirm => 'Are you sure?',
+               :method => :delete %> | <%= link_to 'Edit', edit_list_task_path(task.list, task) %> | <% if task.done %> <%= link_to 'Mark undone', mark_list_task_path(task.list, task) %> | Done. <% else %>  <%= link_to 'Mark done', mark_list_task_path(task.list, task) %> <% end %>
+  </p>
