@@ -20,4 +20,6 @@ urlpatterns = patterns('',
 	url('lists/create_list/', views.create_list, name='create_list'),
 	url('lists/view_lists/', views.view_lists, name='view_lists'),
 	url(r'^(?P<list_id>\d+)/$', views.list_details, name='list_detail'),
+	url(r'^(?P<list_id>\d+)/edit/$', views.edit, name="edit_list_form"),
+	url(r'^(?P<list_id>\d+)/edit_list/$', views.edit_list, name="edit_list_action"),
 )
