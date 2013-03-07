@@ -1,20 +1,14 @@
 <?php
 
-class User_model extends DataMapper {
-  
-  var $table="users";
+class User_model extends DataMapper{
 
-  var $has_many = array('shared_lists'=>array('class'=>'List_model', 'cascade_delete' => FALSE, 'other_field' => 'shared_owner')
-  	, 'owns_lists'=>array('class'=>'List_model', 'cascade_delete' => FALSE, 'other_field' => 'owner')); 
+	var $table="users";
+
+	public function __construct($id=null) {
+		parent::__construct($id);
+	}
 
 
-  
-  
-
-  public function __construct($id=Null) {
-    parent::__construct($id);
-  }
-  
 }
 
 ?>
