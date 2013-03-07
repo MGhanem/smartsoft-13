@@ -104,16 +104,31 @@ class Task extends CI_Controller {
 	//Marks a certain task as done
 	public function mark_done($taskID)
 	{
-		$task = new Task_model();
-		$task->where('id',$taskID)->get();
+    $user_id = $this->session->userdata('user_id');
+    $task = new Task_model($taskID);
+    if(!$task->exists()) {
+      redirect('/tasklist/viewall');
+      return;
+    }
+    $list = new List_model($task->list_id);
+    if($user_id !== False) {
+      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+        redirect('/tasklist/viewall');
+        return;
+      }
+    } else {
+      redirect('/authentication/signin/');
+      return;
+    }
 		if($task->done == 0)
 		{
-			//echo 'Task marked successfully';
 			$task->done = 1;
 			$task->save();
-			return true;
-		}
-		return false;
+		}else{
+      $task->done = 0;
+      $task->save();
+    }
+    redirect('/tasklist/view/'.$list->id);
 	}
 }
 ?>
