@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from accounts import views
-
+from lists.views import view_lists
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^lists/', include('lists.urls', namespace="lists")),
-    url(r'^$', include('lists.urls', namespace="lists")),
+    # url(r'^r/', include('lists.urls', namespace="lists")),
+    url(r'^$', view_lists, name="list_manage"),
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     url(r'^register/', views.register, name="register"),
     url(r'^signin/', views.signin, name="signin"),
