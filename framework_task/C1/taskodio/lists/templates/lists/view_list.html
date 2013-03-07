@@ -1,5 +1,11 @@
 <h1>{{ list1.title }}</h1>
 <hr>
+<form action="/lists/{{list1.id}}/create_task/" method="post">
+	<input type="text" placeholder="task name" name="task_name">
+	<input type="text" placeholder="description" name="task_desc">
+	<input type="submit" value="Create new Task">
+</form> 
+<hr>
 {% if tasks_set %}
     <ul>
     {% for task in tasks_set %}
@@ -10,4 +16,4 @@
     {% endfor %}
     </ul>
 {% endif %}
-{% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
+{% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}

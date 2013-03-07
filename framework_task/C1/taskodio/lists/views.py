@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login
-from lists.models import List
+from lists.models import List,Task
 from django.contrib.auth.models import User
 
 
@@ -107,8 +107,30 @@ def edit_task(request,task_id):
 	return HttpResponse("editing")
 
 def delete_task(request,task_id):
-	return HttpResponse("deleting")
+	return HttpResponse("editing")
 
+
+def create_task(request,list_id):
+	if request.user.is_authenticated():
+		task_name=request.POST['task_name']
+		task_desc=request.POST['task_desc']
+		list1=List.objects.all().get(pk=list_id)
+		if not task_name or not task_desc:
+			context = Context({'detail': "Enter a valid info.",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			new_task=Task(list=List.objects.get(pk=list_id),title=task_name
+				,desc=task_desc)
+			new_task.save()
+			context = Context({'detail': "Your task is added successfully.",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+	return HttpResponse("there is an error ya man.")
 
 def edit_list(request, list_id):
 	if request.user.is_authenticated():

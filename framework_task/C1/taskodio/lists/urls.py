@@ -23,7 +23,8 @@ urlpatterns = patterns('',
 	url(r'^(?P<list_id>\d+)/edit/$', views.edit, name="edit_list_form"),
 	url(r'^(?P<list_id>\d+)/edit_list/$', views.edit_list, name="edit_list_action"),
 	url(r'^(?P<list_id>\d+)/delete/', views.delete_list, name='delete_list'),
-	#url(r'^(?P<list_id>\d+)/edit_task/$', views.edit_task, name="edit_task_action"),
-	#url(r'^(?P<list_id>\d+)/tasks/(?P<task_id>\d+)/delete', views.delete_task, name='delete_task'),
+	url(r'^(?P<list_id>\d+)/edit_task/$', views.edit_task, name="edit_task_action"),
+	url(r'^(?P<list_id>\d+)/tasks/(?P<task_id>\d+)/delete', views.delete_task, name='delete_task'),
+	url(r'^(?P<list_id>\d+)/create_task/', views.create_task, name='create_task'),
 
 )
