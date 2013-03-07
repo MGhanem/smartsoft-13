@@ -1,20 +1,28 @@
 <html>
 
-<body>
+<head>
+</head>
 
-<form method="POST" action="/index.php/authentication/signUp"></br></br></br>
-    <table border='1' align='center'>
-        <tr>
-            <td>Name: </td><td><input type="text" name="userName"></td>
-        </tr>
-        <tr>
-            <td>Password: </td><td><input type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td><input type="submit" name="addProduct" value="register"></td>
-        </tr>
-    </table>
+<Div align = 'right'>
+<form method="GET" action="/index.php/authentication/signIn">
+<span>Already have an account?!!</span>
+<button style="display:inline;" onClick = "" >SignIn</button>
 </form>
-</body>
+</Div>
+
+<Div align='center'>
+<form method="POST" action="/index.php/authentication/signUp">
+    <dl> 
+     <dt>UserName</dt>
+     <dd><input type="text" width:250px placeholder="name" name="username" style="display:inline;"></dd>
+
+     <dt>Password</dt>
+     <dd><input type="password" width:250px placeholder="password" name="userpassword" style="display:inline;"></dd>
+
+    </dl>
+      <button>register</button>
+</form>
+</Div>
+
 
 <html>
