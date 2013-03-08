@@ -56,7 +56,15 @@ def create_list(request):
 			else:
 				new_list = List(title=title, user=request.user)
 				new_list.save()
-				return HttpResponse("You have succesffuly created the list %s" % new_list.title)
+				user = request.user
+				list_name_set = user.owner.all()
+				shared_list_set=user.shared.all()
+				success = "you have successfully created the list %s" % new_list.title
+				context = Context({
+					'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
+					'success': success,
+				})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 				# send a dummy response saying that here we will create a list by
 				# --- by that name
 
@@ -279,6 +287,18 @@ def delete_list(request, list_id):
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 			else:
+				#user = request.user
+				# list_name_set = user.owner.all()
+				# shared_list_set=user.shared.all()
+				# errors = "You cannot delete a list that's not yours"
+				# context = Context({
+				# 	'detail_error': errors,
+				# 	'list_name_set': list_name_set,
+				# 	'shared_list_set': shared_list_set,
+				# 	'user': user
+				# 	})
+				# return render_to_response('lists/list_manage.html', context, RequestContext(request))
+
 				if(request.user.shared.filter(pk=list_id)<1):
 					errors = "You cannot delete a list that's not yours"
 					user = request.user
@@ -294,7 +314,7 @@ def delete_list(request, list_id):
 					shared_list_set=user.shared.all()
 					l.members.remove(request.user)
 					request.user.shared.remove(l)
-					success = "You have successfuly deleted the list %s" % l.title
+					success = "You have successfuly removed the list %s" % l.title
 					context = Context({
 						'list_name_set': list_name_set,
 						'shared_list_set':shared_list_set,

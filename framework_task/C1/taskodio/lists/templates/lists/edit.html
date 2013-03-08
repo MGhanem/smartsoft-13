@@ -1,4 +1,6 @@
 {{title}}
+<a href="/signout">Sign out</a>
+<br>
 {% if errors %}
 	<p><strong>{{ errors }}</strong></p> 
 {% endif %}
@@ -7,4 +9,5 @@
 	<input type="text" placeholder="{{list.title}}" name="list_title">
 	<input type="submit" value="Edit">
 </form>
+<a href="/">Return to your lists</a>
 
