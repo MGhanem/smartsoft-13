@@ -1,6 +1,10 @@
 <h1>{{ list1.title }}</h1>
+<a href="/signout">Sign out</a>
+<br>
+<br> 
 {% if error %}<p><strong> {{ error }}</strong></p> {% endif %}
 {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
+<a href="/">Return to your lists</a>
 <hr>
 <form action="/lists/{{list1.id}}/create_task/" method="post">
 	<input type="text" placeholder="task name" name="task_name">
