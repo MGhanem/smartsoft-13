@@ -1,0 +1,97 @@
+
+body {
+	padding: 0;
+	margin: 0;
+	background: #F2F0D9;
+}
+
+div.body {
+	width: 960px;
+	margin: auto;
+	font-family: Calibri;
+	-moz-column-count: 2;		/* Firefox */
+	-webkit-column-count: 2;	/* Safari and Chrome */
+	column-count: 2;
+}
+
+div.nav {
+	width = 100%;
+	background: #2A7E68;
+ 	padding-left: 5px;
+ 	padding-right: 5px;
+ 	font-family: Calibri;
+}
+
+h2 {
+	color: #2A7E68;
+}
+
+div.nav h2, nav span {
+	color: white;
+}
+
+div.nav h2 {
+	display: inline-block;
+}
+
+div.nav span {
+	float: right;
+	position: relative;
+	top: 20px;
+}
+
+div.lists {
+	height: 400px;
+	padding-top: 20px;
+}
+
+a {
+	color: green;
+	text-decoration: none;
+}
+
+a:hover {
+	color: green;
+	text-decoration: underline;
+}
+
+a:visted {
+	color: green;
+	text-decoration: none;
+}
+
+div.nav a {
+	color: white;
+	text-decoration: none;
+}
+
+div.nav a:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+div.nav a:visted {
+	color: white;
+	text-decoration: none;
+}
+
+div.lists a {
+	color: #2A7E68;
+	font-size:20px;
+	text-decoration: none;
+}
+
+div.lists a:hover {
+	color: #2A7E68;
+	text-decoration: none;
+}
+
+div.lists a:visted {
+	color: #2A7E68;
+	text-decoration: none;
+}
+
+h2.myX {
+	color : red;
+	font-size : 10px;
+}
