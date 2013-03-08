@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login
-from lists.models import List
+from lists.models import List,Task
 from django.contrib.auth.models import User
 
 
@@ -80,25 +80,110 @@ def view_lists(request):
 # where the list will be viewed there
 # will live @ /lists/<list_id>
 def list_details(request, list_id):
-	return HttpResponse("List id %s " % list_id)
+	# return HttpResponse("List id %s " % list_id)
 	# will add later if the user is a member in the list
 	# or not when we add list members attribute
+	#return HttpResponse("awrsgdf4e")
 	if not request.user.is_authenticated():
 		# redirect to the sign in page and send error with it
 		context = Context({ 'errors': "You need to sign in before viewing this page."})
 		return render_to_response('accounts/signin.html', context, RequestContext(request))
-
 	else:
 		user = request.user
-		list = List.objects.get(pk=list_id)
-		if not list:
+		list1 = List.objects.get(pk=list_id)
+		if list1:
 			# redirect to all lists page
-			user = request.user
-			list_name_set = user.list_set.all()
-			detail_error = "The list you're trying to access does not exist."
-			context = Context({'list_name_set': list_name_set,})
-			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+			tasks_set = list1.task_set.all()
+			context = Context({'tasks_set': tasks_set,'list1':list1})
+			#context = Context({'list1':list1})
+			return render_to_response('lists/view_list.html', context, RequestContext(request))
+		else :
+			context = Context({
+			'errors': "There are no tasks in this list.",
+			})
+			return render_to_response('lists/view_list.html',context,RequestContext(request)) 
 
+def save_edit_task(request,list_id,task_id):
+	#return HttpResponse("dsfmncejs")
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(pk=list_id)
+		tasks_set=list1.task_set.all()
+		new_name=request.POST['new_name']
+		new_desc=request.POST['new_desc']
+		if not new_name or not new_desc:
+			context=({'list1':list1,'tasks_set':tasks_set,
+				'detail':"enter a valid info."})
+			return render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			edited_task=Task.objects.all().get(pk=task_id)
+			edited_task.title=new_name
+			edited_task.desc=new_desc
+			edited_task.save()
+			context=({'list1':list1,'tasks_set':tasks_set,
+				'detail':"Your Task has been edited successfully."})
+			return render_to_response('lists/view_list.html',context
+				,RequestContext(request))
+	return HttpResponse("Your not even authenticated, how the hell you got here.")
+
+
+
+
+def edit_task(request,list_id,task_id):
+	#return HttpResponse(task_id)
+	#return HttpResponse(Task.objects.all().get(id=task_id).id)
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		tasks_set=list1.task_set.all()
+		context=Context({'list1':list1,'tasks_set':tasks_set,
+			'detail':"",'edited_task_id':task_id,})
+		return render_to_response('lists/view_list.html',context,RequestContext(request))
+	return HttpResponse("error")
+def delete_task(request,list_id,task_id):
+	#return HttpResponse("editing")
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		Task.objects.all().get(pk=task_id).delete()
+		context = Context({'detail': "Your task has been deleted successfully",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+		return  render_to_response('lists/view_list.html',context,RequestContext(request))
+	else:
+		return HttpResponse("you are not even authenticated, how the hell have you got here.")
+
+def change_state(request,list_id,task_id):
+	if request.user.is_authenticated():
+		list1=List.objects.all().get(id=list_id)
+		edited_task=Task.objects.all().get(pk=task_id)
+		edited_task.done=not edited_task.done
+		edited_task.save()
+		context = Context({'detail': "Your task has been edited successfully",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+		return  render_to_response('lists/view_list.html',context,RequestContext(request))
+
+def create_task(request,list_id):
+	if request.user.is_authenticated():
+		task_name=request.POST['task_name']
+		task_desc=request.POST['task_desc']
+		list1=List.objects.all().get(pk=list_id)
+		if not task_name or not task_desc:
+			context = Context({'detail': "Enter a valid info.",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			new_task=Task(list=List.objects.get(pk=list_id),title=task_name
+				,desc=task_desc)
+			new_task.save()
+			context = Context({'detail': "Your task is added successfully.",
+				'tasks_set':list1.task_set.all(),
+				'list1':list1,
+				})
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+	return HttpResponse("there is an error ya man.")
 
 def edit_list(request, list_id):
 	if request.user.is_authenticated():
