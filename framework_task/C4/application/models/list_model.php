@@ -4,7 +4,6 @@ class List_model extends DataMapper {
   
   var $table="lists";
 
-
   var $has_one = array(
   	'owner'=>array(
   		'class'=>'User_model',
@@ -39,6 +38,13 @@ class List_model extends DataMapper {
     }
     return False;
   }
-}
 
+  public function is_list_owner($user_id) {
+    if($this->owner_id == $user_id){
+      return True;
+    }
+    return False;
+  }
+
+}
 ?>
