@@ -75,14 +75,11 @@ def view_lists(request):
 		# redirect to the sign in page and send error with it
 		context = Context({ 'errors': "You need to sign in before viewing your lists."})
 		return render_to_response('accounts/signin.html', context, RequestContext(request))
-
 	if request.user.is_authenticated():
 		user = request.user
 		list_name_set = user.owner.all()
 		shared_list_set=user.shared.all()
 		context = Context({'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
-		#return HttpResponse(list_name_set.all())
-		# return render(request, 'lists/list_manage.html', context)
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 # redirects to the list view page 
@@ -118,25 +115,33 @@ def save_edit_task(request,list_id,task_id):
 	#return HttpResponse("dsfmncejs")
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(pk=list_id)
-		tasks_set = list1.task_set.all()
-		shared_users_set = list1.members.all()
-		owner = list1.user
-		new_name=request.POST['new_name']
-		new_desc=request.POST['new_desc']
-		if not new_name or not new_desc:
-			context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
-				'detail':"enter a valid info.",})
-			return render_to_response('lists/view_list.html',context,RequestContext(request))
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+			tasks_set = list1.task_set.all()
+			shared_users_set = list1.members.all()
+			owner = list1.user
+			new_name=request.POST['new_name']
+			new_desc=request.POST['new_desc']
+			if not new_name or not new_desc:
+				context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
+					'detail':"enter a valid info.",})
+				return render_to_response('lists/view_list.html',context,RequestContext(request))
+			else:
+				edited_task=Task.objects.all().get(pk=task_id)
+				edited_task.title=new_name
+				edited_task.desc=new_desc
+				edited_task.save()
+				context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,'detail':"Your Task has been edited successfully."})
+				return render_to_response('lists/view_list.html',context
+					,RequestContext(request))
 		else:
-			edited_task=Task.objects.all().get(pk=task_id)
-			edited_task.title=new_name
-			edited_task.desc=new_desc
-			edited_task.save()
-			context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
-				'detail':"Your Task has been edited successfully."})
-			return render_to_response('lists/view_list.html',context
-				,RequestContext(request))
-	return HttpResponse("Your not even authenticated, how the hell you got here.")
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			detail_error="this list has not been shared with you, why are you trying to edit it?!"
+			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+	else:
+		return HttpResponse("Your not even authenticated, how the hell you got here.")
 
 
 
@@ -157,30 +162,48 @@ def delete_task(request,list_id,task_id):
 	#return HttpResponse("editing")
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
-		Task.objects.all().get(pk=task_id).delete()
-		tasks_set=list1.task_set.all()
-		shared_users_set = list1.members.all()
-		owner = list1.user
-		context = Context({'detail': "Your task has been deleted successfully",
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+			Task.objects.all().get(pk=task_id).delete()
+			tasks_set=list1.task_set.all()
+			shared_users_set = list1.members.all()
+			owner = list1.user
+			context = Context({'detail': "Your task has been deleted successfully",
 				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
-		return  render_to_response('lists/view_list.html',context,RequestContext(request))
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			detail_error="this list has not been shared with you, why are you trying to edit it?!"
+			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
 		return HttpResponse("you are not even authenticated, how the hell have you got here.")
 
 def change_state(request,list_id,task_id):
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
-		tasks_set=list1.task_set.all()
-		shared_users_set = list1.members.all()
-		owner = list1.user
-		edited_task=Task.objects.all().get(pk=task_id)
-		edited_task.done=not edited_task.done
-		edited_task.save()
-		context = Context({'detail': "Your task has been edited successfully",
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+			tasks_set=list1.task_set.all()
+			shared_users_set = list1.members.all()
+			owner = list1.user
+			edited_task=Task.objects.all().get(pk=task_id)
+			edited_task.done= not edited_task.done
+			edited_task.save()
+			context = Context({'detail': "Your task has been edited successfully",
 				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
-		return  render_to_response('lists/view_list.html',context,RequestContext(request))
+			return  render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			detail_error="this list has not been shared with you, why are you trying to edit it?!"
+			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+	else:
+		return HttpResponse("you are not even authenticated, how the hell have you got here.")
 
 def create_task(request,list_id):
 	if request.user.is_authenticated():
