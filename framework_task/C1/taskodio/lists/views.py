@@ -56,7 +56,15 @@ def create_list(request):
 			else:
 				new_list = List(title=title, user=request.user)
 				new_list.save()
-				return HttpResponse("You have succesffuly created the list %s" % new_list.title)
+				user = request.user
+				list_name_set = user.owner.all()
+				shared_list_set=user.shared.all()
+				success = "you have successfully created the list %s" % new_list.title
+				context = Context({
+					'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
+					'success': success,
+				})
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 				# send a dummy response saying that here we will create a list by
 				# --- by that name
 

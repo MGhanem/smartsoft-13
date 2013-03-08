@@ -7,6 +7,15 @@ from lists import views
 
 # Just renders the sign IN page template
 def signin(request):
+	if request.user.is_authenticated():
+		user = request.user
+		list_name_set = user.owner.all()
+		shared_list_set=user.shared.all()
+		context = Context({
+		'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
+		'detail_error': "You are already Signed in",
+		})
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	title = 'this is the signin page'
 	template = loader.get_template('accounts/signin.html')
 	context = Context({
@@ -27,6 +36,15 @@ def log_in(request):
 	username=request.POST['username']
 	password=request.POST['password']
 	template = loader.get_template('accounts/signin.html')
+	if request.user.is_authenticated():
+		user = request.user
+		list_name_set = user.owner.all()
+		shared_list_set=user.shared.all()
+		context = Context({
+		'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
+		'detail_error': "You are already Signed in",
+		})
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 	if not username or not password:
 		context = Context({
@@ -82,14 +100,23 @@ def signup(request):
 	new_user.save();
 	user = authenticate(username=username, password=password)
 	login(request,user)
-	return HttpResponse("Hello, %s" % new_user.username)
+	list_name_set = user.owner.all()
+	shared_list_set=user.shared.all()
+	context = Context({'user':user,'list_name_set': list_name_set, 'shared_list_set': shared_list_set
+	})
+	return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	
 # s3
 # method that is responsible for destroying the current user session
 def log_out(request):
 	username = request.user.username
 	logout(request)
-	return HttpResponse("You have successfully logged out, %s" % username) 
+	errors = "you have successfully logged out, %s" % username
+	context = Context({
+		'errors': errors
+	})
+	return render_to_response('accounts/signin.html', context, RequestContext(request))
+	#return HttpResponse("You have successfully logged out, %s" % username) 
 	# just a dummy redirect to test functionality
 	# will change later to redirect to the landing page
 

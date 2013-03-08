@@ -1,11 +1,7 @@
 <h1>List page.....Hello, {{ user.username }}</h1>
 {% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
 {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
-
-<form action="/lists/create_list/" method="post">
-	<input type="text" placeholder="list name" name="list_name">
-	<input type="submit" value="Create new List">
-</form>
+<a href="/lists/new_list">Create a List</a>
 <hr>
 {% if list_name_set %}
     <ul>
