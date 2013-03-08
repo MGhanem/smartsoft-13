@@ -1,0 +1,28 @@
+<h1>{{ list1.title }}</h1>
+<hr>
+<form action="/lists/{{list1.id}}/create_task/" method="post">
+	<input type="text" placeholder="task name" name="task_name">
+	<input type="text" placeholder="description" name="task_desc">
+	<input type="submit" value="Create new Task">
+</form> 
+<hr>
+{% if tasks_set %}
+    <ul>
+    {% for task in tasks_set %}
+        <li>{{task.title}}.......{{task.desc}}.......{% if task.done %} done {% else %} not done {% endif %}.......        
+        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit">Edit</a>....... 
+        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete">Delete</a>
+        {% if edited_task_id %}{% ifequal edited_task_id|add:"0" task.id|add:"0" %}
+            <form action="/lists/{{list1.id}}/tasks/{{task.id}}/edit_task" method="post">
+                <input type="text" placeholder="new name" name="new_name">
+                <input type="text" placeholder="new description" name="new_desc">
+                <input type="submit" value="Done Editing">
+            </form>{% endifequal %}
+        {% endif %}
+        <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post">
+            {% if task.done %}<input type="submit" value="Mark as not done">{% else %} <input type="submit" value="Mark as done">{% endif %}</form>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}

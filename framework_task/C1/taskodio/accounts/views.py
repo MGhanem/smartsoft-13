@@ -80,7 +80,8 @@ def signup(request):
 
 	new_user = User.objects.create_user(username, email, password)
 	new_user.save();
-
+	user = authenticate(username=username, password=password)
+	login(request,user)
 	return HttpResponse("Hello, %s" % new_user.username)
 	
 # s3
