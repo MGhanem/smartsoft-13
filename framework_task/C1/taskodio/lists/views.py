@@ -98,7 +98,7 @@ def list_details(request, list_id):
 		user = request.user
 		#list1 = user.list_set.all().get(pk=list_id)
 		list1 = List.objects.all().get(pk=list_id)
-		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>0):
 			if list1:
 				# redirect to all lists page
 				tasks_set = list1.task_set.all()
@@ -129,7 +129,7 @@ def save_edit_task(request,list_id,task_id):
 	#return HttpResponse("dsfmncejs")
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(pk=list_id)
-		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>0):
 			tasks_set = list1.task_set.all()
 			shared_users_set = list1.members.all()
 			owner = list1.user
@@ -161,7 +161,7 @@ def edit_task(request,list_id,task_id):
 	#return HttpResponse(Task.objects.all().get(id=task_id).id)
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
-		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>0):
 			tasks_set=list1.task_set.all()
 			shared_users_set = list1.members.all()
 			owner = list1.user
@@ -182,7 +182,7 @@ def delete_task(request,list_id,task_id):
 	#return HttpResponse("editing")
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
-		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>0):
 			Task.objects.all().get(pk=task_id).delete()
 			tasks_set=list1.task_set.all()
 			shared_users_set = list1.members.all()
@@ -204,7 +204,7 @@ def delete_task(request,list_id,task_id):
 def change_state(request,list_id,task_id):
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
-		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>1):
+		if(list1.user.id == request.user.id or list1.members.filter(username=request.user.username).count()>0):
 			tasks_set=list1.task_set.all()
 			shared_users_set = list1.members.all()
 			owner = list1.user
@@ -289,7 +289,7 @@ def edit_list(request, list_id):
 # he can edit the list name of id 1
 def edit(request, list_id):
 	l = List.objects.get(pk=list_id)
-	if(l.user.id == request.user.id or l.members.filter(username=request.user.username).count()>1):	
+	if(l.user.id == request.user.id or l.members.filter(username=request.user.username).count()>0):	
 		context = Context({
 			'list': l,
 		})
