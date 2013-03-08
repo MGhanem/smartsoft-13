@@ -1,6 +1,10 @@
 <?php class ChecklistsController extends AppController {
     public $helpers = array('Html', 'Form');
 
+    public function index(){
+        
+    }
+
     public function home() {
         $this->layout = 'loggedin';
         $this->set('home', 'cakephp/index.php/Checklists/home.ctp');
@@ -32,7 +36,7 @@
         if(!empty($id)) {
             $this->Checklist->create();
             $this->Checklist->set('user_id', $id);
-            $this->Checklist->set('name', 'NewList');
+            $this->Checklist->set('name', 'New List');
             $this->Checklist->save();
             $this->redirect(array('action' => 'home'));
         }
@@ -42,21 +46,20 @@
         $this->checkSession();
     }
 
-    public function index(){
-    	
-    }
-
     public function logout() {
         $this->Session->destroy();
         $this->redirect(array('controller' => 'Users', 'action' => 'index'));
     }
 
-    //your problem is here
-    public function submitNewListName($listId, $listName) {
-        $record = $this->Checklist->findByListId($listId);
-        $record['Checklist']['list_name'] = $listName;//->set("list_name", $listName);
-        $record->save();
-        $this->redirect(array("action" => "home"));
+    public function submitNewListName() {
+        if ($this->request->is('post')) {
+            $this->Checklist->read(null, $this->request->data['list_id']);
+            $this->Checklist->set(array(
+            'name' => $this->request->data['name'],
+            ));
+            $this->Checklist->save();
+            $this->redirect(array("action" => "home"));           
+        }
     }
 
     public function deleteList ($list_id) {

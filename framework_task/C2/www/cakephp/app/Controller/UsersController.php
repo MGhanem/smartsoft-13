@@ -17,20 +17,20 @@
                               $this->Session->write('user', $record['User']['user_id']);
                               $this->redirect(array('controller' => 'Checklists', action => 'home'));
                         } else {
-                            $this->Session->setFlash('malacious else');
-                            $this->redirect(array('action' => 'signup'));
+                            $this->Session->setFlash('Could not sign up, please try again');
+                            $this->redirect(array('action' => 'index'));
                         }
                     } else {
-                        $this->Session->setFlash('Username taken');
-                        $this->redirect(array('action' => 'signup'));
+                        $this->Session->setFlash('Username is already taken, please try another one');
+                        $this->redirect(array('action' => 'index'));
                     }
                 } else {
                     $this->Session->setFlash('Passwords dont match');
-                    $this->redirect(array('action' => 'signup'));
+                    $this->redirect(array('action' => 'index'));
                 }
             } else {
-                $this->Session->setFlash('Password less than 8 characters');   
-                $this->redirect(array('action' => 'signup'));
+                $this->Session->setFlash('Your password has to be at least 8 characters');   
+                $this->redirect(array('action' => 'index'));
             }
         }
     }
@@ -48,5 +48,6 @@
             }
         }
     }
+
 
 } ?>

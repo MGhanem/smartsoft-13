@@ -18,8 +18,8 @@
 <body>
 	<header>
 		<div class="nav">
-			<h2><?php echo $this->Html->link('Lists R Us', array('controller' =>'Lists', 'action' => 'listLists')) ?></h2>
-			<span><?php echo $this->Html->link('logout', array('controller' =>'Lists', 'action' => 'logout')); ?></span>
+			<h2><?php echo $this->Html->link('Lists R Us', array('controller' =>'Checklists', 'action' => 'home')) ?></h2>
+			<span><?php echo $this->Html->link('logout', array('controller' =>'Checklists', 'action' => 'logout')); ?></span>
 		</div>
 	</header>
 	<div id="container">

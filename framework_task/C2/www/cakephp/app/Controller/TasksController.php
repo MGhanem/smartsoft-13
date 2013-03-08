@@ -2,18 +2,19 @@
     public $helpers = array('Html', 'Form');
 
     public function listTasks ($id, $name) {
-        $this->layout = 'loggedin';
-        $this->set('tasks', $this->Task->find('all'));
-        $this->set('ListID', $id);
-        $this->set('TaskName', $name);
+    	$this->layout = 'loggedin';
+    	$this->set('tasks', $this->Task->find('all'));
+    	$this->set('ListID', $id);
+    	$this->set('TaskName', $name);
     }
 
     public function editListName($id) {
-        $this->layout = 'loggedin';
-        $this->set('listId', $id);
+    	$this->layout = 'loggedin';
+    	$this->set('list_id', $id);
+       // $this->redirect(array('controller' => 'checklists', 'action' => 'submitNewListName', $id, $this->request->data['listName']));
     }
 
-    public function uncheck($task_id, $ListID, $TaskName) {
+        public function uncheck($task_id, $ListID, $TaskName) {
         $this->Task->read(null, $task_id);
         $this->Task->set('checked', '0');
         $this->Task->save();
@@ -27,15 +28,15 @@
         $this->redirect(array('action'=>'listTasks', $ListID, $TaskName));
     }
 
-    public function deleteTask ($task_id) {
+    public function deleteTask ($task_id, $list_id, $list_name) {
         $this->Task->deleteAll(array('Task.task_id'  => $task_id));
         $this->Session->setFlash('Task has been deleted.');
-        $this->redirect(array('action'=>'listTasks'));
+        $this->redirect(array('action'=>'listTasks', $list_id, $list_name));
     }
 
     public function deleteList () {
-    		$id=$this->Checklist->list_id;
-    		$this->Checklist->delete($id[ '1'], true);    	
+            $id=$this->Checklist->list_id;
+            $this->Checklist->delete($id[ '1'], true);      
     }
 
      public function checkSession(){
@@ -64,5 +65,4 @@
     public function beforeFilter() {
         $this->checkSession();
     }
-
 } ?>
