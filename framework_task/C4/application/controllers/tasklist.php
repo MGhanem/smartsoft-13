@@ -132,6 +132,7 @@ class Tasklist extends CI_Controller {
 	    		$data["title"] = 'Lists';
 			    $data['username'] = $user->username;
 			    $data["list"] = $list;
+			    $data["shared_owners"] = $list->shared_owner;
 			    $data["task"] = $task;
 			    $this->load->view('header', $data);
     			$this->load->view('single_list.php', $data);

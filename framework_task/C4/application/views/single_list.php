@@ -43,10 +43,11 @@
   </form>
   <ul>
   <?php
-      foreach ($shared_owner as $User_model) {
+      $owners = $list->shared_owner->get();
+      foreach ($owners as $User_model) {
               echo '<li>' . $User_model->username; ?>
               <a href="/index.php/tasklist/delete_share/<?php echo
-              $User_model->id;?>/<?php echo $list->id?>">delete</a>
+              $shared_owner->id;?>/<?php echo $list->id?>">delete</a>
               </li>
     <?php }?>
  </ul>
