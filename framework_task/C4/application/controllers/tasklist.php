@@ -121,11 +121,9 @@ class Tasklist extends CI_Controller {
 	    	$user_name = $this->input->post('share');
 	    	$share_user = new User_model();
 	    	$share_user->where('username', $user_name)->get();
-	    	if($list->shared_with($share_user->id)){
-	    		$data["title"] = 'Lists';
-			    $data['username'] = $user->username;
-			    $data["list"] = $list;
-			    $data["task"] = $task;
+	    	if($list->shared_with($share_user->id) 
+	    		|| $list->is_list_owner($share_user->id)
+	    		|| !$share_user->exists()){
 			    redirect('tasklist/viewall');
     			return;
 	    	}
@@ -135,7 +133,6 @@ class Tasklist extends CI_Controller {
 			    $data['username'] = $user->username;
 			    $data["list"] = $list;
 			    $data["task"] = $task;
-			    $data["shared_owner"] = $share_user->username;
 			    $this->load->view('header', $data);
     			$this->load->view('single_list.php', $data);
 	    	}
