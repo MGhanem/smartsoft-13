@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<style>
+.test{
+	background-image: url('/assets/sign_in.jpg');
+}
+.header{
+	font-size: 80px;
+	font-weight: bold;
+	color: white;
+	font-style: arial;
+	text-align: center;
+}
+</style>
+<head>
+  <title>To-Do</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="test">
+<p align='right' background-image: url('/assets/home.jpg') class="app">
+<% if user_signed_in? %>
+	Signed in as <%= current_user.email %>. Not you?
+	<%= link_to "Sign out" , destroy_user_session_path,:method => :delete %>
+	<br>
+	<%= link_to "View my lists", lists_path %>
+<% else %>
+	<%= link_to "Sign in", new_user_session_path%> or <%= link_to "Sign up", new_user_registration_path %>
+<% end %>
+</p>
+<%= yield %>
+
+</body>
+</html>

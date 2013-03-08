@@ -1,0 +1,9 @@
+<%= form_for([@list, @list.tasks.build]) do |f| %>
+  <div class="app">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="app">
+    <%= f.submit %>
+  </div>
+<% end %>
