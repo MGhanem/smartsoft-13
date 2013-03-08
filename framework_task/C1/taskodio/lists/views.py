@@ -101,7 +101,7 @@ def list_details(request, list_id):
 		user = request.user
 		#list1 = user.list_set.all().get(pk=list_id)
 		list1 = List.objects.all().get(pk=list_id)
-		if list1.user.username==user.username:
+		if list1.user.username==user.username or user.username==list1.members.get(pk=user.id).username:
 			if list1:
 				# redirect to all lists page
 				tasks_set = list1.task_set.all()
@@ -126,6 +126,7 @@ def list_details(request, list_id):
 			context=Context({'detail_error':"You cannot access a list that is not yours.",'user':request.user,
 				'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html',context,RequestContext(request))
+
 
 def save_edit_task(request,list_id,task_id):
 	#return HttpResponse("dsfmncejs")
@@ -162,10 +163,20 @@ def edit_task(request,list_id,task_id):
 		tasks_set=list1.task_set.all()
 		shared_users_set = list1.members.all()
 		owner = list1.user
-		context=Context({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
-			'detail':"",'edited_task_id':task_id,})
-		return render_to_response('lists/view_list.html',context,RequestContext(request))
-	return HttpResponse("error")
+		if request.user.username==list1.user.username:
+			context=Context({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
+				'detail':"",'edited_task_id':task_id,})
+			return render_to_response('lists/view_list.html',context,RequestContext(request))
+		else:
+			#return HttpResponse("waesfd")
+			user=request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			context=Context({'detail_error':"You cannot access a list that is not yours.",'user':request.user,
+				'list_name_set': list_name_set, 'shared_list_set': request.user.shared.all()})
+			return render_to_response('lists/list_manage.html',context,RequestContext(request))
+
+
 def delete_task(request,list_id,task_id):
 	#return HttpResponse("editing")
 	if request.user.is_authenticated():
