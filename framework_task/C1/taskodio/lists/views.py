@@ -289,11 +289,18 @@ def edit_list(request, list_id):
 # he can edit the list name of id 1
 def edit(request, list_id):
 	l = List.objects.get(pk=list_id)
-	context = Context({
-		'list': l,
-	})
-	return render_to_response('lists/edit.html', context, RequestContext(request))
-
+	if(l.user.id == request.user.id or l.members.filter(username=request.user.username).count()>1):	
+		context = Context({
+			'list': l,
+		})
+		return render_to_response('lists/edit.html', context, RequestContext(request))
+	else:
+		user = request.user
+		list_name_set = user.owner.all()
+		shared_list_set=user.shared.all()
+		detail_error="this list has not been shared with you, why are you trying to edit it?!"
+		context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 #s6 deleting lists
 def delete_list(request, list_id):
@@ -342,7 +349,7 @@ def delete_list(request, list_id):
 				# 	})
 				# return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
-				if(request.user.shared.filter(pk=list_id)<1):
+				if(request.user.shared.filter(pk=list_id).count()<1):
 					errors = "You cannot delete a list that's not yours"
 					user = request.user
 					list_name_set = user.owner.all()
