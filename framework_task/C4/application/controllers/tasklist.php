@@ -132,7 +132,6 @@ class Tasklist extends CI_Controller {
 	    		$data["title"] = 'Lists';
 			    $data['username'] = $user->username;
 			    $data["list"] = $list;
-			    $data["shared_owners"] = $list->shared_owner;
 			    $data["task"] = $task;
 			    $this->load->view('header', $data);
     			$this->load->view('single_list.php', $data);
@@ -140,14 +139,44 @@ class Tasklist extends CI_Controller {
 	    }
 	}
 
-	public function delete_share($user_name, $list_id)
+	public function delete_share($shared_user_id, $list_id)
 	{
-		$list = new List_model();
-		$user = new User_model();
-		$user->where('username',$user_name)->get();
-		$list->where('id', $list_id)->get();
-		$list->delete(array('shared_owner'=>$user));
-		echo 'Deletion Successful';
+		$user_id = $this->session->userdata('user_id');
+	    $task = new Task_model();
+	    $task->where('list_id', $list_id)->get();
+	    $list = new List_model($list_id);
+	    if(!$list->exists()) 
+	    {
+	      redirect('/tasklist/viewall');
+	      return;
+	    }
+	    if($user_id !== False) 
+	    {
+	      $user = new User_model($user_id);
+	      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+	        redirect('/tasklist/viewall');
+	        return;
+	      }
+	    }
+	    else 
+	    {
+	      redirect('/authentication/signin/');
+	      return;
+	    }
+		$shared_user = new User_model($shared_user_id);
+		if($list->shared_with($shared_user_id)){
+			$list->delete(array('shared_owner'=>$shared_user));
+			$data["title"] = 'Lists';
+		    $data['username'] = $user->username;
+		    $data["list"] = $list;
+		    $data["task"] = $task;
+		    $this->load->view('header', $data);
+			$this->load->view('single_list.php', $data);
+		}
+		else{
+			redirect('/tasklist/viewall');
+			return;
+		}
 	}
 
   public function edit($list_id) {

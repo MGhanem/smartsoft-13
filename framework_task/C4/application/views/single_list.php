@@ -47,7 +47,7 @@
       foreach ($owners as $User_model) {
               echo '<li>' . $User_model->username; ?>
               <a href="/index.php/tasklist/delete_share/<?php echo
-              $shared_owner->id;?>/<?php echo $list->id?>">delete</a>
+              $User_model->id;?>/<?php echo $list->id?>/">delete</a>
               </li>
     <?php }?>
  </ul>
