@@ -13,8 +13,21 @@
         $this->set('listId', $id);
     }
 
+    public function uncheck($task_id, $ListID, $TaskName) {
+        $this->Task->read(null, $task_id);
+        $this->Task->set('checked', '0');
+        $this->Task->save();
+        $this->redirect(array('action'=>'listTasks', $ListID, $TaskName));
+    }
+
+    public function check($task_id, $ListID, $TaskName) {
+        $this->Task->read(null, $task_id);
+        $this->Task->set('checked', '1');
+        $this->Task->save();
+        $this->redirect(array('action'=>'listTasks', $ListID, $TaskName));
+    }
+
     public function deleteTask ($task_id) {
-        echo $task_id;
         $this->Task->deleteAll(array('Task.task_id'  => $task_id));
         $this->Session->setFlash('Task has been deleted.');
         $this->redirect(array('action'=>'listTasks'));

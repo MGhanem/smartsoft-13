@@ -35,23 +35,21 @@
         <div class="right">
 
             <div class="task">
-                
                     <?php foreach ($tasks as $task): ?>
                     <?php $taskID = $task['Task']['task_id'] ?>
-
     <?php if ($task['Task']['list_id'] === $ListID) { ?>
-    <div><h4><?php echo $task['Task']['content'] ?></h4><a>
-    <?php if ($task['Task']['checked']) { ?>
-            <?php echo $this->Html->link('Mark as undone', array('action' => 'uncheck', $taskID, $ListID, $TaskName)) ?></a>
+    <div><h4><?php echo $task['Task']['content'] ?></h4>
+    <?php if ($task['Task']['checked'] === '1') { ?>
+            <a><?php echo $this->Html->link('Mark as undone', array('action' => 'uncheck', $taskID)) ?></a>
     <?php } else { ?>
-            <?php echo $this->Html->link('Mark as done', array('action' => 'check', $taskID, $ListID, $TaskName)) ?></a>
-            <?php } ?>
-            <a><?php echo $this->Html->link('Delete', array('action' => 'deleteTask', 'id' => $task['Task']['task_id'], $taskID)) ?></a>
+            <a><?php echo $this->Html->link('Mark as done', array('action' => 'check', $taskID)) ?></a>
+        </div></div>
+    <a><?php echo $this->Html->link('Delete', array('action' => 'deleteTask', 'id' => $task['Task']['task_id'], $taskID)) ?></a>
             </div>
     <?php } ?>
+    <?php } ?>
+    <br>
     <?php endforeach; ?>
-        </div></div>
-                
     <?php unset($list); ?>
             </div>
         </div>

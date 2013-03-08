@@ -3,7 +3,7 @@
 			<div class="lists">
 				    <?php foreach ($checklists as $list): ?>
         			<?php if ($list['Checklist']['user_id'] === $SessionID) { ?>
-       				<?php echo $this->Html->link($list['Checklist']['name'], array('controller' => 'tasks', 'action' => 'listTasks', $list['Checklist']['list_id'], $list['Checklist']['name']));?>
+       				<?php echo $this->Html->link($list['Checklist']['name'], array('controller' => 'tasks', 'action' => 'listTasks', $list['Checklist']['list_id'], $list['Checklist']['name'])) ?>
         			<?php } ?>
         			<?php $listID = $list['Checklist']['list_id'] ?>
     				<a><?php echo $this->Html->link('Delete', array('action' => 'deleteList', 'id' => $list['Checklist']['list_id'], $listID)) ?></a>
