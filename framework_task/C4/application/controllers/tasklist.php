@@ -92,10 +92,11 @@ class Tasklist extends CI_Controller {
 		$this->viewAll();
 	}
 
-	public function share_list()
+	public function share_list($list_id)
 	{	
 		$user_id = $this->session->userdata('user_id');
 	    $task = new Task_model();
+	    $task->where('list_id', $list_id)->get();
 	    $list = new List_model($list_id);
 	    if(!$list->exists()) 
 	    {
@@ -119,29 +120,25 @@ class Tasklist extends CI_Controller {
 	    {
 	    	$user_name = $this->input->post('share');
 	    	$share_user = new User_model();
-	    	$share_user->where('username', $user_name);
+	    	$share_user->where('username', $user_name)->get();
+	    	if($list->shared_with($share_user->id)){
+	    		$data["title"] = 'Lists';
+			    $data['username'] = $user->username;
+			    $data["list"] = $list;
+			    $data["task"] = $task;
+			    redirect('tasklist/viewall');
+    			return;
+	    	}
 	    	if($list->save(array("shared_owner"=>$share_user)))
 	    	{
 	    		$data["title"] = 'Lists';
 			    $data['username'] = $user->username;
-			    $data["list"] = $list->id;
+			    $data["list"] = $list;
 			    $data["task"] = $task;
 			    $data["shared_owner"] = $share_user->username;
 			    $this->load->view('header', $data);
     			$this->load->view('single_list.php', $data);
 	    	}
-	    	else
-	    	{
-	    		echo "Share Unsuccessful";
-	    		redirect('/tasklist/viewall');
-	    	}
-	    }
-	    else
-	    {
-	    	$data["title"] = 'Share List:';
-		    $data['username'] = $user->username;
-		    $this->load->view('header', $data);
-		    $this->load->view('share_list', $data);
 	    }
 	}
 

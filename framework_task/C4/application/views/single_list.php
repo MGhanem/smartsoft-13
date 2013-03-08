@@ -36,6 +36,12 @@
     <input type="Submit" value="Delete List">
   </form>
   <h3>Shared Owners:</h3>
+  <form action="/index.php/tasklist/share_list/<?php echo $list->id; ?>" method="post">
+    <span>Share list with: </span>
+    <input type="text" name="share" value="<?php echo $text; ?>" />
+    <input type="submit" name="submit" value="Share"/>
+  </form>
+  <ul>
   <?php
       foreach ($shared_owner as $User_model) {
               echo '<li>' . $User_model->username; ?>
@@ -43,6 +49,6 @@
               $User_model->id;?>/<?php echo $list->id?>">delete</a>
               </li>
     <?php }?>
-  <a href="/index.php/tasklist/share_list/">Share List with Friends</a>
+ </ul>
 </body>
 </html>
