@@ -36,15 +36,6 @@ def log_in(request):
 	username=request.POST['username']
 	password=request.POST['password']
 	template = loader.get_template('accounts/signin.html')
-	if request.user.is_authenticated():
-		user = request.user
-		list_name_set = user.owner.all()
-		shared_list_set=user.shared.all()
-		context = Context({
-		'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
-		'detail_error': "You are already Signed in",
-		})
-		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 	if not username or not password:
 		context = Context({

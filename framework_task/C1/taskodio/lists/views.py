@@ -281,9 +281,15 @@ def delete_list(request, list_id):
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 			else:
+				user = request.user
+				list_name_set = user.owner.all()
+				shared_list_set=user.shared.all()
 				errors = "You cannot delete a list that's not yours"
 				context = Context({
 					'detail_error': errors,
+					'list_name_set': list_name_set,
+					'shared_list_set': shared_list_set,
+					'user': user
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
