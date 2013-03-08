@@ -13,10 +13,23 @@
 
         <li><a href="/lists/{{list.id}}">{{list.title}}</a> 
         	<a href="/lists/{{ list.id }}/edit">Edit</a> 
-        	<a href="/lists/{{list.id}}/delete"> Delete</a> </li>
-      
+        	<a href="/lists/{{list.id}}/delete"> Delete</a>
+            <a href="/lists/{{list.id}}/share"> Share</a> </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No lists are available.</p>
+{% endif %}
+<p>Shared lists:.</p>
+{% if shared_list_set %}
+	<ul>
+    {% for list in shared_list_set %}
+
+        <li><a href="/lists/{{list.id}}">{{list.title}}</a> <a href="/lists/{{ list.id }}/edit">Edit</a> <a href="/lists/{{list.id}}/delete"> Delete</a>
+        <a href="/lists/{{list.id}}/share"> Share</a>        </li>
+      
+    {% endfor %}
+    </ul>
+ {% else %}
+    <p>No shared lists.</p>
 {% endif %}

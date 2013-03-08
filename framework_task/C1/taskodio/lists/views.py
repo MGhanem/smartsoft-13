@@ -49,7 +49,7 @@ def create_list(request):
 		# else if the title is not empty
 		else:
 			# check if the user has a list already by that name
-			if request.user.list_set.filter(title=title):
+			if request.user.owner.filter(title=title):
 				context = Context({ 'list_errors': "You can't enter an empty list name."})
 				return render_to_response('lists/new_list.html', context, RequestContext(request))
 			# else if the user doesn't have a list by that name
@@ -70,8 +70,9 @@ def view_lists(request):
 
 	if request.user.is_authenticated():
 		user = request.user
-		list_name_set = user.list_set.all()
-		context = Context({'list_name_set': list_name_set,})
+		list_name_set = user.owner.all()
+		shared_list_set=user.shared.all()
+		context = Context({'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 		#return HttpResponse(list_name_set.all())
 		# return render(request, 'lists/list_manage.html', context)
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
@@ -197,7 +198,8 @@ def edit_list(request, list_id):
 			return render_to_response('lists/edit.html', context, RequestContext(request))
 		else:
 			user = request.user
-			list_name_set = user.list_set.all()
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
 			l = List.objects.get(pk=list_id)
 			l.title = new_title
 			l.save()
@@ -209,10 +211,12 @@ def edit_list(request, list_id):
 				'list': l,
 				'success': "You have succesfuly changed the list name.",
 				'list_name_set': list_name_set,
+				'shared_list_set': shared_list_set,
 				'user': user
 			})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
+		l = List.objects.get(pk=list_id)
 		context = Context({
 			'errors': "please Signin before you can edit a list",
 			'list': l,
@@ -248,12 +252,14 @@ def delete_list(request, list_id):
 			l = List.objects.get(pk=list_id)
 			if(l.user.id == request.user.id):
 				user = request.user
-				list_name_set = user.list_set.all()
+				list_name_set = user.owner.all()
+				shared_list_set=user.shared.all()
 				l_name = l.title
 				l.delete()
 				success = "You have successfuly deleted the list %s" % l_name
 				context = Context({
 					'list_name_set': list_name_set,
+					'shared_list_set':shared_list_set,
 					'user': user,
 					'success': success	
 					})
@@ -264,3 +270,60 @@ def delete_list(request, list_id):
 					'detail_error': errors,
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
+
+def share_list(request, list_id):
+	if not request.user.is_authenticated():
+		errors = "You must be logged in to share lists"
+		context = Context({
+			'errors': errors,
+			})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+	else:
+		if (List.objects.filter(pk=list_id).count()<1):
+			errors="List does not exist."
+			context= Context({
+				'detail_error': errors,
+				})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+		else:
+			new_user = request.POST['shared_user']
+			if (User.objects.filter(username= new_user).count()<1):
+				errors="User does not exist."
+			else:
+				l = List.objects.get(pk=list_id)
+				if (l.user.id != request.user.id):
+					errors = "You cannot share a list that's not yours"
+					context = Context({
+						'detail_error': errors,
+						})
+					return render_to_response('lists/list_manage.html', context, RequestContext(request))
+				else:
+					# if (List.objects.filter(pk=list_id).members.filter(username=new_user).count<1):
+					u=request.user
+					share_with=User.objects.get(username= new_user)
+					list_name_set = u.owner.all()
+					shared_list_set= u.shared.all()
+					l = List.objects.get(pk=list_id)
+					l.members.add(share_with)
+					l.save()
+					context = Context({
+						'list': l,
+						'success': "You have succesfuly shared the list.",
+						'list_name_set': list_name_set,
+						'user': u,
+						'shared_list_set': shared_list_set
+						})
+					return render_to_response('lists/list_manage.html', context, RequestContext(request))
+					# else:
+					# 	errors = "List already shared with this user"
+					# context = Context({
+					# 	'detail_error': errors,
+					# 	})
+					# return render_to_response('lists/list_manage.html', context, RequestContext(request))
+
+def share(request, list_id):
+	l = List.objects.get(pk=list_id)
+	context = Context({
+		'list': l,
+	})
+	return render_to_response('lists/share.html', context, RequestContext(request))

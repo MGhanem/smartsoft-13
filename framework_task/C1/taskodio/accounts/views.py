@@ -36,10 +36,10 @@ def log_in(request):
 	user = authenticate(username=username, password=password)
 	if user is not None:
 		login(request, user)
-		list_name_set=user.list_set.all()
-		context = Context({'user':user,'list_name_set': list_name_set,
-
-		})
+		list_name_set = user.owner.all()
+		shared_list_set=user.shared.all()
+		context = Context({'user':user,'list_name_set': list_name_set, 'shared_list_set': shared_list_set
+			})
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
 		context=Context({'errors':"Username , or password are not in database"})
