@@ -100,12 +100,6 @@ def list_details(request, list_id):
 			context = Context({'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':list1})
 			#context = Context({'list1':list1})
 			return render_to_response('lists/view_list.html', context, RequestContext(request))
-			tasks_set = list1.task_set.all()
-			shared_users_set = list1.members.all()
-			owner = list1.user
-			context = Context({'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':list1})
-			#context = Context({'list1':list1})
-			return render_to_response('lists/view_list.html', context, RequestContext(request))
 		else :
 			context = Context({
 			'errors': "There are no tasks in this list.",
@@ -116,19 +110,21 @@ def save_edit_task(request,list_id,task_id):
 	#return HttpResponse("dsfmncejs")
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(pk=list_id)
-		tasks_set=list1.task_set.all()
+		tasks_set = list1.task_set.all()
+		shared_users_set = list1.members.all()
+		owner = list1.user
 		new_name=request.POST['new_name']
 		new_desc=request.POST['new_desc']
 		if not new_name or not new_desc:
-			context=({'list1':list1,'tasks_set':tasks_set,
-				'detail':"enter a valid info."})
+			context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
+				'detail':"enter a valid info.",})
 			return render_to_response('lists/view_list.html',context,RequestContext(request))
 		else:
 			edited_task=Task.objects.all().get(pk=task_id)
 			edited_task.title=new_name
 			edited_task.desc=new_desc
 			edited_task.save()
-			context=({'list1':list1,'tasks_set':tasks_set,
+			context=({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
 				'detail':"Your Task has been edited successfully."})
 			return render_to_response('lists/view_list.html',context
 				,RequestContext(request))
@@ -143,7 +139,9 @@ def edit_task(request,list_id,task_id):
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
 		tasks_set=list1.task_set.all()
-		context=Context({'list1':list1,'tasks_set':tasks_set,
+		shared_users_set = list1.members.all()
+		owner = list1.user
+		context=Context({'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set,
 			'detail':"",'edited_task_id':task_id,})
 		return render_to_response('lists/view_list.html',context,RequestContext(request))
 	return HttpResponse("error")
@@ -152,9 +150,11 @@ def delete_task(request,list_id,task_id):
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
 		Task.objects.all().get(pk=task_id).delete()
+		tasks_set=list1.task_set.all()
+		shared_users_set = list1.members.all()
+		owner = list1.user
 		context = Context({'detail': "Your task has been deleted successfully",
-				'tasks_set':list1.task_set.all(),
-				'list1':list1,
+				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
 		return  render_to_response('lists/view_list.html',context,RequestContext(request))
 	else:
@@ -163,12 +163,14 @@ def delete_task(request,list_id,task_id):
 def change_state(request,list_id,task_id):
 	if request.user.is_authenticated():
 		list1=List.objects.all().get(id=list_id)
+		tasks_set=list1.task_set.all()
+		shared_users_set = list1.members.all()
+		owner = list1.user
 		edited_task=Task.objects.all().get(pk=task_id)
 		edited_task.done=not edited_task.done
 		edited_task.save()
 		context = Context({'detail': "Your task has been edited successfully",
-				'tasks_set':list1.task_set.all(),
-				'list1':list1,
+				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
 		return  render_to_response('lists/view_list.html',context,RequestContext(request))
 
@@ -177,10 +179,12 @@ def create_task(request,list_id):
 		task_name=request.POST['task_name']
 		task_desc=request.POST['task_desc']
 		list1=List.objects.all().get(pk=list_id)
+		tasks_set=list1.task_set.all()
+		shared_users_set = list1.members.all()
+		owner = list1.user
 		if not task_name or not task_desc:
 			context = Context({'detail': "Enter a valid info.",
-				'tasks_set':list1.task_set.all(),
-				'list1':list1,
+				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
 			return  render_to_response('lists/view_list.html',context,RequestContext(request))
 		else:
@@ -188,8 +192,7 @@ def create_task(request,list_id):
 				,desc=task_desc)
 			new_task.save()
 			context = Context({'detail': "Your task is added successfully.",
-				'tasks_set':list1.task_set.all(),
-				'list1':list1,
+				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
 			return  render_to_response('lists/view_list.html',context,RequestContext(request))
 	return HttpResponse("there is an error ya man.")
@@ -252,9 +255,12 @@ def delete_list(request, list_id):
 	else:
 		if (List.objects.filter(pk=list_id).count()<1):
 			errors = "List does not exist."
-			context = Context({
-				'detail_error': errors,
-				})
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			#return HttpResponse(list_name_set.all())
+			# return render(request, 'lists/list_manage.html', context)
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 		else:
 			l = List.objects.get(pk=list_id)
@@ -273,11 +279,29 @@ def delete_list(request, list_id):
 					})
 				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 			else:
-				errors = "You cannot delete a list that's not yours"
-				context = Context({
-					'detail_error': errors,
-					})
-				return render_to_response('lists/list_manage.html', context, RequestContext(request))
+				if(request.user.shared.filter(pk=list_id)<1):
+					errors = "You cannot delete a list that's not yours"
+					user = request.user
+					list_name_set = user.owner.all()
+					shared_list_set=user.shared.all()
+					context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+					#return HttpResponse(list_name_set.all())
+					# return render(request, 'lists/list_manage.html', context)
+					return render_to_response('lists/list_manage.html', context, RequestContext(request))
+				else:
+					user = request.user
+					list_name_set = user.owner.all()
+					shared_list_set=user.shared.all()
+					l.members.remove(request.user)
+					request.user.shared.remove(l)
+					success = "You have successfuly deleted the list %s" % l.title
+					context = Context({
+						'list_name_set': list_name_set,
+						'shared_list_set':shared_list_set,
+						'user': user,
+						'success': success	
+						})
+					return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 def share_list(request, list_id):
 	if not request.user.is_authenticated():
@@ -289,45 +313,72 @@ def share_list(request, list_id):
 	else:
 		if (List.objects.filter(pk=list_id).count()<1):
 			errors="List does not exist."
-			context= Context({
-				'detail_error': errors,
-				})
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			#return HttpResponse(list_name_set.all())
+			# return render(request, 'lists/list_manage.html', context)
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 		else:
 			new_user = request.POST['shared_user']
 			if (User.objects.filter(username= new_user).count()<1):
 				errors="User does not exist."
+				user = request.user
+				list_name_set = user.owner.all()
+				shared_list_set=user.shared.all()
+				context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+				#return HttpResponse(list_name_set.all())
+				# return render(request, 'lists/list_manage.html', context)
+				return render_to_response('lists/list_manage.html', context, RequestContext(request))
 			else:
 				l = List.objects.get(pk=list_id)
 				if (l.user.id != request.user.id):
 					errors = "You cannot share a list that's not yours"
-					context = Context({
-						'detail_error': errors,
-						})
+					user = request.user
+					list_name_set = user.owner.all()
+					shared_list_set=user.shared.all()
+					context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+					#return HttpResponse(list_name_set.all())
+					# return render(request, 'lists/list_manage.html', context)
 					return render_to_response('lists/list_manage.html', context, RequestContext(request))
 				else:
-					# if (List.objects.filter(pk=list_id).members.filter(username=new_user).count<1):
-					u=request.user
 					share_with=User.objects.get(username= new_user)
-					list_name_set = u.owner.all()
-					shared_list_set= u.shared.all()
-					l = List.objects.get(pk=list_id)
-					l.members.add(share_with)
-					l.save()
-					context = Context({
-						'list': l,
-						'success': "You have succesfuly shared the list.",
-						'list_name_set': list_name_set,
-						'user': u,
-						'shared_list_set': shared_list_set
-						})
-					return render_to_response('lists/list_manage.html', context, RequestContext(request))
-					# else:
-					# 	errors = "List already shared with this user"
-					# context = Context({
-					# 	'detail_error': errors,
-					# 	})
-					# return render_to_response('lists/list_manage.html', context, RequestContext(request))
+					if(l.user.id == share_with.id):
+						errors = "You cannot share a list with yourself"
+						user = request.user
+						list_name_set = user.owner.all()
+						shared_list_set=user.shared.all()
+						context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+						#return HttpResponse(list_name_set.all())
+						# return render(request, 'lists/list_manage.html', context)
+						return render_to_response('lists/list_manage.html', context, RequestContext(request))
+						# if (List.objects.filter(pk=list_id).members.filter(username=new_user).count<1):
+					else:
+						if(l.members.filter(username= new_user).count()<1):
+							u=request.user
+							list_name_set = u.owner.all()
+							shared_list_set= u.shared.all()
+							l = List.objects.get(pk=list_id)
+							l.members.add(share_with)
+							l.save()
+							context = Context({
+								'list': l,
+								'success': "You have succesfuly shared the list.",
+								'list_name_set': list_name_set,
+								'user': u,
+								'shared_list_set': shared_list_set
+								})
+							return render_to_response('lists/list_manage.html', context, RequestContext(request))
+						else:
+							errors = "You already shared the list with this user"
+							user = request.user
+							list_name_set = user.owner.all()
+							shared_list_set=user.shared.all()
+							context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+							#return HttpResponse(list_name_set.all())
+							# return render(request, 'lists/list_manage.html', context)
+							return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 def share(request, list_id):
 	l = List.objects.get(pk=list_id)
@@ -346,9 +397,12 @@ def remove_shared_user(request, list_id, removed_user):
 	else:
 		if (List.objects.filter(pk=list_id).count()<1):
 			errors = "List does not exist."
-			context = Context({
-				'detail_error': errors,
-				})
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			#return HttpResponse(list_name_set.all())
+			# return render(request, 'lists/list_manage.html', context)
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 		else:
 			l = List.objects.get(pk=list_id)
