@@ -1,4 +1,6 @@
 <h1>{{ list1.title }}</h1>
+{% if error %}<p><strong> {{ error }}</strong></p> {% endif %}
+{% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
 <hr>
 <form action="/lists/{{list1.id}}/create_task/" method="post">
 	<input type="text" placeholder="task name" name="task_name">
@@ -26,3 +28,24 @@
     </ul>
 {% endif %}
 {% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}
+<p> List Owner:</p>
+{% if owner %}
+    <ul>
+
+        <li> {{owner.username}}       </li>
+
+    </ul>
+{% endif %}
+<p> Shared with:</p>
+{% if shared_users_set %}
+    <ul>
+    {% for user in shared_users_set %}
+        {%if user.id != owner.id%}
+        <li> {{user.username}}
+        <a href="/lists/{{list1.id}}/{{user.id}}/remove_user"> Remove</a>        </li>
+      {%endif%}
+    {% endfor %}
+    </ul>
+ {% else %}
+    <p>List not shared with anyone.</p>
+{% endif %}

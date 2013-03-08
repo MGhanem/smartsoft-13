@@ -95,7 +95,15 @@ def list_details(request, list_id):
 		if list1:
 			# redirect to all lists page
 			tasks_set = list1.task_set.all()
-			context = Context({'tasks_set': tasks_set,'list1':list1})
+			shared_users_set = list1.members.all()
+			owner = list1.user
+			context = Context({'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':list1})
+			#context = Context({'list1':list1})
+			return render_to_response('lists/view_list.html', context, RequestContext(request))
+			tasks_set = list1.task_set.all()
+			shared_users_set = list1.members.all()
+			owner = list1.user
+			context = Context({'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':list1})
 			#context = Context({'list1':list1})
 			return render_to_response('lists/view_list.html', context, RequestContext(request))
 		else :
@@ -327,3 +335,42 @@ def share(request, list_id):
 		'list': l,
 	})
 	return render_to_response('lists/share.html', context, RequestContext(request))
+
+def remove_shared_user(request, list_id, removed_user):
+	if not request.user.is_authenticated():
+		errors = "You must be logged in to remove a user from a list"
+		context = Context({
+			'errors': errors,
+		})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+	else:
+		if (List.objects.filter(pk=list_id).count()<1):
+			errors = "List does not exist."
+			context = Context({
+				'detail_error': errors,
+				})
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+		else:
+			l = List.objects.get(pk=list_id)
+			if(l.user.id == request.user.id):
+				tasks_set = l.task_set.all()
+				shared_users_set = l.members.all()
+				owner = l.user
+				removed= User.objects.get(pk=removed_user)
+				l.members.remove(removed)
+				removed.shared.remove(l)
+				success = "You have successfuly removed the user %s from this list" % removed.username 
+				context = Context({'success':success,'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':l})
+				#context = Context({'list1':list1})
+				return render_to_response('lists/view_list.html', context, RequestContext(request))
+			else:
+				l = List.objects.get(pk=list_id)
+				errors = "You cannot remove a user from a list that's not yours"
+				tasks_set = l.task_set.all()
+				shared_users_set = l.members.all()
+				owner = l.user
+				context = Context({
+					'error': errors,
+					'tasks_set': tasks_set,'shared_users_set': shared_users_set,'owner':owner,'list1':l
+					})
+				return render_to_response('lists/view_list.html', context, RequestContext(request))
