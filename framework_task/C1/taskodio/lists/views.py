@@ -75,6 +75,7 @@ def view_lists(request):
 		# redirect to the sign in page and send error with it
 		context = Context({ 'errors': "You need to sign in before viewing your lists."})
 		return render_to_response('accounts/signin.html', context, RequestContext(request))
+
 	if request.user.is_authenticated():
 		user = request.user
 		list_name_set = user.owner.all()
@@ -95,6 +96,16 @@ def list_details(request, list_id):
 		context = Context({ 'errors': "You need to sign in before viewing this page."})
 		return render_to_response('accounts/signin.html', context, RequestContext(request))
 	else:
+		if (List.objects.filter(pk=list_id).count() < 1):
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			detail_error = "This list does not Exists"
+			context = Context({
+			'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
+			'detail_error': detail_error,
+			})
+		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 		user = request.user
 		#list1 = user.list_set.all().get(pk=list_id)
 		list1 = List.objects.all().get(pk=list_id)
