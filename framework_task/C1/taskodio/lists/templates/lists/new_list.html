@@ -1,0 +1,10 @@
+{{ title }}
+{% if list_errors %}
+	<p><strong>{{ list_errors }}</strong></p> 
+{% endif %}
+<br>
+<form action="/lists/new_list/create_list/" method="post">
+	<input type="text" placeholder="List name" name="list_name">
+	<input type="submit" value="Create new list">
+</form>
+<a href="/">Return to your lists</a>
