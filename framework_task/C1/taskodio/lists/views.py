@@ -105,7 +105,8 @@ def list_details(request, list_id):
 			'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
 			'detail_error': detail_error,
 			})
-		return render_to_response('lists/list_manage.html', context, RequestContext(request))
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+			
 		user = request.user
 		#list1 = user.list_set.all().get(pk=list_id)
 		list1 = List.objects.all().get(pk=list_id)
