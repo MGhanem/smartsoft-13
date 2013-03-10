@@ -112,7 +112,8 @@ class Task extends CI_Controller {
     }
     $list = new List_model($task->list_id);
     if($user_id !== False) {
-      if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
+      if($list->owner_id != $user_id 
+        && !$list->shared_with($user_id)) {
         redirect('/tasklist/viewall');
         return;
       }
@@ -120,14 +121,7 @@ class Task extends CI_Controller {
       redirect('/authentication/signin/');
       return;
     }
-		if($task->done == 0)
-		{
-			$task->done = 1;
-			$task->save();
-		}else{
-      $task->done = 0;
-      $task->save();
-    }
+		$task->mark_done();
     redirect('/tasklist/view/'.$list->id);
 	}
 }
