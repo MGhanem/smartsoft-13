@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>taskodio</title>
-		<link rel="stylesheet" type="text/css" href="/media/style.css" />
+		<title>taskodio | Signup</title>
+		<link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css" />
 	</head>
 <body>
-	<h1 class='head'>Registration Page</h1>
-	{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
-	<form action="/accounts/signup/" method="post">
-		<input type="text" placeholder="Email" name="email">
-		<input type="text" placeholder="Username" name="username">
-		<input type="password" placeholder="Password" name="password">
-		<input type="submit" value="Signup!">
-	</form>
+
+	<div class="navbar">
+	    <div class="navbar-inner">
+		    <a class="brand" href="/">taskodio</a>
+		    <ul class="nav pull-right">
+			    <li><a href="/register">Sign up</a></li>
+			    <li><a href="/signin">Sign in</a></li>
+		    </ul>
+	    </div>
+    </div>
+
+    <div class="container">
+    	<div class="well">
+			<h1>Registration Page</h1>
+			<br>
+			{% if error %}
+			    <div class="alert">
+    				{{ error }}
+    			</div>
+    		{% endif %}
+			<form action="/accounts/signup/" method="post">
+				<input type="text" placeholder="Email" name="email"><br>
+				<input type="text" placeholder="Username" name="username"><br>
+				<input type="password" placeholder="Password" name="password"><br>
+				<input type="submit" value="Signup!" class="btn btn-inverse">
+			</form>
+		</div>
+	</div>
 </body>
 </html>

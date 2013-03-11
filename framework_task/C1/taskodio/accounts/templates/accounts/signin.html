@@ -1,17 +1,37 @@
 <!DOCTYPE html>
+<html>
 <head>
-	<title>taskodio</title>
+	<title>taskodio | Signin</title>
+		<link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css" />
 </head>
 <body>
-	<h1>Login Page</h1>
-	<form action="/accounts/login/" method="post">
-		<input type="text" placeholder="Username" name="username">
-		<input type="password" placeholder="Password" name="password">
-		<input type="submit" value="Sign In!">
-	</form>
+
+	<div class="navbar">
+	    <div class="navbar-inner">
+		    <a class="brand" href="/">taskodio</a>
+		    <ul class="nav pull-right">
+			    <li><a href="/register">Sign up</a></li>
+			    <li><a href="/signin">Sign in</a></li>
+		    </ul>
+	    </div>
+    </div>
+
+    <div class="container">
+    	<div class="well">
+			<h1>Login Page</h1><br>
+			{% if errors %}
+			    <div class="alert">
+    				{{ errors }}
+    			</div>
+    		{% endif %}
+			<form action="/accounts/login/" method="post">
+				<input type="text" placeholder="Username" name="username"><br>
+				<input type="password" placeholder="Password" name="password"><br>
+				<input type="submit" value="Sign In!" class="btn btn-inverse">
+			</form>
+			<a href="/register">Dont have an account, Register Here</a>
+		</div>
+	</div>
 	<br>
-	{% if errors %}
-	<p>{{errors}}</p>
-	{% endif %}
-	<a href="/register">Dont have an account, Register Here</a>
 </body>
+</html>
