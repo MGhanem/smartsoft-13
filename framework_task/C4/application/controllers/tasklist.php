@@ -4,7 +4,7 @@ class Tasklist extends CI_Controller {
   public function __construct() {
     parent::__construct();
     $this->load->helper('url');
-  }
+  	}
 
 	public function index()
 	{
@@ -16,19 +16,14 @@ class Tasklist extends CI_Controller {
 		$user_id = $this->session->userdata('user_id');
 		$user = new User_model;
 		$user->where('id', $user_id)->get();
-		
-    
-   
-   
+
     if($this->input->post('name') !== False) {
       $list = new List_model();
       $list->name = $this->input->post('name');
       $list->save(array("owner"=>$user));
-      $this->viewAll();
-      
+      $this->viewAll();      
 
     } else {
-     
       $data["title"] = 'New list';
       $data['username'] = $user->username;
       $this->load->view('header', $data);
@@ -53,10 +48,7 @@ class Tasklist extends CI_Controller {
       redirect('/authentication/signin/');
       return;
     }
-        
-        
-       
-        
+           
 	}
 
 	public function view($listID){
@@ -71,19 +63,15 @@ class Tasklist extends CI_Controller {
 		if($list->owner_id != $user_id && !$list->shared_with($user_id)) {
         redirect('/tasklist/viewall');
         return;
-      }
+      	}
 		$data["title"] = 'Lists';
-    $data['username'] = $user->username;
+    	$data['username'] = $user->username;
 		$data["list"] = $list;
 		$data["task"] = $task;
-		
-		
-		
 		$this->load->view('header', $data);
-    $this->load->view('single_list.php', $data);
+    	$this->load->view('single_list.php', $data);
 	}
 
-	
 	public function delete($listID)
 	{	
 		$list = new List_model();
@@ -205,6 +193,7 @@ class Tasklist extends CI_Controller {
       $data['list'] = $list;
       $data["username"] = $user->username;
       $data["title"] = 'Edit a list';
+      $this->load->view('header',$data);
       $this->load->view('list_edit', $data);
     }
   }
