@@ -1,8 +1,16 @@
-<h1>Registration Page</h1>
-{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
-<form action="/accounts/signup/" method="post">
-	<input type="text" placeholder="Email" name="email">
-	<input type="text" placeholder="Username" name="username">
-	<input type="password" placeholder="Password" name="password">
-	<input type="submit" value="Signup!">
-</form>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>taskodio</title>
+	</head>
+<body>
+	<h1>Registration Page</h1>
+	{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
+	<form action="/accounts/signup/" method="post">
+		<input type="text" placeholder="Email" name="email">
+		<input type="text" placeholder="Username" name="username">
+		<input type="password" placeholder="Password" name="password">
+		<input type="submit" value="Signup!">
+	</form>
+</body>
+</html>
