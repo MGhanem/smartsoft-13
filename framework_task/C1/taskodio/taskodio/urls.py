@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from accounts import views
 from lists.views import view_lists
+from django.conf import settings
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^signin/', views.signin, name="signin"),
     url(r'^signout/', views.log_out, name='logout'),
     url(r'^profile/', views.profile, name='profile'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : settings.MEDIA_ROOT }),
 )

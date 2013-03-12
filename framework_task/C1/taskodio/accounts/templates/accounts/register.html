@@ -2,9 +2,10 @@
 <html>
 	<head>
 		<title>taskodio</title>
+		<link rel="stylesheet" type="text/css" href="/media/style.css" />
 	</head>
 <body>
-	<h1>Registration Page</h1>
+	<h1 class='head'>Registration Page</h1>
 	{% if error %}<p><strong>{{ error }}</strong></p>{% endif %}
 	<form action="/accounts/signup/" method="post">
 		<input type="text" placeholder="Email" name="email">
