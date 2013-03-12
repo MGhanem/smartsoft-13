@@ -10,7 +10,7 @@
             <a class="brand" href="/">taskodio</a>
             <ul class="nav pull-right">
                 <li><a href="/lists/new_list">Create a new list</a></li>
-                <li><a href="#">You are logged in as, {{ user.username }}</a></li>
+                <li><a href="/signin">You are logged in as, {{ user.username }}</a></li>
                 <li><a href="/signout">Sign out</a></li>
             </ul>
         </div>
@@ -28,12 +28,14 @@
             <h3>Your lists</h3>
             <table class="table">
               <thead>
+                {% if list_name_set %}
                 <tr>
                   <th>List Name</th>
                   <th>Edit</th>
                   <th>Delete</th>
                   <th>Share</th>
                 </tr>
+                {% endif %}
               </thead>
               {% if list_name_set %}
               <tbody>
@@ -56,12 +58,14 @@
              <h3>Shared lists</h3>
             <table class="table">
               <thead>
+                {% if shared_list_set %}
                 <tr>
                   <th>List Name</th>
                   <th>Edit</th>
                   <th>Remove</th>
                   <th>Share</th>
                 </tr>
+                {% endif %}
               </thead>
               {% if shared_list_set %}
               <tbody>
@@ -79,6 +83,7 @@
                 <p>You don't have any <i>shared</i> lists.</p>
               {% endif %}
             </table>
+
 
         </div>
     </div>

@@ -211,7 +211,8 @@ def delete_task(request,list_id,task_id):
 			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		return HttpResponse("you are not even authenticated, how the hell have you got here.")
+		context = Context({ 'errors': "You need to sign in before viewing this page."}) 
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
 
 def change_state(request,list_id,task_id):
 	if request.user.is_authenticated():
