@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Share Lists</title>
+		<title>taskodio | Share list</title>
+		<link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css" />
 	</head>
 	<body>
-		{{title}}
-		<a href="/signout">Sign out</a>
-		<br>
-		{% if errors %}
-			<p><strong>{{ errors }}</strong></p> 
-		{% endif %}
-		<br>
-		<form action="/lists/{{list.id}}/share_list/" method="post">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="/">taskodio</a>
+            <ul class="nav pull-right">
+                <li><a href="/lists/new_list">Create a new list</a></li>
+                <li><a href="#">You are logged in as, {{ user.username }}</a></li>
+                <li><a href="/signout">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+    	<div class="well">
+    		<h3>Share list</h3>
+    		{% if errors %}
+                <div class="alert">
+                    {{ errors }}
+                </div>
+            {% endif %}
+			<form action="/lists/{{list.id}}/share_list/" method="post">
 			<input type="text" placeholder="enter username" name="shared_user">
-			<input type="submit" value="Share!">
+			<input type="submit" value="Share!" class="btn btn-success">
 		</form>
 		<a href="/">Return to your lists</a>
+    	</div>
+    </div>
+
 	</body>
 </html>
