@@ -19,11 +19,10 @@
 
     <div class="container">
         <div class="well">
-            <h3>{{ list1.title }}</h3>
-            <a style="float:right;" class="btn btn-success" href="/lists/{{list1.id}}/share">Share <i class="icon-share"></i></a>
+            <h2>{{ list1.title }}</h2>
             {% if detail %}
             <div class="alert">
-                Please make sure you enter valid info.
+                    {{detail}}
             </div>
             {% endif %}
 
@@ -69,6 +68,7 @@
              <h4> List Owner: {%if owner%} {{owner}} {% endif %}</h4> 
              <br>
              <h4>Shared with</h4>
+               <a style="float:right;" class="btn btn-success" href="/lists/{{list1.id}}/share">Share <i class="icon-share"></i></a>
             {% if shared_users_set %}
             <ul>
             {% for user in shared_users_set %}
