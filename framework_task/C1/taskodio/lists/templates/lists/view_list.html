@@ -1,29 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{list1.title}}</title>
+        <title>taskodio | List -> {{list1.title}}</title>
+        <link rel="stylesheet" type="text/css" href="/media/css/bootstrap.css" />
     </head>
     <body>
-        <h1>{{ list1.title }}</h1>
-        <a href="/signout">Sign out</a>
-        <br>
-        <br> 
-        {% if error %}<p><strong> {{ error }}</strong></p> {% endif %}
-        {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
-        <a href="/">Return to your lists</a>
-        <hr>
-        <form action="/lists/{{list1.id}}/create_task/" method="post">
-            <input type="text" placeholder="task name" name="task_name">
-            <input type="text" placeholder="description" name="task_desc">
-            <input type="submit" value="Create new Task">
-        </form> 
-        <hr>
-        {% if tasks_set %}
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="/">taskodio</a>
+            <ul class="nav pull-right">
+                <li><a href="/lists/new_list">Create a new list</a></li>
+                <li><a href="#">You are logged in as, {{ user.username }}</a></li>
+                <li><a href="/signout">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="well">
+            <h3>{{ list1.title }}</h3>
+            <a style="float:right;" class="btn btn-success" href="/lists/{{list1.id}}/share">Share <i class="icon-share"></i></a>
+            {% if detail %}
+            <div class="alert">
+                Please make sure you enter valid info.
+            </div>
+            {% endif %}
+
+              {% if error %}
+            <div class="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            {% if success %}
+            <div class="alert">
+                {{ success }}
+            </div>
+             {% endif %}
+
+            <form action="/lists/{{list1.id}}/create_task/" method="post">
+                <input type="text" placeholder="Task title" name="task_name"><br>
+                <input type="text" placeholder="Task description" name="task_desc"><br>
+                <input type="submit" value="Create new Task" class="btn btn-success">
+            </form> 
+            <br>
+            <h3>Tasks</h3>
+            {% if tasks_set %}
             <ul>
             {% for task in tasks_set %}
-                <li>{{task.title}}.......{{task.desc}}.......{% if task.done %} done {% else %} not done {% endif %}.......        
-                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit">Edit</a>....... 
-                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete">Delete</a>
+                <li>{{task.title}} {{task.desc}} {% if task.done %} [<i class="icon-ok"></i>] {% else %} [_] {% endif %}  
+                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit"><i class="icon-edit"></i></a> 
+                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete"><i class="icon-remove"></i></a>
                 {% if edited_task_id %}{% ifequal edited_task_id|add:"0" task.id|add:"0" %}
                     <form action="/lists/{{list1.id}}/tasks/{{task.id}}/edit_task" method="post">
                         <input type="text" placeholder="new name" name="new_name">
@@ -31,28 +59,22 @@
                         <input type="submit" value="Done Editing">
                     </form>{% endifequal %}
                 {% endif %}
-                <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post">
-                    {% if task.done %}<input type="submit" value="Mark as not done">{% else %} <input type="submit" value="Mark as done">{% endif %}</form>
+                <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post"><br>
+                    {% if task.done %}<input class="btn btn-danger" type="submit" value="Mark as not done">{% else %} <input class="btn btn-success" type="submit" value="Mark as done">{% endif %}</form>
                 </li>
             {% endfor %}
             </ul>
-        {% endif %}
-        {% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}
-        <p> List Owner:</p>
-        {% if owner %}
-            <ul>
+            {% endif %}
 
-                <li> {{owner.username}}       </li>
-
-            </ul>
-        {% endif %}
-        <p> Shared with:</p>
-        {% if shared_users_set %}
+             <h4> List Owner: {%if owner%} {{owner}} {% endif %}</h4> 
+             <br>
+             <h4>Shared with</h4>
+            {% if shared_users_set %}
             <ul>
             {% for user in shared_users_set %}
                 {%if user.id != owner.id%}
                 <li> {{user.username}}
-                <a href="/lists/{{list1.id}}/{{user.id}}/remove_user"> Remove</a>        </li>
+                <a href="/lists/{{list1.id}}/{{user.id}}/remove_user"> Remove <i class="icon-remove"></i></a>        </li>
               {%endif%}
             {% endfor %}
             </ul>
@@ -60,5 +82,8 @@
             <p>List not shared with anyone.</p>
         {% endif %}
 
+        <a href="/">Return to your lists</a>
+        </div> 
+    </div>
     </body>
 </html>
