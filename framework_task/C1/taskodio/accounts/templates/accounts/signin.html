@@ -1,12 +1,17 @@
-
-<h1>Login Page</h1>
-<form action="/accounts/login/" method="post">
-	<input type="text" placeholder="Username" name="username">
-	<input type="password" placeholder="Password" name="password">
-	<input type="submit" value="Sign In!">
-</form>
-<br>
-{% if errors %}
-<p>{{errors}}</p>
-{% endif %}
-<a href="/register">Dont have an account, Register Here</a>
+<!DOCTYPE html>
+<head>
+	<title>taskodio</title>
+</head>
+<body>
+	<h1>Login Page</h1>
+	<form action="/accounts/login/" method="post">
+		<input type="text" placeholder="Username" name="username">
+		<input type="password" placeholder="Password" name="password">
+		<input type="submit" value="Sign In!">
+	</form>
+	<br>
+	{% if errors %}
+	<p>{{errors}}</p>
+	{% endif %}
+	<a href="/register">Dont have an account, Register Here</a>
+</body>
