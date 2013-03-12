@@ -51,8 +51,8 @@ def log_in(request):
 			})
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		context=Context({'detail_error':"Username , or password are not in database"})
-		return render_to_response("lists/list_manage.html", context, RequestContext(request))
+		context=Context({'errors':"either the Username , or password is not in the database"})
+		return render_to_response("accounts/signin.html", context, RequestContext(request))
 # s2
 # actual sign up action
 # cases
