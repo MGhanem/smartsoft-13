@@ -1,13 +1,20 @@
-{{title}}
-<a href="/signout">Sign out</a>
-<br>
-{% if errors %}
-	<p><strong>{{ errors }}</strong></p> 
-{% endif %}
-<br>
-<form action="/lists/{{list.id}}/edit_list/" method="post">
-	<input type="text" placeholder="{{list.title}}" name="list_title">
-	<input type="submit" value="Edit">
-</form>
-<a href="/">Return to your lists</a>
-
+<!DOCTYPE html>
+<html>
+	<body>
+		<head>
+			<title>Edit Lists</title>
+		</head>
+		{{title}}
+		<a href="/signout">Sign out</a>
+		<br>
+		{% if errors %}
+			<p><strong>{{ errors }}</strong></p> 
+		{% endif %}
+		<br>
+		<form action="/lists/{{list.id}}/edit_list/" method="post">
+			<input type="text" placeholder="{{list.title}}" name="list_title">
+			<input type="submit" value="Edit">
+		</form>
+		<a href="/">Return to your lists</a>
+	</body>
+</html>

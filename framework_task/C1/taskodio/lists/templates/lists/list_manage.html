@@ -1,45 +1,56 @@
-<h1>List page.....Hello, {{ user.username }}</h1>
-{% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
-{% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
-<a href="/signout">Sign out</a>
-<br>
-<br>
- <a href="/lists/new_list">Create a List</a>
- <br>
- <br>
- <a href="/register">Not {{ user.username}} Register Here</a>
- <br>
- <br>
-<hr>
-{% if list_name_set %}
-    <ul>
-    {% for list in list_name_set %}
-
-        <li><a href="/lists/{{list.id}}">{{list.title}}</a> 
-        	<a href="/lists/{{ list.id }}/edit">Edit</a> 
-        	<a href="/lists/{{list.id}}/delete"> Delete</a>
-            <a href="/lists/{{list.id}}/share"> Share</a> 
-        </li>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lists Page</title>
+    </head>
+    <body>
+        <h1>List page.....Hello, {{ user.username }}</h1>
+        {% if detail_error %}<p><strong> {{ detail_error }}</strong></p> {% endif %}
+        {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
+        <a href="/signout">Sign out</a>
         <br>
         <br>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No lists are available.</p>
-{% endif %}
-<p>Shared lists:.</p>
-{% if shared_list_set %}
-	<ul>
-    {% for list in shared_list_set %}
+         <a href="/lists/new_list">Create a List</a>
+         <br>
+         <br>
+         <a href="/register">Not {{ user.username}} Register Here</a>
+         <br>
+         <br>
+        <hr>
+        {% if list_name_set %}
+            <ul>
+                {% for list in list_name_set %}
 
-        <li>
-            <a href="/lists/{{list.id}}">{{list.title}}</a> 
-            <a href="/lists/{{ list.id }}/edit">Edit</a>
-            <a href="/lists/{{ list.id}}/delete">Remove</a>         
-        </li>
-      
-    {% endfor %}
-    </ul>
- {% else %}
-    <p>No shared lists.</p>
-{% endif %}
+                    <li>
+                        <a href="/lists/{{list.id}}">{{list.title}}</a> 
+                        <a href="/lists/{{ list.id }}/edit">Edit</a> 
+                        <a href="/lists/{{list.id}}/delete"> Delete</a>
+                        <a href="/lists/{{list.id}}/share"> Share</a> 
+                    </li>
+                    <br>
+                    <br>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No lists are available.</p>
+        {% endif %}
+        <p>Shared lists:.</p>
+        {% if shared_list_set %}
+            <ul>
+            {% for list in shared_list_set %}
+
+                <li>
+                    <a href="/lists/{{list.id}}">{{list.title}}</a> 
+                    <a href="/lists/{{ list.id }}/edit">Edit</a>
+                    <a href="/lists/{{ list.id}}/delete">Remove</a>         
+                </li>
+              
+            {% endfor %}
+            </ul>
+         {% else %}
+            <p>No shared lists.</p>
+        {% endif %}
+    </body>
+</html>
+
+

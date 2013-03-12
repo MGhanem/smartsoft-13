@@ -1,55 +1,64 @@
-<h1>{{ list1.title }}</h1>
-<a href="/signout">Sign out</a>
-<br>
-<br> 
-{% if error %}<p><strong> {{ error }}</strong></p> {% endif %}
-{% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
-<a href="/">Return to your lists</a>
-<hr>
-<form action="/lists/{{list1.id}}/create_task/" method="post">
-	<input type="text" placeholder="task name" name="task_name">
-	<input type="text" placeholder="description" name="task_desc">
-	<input type="submit" value="Create new Task">
-</form> 
-<hr>
-{% if tasks_set %}
-    <ul>
-    {% for task in tasks_set %}
-        <li>{{task.title}}.......{{task.desc}}.......{% if task.done %} done {% else %} not done {% endif %}.......        
-        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit">Edit</a>....... 
-        <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete">Delete</a>
-        {% if edited_task_id %}{% ifequal edited_task_id|add:"0" task.id|add:"0" %}
-            <form action="/lists/{{list1.id}}/tasks/{{task.id}}/edit_task" method="post">
-                <input type="text" placeholder="new name" name="new_name">
-                <input type="text" placeholder="new description" name="new_desc">
-                <input type="submit" value="Done Editing">
-            </form>{% endifequal %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{list1.title}}</title>
+    </head>
+    <body>
+        <h1>{{ list1.title }}</h1>
+        <a href="/signout">Sign out</a>
+        <br>
+        <br> 
+        {% if error %}<p><strong> {{ error }}</strong></p> {% endif %}
+        {% if success %}<p><strong> {{ success }}</strong></p> {% endif %}
+        <a href="/">Return to your lists</a>
+        <hr>
+        <form action="/lists/{{list1.id}}/create_task/" method="post">
+            <input type="text" placeholder="task name" name="task_name">
+            <input type="text" placeholder="description" name="task_desc">
+            <input type="submit" value="Create new Task">
+        </form> 
+        <hr>
+        {% if tasks_set %}
+            <ul>
+            {% for task in tasks_set %}
+                <li>{{task.title}}.......{{task.desc}}.......{% if task.done %} done {% else %} not done {% endif %}.......        
+                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/edit">Edit</a>....... 
+                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/delete">Delete</a>
+                {% if edited_task_id %}{% ifequal edited_task_id|add:"0" task.id|add:"0" %}
+                    <form action="/lists/{{list1.id}}/tasks/{{task.id}}/edit_task" method="post">
+                        <input type="text" placeholder="new name" name="new_name">
+                        <input type="text" placeholder="new description" name="new_desc">
+                        <input type="submit" value="Done Editing">
+                    </form>{% endifequal %}
+                {% endif %}
+                <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post">
+                    {% if task.done %}<input type="submit" value="Mark as not done">{% else %} <input type="submit" value="Mark as done">{% endif %}</form>
+                </li>
+            {% endfor %}
+            </ul>
         {% endif %}
-        <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post">
-            {% if task.done %}<input type="submit" value="Mark as not done">{% else %} <input type="submit" value="Mark as done">{% endif %}</form>
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
-{% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}
-<p> List Owner:</p>
-{% if owner %}
-    <ul>
+        {% if detail %}<p><strong> {{ detail }}</strong></p> {% endif %}
+        <p> List Owner:</p>
+        {% if owner %}
+            <ul>
 
-        <li> {{owner.username}}       </li>
+                <li> {{owner.username}}       </li>
 
-    </ul>
-{% endif %}
-<p> Shared with:</p>
-{% if shared_users_set %}
-    <ul>
-    {% for user in shared_users_set %}
-        {%if user.id != owner.id%}
-        <li> {{user.username}}
-        <a href="/lists/{{list1.id}}/{{user.id}}/remove_user"> Remove</a>        </li>
-      {%endif%}
-    {% endfor %}
-    </ul>
- {% else %}
-    <p>List not shared with anyone.</p>
-{% endif %}
+            </ul>
+        {% endif %}
+        <p> Shared with:</p>
+        {% if shared_users_set %}
+            <ul>
+            {% for user in shared_users_set %}
+                {%if user.id != owner.id%}
+                <li> {{user.username}}
+                <a href="/lists/{{list1.id}}/{{user.id}}/remove_user"> Remove</a>        </li>
+              {%endif%}
+            {% endfor %}
+            </ul>
+         {% else %}
+            <p>List not shared with anyone.</p>
+        {% endif %}
+
+    </body>
+</html>
