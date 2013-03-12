@@ -21,11 +21,11 @@
 
     <div class="well">
         <h3>Edit list title</h3>
-    		{% if errors %}
-                <div class="alert">
-                    {{ errors }}
-                </div>
-            {% endif %}
+		{% if errors %}
+            <div class="alert">
+                {{ errors }}
+            </div>
+        {% endif %}
 	<form action="/lists/{{list.id}}/edit_list/" method="post">
 		<input type="text" placeholder="{{list.title}}" name="list_title"><br>
 		<input type="submit" value="Update" class="btn btn-success">
