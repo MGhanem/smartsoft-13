@@ -11,17 +11,15 @@ def signin(request):
 		user = request.user
 		list_name_set = user.owner.all()
 		shared_list_set=user.shared.all()
+		#context = Context({'errors': "",})
+		#return render_to_response("accounts/signin.html", context, RequestContext(request))
 		context = Context({
 		'list_name_set': list_name_set, 'shared_list_set': shared_list_set,
-		'detail_error': "You are already Signed in",
+		'errors': "You are already Signed in",
 		})
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
-	title = 'this is the signin page'
-	template = loader.get_template('accounts/signin.html')
-	context = Context({
-		'title': title,
-	})
-	return HttpResponse(template.render(context))
+	context = Context({'errors': "",})
+	return render_to_response("accounts/signin.html", context, RequestContext(request))
 
 # Just renders the sign UP page template
 def register(request):
@@ -51,8 +49,8 @@ def log_in(request):
 			})
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		context=Context({'detail_error':"Username , or password are not in database"})
-		return render_to_response("lists/list_manage.html", context, RequestContext(request))
+		context=Context({'errors':"Either the Username or password is not in the database."})
+		return render_to_response("accounts/signin.html", context, RequestContext(request))
 # s2
 # actual sign up action
 # cases

@@ -167,7 +167,10 @@ def save_edit_task(request,list_id,task_id):
 			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		return HttpResponse("Your not even authenticated, how the hell you got here.")
+		context = Context({ 'errors': "You need to sign in before viewing this page."})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+
+
 def edit_task(request,list_id,task_id):
 	#return HttpResponse(task_id)
 	#return HttpResponse(Task.objects.all().get(id=task_id).id)
@@ -188,7 +191,8 @@ def edit_task(request,list_id,task_id):
 			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		return HttpResponse("error")
+		context = Context({ 'errors': "You need to sign in before viewing this page."})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
 
 def delete_task(request,list_id,task_id):
 	#return HttpResponse("editing")
@@ -211,7 +215,8 @@ def delete_task(request,list_id,task_id):
 			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		return HttpResponse("you are not even authenticated, how the hell have you got here.")
+		context = Context({ 'errors': "You need to sign in before viewing this page."}) 
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
 
 def change_state(request,list_id,task_id):
 	if request.user.is_authenticated():
@@ -235,7 +240,9 @@ def change_state(request,list_id,task_id):
 			context = Context({'detail_error': detail_error,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 			return render_to_response('lists/list_manage.html', context, RequestContext(request))
 	else:
-		return HttpResponse("you are not even authenticated, how the hell have you got here.")
+		context = Context({ 'errors': "You need to sign in before viewing this page."}) 
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+
 
 def create_task(request,list_id):
 	if request.user.is_authenticated():
@@ -258,7 +265,8 @@ def create_task(request,list_id):
 				'list1':list1,'shared_users_set': shared_users_set,'owner':owner,'tasks_set':tasks_set
 				})
 			return  render_to_response('lists/view_list.html',context,RequestContext(request))
-	return HttpResponse("there is an error ya man.")
+	context = Context({ 'errors': "You need to sign in before viewing this page."}) 
+	return render_to_response('accounts/signin.html', context, RequestContext(request))
 
 def edit_list(request, list_id):
 	if request.user.is_authenticated():
