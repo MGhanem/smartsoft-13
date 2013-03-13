@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 # s5 create list view redirect
 def new_list(request):
 	if not request.user.is_authenticated():
-		errors = "To create a new list you have to sign up first."
+		errors = "To create a new lists you have to sign up first."
 		context = Context({
 			'errors': errors,
 		})
@@ -50,7 +50,7 @@ def create_list(request):
 		else:
 			# check if the user has a list already by that name
 			if request.user.owner.filter(title=title):
-				context = Context({ 'list_errors': "You can't enter an empty list name."})
+				context = Context({ 'list_errors': "This List already exist."})
 				return render_to_response('lists/new_list.html', context, RequestContext(request))
 			# else if the user doesn't have a list by that name
 			else:
@@ -78,7 +78,7 @@ def view_lists(request):
 
 	if request.user.is_authenticated():
 		user = request.user
-		list_name_set = user.owner.all()
+		list_name_set = user.owner.all().order_by('id')
 		shared_list_set=user.shared.all()
 		context = Context({'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
 		return render_to_response('lists/list_manage.html', context, RequestContext(request))
@@ -463,11 +463,29 @@ def share_list(request, list_id):
 							return render_to_response('lists/list_manage.html', context, RequestContext(request))
 
 def share(request, list_id):
-	l = List.objects.get(pk=list_id)
-	context = Context({
-		'list': l,
-	})
-	return render_to_response('lists/share.html', context, RequestContext(request))
+	if not request.user.is_authenticated():
+		context = ({
+			'errors': "You need to be signed in to share your lists"
+		})
+		return render_to_response('accounts/signin.html', context, RequestContext(request))
+	else:
+
+		if (List.objects.filter(pk=list_id).count()<1):
+			errors="List does not exist."
+			user = request.user
+			list_name_set = user.owner.all()
+			shared_list_set=user.shared.all()
+			context = Context({'detail_error': errors,'list_name_set': list_name_set, 'shared_list_set': shared_list_set})
+			#return HttpResponse(list_name_set.all())
+			# return render(request, 'lists/list_manage.html', context)
+			return render_to_response('lists/list_manage.html', context, RequestContext(request))
+		else:
+
+			l = List.objects.get(pk=list_id)
+			context = Context({
+				'list': l,
+			})
+			return render_to_response('lists/share.html', context, RequestContext(request))
 
 def remove_shared_user(request, list_id, removed_user):
 	if not request.user.is_authenticated():

@@ -18,6 +18,12 @@
 
     <div class="container">
         <div class="well">
+            {% if detail_error %}
+            <div class="alert">
+                {{ detail_error }}
+            </div>
+            {% endif %} 
+            
             {% if success %}
                 <div class="alert">
                     {{ success }}

@@ -58,8 +58,8 @@
                         <input type="submit" value="Done Editing">
                     </form>{% endifequal %}
                 {% endif %}
-                <form action="/lists/{{list1.id}}/tasks/{{task.id}}/status" method="post"><br>
-                    {% if task.done %}<input class="btn btn-danger" type="submit" value="Mark as not done">{% else %} <input class="btn btn-success" type="submit" value="Mark as done">{% endif %}</form>
+                <a href="/lists/{{list1.id}}/tasks/{{task.id}}/status"><i {% if task.done %} class="icon-remove-circle" 
+                {% else %} class="icon-ok-circle" {% endif %} ></i></a>
                 </li>
             {% endfor %}
             </ul>
@@ -82,7 +82,7 @@
             <p>List not shared with anyone.</p>
         {% endif %}
 
-        <a href="/">Return to your lists</a>
+        <a href="/"><i class="icon-arrow-left"></i>Return to your lists</a>
         </div> 
     </div>
     </body>
