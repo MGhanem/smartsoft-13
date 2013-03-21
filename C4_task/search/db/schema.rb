@@ -13,10 +13,17 @@
 
 ActiveRecord::Schema.define(:version => 20130321093554) do
 
-  create_table "synonyms", :force => true do |t|
+  create_table "keywords", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "synonyms", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "keywords_id"
   end
 
   create_table "votes", :force => true do |t|
