@@ -1,0 +1,5 @@
+<%= form_for @user, :url => { :action => "create" } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :age %>
+  <%= f.submit "Create" %>
+<% end %>

@@ -13,6 +13,12 @@
 
 ActiveRecord::Schema.define(:version => 20130321093554) do
 
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "keywords", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -23,7 +29,15 @@ ActiveRecord::Schema.define(:version => 20130321093554) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "keywords_id"
+    t.integer  "keyword_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.integer  "age"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "country_id"
   end
 
   create_table "votes", :force => true do |t|
@@ -32,5 +46,4 @@ ActiveRecord::Schema.define(:version => 20130321093554) do
     t.integer  "synonyms_id"
     t.integer  "users_id"
   end
-
 end
