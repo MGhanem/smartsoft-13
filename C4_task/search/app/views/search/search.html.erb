@@ -1,0 +1,21 @@
+<%= form_tag("/search/show_results", :method => "post") do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+<br>
+<label>Filter By:</label>
+<br>
+  <%= label_tag("from:") %>
+  <%= number_field_tag(:from, nil ,{:in => 10...101}) %>
+  <%= label_tag("to:") %>
+  <%= number_field_tag(:to, nil, {:in => 10...101}) %>
+<br>
+  <%= label_tag("country:") %>
+  <%= select("country_info", "country_id", 
+       Country.find(:all).collect {|c| [ c.name, c.id ] })%>
+<br>
+  <%= label_tag("Gender:") %>
+  <%= select("gender_info", "gender_id", {'Nil' => 0,'Male' => 1,'Female' => 2})%>
+<br>
+  <%= submit_tag("Search") %>
+  <% end %>
+
