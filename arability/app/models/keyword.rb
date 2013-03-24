@@ -3,7 +3,7 @@ class Keyword < ActiveRecord::Base
 
   def self.get_similar_keywords(q)
   	keyword_list = self.find(:all, :conditions => ['name LIKE ?', "%#{q}%"])
-  	sorted_by_relevance_list = keyword_list.sort_by {|keyword| keyword.index(q)}
-  	return sorted_by_relevance_list
+  	relevant_first_list = keyword_list.sort_by {|keyword| keyword.name.index(q) && keyword.name}
+  	return relevant_first_list
   end
 end
