@@ -1,0 +1,10 @@
+<h1>List page.....Hello, {{ user.username }}</h1>
+
+<form action="/lists/list_manage/" method="post">
+	<input type="text" placeholder="list name" name="list_name">
+	<input type="submit" value="Create new List">
+</form>
+<hr>
+<form action="/lists/list_manage" method="post">
+	<input type="submit" value="View Lists" name="view_lists">
+</form>

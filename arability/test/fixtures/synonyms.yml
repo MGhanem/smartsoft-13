@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  keyword: 
+  approved: false
+
+two:
+  name: MyString
+  keyword: 
+  approved: false

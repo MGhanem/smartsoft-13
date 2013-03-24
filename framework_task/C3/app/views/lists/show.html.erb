@@ -1,0 +1,14 @@
+<p id="notice"><%= notice%></p>
+
+<p class="another">
+  <b>List:</b>
+  <%= @list.name %>
+</p>
+<p class="titles">Tasks</p>
+<%= render @list.tasks %>
+<p="subtitles">Add a task:</p>
+<%= render "tasks/form" %>
+
+<%= link_to 'Back', lists_path %>
+<a href="/lists/<%= @list.id %>/share" class="app">Share</a>
+

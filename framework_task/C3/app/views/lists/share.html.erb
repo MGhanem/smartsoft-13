@@ -1,0 +1,16 @@
+<p class="titles">This list is shared with:</p>
+<p class="app">Add members</p>
+<form method="get" action="/lists/<%= @list.id %>/share_list">
+	<input type="text" name="email" placeholder="Email">
+	<input type="hidden" visible="hidden" name="list_id" value="<%= @list.id %>">
+	<input type="submit" value="Share">
+</form>
+<p class:"app"><%= flash[:notice] %></p>
+<br>
+<br>
+<ul class="another">
+	<% members = @list.thearray %>
+	<% members.each do |m| %>
+		<li><%= User.find(m).email %></li>
+	<% end %>
+</ul>
