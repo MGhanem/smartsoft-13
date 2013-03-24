@@ -10,18 +10,18 @@ class Vote < ActiveRecord::Base
 
 
   def self.recordVote (gamer_id, synonym_id)
-       valid_gamer = gamer.find_by_id(gamer_id)
-       valid_synonym = synonym.find_by_id(synonym_id)
-       if valid_gamer!=nil && valid_synonym!=nil 
-       @vote = Vote.new
-       @vote.synonym_id = synonym_id
-       @vote.gamer_id = 
-       if @vote.save
-       return @vote  
-       else
-       return nil
-   	   end
-   	   end
+       valid_gamer = Gamer.find_by_id(gamer_id)
+       valid_synonym = Synonym.find_by_id(synonym_id)
+        if valid_gamer!=nil && valid_synonym!=nil 
+          @vote = Vote.new
+          @vote.synonym_id = synonym_id
+          @vote.gamer_id = gamer_id
+            if @vote.save
+              return @vote  
+            else
+              return nil
+   	        end
+   	    end
   end
 
 
