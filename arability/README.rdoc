@@ -1,3 +1,14 @@
+== SMARTSOFTIAN PAY ATTENTION HERE
+
+== README
+I have setup the bootstrap gem and I need you all to bundle install it
+
+And now any css that you wish to write to override the bootstrap defaults
+please do add it in the file "bootstrap_and_overrides.css.scss"
+
+
+
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
