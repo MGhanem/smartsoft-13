@@ -2,7 +2,7 @@ class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
   # attr_accessible :title, :body
-  validates_uniquness_of :gamer_id, :synonym_id 
+  validates_uniqueness_of :gamer_id, :synonym_id 
 
    # This method is used to record the vote given for a certain synonym by a ceratin user
    # Parameters:
