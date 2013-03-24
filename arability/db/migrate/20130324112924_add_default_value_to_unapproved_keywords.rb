@@ -1,5 +1,5 @@
 class AddDefaultValueToUnapprovedKeywords < ActiveRecord::Migration
   def change
-    update_column :keywords,:approved,:default=>false
+    change_column_default :keywords, :approved, false
   end
 end
