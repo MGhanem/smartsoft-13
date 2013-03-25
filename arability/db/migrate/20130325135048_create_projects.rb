@@ -8,11 +8,9 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :maxAge
       t.string :developer_id
       t.text :description
-      t.references :keywords
 
       t.timestamps
     end
     add_index :projects, :category_id
-    add_index :projects, :keywords_id
   end
 end
