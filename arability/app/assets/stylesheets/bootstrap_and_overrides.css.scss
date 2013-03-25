@@ -1,9 +1,14 @@
 @import "bootstrap";
 
 body { 
-  padding-top: 40px; 
+  padding-top: 60px; 
   padding-bottom: 40px;
   background-color: #f5f5f5;
+}
+
+div.field_with_errors {
+  @extend .control-group.error;
+  display: inline;
 }
 
 @import "bootstrap-responsive";
