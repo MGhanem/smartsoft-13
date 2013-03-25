@@ -5,6 +5,18 @@ class Gamer < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :age, :country, :education_level
   # attr_accessible :title, :body
+  validates :username, :presence => true, :length => { :minimum => 2 }
+  validates :username, :format => { :with => /\A[a-zA-Z]+\z/,:message => "can't be anything except letters." }
+  validates_numericality_of :age, :only_integer => true 
+  validates_inclusion_of :age, :in => 5..99, :message => ": Age must be a real age"  
+  validates :country, :presence => true, :length => { :minimum => 2 }
+  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,:message => "can't be anything except letters." }
+  validates :education_level, :presence => true, :length => { :minimum => 2 }
+  validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i,:message => "can't be except low, medium or high" }
+
+
+
+
 end
