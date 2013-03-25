@@ -1,6 +1,11 @@
 Arability::Application.routes.draw do
   get "admin/index"
-  root :to => "admin#index"
+
+  get "admin/login"
+  get "admin/logout"
+
+  post "admin/login"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
