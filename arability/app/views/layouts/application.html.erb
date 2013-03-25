@@ -7,6 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<%= render 'shared/navbar' %>
+
 <div class="container">
   <% flash.each do |key,msg| %>
     <div class="alert alert-<%= key %>">
@@ -20,5 +23,6 @@
   <%= yield %>
 </div>
 
+<%= render 'shared/navbardropdownjs' %>
 </body>
 </html>
