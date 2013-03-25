@@ -1,7 +1,6 @@
 class CreateGamers < ActiveRecord::Migration
   def change
-    change_table :gamers do |t|
-    	
+    create_table :gamers do |t|
 		t.string :name
 		t.string :username
 		t.integer :sign_up_status , :default => 0
