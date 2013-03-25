@@ -37,10 +37,15 @@ class AdminController < ApplicationController
   end
 
   def login
-  	if params[:username] == "admin" and params[:password] == "admin"
-  	  create_session
-  	  redirect_to :action => "index"
-  	end
+    if request.post?
+    	if params[:username] == "admin" and params[:password] == "admin"
+    	  create_session
+    	  redirect_to :action => "index"
+      else
+        flash[:error] = "Invalid username or password"
+        @username = params[:username]
+    	end
+    end
   end
 
   def logout
