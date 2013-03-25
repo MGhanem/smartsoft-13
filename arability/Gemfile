@@ -42,3 +42,7 @@ gem 'execjs'
 
 # To use debugger
 # gem 'debugger'
+
+# devise gem used for authentication
+gem 'devise','2.0'
+
