@@ -14,5 +14,3 @@ class Synonym < ActiveRecord::Base
 	    return synonym.save
 	end
 end
-
-end
