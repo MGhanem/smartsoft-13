@@ -2,6 +2,7 @@ class Keyword < ActiveRecord::Base
   	attr_accessible :approved, :is_english, :name
 
   	# This method is to record the aproval of the admin to a certain keyword
+    # Author: Mirna Yacout
   	# Parameters:
   	#  id: the id of the keyword to be approved
   	# returns:
