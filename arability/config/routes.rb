@@ -1,11 +1,9 @@
 Arability::Application.routes.draw do
-  get "search/index"
-
-  match 'search/index' => 'search#index'
   
+  get "search/search"
+  match 'search' => 'search#search'
 
   root :to => 'pages#home'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
