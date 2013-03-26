@@ -3,6 +3,7 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
 
   	# This method is to record the aproval of the admin to a certain synonym
+    # Author: Mirna Yacout
   	# Parameters:
   	#  id: the id of the synonym to be approved
   	# returns:
