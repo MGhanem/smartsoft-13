@@ -1,9 +1,11 @@
 <div class="row">
 	<legend>Search Keywords:</legend>
-	<form class="form-search" action="/search/index" method="post">
-		<div class="input-append">
-			<input class="span2 search-query" type="text" placeholder="Type search keyword here...">
-			<button type="submit" class="btn"><i class="icon-search"></i></button>
-		</div>
-	</form>
+	<%= form_tag("/search/index", :method => "post", :class => "form-search") do %>
+  	<%= content_tag(:div, :class => 'input-append') do %>
+  		<% text_field_tag(:q, nil, :placeholder => 'search keywords here...', :class => 'search-query') +%>
+			<% button_tag(:type => "submit",:class => 'btn') do %>
+				<% content_tag(:i, nil,:class => "icon-search")%>
+			<% end %>
+		<% end %>			
+	<% end %>
 </div>
