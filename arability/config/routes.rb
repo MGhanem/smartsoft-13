@@ -1,4 +1,6 @@
 Arability::Application.routes.draw do
+
+  get "projects/index"
   
   root :to => 'pages#home'
   resources :projects

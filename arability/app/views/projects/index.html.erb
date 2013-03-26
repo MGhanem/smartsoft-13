@@ -1,37 +1,10 @@
 <h1>Projects</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Formal</th>
-    <th>Minage</th>
-    <th>Maxage</th>
-    <th>Description</th>
-    <th>Words</th>
-    <th>Sharedwith</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
 <% @projects.each do |project| %>
-  <tr>
-    <td><%= project.name %></td>
-    <td><%= project.categories %></td>
-    <td><%= project.formal %></td>
-    <td><%= project.minAge %></td>
-    <td><%= project.maxAge %></td>
-    <td><%= project.description %></td>
-    <td><%= project.words %></td>
-    <td><%= project.sharedWith %></td>
-    <td><%= link_to 'Show', project %></td>
-    <td><%= link_to 'Edit', edit_project_path(project) %></td>
-    <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
+<div class="boxed">
+	<%= project.name %>
+	<%= project.categories %>
+	<%= project.description %>
+</div>
 <br />
-
-<%= link_to 'New Project', new_project_path %>
+<% end %>
