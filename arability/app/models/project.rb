@@ -4,10 +4,11 @@ class Project < ActiveRecord::Base
   has_many :keywords
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :presence => true, :inclusion => { :in => 9..99 },:numericality => { :only_integer => true }
-  validates :maxAge, :presence => true, :inclusion => { :in => 10..100 },:numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
-  validates :formal, :presence => true
+  validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
+  validates :maxAge, :presence => true, :inclusion => { :in => 10..100, :message => "is not in range" }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
+ #Takes the params of the project entred by the developer and creates a project compares
+ #it to the already existing categories and returns the project
   def self.createproject(params)
   	project = Project.new(params.except(:categories))
 

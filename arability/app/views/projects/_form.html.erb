@@ -1,4 +1,9 @@
 <div class = "container">
+  <style>
+  .radio{
+  display:float;
+}
+  </style>
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -20,7 +25,7 @@
     <%= f.label :categories %>
     <%= f.text_field :categories %>
   </div>
-  <div class="field">
+  <div class="radio">
    <%= f.radio_button :formal, 'Formal'%> 
   <%= label :formal, 'Formal' %>
   <%= f.radio_button :formal, 'Slang' %>
@@ -31,8 +36,6 @@
     <div class="field">Age Target</div>
     <%= f.label "From" %>
     <%= f.text_field :minAge %>
-  </div>
-  <div class="field">
     <%= f.label "To" %>
     <%= f.text_field :maxAge %>
   </div>
