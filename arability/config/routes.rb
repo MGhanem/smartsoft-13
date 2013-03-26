@@ -6,6 +6,20 @@ Arability::Application.routes.draw do
 
   post "admin/login"
 
+  root :to => 'pages#home'
+
+  match "keywords" => "keywords#viewall"
+
+  get "keywords/deleteall"
+
+  get "keywords/new"
+
+  post "keywords/create"
+
+  get "search/index"
+
+  match 'search/index' => 'search#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
