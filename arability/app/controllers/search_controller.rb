@@ -10,7 +10,8 @@ class SearchController < ApplicationController
 	#		failure:
 	#			returns an empty list if the search keyword had no matches or no 
 	#     similar keywords were found
-  def index
-  	@similar_keywords = Keyword.get_similar_keywords(:params['q'])
+  def search
+  	@similar_keywords = Keyword.get_similar_keywords(params['q'])
   end
+
 end
