@@ -1,4 +1,7 @@
 Arability::Application.routes.draw do
+  # get "admin/import_csv"
+  match '/admin/import_csv' => "admin#import_csv"
+  post "admin/upload"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +51,7 @@ Arability::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root :to => "admin#import_csv"
 
   # See how all your routes lay out with "rake routes"
 
