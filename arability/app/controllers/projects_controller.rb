@@ -1,6 +1,12 @@
 class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
+
+  # function shows all the projects of a certain developer
+  # params: none
+  # returns:
+  #     on success: returns an array of projects of the developer currently logged in.
+  #     on failure: returns an empty array and notifies the user that he can't see this page.
   def index
  	@developer = Developer.where(:gamer_id => current_gamer.id).first
   	if @developer.present?
