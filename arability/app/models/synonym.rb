@@ -10,8 +10,11 @@ class Synonym < ActiveRecord::Base
   	#  on success of recording the approval: true
   	#  on failure of recording the approval: false
   	def self.approve_synonym(id)
-		synonym = Synonym.find(id)
-		synonym.approved = true
-	    return synonym.save
+      if (Synonym.exists?(id))
+        synonym = Synonym.find(id)
+        synonym.approved = true
+        return synonym.save
+      end
+      return false
 	end
 end
