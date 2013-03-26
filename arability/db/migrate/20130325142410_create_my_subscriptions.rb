@@ -4,7 +4,7 @@ class CreateMySubscriptions < ActiveRecord::Migration
       t.integer :word_search
       t.integer :word_follow
       t.integer :word_add
-      t.refrences :developer
+      t.references :developer
 
       t.timestamps
     end
