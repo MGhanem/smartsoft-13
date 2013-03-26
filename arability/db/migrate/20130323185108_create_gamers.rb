@@ -6,12 +6,6 @@ class CreateGamers < ActiveRecord::Migration
 		t.integer :sign_up_status , :default => 0
 		t.string :country
 		t.date :date_of_birth
-		t.database_authenticatable
-	    t.confirmable
-	    t.recoverable
-	    t.rememberable
-	    t.trackable
-	    t.lockable
 
       t.timestamps
     end
