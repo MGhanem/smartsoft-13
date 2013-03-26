@@ -9,8 +9,11 @@ class Keyword < ActiveRecord::Base
   	#  on success of recording the approval: true
   	#  on failure of recording the approval: false
   	def self.approve_keyword(id)
-		keyword = Keyword.find(id)
-		keyword.approved = true
-	    return keyword.save
+	    if (Keyword.exists?(id))
+        keyword = Keyword.find(id)
+        keyword.approved = true
+        return keyword.save
+      end
+      return false
 	end
 end
