@@ -1,8 +1,10 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
+  has_many :synonyms
+  has_and_belongs_to_many :categories
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"
-  validates_format_of :name, :with => /^([\u0621-\u0652]+|[a-zA-z]+)$/,
+  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
      :message => "The keyword may contain only english or only arabic characters"
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
@@ -12,10 +14,11 @@ class Keyword < ActiveRecord::Base
   #   name: the actual keyword string
   #   approved: is the created keyword is automatically approved
   #   is_english: is the keyword string in English
+  #   categories: a list of categories to tag the keyword with
   # returns:
   #   success: the first return is true and the second is the saved keyword
   #   failure: the first return is false and the second is the unsaved keyword
-  def self.add_keyword_to_database(name, approved = false, is_english = nil)
+  def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
     keyword = self.new(:name => name, :approved => approved)
     if is_english != nil
       keyword.is_english = is_english
@@ -24,6 +27,13 @@ class Keyword < ActiveRecord::Base
     end
 
     if keyword.save
+      categories.each do |category_name|
+        success, category =
+          Category.add_category_to_database_if_not_exists(category_name)
+        if success
+          category.keywords << keyword
+        end
+      end
       return true, keyword
     else
       return false, keyword
@@ -42,6 +52,7 @@ class Keyword < ActiveRecord::Base
     else
       false
     end
+  end
 
 	#Description:
 	#	params:
