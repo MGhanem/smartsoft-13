@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
-  # attr_accessible :title, :body
+  attr_accessible :title, :body, :id
   #validates_uniqueness_of :gamer_id, :scope => :synonym_id
   #validates_existence_of :gamer_id
   #validates_existence_of :synonym_id
@@ -28,6 +28,8 @@ class Vote < ActiveRecord::Base
    	        end
    	    end
   end
+
+
 
 
 end
