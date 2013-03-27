@@ -13,8 +13,10 @@ class Keyword < ActiveRecord::Base
   	if (search_word.blank?)
   		return []
   	end
-  	keyword_list = self.where(['name LIKE ?', "%#{search_word}%"])
-  	relevant_first_list = keyword_list.sort_by {|keyword| keyword.name.index(search_word)}
+    search_word.downcase!
+  	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
+  	relevant_first_list = keyword_list
+      .sort_by {|keyword| [keyword.name.downcase.index(search_word),keyword.name.downcase]}
   	return relevant_first_list
-  end
+  end 
 end

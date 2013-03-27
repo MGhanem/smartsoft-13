@@ -11,7 +11,8 @@ class SearchController < ApplicationController
 	#			returns an empty list if the search keyword had no matches or no 
 	#     similar keywords were found
   def search
-  	@similar_keywords = Keyword.get_similar_keywords(params['q'])
+  	@similar_keywords = Keyword.get_similar_keywords(params['search'])
+  	@test = params['search']
   end
 
 end
