@@ -2,7 +2,7 @@ class CreateProjects < ActiveRecord::Migration
   def change
     create_table :projects do |t|
       t.string :name
-      t.references :category
+      t.references :categories
       t.boolean :formal
       t.integer :minAge
       t.integer :maxAge
