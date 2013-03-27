@@ -1,31 +1,37 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
 
+<div class="container well">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
+  <% if resource.errors.any? %>
   <div class="alert"><%= devise_error_messages! %></div>
+  <% end %>
 
+  <div class="container">
   <div class="control-group"><%= f.label :username, :class => "control-label" %>
-  <%= f.text_field :username, :placeholder => "UserName" %></div>
+  <%= f.text_field :username, :placeholder => "Username", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label :email, :class => "control-label" %>
-  <%= f.email_field :email, :placeholder => "Example@example.com" %></div>
+  <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label :password, :class => "control-label" %> 
-  <%= f.password_field :password, :placeholder => "Password" %><i>(leave blank if you don't want to change it)</i></div>
+  <%= f.password_field :password, :placeholder => "Password", :style => "margin-left: 10px;" %><i>&nbsp;(leave blank if you don't want to change it)</i></div>
 
   <div class="control-group"><%= f.label :password_confirmation, :class => "control-label" %>
-  <%= f.password_field :password_confirmation, :placeholder => "Confirm Password" %></div>
+  <%= f.password_field :password_confirmation, :placeholder => "Confirm Password", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label :age, :class => "control-label" %>
-  <%= f.text_field :age, :placeholder => "Age" %></div>
+  <%= f.text_field :age, :placeholder => "Age", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label :country, :class => "control-label" %>
-  <%= f.text_field :country, :placeholder => "Country" %></div>
+  <%= f.text_field :country, :placeholder => "Country", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label :education_level, :class => "control-label" %>
-  <%= f.text_field :education_level, :placeholder => "Low - Medium - High" %></div> 
+  <%= f.text_field :education_level, :placeholder => "Low - Medium - High", :style => "margin-left: 10px;" %></div> 
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
-  <%= f.password_field :current_password, :placeholder => "Current Password" %><i>(we need your current password to confirm your changes)</i></div>
+  <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
 
-  <div><%= f.submit "Update", :class => "btn btn-inverse" %></div>
+  <div><%= f.submit "Update", :class => "btn btn-success" %></div>
+</div>
+</div>
 <% end %>
