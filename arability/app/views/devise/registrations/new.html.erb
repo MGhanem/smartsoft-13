@@ -22,9 +22,8 @@
   <%= f.text_field :country %></div>
 
   <div><%= f.label :education_level %><br />
-  <%= f.text_field :education_level %>  enter low, medium or high</div>
-
-
+  <%= f.select(:education_level, 
+  options_for_select(['','low','medium','high'])) %></div>
 
   <div><%= f.submit "Sign up" %></div>
 <% end %>
