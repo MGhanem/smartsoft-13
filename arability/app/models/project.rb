@@ -7,17 +7,28 @@ class Project < ActiveRecord::Base
   validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100, :message => "is not in range" }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
- #Takes the params of the project entred by the developer and creates a project compares
- #it to the already existing categories and returns the project
+# author:
+#      Salma Farag
+# description:
+#      Takes the params of the project entred by the developer and creates a project compares
+#it to the already existing categories and returns the project
+# params:
+#     parameters of a project
+# success:
+#     Creates and returns a project after splitting the csv categories string and creating
+#new categories and inserting them into the project categories array
+# failure:
+#     Cannot create a project
+ 
   def self.createproject(params)
   	project = Project.new(params.except(:categories))
-
-  	project.save
-
-  	array = params[:categories].split(",")
+  	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+    catArray = []
   	array.each do |m|
-  		Category.where(:name == m).first_or_create
+      catArray.push(Category.where(:name => m).first_or_create)
   	end
+    project.categories = catArray
+    project.save
   	return project
    end
 end
