@@ -1,18 +1,10 @@
 class ProjectsController < ApplicationController
-  # function shows all the projects of a certain developer
-  # params: none
-  # returns:
-  #     on success: returns an array of projects of the developer currently logged in.
-  #     on failure: returns an empty array and notifies the user that he can't see this page.
+  #A method that views all projects
   def index
-  @developer = Developer.where(:gamer_id => current_gamer.id).first
-    if @developer.present?
-      @projects = Project.where(:developer => @developer.id)
-    else
-      flash[:notice] = "You are not authorized to view this page"
-    end
+    @projects = Project.all
+
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @projects }
     end
   end
@@ -39,14 +31,14 @@ class ProjectsController < ApplicationController
     end
   end
 
-  #def new
-  #  @project = Project.new
+  def new
+    @project = Project.new
 
-   # respond_to do |format|
-    #  format.html
-     # format.json { render json: @project }
-    #end
-  #end
+    respond_to do |format|
+      format.html
+      format.json { render json: @project }
+    end
+  end
 
   #def edit
    # @project = Project.find(params[:id])
