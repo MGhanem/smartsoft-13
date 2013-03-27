@@ -16,7 +16,7 @@ class Synonym < ActiveRecord::Base
 #   returns false if word not saved to database due to incorrect expression of
 #   synonym name or an incorrect keyword id for an unavaialable keyword in database
 
-  validates_format_of :name, :with => /\A([\u0621-\u0625])\Z/i, :on => :create, :message => "The synonym is not in the correct form"
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
 
   def self.recordsynonym(syn, key_id, approved = false)
       if syn == ""
