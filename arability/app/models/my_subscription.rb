@@ -1,41 +1,47 @@
 class MySubscription < ActiveRecord::Base
-  attr_accessible :developer, :word_add, :word_follow, :word_search
+  attr_accessible :developer_id, :word_add, :word_follow, :word_search
   belongs_to :developer
   belongs_to :subscription_model
 
   
-  def decrement_limit(attr)
+  def self.decrement_limit(dev_id)
 
-  	old_limit = self.send(attr)
+  	mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+    old_limit = mySubscription.word_search
   	if old_limit > 0
-  	self.update_attribute(attr, old_limit - 1)
-  else
+  	mySubscription.word_search = old_limit - 1
+    mySubscription.save
+    return true
+    else
 
-  end
+      return false
+
+    end
   end
 
-  def self.search_word_permission
-  	if self.word_search > 0 
+  def self.search_word_permission(dev_id)
+    mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+  	if mySubscription.word_search > 0 
   		return true
   	else
   		return false
+    end
   end
 
-  def self.add_word_permission
-  	if self.word_add > 0
+  def self.add_word_permission(dev_id)
+     mySubscription = MySubscription.where(:developer => dev_id).first
+  	if mysubscription.word_add > 0
   		return true
   	else 
   		return false
-
-  	
+    end  	
   end
 
-  def self.follow_word_permission
-  	if self.word_follow > 0
+  def self.follow_word_permission(dev_id)
+  	if mysubscription.word_follow > 0
   	    return true
   	else
   		return false
-  end
-
-  
+    end
+  end  
 end
