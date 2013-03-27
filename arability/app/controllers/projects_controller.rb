@@ -8,9 +8,9 @@ class ProjectsController < ApplicationController
   #     on success: returns an array of projects of the developer currently logged in.
   #     on failure: returns an empty array and notifies the user that he can't see this page.
   def index
- 	@developer = Developer.where(:gamer_id => current_gamer.id).first
-  	if @developer.present?
-  		@projects = Project.where(:developer => @developer.id)
+ 	developer = Developer.where(:gamer_id => current_gamer.id).first
+  	if developer.present?
+  		@projects = Project.where(:developer => developer.id)
   	else
   		flash[:notice] = "You are not authorized to view this page"
   	end

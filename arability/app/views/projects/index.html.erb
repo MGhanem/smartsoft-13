@@ -2,8 +2,10 @@
 <div class="boxed">
 	<%= project.name %>
 	<%= project.categories %>
+	<% project.categories.each do |c| %>
+	<%= c.name %>
+	<% end %>
 	<%= project.description %>
 </div>
 <br />
 <% end %>
-
