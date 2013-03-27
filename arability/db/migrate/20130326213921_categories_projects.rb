@@ -6,7 +6,4 @@ class CategoriesProjects < ActiveRecord::Migration
   		t.references :projects
   	end
   end
-
-  def down
-  end
 end
