@@ -1,17 +1,7 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
   has_many :synonyms
-
-  # Method takes no inputs and returns an array of "Keywords"
-  # with "synonyms" that haven't been approved yet.
-  # params: --
-  # returns:
-  #   on success: Array of "keywords"
-  #   on failure: Empty array
-  def self.words_with_unapproved_synonyms
-  	return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
-  end
-
+  
   # Method gets the synonym of a certain word with the highest
   # number of votes.
   # params: 
@@ -24,7 +14,6 @@ class Keyword < ActiveRecord::Base
     syn = Synonym.where(:keyword_id => word.id).all
     highest = 0
     highest_syn =  nil
-
     syn.each do |s|
       if Synonym.getVotes(s.id) > highest
         highest_syn = s
