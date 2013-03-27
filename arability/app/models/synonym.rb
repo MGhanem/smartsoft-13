@@ -20,17 +20,17 @@ class Synonym < ActiveRecord::Base
 #   synonym name or an incorrect keyword id for an unavaialable keyword in database
 
   def self.recordsynonym(syn, key_id, approved = false)
-      if syn == ""
+    if syn == ""
+      return false
+    else if Keyword.exists?(:id=>key_id)
+        synew = Synonym.new
+        synew.name = syn
+        synew.keyword_id = key_id 
+        return synew.save
+      else
         return false
-      else if Keyword.exists?(:id=>key_id)
-          synew = Synonym.new
-          synew.name = syn
-          synew.keyword_id = key_id 
-          return synew.save
-        else
-          return false
-        end
       end
+    end
   end
 
 end
