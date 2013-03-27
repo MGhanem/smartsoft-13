@@ -2,9 +2,10 @@ class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
   # attr_accessible :title, :body
-  validate :validate_gamer_exists, :validate_synonym_exists
-  validates :gamer_id, :uniqueness => { :scope => :synonym_id}
+  validate :validate_gamer_exists, :validate_synonym_exists, :validate_voting_for_new_keyword
+  validates :gamer_id, :uniqueness => { :scope => :synonym_id, :message => "This gamer has aleready voted for this sysnonym before"} 
 
+   # Assigned to: Nourhan Zakria
    # This method is used to record the vote given for a certain synonym by a ceratin user
    # Parameters:
    #  gamer_id: the voter(gamer) ID
@@ -17,9 +18,9 @@ class Vote < ActiveRecord::Base
           @vote.synonym_id = synonym_id
           @vote.gamer_id = gamer_id
             if @vote.save
-              return @vote  
+              return true, @vote  
             else
-              return nil
+              return false, @vote
    	        end
   end
 
@@ -53,6 +54,7 @@ class Vote < ActiveRecord::Base
       end
   end
 
+  # Written by: Nourhan Zakaria
   #This is a custom validation method that validates that there exists a gamer with this gamer_id 
   def validate_gamer_exists
     valid_gamer = Gamer.find_by_id(gamer_id)
@@ -61,11 +63,25 @@ class Vote < ActiveRecord::Base
     end
   end
 
+  # Written by: Nourhan Zakaria
   #This is a custom validation method that validates that there exists a synonym with this synonym_id 
   def validate_synonym_exists
     valid_synonym = Synonym.find_by_id(synonym_id)
     if valid_synonym == nil
       errors.add(:synonym_id,"this synonym_id soesn't exist")
+    end
+  end
+
+  # Written by: Nourhan Zakaria
+  # This is a custom validation method that validates that synonym which the gamer is voting for doesn't belong to a keyword that 
+  # this gamer voted for before
+  def validate_voting_for_new_keyword
+    keyword_id_of_chosen_synonym=Synonym.where("id=?",synonym_id).select('Keyword_id')
+    voted_synonyms = Vote.where('gamer_id = ?', gamer_id).select('synonym_id')
+    voted_keywords = Synonym.where(:id => voted_synonyms).select('keyword_id')
+    check = Keyword.where(:id => keyword_id_of_chosen_synonym) - Keyword.where( :id => voted_keywords)
+    if check == []
+       errors.add(:keyword_id,"this user voted for this keyword before")
     end
   end
 
