@@ -13,9 +13,9 @@ class Keyword < ActiveRecord::Base
   #  returns false if the keyword doesnot exist in the database
   #  or if the approval failed to be saved in the database 
   class << self
-    def approve_keyword(id)
-      if (Keyword.exists?(id))
-        keyword = Keyword.find(id)
+    def approve_keyword(kid)
+      if (Keyword.exists?(:id => kid))
+        keyword = Keyword.find(kid)
         keyword.approved = true
         return keyword.save
       end
