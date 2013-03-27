@@ -1,7 +1,24 @@
 Arability::Application.routes.draw do
   # get "admin/import_csv"
+
+  root :to => 'pages#home'
+
   match '/admin/import_csv' => "admin#import_csv"
+
   post "admin/upload"
+
+  match "keywords" => "keywords#viewall"
+
+  get "keywords/deleteall"
+
+  get "keywords/new"
+
+  post "keywords/create"
+
+  get "search/index"
+
+  match 'search/index' => 'search#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

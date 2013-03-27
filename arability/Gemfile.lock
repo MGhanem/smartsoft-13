@@ -106,7 +106,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bootstrap-sass
+  bootstrap-sass (~> 2.3.1.0)
   coffee-rails (~> 3.2.1)
   execjs
   jquery-rails
