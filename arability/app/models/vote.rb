@@ -7,7 +7,7 @@ class Vote < ActiveRecord::Base
 
    # This method is used to record the vote given for a certain synonym by a ceratin user
    # Parameters:
-   #  gamer_id: the voter ID
+   #  gamer_id: the voter(gamer) ID
    #  synonym_id: the synonym_id that the gamer voted for
    # Returns:
    #  On success: Returns the instance of vote that was created and saved
