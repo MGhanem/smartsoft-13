@@ -4,7 +4,7 @@ class Keyword < ActiveRecord::Base
 
   # Method takes no inputs and returns an array of "Keywords"
   # with "synonyms" that haven't been approved yet.
-  # params: none
+  # params: --
   # returns:
   #   on success: Array of "keywords"
   #   on failure: Empty array
@@ -12,15 +12,23 @@ class Keyword < ActiveRecord::Base
   	return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
   end
 
-  #
+  # Method gets the synonym of a certain word with the highest
+  # number of votes.
+  # params: 
+  #   word: a Keyword to get the highest voted synonym for
+  # return:
+  #   on succes: the highest voted Synonym of word gets returned. If two synonyms have an 
+  #               equal number of votes, the first synonym entered to the list is returned.
+  #   on failure: if word has no synonyms, nothing is returned
   def self.highest_voted_synonym(word)
-    syn = Synonym.where(:Keyword_id => word.id)
+    syn = Synonym.where(:keyword_id => word.id).all
     highest = 0
     highest_syn =  nil
+
     syn.each do |s|
-      if Synonym.getVotes(s) > highest
+      if Synonym.getVotes(s.id) > highest
         highest_syn = s
-        highest = Synonym.getVotes(s)
+        highest = Synonym.getVotes(s.id)
       end
     end
     return highest_syn

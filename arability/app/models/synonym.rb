@@ -3,8 +3,14 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
   has_many :votes
 
-  def getVotes(syn_id)
-    return Synonym.joins(:votes).where("votes.synonym_id" => syn_id).count
+  # Method returns the the number of votes of a certain synonym.
+  # params:
+  #   syn_id: ID of synonym to get the votes number for.
+  # returns:
+  #   on succes: return an int with number of votes of the synonym with syn_id
+  #   on failure: --
+  def self.getVotes(syn_id)
+    return Vote.where("votes.synonym_id" => syn_id).count
   end
 
 
