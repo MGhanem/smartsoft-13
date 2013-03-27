@@ -1,6 +1,9 @@
 Arability::Application.routes.draw do
+
+  get "projects/index"
   
   root :to => 'pages#home'
+  resources :projects
 
   match '/developers/new' => "developer#new"
   match '/developers/create' => "developer#create"
