@@ -1,12 +1,15 @@
 class SearchController < ApplicationController
 	#Description:
+  # Author:
+  #   Mohamed Ashraf, Nourhan Mohamed
 	#	params:
-	#		q: a string representing the search keyword, from the params list from a 
-	#      textbox in the search view
+	#		search: a string representing the search keyword, from the params list from a 
+	#     textbox in the search view
+  #   categories: [optional] a string by which the categories can be filtered  
 	#	returns:
 	#		success: 
-	#			returns to the search view a list of the keywords similar to the search
-	#     keyword sorted in lexicographical order
+	#			returns to the search view a list of the keywords (in a certain category) 
+	#     similar to the search keyword sorted by relevance
 	#		failure:
 	#			returns an empty list if the search keyword had no matches or no 
 	#     similar keywords were found
