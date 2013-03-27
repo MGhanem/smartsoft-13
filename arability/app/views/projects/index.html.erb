@@ -1,14 +1,17 @@
 <% @projects.each do |project| %>
 <div class="boxed">
-	<h5>Name:</h5>
+	Name:
+	<br />
 	<%= project.name %>
 	<br />
-	<h5>Categories:</h5>
+	Categories:
+	<br />
 	<% project.categories.each do |c| %>
 	<%= c.name %>
 	<% end %>
 	<br />
-	<h5>Description:</h5>	
+	Description:
+	<br />	
 	<%= project.description %>
 </div>
 <br />
