@@ -11,8 +11,8 @@ class Vote < ActiveRecord::Base
    #  gamer_id: the voter(gamer) ID
    #  synonym_id: the synonym_id that the gamer voted for
    # Returns:
-   #  On success: Returns the instance of vote that was created and saved
-   #  On failure: returns nil
+   #  On success: Returns true and the instance of vote that was created and saved
+   #  On failure: returns false and the instance of vote that wasn't saved
   def self.record_vote(gamer_id, synonym_id) 
           @vote = Vote.new
           @vote.synonym_id = synonym_id
