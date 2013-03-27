@@ -11,7 +11,7 @@ class Keyword < ActiveRecord::Base
 # failure:
 # 	returns an empty list if no words are pending for approval
 
-  def self.unapprovedkeywords
+  def self.listunapprovedkeywords
 
   	return Keyword.where(:approved => false).all
 
