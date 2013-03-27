@@ -2,11 +2,16 @@ class ProjectsController < ApplicationController
   #A method that views all projects
   def index
     @projects = Project.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @projects }
-    end
+ 	# developer = Developer.where(:gamer_id => current_gamer.id).first
+  # 	if developer.present?
+  # 		@projects = Project.where(:developer => developer.id)
+  # 	else
+  # 		flash[:notice] = "You are not authorized to view this page"
+  # 	end
+  #   respond_to do |format|
+  #     format.html
+  #     format.json { render json: @projects }
+  #   end
   end
 
   #A method that calls method createproject that creates the project and redirects to the
