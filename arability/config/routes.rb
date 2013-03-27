@@ -5,6 +5,7 @@ Arability::Application.routes.draw do
   get "admin/logout"
 
   post "admin/login"
+  post "admin/wordadd"
 
   root :to => 'pages#home'
 

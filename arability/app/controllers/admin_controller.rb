@@ -1,16 +1,13 @@
 class AdminController < ApplicationController
 
-  # require login from the user to do any action
   before_filter :require_login
-
-  # checks if the user is logged in to avoid displaying the login page
-  before_filter :check_login, :only => [:login]
-  
-  # to view the login page it is not required to be logged in
   skip_before_filter :require_login, :only => [:login]
 
-  # if the user is not logged in he will be redirect to login page and 
-  # notified via flash message
+  before_filter :check_login, :only => [:login]
+  
+  #  returns:
+  #    success: if the user is not logged in redirect to login
+  #    failure: do nothing
   def require_login
     unless logged_in?
       flash[:error] = "You must be logged in"
@@ -18,29 +15,31 @@ class AdminController < ApplicationController
     end
   end
 
-  # checks if the current user is logged in and redirects him to index page
+  #  returns:
+  #    success: redirect to index if the user is logged in
+  #    failure: does nothing
   def check_login
     if logged_in?
       redirect_to :action => "index"
     end
   end
 
-  # returns if the current user is actually logged in
+  # returns true if the current user is logged in as admin
   def logged_in?
     !!current_user
   end
 
-  # returns the variable who_is_this
+  # returns the session variable who_is_this
   def current_user
     session[:who_is_this]
   end
 
-  # sets the variable who_is_this to "admin" to indicate admin logged in
+  # creates a session with variable who_is_this = "admin"
   def create_session
   	session[:who_is_this] = "admin"
   end
 
-  # removes the variable who_is_this from the session to log out
+  # clears the session variable who_is_this to nil
   def destroy_session
   	session[:who_is_this] = nil
   end
@@ -48,12 +47,13 @@ class AdminController < ApplicationController
   def index
   end
 
-  # check if request is a post request
-  # if it is a post request and the username and password are correct
-  # will create a session to store the admin state
-  # and will redirect to the index page of admin
-  # if it is incorrect username or password the user will
-  # have a flash telling him that it is incorrect
+  # login action for admin
+  # @params:
+  #   username: the username for the admin
+  #   password: the password for the admin
+  # returns:
+  #   success: redirects to admin/index
+  #   failure: refreshes the page with error displayed
   def login
     if request.post?
     	if params[:username] == "admin" and params[:password] == "admin"
@@ -66,7 +66,27 @@ class AdminController < ApplicationController
     end
   end
 
-  # destroyes the session of the user and redirects him to login action
+  # wordadd action for keywords by admin
+  # @params:
+  #   name: the name of the new keyword
+  # returns:
+  #   success: refreshes the page and displays notification
+  #   failure: refreshes the page with error displayed
+  def wordadd
+    name = params[:keyword][:name]
+    is_english = params[:keyword][:is_english]
+    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    if success
+      flash[:success] = "Keyword #{@keyword.name} has been created"
+    else
+      flash[:error] = @keyword.errors.messages
+    end
+    flash.keep
+    redirect_to :action => "index"
+  end
+
+  # returns:
+  #   success: logout the user and redirect to admin login page
   def logout
     destroy_session
     redirect_to :action => "login"
