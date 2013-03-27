@@ -1,6 +1,8 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
 
+# author:
+# 	Omar Hossam
 # description:
 # 	feature takes no input and returns a list of all unapproved keywords
 # success: 
