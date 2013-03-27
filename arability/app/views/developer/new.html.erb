@@ -1,0 +1,12 @@
+<h2>Register as developer Step1</h2>
+
+<%= form_for(@developer, :url => { :action => "create" }) do |f| %>
+<%= f.label :first_name %>
+<%= f.text_field :first_name, :required => true %>
+<%= f.label :last_name %>
+<%= f.text_field :last_name, :required => true %>
+  
+
+  <div><%= f.submit "Next" %></div>
+<% end %>
+

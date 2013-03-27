@@ -2,6 +2,13 @@ Arability::Application.routes.draw do
   
   root :to => 'pages#home'
 
+  match '/developers/new' => "developer#new"
+  match '/developers/create' => "developer#create"
+  match '/my_subscriptions/new' => "my_subscription#new"
+  match '/my_subscriptions/create' => "my_subscription#create"
+
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

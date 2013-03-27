@@ -1,0 +1,2 @@
+module MySubscriptionHelper
+end
