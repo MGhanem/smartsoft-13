@@ -5,24 +5,6 @@ class Vote < ActiveRecord::Base
   validate :validate_gamer_exists, :validate_synonym_exists
   validates :gamer_id, :uniqueness => { :scope => :synonym_id}
 
-   # This method is used to record the vote given for a certain synonym by a ceratin user
-   # Parameters:
-   #  gamer_id: the voter ID
-   #  synonym_id: the synonym_id that the gamer voted for
-   # Returns:
-   #  On success: Returns the instance of vote that was created and saved
-   #  On failure: returns nil
-  def self.record_vote(gamer_id, synonym_id) 
-          @vote = Vote.new
-          @vote.synonym_id = synonym_id
-          @vote.gamer_id = gamer_id
-            if @vote.save
-              return @vote  
-            else
-              return nil
-   	        end
-  end
-
    # This method is used to retreive a list of specific size of keywords that gamer with this gamer_id didn't vote on yet
    # Parameters:
    #  gamer_id: the gamer ID 
