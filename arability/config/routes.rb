@@ -1,4 +1,6 @@
 Arability::Application.routes.draw do
+
+  get "projects/index"
   
   root :to => 'pages#home'
   devise_for :gamers
@@ -6,6 +8,7 @@ Arability::Application.routes.draw do
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
 
+  resources :projects
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

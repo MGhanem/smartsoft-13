@@ -1,7 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  developer: 
+  name: MyString
+  category: 
+  formal: false
+  minAge: 1
+  maxAge: 1
+  description: MyText
+  words: 
+  sharedWith: 
 
 two:
-  developer: 
+  name: MyString
+  category: 
+  formal: false
+  minAge: 1
+  maxAge: 1
+  description: MyText
+  words: 
+  sharedWith: 
