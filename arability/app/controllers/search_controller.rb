@@ -23,6 +23,7 @@ class SearchController < ApplicationController
     else
       categories_array = []
     end
+    @suggested = params['suggested']
     @search_keyword = params['search']
   	@similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)

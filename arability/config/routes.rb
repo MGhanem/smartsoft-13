@@ -9,6 +9,8 @@ Arability::Application.routes.draw do
 
   get "keywords/new"
 
+  get "keywords/suggest_add"
+
   post "keywords/create"
 
   # The priority is based upon order of creation:
