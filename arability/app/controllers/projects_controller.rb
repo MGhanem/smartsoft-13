@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+#A method that views the form to create a project
   def new
     @project = Project.new
 
