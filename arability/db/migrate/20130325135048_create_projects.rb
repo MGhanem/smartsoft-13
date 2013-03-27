@@ -6,7 +6,7 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :formal
       t.integer :minAge
       t.integer :maxAge
-      t.string :developer_id
+      t.references :developer
       t.text :description
 
       t.timestamps
