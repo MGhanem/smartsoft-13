@@ -11,7 +11,7 @@ class Keyword < ActiveRecord::Base
 
   def self.unapprovedkeywords
 
-  	return Keyword.where("approved" => false).all
+  	return Keyword.where(:approved => false).all
 
   end
 
