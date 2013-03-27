@@ -4,6 +4,7 @@ class CategoriesProjects < ActiveRecord::Migration
   	create_table :categories_projects do |t|
   		t.references :categories
   		t.references :projects
+  		t.integer :project_id
   	end
   end
 
