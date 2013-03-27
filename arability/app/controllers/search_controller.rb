@@ -14,6 +14,6 @@ class SearchController < ApplicationController
     categories = params[:categories]
     if categories.present?
       categories = categories.split /\s*,\s*/
-  	@similar_keywords = Keyword.get_similar_keywords(params['q'])
+  	@similar_keywords = Keyword.get_similar_keywords(params['search'])
   end
 end

@@ -1,6 +1,5 @@
 Arability::Application.routes.draw do
-  
-  get "search/search"
+
   match 'search' => 'search#search'
 
   root :to => 'pages#home'
