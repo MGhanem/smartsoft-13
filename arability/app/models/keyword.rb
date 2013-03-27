@@ -4,7 +4,7 @@ class Keyword < ActiveRecord::Base
 
   # Method takes no inputs and returns an array of "Keywords"
   # with "synonyms" that haven't been approved yet.
-  # params: none
+  # params: --
   # returns:
   #   on success: Array of "keywords"
   #   on failure: Empty array
