@@ -1,8 +1,9 @@
 Arability::Application.routes.draw do
   
   root :to => 'pages#home'
+ 
+  # required for routing by the devise module(gem)
   devise_for :gamers
-
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
 
