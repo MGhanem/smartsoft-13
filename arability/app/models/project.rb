@@ -1,4 +1,3 @@
 class Project < ActiveRecord::Base
-  belongs_to :developer
-  # attr_accessible :title, :body
+  attr_accessible :name
 end

@@ -1,21 +1,24 @@
 class DeveloperController < ApplicationController
   def index
-  	#@developer = Developer.where(:id => current_user.id)
+  	
   end
 
-  	#def current_user
-     #@current_user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id]) # Use find_by_id to get nil instead of an error if user doesn't exist
-   #end
+  
+    #Shall be placed in it's proper controller
+    # def check_for_search_permission
+    #   if(current_user.my_subscription.limit_search == 0)
+    #     render :text => "Limit reached", :status => 422
+    #   else
+    #     render :text => "", :status => 200
+    #   end
+    # end
 
-   #def permission
-   	#@developer = Developer.where(:id => current_user.id)
-   	#if(words>max)
-   	#permission =false
+    # def decrement_search
+    #   current_user.my_subscription.decrement_limit(:limit_search)
+    #   render :text => current_user.my_subscription.limit_search.to_s
+    # end
 
-   	
-   	#def is_allowed?()
-
-
+    
 
   
 end

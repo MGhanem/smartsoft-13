@@ -7,4 +7,4 @@ class CreateSearches < ActiveRecord::Migration
       t.timestamps
     end
   end
-end
+ 

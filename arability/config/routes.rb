@@ -1,4 +1,15 @@
 Arability::Application.routes.draw do
+
+  resources :projects
+
+
+  resources :developer
+
+  root :to => "developer#index"
+
+
+  get "developer/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
