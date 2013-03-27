@@ -22,7 +22,7 @@ class Synonym < ActiveRecord::Base
       if syn == ""
         return false
       else if Keyword.exists?(:id=>key_id)
-            synew = Synonym.new
+          synew = Synonym.new
           synew.name = syn
           synew.keyword_id = key_id 
           return synew.save
