@@ -11,9 +11,17 @@ class SearchController < ApplicationController
 	#			returns an empty list if the search keyword had no matches or no 
 	#     similar keywords were found
   def search
-    categories = params[:categories]
-    if categories.present?
-      categories = categories.split /\s*,\s*/
-  	@similar_keywords = Keyword.get_similar_keywords(params['search'])
+    @categories = params[:categories]
+    if @categories.present?
+      categories_array = @categories.split(/,/)
+      categories_array.reject! {|x| x.blank?}
+      categories_array.map! {|x| x.strip}
+      categories_array.uniq!
+    else
+      categories_array = []
+    end
+    @q = params[:search]
+  	@similar_keywords =
+      Keyword.get_similar_keywords(@q, categories_array)
   end
 end

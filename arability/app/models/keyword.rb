@@ -1,6 +1,7 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
 
+  has_and_belongs_to_many :categories
 	#Description:
 	#	params:
 	#		search_word: a string representing the search keyword that should be retrieved if found in the database

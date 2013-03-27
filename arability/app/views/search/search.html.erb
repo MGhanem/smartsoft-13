@@ -2,11 +2,13 @@
 	<legend>Search Keywords:</legend>
 	<%= form_tag("/search/", :method => "post", :class => "form-search") do %>
   	<%= content_tag(:div, :class => 'input-append') do %>
-  		<% text_field_tag(:search, nil, :placeholder => 'search keywords here...', :class => 'search-query') +%>
+  		<% text_field_tag(:search, @q, :placeholder => 'search keywords here...', :class => 'search-query') +%>
 			<% button_tag(:type => "submit",:class => 'btn') do %>
 				<% content_tag(:i, nil,:class => "icon-search")%>
 			<% end %>
-		<% end %>			
+		<% end %>
+    <%= text_field_tag :categories, @categories,
+       :placeholder => "optionally filter by categories" %>
 	<% end %>
 </div>
 
@@ -18,5 +20,4 @@
 		<% end %>
 	</ul>
 <% end %>
-<%= debug @test %>
 </div>
