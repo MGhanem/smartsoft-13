@@ -26,7 +26,7 @@ class Vote < ActiveRecord::Base
           else
             un_voted_keywords = Keyword.all - Keyword.where( :id => voted_keywords) 
           end
-        list_returned = un_voted_keywords.take(count)
+        list_returned = un_voted_keywords.shuffle.sample(count)
 
         return list_returned
 
