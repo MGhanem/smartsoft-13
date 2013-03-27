@@ -12,6 +12,7 @@ class Keyword < ActiveRecord::Base
   	return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
   end
 
+  #
   def self.highest_voted_synonym(word)
     syn = Synonym.where(:Keyword_id => word.id)
     highest = 0
