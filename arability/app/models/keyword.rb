@@ -14,7 +14,7 @@ class Keyword < ActiveRecord::Base
   		return []
   	end
     search_word.downcase!
-  	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
+  	keyword_list = self.where("name LIKE ?", "%#{search_word}%").where(:approved => true)
   	relevant_first_list = keyword_list
       .sort_by {|keyword| [keyword.name.downcase.index(search_word),keyword.name.downcase]}
   	return relevant_first_list

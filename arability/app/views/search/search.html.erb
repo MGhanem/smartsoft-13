@@ -11,12 +11,16 @@
 </div>
 
 <div class="row">	
-<% if !@similar_keywords.blank? %>
-	<ul id="words" class="unstyled">
-		<% @similar_keywords.each do |c| %>
-		<%= content_tag(:li, c.name) %>
-		<% end %>
-	</ul>
-<% end %>
-<%= debug @test %>
+	<% if @similar_keywords.blank? && !@search_keyword.blank? %>
+	<div class="well">
+		<%= content_tag(:span, 
+		"Sorry! No matched were found for the keyword you searched for!")%>
+	</div>
+	<% else %>
+		<ul class="unstyled">
+			<% @similar_keywords.each do |c| %>
+			<%= content_tag(:li, c.name) %>
+			<% end %>
+		</ul>
+	<% end %>
 </div>
