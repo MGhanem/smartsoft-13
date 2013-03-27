@@ -2,6 +2,8 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
 
+# author:
+#   Omar Hossam
 # description:
 #   feature adds synonym to database and returns a boolean result 
 #   indicatiing success or failure of saving
