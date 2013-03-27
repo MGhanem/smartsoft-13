@@ -12,7 +12,6 @@ class SearchController < ApplicationController
 	#     similar keywords were found
   def search
   	@similar_keywords = Keyword.get_similar_keywords(params['search'])
-  	@test = params['search']
   end
 
 end
