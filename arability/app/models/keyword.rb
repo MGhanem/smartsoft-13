@@ -13,7 +13,7 @@ class Keyword < ActiveRecord::Base
 
   def self.listunapprovedkeywords
 
-  	return Keyword.where(:approved => false).all
+    return Keyword.where(:approved => false).all
 
   end
 
