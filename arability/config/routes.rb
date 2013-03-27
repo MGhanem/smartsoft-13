@@ -1,6 +1,9 @@
 Arability::Application.routes.draw do
+
+  get "projects/index"
   
   root :to => 'pages#home'
+  resources :projects
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

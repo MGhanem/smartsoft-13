@@ -1,0 +1,18 @@
+<h1>Projects</h1>
+<br />
+<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+<br />
+<% @projects.each do |project| %>
+<br />
+<div class="boxed">
+	<%= project.name %>
+	<br />
+	<% project.categories.each do |c| %>
+	<%= c.name %>
+	<% end %>
+	<br />
+	<%= project.description %>
+
+</div>
+<br />
+<% end %>
