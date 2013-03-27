@@ -5,6 +5,7 @@ class Vote < ActiveRecord::Base
   validate :validate_gamer_exists, :validate_synonym_exists
   validates :gamer_id, :uniqueness => { :scope => :synonym_id}
 
+   # Written by: Nourhan Zakaria
    # This method is used to retreive a list of specific size of keywords that gamer with this gamer_id didn't vote on yet
    # Parameters:
    #  gamer_id: the gamer ID 
@@ -13,12 +14,11 @@ class Vote < ActiveRecord::Base
    #        keywords can be icluded
    # Returns:
    #  On success: Returns a list of un voted keywords of the specified langauge with size = count for the gamer with this gamer_id  
-   #  On failure: Returns empty list
+   #  On failure: Returns empty list or nil if the gamer with the input gamer_id doesn't exist
   def self.get_unvoted_keywords(gamer_id, count, lang)
       if Gamer.find_by_id(gamer_id) != nil
         voted_synonyms = Vote.where('gamer_id = ?', gamer_id).select('synonym_id')
         voted_keywords = Synonym.where(:id => voted_synonyms).select('keyword_id')
-        #un_voted_keywords = Keyword.all - Keyword.where( :id => voted_keywords)
           if lang == 0
             un_voted_keywords = Keyword.where("is_english =?",true) - Keyword.where(:id => voted_keywords)
           elsif lang ==1
