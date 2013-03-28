@@ -1,4 +1,5 @@
 class MySubscriptionController < ApplicationController
+	before_filter :authenticate_gamer!
 # author:
 # 	Khloud Khalid
 # description:
@@ -10,32 +11,28 @@ class MySubscriptionController < ApplicationController
 # failure:
 # 	gamer not signed in  
 	def new
-		if(gamer_signed_in?)
 			@my_subscription = MySubscription.new
-		else
-			flash[:notice] = "Please login to proceed with registration."
-		end	
 	end
 # author:
 # 	Khloud Khalid
 # description:
-#  	creates new developer using parameters from registration form
+#  	creates new my_subscription using parameters from registration form and links it to the developer
 # params:
-#  	first_name, last_name
+#  	subscription_model_id
 # success:
-#  	developer created successfully
+#  	my_subscription created successfully and linked to developer
 # failure:
 # 	invalid information
 	def create
-		@subscription_model = params[:subscription_model]
 		@my_subscription = MySubscription.new()
-		@my_subscription.developer_id = current_developer.id
-		@my_subscription.subscription_models_id = @subscription_model
+		@my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+		@my_subscription.subscription_models_id = params[:my_subscription]
 		if @my_subscription.save 
-			#redirect to home page
 			flash[:notice] = "You have successfully registered as a developer."
+			render 'my_subscription/new'
 		else
 			flash[:notice] = "Failed to complete registration."
+			render 'my_subscription/new'
 		end
 	end
 

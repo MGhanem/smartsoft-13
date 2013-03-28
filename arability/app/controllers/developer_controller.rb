@@ -1,4 +1,6 @@
 class DeveloperController < ApplicationController
+
+	before_filter :authenticate_gamer!
 # author:
 # 	Khloud Khalid
 # description:
@@ -10,11 +12,7 @@ class DeveloperController < ApplicationController
 # failure:
 # 	gamer not signed in  	
 	def new
-		if(gamer_signed_in?)
-			@developer = Developer.new
-		else
-			flash[:notice] = "Please login to be able to register."
-		end
+		@developer = Developer.new
 	end
 # author:
 # 	Khloud Khalid
@@ -29,15 +27,24 @@ class DeveloperController < ApplicationController
 	def create
 		@developer = Developer.new(params[:developer])
 		@developer.gamer_id = current_gamer.id
-		if((Developer.find_by_gamer_id(current_gamer.id)) == nil)
+		if @developer.valid?
 			if @developer.save 
-				render '/my_subscriptions/new'
+				render 'my_subscription/new'
 			else
 				flash[:notice] = "Failed to complete registration."
+				render :action => 'new'
 			end
+				
 		else
-			#redirect to homepage
-			flash[:notice] = "You are already registered as developer."
-		end
+			if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
+				flash[:notice] = "You are already registered as a developer."	
+				render :action => 'new'
+			else
+				flash[:notice] = "Please make sure you entered your first and last name."	
+				render :action => 'new'	
+			end		
+		end	
 	end
 end
+
+
