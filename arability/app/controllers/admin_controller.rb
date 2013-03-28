@@ -1,16 +1,21 @@
 class AdminController < ApplicationController
 
-  # require login from the user to do any action
   before_filter :require_login
-
-  # checks if the user is logged in to avoid displaying the login page
-  before_filter :check_login, :only => [:login]
-  
-  # to view the login page it is not required to be logged in
   skip_before_filter :require_login, :only => [:login]
 
-  # if the user is not logged in he will be redirect to login page and 
-  # notified via flash message
+  before_filter :check_login, :only => [:login]
+  
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     a filter that makes sure the user is logged in
+  # params
+  #     none
+  # success: 
+  #     if the user is not logged in redirect to login
+  # failure: 
+  #     none
   def require_login
     unless logged_in?
       flash[:error] = "You must be logged in"
@@ -18,29 +23,74 @@ class AdminController < ApplicationController
     end
   end
 
-  # checks if the current user is logged in and redirects him to index page
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     a function that checks if the user is logged in and redirects him to /admin/index
+  # params
+  #     none
+  # success: 
+  #     redirect to index if the user is logged in
+  # failure: 
+  #     none
   def check_login
     if logged_in?
       redirect_to :action => "index"
     end
   end
 
-  # returns if the current user is actually logged in
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     checks if the user is logged in
+  # params
+  #     none
+  # success: 
+  #     returns true if the user is logged in as admin
+  # failure: 
+  #     none
   def logged_in?
     !!current_user
   end
 
-  # returns the variable who_is_this
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     current_user method
+  # params
+  #     none
+  # success: 
+  #     returns the session variable :who_is_this
+  # failure: 
+  #     none
   def current_user
     session[:who_is_this]
   end
 
-  # sets the variable who_is_this to "admin" to indicate admin logged in
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     create session method
+  # params
+  #     none
+  # success: 
+  #     sets the session variable :who_is_this to "admin"
+  # failure: 
+  #     none
   def create_session
   	session[:who_is_this] = "admin"
   end
 
-  # removes the variable who_is_this from the session to log out
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     destroy_session method
+  # params
+  #     none
+  # success: 
+  #     unsets the session variable :who_is_this
+  # failure: 
+  #     none
   def destroy_session
   	session[:who_is_this] = nil
   end
@@ -48,12 +98,17 @@ class AdminController < ApplicationController
   def index
   end
 
-  # check if request is a post request
-  # if it is a post request and the username and password are correct
-  # will create a session to store the admin state
-  # and will redirect to the index page of admin
-  # if it is incorrect username or password the user will
-  # have a flash telling him that it is incorrect
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     login action for admin
+  # params
+  #     username: the username for the admin
+  #     password: the password for the admin
+  # success: 
+  #     redirects to admin/index
+  # failure: 
+  #     refreshes the page with error displayed
   def login
     if request.post?
     	if params[:username] == "admin" and params[:password] == "admin"
@@ -66,7 +121,16 @@ class AdminController < ApplicationController
     end
   end
 
-  # destroyes the session of the user and redirects him to login action
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     admin logout action
+  # params
+  #     none
+  # success: 
+  #     redirects the user to /admin/login page
+  # failure: 
+  #     none
   def logout
     destroy_session
     redirect_to :action => "login"
