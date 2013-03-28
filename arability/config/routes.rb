@@ -6,7 +6,7 @@ Arability::Application.routes.draw do
 
   resources :developer
 
-  root :to => "developer#index"
+  root :to => "Pages#home"
 
 
   get "developer/index"
