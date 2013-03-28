@@ -1,10 +1,6 @@
 Arability::Application.routes.draw do
   root :to => 'pages#home'
 
-  match "keywords" => "keywords#viewall"
-
-  get "keywords/deleteall"
-
   get "keywords/new"
 
   post "keywords/create"
