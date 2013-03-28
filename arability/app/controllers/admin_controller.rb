@@ -32,7 +32,7 @@ class AdminController < ApplicationController
   #   the file is not UTF-8 encoded and message is '2'
   def upload
     begin
-  	  @csvfile = params[:csvfile]
+      @csvfile = params[:csvfile]
       if @csvfile != nil
         @content = File.read(@csvfile.tempfile)
         arr_of_arrs = CSV.parse(@content)
@@ -44,14 +44,13 @@ class AdminController < ApplicationController
             end
           end
       end
-        redirect_to :action => "import_csv", :message => "0"
+        redirect_to action: "import_csv", message: "0"
       else 
-        redirect_to :action => "import_csv", :message => "1"
+        redirect_to action: "import_csv", message: "1"
       end
     rescue ArgumentError
-        redirect_to :action => "import_csv", :message => "2"
+        redirect_to action: "import_csv", message: "2"
     end
   end
-
 end
 
