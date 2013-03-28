@@ -18,7 +18,7 @@ class Synonym < ActiveRecord::Base
       if (Synonym.exists?(id: sid))
         synonym = Synonym.find(sid)
         synonym.approved = true
-      return synonym.save
+        return synonym.save
       end
       return false
     end
