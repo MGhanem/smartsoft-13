@@ -5,11 +5,11 @@ class Keyword < ActiveRecord::Base
   #  Mirna Yacout
   # Description:
   #  This method is to record the aproval of the admin to a certain keyword in the database
-	# Parameters:
+  # Parameters:
   #  id: the id of the keyword to be approved
-	# Success:
+  # Success:
   #  returns true on saving the approval correctly in the database
-	# Failure:
+  # Failure:
   #  returns false if the keyword doesnot exist in the database
   #  or if the approval failed to be saved in the database 
   class << self
