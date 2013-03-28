@@ -9,6 +9,7 @@ class KeywordsController < ApplicationController
   #   name: the name of the new keyword
   #   redirect: the url to redirect to after the creation defaults to new
   #             keyword path
+  #   is_english: the language of the keyword
   # returns:
   #   success: refreshes the page and displays notification
   #   failure: refreshes the page with error displayed
