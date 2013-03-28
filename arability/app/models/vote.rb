@@ -2,26 +2,32 @@ class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
   # attr_accessible :title, :body
-  validate :validate_gamer_exists, :validate_synonym_exists, :validate_voting_for_new_keyword
-  validates :gamer_id, :uniqueness => { :scope => :synonym_id, :message => "This gamer has aleready voted for this sysnonym before"} 
+  validate :validate_gamer_exists, :validate_synonym_exists, 
+  :validate_voting_for_new_keyword
+  validates :gamer_id, :uniqueness => { :scope => :synonym_id, 
+    :message => "This gamer has aleready voted for this sysnonym before"} 
 
-   # Assigned to: Nourhan Zakria
-   # This method is used to record the vote given for a certain synonym by a ceratin user
+   # Author: Nourhan Zakaria
+   # This method is used to record the vote given for a certain synonym 
+   # by a certain gamer
    # Parameters:
    #  gamer_id: the voter(gamer) ID
-   #  synonym_id: the synonym_id that the gamer voted for
+   #  synonym_id: the synonym ID that the gamer voted for
    # Returns:
-   #  On success: Returns true and the instance of vote that was created and saved
+   #  On success: returns true and the instance of vote that 
+   #  was created and saved
    #  On failure: returns false and the instance of vote that wasn't saved
-  def self.record_vote(gamer_id, synonym_id) 
-          @vote = Vote.new
-          @vote.synonym_id = synonym_id
-          @vote.gamer_id = gamer_id
-            if @vote.save
-              return true, @vote  
-            else
-              return false, @vote
-   	        end
+  class << self
+    def record_vote(gamer_id, synonym_id) 
+        vote = Vote.new
+        vote.synonym_id = synonym_id
+        vote.gamer_id = gamer_id
+          if vote.save
+            return true, vote  
+          else
+            return false, vote
+   	      end
+    end
   end
 
    # This method is used to retreive a list of specific size of keywords that gamer with this gamer_id didn't vote on yet
@@ -54,26 +60,29 @@ class Vote < ActiveRecord::Base
       end
   end
 
-  # Written by: Nourhan Zakaria
-  #This is a custom validation method that validates that there exists a gamer with this gamer_id 
+  # Author: Nourhan Zakaria
+  # This is a custom validation method that validates that there exists 
+  # a gamer with this gamer_id 
   def validate_gamer_exists
     valid_gamer = Gamer.find_by_id(gamer_id)
     if valid_gamer == nil
-      errors.add(:gamer_id,"this gamer_id soesn't exist")
+      errors.add(:gamer_id,"this gamer_id doesn't exist")
     end
   end
 
-  # Written by: Nourhan Zakaria
-  #This is a custom validation method that validates that there exists a synonym with this synonym_id 
+  # Author: Nourhan Zakaria
+  # This is a custom validation method that validates that there exists 
+  # a synonym with this synonym_id 
   def validate_synonym_exists
     valid_synonym = Synonym.find_by_id(synonym_id)
     if valid_synonym == nil
-      errors.add(:synonym_id,"this synonym_id soesn't exist")
+      errors.add(:synonym_id,"this synonym_id doesn't exist")
     end
   end
 
-  # Written by: Nourhan Zakaria
-  # This is a custom validation method that validates that synonym which the gamer is voting for doesn't belong to a keyword that 
+  # Author: Nourhan Zakaria
+  # This is a custom validation method that validates that the synonym that 
+  # the gamer is voting for doesn't belong to a keyword that 
   # this gamer voted for before
   def validate_voting_for_new_keyword
     keyword_id_of_chosen_synonym=Synonym.where("id=?",synonym_id).select('Keyword_id')
