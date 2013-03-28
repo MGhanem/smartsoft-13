@@ -1,8 +1,7 @@
 Arability::Application.routes.draw do
-
-  get "projects/index"
   
   root :to => 'pages#home'
+
   devise_for :gamers
 
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
