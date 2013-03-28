@@ -33,19 +33,20 @@ class KeywordsController < ApplicationController
   # Author:
   #   Nourhan Mohamed
   # params:
-  #   search: a string representing the search keyword that was suggested to 
+  #   search: a string representing the search keyword that was suggested to
   #     be added to the database
   # returns:
   #   success:
-  #     redirects to the search page again after adding the keyword to database
-  #     and displays a message indicating successful adding
+  #     redirects to the search page again after adding the keyword to
+  #     database and displays a message indicating successful adding
   #   failure:
-  #     returns an error message indicating failure to add (not implemented as UI yet) 
+  #     returns an error message indicating failure to add
+  #     (not implemented as UI yet)
   def suggest_add
     keyword_to_add = params[:search]
     Keyword.add_keyword_to_database(keyword_to_add)
-    redirect_to :controller => 'search', :action => 'search', :search => keyword_to_add, 
-      :suggested => true
+    redirect_to :controller => 'search', :action => 'search',
+      :search => keyword_to_add, :suggested => true
   end
 
   # View all kewords
