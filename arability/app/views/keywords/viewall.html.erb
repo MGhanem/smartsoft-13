@@ -1,0 +1,6 @@
+<h1>All keywords</h1>
+<ul>
+<% @keywords.each do |keyword| %>
+  <li><%= "#{keyword.name}, #{keyword.approved}, #{keyword.is_english}" %></li>
+<% end %>
+</ul>
