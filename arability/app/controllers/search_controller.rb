@@ -17,8 +17,8 @@ class SearchController < ApplicationController
     @categories = params[:categories]
     if @categories.present?
       categories_array = @categories.split(/,/)
-      categories_array.reject! {|x| x.blank?}
-      categories_array.map! {|x| x.strip}
+      categories_array.reject! { |x| x.blank? }
+      categories_array.map! { |x| x.strip }
       categories_array.uniq!
     else
       categories_array = []
