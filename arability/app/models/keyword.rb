@@ -10,17 +10,21 @@ class Keyword < ActiveRecord::Base
   #   on succes: the highest voted Synonym of word gets returned. If two synonyms have an 
   #               equal number of votes, the first synonym entered to the list is returned.
   #   on failure: if word has no synonyms, nothing is returned
-  def self.highest_voted_synonym(word)
-    syn = Synonym.where(:keyword_id => word.id).all
-    highest = 0
-    highest_syn =  nil
-    syn.each do |s|
-      if Synonym.getVotes(s.id) > highest
-        highest_syn = s
-        highest = Synonym.getVotes(s.id)
-      end
+  class << self
+    def highest_voted_synonym(word)
+
+      syn = Synonym.where(:keyword_id => word.id).joins(:votes).where
+
+      # highest = 0
+      # highest_syn =  nil
+      # syn.each do |s|
+      #   if Synonym.getVotes(s.id) > highest
+      #     highest_syn = s
+      #     highest = Synonym.getVotes(s.id)
+      #   end
+      # end
+      # return highest_syn
     end
-    return highest_syn
   end
 
 end
