@@ -13,7 +13,7 @@ class Synonym < ActiveRecord::Base
 #   key_id: integer input parameter representing the keyword id
 #     the synonym points to
 #   approved: an optional boolean input parameter with a default false
-#     represents if an admin has approved a synonym ot database or not
+#     represents if an admin has approved a synonym on database or not
 # success:
 #   Output is boolean -- this method returns true if the vote has been recorded.
 # failure: 
