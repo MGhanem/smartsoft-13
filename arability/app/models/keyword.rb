@@ -81,7 +81,7 @@ class Keyword < ActiveRecord::Base
             .where("categories.name" => categories)
       end
     	relevant_first_list = keyword_list
-        .sort_by { |keyword| [keyword.name.downcase.index(search_word),
+        .sort_by {|keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	return relevant_first_list
     end
