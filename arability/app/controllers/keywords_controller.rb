@@ -1,4 +1,5 @@
 class KeywordsController < ApplicationController
+  # displays the form for adding a new word
   def new
     @keyword = Keyword.new(params[:name])
   end
@@ -27,16 +28,5 @@ class KeywordsController < ApplicationController
       flash = {:error => @keyword.errors.messages}
       redirect_to redirect_url, :flash => flash
     end
-  end
-
-  # View all kewords
-  def viewall
-    @keywords = Keyword.all
-  end
-
-  # Delete all keywords
-  def deleteall
-    Keyword.delete_all
-    redirect_to keywords_path, :flash => {:success => "All keywords have been deleted" }
   end
 end
