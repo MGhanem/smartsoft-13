@@ -1,8 +1,18 @@
 Arability::Application.routes.draw do
+  get "admin/index"
+
+  get "admin/login"
+  get "admin/logout"
+
+  post "admin/login"
+  post "admin/wordadd"
+  
+  resources :projects
+
   # get "admin/import_csv"
 
   root :to => 'pages#home'
- 
+
   # required for routing by the devise module(gem)
   devise_for :gamers
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
@@ -17,6 +27,7 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
+  resources :projects
   post "keywords/create"
 
   match 'search' => 'search#search'
