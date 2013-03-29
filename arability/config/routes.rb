@@ -1,11 +1,17 @@
 Arability::Application.routes.draw do
+  # get "admin/import_csv"
+
   root :to => 'pages#home'
  
   # required for routing by the devise module(gem)
   devise_for :gamers
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
+  match '/admin/import_csv' => "admin#import_csv"
 
+  post "admin/upload"
+
+  match "keywords" => "keywords#viewall"
 
   get "keywords/new"
 
@@ -63,7 +69,7 @@ Arability::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root :to => "admin#import_csv"
 
   # See how all your routes lay out with "rake routes"
 
