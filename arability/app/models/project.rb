@@ -13,12 +13,12 @@ class Project < ActiveRecord::Base
 #      Takes the params of the project entred by the developer and creates a project compares
 #it to the already existing categories and returns the project
 # params:
-#     parameters of a project
+#     :project
 # success:
 #     Creates and returns a project after splitting the csv categories string and creating
 #new categories and inserting them into the project categories array
 # failure:
-#     Cannot create a project
+#     None
  
   def self.createproject(params)
   	project = Project.new(params.except(:categories))

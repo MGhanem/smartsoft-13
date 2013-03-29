@@ -1,0 +1,14 @@
+<form action="/admin/login" method="POST">
+	<fieldset>
+		<legend>Login</legend>
+		<label>
+			<strong>username:</strong>
+			<input type="text" name="username" placeholder="username" required value="<%= @username %>">
+		</label>
+		<label>
+			<strong>password:</strong>
+			<input type="password" name="password" placeholder="password" required>
+		</label>
+	</fieldset>
+	<input type="submit" value="login">
+</form>
