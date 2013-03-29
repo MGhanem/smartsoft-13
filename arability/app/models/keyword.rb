@@ -60,6 +60,8 @@ class Keyword < ActiveRecord::Base
     end
 
   	#Description:
+    #   gets words similar to a search keyword (in a certain category) and sorts 
+    #   result by relevance
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:
@@ -86,7 +88,7 @@ class Keyword < ActiveRecord::Base
             .where("categories.name" => categories)
       end
     	relevant_first_list = keyword_list
-        .sort_by {|keyword| [keyword.name.downcase.index(search_word),
+        .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	return relevant_first_list
     end
