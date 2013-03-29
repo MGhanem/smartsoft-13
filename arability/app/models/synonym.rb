@@ -26,7 +26,6 @@ class Synonym < ActiveRecord::Base
       end
       return false
     end
-  
 
 # author:
 #   Omar Hossam
