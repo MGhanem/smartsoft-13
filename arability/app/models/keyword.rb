@@ -107,7 +107,7 @@ class Keyword < ActiveRecord::Base
     #   on failure: if word has no synonyms, nothing is returned
     def highest_voted_synonym(keyword)
       max_id = Synonym.where(:keyword_id => keyword.id).joins(:votes)
-      .count(:group => "synonym_id").max
+        .count(:group => "synonym_id").max
       return Synonym.where(:id => max_id[0])
     end
 
