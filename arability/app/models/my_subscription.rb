@@ -14,12 +14,12 @@ class MySubscription < ActiveRecord::Base
 #   word search not decremented
   class << self
    def decrement_limit(dev_id)
-  	mySubscription =
+  	my_Subscription =
     MySubscription.joins(:developer).where(:developer_id => dev_id).first
-    old_limit = mySubscription.word_search
-  	if  mySubscription.word_search > 0
-  	  mySubscription.word_search = old_limit - 1
-      mySubscription.save
+    old_limit = my_Subscription.word_search
+  	if  my_Subscription.word_search > 0
+  	  my_Subscription.word_search = old_limit - 1
+      my_Subscription.save
       return true
     else
       return false
@@ -40,15 +40,16 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def search_word_permission(dev_id) 
-    mySubscription = 
+    my_Subscription = 
     MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if mySubscription.word_search > 0 
+  	if my_Subscription.word_search > 0 
   		return true
   	else
   		return false
     end
    end
   end
+
 # author:Noha hesham
 # Description:
 #   takes the developer id and checks wether the developer's word add limit has been 
@@ -62,15 +63,16 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def add_word_permission(dev_id)
-     mySubscription = 
+     my_Subscription = 
      MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if mysubscription.word_add > 0
+  	if my_Subscription.word_add > 0
   		return true
   	else 
   		return false
     end  	
    end
   end
+
 # author:Noha hesham
 # Description:
 #   takes the developer id and checks wether the developer's word follow limit has been 
@@ -84,9 +86,9 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def follow_word_permission(dev_id)
-    mySubscription = 
+    my_Subscription = 
     MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if mysubscription.word_follow > 0
+  	if my_Subscription.word_follow > 0
   	  return true
   	else
   		return false
