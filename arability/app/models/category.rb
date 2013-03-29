@@ -25,5 +25,4 @@ class Category < ActiveRecord::Base
       end
     end
   end
->>>>>>> 12e1d30db25e928872c7713ae5e19915f742fff6
 end
