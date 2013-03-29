@@ -4,6 +4,8 @@ class Synonym < ActiveRecord::Base
   has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
 
+  class << self
+
   # Author:
   #  Mirna Yacout
   # Description:
@@ -15,7 +17,7 @@ class Synonym < ActiveRecord::Base
   # Failure:
   #  returns false if the synonym doesnot exist in the database
   #  or if the approval failed to be saved in the database 
-  class << self
+  
     def approve_synonym(synonym_id)
       if Synonym.exists?(id: synonym_id)
         synonym = Synonym.find(synonym_id)
@@ -24,9 +26,7 @@ class Synonym < ActiveRecord::Base
       end
       return false
     end
-  end
-
-  class << self
+  
 
 # author:
 #   Omar Hossam
