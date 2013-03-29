@@ -3,11 +3,7 @@ Arability::Application.routes.draw do
   resources :developer
   root :to => "Pages#home"
   get "developer/index"
-
   
-  
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -16,9 +16,9 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def search_word_permission(dev_id) 
-    my_Subscription = 
+    my_subscription = 
      MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if my_Subscription.word_search > 0 
+  	if my_subscription.word_search > 0 
   		return true
   	else
   		return false
@@ -39,9 +39,9 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def add_word_permission(dev_id)
-     my_Subscription = 
+     my_subscription = 
       MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if my_Subscription.word_add > 0
+  	if my_subscription.word_add > 0
   		return true
   	else 
   		return false
@@ -62,9 +62,9 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def follow_word_permission(dev_id)
-    my_Subscription = 
+    my_subscription = 
      MySubscription.joins(:developer).where(:developer_id => dev_id).first
-  	if my_Subscription.word_follow > 0
+  	if my_subscription.word_follow > 0
   	  return true
   	else
   		return false
