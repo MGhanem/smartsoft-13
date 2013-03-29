@@ -8,8 +8,6 @@ Arability::Application.routes.draw do
   post "keywords/create"
 
   match 'search' => 'search#search'
-
-  root :to => 'pages#home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

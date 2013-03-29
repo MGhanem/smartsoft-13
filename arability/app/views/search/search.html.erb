@@ -4,25 +4,31 @@
   	<%= content_tag(:div, :class => 'input-append') do %>
   		<% text_field_tag(:search, @search_keyword,
   											:placeholder => 'search keywords here...',
-  											:class => 'search-query') +%>
+  											:class => 'search-query') + %>
 			<% button_tag(:type => "submit",:class => 'btn') do %>
-				<% content_tag(:i, nil,:class => "icon-search")%>
+				<% content_tag(:i, nil,:class => "icon-search") %>
 			<% end %>
 		<% end %>
 	<% end %>
 </div>
 
-<div class="row">	
-	<% if @suggested %>
+<div class="row">
+	<% if @is_successful == 'true' %>
 	<div class="alert alert-success">
-		<%= content_tag(:span, "Keyword successfully added!")%>
+		<%= content_tag(:span, "Keyword successfully added!") %>
+	</div>
+	<% elsif @is_successful == 'false' %>
+	<div class="alert alert-danger">
+		<%= content_tag(:span, 
+			"Sorry, we failed to add your word to database! Check it and try " +
+			"again") %>
 	</div>
 	<% end %>
-	<% if @similar_keywords.blank? && !@search_keyword.blank? && !@suggested %>
+	<% if @similar_keywords.blank? && !@search_keyword.blank? && @is_successful == nil %>
 	<div class="well">
 		<%= content_tag(:span, 
-		"Sorry! No matched were found for the keyword you searched for!" +
-		" Do you wish to add it to our database?")%>
+			"Sorry! No matched were found for the keyword you searched for!" +
+			" Do you wish to add it to our database?") %>
 		<%= link_to "Add", :controller => "keywords", :action => "suggest_add",
 		:search => @search_keyword, :method => :get %>
 	</div>
