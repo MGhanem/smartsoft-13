@@ -1,8 +1,8 @@
 class MySubscription < ActiveRecord::Base
-<<<<<<< HEAD
-  attr_accessible :developer_id, :word_add, :word_follow, :word_search
-  belongs_to :developer
   belongs_to :subscription_model
+  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_models_id
+  belongs_to :developer
+  validates :subscription_models_id, :presence => true
 
   @@search=1
   @@add=2
@@ -57,9 +57,5 @@ class MySubscription < ActiveRecord::Base
       return @@follow
     end
 end
-=======
-  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_models_id
-  belongs_to :developer
-  validates :subscription_models_id, :presence => true
-end
->>>>>>> 463444f8b41e4ee4ba1b41e4b340e648e86a2c9f
+
+
