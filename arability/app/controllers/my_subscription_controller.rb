@@ -36,8 +36,13 @@ class MySubscriptionController < ApplicationController
 				render 'my_subscription/new'
 			end
 		else
-			flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
-			render 'my_subscription/new'
+			if(params[:my_subscription] == nil)
+				flash[:notice] = "Please choose a subscription model."
+				render 'my_subscription/new'
+			else
+				flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
+				render 'my_subscription/new'
+			end
 		end
 	end	
 end
