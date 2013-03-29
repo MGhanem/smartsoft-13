@@ -5,6 +5,8 @@ class KeywordsController < ApplicationController
   end
 
   # Create action for keywords
+  # Author:
+  #   Mohamed Ashraf
   # @params:
   #   name: the name of the new keyword
   #   redirect: the url to redirect to after the creation defaults to new
@@ -13,7 +15,6 @@ class KeywordsController < ApplicationController
   # returns:
   #   success: refreshes the page and displays notification
   #   failure: refreshes the page with error displayed
-  # author: Mohamed Ashraf
   def create
     redirect_url = params[:redirect]
     if redirect_url.blank?
