@@ -14,9 +14,9 @@ class DeveloperController < ApplicationController
      if Developer.find_by_gamer_id(current_gamer.id) != nil
         flash[:notice] = "You are already registered as a developer. Don't you remember?"
         render 'pages/home'
-    else
+     else
       @developer = Developer.new
-    end
+     end
   end
 # author:
 #   Khloud Khalid
