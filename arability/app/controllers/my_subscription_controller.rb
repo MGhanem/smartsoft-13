@@ -29,7 +29,7 @@ class MySubscriptionController < ApplicationController
 		@my_subscription.subscription_models_id = params[:my_subscription]
 		if @my_subscription.save 
 			flash[:notice] = "You have successfully registered as a developer."
-			render 'my_subscription/new'
+			render 'pages/home'
 		else
 			flash[:notice] = "Failed to complete registration."
 			render 'my_subscription/new'
