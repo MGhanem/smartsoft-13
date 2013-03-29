@@ -1,15 +1,5 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
-  has_many :synonyms
-  has_and_belongs_to_many :categories
-  validates_presence_of :name, 
-    :message => "You need to enter a keyword to save"
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
-    :message => "The keyword may contain only english or only arabic characters"
-  validates_uniqueness_of :name,
-    :message => "This keyword is already in the database"
-
-  class << self
 
   # Author:
   #  Mirna Yacout
@@ -22,14 +12,28 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #  returns false if the keyword doesnot exist in the database
   #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
+  class << self
+    def approve_keyword(kid)
+      if (Keyword.exists?(id: kid))
+        keyword = Keyword.find(kid)
         keyword.approved = true
         return keyword.save
       end
       return false
     end
+  end
+
+  has_many :synonyms
+
+  has_and_belongs_to_many :categories
+  # validates_presence_of :name, 
+  #   :message => "You need to enter a keyword to save"
+  # validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
+  #   :message => "The keyword may contain only english or only arabic characters"
+  # validates_uniqueness_of :name,
+  #   :message => "This keyword is already in the database"
+
+  class << self
 
 # author:
 #   Omar Hossam
@@ -142,9 +146,9 @@ class Keyword < ActiveRecord::Base
     #               entered to the list is returned.
     #   on failure: if word has no synonyms, nothing is returned
     def highest_voted_synonym(keyword)
-      return Synonym.where(:keyword_id => keyword.id).joins(:votes)
-        .count(:group => "synonym_id").max
-      # return Synonym.where(:id => max_id[0])
+      grouped_synonyms = Synonym.where(:keyword_id => keyword.id).joins(:votes).count(:group => "synonym_id")
+      highest_synonym = grouped_synonyms.max_by{|key, count|count}
+      return Synonym.where(:id => highest_synonym[0])
     end
 
     # Author: Mostafa Hassaan
