@@ -24,7 +24,7 @@ class MySubscriptionController < ApplicationController
 # failure:
 #   invalid information
   def create
-    if(SubscriptionModel.find_by_id(params[:my_subscription]) != nil)
+    if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
       @my_subscription = MySubscription.new
       @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
       @my_subscription.subscription_models_id = params[:my_subscription]
@@ -36,7 +36,7 @@ class MySubscriptionController < ApplicationController
         render 'my_subscription/new'
       end
     else
-      if(params[:my_subscription] == nil)
+      if params[:my_subscription] == nil
         flash[:notice] = "Please choose a subscription model."
         render 'my_subscription/new'
       else

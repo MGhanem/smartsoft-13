@@ -29,7 +29,7 @@ class DeveloperController < ApplicationController
     if @developer.save
       render 'my_subscription/new'
     else
-      if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
+      if Developer.find_by_gamer_id(current_gamer.id) != nil
         flash[:notice] = "You are already registered as a developer."
         render :action => 'new'
       else

@@ -1,8 +1,8 @@
 class Developer < ActiveRecord::Base
  belongs_to :gamer
  attr_accessible :first_name, :last_name, :verified, :gamer_id
- validates :first_name,  :presence => true
- validates :last_name,  :presence => true
+ validates :first_name, :presence => true
+ validates :last_name, :presence => true
  validates_format_of :first_name, :with => /\A[a-zA-Z]+\z/
  validates_format_of :last_name, :with => /\A[a-zA-Z]+\z/
  validates_length_of :first_name, :maximum => 18
