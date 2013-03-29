@@ -45,6 +45,8 @@ class Keyword < ActiveRecord::Base
     end
 
     # checks if the keyword is formed of english letters only
+    # author:
+    #   Mohamed Ashraf
     # params:
     #   name: the string being checked
     # returns:
@@ -92,6 +94,7 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
+    
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -107,5 +110,18 @@ class Keyword < ActiveRecord::Base
       max_id = Synonym.where(:keyword_id => word.id).joins(:votes).count(:group => "synonym_id").max
       return Synonym.where(:id => max_id[0])
     end
+
+    # Author: Mostafa Hassaan
+    # Method takes no inputs and returns an array of "Keywords"
+    # with "synonyms" that haven't been approved yet.
+    # params: --
+    # returns:
+    #   on success: Array of "keywords"
+    #   on failure: Empty array
+    def words_with_unapproved_synonyms
+      return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
+
   end
 end
