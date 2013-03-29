@@ -1,0 +1,17 @@
+<% flash.each do |key,msg| %>
+  <div class="alert alert-<%= key %> row">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <% if msg.respond_to? "each" %>
+        <div>
+          <ul class="unstyled">
+          <% msg.each do |item| %>
+            <li><%= "#{item}" %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <%= content_tag :div, msg %>
+      <% end %>
+  </div>
+<% end %>
+

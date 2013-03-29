@@ -1,32 +1,37 @@
-<h2>Sign up</h2>
+<em><h3 class="text-info">Sign up <%= resource_name.to_s.humanize %></h3></em>
 
+<div class="container well">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+  <% if resource.errors.any? %>
+    <div class="alert"><%= devise_error_messages! %></div>
+  <% end %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+    <div class="container">
+    <div><%= f.label :email, :class => "control-label" %>
+    <%= f.email_field :email, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <div><%= f.label :password, :class => "control-label" %>
+    <%= f.password_field :password, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div><%= f.label :password_confirmation, :class => "control-label" %>
+    <%= f.password_field :password_confirmation, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :username %><br />
-  <%= f.text_field :username %></div>
+    <div><%= f.label :username, :class => "control-label" %>
+    <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :age %><br />
-  <%= f.text_field :age %></div>
+    <div><%= f.label :age, :class => "control-label" %>
+    <%= f.text_field :age, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :country %><br />
-  <%= f.text_field :country %></div>
+    <div><%= f.label :country, :class => "control-label" %>
+    <%= f.text_field :country, :style => "margin-left: 10px;" %></div></br>
 
-  <div><%= f.label :education_level %><br />
-  <%= f.text_field :education_level %>  enter low, medium or high</div>
+    <div><%= f.label :education_level, :class => "control-label" %>
+    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div>
 
+    <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
 
-
-  <div><%= f.submit "Sign up" %></div>
+ </div>
+</div>
 <% end %>
 
 <%= render "links" %>
