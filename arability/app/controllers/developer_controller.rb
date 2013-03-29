@@ -26,23 +26,18 @@ end
 def create
   @developer = Developer.new(params[:developer])
   @developer.gamer_id = current_gamer.id
-  if @developer.valid?
-    if @developer.save
-      render 'my_subscription/new'
-      else
-        flash[:notice] = "Failed to complete registration."
+  if @developer.save
+    render 'my_subscription/new'
+    else
+      if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
+        flash[:notice] = "You are already registered as a developer."
         render :action => 'new'
-        end
         else
-          if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
-            flash[:notice] = "You are already registered as a developer."
-            render :action => 'new'
-            else
-              flash[:notice] = "Please make sure you entered valid information."
-              render :action => 'new'
-              end
-              end
-              end
-            end
+          flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+          render :action => 'new'
+        end
+        end
+        end
+      end
 
 
