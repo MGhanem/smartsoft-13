@@ -1,4 +1,5 @@
 <h1>Projects</h1>
+<<<<<<< HEAD
 <table>
   <tr>
     <th>Name</th>
@@ -13,3 +14,26 @@
 </table>
 <br />
 <%= link_to 'New Project', new_project_path %>
+=======
+<br />
+<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+<br />
+<% @projects.each do |project| %>
+  <div class="boxed">
+  Name:
+  <br />
+  <%= project.name %>
+  <br />
+  Categories:
+  <br />
+  <% project.categories.each do |c| %>
+    <%= c.name %>
+  <% end %>
+  <br />
+  Description:
+  <br />	
+  <%= project.description %>
+</div>
+<br />
+<% end %>
+>>>>>>> 463444f8b41e4ee4ba1b41e4b340e648e86a2c9f

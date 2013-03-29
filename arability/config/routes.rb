@@ -1,8 +1,46 @@
 Arability::Application.routes.draw do
   resources :projects
   resources :developer
-  root :to => "Pages#home"
+
   get "developer/index"
+  
+  get "admin/index"
+
+  get "admin/login"
+  get "admin/logout"
+
+  post "admin/login"
+  post "admin/wordadd"
+  
+  resources :projects
+
+  # get "admin/import_csv"
+
+  root :to => 'pages#home'
+
+  # required for routing by the devise module(gem)
+  devise_for :gamers
+  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+
+  get "admin/import_csv"
+
+  post "admin/upload"
+
+  match "keywords" => "keywords#viewall"
+
+  get "keywords/new"
+
+  get "keywords/suggest_add"
+
+  resources :projects
+  post "keywords/create"
+
+  match '/developers/new' => "developer#new"
+  match '/developers/create' => "developer#create"
+  match '/my_subscriptions/new' => "my_subscription#new"
+  match '/my_subscriptions/create' => "my_subscription#create"
+
+  match 'search' => 'search#search'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -53,7 +91,7 @@ Arability::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root :to => "admin#import_csv"
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -5,6 +6,20 @@
         <%= pluralize(@project.errors.count, "error") %> 
         prohibited this project from being saved:
       </h2>
+=======
+<div class = "container">
+  <style>
+  .radio{
+  display:float;
+}
+  </style>
+
+<%= form_for(@project) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+>>>>>>> 463444f8b41e4ee4ba1b41e4b340e648e86a2c9f
       <ul>
       <% @project.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -12,11 +27,45 @@
       </ul>
     </div>
   <% end %>
+<<<<<<< HEAD
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+=======
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :categories %>
+    <%= f.text_field :categories %>
+  </div>
+  <div class="radio">
+   <%= f.radio_button :formal, 'Formal'%> 
+  <%= label :formal, 'Formal' %>
+  <%= f.radio_button :formal, 'Slang' %>
+  <%= label :slang, 'Slang' %>
+  <br>
+  </div>
+  <div class="field">
+    <div class="field">Age Target</div>
+    <%= f.label "From" %>
+    <%= f.text_field :minAge %>
+    <%= f.label "To" %>
+    <%= f.text_field :maxAge %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+>>>>>>> 463444f8b41e4ee4ba1b41e4b340e648e86a2c9f
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+<<<<<<< HEAD
+=======
+</div>
+>>>>>>> 463444f8b41e4ee4ba1b41e4b340e648e86a2c9f
