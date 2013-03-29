@@ -3,7 +3,8 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
   has_many :votes
 
-  # Method returns the the number of votes of a certain synonym.
+  # Author: Mostafa Hassaan
+  # Description: Method returns the the number of votes of a certain synonym.
   # params:
   #   syn_id: ID of synonym to get the votes number for.
   # returns:
