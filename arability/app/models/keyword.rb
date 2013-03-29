@@ -44,6 +44,8 @@ class Keyword < ActiveRecord::Base
     end
 
     # checks if the keyword is formed of english letters only
+    # author:
+    #   Mohamed Ashraf
     # params:
     #   name: the string being checked
     # returns:
