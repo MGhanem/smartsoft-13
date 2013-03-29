@@ -2,6 +2,8 @@ class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
   # attr_accessible :title, :body
+  @@ENG = 0
+  @@ARABIC = 1
  
    # Author: Nourhan Zakaria
    # This method is used to get a list of specific size of keywords 
@@ -30,9 +32,9 @@ class Vote < ActiveRecord::Base
                                         OR id NOT IN( Select K1.id from 
                                         Keywords K1 INNER JOIN Synonyms S1
                                         ON S1.keyword_id = K1.id)", gamer_id)                            
-          if lang == 0    
+          if lang == @@ENG    
             keywords_list = unvoted_keywords.where('is_english=?', true)
-          elsif lang == 1
+          elsif lang == @@ARABIC
             keywords_list = unvoted_keywords.where('is_english=?', false)
           else
             keywords_list = unvoted_keywords
