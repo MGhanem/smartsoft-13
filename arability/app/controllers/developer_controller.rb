@@ -10,9 +10,9 @@ class DeveloperController < ApplicationController
 #   view generated successfully
 # failure:
 #   gamer not signed in
-def new
-  @developer = Developer.new
-end
+  def new
+    @developer = Developer.new
+  end
 # author:
 #   Khloud Khalid
 # description:
@@ -23,21 +23,21 @@ end
 #   developer created successfully
 # failure:
 #   invalid information, user already registered as developer
-def create
-  @developer = Developer.new(params[:developer])
-  @developer.gamer_id = current_gamer.id
-  if @developer.save
-    render 'my_subscription/new'
-  else
-    if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
-      flash[:notice] = "You are already registered as a developer."
-      render :action => 'new'
+  def create
+    @developer = Developer.new(params[:developer])
+    @developer.gamer_id = current_gamer.id
+    if @developer.save
+      render 'my_subscription/new'
     else
-      flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
-      render :action => 'new'
+      if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
+        flash[:notice] = "You are already registered as a developer."
+        render :action => 'new'
+      else
+        flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+        render :action => 'new'
+      end
     end
   end
-end
 end
 
 
