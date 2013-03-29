@@ -27,17 +27,6 @@ class Synonym < ActiveRecord::Base
       return false
     end
 
-  end
-end
-
-  has_many :votes
-
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create
-    , :message => "The synonym is not in the correct form"
-
-  class << self
-
-
 # author:
 #   Omar Hossam
 # description:
