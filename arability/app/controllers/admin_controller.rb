@@ -1,9 +1,9 @@
 class AdminController < ApplicationController
 
   before_filter :require_login
-  skip_before_filter :require_login, :only => [:login]
+  skip_before_filter :require_login, only: [:login]
 
-  before_filter :check_login, :only => [:login]
+  before_filter :check_login, only: [:login]
   
   # author:
   #     Karim ElNaggar
@@ -18,7 +18,7 @@ class AdminController < ApplicationController
   def require_login
     unless logged_in?
       flash[:error] = "You must be logged in"
-      redirect_to :action => "login"
+      redirect_to action: "login"
     end
   end
 
@@ -34,7 +34,7 @@ class AdminController < ApplicationController
   #     none
   def check_login
     if logged_in?
-      redirect_to :action => "index"
+      redirect_to action: "index"
     end
   end
 
@@ -112,7 +112,7 @@ class AdminController < ApplicationController
     if request.post?
     	if params[:username] == "admin" and params[:password] == "admin"
     	  create_session
-    	  redirect_to :action => "index"
+    	  redirect_to action: "index"
       else
         flash[:error] = "Invalid username or password"
         @username = params[:username]
@@ -140,7 +140,7 @@ class AdminController < ApplicationController
       flash[:error] = @keyword.errors.messages
     end
     flash.keep
-    redirect_to :action => "index"
+    redirect_to action: "index"
   end
 
   # author:
@@ -155,6 +155,6 @@ class AdminController < ApplicationController
   #     none
   def logout
     destroy_session
-    redirect_to :action => "login"
+    redirect_to action: "login"
   end
 end
