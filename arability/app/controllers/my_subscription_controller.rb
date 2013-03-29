@@ -34,9 +34,9 @@ class MySubscriptionController < ApplicationController
 # failure:
 #   invalid information
   def create
-    if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
-      if Developer.find_by_gamer_id(current_gamer.id) != nil
-        if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
+      if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
+        if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
           @my_subscription = MySubscription.new
           @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
           @my_subscription.subscription_models_id = params[:my_subscription]
@@ -48,21 +48,21 @@ class MySubscriptionController < ApplicationController
             render 'my_subscription/new'
           end
         else
-          flash[:notice] = "You have already chosen your subscription model."
-          render 'pages/home'
+          if params[:my_subscription] == nil
+            flash[:notice] = "Please choose a subscription model."
+            render 'my_subscription/new'
+          else
+            flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
+            render 'my_subscription/new'
+          end
         end
       else
-        flash[:notice] = "Please register as a developer before you choose your subscription model."
+        flash[:notice] = "You have already chosen your subscription model. Don't you remember?"
         render 'pages/home'
       end
     else
-      if params[:my_subscription] == nil
-        flash[:notice] = "Please choose a subscription model."
-        render 'my_subscription/new'
-      else
-        flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
-        render 'my_subscription/new'
-      end
-    end
+      flash[:notice] = "Please register as a developer before you choose your subscription model."
+      render 'pages/home'
+    end  
   end
 end
