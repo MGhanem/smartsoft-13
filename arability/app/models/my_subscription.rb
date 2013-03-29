@@ -2,8 +2,8 @@ class MySubscription < ActiveRecord::Base
   attr_accessible :developer_id, :word_add, :word_follow, :word_search
   belongs_to :developer
   belongs_to :subscription_model
-
-  #author:Noha hesham
+  class << self
+# author:Noha hesham
 # Description:
 #  takes the developer id and integer type and checks wether 
 #  the developer's word search ,word add and word follow
@@ -17,11 +17,9 @@ class MySubscription < ActiveRecord::Base
 #  or follow limit
 # fail:
 #  none
-
-  class << self
     def give_permissions(dev_id,type)
       my_subscription = 
-     MySubscription.joins(:developer).where(:developer_id => dev_id).first
+      MySubscription.joins(:developer).where(:developer_id => dev_id).first
       if type == 1
         if my_subscription.word_search > 0 
           return true
