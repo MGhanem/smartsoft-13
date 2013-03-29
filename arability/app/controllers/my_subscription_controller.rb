@@ -24,17 +24,20 @@ class MySubscriptionController < ApplicationController
 # failure:
 # 	invalid information
 	def create
-		@my_subscription = MySubscription.new
-		@my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
-		@my_subscription.subscription_models_id = params[:my_subscription]
-		if @my_subscription.save 
-			flash[:notice] = "You have successfully registered as a developer."
-			render 'pages/home'
+		if(SubscriptionModel.find_by_id(params[:my_subscription]) != nil)
+			@my_subscription = MySubscription.new
+			@my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+			@my_subscription.subscription_models_id = params[:my_subscription]
+			if @my_subscription.save 
+				flash[:notice] = "You have successfully registered as a developer."
+				render 'pages/home'
+			else
+				flash[:notice] = "Failed to complete registration."
+				render 'my_subscription/new'
+			end
 		else
-			flash[:notice] = "Failed to complete registration."
+			flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
 			render 'my_subscription/new'
 		end
-	end
-
-	
+	end	
 end
