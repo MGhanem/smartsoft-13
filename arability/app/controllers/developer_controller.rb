@@ -26,7 +26,7 @@ class DeveloperController < ApplicationController
 # 	invalid information, user already registered as developer
 	def create
 		@developer = Developer.new(params[:developer])
-		@developer.gamer_id = 3
+		@developer.gamer_id = current_gamer.id
 		if @developer.valid?
 			if @developer.save 
 				render 'my_subscription/new'
@@ -36,7 +36,7 @@ class DeveloperController < ApplicationController
 			end
 				
 		else
-			if((Developer.find_by_gamer_id(3)) != nil)
+			if((Developer.find_by_gamer_id(current_gamer.id)) != nil)
 				flash[:notice] = "You are already registered as a developer."	
 				render :action => 'new'
 			else
