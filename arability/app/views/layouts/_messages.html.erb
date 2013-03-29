@@ -4,8 +4,8 @@
       <% if msg.respond_to? "each" %>
         <div>
           <ul class="unstyled">
-          <%msg.each do |name, alert| %>
-            <li><%= "#{name}: #{alert}" %></li>
+          <% msg.each do |item| %>
+            <li><%= "#{item}" %></li>
           <% end %>
           </ul>
         </div>
