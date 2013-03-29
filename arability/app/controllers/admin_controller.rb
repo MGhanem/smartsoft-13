@@ -110,7 +110,7 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def login
     if request.post?
-    	if params[:username] == "admin" and params[:password] == "admin"
+    	if params[:username] == "admin" && params[:password] == "admin"
     	  create_session
     	  redirect_to action: "index"
       else
