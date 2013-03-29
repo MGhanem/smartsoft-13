@@ -5,30 +5,6 @@ class MySubscription < ActiveRecord::Base
 
 #author:Noha hesham
 # Description:
-#   takes the developer id and decrements the word search.
-# params:
-#   developer id
-# success:
-#   word search decremented
-# fail:
-#   word search not decremented
-  class << self
-   def decrement_limit(dev_id)
-  	my_Subscription =
-    MySubscription.joins(:developer).where(:developer_id => dev_id).first
-    old_limit = my_Subscription.word_search
-  	if  my_Subscription.word_search > 0
-  	  my_Subscription.word_search = old_limit - 1
-      my_Subscription.save
-      return true
-    else
-      return false
-    end
-   end
-  end
-
-#author:Noha hesham
-# Description:
 #   takes the developer id and checks wether the developer's word search limit has been 
 #   reached ,if its not then it is greater than zero and permission is given to search for words
 #   by returning true else return false and permission denied.
@@ -41,7 +17,7 @@ class MySubscription < ActiveRecord::Base
   class << self
    def search_word_permission(dev_id) 
     my_Subscription = 
-    MySubscription.joins(:developer).where(:developer_id => dev_id).first
+     MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if my_Subscription.word_search > 0 
   		return true
   	else
@@ -64,7 +40,7 @@ class MySubscription < ActiveRecord::Base
   class << self
    def add_word_permission(dev_id)
      my_Subscription = 
-     MySubscription.joins(:developer).where(:developer_id => dev_id).first
+      MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if my_Subscription.word_add > 0
   		return true
   	else 
@@ -87,7 +63,7 @@ class MySubscription < ActiveRecord::Base
   class << self
    def follow_word_permission(dev_id)
     my_Subscription = 
-    MySubscription.joins(:developer).where(:developer_id => dev_id).first
+     MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if my_Subscription.word_follow > 0
   	  return true
   	else
