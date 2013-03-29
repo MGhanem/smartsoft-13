@@ -52,9 +52,9 @@ class Synonym < ActiveRecord::Base
         synew.name = syn
         synew.keyword_id = key_id 
         return synew.save
-        else
-          return false
-        end
+      else
+        return false
+      end
     end
   end
  end
