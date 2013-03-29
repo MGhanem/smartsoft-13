@@ -11,12 +11,12 @@ class DeveloperController < ApplicationController
 # failure:
 #   gamer not signed in
   def new
-     if Developer.find_by_gamer_id(current_gamer.id) != nil
-        flash[:notice] = "You are already registered as a developer. Don't you remember?"
-        render 'pages/home'
-     else
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
+      flash[:notice] = "You are already registered as a developer. Don't you remember?"
+      render 'pages/home'
+    else
       @developer = Developer.new
-     end
+    end
   end
 # author:
 #   Khloud Khalid
@@ -29,13 +29,18 @@ class DeveloperController < ApplicationController
 # failure:
 #   invalid information, user already registered as developer
   def create
-    @developer = Developer.new(params[:developer])
-    @developer.gamer_id = current_gamer.id
-    if @developer.save
-      render 'my_subscription/new'
-    else 
-      flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
-      render :action => 'new'
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
+      flash[:notice] = "You are already registered as a developer. Don't you remember?"
+      render 'pages/home'
+    else
+      @developer = Developer.new(params[:developer])
+      @developer.gamer_id = current_gamer.id
+      if @developer.save
+        render 'my_subscription/new'
+      else
+        flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+        render :action => 'new'
+      end
     end
   end
 end
