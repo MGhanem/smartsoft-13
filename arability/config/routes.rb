@@ -2,6 +2,10 @@ Arability::Application.routes.draw do
   # get "admin/import_csv"
 
   root :to => 'pages#home'
+ 
+  # required for routing by the devise module(gem)
+  devise_for :gamers
+  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   match '/admin/import_csv' => "admin#import_csv"
 
@@ -9,16 +13,13 @@ Arability::Application.routes.draw do
 
   match "keywords" => "keywords#viewall"
 
-  get "keywords/deleteall"
-
   get "keywords/new"
+
+  get "keywords/suggest_add"
 
   post "keywords/create"
 
-  get "search/index"
-
-  match 'search/index' => 'search#index'
-
+  match 'search' => 'search#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
