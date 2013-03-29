@@ -11,6 +11,23 @@ class Keyword < ActiveRecord::Base
     :message => "This keyword is already in the database"
 
   class << self
+
+# author:
+#   Omar Hossam
+# description:
+#   feature takes no input and returns a list of all unapproved keywords
+# success: 
+#   takes no arguments and returns to the admin a list containing the keywords 
+#   that are pending for approval in the database
+# failure:
+#   returns an empty list if no words are pending for approval
+
+  def listunapprovedkeywords
+
+    return Keyword.where(approved: false).all
+
+  end
+
     # adds a new keyword to the database
     # author:
     #   Mohamed Ashraf
