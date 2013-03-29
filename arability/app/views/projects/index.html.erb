@@ -3,16 +3,20 @@
 <a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
 <br />
 <% @projects.each do |project| %>
-<br />
-<div class="boxed">
-    <%= project.name %>
-    <br />
-    <% project.categories.each do |c| %>
+  <div class="boxed">
+  Name:
+  <br />
+  <%= project.name %>
+  <br />
+  Categories:
+  <br />
+  <% project.categories.each do |c| %>
     <%= c.name %>
-    <% end %>
-    <br />
-    <%= project.description %>
-
+  <% end %>
+  <br />
+  Description:
+  <br />	
+  <%= project.description %>
 </div>
 <br />
 <% end %>
