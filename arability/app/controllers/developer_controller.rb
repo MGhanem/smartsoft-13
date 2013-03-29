@@ -35,9 +35,9 @@ def create
         else
           flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
           render :action => 'new'
-        end
-        end
-        end
       end
+  end
+end
+end
 
 

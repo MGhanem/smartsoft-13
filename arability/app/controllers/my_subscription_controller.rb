@@ -34,7 +34,7 @@ def create
       else
         flash[:notice] = "Failed to complete registration."
         render 'my_subscription/new'
-        end
+    end
         else
           if(params[:my_subscription] == nil)
             flash[:notice] = "Please choose a subscription model."
@@ -42,7 +42,7 @@ def create
             else
               flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
               render 'my_subscription/new'
-              end
-              end
-              end
-            end
+          end
+  end
+end
+end
