@@ -1,4 +1,7 @@
 Arability::Application.routes.draw do
+  
+  resources :projects
+
   # get "admin/import_csv"
 
   root :to => 'pages#home'
