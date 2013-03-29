@@ -5,11 +5,14 @@ class Keyword < ActiveRecord::Base
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"
   validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
-     :message => "The keyword may contain only english or only arabic characters"
+    :message => "The keyword may contain only english or only arabic characters"
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
+
   class << self
     # adds a new keyword to the database
+    # author:
+    #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
     #   approved: is the created keyword is automatically approved
