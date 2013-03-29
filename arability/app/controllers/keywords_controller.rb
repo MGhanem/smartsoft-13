@@ -44,9 +44,9 @@ class KeywordsController < ApplicationController
   #     (not implemented as UI yet)
   def suggest_add
     keyword_to_add = params[:search]
-    Keyword.add_keyword_to_database(keyword_to_add)
+    add_success = Keyword.add_keyword_to_database(keyword_to_add)
     redirect_to :controller => 'search', :action => 'search',
-      :search => keyword_to_add, :suggested => true
+      :search => keyword_to_add, :suggested => add_success[0]
   end
 
   # View all kewords
