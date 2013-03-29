@@ -1,7 +1,10 @@
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
+  has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
+
+  class << self
 
 # author:
 #   Omar Hossam
@@ -20,7 +23,7 @@ class Synonym < ActiveRecord::Base
 #   returns false if word not saved to database due to incorrect expression of
 #   synonym name or an incorrect keyword id for an unavaialable keyword in database
 
-  def self.recordsynonym(syn, key_id, approved = false)
+  def recordsynonym(syn, key_id, approved = false)
     if syn == ""
       return false
     else if Keyword.exists?(id: key_id)
@@ -33,5 +36,7 @@ class Synonym < ActiveRecord::Base
       end
     end
   end
+
+ end
 
 end

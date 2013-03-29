@@ -10,19 +10,22 @@
 
 <%= render 'shared/navbar' %>
 
-<div class="container">
-  <% flash.each do |key,msg| %>
-    <div class="alert alert-<%= key %>">
-      <div class="message-inner">
-        <%= content_tag :div, msg %>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-    </div>
-  <% end %>
 
-  <%= yield %>
+<div role="main" id="main">
+  <div class="container">
+    <% flash.each do |key,msg| %>
+      <div class="alert alert-<%= key %>">
+        <div class="message-inner">
+          <%= content_tag :div, msg %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  </div>
 </div>
 
+<%= yield %>
 <%= render 'shared/navbardropdownjs' %>
+
 </body>
 </html>
