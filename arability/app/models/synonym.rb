@@ -42,4 +42,3 @@ class Synonym < ActiveRecord::Base
  end
 
 end
-
