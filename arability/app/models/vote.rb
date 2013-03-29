@@ -18,7 +18,7 @@ class Vote < ActiveRecord::Base
    #  was created and saved
    #  On failure: returns false and the instance of vote that wasn't saved
   class << self
-    def record_vote(gamer_id, synonym_id) 
+      def record_vote(gamer_id, synonym_id) 
         vote = Vote.new
         vote.synonym_id = synonym_id
         vote.gamer_id = gamer_id
@@ -27,38 +27,8 @@ class Vote < ActiveRecord::Base
           else
             return false, vote
    	      end
-    end
-  end
-
-   # This method is used to retreive a list of specific size of keywords that gamer with this gamer_id didn't vote on yet
-   # Parameters:
-   #  gamer_id: the gamer ID 
-   #  count: the size of the list to be retreived
-   #  lang: integer to specify the language of keywords to be retreived if 0 then english only, if 1 then arabic only, otherwise both english and arabic 
-   #        keywords can be icluded
-   # Returns:
-   #  On success: Returns a list of un voted keywords of the specified langauge with size = count for the gamer with this gamer_id  
-   #  On failure: Returns empty list
-  def self.get_unvoted_keywords(gamer_id, count, lang)
-      if Gamer.find_by_id(gamer_id) != nil
-        voted_synonyms = Vote.where('gamer_id = ?', gamer_id).select('synonym_id')
-        voted_keywords = Synonym.where(:id => voted_synonyms).select('keyword_id')
-        #un_voted_keywords = Keyword.all - Keyword.where( :id => voted_keywords)
-          if lang == 0
-            un_voted_keywords = Keyword.where("is_english =?",true) - Keyword.where(:id => voted_keywords)
-          elsif lang ==1
-            un_voted_keywords = Keyword.where("is_english=?",false) - Keyword.where(:id => voted_keywords)
-          else
-            un_voted_keywords = Keyword.all - Keyword.where( :id => voted_keywords) 
-          end
-        list_returned = un_voted_keywords.take(count)
-
-        return list_returned
-
-      else
-        return nil
       end
-  end
+   end
 
   # Author: Nourhan Zakaria
   # This is a custom validation method that validates that there exists 
@@ -85,13 +55,20 @@ class Vote < ActiveRecord::Base
   # the gamer is voting for doesn't belong to a keyword that 
   # this gamer voted for before
   def validate_voting_for_new_keyword
-    keyword_id_of_chosen_synonym=Synonym.where("id=?",synonym_id).select('Keyword_id')
-    voted_synonyms = Vote.where('gamer_id = ?', gamer_id).select('synonym_id')
-    voted_keywords = Synonym.where(:id => voted_synonyms).select('keyword_id')
-    check = Keyword.where(:id => keyword_id_of_chosen_synonym) - Keyword.where( :id => voted_keywords)
-    if check == []
-       errors.add(:keyword_id,"this user voted for this keyword before")
-    end
+    return chosen_synonym = Synonym.where("id=?",synonym_id)
+      if chosen_synonym != []
+      k_id_of_chosen_synonym = chosen_synonym.first.keyword_id
+      check = Keyword.where("id NOT IN (
+                    Select K.id from Keywords K 
+                    INNER JOIN Synonyms  S ON 
+                    S.keyword_id = K.id AND S.id IN (
+                    SELECT S1.id FROM synonyms S1 
+                    INNER JOIN votes V on S1.id = V.synonym_id 
+                    INNER JOIN gamers G on G.id = V.gamer_id AND G.id = ?)) 
+                    AND id = ?",gamer_id, k_id_of_chosen_synonym )
+          if check == []
+            errors.add(:keyword_id,"this user voted for this keyword before")
+          end
+      end
   end
-
 end
