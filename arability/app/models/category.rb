@@ -13,12 +13,14 @@ class Category < ActiveRecord::Base
   # returns:
   #   success: the first return is true and the second is the saved category
   #   failure: the first return is false and the second is the unsaved category
-  def self.add_category_to_database_if_not_exists(name)
-    category = Category.where(:name => name).first_or_create
-    if category.save
-      return true, category
-    else
-      return false, category
+  class << self
+    def add_category_to_database_if_not_exists(name)
+      category = Category.where(:name => name).first_or_create
+      if category.save
+        return true, category
+      else
+        return false, category
+      end
     end
   end
 end

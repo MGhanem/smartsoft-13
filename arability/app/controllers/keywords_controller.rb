@@ -1,4 +1,5 @@
 class KeywordsController < ApplicationController
+  # displays the form for adding a new word
   def new
     @keyword = Keyword.new(params[:name])
   end
@@ -8,6 +9,7 @@ class KeywordsController < ApplicationController
   #   name: the name of the new keyword
   #   redirect: the url to redirect to after the creation defaults to new
   #             keyword path
+  #   is_english: the language of the keyword
   # returns:
   #   success: refreshes the page and displays notification
   #   failure: refreshes the page with error displayed
@@ -24,7 +26,7 @@ class KeywordsController < ApplicationController
       flash = { :success => "Keyword #{@keyword.name} has been created" }
       redirect_to redirect_url, :flash => flash
     else
-      flash = {:error => @keyword.errors.messages}
+      flash = { :error => @keyword.errors.messages }
       redirect_to redirect_url, :flash => flash
     end
   end
@@ -47,16 +49,5 @@ class KeywordsController < ApplicationController
     Keyword.add_keyword_to_database(keyword_to_add)
     redirect_to :controller => 'search', :action => 'search',
       :search => keyword_to_add, :suggested => true
-  end
-
-  # View all kewords
-  def viewall
-    @keywords = Keyword.all
-  end
-
-  # Delete all keywords
-  def deleteall
-    Keyword.delete_all
-    redirect_to keywords_path, :flash => {:success => "All keywords have been deleted" }
   end
 end
