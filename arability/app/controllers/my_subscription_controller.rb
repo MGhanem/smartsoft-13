@@ -31,18 +31,18 @@ def create
     if @my_subscription.save
       flash[:notice] = "You have successfully registered as a developer."
       render 'pages/home'
-      else
-        flash[:notice] = "Failed to complete registration."
-        render 'my_subscription/new'
+    else
+      flash[:notice] = "Failed to complete registration."
+      render 'my_subscription/new'
     end
-        else
-          if(params[:my_subscription] == nil)
-            flash[:notice] = "Please choose a subscription model."
-            render 'my_subscription/new'
-            else
-              flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
-              render 'my_subscription/new'
-          end
+  else
+    if(params[:my_subscription] == nil)
+        flash[:notice] = "Please choose a subscription model."
+        render 'my_subscription/new'
+    else
+      flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
+      render 'my_subscription/new'
+    end
   end
 end
 end
