@@ -24,8 +24,8 @@ class MySubscriptionController < ApplicationController
 # failure:
 # 	invalid information
 	def create
-		@my_subscription = MySubscription.new()
-		@my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+		@my_subscription = MySubscription.new
+		@my_subscription.developer_id = Developer.find_by_gamer_id(3).id
 		@my_subscription.subscription_models_id = params[:my_subscription]
 		if @my_subscription.save 
 			flash[:notice] = "You have successfully registered as a developer."
