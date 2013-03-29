@@ -157,7 +157,6 @@ class AdminController < ApplicationController
     destroy_session
     redirect_to action: "login"
   end
-end
 
   require 'csv'
   
