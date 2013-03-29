@@ -21,7 +21,6 @@ class Keyword < ActiveRecord::Base
       end
       return false
     end
-  end
 
   has_many :synonyms
 
