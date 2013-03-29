@@ -5,21 +5,21 @@ class MySubscription < ActiveRecord::Base
   class << self
 # author:Noha hesham
 # Description:
-#  takes the developer id and integer type and checks wether 
-#  the developer's word search ,word add and word follow
-#  limit has been reached ,if its not then it is greater than zero 
-#  and permission is given by returning true else return false
-#  and permission denied.
+#   takes the developer id and integer type and checks wether 
+#   the developer's word search ,word add and word follow
+#   limit has been reached ,if its not then it is greater than zero 
+#   and permission is given by returning true else return false
+#   and permission denied.
 # params:
-#  developer id and type
+#   developer id and type
 # success:
-#  permission is given if the developer didnt exceed the search ,add
-#  or follow limit
+#   permission is given if the developer didnt exceed the search ,add
+#   or follow limit
 # fail:
-#  none
+#   none
     def give_permissions(dev_id,type)
       my_subscription = 
-      MySubscription.joins(:developer).where(:developer_id => dev_id).first
+       MySubscription.joins(:developer).where(:developer_id => dev_id).first
       if type == 1
         if my_subscription.word_search > 0 
           return true
