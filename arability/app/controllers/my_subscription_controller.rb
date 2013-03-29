@@ -25,15 +25,20 @@ class MySubscriptionController < ApplicationController
 #   invalid information
   def create
     if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
-      @my_subscription = MySubscription.new
-      @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
-      @my_subscription.subscription_models_id = params[:my_subscription]
-      if @my_subscription.save
-        flash[:notice] = "You have successfully registered as a developer."
-        render 'pages/home'
+      if SubscriptionModel.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
+        @my_subscription = MySubscription.new
+        @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+        @my_subscription.subscription_models_id = params[:my_subscription]
+        if @my_subscription.save
+          flash[:notice] = "You have successfully registered as a developer."
+          render 'pages/home'
+        else
+          flash[:notice] = "Failed to complete registration."
+          render 'my_subscription/new'
+        end
       else
-        flash[:notice] = "Failed to complete registration."
-        render 'my_subscription/new'
+        flash[:notice] = "You have already chosen your subscription model."
+        render 'pages/home'
       end
     else
       if params[:my_subscription] == nil
