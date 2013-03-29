@@ -3,6 +3,7 @@
 <head>
   <title>Arability</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "bootstrap_and_overrides", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -13,17 +14,18 @@
 
 <div role="main" id="main">
   <div class="container">
-    <div class="content">
-      <div class="row">
-        <div class="span12">
-          <%= render 'layouts/messages' %>
-          <%= yield %>
+    <% flash.each do |key,msg| %>
+      <div class="alert alert-<%= key %>">
+        <div class="message-inner">
+          <%= content_tag :div, msg %>
         </div>
       </div>
+    <% end %>
     </div>
   </div>
 </div>
 
+<%= yield %>
 <%= render 'shared/navbardropdownjs' %>
 
 </body>
