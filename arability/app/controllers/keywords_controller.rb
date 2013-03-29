@@ -26,7 +26,7 @@ class KeywordsController < ApplicationController
       flash = { :success => "Keyword #{@keyword.name} has been created" }
       redirect_to redirect_url, :flash => flash
     else
-      flash = {:error => @keyword.errors.messages}
+      flash = { :error => @keyword.errors.messages }
       redirect_to redirect_url, :flash => flash
     end
   end
