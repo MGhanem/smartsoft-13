@@ -4,6 +4,7 @@ class Vote < ActiveRecord::Base
   # attr_accessible :title, :body
   @@ENG = 0
   @@ARABIC = 1
+  @@BOTH = 2
   
   class << self
     #Author: Nourhan Zakaria
@@ -40,7 +41,7 @@ class Vote < ActiveRecord::Base
     #Returns the value of constant representing English language
     #Parameters: --
     #Returns:
-    #  On success: returns 0
+    #  On success: returns @@ENG
     #  On failure: --
     def get_lang_english
       return @@ENG
@@ -50,10 +51,20 @@ class Vote < ActiveRecord::Base
     #Returns the value of constant representing Arabic language
     #Parameters: --
     #Returns:
-    #  On success: returns 1
+    #  On success: returns @@ARABIC
     #  On failure: --
     def get_lang_arabic
       return @@ARABIC
+    end
+
+    #Author: Nourhan Zakaria
+    #Returns the value of constant representing both language
+    #Parameters: --
+    #Returns:
+    #  On success: returns @@BOTH
+    #  On failure: --
+    def get_lang_both
+      return @@BOTH
     end
   end
 end
