@@ -22,16 +22,14 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #  returns false if the keyword doesnot exist in the database
   #  or if the approval failed to be saved in the database 
-  
-    def approve_keyword(kid)
-      if (Keyword.exists?(id: kid))
-        keyword = Keyword.find(kid)
+    def approve_keyword(keyword_id)
+      if (Keyword.exists?(id: keyword_id))
+        keyword = Keyword.find(keyword_id)
         keyword.approved = true
         return keyword.save
       end
       return false
     end
-  end
 
 # author:
 #   Omar Hossam
@@ -144,7 +142,8 @@ class Keyword < ActiveRecord::Base
     #               entered to the list is returned.
     #   on failure: if word has no synonyms, nothing is returned
     def highest_voted_synonym(keyword)
-      grouped_synonyms = Synonym.where(:keyword_id => keyword.id).joins(:votes).count(:group => "synonym_id")
+      grouped_synonyms = Synonym.where(:keyword_id => keyword.id)
+        .joins(:votes).count(:group => "synonym_id")
       highest_synonym = grouped_synonyms.max_by{ |key, count|count }
       return Synonym.where(:id => highest_synonym[0])
     end
