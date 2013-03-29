@@ -1,9 +1,14 @@
 <h1>Import CSV file</h1>
 
-<form action="upload" enctype="multipart/form-data" method="post">
+<form action="/admin/upload" enctype="multipart/form-data" method="POST">
 	<input type="file" id="csvfile" name="csvfile">
+	<input type="hidden" name="authenticity_token">
 	<input type="submit" value="Upload">
 </form>
+
+<script>
+$('input[name=authenticity_token]').val($('meta[name=csrf-token]').attr('content'))
+</script>
 
 <p>To upload a CSV file:</br></p>
 <ol>
