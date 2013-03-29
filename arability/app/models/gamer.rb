@@ -9,8 +9,7 @@ class Gamer < ActiveRecord::Base
   # attr_accessible :title, :body
   validates :username, :presence => true, :length => { :minimum => 2 }
   validates :username, :format => { :with => /\A[a-zA-Z]+\z/,:message => "can't be anything except letters." }
-  validates_numericality_of :age, :only_integer => true 
-  validates_inclusion_of :age, :in => 5..99, :message => ": Age must be a real age"  
+  validates :age, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 100, :only_integer => true }
   validates :country, :presence => true, :length => { :minimum => 2 }
   validates :country, :format => { :with => /\A[a-zA-Z]+\z/,:message => "can't be anything except letters." }
   validates :education_level, :presence => true, :length => { :minimum => 2 }
