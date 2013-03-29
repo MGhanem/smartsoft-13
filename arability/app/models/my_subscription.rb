@@ -3,9 +3,19 @@ class MySubscription < ActiveRecord::Base
   belongs_to :developer
   belongs_to :subscription_model
 
+#author:Noha hesham
+# Description:
+#   takes the developer id and decrements the word search.
+# params:
+#   developer id
+# success:
+#   word search decremented
+# fail:
+#   word search not decremented
   class << self
    def decrement_limit(dev_id)
-  	mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+  	mySubscription =
+    MySubscription.joins(:developer).where(:developer_id => dev_id).first
     old_limit = mySubscription.word_search
   	if  mySubscription.word_search > 0
   	  mySubscription.word_search = old_limit - 1
@@ -17,7 +27,7 @@ class MySubscription < ActiveRecord::Base
    end
   end
 
-#author:Noha
+#author:Noha hesham
 # Description:
 #   takes the developer id and checks wether the developer's word search limit has been 
 #   reached ,if its not then it is greater than zero and permission is given to search for words
@@ -30,7 +40,8 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def search_word_permission(dev_id) 
-    mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+    mySubscription = 
+    MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mySubscription.word_search > 0 
   		return true
   	else
@@ -38,7 +49,7 @@ class MySubscription < ActiveRecord::Base
     end
    end
   end
-# author:Noha
+# author:Noha hesham
 # Description:
 #   takes the developer id and checks wether the developer's word add limit has been 
 #   reached ,if its not then it is greater than zero and permission is given to add and visual stats for words
@@ -51,7 +62,8 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def add_word_permission(dev_id)
-     mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+     mySubscription = 
+     MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mysubscription.word_add > 0
   		return true
   	else 
@@ -59,7 +71,7 @@ class MySubscription < ActiveRecord::Base
     end  	
    end
   end
-# author:Noha
+# author:Noha hesham
 # Description:
 #   takes the developer id and checks wether the developer's word follow limit has been 
 #   reached ,if its not then it is greater than zero and permission is given to follow words
@@ -72,7 +84,8 @@ class MySubscription < ActiveRecord::Base
 #   none
   class << self
    def follow_word_permission(dev_id)
-    mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
+    mySubscription = 
+    MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mysubscription.word_follow > 0
   	  return true
   	else
