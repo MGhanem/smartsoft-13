@@ -1,0 +1,28 @@
+<div class="row">
+	<legend>Search Keywords:</legend>
+	<%= form_tag("/search/", :method => "post", :class => "form-search") do %>
+  	<%= content_tag(:div, :class => 'input-append') do %>
+  		<% text_field_tag(:search, @q, 
+  											:placeholder => 'search keywords here...', 
+  											:class => 'search-query') +%>
+			<% button_tag(:type => "submit",:class => 'btn') do %>
+				<% content_tag(:i, nil,:class => "icon-search")%>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>
+
+<div class="row">	
+	<% if @similar_keywords.blank? && !@search_keyword.blank? %>
+	<div class="well">
+		<%= content_tag(:span, 
+		"Sorry! No matched were found for the keyword you searched for!")%>
+	</div>
+	<% else %>
+		<ul class="unstyled">
+			<% @similar_keywords.each do |c| %>
+			<%= content_tag(:li, c.name) %>
+			<% end %>
+		</ul>
+	<% end %>
+</div>

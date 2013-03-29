@@ -1,13 +1,12 @@
 Arability::Application.routes.draw do
-  root :to => 'pages#home'
 
-  get "keywords/new"
+  match 'search' => 'search#search'
 
   post "keywords/create"
 
-  get "search/index"
+  get "keywords/new"
 
-  match 'search/index' => 'search#index'
+  root :to => 'pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
