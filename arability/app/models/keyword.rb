@@ -10,6 +10,8 @@ class Keyword < ActiveRecord::Base
     :message => "This keyword is already in the database"
   class << self
     # adds a new keyword to the database
+    # author:
+    #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
     #   approved: is the created keyword is automatically approved
@@ -41,6 +43,8 @@ class Keyword < ActiveRecord::Base
     end
 
     # checks if the keyword is formed of english letters only
+    # author:
+    #   Mohamed Ashraf
     # params:
     #   name: the string being checked
     # returns:

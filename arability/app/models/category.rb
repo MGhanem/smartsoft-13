@@ -6,6 +6,8 @@ class Category < ActiveRecord::Base
   validates_format_of :name, :with => /^[a-zA-Z ]+$/
 
   # adds a new category to the database or returns the category already in the database
+  # author:
+  #   Mohamed Ashraf
   # params:
   #   name: the actual category string
   # returns:
