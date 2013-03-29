@@ -3,9 +3,9 @@ class Vote < ActiveRecord::Base
   belongs_to :gamer
   # attr_accessible :title, :body
   validate :validate_gamer_exists, :validate_synonym_exists, 
-  :validate_voting_for_new_keyword
-  validates :gamer_id, :uniqueness => { :scope => :synonym_id, 
-  :message => "This gamer has aleready voted for this synonym before" } 
+    :validate_voting_for_new_keyword
+  validates :gamer_id, :uniqueness => { :scope => :synonym_id,
+    :message => "This gamer has aleready voted for this synonym before" } 
 
   class << self
     #Author: Nourhan Zakaria
@@ -26,7 +26,7 @@ class Vote < ActiveRecord::Base
           return true, vote  
         else
           return false, vote
- 	      end
+        end
     end
   end
 
@@ -69,9 +69,9 @@ class Vote < ActiveRecord::Base
           S.keyword_id = K.id AND S.id IN(SELECT S1.id FROM synonyms S1 
           INNER JOIN votes V ON S1.id = V.synonym_id INNER JOIN 
           gamers G ON G.id = V.gamer_id AND G.id = ?)) AND id = ?",
-          gamer_id, k_id_of_chosen_synonym)
-        if check == []
-          errors.add(:keyword_id,"this user voted for this keyword before")
+          gamer_id, k_id_of_chosen_synonym).exists?
+        if !check 
+          errors.add(:keyword_id,"this gamer voted for this keyword before")
         end
       end
     end
