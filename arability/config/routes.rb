@@ -17,7 +17,7 @@ Arability::Application.routes.draw do
   devise_for :gamers
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
-  match '/admin/import_csv' => "admin#import_csv"
+  get "admin/import_csv"
 
   post "admin/upload"
 
