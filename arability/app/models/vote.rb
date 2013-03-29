@@ -63,7 +63,6 @@ class Vote < ActiveRecord::Base
       return keywords_list.sample(count)    
     end
 
-
     #Author: Nourhan Zakaria
     #Returns the value of constant representing English language
     #Parameters: --
