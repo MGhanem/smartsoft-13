@@ -1,4 +1,10 @@
 Arability::Application.routes.draw do
+  get "admin/index"
+
+  get "admin/login"
+  get "admin/logout"
+
+  post "admin/login"
   
   resources :projects
 
