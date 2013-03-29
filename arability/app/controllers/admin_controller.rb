@@ -1,12 +1,12 @@
 class AdminController < ApplicationController
 
   require 'csv'
-  
+
   before_filter :require_login
   skip_before_filter :require_login, only: [:login]
 
   before_filter :check_login, only: [:login]
-  
+
   # author:
   #     Karim ElNaggar
   # description:
@@ -79,7 +79,7 @@ class AdminController < ApplicationController
   # failure: 
   #     none
   def create_session
-  	session[:who_is_this] = "admin"
+    session[:who_is_this] = "admin"
   end
 
   # author:
@@ -93,7 +93,7 @@ class AdminController < ApplicationController
   # failure: 
   #     none
   def destroy_session
-  	session[:who_is_this] = nil
+    session[:who_is_this] = nil
   end
 
   def index
@@ -112,13 +112,13 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def login
     if request.post?
-    	if params[:username] == "admin" && params[:password] == "admin"
-    	  create_session
-    	  redirect_to action: "index"
+      if params[:username] == "admin" && params[:password] == "admin"
+        create_session
+        redirect_to action: "index"
       else
         flash[:error] = "Invalid username or password"
         @username = params[:username]
-    	end
+      end
     end
   end
   
