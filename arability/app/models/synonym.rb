@@ -18,7 +18,7 @@ class Synonym < ActiveRecord::Base
   #  returns false if the synonym doesnot exist in the database
   #  or if the approval failed to be saved in the database 
 
-  def approve_synonym(synonym_id)
+    def approve_synonym(synonym_id)
       if Synonym.exists?(id: synonym_id)
         synonym = Synonym.find(synonym_id)
         synonym.approved = true
@@ -48,13 +48,13 @@ class Synonym < ActiveRecord::Base
     if syn == ""
       return false
     else if Keyword.exists?(id: key_id)
-        synew = Synonym.new
-        synew.name = syn
-        synew.keyword_id = key_id 
-        return synew.save
-      else
-        return false
-      end
+          synew = Synonym.new
+          synew.name = syn
+          synew.keyword_id = key_id 
+          return synew.save
+          else
+            return false
+        end
     end
   end
  end
