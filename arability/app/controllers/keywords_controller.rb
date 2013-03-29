@@ -43,7 +43,6 @@ class KeywordsController < ApplicationController
   #     database and displays a message indicating successful adding
   #   failure:
   #     returns an error message indicating failure to add
-  #     (not implemented as UI yet)
   def suggest_add
     keyword_to_add = params[:search]
     add_success = Keyword.add_keyword_to_database(keyword_to_add)
