@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-  
   root :to => 'pages#home'
  
   # required for routing by the devise module(gem)
@@ -8,6 +7,13 @@ Arability::Application.routes.draw do
 
 
 
+  get "keywords/new"
+
+  get "keywords/suggest_add"
+
+  post "keywords/create"
+
+  match 'search' => 'search#search'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
