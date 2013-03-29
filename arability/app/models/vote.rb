@@ -43,7 +43,7 @@ class Vote < ActiveRecord::Base
     #  On success: returns 0
     #  On failure: --
     def get_lang_english
-      return 0
+      return @@ENG
     end
 
     #Author: Nourhan Zakaria
@@ -53,7 +53,7 @@ class Vote < ActiveRecord::Base
     #  On success: returns 1
     #  On failure: --
     def get_lang_arabic
-      return 1
+      return @@ARABIC
     end
   end
 end
