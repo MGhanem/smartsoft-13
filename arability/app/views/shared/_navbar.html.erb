@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
       </a>
 
-      <a class="brand">arability</a>
+      <a class="brand" href="/">arability</a>
 
       <div class="nav-collapse">
       <% if !gamer_signed_in? %>
@@ -31,7 +31,8 @@
       <% else %>
 
       <ul class="nav pull-right">
-          <li><a href="#"></a></li>
+          <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
+          <li><a href="/gamers/edit"><i class="icon-wrench"></i>Account Settings</a></li>
       </ul>
 
       <% end %>
