@@ -32,6 +32,7 @@ class KeywordsController < ApplicationController
   end
 
   #Description:
+  #   adds a keyword suggested by user to database
   # Author:
   #   Nourhan Mohamed
   # params:

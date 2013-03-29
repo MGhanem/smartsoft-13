@@ -58,6 +58,8 @@ class Keyword < ActiveRecord::Base
     end
 
   	#Description:
+    #   gets words similar to a search keyword (in a certain category) and sorts 
+    #   result by relevance
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:

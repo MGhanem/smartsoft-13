@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
 	#Description:
+  #   search for keywords (in a particular category)
   # Author:
   #   Mohamed Ashraf, Nourhan Mohamed
 	#	params:
