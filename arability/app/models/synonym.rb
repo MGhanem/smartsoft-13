@@ -1,5 +1,5 @@
 class Synonym < ActiveRecord::Base
-  belongs_to :keywords
+  belongs_to :keyword
   attr_accessible :approved, :name
   has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
@@ -18,7 +18,7 @@ class Synonym < ActiveRecord::Base
   #  returns false if the synonym doesnot exist in the database
   #  or if the approval failed to be saved in the database 
   
-    def approve_synonym(synonym_id)
+  def approve_synonym(synonym_id)
       if Synonym.exists?(id: synonym_id)
         synonym = Synonym.find(synonym_id)
         synonym.approved = true

@@ -159,7 +159,5 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
-
-
   end
 end
