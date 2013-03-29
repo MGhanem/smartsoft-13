@@ -25,7 +25,7 @@ class MySubscriptionController < ApplicationController
 #   invalid information
   def create
     if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
-      if SubscriptionModel.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
+      if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
         @my_subscription = MySubscription.new
         @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
         @my_subscription.subscription_models_id = params[:my_subscription]
