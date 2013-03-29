@@ -63,7 +63,7 @@ class Keyword < ActiveRecord::Base
     #		categories: one or more categories to limit the search to
   	#	returns:
   	#		success:
-  	#			returns a list of the keywords (optionally filtered by categories)
+  	#			returns a list of the keywords (optionally filtered by categories) 
     #     similar to the search keyword sorted in lexicographical order
   	#		failure:
   	#			returns an empty list if the search keyword had no matches or no 
