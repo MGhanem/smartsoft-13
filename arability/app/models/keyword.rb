@@ -14,18 +14,8 @@ class Keyword < ActiveRecord::Base
   #   on failure: if word has no synonyms, nothing is returned
   class << self
     def highest_voted_synonym(word)
-
-      syn = Synonym.where(:keyword_id => word.id).all
-
-      highest = 0
-      highest_syn =  nil
-      syn.each do |s|
-        if Synonym.getVotes(s.id) > highest
-          highest_syn = s
-          highest = Synonym.getVotes(s.id)
-        end
-      end
-      return highest_syn
+      max_id = Synonym.where(:keyword_id => word.id).joins(:votes).count(:group => "synonym_id").max
+      return Synonym.where(:id => max_id[0])
     end
   end
 
