@@ -5,7 +5,6 @@ class AdminController < ApplicationController
 
   before_filter :check_login, only: [:login]
   
-
   # author:
   #     Karim ElNaggar
   # description:
@@ -119,6 +118,29 @@ class AdminController < ApplicationController
         @username = params[:username]
     	end
     end
+  end
+  
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     wordadd action for keywords by admin
+  # params
+  #     name: the name of the new keyword
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def wordadd
+    name = params[:keyword][:name]
+    is_english = params[:keyword][:is_english]
+    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    if success
+      flash[:success] = "Keyword #{@keyword.name} has been created"
+    else
+      flash[:error] = @keyword.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
   end
 
   # author:
