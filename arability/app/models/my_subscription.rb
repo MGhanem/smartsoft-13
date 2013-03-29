@@ -4,21 +4,18 @@ class MySubscription < ActiveRecord::Base
   belongs_to :subscription_model
 
   class << self
-  def decrement_limit(dev_id)
+   def decrement_limit(dev_id)
   	mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
     old_limit = mySubscription.word_search
   	if  mySubscription.word_search > 0
-  	mySubscription.word_search = old_limit - 1
-    mySubscription.save
-    return true
+  	  mySubscription.word_search = old_limit - 1
+      mySubscription.save
+      return true
     else
       return false
     end
+   end
   end
-  end
-
-
-
 
 #author:Noha
 # Description:
@@ -32,14 +29,14 @@ class MySubscription < ActiveRecord::Base
 # fail:
 #   none
   class << self
-  def search_word_permission(dev_id) 
+   def search_word_permission(dev_id) 
     mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mySubscription.word_search > 0 
   		return true
   	else
   		return false
     end
-  end
+   end
   end
 # author:Noha
 # Description:
@@ -53,14 +50,14 @@ class MySubscription < ActiveRecord::Base
 # fail:
 #   none
   class << self
-  def add_word_permission(dev_id)
+   def add_word_permission(dev_id)
      mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mysubscription.word_add > 0
   		return true
   	else 
   		return false
     end  	
-  end
+   end
   end
 # author:Noha
 # Description:
@@ -74,14 +71,14 @@ class MySubscription < ActiveRecord::Base
 # fail:
 #   none
   class << self
-  def follow_word_permission(dev_id)
+   def follow_word_permission(dev_id)
     mySubscription = MySubscription.joins(:developer).where(:developer_id => dev_id).first
   	if mysubscription.word_follow > 0
   	  return true
   	else
   		return false
     end
-  end
+   end
   end  
 end
 
