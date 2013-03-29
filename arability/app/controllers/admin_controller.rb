@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
 
+  require 'csv'
+  
   before_filter :require_login
   skip_before_filter :require_login, only: [:login]
 
@@ -49,7 +51,7 @@ class AdminController < ApplicationController
   # failure: 
   #     none
   def logged_in?
-    !!current_user
+    current_user == "admin"
   end
 
   # author:
@@ -157,8 +159,6 @@ class AdminController < ApplicationController
     destroy_session
     redirect_to action: "login"
   end
-
-  require 'csv'
   
   # author:
   #   Amr Abdelraouf
