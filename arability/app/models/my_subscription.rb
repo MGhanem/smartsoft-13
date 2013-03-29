@@ -17,28 +17,28 @@ class MySubscription < ActiveRecord::Base
     #   or follow limit
     # fail:
     #   none
-        def give_permissions(dev_id,type)
-          my_subscription = 
-           MySubscription.joins(:developer).where(:developer_id => dev_id).first
-          if type == 1
-            if my_subscription.word_search > 0 
-              return true
-            else
-              return false
-            end
-          elsif  type == 2
-            if my_subscription.word_add > 0
-              return true
-            else 
-              return false
-            end 
-          else type == 3
-            if my_subscription.word_follow > 0
-              return true
-            else
-              return false
-            end
+      def give_permissions(dev_id,type)
+        my_subscription = 
+         MySubscription.joins(:developer).where(:developer_id => dev_id).first
+        if type == 1
+          if my_subscription.word_search > 0 
+            return true
+          else
+            return false
+          end
+        elsif  type == 2
+          if my_subscription.word_add > 0
+            return true
+          else 
+            return false
+          end 
+        else type == 3
+          if my_subscription.word_follow > 0
+            return true
+          else
+            return false
           end
         end
+      end
   end 
 end
