@@ -3,7 +3,8 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
   has_many :votes
 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create
+    , :message => "The synonym is not in the correct form"
 
   class << self
 

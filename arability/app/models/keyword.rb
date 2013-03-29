@@ -123,9 +123,9 @@ class Keyword < ActiveRecord::Base
     #               entered to the list is returned.
     #   on failure: if word has no synonyms, nothing is returned
     def highest_voted_synonym(keyword)
-      max_id = Synonym.where(:keyword_id => keyword.id).joins(:votes)
+      return Synonym.where(:keyword_id => keyword.id).joins(:votes)
         .count(:group => "synonym_id").max
-      return Synonym.where(:id => max_id[0])
+      # return Synonym.where(:id => max_id[0])
     end
 
     # Author: Mostafa Hassaan
