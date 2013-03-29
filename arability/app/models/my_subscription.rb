@@ -5,15 +5,16 @@ class MySubscription < ActiveRecord::Base
 
 #author:Noha hesham
 # Description:
-#   takes the developer id and checks wether the developer's word search limit has been 
-#   reached ,if its not then it is greater than zero and permission is given to search for words
-#   by returning true else return false and permission denied.
+#  takes the developer id and checks wether the developer's word search 
+#  limit has been reached ,if its not then it is greater than zero and permission 
+#  is given to search for words by returning true else 
+#  return false and permission denied.
 # params:
-#   developer id
+#  developer id
 # success:
-#   permission is given if the developer didnt exceed the search limit
+#  permission is given if the developer didnt exceed the search limit
 # fail:
-#   none
+#  none
   class << self
    def search_word_permission(dev_id) 
     my_subscription = 
@@ -24,20 +25,19 @@ class MySubscription < ActiveRecord::Base
   		return false
     end
    end
-  end
 
 # author:Noha hesham
 # Description:
-#   takes the developer id and checks wether the developer's word add limit has been 
-#   reached ,if its not then it is greater than zero and permission is given to add and visual stats for words
-#   by returning true else return false and permission denied.
+#  takes the developer id and checks wether the developer's word add limit has been 
+#  reached ,if its not then it is greater than zero and permission is given to add 
+#  and visual stats for words by returning true else return false
+#  and permission denied.
 # params:
-#   developer id
+#  developer id
 # success:
-#   permission is given if the developer didnt exceed the add limit
+#  permission is given if the developer didnt exceed the add limit
 # fail:
-#   none
-  class << self
+#  none
    def add_word_permission(dev_id)
      my_subscription = 
       MySubscription.joins(:developer).where(:developer_id => dev_id).first
@@ -47,20 +47,19 @@ class MySubscription < ActiveRecord::Base
   		return false
     end  	
    end
-  end
-
+  
 # author:Noha hesham
 # Description:
-#   takes the developer id and checks wether the developer's word follow limit has been 
-#   reached ,if its not then it is greater than zero and permission is given to follow words
-#   by returning true else return false and permission denied.
+#  takes the developer id and checks wether the developer's word follow 
+#  limit has been reached ,if its not then it is greater than zero 
+#  and permission is given to follow words by returning true else 
+#  return false and permission denied.
 # params:
-#   developer id
-# success:
-#   permission is given if the developer didnt exceed the follow word limit
+#  developer id
+# success: 
+#  permission is given if the developer didnt exceed the follow word limit
 # fail:
 #   none
-  class << self
    def follow_word_permission(dev_id)
     my_subscription = 
      MySubscription.joins(:developer).where(:developer_id => dev_id).first
