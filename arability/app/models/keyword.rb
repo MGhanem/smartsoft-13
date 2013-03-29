@@ -1,6 +1,7 @@
 class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
   has_many :synonyms
+
   has_and_belongs_to_many :categories
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"
@@ -92,5 +93,17 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	return relevant_first_list
     end
+
+    # Author: Mostafa Hassaan
+    # Method takes no inputs and returns an array of "Keywords"
+    # with "synonyms" that haven't been approved yet.
+    # params: --
+    # returns:
+    #   on success: Array of "keywords"
+    #   on failure: Empty array
+    def words_with_unapproved_synonyms
+      return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
   end
 end
