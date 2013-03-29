@@ -16,8 +16,8 @@ class Vote < ActiveRecord::Base
    #  On success: Returns a list of un voted keywords of the specified langauge 
    #  with size = count for the gamer with this gamer_id  
    #  On failure: Returns empty list 
-class << self
-  def get_unvoted_keywords(gamer_id, count, lang)
+  class << self
+    def get_unvoted_keywords(gamer_id, count, lang)
       unvoted_keywords = Keyword.where( "id Not IN(
                                         Select K.id from Keywords K 
                                         INNER JOIN Synonyms  S ON 
@@ -38,8 +38,8 @@ class << self
             keywords_list = unvoted_keywords
           end
       return keywords_list.sample(count)    
+    end
   end
-end
 end
 
   
