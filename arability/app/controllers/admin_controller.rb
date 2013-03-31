@@ -1,8 +1,6 @@
 class AdminController < ActionController::Base
   protect_from_forgery
 
-  require 'csv'
-
   before_filter :require_login
   skip_before_filter :require_login, only: [:login]
 
@@ -97,9 +95,6 @@ class AdminController < ActionController::Base
     session[:who_is_this] = nil
   end
 
-  def index
-  end
-
   # author:
   #     Karim ElNaggar
   # description:
@@ -122,7 +117,26 @@ class AdminController < ActionController::Base
       end
     end
   end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     admin logout action
+  # params
+  #     none
+  # success: 
+  #     redirects the user to /admin/login page
+  # failure: 
+  #     none
+  def logout
+    destroy_session
+    redirect_to action: "login"
+  end
   
+  def index
+    @message = params[:message]
+  end
+
   # author:
   #     Karim ElNaggar
   # description:
@@ -147,37 +161,6 @@ class AdminController < ActionController::Base
   end
 
   # author:
-  #     Karim ElNaggar
-  # description:
-  #     admin logout action
-  # params
-  #     none
-  # success: 
-  #     redirects the user to /admin/login page
-  # failure: 
-  #     none
-  def logout
-    destroy_session
-    redirect_to action: "login"
-  end
-  
-  # author:
-  #   Amr Abdelraouf
-  # description:
-  #   this function loads a view which allows the user to import a csv file and lists the rules for uploading
-  #   in addition when a file is uploaded it gives the user feedback whether the file was successfully
-  #   uploaded or not and gives the reason why not
-  # params:
-  #   GET message is feedback message
-  # success:
-  #   displays upload button, rules and feedback message (if applicable)
-  # failure:
-  #   no failure
-  def import_csv
-    @message = params[:message]
-  end
-
-  # author:
   #   Amr Abdelraouf
   # description:
   #   this function takes a csvfile as a parameter, parses it as an array of arrays
@@ -192,6 +175,7 @@ class AdminController < ActionController::Base
   #   the file is not UTF-8 encoded and message is '2'
   def upload
     begin
+      require 'csv'
       @csvfile = params[:csvfile]
       if @csvfile != nil
         @content = File.read(@csvfile.tempfile)
@@ -204,12 +188,12 @@ class AdminController < ActionController::Base
             end
           end
       end
-        redirect_to action: "import_csv", message: "0"
+        redirect_to action: "index", message: "0"
       else 
-        redirect_to action: "import_csv", message: "1"
+        redirect_to action: "index", message: "1"
       end
     rescue ArgumentError
-        redirect_to action: "import_csv", message: "2"
+        redirect_to action: "index", message: "2"
     end
   end
 end
