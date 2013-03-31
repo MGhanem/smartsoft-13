@@ -7,11 +7,13 @@
         <span class="icon-bar"></span>
       </a>
 
-      <a class="brand" href="/">arability</a>
+      <a class="brand" href="/"><%= t :arability %></a>
 
       <div class="nav-collapse">
       <% if !gamer_signed_in? %>
         <ul class="nav pull-right">
+          <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
+          <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
           <li><a href="/gamers/sign_up">Sign up</a></li>
           <li class="divider-vertical"></li>
           <li class="dropdown">
