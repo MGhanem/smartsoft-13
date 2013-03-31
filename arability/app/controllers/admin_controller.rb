@@ -188,12 +188,14 @@ class AdminController < ActionController::Base
             end
           end
       end
-        redirect_to action: "index", message: "0"
-      else 
-        redirect_to action: "index", message: "1"
+        flash[:success] = "Import successfull"
+      else
+        flash[:error] = "You did not upload a file"
       end
     rescue ArgumentError
-        redirect_to action: "index", message: "2"
+        flash[:error] = "Wrong encoding. Make sure your file is UTF-8 encoded"        
     end
+    flash.keep
+    redirect_to action: "index"
   end
 end
