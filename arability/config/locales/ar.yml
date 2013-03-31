@@ -1,3 +1,7 @@
 ar:
   hello: "ahlan wasahlan"
   arability: "عربلتي"
+  sign_up: "إنشاء حساب"
+  sign_in: "تسجيل الدخول"
+  english: "الإنجليزية"
+  arabic: "العربية"
