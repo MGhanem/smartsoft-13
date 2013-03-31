@@ -1,42 +1,47 @@
 Arability::Application.routes.draw do
-  get "admin/index"
-
-  get "admin/login"
-  get "admin/logout"
-
-  post "admin/login"
-  post "admin/wordadd"
-  
-  resources :projects
-
-  # get "admin/import_csv"
 
   root :to => 'pages#home'
 
-  # required for routing by the devise module(gem)
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+  scope "(:locale)", :locale => /en|ar/ do
+    #here only two languages are accepted: english and arabic
 
-  get "admin/import_csv"
+    get "admin/index"
 
-  post "admin/upload"
+    get "admin/login"
+    get "admin/logout"
 
-  match "keywords" => "keywords#viewall"
+    post "admin/login"
+    post "admin/wordadd"
 
-  get "keywords/new"
+    resources :projects
 
-  get "keywords/suggest_add"
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
 
-  resources :projects
-  post "keywords/create"
+    get "admin/import_csv"
 
-  match '/developers/new' => "developer#new"
-  match '/developers/create' => "developer#create"
-  match '/my_subscriptions/new' => "my_subscription#new"
-  match '/my_subscriptions/create' => "my_subscription#create"
+    post "admin/upload"
 
-  match 'search' => 'search#search'
-  
+    match "keywords" => "keywords#viewall"
+
+    get "keywords/new"
+
+    get "keywords/suggest_add"
+
+    resources :projects
+
+    post "keywords/create"
+
+    match '/developers/new' => "developer#new"
+    match '/developers/create' => "developer#create"
+    match '/my_subscriptions/new' => "my_subscription#new"
+    match '/my_subscriptions/create' => "my_subscription#create"
+
+    match 'search' => 'search#search'
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
