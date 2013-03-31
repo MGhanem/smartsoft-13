@@ -1,5 +1,6 @@
 class Developer < ActiveRecord::Base
  belongs_to :gamer
+ has_many :projects
  attr_accessible :first_name, :last_name, :verified, :gamer_id
  validates :first_name, :presence => true
  validates :last_name, :presence => true

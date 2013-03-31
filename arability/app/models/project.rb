@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  belongs_to :developer
+  has_and_belongs_to_many :developers
   has_and_belongs_to_many :categories
   has_many :keywords
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
 # author:
 #      Salma Farag
 # description:
-#      Takes the params of the project entred by the developer and creates a project compares
+#      Takes the params of the project entered by the developer and creates a project compares
 #it to the already existing categories and returns the project
 # params:
 #     :project
@@ -21,14 +21,15 @@ class Project < ActiveRecord::Base
 #     None
  
   def self.createproject(params)
-  	project = Project.new(params.except(:categories))
-  	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+    project = Project.new(params.except(:categories))
+    array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
     catArray = []
-  	array.each do |m|
+    array.each do |m|
       catArray.push(Category.where(:name => m).first_or_create)
-  	end
+    end
     project.categories = catArray
+    project.developer_id = current_gamer.id
     project.save
-  	return project
+    return project
    end
 end
