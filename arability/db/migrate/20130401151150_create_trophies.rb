@@ -1,6 +1,6 @@
-class CreateTrohpies < ActiveRecord::Migration
+class CreateTrophies < ActiveRecord::Migration
   def up
-    create_table :trohpies do |t|
+    create_table :trophies do |t|
       t.string :name
       t.integer :level
       t.integer :score
@@ -11,3 +11,4 @@ class CreateTrohpies < ActiveRecord::Migration
     drop_table :trophies
   end
 end
+
