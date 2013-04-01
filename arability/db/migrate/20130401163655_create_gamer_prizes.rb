@@ -2,7 +2,7 @@ class CreateGamerPrizes < ActiveRecord::Migration
   def up
     create_table :gamers_prizes, :id => false do |t|
       t.references :gamer
-      t.references :trophy
+      t.references :prize
     end
   end
 
