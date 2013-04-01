@@ -7,6 +7,9 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 
+# Gems required for automated documentation
+gem 'yard'
+gem 'redcarpet'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,6 +26,13 @@ end
 
 gem 'jquery-rails'
 gem 'execjs'
+
+# gem for age validations 
+gem 'date_validator'
+
+#gem used to select countries
+gem 'country-select'
+
 
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby
@@ -42,3 +52,7 @@ gem 'execjs'
 
 # To use debugger
 # gem 'debugger'
+
+# devise gem used for authentication
+gem 'devise','2.0'
+
