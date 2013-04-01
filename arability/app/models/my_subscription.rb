@@ -47,12 +47,15 @@ class MySubscription < ActiveRecord::Base
         end
       end
   end 
-   def get_word_search
+
+    def get_word_search
       return @@search
     end
+
     def get_word_add
       return @@add
     end
+
     def get_word_follow
       return @@follow
     end

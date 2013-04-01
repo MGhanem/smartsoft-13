@@ -14,6 +14,11 @@ class MySubscriptionController < ApplicationController
     if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
       if Developer.find_by_gamer_id(current_gamer.id) != nil
         @my_subscription = MySubscription.new
+        @my_subscription.limit_search = 20
+        @my_subscription.limit_add = 20
+        @my_subscription.limit_project = 1
+        @my_subscription.limit = 20
+        @my_subscription.save
       else
         flash[:notice] = "Please register as a developer before you choose your subscription model."
         render 'pages/home'
@@ -36,7 +41,8 @@ class MySubscriptionController < ApplicationController
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
-        if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
+        if Subscrip
+          tionModel.find_by_id(params[:my_subscription]) != nil
           @my_subscription = MySubscription.new
           @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
           @my_subscription.subscription_models_id = params[:my_subscription]
@@ -65,4 +71,12 @@ class MySubscriptionController < ApplicationController
       render 'pages/home'
     end  
   end
+# def create 
+#         @my_subscription=SubscriptionModel.new
+#         @my_subscription.limit_search = 20
+#         @my_subscription.limit_add = 20
+#         @my_subscription.limit_project = 1
+#         @my_subscription.limit = 20
+#         @my_subscription.save
+#     end
 end
