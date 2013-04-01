@@ -30,15 +30,20 @@ class ProjectsController < ApplicationController
 #     Gives status errors
 
 def create
-  @project = Project.createproject(params[:project],current_gamer.id)
-  respond_to do |format|
-    if @project.save
-      format.html { redirect_to "/projects", notice: 'Project was successfully created.' }
-      format.json { render json: @project, status: :created, location: @project }
-    else
-      format.html { render action: "new" }
-      format.json { render json: @project.errors, status: :unprocessable_entity }
+  if Developer.find_by_gamer_id(current_gamer.id) != nil
+    @project = Project.createproject(params[:project],current_gamer.id)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to "/projects", notice: 'Project was successfully created.' }
+        format.json { render json: @project, status: :created, location: @project }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
     end
+  else
+    flash[:notice] = "Please log in to view this page."
+    render 'pages/home'
   end
 end
 
