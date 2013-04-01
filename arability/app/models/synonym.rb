@@ -5,6 +5,31 @@ class Synonym < ActiveRecord::Base
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "The synonym is not in the correct form"
 
+    
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   gets the vote count for a certain synonym
+  # Parameters:
+  #   filter: optional parameter used for vote count filtering
+  # Success:
+  #   returns vote count for the given synonym
+  # Failure:
+  #   returns -1 if the synonym or the keyword to which the synonym belongs
+  #   is not approved
+    def get_votes(filter = [])
+      if(filter.blank?)
+        keyword_model = Keyword.find(self.keyword_id)
+        if(self.approved && keyword_model.approved)
+          return Synonym.joins(:votes).where(:id => self.id).count
+        else
+          return -1
+        end
+      # else
+        #Handling filters reside here
+      end
+    end
+
   class << self
     # Author:
     #  Mirna Yacout
@@ -77,7 +102,10 @@ class Synonym < ActiveRecord::Base
           return []
         end
         keyword_id = keyword_model.first.id
-        synonym_list = Synonym.where(:keyword_id => keyword_id, :approved => true)
+        synonym_list = Synonym
+          .where(:keyword_id => keyword_id, :approved => true)
+        synonym_list = synonym_list.sort_by { |synonym| synonym.get_votes }
+          .reverse!
         return synonym_list
       end
   end
