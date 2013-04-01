@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
-  has_and_belongs_to_many :developers
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  has_one :project_owner, :class_name => "Developer"
   has_and_belongs_to_many :categories
   has_many :keywords
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
@@ -20,16 +21,19 @@ class Project < ActiveRecord::Base
 # failure:
 #     None
  
-  def self.createproject(params)
-    project = Project.new(params.except(:categories))
+  def self.createproject(params,gamer_id)
+    project = Project.new(params.except(:categories,:developer))
     array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
     catArray = []
     array.each do |m|
       catArray.push(Category.where(:name => m).first_or_create)
     end
     project.categories = catArray
-    project.developer_id = current_gamer.id
+    developer = Developer.where(:gamer_id => gamer_id).first
+    project.developer = developer
     project.save
     return project
    end
+
+
 end

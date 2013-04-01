@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
 #     Gives status errors
 
 def create
-  @project = Project.createproject(params[:project])
+  @project = Project.createproject(params[:project],current_gamer.id)
   respond_to do |format|
     if @project.save
       format.html { redirect_to "/projects", notice: 'Project was successfully created.' }
