@@ -24,6 +24,9 @@ end
 gem 'jquery-rails'
 gem 'execjs'
 
+# gem for age validations 
+gem 'date_validator'
+
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby
 # end
