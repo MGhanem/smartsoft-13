@@ -16,7 +16,4 @@ class Gamer < ActiveRecord::Base
   validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i }
   validates :date_of_birth, :date => { :after_or_equal_to => Time.now-95.year, :before_or_equal_to => Time.now - 10.year }
 
-
-
-
 end

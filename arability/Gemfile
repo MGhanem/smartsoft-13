@@ -27,6 +27,10 @@ gem 'execjs'
 # gem for age validations 
 gem 'date_validator'
 
+#gem used to select countries
+gem 'country-select'
+
+
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby
 # end
