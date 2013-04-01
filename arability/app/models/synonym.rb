@@ -58,5 +58,27 @@ class Synonym < ActiveRecord::Base
             end
         end
       end
+
+    # Author: 
+    #   Nourhan Mohamed
+    # Description:
+    #   retrieved approved synonyms for a given keyword
+    # Parameters:
+    #   keyword: a string representing the keyword for which the synonyms will
+    #     be retrieved
+    # Success:
+    #   returns a list of synonyms for the passed keyword
+    # Failure:
+    #   returns an empty list if the keyword doesn't exist or if no approved
+    #   synonyms where found for the keyword  
+      def retrieve_synonym(keyword)
+        keyword_model = Keyword.where(:name => keyword, :approved => true)
+        if(!keyword_model.exists?)
+          return []
+        end
+        keyword_id = keyword_model.id
+        synonym_list = Synonym.where(:keyword_id => keyword_id, :approved => true)
+        return synonym_list
+      end
   end
 end
