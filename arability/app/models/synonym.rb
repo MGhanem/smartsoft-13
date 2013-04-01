@@ -3,7 +3,7 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
   has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => "The synonym is not in the correct form"
+    :message => "The synonym is not arabic"
 
   class << self
 
@@ -28,30 +28,29 @@ class Synonym < ActiveRecord::Base
       return false
     end
 
-# author:
-#   Omar Hossam
-# description:
-#   feature adds synonym to database and returns a boolean result
-#   indicatiing success or failure of saving
-# parameters:
-#   synonym_name: string input parameter that represents the synonym name
-#   keyword_id_in: integer input parameter representing the keyword id
-#     the synonym points to
-#   approved: an optional boolean input parameter with a default false
-#     represents if an admin has approved a synonym on database or not
-# success:
-#   Output is boolean -- this method returns true if the vote has been recorded
-# failure: 
-#   returns false if word not saved to database due to incorrect expression of
-#   synonym name or an incorrect keyword id for an unavaialable keyword in database
-
-    def record_synonym(synonym_name, keyword_id_in, approved = false)
+  # author:
+  #   Omar Hossam
+  # description:
+  #   feature adds synonym to database and returns a boolean result
+  #   indicatiing success or failure of saving
+  # parameters:
+  #   synonym_name: string input parameter that represents the synonym name
+  #   keyword_id: integer input parameter representing the keyword id
+  #     the synonym points to
+  #   approved: an optional boolean input parameter with a default false
+  #     represents if an admin has approved a synonym on database or not
+  # success:
+  #   Output is boolean -- this method returns true if the vote has been recorded
+  # failure: 
+  #   returns false if word not saved to database due to incorrect expression of
+  #   synonym name or an incorrect keyword id for an unavaialable keyword in database
+    def record_synonym(synonym_name, keyword_id, approved = false)
       if synonym_name.blank?
         return false
       elsif Keyword.exists?(id: keyword_id_in)
         new_synonym = Synonym.new
         new_synonym.name = synonym_name
-        new_synonym.keyword_id = keyword_id_in 
+        new_synonym.keyword_id = keyword_id
         return new_synonym.save
       else
         return false
