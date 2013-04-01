@@ -19,8 +19,9 @@
     <div><%= f.label :username, :class => "control-label" %>
     <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
 
-    <div><%= f.label :age, :class => "control-label" %>
-    <%= f.text_field :age, :style => "margin-left: 10px;" %></div></br>
+    <div><%= f.label :date_of_birth, :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div></br>
 
     <div><%= f.label :country, :class => "control-label" %>
     <%= f.text_field :country, :style => "margin-left: 10px;" %></div></br>
