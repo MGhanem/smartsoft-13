@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
   		@projects = Project.where(:developer_id => developer.id)
   	else
   		flash[:notice] = "You are not authorized to view this page"
+      render 'projects/index'
   	end
   end
 
