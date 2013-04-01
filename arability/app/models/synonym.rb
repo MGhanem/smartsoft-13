@@ -1,6 +1,6 @@
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
-  attr_accessible :approved, :name
+  attr_accessible :approved, :name, :keyword_id
   has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "The synonym is not in the correct form"
@@ -71,12 +71,12 @@ class Synonym < ActiveRecord::Base
     # Failure:
     #   returns an empty list if the keyword doesn't exist or if no approved
     #   synonyms where found for the keyword  
-      def retrieve_synonym(keyword)
+      def retrieve_synonyms(keyword)
         keyword_model = Keyword.where(:name => keyword, :approved => true)
         if(!keyword_model.exists?)
           return []
         end
-        keyword_id = keyword_model.id
+        keyword_id = keyword_model.first.id
         synonym_list = Synonym.where(:keyword_id => keyword_id, :approved => true)
         return synonym_list
       end
