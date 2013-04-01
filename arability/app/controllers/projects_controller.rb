@@ -41,9 +41,9 @@ def create
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
-  else
-    flash[:notice] = "Please log in to view this page."
-    render 'pages/home'
+  # else
+  #   flash[:notice] = "Please log in to view this page."
+  #   render 'pages/home'
   end
 end
 
