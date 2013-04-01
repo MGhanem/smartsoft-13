@@ -46,3 +46,5 @@ gem 'execjs'
 # devise gem used for authentication
 gem 'devise','2.0'
 
+gem 'lazy_high_charts'
+
