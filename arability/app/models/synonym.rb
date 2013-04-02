@@ -97,6 +97,9 @@ class Synonym < ActiveRecord::Base
     #   returns an empty list if the keyword doesn't exist or if no approved
     #   synonyms where found for the keyword  
       def retrieve_synonyms(keyword)
+        if(Keyword.is_english_keyword(keyword))
+          keyword.downcase!
+        end
         keyword_model = Keyword.where(:name => keyword, :approved => true)
         if(!keyword_model.exists?)
           return []
