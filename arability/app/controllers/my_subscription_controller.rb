@@ -71,12 +71,25 @@ class MySubscriptionController < ApplicationController
       render 'pages/home'
     end  
   end
-# def create 
-#         @my_subscription=SubscriptionModel.new
-#         @my_subscription.limit_search = 20
-#         @my_subscription.limit_add = 20
-#         @my_subscription.limit_project = 1
-#         @my_subscription.limit = 20
-#         @my_subscription.save
-#     end
+   def choose(type)
+    if type == 1
+      @my_subscription.limit_search=20
+      @my_subscription.limit_add = 20
+      @my_subscription.limit_project = 1
+      @my_subscription.limit = 20
+      @my_subscription.save
+    elsif type == 2
+      @my_subscription.limit_search=1000
+      @my_subscription.limit_add = 1000
+      @my_subscription.limit_project = 100
+      @my_subscription.limit = 1000
+      @my_subscription.save
+  elsif type == 3 
+      @my_subscription.limit_search=2000
+      @my_subscription.limit_add = 2000
+      @my_subscription.limit_project = 200
+      @my_subscription.limit = 1000
+      @my_subscription.save
+   end
+ end
 end

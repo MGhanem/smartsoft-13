@@ -1,8 +1,8 @@
 <h2>Register as developer Step2: choose your subscription model</h2>
-<%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "create" }) do |f| %>
-<% SubscriptionModel.all.each do |subscription| %>
+<%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "choose" }) do |f| %>
+<!--<% SubscriptionModel.all.each do |subscription| %>
 <p><%= subscription.name %></p><%= radio_button_tag(:my_subscription, subscription.id) %>
-<% end %>
+<% end %> -->
 <div><%= f.submit "Done!" %></div>
 <% end %>
 
