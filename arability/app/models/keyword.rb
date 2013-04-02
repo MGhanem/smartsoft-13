@@ -116,7 +116,9 @@ class Keyword < ActiveRecord::Base
     	if (search_word.blank?)
     		return []
     	end
-      search_word.downcase!
+      if(is_english_keyword(search_word))
+        search_word.downcase!
+      end
     	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
@@ -129,7 +131,6 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	return relevant_first_list
     end
-
     
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
