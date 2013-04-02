@@ -19,9 +19,9 @@ Arability::Application.routes.draw do
 
   get "admin/import_csv"
   
-  get "projects/import_csv"
-
   match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+
+  match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
   post "admin/upload"
 

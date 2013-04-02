@@ -85,52 +85,51 @@ class ProjectsController < ApplicationController
   def upload
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
-      redirect_to action: "import_csv", message: message
-    end
-    words_in_database_before = Array.new
-    synonyms_words_in_database_before = Array.new
-    words_not_in_database_before = Array.new
-    synonyms_words_not_in_database_before = Array.new
-    arr_of_arrs.each do |row|
-      if Keyword.find_by_name(row[0])
-        keywrd = Keyword.find(row[0])
-        for i in 1..row.size
-          Synonym.record_synonym(row[i],keywrd.id)
-        end
-        for i in 1..row.size
-          synonm = Synonym.find(row[i], keywrd.id)
-          if synonm != nil
-            words_in_database_before.push(keywrd)
-            synonyms_words_in_database_before.push(synonm)
-            break
-          end
-        end
-      else
-        @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-        if @isSaved
+      # redirect_to import_csv_project_path(:message => message)
+      redirect_to action: "import_csv", id: params[:project_id], message: message
+    else
+      words_in_database_before = Array.new
+      synonyms_words_in_database_before = Array.new
+      words_not_in_database_before = Array.new
+      synonyms_words_not_in_database_before = Array.new
+      arr_of_arrs.each do |row|
+        if Keyword.find_by_name(row[0])
+          keywrd = Keyword.find(row[0])
           for i in 1..row.size
             Synonym.record_synonym(row[i],keywrd.id)
           end
           for i in 1..row.size
             synonm = Synonym.find(row[i], keywrd.id)
             if synonm != nil
-              words_not_in_database_before.push(keywrd)
-              synonyms_words_not_in_database_before.push(synonm)
+              words_in_database_before.push(keywrd)
+              synonyms_words_in_database_before.push(synonm)
               break
+            end
+          end
+        else
+          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
+          if @isSaved
+            for i in 1..row.size
+              Synonym.record_synonym(row[i],keywrd.id)
+            end
+            for i in 1..row.size
+              synonm = Synonym.find(row[i], keywrd.id)
+              if synonm != nil
+                words_not_in_database_before.push(keywrd)
+                synonyms_words_not_in_database_before.push(synonm)
+                break
+              end
             end
           end
         end
       end
+      redirect_to action: "choose_keywords",id: params[:project_id], a1:words_in_database_before ,a2:synonyms_words_in_database_before ,a3:words_not_in_database_before ,a4:synonyms_words_not_in_database_before 
     end
-    redirect_to action: "choose_keywords", a1:words_in_database_before ,a2:synonyms_words_in_database_before ,a3:words_not_in_database_before ,a4:synonyms_words_not_in_database_before 
   end
 
   def import_csv
     current_project = Project.find(params[:id])
     @project_id = current_project.id
     @message = params[:message]
-    if @message == 0
-      redirect_to action: "choose_keywords"
-    end
   end
 end

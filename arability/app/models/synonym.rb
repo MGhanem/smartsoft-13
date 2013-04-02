@@ -2,8 +2,7 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
   has_many :votes
-  #validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    #:message => "The synonym is not arabic"
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :message => "The synonym is not arabic"
 
   class << self
 
@@ -59,10 +58,6 @@ class Synonym < ActiveRecord::Base
       else
         return false
       end
-    end
-
-    def find(syn, key_id)
-      return Synonym.where("keyword_id = ? AND name = ?", key_id, syn)  
     end
   end
 end
