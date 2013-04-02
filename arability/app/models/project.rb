@@ -20,20 +20,33 @@ class Project < ActiveRecord::Base
 #new categories and inserting them into the project categories array
 # failure:
 #     None
- 
-  def self.createproject(params,gamer_id)
-    project = Project.new(params.except(:categories,:developer))
-    array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-    catArray = []
-    array.each do |m|
-      catArray.push(Category.where(:name => m).first_or_create)
-    end
-    project.categories = catArray
-    developer = Developer.where(:gamer_id => gamer_id).first
-    project.developer = developer
-    project.save
-    return project
-   end
 
+def self.createproject(params,gamer_id)
+  project = Project.new(params.except(:categories,:developer))
+  createcategories(params[:categories])
+  developer = Developer.where(:gamer_id => gamer_id).first
+  project.developer_id = developer.gamer_id
+  project.save
+  return project
+end
 
+# author:
+  #      Salma Farag
+  # description:
+  #     A method that takes categories in the form of csv and sabes them in an array
+  #then loops on it and creates an a new category each time.
+  # params:
+  #     Category names in the form of csv.
+  # success:
+  #     Categories will be created.
+  # failure:
+  #     none
+def self.createcategories(categoriesField)
+  array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+  catArray = []
+  array.each do |m|
+    catArray.push(Category.where(:name => m).first_or_create)
+  end
+  @project.categories = catArray
+end
 end

@@ -4,19 +4,15 @@
 <br />
 <% @projects.each do |project| %>
   <div class="boxed">
-  Name:
-  <br />
-  <%= project.name %>
-  <br />
-  Categories:
-  <br />
-  <% project.categories.each do |c| %>
-    <%= c.name %>
+    <a class="btn" href="/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
+    <br />
+    Name:  <%= project.name %>
+    <br />
+    Categories:  <% project.categories.each do |c| %>
+      <%= c.name %>
+      <% end %>
+    <br />
+    <%= project.description %>
+    <br />
   <% end %>
-  <br />
-  Description:
-  <br /> 
-  <%= project.description %>
-<br />
-<% end %>
 </div>

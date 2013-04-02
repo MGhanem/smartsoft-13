@@ -8,6 +8,7 @@ Arability::Application.routes.draw do
   post "admin/wordadd"
   
   resources :projects
+  get "projects/update"
 
   # get "admin/import_csv"
 
