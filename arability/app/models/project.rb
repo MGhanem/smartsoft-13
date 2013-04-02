@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :developer
   has_and_belongs_to_many :categories
-  has_many :keywords
+  has_many :keywords, :through => :prefered_synonyms
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
   validates :name, :presence => true,:length => { :maximum => 30 }
   validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
