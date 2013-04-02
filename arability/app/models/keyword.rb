@@ -88,5 +88,17 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	return relevant_first_list
     end
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
   end
 end
