@@ -13,6 +13,9 @@ gem 'omniauth'
 gem 'yard'
 gem 'redcarpet'
 
+# Gem for attaching images to models
+gem 'paperclip', '~> 3.0'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
