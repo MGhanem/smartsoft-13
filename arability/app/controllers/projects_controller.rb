@@ -20,8 +20,9 @@ class ProjectsController < ApplicationController
 # author:
 #      Salma Farag
 # description:
-#     A method that calls method createproject that creates the project and redirects to the
-#project page and prints an error if the data entered is invalid
+#     After checking that the user is signed in, the method that calls method createproject
+#that creates the project and redirects to the project page and prints
+#an error if the data entered is invalid.
 # params:
 #     none
 # success:
@@ -30,7 +31,7 @@ class ProjectsController < ApplicationController
 #     Gives status errors
 
 def create
-  if Developer.find_by_gamer_id(current_gamer.id) != nil
+  if gamer_signed_in?
     @project = Project.createproject(params[:project],current_gamer.id)
     respond_to do |format|
       if @project.save
@@ -41,16 +42,17 @@ def create
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
-  # else
-  #   flash[:notice] = "Please log in to view this page."
-  #   render 'pages/home'
-  end
+  else
+   flash[:notice] = "Please log in to view this page."
+   render 'pages/home'
+ end
 end
 
 # author:
 #      Salma Farag
 # description:
 #     A method that views the form that  instantiates an empty project object
+# after checking that the user is signed in.
 # params:
 #     none
 # success:
@@ -58,7 +60,20 @@ end
 # failure:
 #     none
 def new
-  @project = Project.new
+  if gamer_signed_in?
+    @project = Project.new
+    respond_to do |format|
+      format.html
+      format.json { render json: @project }
+    end
+  else
+    flash[:notice] = "Please log in to view this page."
+    render 'pages/home'
+  end
+end
+
+def edit
+  @project = Project.find(params[:id])
   respond_to do |format|
     format.html
     format.json { render json: @project }
