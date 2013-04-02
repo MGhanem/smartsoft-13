@@ -10,8 +10,8 @@ class Keyword < ActiveRecord::Base
     :message => "This keyword is already in the database"
 
   class << self
-    # adds a new keyword to the database
-    # author:
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -22,7 +22,9 @@ class Keyword < ActiveRecord::Base
     #   success: the first return is true and the second is the saved keyword
     #   failure: the first return is false and the second is the unsaved keyword
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
-      keyword = self.new(:name => name, :approved => approved)
+      name.strip!
+      keyword = where(name: name).first_or_create
+      keyword.approved = approved
       if is_english != nil
         keyword.is_english = is_english
       else
