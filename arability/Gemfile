@@ -59,5 +59,6 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
+#gem omniauth and omniauth-twitter for twitter authorizations
 gem 'omniauth'
 gem 'omniauth-twitter'

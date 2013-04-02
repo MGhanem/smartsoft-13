@@ -36,6 +36,8 @@ Arability::Application.routes.draw do
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
+
+  match '/auth/:twitter/callback', :to => 'social#twitter'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
