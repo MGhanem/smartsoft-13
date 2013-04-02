@@ -85,7 +85,6 @@ class ProjectsController < ApplicationController
   def upload
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
-      # redirect_to import_csv_project_path(:message => message)
       redirect_to action: "import_csv", id: params[:project_id], message: message
     else
       words_in_database_before = Array.new
