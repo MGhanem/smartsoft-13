@@ -18,8 +18,14 @@ Arability::Application.routes.draw do
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   get "admin/import_csv"
+  
+  get "projects/import_csv"
+
+  match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
   post "admin/upload"
+
+  post "projects/upload"
 
   match "keywords" => "keywords#viewall"
 

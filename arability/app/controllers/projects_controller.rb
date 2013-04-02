@@ -13,12 +13,13 @@ class ProjectsController < ApplicationController
   #   on success: returns an array of projects of the developer currently logged in.
   #   on failure: notifies the user that he can't see this page.
   def index
- 	  developer = Developer.where(:gamer_id => current_gamer.id).first
-  	if developer.present?
-  		@projects = Project.where(:developer_id => developer.id)
-  	else
-  		flash[:notice] = "You are not authorized to view this page"
-  	end
+    @projects = Project.all
+ 	  # developer = Developer.where(:gamer_id => current_gamer.id).first
+  	# if developer.present?
+  	# 	@projects = Project.where(:developer_id => developer.id)
+  	# else
+  	# 	flash[:notice] = "You are not authorized to view this page"
+  	# end
   end
 
 # author:
@@ -65,6 +66,15 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    @project = Project.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @project }
+    end
+  end
+
   def choose_keywords
     @words_in_database_before = params[:a1]
     @synonyms_words_in_database_before = params[:a2]
@@ -82,10 +92,10 @@ class ProjectsController < ApplicationController
     words_not_in_database_before = Array.new
     synonyms_words_not_in_database_before = Array.new
     arr_of_arrs.each do |row|
-      if Keyword.keyword_exists?(row[0])
+      if Keyword.find_by_name(row[0])
         keywrd = Keyword.find(row[0])
         for i in 1..row.size
-          Synonym.recordsynonym(row[i],keywrd.id)
+          Synonym.record_synonym(row[i],keywrd.id)
         end
         for i in 1..row.size
           synonm = Synonym.find(row[i], keywrd.id)
@@ -99,7 +109,7 @@ class ProjectsController < ApplicationController
         @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
         if @isSaved
           for i in 1..row.size
-            Synonym.recordsynonym(row[i],keywrd.id)
+            Synonym.record_synonym(row[i],keywrd.id)
           end
           for i in 1..row.size
             synonm = Synonym.find(row[i], keywrd.id)
@@ -116,6 +126,8 @@ class ProjectsController < ApplicationController
   end
 
   def import_csv
+    current_project = Project.find(params[:id])
+    @project_id = current_project.id
     @message = params[:message]
     if @message == 0
       redirect_to action: "choose_keywords"
