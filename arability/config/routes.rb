@@ -3,7 +3,7 @@ Arability::Application.routes.draw do
 
   get "follow/unfollow"
 
-  match "followed" => "follow#listFollowed"
+  get "follow/listfollowed"
 
   get "admin/index"
 
