@@ -11,6 +11,9 @@ gem 'sqlite3'
 gem 'yard'
 gem 'redcarpet'
 
+# Gem for attaching images to models
+gem 'paperclip', '~> 3.0'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -26,6 +29,13 @@ end
 
 gem 'jquery-rails'
 gem 'execjs'
+
+# gem for age validations 
+gem 'date_validator'
+
+#gem used to select countries
+gem 'country-select'
+
 
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby
