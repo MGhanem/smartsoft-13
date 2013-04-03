@@ -17,7 +17,12 @@ class Gamer < ActiveRecord::Base
   validates :education_level, :presence => true, :length => { :minimum => 2 }
   validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i,:message => "can't be except low, medium or high" }
 
+  #scopes defined for advanced search aid
+  scope :filter_by_country, lambda { |country| where(:country => country) }
+  scope :filter_by_age, lambda { |from, to| where :age => from..to } #ask for an age method
+  scope :filter_by_gender, lambda { |gender| where :gender => gender }
+  scope :filter_by_education, lambda { |education| where :education_level => education }
 
-
-
+  has_many :synonyms, :through => :votes
+  has_many :votes
 end
