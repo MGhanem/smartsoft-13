@@ -27,7 +27,6 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
   post "keywords/create"
 
   match '/developers/new' => "developer#new"
@@ -37,6 +36,8 @@ Arability::Application.routes.draw do
 
   match 'search' => 'search#search'
   
+  match 'follow' => 'follow#follow'
+  get 'backend/home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
