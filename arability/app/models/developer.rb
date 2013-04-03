@@ -19,5 +19,6 @@ class Developer < ActiveRecord::Base
       keyword = Keyword.find(keyword_id)
       developer.keywords << keyword
     end
+    
   end
 end

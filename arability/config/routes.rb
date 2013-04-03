@@ -1,4 +1,10 @@
 Arability::Application.routes.draw do
+  get "follow/follow"
+
+  get "follow/unfollow"
+
+  match "followed" => "follow#listFollowed"
+
   get "admin/index"
 
   get "admin/login"
