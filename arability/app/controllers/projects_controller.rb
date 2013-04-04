@@ -13,6 +13,7 @@
         @projects = Project.where(:owner_id => current_gamer.id)
       else
         flash[:notice] = "You are not authorized to view this page"
+        render 'pages/home'
       end
     end
 
@@ -104,7 +105,7 @@
   def update
     if gamer_signed_in?
      @project = Project.find(params[:id])
-     @project = Project.createcategories(@project,params[:categories])
+     @project = Project.createcategories(@project,params([:project].find([:categories])))
      if @project.update_attributes(params[:project])
       redirect_to :action => "index"
       flash[:notice] = "Project has been successfully updated."
@@ -116,11 +117,11 @@
   end
 end
 
-def show(projectID)
-  if gamer_signed_in?
-    @project = Project.find([projectID])
-  else
-    flash[:notice] = "You are not authorized to view this page"
-  end
-end
+# def show(projectID)
+#   if gamer_signed_in?
+#     @project = Project.find([projectID])
+#   else
+#     flash[:notice] = "You are not authorized to view this page"
+#   end
+# end
 end
