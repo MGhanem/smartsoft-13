@@ -8,6 +8,7 @@ Arability::Application.routes.draw do
   post "admin/wordadd"
   
   resources :projects
+  
 
   # get "admin/import_csv"
 
@@ -23,6 +24,8 @@ Arability::Application.routes.draw do
 
   match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
+  match '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
   post "admin/upload"
 
   post "projects/upload"
@@ -33,7 +36,6 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
   post "keywords/create"
 
   match '/developers/new' => "developer#new"
