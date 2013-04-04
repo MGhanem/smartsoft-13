@@ -26,6 +26,7 @@ Arability::Application.routes.draw do
   get "keywords/new"
 
   get "keywords/suggest_add"
+  get "social/welcome"
 
   resources :projects
   post "keywords/create"
