@@ -110,4 +110,45 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
+
+  def change_synonym
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
+        # check of project is shared with me too
+        @word_id = params[:word_id]
+        if Keyword.find_by_id(@word_id) != nil
+          @edited_word = ProjectWord.find_by_keyword_id(@word_id).find_by_project_id(@project_id)
+          if  @edited_word != nil
+            @synonym_id = params[:synonym_id]
+            if Synonym.find_by_id(@synonym_id) != nil
+              @edited_word.synonym_id = @synonym_id
+              if @edited_word.save
+                flash[:notice] = "Synonym changed successfully."
+                # render the project's page
+              else
+                flash[:notice] = "Failed to update synonym"
+                # render the project's page
+              end
+            else
+              flash[:notice] = "This synonym does not exist."
+              # render project's page
+            end
+          else
+            flash[:notice] = "This word is not in the project."
+            # render project's page
+          end
+        else
+          flash[:notice] = "This word does not exist."
+          # render the project's page and add link to add this word to the database
+        end
+      else
+        flash[:notice] = "You can't edit someone else's project!"
+        render 'pages/home'
+      end
+    else
+      flash[:notice] = "You have to register as a developer before trying to change the synonym of this word."
+      render 'pages/home'
+    end
+  end
 end
