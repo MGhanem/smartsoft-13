@@ -45,6 +45,33 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def share
+    @project = Project.find(params[:id])
+  end
+
+  def share_project_with_developer
+    @project = Project.find(params[:id])
+    gamer = Gamer.find_by_email(params[:email])
+    if(!gamer.present?)
+      flash[:notice] = "Email doesn't exist"
+    else
+      developer = Developer.find_by_gamer_id(gamer.id)
+      if developer == nil
+        flash[:notice] = "Email address is for gamer, not a developer"
+      else
+        #share project with the developer
+        developer.projects_shared << @project
+        if(developer.save)
+          flash[:notice] = "Project has been shared successfully with #{developer.name}"
+        else
+          flash[:notice] = "Failed to share project with developer"
+        end
+      end
+      #developer.shared_projects.find_by_developer_id(developer.id).destroy
+    end
+    render "projects/share"
+  end
+
 # author:
 #      Salma Farag
 # description:

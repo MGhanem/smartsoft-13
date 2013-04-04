@@ -1,5 +1,10 @@
 class Project < ActiveRecord::Base
   belongs_to :developer
+
+  has_many :shared_projects
+  has_many :developers_shared, :through => :shared_projects, :source => "developer"
+
+
   has_and_belongs_to_many :categories
   has_many :keywords
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories

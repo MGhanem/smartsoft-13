@@ -1,5 +1,10 @@
 class Developer < ActiveRecord::Base
- belongs_to :gamer
+  belongs_to :gamer 
+  has_one :my_subscription
+  has_many :projects
+  has_many :shared_projects
+  has_many :projects_shared, :through => :shared_projects, :source => "project"
+
  attr_accessible :first_name, :last_name, :verified, :gamer_id
  validates :first_name, :presence => true
  validates :last_name, :presence => true
@@ -10,4 +15,19 @@ class Developer < ActiveRecord::Base
  validates_length_of :last_name, :maximum => 18
  validates_length_of :last_name, :minimum => 3
  validates :gamer_id, :presence => true, :uniqueness => true
-end
+
+ def email
+ 	self.gamer.email
+ end
+
+
+# def add_shared_project
+	
+# end
+
+#  def validate_developer_subscription
+#  	if(self.my_subscription.limit_project < self.projects.count)
+#  	end
+#  end
+
+# end
