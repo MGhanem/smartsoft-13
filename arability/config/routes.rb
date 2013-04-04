@@ -6,7 +6,7 @@ Arability::Application.routes.draw do
 
   post "admin/login"
   post "admin/wordadd"
-  
+
   resources :projects
 
   # get "admin/import_csv"
@@ -14,7 +14,6 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   # required for routing by the devise module(gem)
-  devise_for :gamers
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   get "admin/import_csv"
@@ -27,7 +26,6 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
   post "keywords/create"
 
   match '/developers/new' => "developer#new"
@@ -36,7 +34,7 @@ Arability::Application.routes.draw do
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -93,4 +91,6 @@ Arability::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  match '*path', :to => 'pages#routing_error'
 end
