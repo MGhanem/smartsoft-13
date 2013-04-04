@@ -132,10 +132,10 @@ class AdminController < ActionController::Base
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def wordadd
+  def addword
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
       flash[:success] = "Keyword #{@keyword.name} has been created"
     else

@@ -5,7 +5,7 @@ Arability::Application.routes.draw do
   get "admin/logout"
 
   post "admin/login"
-  post "admin/wordadd"
+  post "admin/addword"
   
   resources :projects
 

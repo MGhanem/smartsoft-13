@@ -1,6 +1,93 @@
-<%= link_to "logout", :action => "logout" %>
-<%= link_to "import csv", action: "import_csv" %>
-
-<h1>Admin#index</h1>
-
-<%= render 'admin/wordadd' %>
+<div class="container admin">
+		<div class="row">
+			<div class="span3">
+				<div class="well">
+					<ul class="nav nav-list nav-stacked" id="admin-tabs">
+						<li class="active">
+							<a href="#home" data-toggle="tab">الصفحة الرئيسية</a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الكلمات</li>
+						<li>
+							<a href="#new-keyword" data-toggle="tab">إضافة كلمة جديدة</a>
+						</li>
+						<li>
+							<a href="#import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV </a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الميداليات</li>
+						<li>
+							<a href="#add-trophy" data-toggle="tab">إضافة مدالية جديدة</a>
+						</li>
+						<li>
+							<a href="#delete-trophy" data-toggle="tab">مسح مدالية</a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الجوائز</li>
+						<li>
+							<a href="#add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+						</li>
+						<li>
+							<a href="#delete-prize" data-toggle="tab">مسح جائزة</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<div class="tab-content">
+					<div class="tab-pane active" id="home">
+						<div class="alert alert-info">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>مرحبا بكم!!</strong>
+						</div>
+						<%= render 'layouts/messages' %>
+					</div>
+					<div class="tab-pane" id="new-keyword">
+						<%= render 'add-word' %>
+					</div>
+					<div class="tab-pane" id="import-csv-file">
+						<form class="form-horizontal well span6" action="#" method="post">
+							<fieldset>
+								<legend>import a new keyword CSV file</legend>
+								<div class="fileupload fileupload-new" data-provides="fileupload">
+									<div class="input-append">
+									    <div class="uneditable-input span3">
+									    	<i class="icon-file fileupload-exists"></i>
+									    	<span class="fileupload-preview"></span>
+									    </div>
+									    <span class="btn btn-file">
+									    	<span class="fileupload-new">Select file</span>
+									    	<span class="fileupload-exists">Change</span>
+									    	<input type="file">
+										</span>
+										<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+										<button type="submit" class="btn fileupload-exists">Import file</button>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<div class="tab-pane" id="add-trophy">
+						<form class="well span6" action="#" method="post">
+							
+						</form>
+					</div>
+					<div class="tab-pane" id="delete-trophy">
+						<form class="well span6" action="#" method="post">
+							
+						</form>
+					</div>
+					<div class="tab-pane" id="add-prize">
+						<form class="well span6" action="#" method="post">
+							
+						</form>
+					</div>
+					<div class="tab-pane" id="delete-prize">
+						<form class="well span6" action="#" method="post">
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
