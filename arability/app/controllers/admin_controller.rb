@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class AdminController < ActionController::Base
 
   require 'csv'
 
