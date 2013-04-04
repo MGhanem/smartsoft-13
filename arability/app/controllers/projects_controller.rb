@@ -76,6 +76,7 @@ class ProjectsController < ApplicationController
 #     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
 #     developer.
   def add_word
+    # if he word doesn't have synonyms redirect to follow word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
       if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
@@ -110,7 +111,17 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
-
+# author:
+#      Khloud Khalid
+# description:
+#     method changes the chosen synonym of a keyword in a certain project
+# params:
+#     project_id, word_id, synonym_id
+# success:
+#     synonym updated successfully
+# failure:
+#     keyword or synonym does not exist, keyword is not in the project, developer trying to add word is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
   def change_synonym
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
