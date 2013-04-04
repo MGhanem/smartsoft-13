@@ -135,7 +135,7 @@ class ProjectsController < ApplicationController
           end
         end
       end
-      redirect_to action: "choose_keywords",id: params[:project_id], a1:words_in_database_before ,a2:synonyms_words_in_database_before ,a3:words_not_in_database_before ,a4:synonyms_words_not_in_database_before 
+      redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
     end
   end
 
