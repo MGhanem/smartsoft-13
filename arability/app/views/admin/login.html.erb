@@ -1,3 +1,4 @@
+<!-- 
 <form action="/admin/login" method="POST">
 	<fieldset>
 		<legend>Login</legend>
@@ -12,3 +13,28 @@
 	</fieldset>
 	<input type="submit" value="login">
 </form>
+-->
+<div class="row">
+	<form class="form-horizontal well offset4 span5 offset25top" action="/admin/login" method="post">
+		<fieldset>
+			<legend>تسجيل الدخول</legend>
+			<div class="control-group">
+				<label class="control-label" for="inputusername">اسم المستخدم</label>
+				<div class="controls">
+					<input type="text" id="inputusername" name="username" placeholder="اسم المستخدم">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputpassword">كلمة السر</label>
+				<div class="controls">
+					<input type="text" id="inputpassword" name="password" placeholder="كلمة السر">
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<button type="submit" class="btn">تسجيل الدخول</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
