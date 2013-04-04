@@ -63,7 +63,18 @@ class ProjectsController < ApplicationController
       format.json { render json: @project }
     end
   end
-
+# author:
+#      Khloud Khalid
+# description:
+#     method adds a keyword and a synonym to an existing project by creating a new ProjectWord object 
+# params:
+#     project_id, word_id, synonym_id
+# success:
+#     keyword and synonym are added to project (new ProjectWord object created) 
+# failure:
+#     object not valid (no project or word id), word already exists in project, keyword does not exist, 
+#     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
+#     developer.
   def add_word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
