@@ -111,7 +111,7 @@ class ProjectsController < ApplicationController
             Synonym.record_synonym(row[i],keywrd.id)
           end
           for i in 1..row.size
-            synonm = Synonym.find(row[i], keywrd.id)
+            synonm = Synonym.find_by_name(row[i], keywrd.id)
             if synonm != nil
               id_words_in_database_before.push(keywrd.id)
               id_synonyms_words_in_database_before.push(synonm.id)
@@ -125,7 +125,7 @@ class ProjectsController < ApplicationController
               Synonym.record_synonym(row[i],keywrd.id)
             end
             for i in 1..row.size
-              synonm = Synonym.find(row[i], keywrd.id)
+              synonm = Synonym.find_by_name(row[i], keywrd.id)
               if synonm != nil
                 id_words_not_in_database_before.push(keywrd.id)
                 id_synonyms_words_not_in_database_before.push(synonm.id)
