@@ -43,6 +43,34 @@ class DeveloperController < ApplicationController
       end
     end
   end
+
+  def follow
+    dev_id = Developer.where(:gamer_id => current_gamer.id).first.id
+    Developer.follow(dev_id, #keyword_id)
+  end
+
+  def unfollow
+    dev_id = Developer.where(:gamer_id => current_gamer.id).first.id
+    Developer.unfollow(dev_id, #keyword_id)
+  end
+
+
+  def followed
+    if current_gamer != nil 
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      if developer != nil
+        keyword_ids_array = developer.keyword_ids
+        @keywords = Keyword.find_all_by_id(keyword_ids_array)
+        render 'developer/followed'
+      else
+        flash[:notice] = "Please sign up as a developer first"
+        render 'developers/new'
+      end
+    else
+      flash[:notice] = "Please sign in"
+      render 'pages/home'
+    end  
+  end
 end
 
 

@@ -5,6 +5,8 @@ Arability::Application.routes.draw do
 
   get "follow/listfollowed"
 
+  get "developer/followed"
+
   get "admin/index"
 
   get "admin/login"
@@ -36,6 +38,7 @@ Arability::Application.routes.draw do
   resources :projects
   post "keywords/create"
 
+  match '/developers/followed' => "developer#followed"
   match '/developers/new' => "developer#new"
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
