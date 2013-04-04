@@ -1,5 +1,6 @@
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
+  #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
 # author:
 #   Khloud Khalid
 # description:
@@ -14,10 +15,6 @@ class MySubscriptionController < ApplicationController
     if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
       if Developer.find_by_gamer_id(current_gamer.id) != nil
         @my_subscription = MySubscription.new
-        @my_subscription.limit_search = 20
-        @my_subscription.limit_add = 20
-        @my_subscription.limit_project = 1
-        @my_subscription.limit = 20
         @my_subscription.save
       else
         flash[:notice] = "Please register as a developer before you choose your subscription model."
@@ -71,25 +68,35 @@ class MySubscriptionController < ApplicationController
       render 'pages/home'
     end  
   end
-   def choose(type)
-    if type == 1
-      @my_subscription.limit_search=20
-      @my_subscription.limit_add = 20
-      @my_subscription.limit_project = 1
-      @my_subscription.limit = 20
-      @my_subscription.save
-    elsif type == 2
-      @my_subscription.limit_search=1000
-      @my_subscription.limit_add = 1000
-      @my_subscription.limit_project = 100
-      @my_subscription.limit = 1000
-      @my_subscription.save
-  elsif type == 3 
-      @my_subscription.limit_search=2000
-      @my_subscription.limit_add = 2000
-      @my_subscription.limit_project = 200
-      @my_subscription.limit = 1000
-      @my_subscription.save
-   end
- end
+
+
+  def choose_sub
+    @all_subscription_models = SubscriptionModel.all
+    @developer = Developer.first#for testing
+  end
+
+  def pick
+    #recieve parameters
+    @all_subscription_models = SubscriptionModel.all
+    @developer = Developer.first#for testing
+    sub_id = params[:my_subscription]
+    dev_id = @developer.id
+    # we need this to be the action for a form
+    # and to make this form we need another method with an equiv view to render 
+    # it so lets call this choose_sub
+    
+    if MySubscription.choose(dev_id,sub_id)
+      flash[:notice] = "You have successfully chosen your subscription model"
+        redirect_to root_url
+    else
+      flash[:notice] = "Please choose your subscription model"
+      render 'my_subscription/choose_sub'
+    end
+  end
+
+  #private 
+
+  #def prepare_subscriptions
+    #@all_subscription_models = SubscriptionModel.all
+  #end
 end

@@ -13,6 +13,8 @@ Arability::Application.routes.draw do
   post "admin/wordadd"
   
   resources :projects
+  match "projects/share/:id" => "projects#share"
+  match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :post
 
   # get "admin/import_csv"
 
@@ -39,6 +41,9 @@ Arability::Application.routes.draw do
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
+  match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+  match '/my_subscriptions/pick' => "my_subscription#pick"
+
 
   match 'search' => 'search#search'
   

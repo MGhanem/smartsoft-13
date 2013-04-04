@@ -23,28 +23,35 @@ class MySubscription < ActiveRecord::Base
     #   or follow limit
     # fail:
     #   none
+      #errors = dev.my_sub.get_permissions(dev_id, type)
+      #if(errors.empty?)
+        #all valid
+        #continue save
+      #else
+        #Stop further actions
+        
+        #flash[:notice] = errors.join("\n")
+      #end
       def get_permissions(dev_id,type)
+        errors = []
+        errors.empty?
+        
         my_subscription = 
          MySubscription.joins(:developer).where(:developer_id => dev_id).first
         if type = @@search
-          if my_subscription.word_search > 0 
-            return true
-          else
-            return false
+          if my_subscription.word_search == 0 
+            errors << "You have exceeded your search limit"
           end
         elsif  type = @@add
-          if my_subscription.word_add > 0
-            return true
-          else 
-            return false
+          if my_subscription.word_add == 0
+            errors << "You have exceeded your add limit"
           end 
         else type = @@follow
-          if my_subscription.word_follow > 0
-            return true
-          else
-            return false
+          if my_subscription.word_follow == 0
+            errors << "You have exceeded your follow limit"
           end
         end
+        return errors
       end
   end 
 
@@ -58,6 +65,24 @@ class MySubscription < ActiveRecord::Base
 
     def get_word_follow
       return @@follow
+    end
+
+    def self.choose(dev_id,sub_id)
+      submodel = SubscriptionModel.find(sub_id)
+      my_sub = MySubscription.where(:developer_id => dev_id).first
+      if(my_sub == nil)
+        my_sub = MySubscription.new
+      end
+      my_sub.developer_id = dev_id
+      my_sub.word_search=submodel.limit_search
+      my_sub.word_add=submodel.limit
+      my_sub.word_follow=submodel.limit_follow
+      my_sub.subscription_models_id = submodel.id
+      if my_sub.save!
+        return true
+      else 
+        return false
+      end 
     end
 end
 
