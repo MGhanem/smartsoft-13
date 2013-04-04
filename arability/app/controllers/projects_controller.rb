@@ -162,7 +162,17 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
-
+# author:
+#      Khloud Khalid
+# description:
+#     method removes a given word from a project
+# params:
+#     project_id, word_id
+# success:
+#     word removed successfully
+# failure:
+#     keyword does not exist or is not in the project, developer trying to remove word is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
   def remove_word
      if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
