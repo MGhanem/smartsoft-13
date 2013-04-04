@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  has_one :project_owner, :class_name => "Developer"
+  has_one :owner, :class_name => "Developer"
   has_and_belongs_to_many :categories
   has_many :keywords
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
@@ -23,17 +23,16 @@ class Project < ActiveRecord::Base
 
 def self.createproject(params,gamer_id)
   project = Project.new(params.except(:categories,:developer))
-  createcategories(params[:categories])
   developer = Developer.where(:gamer_id => gamer_id).first
-  project.developer_id = developer.gamer_id
-  project.save
+  project.owner_id = developer.gamer_id
+  project = createcategories(project,params[:categories])
   return project
 end
 
-# author:
+  # author:
   #      Salma Farag
   # description:
-  #     A method that takes categories in the form of csv and sabes them in an array
+  #     A method that takes categories in the form of csv and saves them in an array
   #then loops on it and creates an a new category each time.
   # params:
   #     Category names in the form of csv.
@@ -41,12 +40,31 @@ end
   #     Categories will be created.
   # failure:
   #     none
-def self.createcategories(categoriesField)
-  array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+def self.createcategories(project,categories)
+  array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
   array.each do |m|
     catArray.push(Category.where(:name => m).first_or_create)
   end
-  @project.categories = catArray
+  project.categories = catArray
+  project.save
+  return project
+end
+
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that takes an array of categories, maps their names into an array and joins
+  #the array using commas.
+  # params:
+  #     Array of categories.
+  # success:
+  #     Returns a string of category names.
+  # failure:
+  #     None
+def self.printarray(array)
+  t = array.map {|item| item.name}
+  t = t.join(", ")
+  return t
 end
 end

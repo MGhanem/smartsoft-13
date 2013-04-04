@@ -9,9 +9,8 @@
     #   on success: returns an array of projects of the developer currently logged in.
     #   on failure: notifies the user that he can't see this page.
     def index
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer.present?
-        @projects = Project.where(:developer_id => developer.id)
+      if gamer_signed_in?
+        @projects = Project.where(:owner_id => current_gamer.id)
       else
         flash[:notice] = "You are not authorized to view this page"
       end
@@ -46,7 +45,7 @@
      flash[:notice] = "Please log in to view this page."
      render 'pages/home'
    end
-  end
+ end
 
   # author:
   #      Salma Farag
@@ -72,7 +71,7 @@
     end
   end
 
-# author:
+  # author:
   #      Salma Farag
   # description:
   #     A method that specifies an already existing project by its ID
@@ -83,11 +82,15 @@
   # failure:
   #     none
   def edit
-    @project = Project.find(params[:id])
-    @categories = Category.find(:all)
+    if gamer_signed_in?
+      @project = Project.find(params[:id])
+      @categories = Category.find(:all)
+    else
+      flash[:notice] = "You are not authorized to view this page"
+    end
   end
 
-# author:
+  # author:
   #      Salma Farag
   # description:
   #     A method that checks if the fields of the form editting the project have been changed.
@@ -99,17 +102,25 @@
   # failure:
   #     The old values will be kept.
   def update
-    @project = Project.find(params[:id])
-    array = @project.categories
-    if @project.update_attributes(params[:project].except(:categories))
-      if array==@project.categories
-        redirect_to :action => "index"
-      else
-       array = self.createcategories(params[:categories])
-     end
-   else
-    @categories = Category.find(:all)
-    render :action => 'edit'
+    if gamer_signed_in?
+     @project = Project.find(params[:id])
+     @project = Project.createcategories(@project,params[:categories])
+     if @project.update_attributes(params[:project])
+      redirect_to :action => "index"
+      flash[:notice] = "Project has been successfully updated."
+    else
+      render :action => 'edit'
+    end
+  else
+    flash[:notice] = "You are not authorized to view this page"
   end
+end
+
+def show(projectID)
+  if gamer_signed_in?
+    @project = Project.find([projectID])
+  else
+    flash[:notice] = "You are not authorized to view this page"
   end
+end
 end

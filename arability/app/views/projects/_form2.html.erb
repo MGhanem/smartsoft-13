@@ -1,19 +1,19 @@
 <style>
 .radio{
-    display:float;
+display:float;
 }
 </style>
 <div class = "container">
-<%= form_for(@project) do |f| %>
+    <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
-        <div id="error_explanation">
-            <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-            <ul>
+    <div id="error_explanation">
+        <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+        <ul>
             <% @project.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
+            <li><%= msg %></li>
             <% end %>
-            </ul>
-        </div>
+        </ul>
+    </div>
     <% end %>
 
     <div class="field">
@@ -22,14 +22,14 @@
     </div>
     <div class="field">
         <%= f.label :categories %>
-        <%= f.text_field :categories %>
+        <%= text_field_tag("project[categories]",Project.printarray(@project.categories)) %> 
     </div>
     <div class="radio">
         <%= f.radio_button :formal, 'Formal'%> 
         <%= label :formal, 'Formal' %>
         <%= f.radio_button :formal, 'Slang' %>
         <%= label :slang, 'Slang' %>
-    <br>
+        <br>
     </div>
     <div class="field">
         <div class="field">Age Target</div>
