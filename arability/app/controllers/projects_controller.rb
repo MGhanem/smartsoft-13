@@ -63,4 +63,40 @@ class ProjectsController < ApplicationController
       format.json { render json: @project }
     end
   end
+
+  def add_word
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
+        # check of project is shared with me too
+        @word_id = params[:word_id]
+        if Keyword.find_by_id(@word_id) != nil
+          if ProjectWord.find_by_project_id(@project_id).find_by_keyword_id(@word_id) == nil
+            @synonym_id = params[:synonym_id]
+            # check for free users, if the words exceeds 20 words
+            @added_word = ProjectWord.new(@word_id, @project_id, @synonym)
+            if @added_word.save
+              flash[:notice] = "You have successfully added the word to your project."
+              # render the project's page
+            else
+              flash[:notice] = "Word cannot be added to your project."
+              # render the project's page
+            end
+          else
+            flash[:notice] = "Don't you remember you already added this word to your project?"
+            # render the project's page
+          end
+        else
+          flash[:notice] = "The word you're trying to add does not exist."
+          # render the project's page and add link to add this word to the database
+        end
+      else
+        flash[:notice] = "You can't add a word to someone else's project!"
+        render 'pages/home'
+      end
+    else
+      flash[:notice] = "You have to register as a developer before trying to add a word to your project."
+      render 'pages/home'
+    end
+  end
 end
