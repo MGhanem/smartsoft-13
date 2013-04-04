@@ -9,7 +9,9 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
+
   class << self
+  include StringHelper
     # adds a new keyword to the database or returns it if it exists
     # Author:
     #   Mohamed Ashraf
@@ -25,10 +27,13 @@ class Keyword < ActiveRecord::Base
       name.strip!
       keyword = where(name: name).first_or_create
       keyword.approved = approved
+      if is_english_string(name) 
+        name.downcase!
+      end
       if is_english != nil
         keyword.is_english = is_english
       else
-        keyword.is_english = self.is_english_keyword(name)
+        keyword.is_english = is_english_string(name)
       end
 
       if keyword.save
@@ -42,20 +47,6 @@ class Keyword < ActiveRecord::Base
         return true, keyword
       else
         return false, keyword
-      end
-    end
-
-    # checks if the keyword is formed of english letters only
-    # params:
-    #   name: the string being checked
-    # returns:
-    #   success: returns true if the keyword is in english
-    #   failure: returns false if the keyword contains non english letters
-    def is_english_keyword(name)
-      if name.match /^[a-zA-Z]+$/
-        true
-      else
-        false
       end
     end
 
