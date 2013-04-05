@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+
+  require 'csv'
+
   # GET /projects
   # GET /projects.json
   
@@ -202,4 +205,37 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
+
+  def export_to_csv 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
+      @project_id = params[:project_id]
+      if Project.find_by_id(@project_id) != nil  
+        if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil 
+          # check of project is shared with me too   
+          @exported_data = ProjectWord.find_by_project_id(@project_id)
+          csv_string = CSV.generate do |csv|
+            csv << ["Keyword", "Synonym"]
+            @exported_data.each do |word|
+              @keyword = Keyword.find_by_id(word.keyword_id)
+              @synonym = Synonym.find_by_id(word.synonym_id)
+              csv << [@keyword, @synonym]
+            end
+          end         
+          send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=project_data.csv" 
+        else
+          flash[:notice] = "You can't export the data of someone else's project!"
+          render 'pages/home'
+        end
+      else
+        flash[:notice] = "Project does not exist!"
+        render 'pages/home'
+      end
+    else
+      flash[:notice] = "You have to register as a developer before trying to export project's data."
+      render 'pages/home'
+    end
+  end 
+
 end
