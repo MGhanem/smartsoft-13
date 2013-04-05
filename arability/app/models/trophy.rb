@@ -6,10 +6,8 @@ class Trophy < ActiveRecord::Base
     :greater_than_or_equal_to => 1, :less_than_or_equal_to => 100 }
   validates :score, :presence => true, :numericality => {
     :greater_than_or_equal_to => 1, :less_than_or_equal_to => 1000000 }
-                              # This will probably be changed when we figure
-                              # the scoring system the game will have
-  # validates :photo, :presence => true
-  # validates_attachment_size :photo, :in => 0.megabytes..0.5.megabytes
+  validates :photo, :presence => true
+  validates_attachment_size :photo, :in => 0.megabytes..0.5.megabytes
   
   has_and_belongs_to_many :gamers
 
@@ -17,4 +15,26 @@ class Trophy < ActiveRecord::Base
 
   has_attached_file :photo
 
+  class << self
+
+    # author:
+    #     Karim ElNaggar
+    # description:
+    #     a function adds a new trophy to the database
+    # params
+    #     name, level, score, photo
+    # success: 
+    #     returns true and the new trophy if it is added to the database
+    # failure: 
+    #     returns false and the trophy if it is not added to the database
+    def add_trophy_to_database(name, level, score, photo)
+      new_trophy = Trophy.new(name: name, level: level, score: score, photo: photo)
+      if new_trophy.save
+        return true, new_trophy
+      else
+        return false, new_trophy
+      end
+    end
+
+  end
 end

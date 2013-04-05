@@ -148,6 +148,31 @@ class AdminController < ActionController::Base
   # author:
   #     Karim ElNaggar
   # description:
+  #     this action takes a trophy as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the trophy
+  #     level: the level required to earn the trophy
+  #     score: the score required to earn the trophy
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addtrophy
+    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:photo])
+    if success
+      flash[:success] = "Trophy #{trophy.name} has been created"
+    else
+      flash[:error] = trophy.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
   #     admin logout action
   # params
   #     none
