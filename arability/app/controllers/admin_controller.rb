@@ -152,15 +152,15 @@ class AdminController < ActionController::Base
   #     the database and redirects the user to index
   # params
   #     name: name of the trophy
-  #     level: the level required to earn the trophy
-  #     score: the score required to earn the trophy
+  #     score: the level required to earn the trophy
+  #     rank: the score required to earn the trophy
   #     photo: the photo thumbnail which would be displayed
   # success: 
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
   def addtrophy
-    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:photo])
+    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:score], params[:rank], params[:photo])
     if success
       flash[:success] = "Trophy #{trophy.name} has been created"
     else

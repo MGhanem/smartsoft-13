@@ -22,13 +22,13 @@ class Trophy < ActiveRecord::Base
     # description:
     #     a function adds a new trophy to the database
     # params
-    #     name, level, score, photo
+    #     name, score, rank, photo
     # success: 
     #     returns true and the new trophy if it is added to the database
     # failure: 
     #     returns false and the trophy if it is not added to the database
-    def add_trophy_to_database(name, level, score, photo)
-      new_trophy = Trophy.new(name: name, level: level, score: score, photo: photo)
+    def add_trophy_to_database(name, score, rank, photo)
+      new_trophy = Trophy.new(name: name, score: score, level: rank, photo: photo)
       if new_trophy.save
         return true, new_trophy
       else
