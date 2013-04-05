@@ -1,3 +1,20 @@
+<script type="text/javascript" charset="utf-8">
+  
+  var words=["car","dead","ok"];
+
+  function get_words(){
+    return words;
+  }
+
+  function request_vote_form(){
+    $('#workspace').remove();
+    $('.zone').append('<div class=\"vote_form\"></div>');
+    var first_word = words.shift();
+    $.post("/games/vote.js", { word: first_word});
+  }
+
+
+</script>
 
 <div class="game-zone">
   <div class="game-nav">
@@ -21,6 +38,12 @@
     </div>
   </div>
   <div class="zone">
-    
+
   </div>
 </div>
+
+<div id="workspace" style="position:relative; left: 10px; ">
+  <a onclick="request_vote_form()"  id="btn">start voting</a>
+</div>
+
+
