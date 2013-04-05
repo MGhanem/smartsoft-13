@@ -17,4 +17,10 @@ class Prize < ActiveRecord::Base
 
   has_attached_file :photo
 
+  def self.get_new_prizes_for_gamer(gamer_id)
+    prizes_all = Prize.all
+    prizes_gamer = gamer.prizes
+    return prizes_all - prizes_gamer
+  end
+
 end

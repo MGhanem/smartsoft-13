@@ -30,8 +30,18 @@ class Gamer < ActiveRecord::Base
   
 
   def receive_prize(prize_id)
-    prize = Prize.find(prize(prize_id))
-    gamer = Gamer.find(gamer_id)
+    prize = Prize.find(prize_id)
+    
+    if prize == nil
+      return false
+    end
+    
+    if self.prizes.include? prize
+      return false
+    else
+      self.prizes << prize
+      return true
+    end
   end
 
 end
