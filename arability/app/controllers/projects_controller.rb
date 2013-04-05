@@ -121,7 +121,19 @@ class ProjectsController < ApplicationController
   def upload
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
-      redirect_to action: "import_csv", id: params[:project_id], message: message
+      if message == 1
+        flash[:notice] = "You did not upload a file"
+      end
+      if message == 2
+        flash[:notice] = "Wrong encoding. Make sure your file is UTF-8 encoded"
+      end
+      if message == 3
+        flash[:notice] = "There is something wrong with this file"
+      end
+      if message == 4
+        flash[:notice] = "This file is not in csv format"
+      end
+      redirect_to action: "import_csv", id: params[:project_id]
     else
       id_words_in_database_before = Array.new
       id_synonyms_words_in_database_before = Array.new
