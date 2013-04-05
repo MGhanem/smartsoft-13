@@ -11,20 +11,4 @@ class Developer < ActiveRecord::Base
  validates_length_of :last_name, :maximum => 18
  validates_length_of :last_name, :minimum => 3
  validates :gamer_id, :presence => true, :uniqueness => true
-
-
-
-  class << self
-    def follow(developer_id, keyword_id)
-      developer = Developer.find(developer_id)
-      keyword = Keyword.find(keyword_id)
-      developer.keywords << keyword
-    end
-
-    def unfollow(developer_id, keyword_id)
-      developer = Developer.find(developer_id)
-      keyword = Keyword.find(keyword_id)
-      developer.keywords.delete(keyword)
-    end
-  end
 end

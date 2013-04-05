@@ -1,9 +1,9 @@
 Arability::Application.routes.draw do
-  get "follow/follow"
+  match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
-  get "follow/unfollow"
+  match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
 
-  get "follow/listfollowed"
+  match "followed" => "follow#list_followed", :as => "list_followed_words"
 
   get "developer/followed"
 
@@ -38,7 +38,6 @@ Arability::Application.routes.draw do
   resources :projects
   post "keywords/create"
 
-  match '/developers/followed' => "developer#followed"
   match '/developers/new' => "developer#new"
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
