@@ -205,7 +205,17 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
-
+# author:
+#      Khloud Khalid
+# description:
+#     method exports words and synonyms of a given project to a .csv file
+# params:
+#     project_id
+# success:
+#     data exported successfully
+# failure:
+#     project does not exist, developer trying to export data is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
   def export_to_csv 
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
