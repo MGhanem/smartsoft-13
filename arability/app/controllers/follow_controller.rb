@@ -1,4 +1,9 @@
 class FollowController < ApplicationController
+  
+  def follow
+    developer = Developer.where(:gamer_id => current_gamer.id).first
+    developer.follow(params[:keyword_id])
+  end
 
   def unfollow
     developer = Developer.where(:gamer_id => current_gamer.id).first
@@ -6,7 +11,7 @@ class FollowController < ApplicationController
     word = Keyword.find(params[:keyword_id]).name
     redirect_to :list_followed_words, :flash => {:success => "'#{word}' has been unfollowed"}
   end
-  
+
   def list_followed
     developer = Developer.where(:gamer_id => current_gamer.id).first
     keyword_ids_array = developer.keyword_ids
