@@ -1,22 +1,22 @@
-<form class="form-horizontal well span6" action="/admin/addtrophy" method="post">
+<form class="form-horizontal well span6" action="/admin/addtrophy" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>إضافة مدالية جديدة</legend>
 		<div class="control-group">
-			<label class="control-label" for="inputPassword">إسم المدالية</label>
+			<label class="control-label" for="inputName">إسم المدالية</label>
 			<div class="controls">
-				<input type="password" id="inputPassword" placeholder="إسم المدالية" name="name">
+				<input type="text" id="inputName" placeholder="إسم المدالية" name="name">
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="inputPassword">مجموع النقاط</label>
+			<label class="control-label" for="inputScore">مجموع النقاط</label>
 			<div class="controls">
-				<input type="password" id="inputPassword" placeholder="مجموع النقاط" name="score">
+				<input type="text" id="inputScore" placeholder="مجموع النقاط" name="score">
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="inputPassword">الترتيب</label>
+			<label class="control-label" for="inputRank">الترتيب</label>
 			<div class="controls">
-				<input type="password" id="inputPassword" placeholder="الترتيب" name="rank">
+				<input type="text" id="inputRank" placeholder="الترتيب" name="rank">
 			</div>
 		</div>
 		<div class="control-group" data-provides="fileupload">
