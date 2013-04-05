@@ -15,11 +15,11 @@ class Prize < ActiveRecord::Base
 
   attr_accessible :name, :level, :score, :photo
 
-  has_attached_file :photo
+  # has_attached_file :photo
 
-  def self.get_new_prizes_for_gamer(gamer_id)
-    prizes_all = Prize.all
-    prizes_gamer = gamer.prizes
+  def self.get_new_prizes_for_gamer(gamer_id, score, level)
+    prizes_all = Prize.where(:score => score, :level => level)
+    prizes_gamer = Gamer.find(gamer_id).prizes
     return prizes_all - prizes_gamer
   end
 
