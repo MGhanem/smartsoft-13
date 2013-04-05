@@ -34,7 +34,6 @@ Arability::Application.routes.draw do
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
-  match '/projects/index_shared' => "projects#index_shared"
 
   match 'search' => 'search#search'
   
