@@ -29,7 +29,7 @@ class Gamer < ActiveRecord::Base
     :before_or_equal_to => 10.years.ago }
   
 
-  def give_prize(prize_id, gamer_id)
+  def receive_prize(prize_id)
     prize = Prize.find(prize(prize_id))
     gamer = Gamer.find(gamer_id)
   end
