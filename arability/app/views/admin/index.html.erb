@@ -20,7 +20,7 @@
 							<a href="#add-trophy" data-toggle="tab">إضافة مدالية جديدة</a>
 						</li>
 						<li>
-							<a href="#delete-trophy" data-toggle="tab">مسح مدالية</a>
+							<a href="#delete-trophy" data-toggle="tab">عرض المداليات</a>
 						</li>
 						<li class="divider"></li>
 						<li class="nav-header">إدارة الجوائز</li>
@@ -28,7 +28,7 @@
 							<a href="#add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
 						</li>
 						<li>
-							<a href="#delete-prize" data-toggle="tab">مسح جائزة</a>
+							<a href="#delete-prize" data-toggle="tab">عرض الجوائز</a>
 						</li>
 					</ul>
 				</div>
@@ -46,31 +46,10 @@
 						<%= render 'add-word' %>
 					</div>
 					<div class="tab-pane" id="import-csv-file">
-						<form class="form-horizontal well span6" action="#" method="post">
-							<fieldset>
-								<legend>import a new keyword CSV file</legend>
-								<div class="fileupload fileupload-new" data-provides="fileupload">
-									<div class="input-append">
-									    <div class="uneditable-input span3">
-									    	<i class="icon-file fileupload-exists"></i>
-									    	<span class="fileupload-preview"></span>
-									    </div>
-									    <span class="btn btn-file">
-									    	<span class="fileupload-new">Select file</span>
-									    	<span class="fileupload-exists">Change</span>
-									    	<input type="file">
-										</span>
-										<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-										<button type="submit" class="btn fileupload-exists">Import file</button>
-									</div>
-								</div>
-							</fieldset>
-						</form>
+						
 					</div>
 					<div class="tab-pane" id="add-trophy">
-						<form class="well span6" action="#" method="post">
-							
-						</form>
+						<%= render 'add-trophy' %>
 					</div>
 					<div class="tab-pane" id="delete-trophy">
 						<form class="well span6" action="#" method="post">
