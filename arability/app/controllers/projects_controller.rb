@@ -16,7 +16,8 @@ class ProjectsController < ApplicationController
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:developer_id => developer.id)
-        @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
+        # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
+        @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
       else
         flash[:notice] = "Please sign up as a developer first"
         render 'developers/new'
