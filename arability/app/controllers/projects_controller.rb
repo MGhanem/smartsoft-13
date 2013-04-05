@@ -76,19 +76,19 @@ class ProjectsController < ApplicationController
   end
 
   def choose_keywords
-    id_words_in_database_before = params[:a1]
-    id_synonyms_words_in_database_before = params[:a2]
-    id_words_not_in_database_before = params[:a3]
-    id_synonyms_words_not_in_database_before = params[:a4]
+    @id_words_in_database_before = params[:a1]
+    @id_synonyms_words_in_database_before = params[:a2]
+    @id_words_not_in_database_before = params[:a3]
+    @id_synonyms_words_not_in_database_before = params[:a4]
     @words_in_database_before = Array.new
     @words_not_in_database_before = Array.new
-    if id_words_in_database_before != nil
-      id_words_in_database_before.each do |id_word|
+    if @id_words_in_database_before != nil
+      @id_words_in_database_before.each do |id_word|
         @words_in_database_before.push(Keyword.find(id_word))
       end
     end
-    if id_words_not_in_database_before != nil
-      id_words_not_in_database_before.each do |id_word|
+    if @id_words_not_in_database_before != nil
+      @id_words_not_in_database_before.each do |id_word|
         @words_not_in_database_before.push(Keyword.find(id_word))
       end
     end
@@ -97,6 +97,24 @@ class ProjectsController < ApplicationController
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     id_project =  params[:id]
+    id_words_in_database_before = params[:id_words_in_database_before]
+    id_synonyms_words_in_database_before = params[:id_synonyms_words_in_database_before]
+    id_words_not_in_database_before = params[:id_words_not_in_database_before]
+    id_synonyms_words_not_in_database_before = params[:id_synonyms_words_not_in_database_before]
+    if id_words_project != nil
+      counter = 0
+      while counter < id_words_project.size
+        index = id_words_in_database_before.index(id_words_project[counter])
+        if index == nil
+          index = id_words_not_in_database_before.index(id_words_project[counter])
+          id_synonym = id_synonyms_words_not_in_database_before[index]          
+        else
+          id_synonym = id_synonyms_words_in_database_before[index]
+        end
+        PreferedSynonym.add_keyword_and_synonym_to_project(id_synonym, id_words_project[counter], id_project)
+        counter = counter+1
+      end 
+    end
     redirect_to action: "show", id: id_project
   end
 
@@ -112,35 +130,44 @@ class ProjectsController < ApplicationController
       arr_of_arrs.each do |row|
         keywrd = Keyword.find_by_name(row[0])
         if keywrd != nil
-          for i in 1..row.size
-            Synonym.record_synonym(row[i],keywrd.id)
-          end
-          for i in 1..row.size
-            synonm = Synonym.find_by_name(row[i], keywrd.id)
-            if synonm != nil
-              id_words_in_database_before.push(keywrd.id)
-              id_synonyms_words_in_database_before.push(synonm.id)
-              break
-            end
-          end
-        else
-          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-          if @isSaved
+          if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
             for i in 1..row.size
               Synonym.record_synonym(row[i],keywrd.id)
             end
             for i in 1..row.size
               synonm = Synonym.find_by_name(row[i], keywrd.id)
               if synonm != nil
-                id_words_not_in_database_before.push(keywrd.id)
-                id_synonyms_words_not_in_database_before.push(synonm.id)
+                id_words_in_database_before.push(keywrd.id)
+                id_synonyms_words_in_database_before.push(synonm.id)
                 break
+              end
+            end
+          end
+        else
+          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
+          if @isSaved
+            if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
+              for i in 1..row.size
+                Synonym.record_synonym(row[i],keywrd.id)
+              end
+              for i in 1..row.size
+                synonm = Synonym.find_by_name(row[i], keywrd.id)
+                if synonm != nil
+                  id_words_not_in_database_before.push(keywrd.id)
+                  id_synonyms_words_not_in_database_before.push(synonm.id)
+                  break
+                end
               end
             end
           end
         end
       end
-      redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
+      if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
+        flash[:notice] = "There are no words to import to this project"
+        redirect_to action: "show", id: params[:project_id]
+      else
+        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
+     end
     end
   end
 

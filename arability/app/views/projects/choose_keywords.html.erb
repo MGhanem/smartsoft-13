@@ -1,4 +1,9 @@
+<h3>Please select from the words below to be imported to your project</h3>
 <%= form_tag add_from_csv_keywords_project_path, :method => :put, :id => 'form_to_select_words' do %>
+  <input type="hidden" value="<%= @id_words_in_database_before %>" name="id_words_in_database_before">
+  <input type="hidden" value="<%= @id_synonyms_words_in_database_before %>" name="id_synonyms_words_in_database_before">
+  <input type="hidden" value="<%= @id_words_not_in_database_before %>" name="id_words_not_in_database_before">
+  <input type="hidden" value="<%= @id_synonyms_words_not_in_database_before %>" name="id_synonyms_words_not_in_database_before">
   <% for word in @words_in_database_before %>
     <%= check_box_tag "words_ids[]", word.id %>
     <%= word.name %>
@@ -6,7 +11,7 @@
   <% end %>
   <% for word in @words_not_in_database_before %>
     <%= check_box_tag "words_ids[]", word.id %>
-    <%= word.name %><style="color:red;">*new*</>
+    <%= word.name %> <span style="color:red;">*new*</span>
     <br />
   <% end %>
   <br />
