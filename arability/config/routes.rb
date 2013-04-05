@@ -35,9 +35,8 @@ Arability::Application.routes.draw do
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
-  
-  match 'follow' => 'follow#follow'
-  get 'backend/home'
+
+  match 'follow' => 'follow#follow', :as => "list_followed_words"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -54,15 +54,15 @@ Tabulous.setup do |config|
 
   config.tabs do
     [
-      #--------------------------------------------------------------------------------------------------#
-      #    TAB NAME         |    DISPLAY TEXT    |    PATH             |    VISIBLE?    |    ENABLED?    #
-      #--------------------------------------------------------------------------------------------------#
-      [    :projects_tab    ,    t(:projects)    ,    projects_path    ,    true        ,    true        ],
-      [    :search_tab      ,    t(:search)      ,    search_path      ,    true        ,    true        ],
-      [    :follow_tab      ,    t(:follow)      ,    follow_path      ,    true        ,    true        ],
-      #--------------------------------------------------------------------------------------------------#
-      #    TAB NAME         |    DISPLAY TEXT    |    PATH             |    VISIBLE?    |    ENABLED?    #
-      #--------------------------------------------------------------------------------------------------#
+      #-------------------------------------------------------------------------------------------------------------#
+      #    TAB NAME         |    DISPLAY TEXT    |    PATH                        |    VISIBLE?    |    ENABLED?    #
+      #-------------------------------------------------------------------------------------------------------------#
+      [    :projects_tab    ,    t(:projects)    ,    projects_path               ,    true        ,    true        ],
+      [    :search_tab      ,    t(:search)      ,    search_path                 ,    true        ,    true        ],
+      [    :follow_tab      ,    t(:follow)      ,    list_followed_words_path    ,    true        ,    true        ],
+      #-------------------------------------------------------------------------------------------------------------#
+      #    TAB NAME         |    DISPLAY TEXT    |    PATH                        |    VISIBLE?    |    ENABLED?    #
+      #-------------------------------------------------------------------------------------------------------------#
     ]
   end
 
@@ -88,7 +88,7 @@ Tabulous.setup do |config|
       [    :projects     ,    :all_actions    ,    :projects_tab    ],
       [    :search       ,    :all_actions    ,    :search_tab      ],
       [    :follow       ,    :all_actions    ,    :follow_tab      ],
-      [    :keywords       ,    :all_actions    ,    :search_tab      ],
+      [    :keywords     ,    :all_actions    ,    :search_tab      ],
       #-------------------------------------------------------------#
       #    CONTROLLER    |    ACTION          |    TAB              #
       #-------------------------------------------------------------#
