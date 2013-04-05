@@ -82,17 +82,22 @@ class ProjectsController < ApplicationController
     id_synonyms_words_not_in_database_before = params[:a4]
     @words_in_database_before = Array.new
     @words_not_in_database_before = Array.new
-    id_words_in_database_before.each do |id_word|
-      @words_in_database_before.push(Keyword.find(id_word))
+    if id_words_in_database_before != nil
+      id_words_in_database_before.each do |id_word|
+        @words_in_database_before.push(Keyword.find(id_word))
+      end
     end
-    id_words_not_in_database_before.each do |id_word|
-      @words_not_in_database_before.push(Keyword.find(id_word))
+    if id_words_not_in_database_before != nil
+      id_words_not_in_database_before.each do |id_word|
+        @words_not_in_database_before.push(Keyword.find(id_word))
+      end
     end
-
   end
 
   def add_from_csv_keywords
-
+    id_words_project = params[:words_ids]
+    id_project =  params[:id]
+    redirect_to action: "show", id: id_project
   end
 
   def upload
