@@ -34,6 +34,7 @@ Arability::Application.routes.draw do
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
+  match '/synonyms/piechart' => 'synonyms#piechart'
 
   match 'search' => 'search#search'
   
