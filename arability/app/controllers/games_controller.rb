@@ -4,5 +4,8 @@ class GamesController < ApplicationController
 
   def vote
   end
-  
+
+  def record_vote
+
+  end
 end

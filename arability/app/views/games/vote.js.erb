@@ -1,11 +1,19 @@
 
 var words=get_words();
 
+function record_vote(syn_id){
+	$.post("/games/record_vote.js", {synonym_id: syn_id } );
+}
+
 function display_next_word(){
 	$('.vote_form').remove();
+	if(words.length==0){
+		$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
+		return;
+	}
 	$('.zone').append('<div class=\"vote_form\"></div>');
-	var first_word = words.shift();
-    $.post("/games/vote.js", { word: first_word});
+	var word = words.shift();
+    $.post("/games/vote.js", { word: word});
 }
 
 
@@ -16,13 +24,12 @@ vote_form.push('<% keyword=Keyword.where(:name => submitted_word).first%>');
 vote_form.push('<%synonym_list=keyword.synonyms %>');
 vote_form.push('<%= keyword.name %></br>')
 vote_form.push('<%synonym_list.each do |syn|%>');
-vote_form.push('<input type="button" onclick="display_next_word()" value="<%= syn.name %>"/>');
+vote_form.push('<input type="button" onclick="record_vote(<%= syn.id %>)" value="<%= syn.name %>"/>');
 vote_form.push('</br>');
 vote_form.push('<% end %>');
 vote_form.push('</div>');
 
 vote_form=vote_form.join('');
-
 
 $('.vote_form').append(vote_form);
 

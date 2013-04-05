@@ -7,6 +7,10 @@
   }
 
   function request_vote_form(){
+    if(words.length==0){
+      alert('empty');
+      return;
+    }
     $('#workspace').remove();
     $('.zone').append('<div class=\"vote_form\"></div>');
     var first_word = words.shift();

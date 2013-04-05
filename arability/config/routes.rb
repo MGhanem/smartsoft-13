@@ -40,6 +40,8 @@ Arability::Application.routes.draw do
   match '/game' => 'games#game'
 
   post "games/vote" 
+
+  post "games/record_vote"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
