@@ -15,7 +15,8 @@ class ProjectsController < ApplicationController
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
-        @projects = Project.where(:developer_id => developer.id)
+        @my_projects = Project.where(:developer_id => developer.id)
+        @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
       else
         flash[:notice] = "Please sign up as a developer first"
         render 'developers/new'
@@ -24,21 +25,6 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Please sign in"
       render 'pages/home'
     end  
-  end
-
-  def index_shared
-    if current_gamer != nil 
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @projects = Project.joins(:shared_projects).where(:developer => developer.id)
-      else
-        flash[:notice] = "Please sign up as a developer first"
-        render 'developers/new'
-      end
-    else
-      flash[:notice] = "Please sign in"
-      render 'pages/home'
-    end
   end
 
 # author:
