@@ -6,7 +6,7 @@
   <div class="boxed">
     <a class="btn" href="/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
     <br />
-    Name:  <%= project.name %>
+    Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
     <br />
     Categories:  <% project.categories.each do |c| %>
       <%= c.name %>

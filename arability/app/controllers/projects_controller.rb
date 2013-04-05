@@ -12,7 +12,7 @@
       if gamer_signed_in?
         @projects = Project.where(:owner_id => current_gamer.id)
       else
-        flash[:notice] = "You are not authorized to view this page"
+        flash[:error] = "You are not authorized to view this page"
         render 'pages/home'
       end
     end
@@ -43,7 +43,7 @@
         end
       end
     else
-     flash[:notice] = "Please log in to view this page."
+     flash[:error] = "Please log in to view this page."
      render 'pages/home'
    end
  end
@@ -67,7 +67,7 @@
         format.json { render json: @project }
       end
     else
-      flash[:notice] = "Please log in to view this page."
+      flash[:error] = "Please log in to view this page."
       render 'pages/home'
     end
   end
@@ -85,9 +85,8 @@
   def edit
     if gamer_signed_in?
       @project = Project.find(params[:id])
-      @categories = Category.find(:all)
     else
-      flash[:notice] = "You are not authorized to view this page"
+      flash[:error] = "You are not authorized to view this page"
     end
   end
 
@@ -105,7 +104,7 @@
   def update
     if gamer_signed_in?
      @project = Project.find(params[:id])
-     @project = Project.createcategories(@project,params([:project].find([:categories])))
+     @project = Project.createcategories(@project, params([:project][:categories]))
      if @project.update_attributes(params[:project])
       redirect_to :action => "index"
       flash[:notice] = "Project has been successfully updated."
@@ -113,15 +112,25 @@
       render :action => 'edit'
     end
   else
-    flash[:notice] = "You are not authorized to view this page"
+    flash[:error] = "You are not authorized to view this page"
   end
 end
 
-# def show(projectID)
-#   if gamer_signed_in?
-#     @project = Project.find([projectID])
-#   else
-#     flash[:notice] = "You are not authorized to view this page"
-#   end
-# end
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that finds a project by its ID to view it.
+  # params:
+  #     none
+  # success:
+  #     A project page will open.
+  # failure:
+  #     None.
+def show
+  if gamer_signed_in?
+    @project = Project.find(params[:id])
+  else
+    flash[:error] = "You are not authorized to view this page"
+  end
+end
 end
