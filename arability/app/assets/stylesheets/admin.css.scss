@@ -73,3 +73,14 @@
 
 
 /* image file upload css END */
+
+div.trophy {
+  display: inline-block !important;
+  max-width: 128px;
+  text-align: center;
+  margin: 15px;
+}
+
+div.trophy span {
+  display: block;
+}

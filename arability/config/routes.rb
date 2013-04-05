@@ -7,6 +7,7 @@ Arability::Application.routes.draw do
   post "admin/login"
   post "admin/addword"
   post "admin/addtrophy"
+  get "admin/deletetrophy"
   
   resources :projects
 

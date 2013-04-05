@@ -97,6 +97,7 @@ class AdminController < ActionController::Base
   end
 
   def index
+    @trophies_list = Trophy.all
   end
 
   # author:
@@ -166,6 +167,14 @@ class AdminController < ActionController::Base
     else
       flash[:error] = trophy.errors.messages
     end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+
+  def deletetrophy
+    Trophy.find_by_name(params[:name]).delete
+    flash[:success] = "Trophy #{params[:name]} has been deleted"
     flash.keep
     redirect_to action: "index"
   end
