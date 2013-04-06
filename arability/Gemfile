@@ -57,7 +57,7 @@ gem 'country-select'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+# gem 'debugger'
 
 # devise gem used for authentication
 gem 'devise','2.0'
