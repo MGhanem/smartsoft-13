@@ -1,6 +1,7 @@
 <form class="form-horizontal well span6" action="/admin/addprize" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>إضافة جائزة جديدة</legend>
+		<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 		<div class="control-group">
 			<label class="control-label" for="inputName">إسم الجائزة</label>
 			<div class="controls">

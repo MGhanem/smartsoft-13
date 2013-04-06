@@ -2,6 +2,7 @@
 	<form class="form-horizontal well offset4 span5 offset25top" action="/admin/login" method="post">
 		<fieldset>
 			<legend>تسجيل الدخول</legend>
+			<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 			<div class="control-group">
 				<label class="control-label" for="inputusername">اسم المستخدم</label>
 				<div class="controls">

@@ -1,15 +1,13 @@
-<div>
-	<% @prizes_list.each do |t| %>
-		<div class="trophy well">
-			<span>name: <%= t.name %></span>
-			<div class="uploader-controls">
-				<div class="uploader-preview fileupload-preview thumbnail">
-					<img src="<%= t.image %>">
-				</div>
+<% @prizes_list.each do |t| %>
+	<div class="trophy well">
+		<span>name: <%= t.name %></span>
+		<div class="uploader-controls">
+			<div class="uploader-preview fileupload-preview thumbnail">
+				<img src="<%= t.image %>">
 			</div>
-			<span>level: <%= t.level %></span>
-			<span>score: <%= t.score %></span>
-			<span><a href="/admin/deleteprize?name=<%= t.name %>">delete</a></span>
 		</div>
-	<% end %>
-</div>
+		<span>level: <%= t.level %></span>
+		<span>score: <%= t.score %></span>
+		<span><a href="/admin/deleteprize?name=<%= t.name %>">delete</a></span>
+	</div>
+<% end %>

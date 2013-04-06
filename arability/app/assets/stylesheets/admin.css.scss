@@ -16,7 +16,8 @@
 }
 
 .uploader-controls .uploader-preview img {
-  max-width: 120px;
+  width: 120px;
+  height: 80px;
   border: 1px solid #ccc;
   vertical-align: top;
 }
@@ -83,4 +84,8 @@ div.trophy {
 
 div.trophy span {
   display: block;
+}
+
+div.trophy span:first-child {
+  height: 40px;
 }

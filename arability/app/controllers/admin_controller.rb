@@ -1,5 +1,5 @@
 class AdminController < ActionController::Base
-
+  protect_from_forgery
   require 'csv'
 
   before_filter :require_login
