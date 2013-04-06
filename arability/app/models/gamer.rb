@@ -1,3 +1,4 @@
+#encoding:utf-8
 class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -10,10 +11,17 @@ class Gamer < ActiveRecord::Base
                   
 
   validates :username, :presence => true, :length => { :minimum => 3 }
+  
+  def self.check
+    if I18n.locale==:ar
+      return "انت غبي؟"
+    else
+      return "Kareem"
+    end
+  end
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
-    :message => " can only start with a letter, 
-    and have no 2 successive \"_\"" }
+    :message => check }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 

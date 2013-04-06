@@ -5,3 +5,17 @@ ar:
   sign_in: "تسجيل الدخول"
   english: "الإنجليزية"
   arabic: "العربية"
+  email: "البريد الالكتروني"
+  password: "كلمة السر"
+  password_confirmation: "تأكيد كلمة السر"
+  username: "اسم المستخدم"
+  date_of_birth: "تاريخ الميلاد"
+  country: "الدولة"
+  education_level: "المستوي التعليمي"
+  errors:
+    messages:
+      not_saved:
+
+
+
+
