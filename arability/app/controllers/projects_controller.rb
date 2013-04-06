@@ -87,16 +87,40 @@ class ProjectsController < BackendController
     @id_synonyms_words_in_database_before = params[:a2]
     @id_words_not_in_database_before = params[:a3]
     @id_synonyms_words_not_in_database_before = params[:a4]
+    @num_synonyms_words_in_database_before = params[:a5]
+    @num_synonyms_words_not_in_database_before = params[:a6]
     @words_in_database_before = Array.new
     @words_not_in_database_before = Array.new
     if @id_words_in_database_before != nil
       @id_words_in_database_before.each do |id_word|
         @words_in_database_before.push(Keyword.find(id_word))
       end
+      @all_synonyms_words_in_database_before = Array.new
+      @id_synonyms_words_in_database_before.each do |id_syn|
+        synonym = Synonym.find(id_syn)
+        @all_synonyms_words_in_database_before.push(synonym)
+      end
+      @id_first_synonyms_words_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_in_database_before.push(@id_synonyms_words_in_database_before[counter])
+        counter = counter + num_syns.to_i
+      end
     end
     if @id_words_not_in_database_before != nil
       @id_words_not_in_database_before.each do |id_word|
         @words_not_in_database_before.push(Keyword.find(id_word))
+      end
+      @all_synonyms_words_not_in_database_before = Array.new
+      @id_synonyms_words_not_in_database_before.each do |id_syn|
+        synonym = Synonym.find(id_syn)
+        @all_synonyms_words_not_in_database_before.push(synonym)
+      end
+      @id_first_synonyms_words_not_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_not_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_not_in_database_before.push(@id_synonyms_words_not_in_database_before[counter])
+        counter = counter + num_syns.to_i
       end
     end
   end
@@ -129,16 +153,16 @@ class ProjectsController < BackendController
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
       if message == 1
-        flash[:notice] = "You did not upload a file"
+        flash[:notice] = "أنت لم تقم بإختيار ملف"
       end
       if message == 2
-        flash[:notice] = "Wrong encoding. Make sure your file is UTF-8 encoded"
+        flash[:notice] = "هذا الملف ليس بتقنية UTF-8"
       end
       if message == 3
-        flash[:notice] = "There is something wrong with this file"
+        flash[:notice] = "يوجد خطأ بهذا الملف"
       end
       if message == 4
-        flash[:notice] = "This file is not in csv format"
+        flash[:notice] = "هذا الملف ليس CSV"
       end
       redirect_to action: "import_csv", id: params[:project_id]
     else
@@ -146,6 +170,8 @@ class ProjectsController < BackendController
       id_synonyms_words_in_database_before = Array.new
       id_words_not_in_database_before = Array.new
       id_synonyms_words_not_in_database_before = Array.new
+      num_synonyms_words_in_database_before = Array.new
+      num_synonyms_words_not_in_database_before = Array.new
       arr_of_arrs.each do |row|
         keywrd = Keyword.find_by_name(row[0])
         if keywrd != nil
@@ -153,12 +179,18 @@ class ProjectsController < BackendController
             for i in 1..row.size
               Synonym.record_synonym(row[i],keywrd.id)
             end
-            for i in 1..row.size
-              synonm = Synonym.find_by_name(row[i], keywrd.id)
-              if synonm != nil
+            if !id_words_in_database_before.include?(row[0]) and !id_words_not_in_database_before.include?(row[0])
+              counter = 0
+              for i in 1..row.size
+                synonm = Synonym.find_by_name(row[i], keywrd.id)
+                if synonm != nil
+                  counter = counter + 1
+                  id_synonyms_words_in_database_before.push(synonm.id)
+                end
+              end
+              if counter > 0
                 id_words_in_database_before.push(keywrd.id)
-                id_synonyms_words_in_database_before.push(synonm.id)
-                break
+                num_synonyms_words_in_database_before.push(counter)
               end
             end
           end
@@ -169,23 +201,27 @@ class ProjectsController < BackendController
               for i in 1..row.size
                 Synonym.record_synonym(row[i],keywrd.id)
               end
+              counter = 0
               for i in 1..row.size
                 synonm = Synonym.find_by_name(row[i], keywrd.id)
                 if synonm != nil
-                  id_words_not_in_database_before.push(keywrd.id)
+                  counter = counter + 1
                   id_synonyms_words_not_in_database_before.push(synonm.id)
-                  break
                 end
+              end
+              if counter > 0
+                id_words_not_in_database_before.push(keywrd.id)
+                num_synonyms_words_not_in_database_before.push(counter)
               end
             end
           end
         end
       end
       if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
-        flash[:notice] = "There are no words to import to this project"
+        flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
         redirect_to action: "show", id: params[:project_id]
       else
-        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
+        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before, a2:id_synonyms_words_in_database_before, a3:id_words_not_in_database_before, a4:id_synonyms_words_not_in_database_before, a5:num_synonyms_words_in_database_before, a6:num_synonyms_words_not_in_database_before
      end
     end
   end
