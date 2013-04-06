@@ -15,12 +15,8 @@
 <div role="main" id="main">
   <div class="container">
     <div class="content">
-      <div class="row">
-        <div class="span12">
-          <%= render 'layouts/messages' %>
-          <%= yield %>
-        </div>
-      </div>
+      <%= render 'layouts/messages' %>
+      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
     </div>
   </div>
 </div>

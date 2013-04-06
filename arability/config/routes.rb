@@ -1,23 +1,23 @@
 Arability::Application.routes.draw do
+  root :to => 'pages#home'
+
   get "admin/index"
 
   get "admin/login"
+  
   get "admin/logout"
 
   post "admin/login"
-  post "admin/wordadd"
   
-  resources :projects  
-
-  # get "admin/import_csv"
-
-  root :to => 'pages#home'
-
-  # required for routing by the devise module(gem)
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+  post "admin/wordadd"
 
   get "admin/import_csv"
+
+  post "admin/upload"
+
+  scope "/developers" do
+    resources :projects
+  end
   
   match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
@@ -25,25 +25,33 @@ Arability::Application.routes.draw do
 
   put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
-  post "admin/upload"
+  match "keywords/new" => "keywords#new"
+
+  match "keywords/suggest_add" => "keywords#suggest_add"
 
   post "projects/upload"
 
   match "keywords" => "keywords#viewall"
 
-  get "keywords/new"
-
-  get "keywords/suggest_add"
-
-  post "keywords/create"
+  match "keywords/create" => "keywords#create"
 
   match '/developers/new' => "developer#new"
+
   match '/developers/create' => "developer#create"
+  
   match '/my_subscriptions/new' => "my_subscription#new"
+
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
-  
+
+  post "keywords/create"
+
+  match 'follow' => 'follow#follow', :as => "list_followed_words"
+
+  # required for routing by the devise module(gem)
+  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
