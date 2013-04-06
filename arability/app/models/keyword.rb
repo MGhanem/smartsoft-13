@@ -128,10 +128,12 @@ class Keyword < ActiveRecord::Base
     end
   end
 
-  # def notify_developer(synonym.id)
-  #   keyword = Keyword.find(self.id)
-  #   developers = keyword.developers
-  #   developers.each do |dev|
-  #   end
-  # end
+  def notify_developer(synonym_id)
+    keyword = Keyword.find(self.id)
+    synonym = Synonym.find(synonym_id)
+    developers = keyword.developers
+    developers.each do |dev|
+      UserMailer.follow_notification(dev, keyword, synonym).deliver
+    end
+  end
 end
