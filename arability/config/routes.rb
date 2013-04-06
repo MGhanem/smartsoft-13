@@ -1,7 +1,7 @@
 Arability::Application.routes.draw do
-   root :to => 'pages#home'
+    root :to => 'pages#home'
 
-  scope "(:locale)", :locale => /en|ar/ do
+    scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
     get "admin/index"
@@ -10,7 +10,14 @@ Arability::Application.routes.draw do
     get "admin/logout"
 
     post "admin/login"
-    post "admin/wordadd"
+
+    post "admin/addword"
+    post "admin/addtrophy"
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+    get "admin/deleteprize"
+
     match '/game' => 'games#game'
 
 
@@ -22,6 +29,8 @@ Arability::Application.routes.draw do
     get "admin/import_csv"
 
     post "admin/upload"
+  
+    resources :projects
 
     scope "developers/" do 
 

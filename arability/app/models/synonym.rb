@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
@@ -30,6 +31,7 @@ class Synonym < ActiveRecord::Base
     end
 
   class << self
+    include StringHelper
     # author:
     #   Omar Hossam
     # description:
@@ -96,7 +98,7 @@ class Synonym < ActiveRecord::Base
     #   returns an empty list if the keyword doesn't exist or if no approved
     #   synonyms where found for the keyword  
       def retrieve_synonyms(keyword)
-        if(Keyword.is_english_keyword(keyword))
+        if(is_english_string(keyword))
           keyword.downcase!
         end
         keyword_model = Keyword.where(:name => keyword, :approved => true)
