@@ -1,5 +1,5 @@
 Arability::Application.routes.draw do
-  root :to => 'pages#home'
+   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
