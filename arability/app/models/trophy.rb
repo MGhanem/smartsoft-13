@@ -19,7 +19,7 @@ class Trophy < ActiveRecord::Base
   
   def self.get_new_trophies_for_gamer(gamer_id, score, level)
     trophies_all = Trophy.where(:score => score, :level => level)
-    trophies_gamer = Gamer.find(gamer_id).prizes
+    trophies_gamer = Gamer.find(gamer_id).trophies
     return trophies_all - trophies_gamer
   end
 
