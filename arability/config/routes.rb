@@ -7,7 +7,7 @@ Arability::Application.routes.draw do
   post "admin/login"
   post "admin/wordadd"
   
-  resources :projects
+  resources :projects  
 
   # get "admin/import_csv"
 
@@ -18,8 +18,16 @@ Arability::Application.routes.draw do
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   get "admin/import_csv"
+  
+  match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+
+  match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
   post "admin/upload"
+
+  post "projects/upload"
 
   match "keywords" => "keywords#viewall"
 
@@ -27,7 +35,6 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
   post "keywords/create"
 
   match '/developers/new' => "developer#new"
