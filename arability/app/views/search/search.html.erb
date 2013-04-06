@@ -41,7 +41,7 @@
 	<% end %>
 </div>
 <div>	
- <%= high_chart("my_id4", chart) do |c| %>
+ <%= high_chart("my_id4", chart_keyword_synonym(578)) do |c| %>
           <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
           <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
       <% end %>
