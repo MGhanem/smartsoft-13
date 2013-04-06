@@ -9,6 +9,8 @@ gem 'sqlite3'
 
 gem 'omniauth'
 
+gem "oa-openid"
+
 # Gems required for automated documentation
 gem 'yard'
 gem 'redcarpet'
