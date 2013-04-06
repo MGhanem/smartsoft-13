@@ -15,8 +15,9 @@ class SearchController < ApplicationController
   def search
     @search_keyword = params['search']
     if(!@search_keyword.blank?)
-      @synonyms =
-        Synonym.retrieve_synonyms(@search_keyword)
+      @search_keyword_model = Keyword.find_by_name(@search_keyword)
+      @synonyms, @votes =
+        @search_keyword_model.retrieve_synonyms()
     end
   end
 end
