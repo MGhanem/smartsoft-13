@@ -467,7 +467,6 @@ function pause(){
 }
 
 function clearWord(){
-	calculateScore();
 	document.getElementById('wordLabel').innerHTML = '';
 	for(var i = 0; i < buttonArray.length; i++){
 		buttonArray[i].removeClass('btn-warning');
