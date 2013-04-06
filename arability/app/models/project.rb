@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 
+
   belongs_to :developer
 
   has_many :shared_projects
@@ -9,6 +10,11 @@ class Project < ActiveRecord::Base
 
   # has_and_belongs_to_many :shared_with, :class_name => "Developer"
   # has_one :owner, :class_name => "Developer"
+
+
+  attr_accessible :name
+  belongs_to :developer
+
 
   has_and_belongs_to_many :categories
   has_many :keywords
@@ -78,3 +84,4 @@ def self.printarray(array)
 end
 
 end
+
