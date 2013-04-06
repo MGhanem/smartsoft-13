@@ -2,6 +2,7 @@ class Prize < ActiveRecord::Base
   
   validates :name, :presence => true, :length => { :in => 6..24 }, 
     :uniqueness => true
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/
   validates :level, :presence => true, :numericality => { 
     :greater_than_or_equal_to => 1, :less_than_or_equal_to => 100 }
   validates :score, :presence => true, :numericality => { 
