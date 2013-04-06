@@ -9,6 +9,10 @@
   <br />
   <%= project.name %>
   <br />
+  <% project.developers_shared.each do |dev|%>
+  <%= dev.name %>
+   <a href="/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=project.id%>">Remove Share</a>
+  <%end%>
   <strong>Categories:</strong>
   <br />
   <% size = project.categories.length %>
