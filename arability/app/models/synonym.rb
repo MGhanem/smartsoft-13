@@ -61,7 +61,7 @@ class Synonym < ActiveRecord::Base
           new_synonym.keyword_id = keyword_id
           return new_synonym.save
         else
-            return false
+          return false
         end
       end
 
