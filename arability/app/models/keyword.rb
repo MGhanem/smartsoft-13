@@ -161,10 +161,10 @@ class Keyword < ActiveRecord::Base
     end
   end
 
-  def notify_developer(synonym.id)
-    keyword = Keyword.find(self.id)
-    developers = keyword.developers
-    developers.each do |dev|
-    end
-  end
+  # def notify_developer(synonym.id)
+  #   keyword = Keyword.find(self.id)
+  #   developers = keyword.developers
+  #   developers.each do |dev|
+  #   end
+  # end
 end
