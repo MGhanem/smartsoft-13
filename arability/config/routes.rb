@@ -39,16 +39,22 @@ Arability::Application.routes.draw do
       resources :projects
 
       post "keywords/create"
-
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 
-      match 'search' => 'search#search'
+
+  match 'search' => 'search#search'
+
+  match '/game' => 'games#game'
+
     end
   end
+
   
+  get 'games/getnewwords'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
