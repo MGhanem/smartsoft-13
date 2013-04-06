@@ -1,8 +1,8 @@
-<legend>Words followed by you:</legend>
+<legend><%= t(:words_followed_by_you)%></legend>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Words</th>
+      <th><%= t(:words)%></th>
       <th></th>
     </tr>
   </thead>
@@ -10,7 +10,7 @@
   <% @keywords.each do |keyword| %>
     <tr>
         <td><%= keyword.name %></td>
-        <td><%= button_to "Unfollow", unfollow_word_path(keyword.id), :class => "btn btn-info" %></td>
+        <td><%= button_to t(:words), unfollow_word_path(keyword.id), :class => "btn btn-info" %></td>
     </tr>
   <% end %> 
   </tbody>

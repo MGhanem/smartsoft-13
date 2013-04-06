@@ -1,9 +1,10 @@
 <div class="row">
 	<div class="span12">
+		<legend>Search Keywords:</legend>
 		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
-													:placeholder => t(:search_here),
+													:placeholder => 'search keywords here...',
 													:class => 'search-query') + %>
 				<% button_tag(:type => "submit",:class => 'btn') do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
@@ -17,7 +18,7 @@
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
-				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
+				<span>Viewing collective statistics for word <i><b><%= @search_keyword %></b></i></span>
 			</span>
 		</div>
 		<div id="collective" class="accordion-body collapse in">
@@ -39,10 +40,10 @@
 								</div>
 								<div class="pull-right">
 									<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
-										<span><%= t(:view_stats) %></span>
+										<span>View Stats</span>
 									</button>
 									<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-										<%= content_tag(:span, t(:add_to_project))%>
+										<%= content_tag(:span, "Add to Project")%>
 									<% end %>
 								</div>
 							</div>
@@ -72,5 +73,12 @@
 		</ul>
 	<% end %>
 </div>
-
+<div>	
+	<% if(!@search_keyword.blank?) %>
+ <%= high_chart("my_id4", chart_keyword_synonym(@search_keyword.name)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %>
+  <% end %>
+</div>
 <% end %>
