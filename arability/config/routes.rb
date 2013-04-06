@@ -28,6 +28,7 @@ Arability::Application.routes.draw do
     match '/game' => 'games#game'
 
 
+
     # required for routing by the devise module(gem)
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
@@ -60,7 +61,9 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
-      match 'search' => 'search#search'
+
+  match 'search' => 'search#search'
+
     end
   end
   
