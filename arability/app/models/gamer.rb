@@ -44,5 +44,12 @@ class Gamer < ActiveRecord::Base
       return true
     end
   end
+  
+  def get_won_trophies
+    return self.trophies
+  end
 
+  def get_available_trophies
+    return Trophy.all - self.trophies
+  end
 end
