@@ -41,3 +41,20 @@
   height: 530px;
   width: 100%;
 }
+
+.award-title {
+ padding: 20px;
+ direction:rtl;
+ text-align:right; 
+}
+
+.award {
+  font-size: 20px; 
+  padding: 10px;
+  margin-left:10px; 
+  margin-right:10px; 
+  margin-top: 10px; 
+  direction: rtl; 
+  text-align:right; 
+  background-color: rgba(200,200,200, 0.3); 
+}

@@ -7,9 +7,19 @@
   <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
   <% if won_trophies.length == 0 %>
-     success = '<h1 style="padding: 20px;">لقد ربحت كل الجوائز لهذه المرحلة /h1>';
+      success = '<h1 style="padding: 20px;direction:rtl;text-align:right;">لقد ربحت كل الجوائز لهذه المرحلة /h1>';
   <% else %>
-     success = '<h1 style="padding: 20px;">مبروك! لقد فزت الجوائز التالية!</h1>';
+      success = '<h1 style="padding: 20px;direction:rtl; text-algin:right;">مبروك! لقد فزت الجوائز التالية!</h1>';
+      trophies = [];
+
+      <% won_trophies.each do |t| %>
+        trophies.push('<div class="award">' + '<%= t.name %>' + '</div>');
+      <% end %>
+       
   <% end %>
-    $("#zone").append($(success));
+      $("#zone").append($(success));
+      for(var i = 0; i < trophies.length; i++) {
+        $("#zone").append($(trophies[i]));
+      }
+   
 <% end %>
