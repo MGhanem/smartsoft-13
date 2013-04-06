@@ -1,6 +1,6 @@
 class Keyword < ActiveRecord::Base
   has_many :synonyms
-  attr_accessible :approved, :is_english, :name
+  attr_accessible :approved, :is_english, :name,
   has_and_belongs_to_many :categories
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"

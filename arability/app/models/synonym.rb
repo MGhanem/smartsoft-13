@@ -2,6 +2,7 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
   has_many :votes
+  has_many :gamers, :through => :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
 
   class << self
@@ -57,5 +58,18 @@ class Synonym < ActiveRecord::Base
       end
     end
   end
+
+=begin
+  def get_visual_stats(synonym_id)
+        voters = Gamer.joins(:synonyms).where("synonym_id = ?", synonym_id)
+        #x = [1,2,3]
+        #voters = Gamer.all
+        #return Gamer.select('country').group('country').count
+        groups = voters.count(group: :country)
+        sum = groups.sum{|v| v.last}
+        return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i] }
+        return sum
+  end
+=end
  end
 end
