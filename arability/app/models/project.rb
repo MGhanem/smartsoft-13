@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Project < ActiveRecord::Base
   belongs_to :developer
   has_and_belongs_to_many :categories
