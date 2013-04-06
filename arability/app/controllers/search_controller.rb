@@ -1,4 +1,4 @@
-class SearchController < ApplicationController
+class SearchController < BackendController
 	#Description:
   #   search for keywords (in a particular category)
   # Author:
