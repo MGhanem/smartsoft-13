@@ -36,19 +36,6 @@ class Project < ActiveRecord::Base
 # failure:
 #     None
 
- 
-  # def self.createproject(params)
-  # 	project = Project.new(params.except(:categories))
-  # 	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  #   catArray = []
-  # 	array.each do |m|
-  #     catArray.push(Category.where(:name => m).first_or_create)
-  # 	end
-  #   project.categories = catArray
-  #   project.save
-  # 	return project
-  #  end
-
 def self.createproject(params,gamer_id)
   project = Project.new(params.except(:categories,:developer))
   developer = Developer.where(:gamer_id => gamer_id).first
