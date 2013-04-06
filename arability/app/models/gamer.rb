@@ -25,7 +25,7 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
 
-    #Author: Kareem ALi
+
     #This method is used to select a synonym 
     #by a certain gamer
     #Parameters:
@@ -34,12 +34,20 @@ class Gamer < ActiveRecord::Base
     #  On success: returns true if selecting synonym is true, when 
     #  Vote.record_vote returns true
     #  On failure: returns false if no new vote was created 
-    def select_synonym(synonym_id)
-      if Vote.record_vote(self.id,synonym_id)[0]
-        return true
-      else
-        return false
+      def select_synonym(synonym_id)
+        if Vote.record_vote(self.id,synonym_id)[0]
+          return true
+        else
+          return false
+        end
       end
-    end
 
+    #Author: Kareem ALi
+      def suggest_synonym(synonym_name, keyword_id)
+        if Synonym.record_suggested_synonym(synonym_name, keyword_id, false)
+          return true
+        else
+          return false
+        end
+      end
 end
