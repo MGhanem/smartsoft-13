@@ -7,10 +7,9 @@
   <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
   <% if won_trophies.length == 0 %>
-     success = '<h1 style="padding: 20px;">مبروك! لقد فزت الجوائز التالية!</h1>';
+     success = '<h1 style="padding: 20px;">لقد ربحت كل الجوائز لهذه المرحلة /h1>';
   <% else %>
      success = '<h1 style="padding: 20px;">مبروك! لقد فزت الجوائز التالية!</h1>';
   <% end %>
-
     $("#zone").append($(success));
 <% end %>
