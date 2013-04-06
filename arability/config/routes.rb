@@ -12,6 +12,8 @@ Arability::Application.routes.draw do
     post "admin/login"
     post "admin/wordadd"
 
+    match '/game' => 'games#game'
+
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -46,8 +48,6 @@ Arability::Application.routes.draw do
 
 
   match 'search' => 'search#search'
-
-  match '/game' => 'games#game'
 
     end
   end
