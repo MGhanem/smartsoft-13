@@ -25,7 +25,22 @@ ar:
   words_followed_by_you: "الكلمات المتابعة:"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
+  project: "مشروع"
+  projects: "مشاريع"
+  my_projects: "مشاريعي"
+  name: "الاسم"
+  category: "الصنف"
+  categories: "الاصناف"
+  formal: "رسمي"
+  slang: "غير رسمي"
+  age: "السن"
+  from: "من"
+  to: "الى"
+  desc: "عن"
+  new_project: "مشروع جديد"
+  back: "عودة"
+  edit_project: "تعديل المشروع"
+
   errors:
     messages:
       not_saved:
-
