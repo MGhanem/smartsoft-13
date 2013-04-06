@@ -17,3 +17,6 @@ en:
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
   add_to_project: "Add to project"
+  words_followed_by_you: "Words followed by you:"
+  words: "Words"
+  unfollow: "Unfollow"

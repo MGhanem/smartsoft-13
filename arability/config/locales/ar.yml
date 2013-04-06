@@ -22,6 +22,10 @@ ar:
   view_collectives: "عرض الإحصائيات الجماعية للكلمة "
   view_stats: "الإحصائيات"
   add_to_project: "اضف لمشروعك"
+  words_followed_by_you: "الكلمات المتابعة:"
+  words: "كلمات"
+  unfollow: "إلغاء المتابعة"
   errors:
     messages:
       not_saved:
+
