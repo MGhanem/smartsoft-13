@@ -22,7 +22,7 @@
     </div>
     <div class="field">
         <%= t(:categories)%>
-        <%= text_field_tag("project[categories]",@project.categories) %> 
+        <%= text_field_tag("project[categories]",Project.printarray(@project.categories)) %> 
     </div><br>
     <div class="radio">
         <%= t(:formal)%>

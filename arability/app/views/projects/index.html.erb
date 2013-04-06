@@ -1,7 +1,13 @@
 <h1>Projects</h1>
 <br />
-<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
-<br />
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">My projects</a></li>
+    <li><a href="#tab2" data-toggle="tab">Shared projects with me</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> New Project</a>
 <br />
 <% @projects.each do |project| %>
   <div class="well well-small">
@@ -22,13 +28,16 @@
       <%= c.name %>,
       <% counter = counter + 1 %>
     <% else %>
-      <%= c.name %>
-    <% end %>
+  <div class="boxed">
+    <a class="btn" href="/developers/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
+    <br />
+    Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
+    <br />
+    <%= project.description %>
+    <br />
   <% end %>
-  <br />
-  <strong>Description:</strong>
-  <br />	
-  <%= project.description %>
+  <% end %>
+
 </div>
-<br />
 <% end %>
+
