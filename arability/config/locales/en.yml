@@ -9,5 +9,7 @@ en:
   keyword_in_wrong_format: "Keyword should only contain either Arabic or English characters!"
   keyword_suggest_add: "Keyword doesn't exist in our database. Would you like to add it?"
   click_here: "Click here"
-
+  view_collectives: "Viewing collective statistics for word "
+  view_stats: "View Stats"
+  add_to_project: "Add to project"
 
