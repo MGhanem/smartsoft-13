@@ -1,45 +1,73 @@
 Arability::Application.routes.draw do
-  get "admin/index"
-
-  get "admin/login"
-  get "admin/logout"
-
-  post "admin/login"
-  post "admin/wordadd"
   
-  resources :projects
-
-  # get "admin/import_csv"
-
   root :to => 'pages#home'
-
-  # required for routing by the devise module(gem)
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
-
-  get "admin/import_csv"
-
-  post "admin/upload"
-
-  match "keywords" => "keywords#viewall"
-
-  get "keywords/new"
-
-  get "keywords/suggest_add"
-
-  resources :projects
-  post "keywords/create"
-
-  match '/developers/new' => "developer#new"
-  match '/developers/create' => "developer#create"
-  match '/my_subscriptions/new' => "my_subscription#new"
-  match '/my_subscriptions/create' => "my_subscription#create"
-
-  match 'search' => 'search#search'
   
+  match '/game' => 'games#game'
+
+  post "games/vote" 
+
+  post "games/record_vote"
+
+  scope "(:locale)", :locale => /en|ar/ do
+    #here only two languages are accepted: english and arabic
+
+    get "admin/index"
+
+    get "admin/login"
+    get "admin/logout"
+
+    post "admin/login"
+
+    post "admin/addword"
+    post "admin/addtrophy"
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+    get "admin/deleteprize"
+
+    match '/game' => 'games#game'
+
+
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
+
+    get "admin/import_csv"
+
+    post "admin/upload"
+  
+    resources :projects
+
+    scope "developers/" do 
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match "keywords" => "keywords#viewall"
+
+      get "keywords/new"
+
+      get "keywords/suggest_add"
+
+      resources :projects
+
+      post "keywords/create"
+      match '/developers/new' => "developer#new"
+      match '/developers/create' => "developer#create"
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
+      match 'search' => 'search#search'
+    end
+  end
+  
+  get 'games/getnewwords'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action

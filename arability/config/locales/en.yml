@@ -2,4 +2,18 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  arability: "Arability"
+  sign_up: "Sign Up"
+  sign_in: "Sign In"
+  english: "English"
+  arabic: "Arabic"
+  search: "Search Keywords"
+  search_here: "search keywords here"
+  keyword_add_success: "Keyword added to our database successfully"
+  keyword_pending: "Sorry, Keyword pending for approval"
+  keyword_in_wrong_format: "Keyword should only contain either Arabic or English characters!"
+  keyword_suggest_add: "Keyword doesn't exist in our database. Would you like to add it?"
+  click_here: "Click here"
+  view_collectives: "Viewing collective statistics for word "
+  view_stats: "View Stats"
+  add_to_project: "Add to project"
