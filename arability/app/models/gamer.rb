@@ -43,5 +43,12 @@ class Gamer < ActiveRecord::Base
       return true
     end
   end
+  
+  def get_won_prizes
+    return self.prizes
+  end
 
+  def get_available_prizes
+    return Prize.all - self.prizes
+  end
 end

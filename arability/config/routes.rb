@@ -40,6 +40,7 @@ Arability::Application.routes.draw do
   match '/game' => 'games#game'
   
   get "games/getprizes"
+  get "games/showprizes"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
