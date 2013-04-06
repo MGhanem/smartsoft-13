@@ -6,6 +6,9 @@ Arability::Application.routes.draw do
 
   post "admin/login"
   post "admin/wordadd"
+
+  match '/auth/:service/callback' => 'services#create' 
+  resources :services, :only => [:index, :create, :destroy]
   
   resources :projects
   get "projects/update"
