@@ -7,7 +7,7 @@ Arability::Application.routes.draw do
   post "admin/login"
   post "admin/wordadd"
   
-  resources :projects
+  
 
   # get "admin/import_csv"
 
@@ -27,13 +27,21 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
+ 
+  get "projects/remove_developer_from_project"
+  match "projects/share/:id" => "projects#share"
+  match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   post "keywords/create"
+
+  resources :projects
 
   match '/developers/new' => "developer#new"
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
+  match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+  match '/my_subscriptions/pick' => "my_subscription#pick"
+  
 
   match 'search' => 'search#search'
   

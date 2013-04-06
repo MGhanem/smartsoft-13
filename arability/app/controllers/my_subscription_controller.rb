@@ -33,6 +33,7 @@ class MySubscriptionController < ApplicationController
 #   my_subscription created successfully and linked to developer
 # failure:
 #   invalid information
+
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil

@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   def index
  	  developer = Developer.where(:gamer_id => current_gamer.id).first
   	if developer.present?
-  		@projects = Project.where(:developer_id => developer.id)
+  		@projects = Project.where(:owner_id => developer.id)
   	else
   		flash[:notice] = "You are not authorized to view this page"
   	end
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
       if developer == nil
         flash[:notice] = "Email address is for gamer, not a developer"
       else
-        #share project with the developer
+
         developer.projects_shared << @project
         if(developer.save)
           flash[:notice] = "Project has been shared successfully with #{developer.name}"
@@ -67,10 +67,19 @@ class ProjectsController < ApplicationController
           flash[:notice] = "Failed to share project with developer"
         end
       end
-      #developer.shared_projects.find_by_developer_id(developer.id).destroy
     end
     render "projects/share"
   end
+  def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+   redirect_to "/projects"
+  end
+
+
 
 # author:
 #      Salma Farag
@@ -89,5 +98,7 @@ class ProjectsController < ApplicationController
       format.html
       format.json { render json: @project }
     end
+  end
+  def show
   end
 end
