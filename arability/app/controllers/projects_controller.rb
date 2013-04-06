@@ -1,18 +1,13 @@
-# <<<<<<< HEAD
-#   class ProjectsController < ApplicationController 
-#     def index
-#       if gamer_signed_in?
-#         @projects = Project.where(:owner_id => current_gamer.id)
-#       else
-#         flash[:error] = "You are not authorized to view this page"
-#         render 'pages/home'
-#       end
-#     end
-# =======
-class ProjectsController < BackendController
-  # GET /projects
-  # GET /projects.json
-  
+  class ProjectsController < ApplicationController 
+    def index
+      if gamer_signed_in?
+        @projects = Project.where(:owner_id => current_gamer.id)
+      else
+        flash[:error] = "You are not authorized to view this page"
+        render 'pages/home'
+      end
+    end
+
   # author: 
   #   Mohamed Tamer 
   # description: 
@@ -22,22 +17,22 @@ class ProjectsController < BackendController
   # returns:
   #   on success: returns an array of projects of the developer currently logged in.
   #   on failure: notifies the user that he can't see this page.
-  def index
-    if current_gamer != nil 
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @my_projects = Project.where(:owner_id => developer.id)
-        # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
-        @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
-      else
-        flash[:notice] = "Please sign up as a developer first"
-        render 'developers/new'
-      end
-    else
-      flash[:notice] = "Please sign in"
-      render 'pages/home'
-    end  
-  end
+  # def index
+  #   if current_gamer != nil 
+  #     developer = Developer.where(:gamer_id => current_gamer.id).first
+  #     if developer != nil
+  #       @my_projects = Project.where(:owner_id => developer.id)
+  #       # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
+  #      # @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
+  #     else
+  #       flash[:notice] = "Please sign up as a developer first"
+  #       render 'developers/new'
+  #     end
+  #   else
+  #     flash[:notice] = "Please sign in"
+  #     render 'pages/home'
+  #   end  
+  # end
 
   # author:
   #      Salma Farag

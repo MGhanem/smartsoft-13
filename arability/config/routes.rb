@@ -9,7 +9,8 @@ Arability::Application.routes.draw do
   post "admin/login"
   post "admin/wordadd"
 
-  match '/auth/:service/callback' => 'services#create' 
+  match '/auth/google' => 'services#create'
+  match '/auth/google/login' => 'services#index' 
   resources :services, :only => [:index, :create, :destroy]
   
   resources :projects

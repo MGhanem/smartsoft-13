@@ -23,6 +23,7 @@
                 <%= f.check_box :remember_me, :style => "float: left; margin-right: 10px;" %>
                 <%= f.label :remember_me %>
                 <%= f.submit "Sign In", :style => "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
+                <%= link_to "Sign In with Google", "/auth/google/login", :style => "clear: left; width: 88%; height: 30px; font-size: 13px", :class => "btn btn-success" %>
               <% end %>
             </div>
           </li>
