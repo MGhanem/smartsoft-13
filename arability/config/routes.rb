@@ -1,46 +1,45 @@
 Arability::Application.routes.draw do
   root :to => 'pages#home'
+  #here only two languages are accepted: english and arabic
+  scope "(:locale)", :locale => /en|ar/ do
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
+    get "admin/index"
 
-  get "admin/index"
+    post "admin/login"
+    post "admin/wordadd"
 
-  get "admin/login"
-  get "admin/logout"
+    get "admin/logout"
+    get "admin/import_csv"
 
-  post "admin/login"
-  post "admin/wordadd"
+    post "admin/upload"
 
-  match '/auth/google' => 'services#create'
-  match '/auth/google/login' => 'services#index' 
-  resources :services, :only => [:index, :create, :destroy]
-  
-  resources :projects
-  get "projects/update"
+    match '/auth/google' => 'services#create'
+    match '/auth/google/login' => 'services#index' 
+    resources :services, :only => [:index, :create, :destroy]
 
-  get "admin/import_csv"
+    scope "/developers" do
+      resources :projects
+      get "projects/update"
 
-  post "admin/upload"
+      match "keywords/new" => "keywords#new"
 
-  scope "/developers" do
-    resources :projects
+      match "keywords/suggest_add" => "keywords#suggest_add"
 
-    match "keywords/new" => "keywords#new"
+      match "keywords/create" => "keywords#create"
 
-    match "keywords/suggest_add" => "keywords#suggest_add"
+      match '/developers/new' => "developer#new"
+      match '/developers/create' => "developer#create"
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
 
-    match "keywords/create" => "keywords#create"
+      match 'search' => 'search#search'
 
-    match '/developers/new' => "developer#new"
-    match '/developers/create' => "developer#create"
-    match '/my_subscriptions/new' => "my_subscription#new"
-    match '/my_subscriptions/create' => "my_subscription#create"
-
-    match 'search' => 'search#search'
-
-    match 'follow' => 'follow#follow', :as => "list_followed_words"
+      match 'follow' => 'follow#follow', :as => "list_followed_words"
+    end
   end
-
-  # required for routing by the devise module(gem)
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

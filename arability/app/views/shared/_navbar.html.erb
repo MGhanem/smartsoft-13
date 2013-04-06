@@ -7,15 +7,21 @@
         <span class="icon-bar"></span>
       </a>
 
-      <a class="brand" href="/">arability</a>
+      <a class="brand" href="/"><%= t :arability %></a>
 
       <div class="nav-collapse">
       <% if !gamer_signed_in? %>
         <ul class="nav pull-right">
-          <li><a href="/gamers/sign_up">Sign up</a></li>
+        <% if I18n.locale == :ar %>
+          <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
+        <% else %>
+          <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
+        <% end %>
+          <li class="divider-vertical"></li>
+          <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
           <li class="divider-vertical"></li>
           <li class="dropdown">
-          <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
               <%= form_for("gamer", :url => gamer_session_path) do |f| %>
                 <%= f.text_field :email, :style => "margin-bottom: 15px;", :placeholder => "Email", :size => "30" %>
