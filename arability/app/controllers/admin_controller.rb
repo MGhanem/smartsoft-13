@@ -98,6 +98,7 @@ class AdminController < ActionController::Base
 
   def index
     @trophies_list = Trophy.all
+    @prizes_list = Prize.all
   end
 
   # author:
@@ -200,6 +201,13 @@ class AdminController < ActionController::Base
   def deletetrophy
     Trophy.find_by_name(params[:name]).delete
     flash[:success] = "Trophy #{params[:name]} has been deleted"
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  def deleteprize
+    Prize.find_by_name(params[:name]).delete
+    flash[:success] = "Prize #{params[:name]} has been deleted"
     flash.keep
     redirect_to action: "index"
   end

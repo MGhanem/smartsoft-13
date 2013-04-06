@@ -12,7 +12,7 @@
 							<a href="#new-keyword" data-toggle="tab">إضافة كلمة جديدة</a>
 						</li>
 						<li>
-							<a href="#import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV </a>
+							<a href="/admin/import_csv">استيراد ملف كلمات بصيغة CSV </a>
 						</li>
 						<li class="divider"></li>
 						<li class="nav-header">إدارة الميداليات</li>
@@ -58,9 +58,7 @@
 						<%= render 'add-prize' %>
 					</div>
 					<div class="tab-pane" id="delete-prize">
-						<form class="well span6" action="#" method="post">
-							
-						</form>
+						<%= render 'list-prizes' %>
 					</div>
 				</div>
 			</div>
