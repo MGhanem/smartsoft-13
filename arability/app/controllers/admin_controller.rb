@@ -171,6 +171,31 @@ class AdminController < ActionController::Base
     redirect_to action: "index"
   end
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a prize as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the prize
+  #     score: the level required to earn the prize
+  #     rank: the score required to earn the prize
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addprize
+    success, prize = Prize.add_prize_to_database(params[:name], params[:score], params[:rank], params[:photo])
+    if success
+      flash[:success] = "Prize #{prize.name} has been created"
+    else
+      flash[:error] = prize.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
 
   def deletetrophy
     Trophy.find_by_name(params[:name]).delete
