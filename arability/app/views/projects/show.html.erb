@@ -1,0 +1,55 @@
+<div class="container" border="1"> 
+	<h3>Project: <%=@project.name %></h3><br>
+	<form>
+		<div class="container well">
+			<div class="btn-toolbar" style="margin: 0;">
+				<div class="btn-group">
+					<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i> Import <span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><a href= "#">As csv</a></li>
+					</ul>
+				</div>
+				<div class="btn-group">
+					<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Export <span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><a href= "#">As csv</a></li>
+					</ul>
+				</div>
+				<div class="btn-group">
+					<button class="btn"><i class="icon-plus-sign"></i> Add words <span></span></button>
+				</div>
+				<div class="btn-group">
+					<button class="btn"><i class="icon-thumbs-up"></i>  Recommended words  <span></span></button>
+				</div>
+				<div class="btn-group">
+					<button class="btn"><i class="icon-share"></i> Share <span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><a href= "#">Share project</a></li>
+						<li><a href= "#">People shared with</a></li>
+					</ul>
+				</div>
+				<div class="btn-group">
+					<button class="btn"><i class="icon-edit"></i> Edit project <span></span></button>
+				</div>
+				<div class="btn-group">
+					<button class="btn"><i class="icon-trash"></i> Delete <span></span></button>
+				</div>
+				<div class="btn-group">
+					<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-question-sign"></i> Help <span class="caret"></span></button>
+				</div>
+			</div><br>
+			<table class="table table-bordered" style="width:940px;background-color:white" >
+				<col style="width:25%">
+        		<col style="width:75%">
+				<tr>
+					<td style="text-align:center">Word</td>
+					<td style="text-align:center">Meaning</td>
+				</tr>
+			</table>
+			<table class="table table-hover table-bordered table-condensed"style="width:940px;background-color:white">
+				<col style="width:25%">
+        		<col style="width:75%">
+        		
+			</table>
+		</div>
+	</form>
