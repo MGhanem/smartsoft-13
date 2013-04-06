@@ -669,12 +669,13 @@ if(level == 6){
 }
 
 function setLang(l){
-	$(".zone").slideUp('slow');
+	$(".zone").slideUp(1000);
+	$(".zone").slideDown(1000);
 	lang = l;
 	setTimeout(function(){
-		$(".zone").slideDown('slow');
+		
 		newGame();
-	}, 1000);
+	}, 1100);
 }
 
 function calculateScore(){
