@@ -39,6 +39,8 @@ Arability::Application.routes.draw do
 
   match '/game' => 'games#game'
   
+  get 'games/getnewwords'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
