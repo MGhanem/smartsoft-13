@@ -85,11 +85,11 @@ class ProjectsController < ApplicationController
         # check of project is shared with me too
         @word_id = params[:word_id]
         if Keyword.find_by_id(@word_id) != nil
-          if ProjectWord.find_by_project_id(@project_id).find_by_keyword_id(@word_id) == nil
+          if PreferedSynonym.find_word_in_project(@project_id, @word_id) == nil
             @synonym_id = params[:synonym_id]
             # check for free users, if the words exceeds 20 words
-            @added_word = ProjectWord.new(@word_id, @project_id, @synonym)
-            if @added_word.save
+            @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
+            if @added_word
               flash[:notice] = "You have successfully added the word to your project."
               # render the project's page
             else
@@ -131,8 +131,8 @@ class ProjectsController < ApplicationController
         # check of project is shared with me too
         @word_id = params[:word_id]
         if Keyword.find_by_id(@word_id) != nil
-          @edited_word = ProjectWord.find_by_keyword_id(@word_id).find_by_project_id(@project_id)
-          if  @edited_word != nil
+          @edited_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
+          if @edited_word != nil
             @synonym_id = params[:synonym_id]
             if Synonym.find_by_id(@synonym_id) != nil
               @edited_word.synonym_id = @synonym_id
