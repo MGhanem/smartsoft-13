@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
   
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
-        @my_projects = Project.where(:developer_id => developer.id)
+        @my_projects = Project.where(:owner_id => developer.id)
         # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
         @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
       else
