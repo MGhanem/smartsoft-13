@@ -2,19 +2,27 @@
 <br />
 <a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
 <br />
+<br />
 <% @projects.each do |project| %>
-  <div class="boxed">
-  Name:
+  <div class="well well-small">
+  <strong>Name:</strong>
   <br />
   <%= project.name %>
   <br />
-  Categories:
+  <strong>Categories:</strong>
   <br />
+  <% size = project.categories.length %>
+  <% counter = 1 %>
   <% project.categories.each do |c| %>
-    <%= c.name %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
   <% end %>
   <br />
-  Description:
+  <strong>Description:</strong>
   <br />	
   <%= project.description %>
 </div>
