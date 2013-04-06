@@ -1,4 +1,12 @@
 Arability::Application.routes.draw do
+  match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+  match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+  match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+  get "developer/followed"
+
   get "admin/index"
 
   get "admin/login"
