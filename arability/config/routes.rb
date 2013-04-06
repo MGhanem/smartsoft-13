@@ -1,4 +1,6 @@
 Arability::Application.routes.draw do
+  root :to => 'pages#home'
+
   get "admin/index"
 
   get "admin/login"
@@ -13,34 +15,32 @@ Arability::Application.routes.draw do
   resources :projects
   get "projects/update"
 
-  # get "admin/import_csv"
-
-  root :to => 'pages#home'
-
-  # required for routing by the devise module(gem)
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
-
   get "admin/import_csv"
 
   post "admin/upload"
 
-  match "keywords" => "keywords#viewall"
+  scope "/developers" do
+    resources :projects
 
-  get "keywords/new"
+    match "keywords/new" => "keywords#new"
 
-  get "keywords/suggest_add"
+    match "keywords/suggest_add" => "keywords#suggest_add"
 
-  resources :projects
-  post "keywords/create"
+    match "keywords/create" => "keywords#create"
 
-  match '/developers/new' => "developer#new"
-  match '/developers/create' => "developer#create"
-  match '/my_subscriptions/new' => "my_subscription#new"
-  match '/my_subscriptions/create' => "my_subscription#create"
+    match '/developers/new' => "developer#new"
+    match '/developers/create' => "developer#create"
+    match '/my_subscriptions/new' => "my_subscription#new"
+    match '/my_subscriptions/create' => "my_subscription#create"
 
-  match 'search' => 'search#search'
-  
+    match 'search' => 'search#search'
+
+    match 'follow' => 'follow#follow', :as => "list_followed_words"
+  end
+
+  # required for routing by the devise module(gem)
+  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
