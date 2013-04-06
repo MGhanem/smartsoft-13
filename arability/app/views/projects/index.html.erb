@@ -33,11 +33,15 @@
     <br />
     Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
     <br />
-    <%= project.description %>
-    <br />
   <% end %>
   <% end %>
-
+  <br />
+  Description:
+  <br />	
+  <%= project.description %>
+  <%= link_to 'Destroy', project, method: 
+    delete, data: { confirm: 'Are you sure?' } %>
 </div>
+<br />
 <% end %>
 
