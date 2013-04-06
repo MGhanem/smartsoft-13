@@ -30,6 +30,9 @@ end
 gem 'jquery-rails'
 gem 'execjs'
 
+#gem for visual charts
+gem 'lazy_high_charts'
+
 # gem for age validations 
 gem 'date_validator'
 
@@ -54,7 +57,7 @@ gem 'country-select'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
 
 # devise gem used for authentication
 gem 'devise','2.0'
