@@ -10,6 +10,7 @@ Arability::Application.routes.draw do
 
   get 'games/getnewwords'
 
+
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
@@ -32,12 +33,28 @@ Arability::Application.routes.draw do
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
-
     # required for routing by the devise module(gem)
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
+
+ 
+  get "projects/remove_developer_from_project"
+  match "projects/share/:id" => "projects#share"
+  match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  post "keywords/create"
+
+  resources :projects
+
+  
+  match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+  match '/my_subscriptions/pick' => "my_subscription#pick"
+  
+
+
+
     # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
 
     scope "developers/" do 
 

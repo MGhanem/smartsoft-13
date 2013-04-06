@@ -10,16 +10,34 @@
       <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> New Project</a>
 <br />
 <% @projects.each do |project| %>
+  <div class="well well-small">
+  <strong>Name:</strong>
+  <br />
+  <%= project.name %>
+  <br />
+  <% project.developers_shared.each do |dev|%>
+  <%= dev.name %>
+   <a href="/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=project.id%>">Remove Share</a>
+  <%end%>
+  <strong>Categories:</strong>
+  <br />
+  <% size = project.categories.length %>
+  <% counter = 1 %>
+  <% project.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
   <div class="boxed">
     <a class="btn" href="/developers/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
     <br />
     Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
     <br />
-    Categories:  <% project.categories.each do |c| %>
-      <%= c.name %>
-      <% end %>
-    <br />
     <%= project.description %>
     <br />
   <% end %>
+  <% end %>
+
 </div>
+<% end %>
+

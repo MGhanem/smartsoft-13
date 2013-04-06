@@ -1,12 +1,4 @@
   class ProjectsController < ApplicationController 
-    def index
-      if gamer_signed_in?
-        @projects = Project.where(:owner_id => current_gamer.id)
-      else
-        flash[:error] = "You are not authorized to view this page"
-        render 'pages/home'
-      end
-    end
 
   # author: 
   #   Mohamed Tamer 
@@ -17,6 +9,26 @@
   # returns:
   #   on success: returns an array of projects of the developer currently logged in.
   #   on failure: notifies the user that he can't see this page.
+  def index
+    if current_gamer != nil 
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      if developer != nil
+        @projects = Project.where(:developer_id => developer.id)
+      else
+        flash[:notice] = "Please sign up as a developer first"
+        render 'developers/new'
+      end
+    else
+      flash[:notice] = "Please sign in"
+      render 'pages/home'
+    end  
+  	if developer.present?
+  		@projects = Project.where(:owner_id => developer.id)
+  	else
+  		flash[:notice] = "You are not authorized to view this page"
+  	end
+
+  end
   # def index
   #   if current_gamer != nil 
   #     developer = Developer.where(:gamer_id => current_gamer.id).first
@@ -33,6 +45,7 @@
   #     render 'pages/home'
   #   end  
   # end
+
 
   # author:
   #      Salma Farag
@@ -89,6 +102,54 @@
     end
   end
 
+
+  def share
+    @project = Project.find(params[:id])
+  end
+
+  def share_project_with_developer
+    @project = Project.find(params[:id])
+    gamer = Gamer.find_by_email(params[:email])
+    if(!gamer.present?)
+      flash[:notice] = "Email doesn't exist"
+    else
+      developer = Developer.find_by_gamer_id(gamer.id)
+      if developer == nil
+        flash[:notice] = "Email address is for gamer, not a developer"
+      else
+
+        developer.projects_shared << @project
+        if(developer.save)
+          flash[:notice] = "Project has been shared successfully with #{developer.name}"
+        else
+          flash[:notice] = "Failed to share project with developer"
+        end
+      end
+    end
+    render "projects/share"
+  end
+  def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+   redirect_to "/projects"
+  end
+
+
+
+# author:
+#      Salma Farag
+# description:
+#     A method that views the form that  instantiates an empty project object
+# params:
+#     none
+# success:
+#     An empty project will be instantiated
+# failure:
+#     none
+
   # author:
   #      Salma Farag
   # description:
@@ -106,6 +167,7 @@
       flash[:error] = "You are not authorized to view this page"
     end
   end
+
 
   # author:
   #      Salma Farag
@@ -152,3 +214,4 @@ def show
   end
 end
 end
+
