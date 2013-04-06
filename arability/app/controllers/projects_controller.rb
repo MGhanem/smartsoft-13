@@ -68,21 +68,22 @@ class ProjectsController < ApplicationController
 # author:
 #      Khloud Khalid
 # description:
-#     method adds a keyword and a synonym to an existing project by creating a new ProjectWord object 
+#     method adds a keyword and a synonym to an existing project and if word already exists in the project updates
+#     its synonym
 # params:
 #     project_id, word_id, synonym_id
 # success:
-#     keyword and synonym are added to project (new ProjectWord object created) 
+#     keyword and synonym are added to project or synonym of word updated 
 # failure:
-#     object not valid (no project or word id), word already exists in project, keyword does not exist, 
+#     object not valid (no project or word id), word already exists in project, keyword or synonym does not exist, 
 #     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
-#     developer.
+#     developer, or keyword is not in the project.
   def add_word
-    # if he word doesn't have synonyms redirect to follow word
+    # if the word doesn't have synonyms redirect to follow word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
       if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
-        # check of project is shared with me too
+        # check if project is shared with me too
         @word_id = params[:word_id]
         if Keyword.find_by_id(@word_id) != nil
           if PreferedSynonym.find_word_in_project(@project_id, @word_id) == nil
@@ -97,8 +98,26 @@ class ProjectsController < ApplicationController
               # render the project's page
             end
           else
-            flash[:notice] = "Don't you remember you already added this word to your project?"
-            # render the project's page
+            @edited_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
+            if @edited_word != nil
+              @synonym_id = params[:synonym_id]
+              if Synonym.find_by_id(@synonym_id) != nil
+                @edited_word.synonym_id = @synonym_id
+                if @edited_word.save
+                  flash[:notice] = "Synonym changed successfully."
+                  # render the project's page
+                else
+                  flash[:notice] = "Failed to update synonym"
+                  # render the project's page
+                end
+              else
+                flash[:notice] = "This synonym does not exist."
+                # render project's page
+              end
+            else
+              flash[:notice] = "This word is not in the project."
+              # render project's page
+            end
           end
         else
           flash[:notice] = "The word you're trying to add does not exist."
@@ -113,57 +132,7 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
-# author:
-#      Khloud Khalid
-# description:
-#     method changes the chosen synonym of a keyword in a certain project
-# params:
-#     project_id, word_id, synonym_id
-# success:
-#     synonym updated successfully
-# failure:
-#     keyword or synonym does not exist, keyword is not in the project, developer trying to add word is not owner 
-#     of the project nor is the project shared with him/her, not registered developer.
-  def change_synonym
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
-      @project_id = params[:project_id]
-      if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
-        # check of project is shared with me too
-        @word_id = params[:word_id]
-        if Keyword.find_by_id(@word_id) != nil
-          @edited_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          if @edited_word != nil
-            @synonym_id = params[:synonym_id]
-            if Synonym.find_by_id(@synonym_id) != nil
-              @edited_word.synonym_id = @synonym_id
-              if @edited_word.save
-                flash[:notice] = "Synonym changed successfully."
-                # render the project's page
-              else
-                flash[:notice] = "Failed to update synonym"
-                # render the project's page
-              end
-            else
-              flash[:notice] = "This synonym does not exist."
-              # render project's page
-            end
-          else
-            flash[:notice] = "This word is not in the project."
-            # render project's page
-          end
-        else
-          flash[:notice] = "This word does not exist."
-          # render the project's page and add link to add this word to the database
-        end
-      else
-        flash[:notice] = "You can't edit someone else's project!"
-        render 'pages/home'
-      end
-    else
-      flash[:notice] = "You have to register as a developer before trying to change the synonym of this word."
-      render 'pages/home'
-    end
-  end
+
 def show
     @project = Project.find(params[:id])
 
