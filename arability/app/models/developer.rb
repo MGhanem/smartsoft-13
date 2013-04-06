@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Developer < ActiveRecord::Base
  belongs_to :gamer
  attr_accessible :first_name, :last_name, :verified, :gamer_id

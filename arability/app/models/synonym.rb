@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
@@ -5,7 +6,7 @@ class Synonym < ActiveRecord::Base
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :message => "The synonym is not arabic"
 
   class << self
-
+  include StringHelper
   # Author:
   #  Mirna Yacout
   # Description:
