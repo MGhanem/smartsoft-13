@@ -3,7 +3,7 @@ class Synonym < ActiveRecord::Base
   attr_accessible :approved, :name
   has_many :votes
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => "The synonym is not arabic"
+    :message => "هذا المعنى ليس باللغة العربية"
 
   class << self
 
