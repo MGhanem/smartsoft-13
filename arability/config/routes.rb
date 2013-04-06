@@ -4,12 +4,6 @@ Arability::Application.routes.draw do
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
-		match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
-
-  	match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
-
-  	match "followed" => "follow#list_followed", :as => "list_followed_words"
-    
     get "admin/index"
 
     get "admin/login"
@@ -18,7 +12,6 @@ Arability::Application.routes.draw do
     post "admin/login"
     post "admin/wordadd"
 
-    resources :projects
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -29,22 +22,31 @@ Arability::Application.routes.draw do
 
     post "admin/upload"
 
-    match "keywords" => "keywords#viewall"
+    scope "developers/" do 
 
-    get "keywords/new"
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
-    get "keywords/suggest_add"
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
 
-    resources :projects
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
 
-    post "keywords/create"
+      match "keywords" => "keywords#viewall"
 
-    match '/developers/new' => "developer#new"
-    match '/developers/create' => "developer#create"
-    match '/my_subscriptions/new' => "my_subscription#new"
-    match '/my_subscriptions/create' => "my_subscription#create"
+      get "keywords/new"
 
-    match 'search' => 'search#search'
+      get "keywords/suggest_add"
+
+      resources :projects
+
+      post "keywords/create"
+
+      match '/developers/new' => "developer#new"
+      match '/developers/create' => "developer#create"
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
+
+      match 'search' => 'search#search'
+    end
   end
   
   # The priority is based upon order of creation:
