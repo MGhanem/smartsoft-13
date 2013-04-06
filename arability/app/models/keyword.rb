@@ -9,7 +9,6 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
-
   class << self
   include StringHelper
     # adds a new keyword to the database or returns it if it exists
@@ -51,6 +50,8 @@ class Keyword < ActiveRecord::Base
     end
 
   	#Description:
+    #   gets words similar to a search keyword (in a certain category) and sorts 
+    #   result by relevance
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:
@@ -77,12 +78,41 @@ class Keyword < ActiveRecord::Base
             .where("categories.name" => categories)
       end
     	relevant_first_list = keyword_list
-        .sort_by {|keyword| [keyword.name.downcase.index(search_word),
+        .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	return relevant_first_list
     end
 
-    # finds a keyword by name from the database
+    
+    # Author: Mostafa Hassaan
+    # Description: Method gets the synonym of a certain word with the highest
+    #               number of votes.
+    # params: 
+    #   word: a Keyword to get the highest voted synonym for
+    # return:
+    #   on success: the highest voted Synonym of word gets returned. If two 
+    #               synonyms have an equal number of votes, the first synonym 
+    #               entered to the list is returned.
+    #   on failure: if word has no synonyms, nothing is returned
+    def highest_voted_synonym(keyword)
+      grouped_synonyms = Synonym.where(:keyword_id => keyword.id)
+        .joins(:votes).count(:group => "synonym_id")
+      highest_synonym = grouped_synonyms.max_by{ |key, count|count }
+      return Synonym.where(:id => highest_synonym[0])
+    end
+
+    # Author: Mostafa Hassaan
+    # Method takes no inputs and returns an array of "Keywords"
+    # with "synonyms" that haven't been approved yet.
+    # params: --
+    # returns:
+    #   on success: Array of "keywords"
+    #   on failure: Empty array
+    def words_with_unapproved_synonyms
+      return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
+		# finds a keyword by name from the database
     # @author Mohamed Ashraf
     # @params name [string] the search string
     # ==returns

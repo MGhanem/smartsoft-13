@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
   attr_accessible :name
   has_and_belongs_to_many :keywords
+  has_and_belongs_to_many :projects
+
   validates_uniqueness_of :name
   validates_presence_of :name
   validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
