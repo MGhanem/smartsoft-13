@@ -160,4 +160,11 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
   end
+
+  def notify_developer(synonym.id)
+    keyword = Keyword.find(self.id)
+    developers = keyword.developers
+    developers.each do |dev|
+    end
+  end
 end
