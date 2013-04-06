@@ -13,8 +13,42 @@ class Keyword < ActiveRecord::Base
 
   class << self
   include StringHelper
-    # adds a new keyword to the database or returns it if it exists
-    # Author:
+
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to record the aproval of the admin to a certain keyword in the database
+  # Parameters:
+  #  id: the id of the keyword to be approved
+  # Success:
+  #  returns true on saving the approval correctly in the database
+  # Failure:
+  #  returns false if the keyword doesnot exist in the database
+  #  or if the approval failed to be saved in the database 
+    def approve_keyword(keyword_id)
+      if Keyword.exists?(id: keyword_id)
+        keyword = Keyword.find(keyword_id)
+        keyword.approved = true
+        return keyword.save
+      end
+      return false
+    end
+
+  # author:
+  #   Omar Hossam
+  # description:
+  #   feature takes no input and returns a list of all unapproved keywords
+  # success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are pending for approval in the database
+  # failure:
+  #   returns an empty list if no words are pending for approval
+    def list_unapproved_keywords
+      return Keyword.where(approved: false).all
+    end
+
+    # adds a new keyword to the database
+    # author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
