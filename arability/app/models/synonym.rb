@@ -1,4 +1,4 @@
-#encoding: UTF-8
+#encoding:utf-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id

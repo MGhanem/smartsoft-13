@@ -1,7 +1,14 @@
 Arability::Application.routes.draw do
-    root :to => 'pages#home'
+  
+  root :to => 'pages#home'
+  
+  match '/game' => 'games#game'
 
-    scope "(:locale)", :locale => /en|ar/ do
+  post "games/vote" 
+
+  post "games/record_vote"
+
+  scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
     get "admin/index"
@@ -56,7 +63,6 @@ Arability::Application.routes.draw do
       match 'search' => 'search#search'
     end
   end
-
   
   get 'games/getnewwords'
 

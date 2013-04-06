@@ -1,9 +1,17 @@
 ar:
-  arability: "ﻋﺮﺑﻠﺘﻲ"
-  sign_up: "ﺇﻧﺸﺎء ﺣﺴﺎﺏ"
-  sign_in: "ﺗﺴﺠﻴﻞ اﻟﺪﺧﻮﻝ"
-  english: "اﻹﻧﺠﻠﻴﺰﻳﺔ"
-  arabic: "اﻟﻌﺮﺑﻴﺔ"
+  hello: "ahlan wasahlan"
+  arability: "عربلتي"
+  sign_up: "إنشاء حساب"
+  sign_in: "تسجيل الدخول"
+  english: "الإنجليزية"
+  arabic: "العربية"
+  email: "البريد الالكتروني"
+  password: "كلمة السر"
+  password_confirmation: "تأكيد كلمة السر"
+  username: "اسم المستخدم"
+  date_of_birth: "تاريخ الميلاد"
+  country: "الدولة"
+  education_level: "المستوي التعليمي"
   search: "اﻟﺒﺤﺚ"
   search_here: "اﺑﺤﺚ اﻟﻜﻠﻤﺎﺕ ﻫﻨﺎ"
   keyword_add_success: "ﺗﻤﺖ ﺇﺿﺎﻓﺔ اﻟﻜﻠﻤﺔ ﺑﻨﺠﺎﺡ"
@@ -17,3 +25,7 @@ ar:
   words_followed_by_you: "الكلمات المتابعة:"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
+  errors:
+    messages:
+      not_saved:
+

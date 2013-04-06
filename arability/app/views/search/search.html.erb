@@ -23,7 +23,11 @@
 		</div>
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
-				<!-- collective chart here -->
+				<% key_id = Keyword.where(:name => @search_keyword).first.id %>
+				 <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %>
 			</div>
 		</div>
 	</div>
@@ -57,28 +61,8 @@
 				</div>
 			</div>
 	<% end %>
-	<% if @similar_keywords.blank? && !@search_keyword.blank? && @is_successful == nil %>
-	<div class="well">
-		<%= content_tag(:span, 
-			"Sorry! No matched were found for the keyword you searched for!" +
-			" Do you wish to add it to our database?") %>
-		<%= link_to "Add", :controller => "keywords", :action => "suggest_add",
-		:search => @search_keyword, :method => :get %>
-	</div>
-	<% else %>
-		<ul class="unstyled">
-			<% @similar_keywords.each do |c| %>
-			<%= content_tag(:li, c.name) %>
-			<% end %>
-		</ul>
-	<% end %>
 </div>
-<div>	
-	<% if(!@search_keyword.blank?) %>
- <%= high_chart("my_id4", chart_keyword_synonym(@search_keyword.name)) do |c| %>
-          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-      <% end %>
-  <% end %>
-</div>
+
+  
+
 <% end %>
