@@ -1,10 +1,15 @@
 Arability::Application.routes.draw do
-
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
+		match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+  	match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+  	match "followed" => "follow#list_followed", :as => "list_followed_words"
+    
     get "admin/index"
 
     get "admin/login"
@@ -41,7 +46,7 @@ Arability::Application.routes.draw do
 
     match 'search' => 'search#search'
   end
-
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
