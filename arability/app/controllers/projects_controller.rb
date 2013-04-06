@@ -179,19 +179,17 @@ class ProjectsController < BackendController
             for i in 1..row.size
               Synonym.record_synonym(row[i],keywrd.id)
             end
-            if !id_words_in_database_before.include?(row[0]) and !id_words_not_in_database_before.include?(row[0])
-              counter = 0
-              for i in 1..row.size
-                synonm = Synonym.find_by_name(row[i], keywrd.id)
-                if synonm != nil
-                  counter = counter + 1
-                  id_synonyms_words_in_database_before.push(synonm.id)
-                end
+            counter = 0
+            for i in 1..row.size
+              synonm = Synonym.find_by_name(row[i], keywrd.id)
+              if synonm != nil
+                counter = counter + 1
+                id_synonyms_words_in_database_before.push(synonm.id)
               end
-              if counter > 0
-                id_words_in_database_before.push(keywrd.id)
-                num_synonyms_words_in_database_before.push(counter)
-              end
+            end
+            if counter > 0
+              id_words_in_database_before.push(keywrd.id)
+              num_synonyms_words_in_database_before.push(counter)
             end
           end
         else
