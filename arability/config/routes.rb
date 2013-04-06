@@ -11,6 +11,7 @@ Arability::Application.routes.draw do
 
     post "admin/login"
     post "admin/wordadd"
+    match '/game' => 'games#game'
 
 
     # required for routing by the devise module(gem)
@@ -39,19 +40,19 @@ Arability::Application.routes.draw do
       resources :projects
 
       post "keywords/create"
-
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
-
       match 'search' => 'search#search'
     end
   end
+
   
+  get 'games/getnewwords'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
