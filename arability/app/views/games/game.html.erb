@@ -1,3 +1,24 @@
+<script type="text/javascript" charset="utf-8">
+  
+  var words=["car","dead","ok"];
+
+  function get_words(){
+    return words;
+  }
+
+  function request_vote_form(){
+    if(words.length==0){
+      alert('empty');
+      return;
+    }
+    $('#workspace').remove();
+    $('.zone').append('<div class=\"vote_form\"></div>');
+    var first_word = words.shift();
+    $.post("/games/vote.js", { word: first_word});
+  }
+
+
+</script>
 
 <div class="game-zone">
   <div class="game-nav">
@@ -21,6 +42,7 @@
     </div>
   </div>
   <div class="zone">
+
     <div class="divaya">
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
     <div class="game-lang">
@@ -29,5 +51,12 @@
       <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
     </div>
     </div>
+
   </div>
 </div>
+
+<div id="workspace" style="position:relative; left: 10px; ">
+  <a onclick="request_vote_form()"  id="btn">start voting</a>
+</div>
+
+

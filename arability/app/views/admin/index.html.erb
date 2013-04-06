@@ -1,6 +1,66 @@
-<%= link_to "logout", :action => "logout" %>
-<%= link_to "import csv", action: "import_csv" %>
-
-<h1>Admin#index</h1>
-
-<%= render 'admin/wordadd' %>
+<div class="container admin">
+		<div class="row">
+			<div class="span3">
+				<div class="well">
+					<ul class="nav nav-list nav-stacked" id="admin-tabs">
+						<li class="active">
+							<a href="#home" data-toggle="tab">الصفحة الرئيسية</a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الكلمات</li>
+						<li>
+							<a href="#new-keyword" data-toggle="tab">إضافة كلمة جديدة</a>
+						</li>
+						<li>
+							<a href="/admin/import_csv">استيراد ملف كلمات بصيغة CSV </a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الميداليات</li>
+						<li>
+							<a href="#add-trophy" data-toggle="tab">إضافة مدالية جديدة</a>
+						</li>
+						<li>
+							<a href="#delete-trophy" data-toggle="tab">عرض المداليات</a>
+						</li>
+						<li class="divider"></li>
+						<li class="nav-header">إدارة الجوائز</li>
+						<li>
+							<a href="#add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+						</li>
+						<li>
+							<a href="#delete-prize" data-toggle="tab">عرض الجوائز</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<div class="tab-content">
+					<div class="tab-pane active" id="home">
+						<div class="alert alert-info">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>مرحبا بكم!!</strong>
+						</div>
+						<%= render 'layouts/messages' %>
+					</div>
+					<div class="tab-pane" id="new-keyword">
+						<%= render 'add-word' %>
+					</div>
+					<div class="tab-pane" id="import-csv-file">
+						
+					</div>
+					<div class="tab-pane" id="add-trophy">
+						<%= render 'add-trophy' %>
+					</div>
+					<div class="tab-pane" id="delete-trophy">
+						<%= render 'list-trophies' %>
+					</div>
+					<div class="tab-pane" id="add-prize">
+						<%= render 'add-prize' %>
+					</div>
+					<div class="tab-pane" id="delete-prize">
+						<%= render 'list-prizes' %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

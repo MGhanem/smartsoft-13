@@ -1,5 +1,12 @@
 Arability::Application.routes.draw do
-   root :to => 'pages#home'
+  
+  root :to => 'pages#home'
+  
+  match '/game' => 'games#game'
+
+  post "games/vote" 
+
+  post "games/record_vote"
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
@@ -10,9 +17,16 @@ Arability::Application.routes.draw do
     get "admin/logout"
 
     post "admin/login"
-    post "admin/wordadd"
+
+    post "admin/addword"
+    post "admin/addtrophy"
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+    get "admin/deleteprize"
 
     match '/game' => 'games#game'
+
 
 
     # required for routing by the devise module(gem)
@@ -23,6 +37,8 @@ Arability::Application.routes.draw do
     get "admin/import_csv"
 
     post "admin/upload"
+  
+    resources :projects
 
     scope "developers/" do 
 
@@ -46,18 +62,15 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 
-
   match 'search' => 'search#search'
 
     end
   end
-
   
   get 'games/getnewwords'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
