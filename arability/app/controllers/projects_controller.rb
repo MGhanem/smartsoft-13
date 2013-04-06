@@ -255,7 +255,7 @@ def show
         # check of project is shared with me too
         @word_id = params[:word_id]
         if Keyword.find_by_id(@word_id) != nil
-          @removed_word = ProjectWord.find_by_keyword_id(@word_id).find_by_project_id(@project_id)
+          @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
           if  @removed_word != nil
             @removed_word.destroy
             flash[:notice] = "Word removed successfully."
