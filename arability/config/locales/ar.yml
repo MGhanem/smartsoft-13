@@ -23,6 +23,9 @@ ar:
   view_stats: "الإحصائيات"
   add_to_project: "اضف لمشروعك"
   gender: "النوع"
+  gamer: "اللاعب"
   errors:
     messages:
       not_saved:
+        one: "خطأ واحد منع هذا %{resource} من التسجيل:"
+        other: "%{count} اخطآء منعت هذا %{resource} من التسجيل:"

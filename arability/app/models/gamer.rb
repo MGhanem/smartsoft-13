@@ -30,8 +30,8 @@ class Gamer < ActiveRecord::Base
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
+  # validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
+  #   :message => "can't be anything except letters." }
 
   validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i }
   
