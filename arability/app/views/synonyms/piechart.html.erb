@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script  type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" charset="utf-8"></script>
+<%= javascript_include_tag "highcharts", "rails","bootstrap", "bootstrap.min" %>
+<%= stylesheet_link_tag "bootstrap", "bootstrap-responsive", "bootstrap.min", "bootstrap-responsive.min" %>
+<STYLE type="text/css">
+   .expandView {display: none; color:red;}
+</STYLE>
+<script type="text/javascript">
+$('#tic').click(function () {
+$('.expandView').slideToggle();
+});​
+</script>
+<div>
+  <a href="">try</a>
+  <img src="<%= @graph %>"/>
+</div>
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" align="left">
+        <p>
+        <button class="btn" type="button">الاحصائيات</button>
+        <p align="right" style="display:inline;margin-right:2px;">المعني</p>
+        </p>
+      </a>
+        
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+      <div class="row">
+        <div class="span10" style="margin:auto">
+      <div class="accordion-inner">
+         <div class="container-fluid">
+  <div class="row" style="align:center;">
+    <div class="span2">
+      <%= high_chart("0", piechart(11,0)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %>
+    </div>
+    <div class="span2">
+      <%= high_chart("1", piechart(11,1)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %> 
+    </div>
+    <div class="span2">
+      <%= high_chart("3", piechart(11,3)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %>
+    </div>
+    <div class="span2">
+      <%= high_chart("4", piechart(11,3)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+      <% end %>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+      </div>
+    </div>
+</div>
+
+
+</html>
