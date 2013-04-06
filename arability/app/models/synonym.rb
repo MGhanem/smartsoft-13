@@ -59,17 +59,11 @@ class Synonym < ActiveRecord::Base
     end
   end
 
-=begin
-  def get_visual_stats(synonym_id)
+    def get_visual_stats_gender(synonym_id)
         voters = Gamer.joins(:synonyms).where("synonym_id = ?", synonym_id)
-        #x = [1,2,3]
-        #voters = Gamer.all
-        #return Gamer.select('country').group('country').count
-        groups = voters.count(group: :country)
+        groups = voters.count(group: :gender)
         sum = groups.sum{|v| v.last}
-        return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i] }
-        return sum
-  end
-=end
+        return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+    end 
  end
 end
