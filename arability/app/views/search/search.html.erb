@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="span12">
-		<legend><%= t(:search)%></legend>
 		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
