@@ -52,10 +52,10 @@ class Synonym < ActiveRecord::Base
       elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
         return false
       elsif Keyword.exists?(id: keyword_id)
-          new_synonym = Synonym.new
-          new_synonym.name = synonym_name
-          new_synonym.keyword_id = keyword_id
-          return new_synonym.save
+        new_synonym = Synonym.new
+        new_synonym.name = synonym_name
+        new_synonym.keyword_id = keyword_id
+        return new_synonym.save
       else
         return false
       end
