@@ -6,6 +6,8 @@ Arability::Application.routes.draw do
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
+    # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+    
     get "admin/index"
 
     post "admin/login"
@@ -15,7 +17,6 @@ Arability::Application.routes.draw do
     get "admin/import_csv"
 
     post "admin/upload"
-
     match '/auth/google' => 'services#create'
     match '/auth/google/login' => 'services#index' 
     resources :services, :only => [:index, :create, :destroy]

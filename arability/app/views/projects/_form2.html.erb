@@ -1,9 +1,9 @@
 <style>
 .radio{
-display:float;
+    display:float;
 }
 </style>
-<div class = "container">
+<div class = "container" >
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -17,33 +17,34 @@ display:float;
     <% end %>
 
     <div class="field">
-        <%= f.label :name %>
+        <%= t(:name)%>
         <%= f.text_field :name %>
     </div>
     <div class="field">
-        <%= f.label :categories %>
+        <%= t(:categories)%>
         <%= text_field_tag("project[categories]",Project.printarray(@project.categories)) %> 
-    </div>
+    </div><br>
     <div class="radio">
+        <%= t(:formal)%>
         <%= f.radio_button :formal, 'Formal'%> 
-        <%= label :formal, 'Formal' %>
+        <%= t(:slang)%>
         <%= f.radio_button :formal, 'Slang' %>
-        <%= label :slang, 'Slang' %>
-        <br>
+        </br>
+    </br>
     </div>
     <div class="field">
-        <div class="field">Age Target</div>
-        <%= f.label "From" %>
+        <div class="field"><%= t(:age)%></div>
+        <%= t(:from)%>
         <%= f.text_field :minAge %>
-        <%= f.label "To" %>
+        <%= t(:to)%>
         <%= f.text_field :maxAge %>
-    </div>
-    <div class="field">
-        <%= f.label :description %>
-        <%= f.text_area :description %>
-    </div>
-    <div class="actions">
-        <%= f.submit %>
-    </div>
+  </div>
+  <div>
+    <%= t(:desc) %>
+    <%= f.text_area :description %>
+</div>
+<div class="actions">
+    <%= f.submit %>
+</div>
 </div>
 <% end %>

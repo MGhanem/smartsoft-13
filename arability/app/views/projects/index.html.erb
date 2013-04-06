@@ -7,11 +7,11 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> New Project</a>
 <br />
 <% @projects.each do |project| %>
   <div class="boxed">
-    <a class="btn" href="/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
+    <a class="btn" href="/developers/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
     <br />
     Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
     <br />

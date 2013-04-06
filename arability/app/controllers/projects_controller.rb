@@ -52,7 +52,7 @@
       @project = Project.createproject(params[:project],current_gamer.id)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
@@ -121,8 +121,9 @@
   def update
     if gamer_signed_in?
      @project = Project.find(params[:id])
-     @project = Project.createcategories(@project, params([:project][:categories]))
-     if @project.update_attributes(params[:project])
+     @project = Project.createcategories(@project, params[:project][:categories])
+     if @project.update_attributes(params.except(:categories,:utf8, :_method,
+      :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
       redirect_to :action => "index"
       flash[:notice] = "Project has been successfully updated."
     else
