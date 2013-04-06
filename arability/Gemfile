@@ -46,3 +46,7 @@ gem 'execjs'
 # devise gem used for authentication
 gem 'devise','2.0'
 
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'twitter'
+gem 'fb_graph'

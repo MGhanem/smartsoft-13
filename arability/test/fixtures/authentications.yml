@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  gamer_id: MyString
+  provider: MyString
+  uid: MyString
+  token: MyString
+  token_secret: MyString
+
+two:
+  gamer_id: MyString
+  provider: MyString
+  uid: MyString
+  token: MyString
+  token_secret: MyString

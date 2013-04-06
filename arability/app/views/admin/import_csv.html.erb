@@ -6,12 +6,6 @@
 	<input type="submit" value="Upload">
 </form>
 
-<!--	
-<script>
-$('input[name=authenticity_token]').val($('meta[name=csrf-token]').attr('content'))
-</script>
--->
-
 <p>To upload a CSV file:</br></p>
 <ol>
 	<li>Keywords that contain numbers will not be accepted</li>
@@ -28,5 +22,13 @@ $('input[name=authenticity_token]').val($('meta[name=csrf-token]').attr('content
 <% end %>
 
 <% if @message == "2" %>
-<p style="color:red;">Wrong encoding. Make sure your file is UTF-8 encoded</p>
+<p style="color:red;">*Wrong encoding. Make sure your file is UTF-8 encoded</p>
+<% end %>
+
+<% if @message == "3" %>
+<p style="color:red;">*There is something wrong with your file, please check and try again</p>
+<% end %>
+
+<% if @message == "4" %>
+<p style="color:red;">*This is not a csv file</p>
 <% end %>
