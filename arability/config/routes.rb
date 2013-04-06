@@ -9,8 +9,12 @@ Arability::Application.routes.draw do
     get "admin/login"
     get "admin/logout"
 
-    post "admin/login"
-    post "admin/wordadd"
+    post "admin/addword"
+    post "admin/addtrophy"
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+    get "admin/deleteprize"
 
 
     # required for routing by the devise module(gem)
@@ -21,6 +25,8 @@ Arability::Application.routes.draw do
     get "admin/import_csv"
 
     post "admin/upload"
+  
+    resources :projects
 
     scope "developers/" do 
 
