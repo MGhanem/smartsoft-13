@@ -35,11 +35,12 @@ vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
-vote_form.push('</div>');
-vote_form.push('</div>');
+vote_form.push('</div></br>');
 vote_form.push('<div style="float:left;" id="skip_button">');
 vote_form.push('<button class="btn btn-primary" type="submit" onclick="skip_keyword()"> <<  تخطي هذه الكلمة</button>');
 vote_form.push('</div>');
+vote_form.push('</div>');
+
 
 vote_form=vote_form.join('');
 
