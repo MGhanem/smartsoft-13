@@ -9,6 +9,7 @@ Arability::Application.routes.draw do
     get "admin/login"
     get "admin/logout"
 
+    post "admin/login"
     post "admin/addword"
     post "admin/addtrophy"
     post "admin/addprize"
