@@ -22,11 +22,17 @@ vote_form.push('<div style="position:relative; left: 10px;" >');
 vote_form.push('<% submitted_word=params[:word] %>');
 vote_form.push('<% keyword=Keyword.where(:name => submitted_word).first%>');
 vote_form.push('<%synonym_list=keyword.synonyms %>');
-vote_form.push('<%= keyword.name %></br>')
+vote_form.push('<p><%= keyword.name %>  من فضلك اختار معني لكلمة</p>');
+vote_form.push('<br/>');
+vote_form.push('<div class="btn-toolbar">');
+vote_form.push('<% i=1 %>');
 vote_form.push('<%synonym_list.each do |syn|%>');
-vote_form.push('<input type="button" onclick="record_vote(<%= syn.id %>)" value="<%= syn.name %>"/>');
-vote_form.push('</br>');
+vote_form.push('<% if i%2==1 %><div class="btn-group"><% end%>');
+vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn.id %>)"><%= syn.name %></button>');
+vote_form.push('<% if i%2==0 %></div></br><% end %>');
+vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
+vote_form.push('</div>');
 vote_form.push('</div>');
 
 vote_form=vote_form.join('');
