@@ -1,5 +1,4 @@
 class Keyword < ActiveRecord::Base
-<<<<<<< HEAD
   has_many :synonyms
   has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
