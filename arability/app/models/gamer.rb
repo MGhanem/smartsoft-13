@@ -1,6 +1,9 @@
 class Gamer < ActiveRecord::Base
+  has_many :votes
+  has_many :synonyms, :through => :votes
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
