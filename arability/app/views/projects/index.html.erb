@@ -12,11 +12,11 @@
 <br />
 <% @my_projects.each do |project| %>
   <div class="well well-small">
-  <strong>Name:</strong>
+  <strong>اسم:</strong>
   <br />
   <%= project.name %>
   <br />
-  <strong>Categories:</strong>
+  <strong>فئات:</strong>
   <br />
   <% size = project.categories.length %>
   <% counter = 1 %>
@@ -29,7 +29,7 @@
     <% end %>
   <% end %>
   <br />
-  <strong>Description:</strong>
+  <strong>وصف:</strong>
   <br />  
   <%= project.description %>
 </div>
@@ -40,11 +40,11 @@
       <p>
         <% @shared_projects.each do |project| %>
   <div class="well well-small">
-  <strong>Name:</strong>
+  <strong>اسم:</strong>
   <br />
   <%= project.name %>
   <br />
-  <strong>Categories:</strong>
+  <strong>فئات:</strong>
   <br />
   <% size = project.categories.length %>
   <% counter = 1 %>
@@ -57,7 +57,7 @@
     <% end %>
   <% end %>
   <br />
-  <strong>Description:</strong>
+  <strong>وصف:</strong>
   <br />  
   <%= project.description %>
   <br />

@@ -20,11 +20,11 @@ class ProjectsController < BackendController
         # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
         @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
       else
-        flash[:notice] = "Please sign up as a developer first"
+        flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'
       end
     else
-      flash[:notice] = "Please sign in"
+      flash[:notice] = "من فضلك قم بالدخول"
       render 'pages/home'
     end  
   end
