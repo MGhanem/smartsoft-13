@@ -25,6 +25,9 @@
             <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
                 :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div></br>
 
+            <div><%= f.label :gender, :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>    
+
             <div><%= f.label :country, :class => "control-label" %>
                 <span style="margin-left: 10px;">
                     <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
@@ -58,6 +61,9 @@
             <div><%= f.label t(:date_of_birth), :class => "control-label" %>
             <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
                 :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div></br>
+
+            <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['ذكر','انثي']),{}, :style => "margin-left: 10px;" ) %></div></br>  
 
             <div><%= f.label t(:country), :class => "control-label" %>
                 <span style="margin-left: 10px;">

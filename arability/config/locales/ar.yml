@@ -22,6 +22,7 @@ ar:
   view_collectives: "عرض الإحصائيات الجماعية للكلمة "
   view_stats: "الإحصائيات"
   add_to_project: "اضف لمشروعك"
+  gender: "النوع"
   errors:
     messages:
       not_saved:
