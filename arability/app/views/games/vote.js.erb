@@ -15,6 +15,9 @@ function display_next_word(){
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
 }
+function skip_keyword(){
+	display_next_word();
+} 
 
 
 vote_form=[];
@@ -34,8 +37,8 @@ vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
 vote_form.push('</div>');
 vote_form.push('</div>');
-vote_form.push('<div style="float:left;">');
-vote_form.push('<button class="btn btn-primary" type="submit"> <<  تخطي هذه الكلمة</button>');
+vote_form.push('<div style="float:left;" id="skip_button">');
+vote_form.push('<button class="btn btn-primary" type="submit" onclick="skip_keyword()"> <<  تخطي هذه الكلمة</button>');
 vote_form.push('</div>');
 
 vote_form=vote_form.join('');
