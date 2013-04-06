@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
+  require 'csv'
   
   # author: 
   #   Mohamed Tamer 
@@ -12,12 +13,13 @@ class ProjectsController < ApplicationController
   #   on success: returns an array of projects of the developer currently logged in.
   #   on failure: notifies the user that he can't see this page.
   def index
- 	  developer = Developer.where(:gamer_id => current_gamer.id).first
-  	if developer.present?
-  		@projects = Project.where(:developer_id => developer.id)
-  	else
-  		flash[:notice] = "You are not authorized to view this page"
-  	end
+    @projects = Project.all
+ 	  # developer = Developer.where(:gamer_id => current_gamer.id).first
+  	# if developer.present?
+  	# 	@projects = Project.where(:developer_id => developer.id)
+  	# else
+  	# 	flash[:notice] = "You are not authorized to view this page"
+  	# end
   end
 
 # author:
@@ -161,5 +163,115 @@ class ProjectsController < ApplicationController
       flash[:notice] = "You have to register as a developer before trying to change the synonym of this word."
       render 'pages/home'
     end
+  end
+def show
+    @project = Project.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @project }
+    end
+  end
+
+  def choose_keywords
+    @id_words_in_database_before = params[:a1]
+    @id_synonyms_words_in_database_before = params[:a2]
+    @id_words_not_in_database_before = params[:a3]
+    @id_synonyms_words_not_in_database_before = params[:a4]
+    @words_in_database_before = Array.new
+    @words_not_in_database_before = Array.new
+    if @id_words_in_database_before != nil
+      @id_words_in_database_before.each do |id_word|
+        @words_in_database_before.push(Keyword.find(id_word))
+      end
+    end
+    if @id_words_not_in_database_before != nil
+      @id_words_not_in_database_before.each do |id_word|
+        @words_not_in_database_before.push(Keyword.find(id_word))
+      end
+    end
+  end
+
+  def add_from_csv_keywords
+    id_words_project = params[:words_ids]
+    id_project =  params[:id]
+    id_words_in_database_before = params[:id_words_in_database_before]
+    id_synonyms_words_in_database_before = params[:id_synonyms_words_in_database_before]
+    id_words_not_in_database_before = params[:id_words_not_in_database_before]
+    id_synonyms_words_not_in_database_before = params[:id_synonyms_words_not_in_database_before]
+    if id_words_project != nil
+      counter = 0
+      while counter < id_words_project.size
+        index = id_words_in_database_before.index(id_words_project[counter])
+        if index == nil
+          index = id_words_not_in_database_before.index(id_words_project[counter])
+          id_synonym = id_synonyms_words_not_in_database_before[index]          
+        else
+          id_synonym = id_synonyms_words_in_database_before[index]
+        end
+        PreferedSynonym.add_keyword_and_synonym_to_project(id_synonym, id_words_project[counter], id_project)
+        counter = counter+1
+      end 
+    end
+    redirect_to action: "show", id: id_project
+  end
+
+  def upload
+    arr_of_arrs, message = parseCSV(params[:csvfile])
+    if message != 0
+      redirect_to action: "import_csv", id: params[:project_id], message: message
+    else
+      id_words_in_database_before = Array.new
+      id_synonyms_words_in_database_before = Array.new
+      id_words_not_in_database_before = Array.new
+      id_synonyms_words_not_in_database_before = Array.new
+      arr_of_arrs.each do |row|
+        keywrd = Keyword.find_by_name(row[0])
+        if keywrd != nil
+          if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
+            for i in 1..row.size
+              Synonym.record_synonym(row[i],keywrd.id)
+            end
+            for i in 1..row.size
+              synonm = Synonym.find_by_name(row[i], keywrd.id)
+              if synonm != nil
+                id_words_in_database_before.push(keywrd.id)
+                id_synonyms_words_in_database_before.push(synonm.id)
+                break
+              end
+            end
+          end
+        else
+          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
+          if @isSaved
+            if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
+              for i in 1..row.size
+                Synonym.record_synonym(row[i],keywrd.id)
+              end
+              for i in 1..row.size
+                synonm = Synonym.find_by_name(row[i], keywrd.id)
+                if synonm != nil
+                  id_words_not_in_database_before.push(keywrd.id)
+                  id_synonyms_words_not_in_database_before.push(synonm.id)
+                  break
+                end
+              end
+            end
+          end
+        end
+      end
+      if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
+        flash[:notice] = "There are no words to import to this project"
+        redirect_to action: "show", id: params[:project_id]
+      else
+        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
+     end
+    end
+  end
+
+  def import_csv
+    current_project = Project.find(params[:id])
+    @project_id = current_project.id
+    @message = params[:message]
   end
 end

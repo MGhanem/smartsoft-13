@@ -44,11 +44,12 @@ class Keyword < ActiveRecord::Base
   def listunapprovedkeywords
 
     return Keyword.where(approved: false).all
-
   end
 
     # adds a new keyword to the database
     # author:
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -58,8 +59,11 @@ class Keyword < ActiveRecord::Base
     # returns:
     #   success: the first return is true and the second is the saved keyword
     #   failure: the first return is false and the second is the unsaved keyword
+
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
-      keyword = self.new(:name => name, :approved => approved)
+      name.strip!
+      keyword = where(name: name).first_or_create
+      keyword.approved = approved
       if is_english != nil
         keyword.is_english = is_english
       else
@@ -130,7 +134,6 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -157,6 +160,18 @@ class Keyword < ActiveRecord::Base
     #   on failure: Empty array
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
     end
   end
 end
