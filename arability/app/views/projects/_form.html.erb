@@ -18,15 +18,16 @@
 
     <div class="field">
         <%= t(:name)%>
-        <%= f.text_field :name %>
+        <%= f.text_field :name, :placeholder=>t(:name) %>
     </div>
     <div class="field">
         <%= t(:categories)%>
-        <%= text_field_tag("project[categories]",@project.categories) %> 
+        <%= text_field_tag("project[categories]", @categories,:placeholder=>t(:enter_as_csv)) %> 
     </div><br>
     <div class="radio">
         <%= t(:formal)%>
         <%= f.radio_button :formal, 'Formal'%> 
+        <br>
         <%= t(:slang)%>
         <%= f.radio_button :formal, 'Slang' %>
         </br>

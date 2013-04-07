@@ -28,3 +28,5 @@ ar:
   delete: "مسح"
   word: "الكلمة"
   meaning: "المعنى"
+  help: "مساعدة"
+  enter_as_csv: "ادخل الكلمات منفصلة"

@@ -1,4 +1,4 @@
-  class ProjectsController < ApplicationController 
+  class ProjectsController < BackendController 
     def index
       if gamer_signed_in?
         @projects = Project.where(:owner_id => current_gamer.id)
@@ -50,6 +50,7 @@
   def create
     if gamer_signed_in?
       @project = Project.createproject(params[:project],current_gamer.id)
+      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
@@ -79,6 +80,7 @@
   def new
     if gamer_signed_in?
       @project = Project.new
+      @categories = @project.categories
       respond_to do |format|
         format.html
         format.json { render json: @project }
