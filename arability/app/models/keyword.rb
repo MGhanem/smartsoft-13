@@ -50,7 +50,7 @@ class Keyword < ActiveRecord::Base
         synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
       end
       synonym_list.uniq!
-      synonym_list = synonym_list.sort_by { |synonym, count| votes_count[synonym] }
+      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
         .reverse!
       synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
       synonym_list = synonym_list + synonyms_with_no_votes
