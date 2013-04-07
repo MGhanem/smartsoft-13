@@ -34,18 +34,22 @@ class Keyword < ActiveRecord::Base
       keyword_id = self.id
       filtered_data = Gamer
       filtered_data = filtered_data
-        .filter_by_country(country.downcase) unless country.blank?
+        .filter_by_country(country) unless country.blank?
       filtered_data = filtered_data
         .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
       filtered_data = filtered_data
-        .filter_by_gender(gender.downcase) unless gender.blank?
+        .filter_by_gender(gender) unless gender.blank?
       filtered_data = filtered_data
         .filter_by_education(education.downcase) unless education.blank?
       filtered_data = filtered_data.joins(:synonyms)
-      synonym_list = filtered_data
+      filtered_data = filtered_data
         .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
-      votes_count = synonym_list.count(:group => "synonyms.id")
-      synonym_list = synonym_list.sort_by { |synonym, count| vote_count }
+      votes_count = filtered_data.count(:group => "synonyms.id")
+      synonym_list = []
+      filtered_data.each do |gamer|
+        synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
+      end
+      synonym_list = synonym_list.sort_by { |synonym, count| votes_count[synonym] }
         .reverse!
       synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
       synonym_list = synonym_list + synonyms_with_no_votes
