@@ -1,6 +1,6 @@
 <style>
 .radio{
-    display:float;
+display:float;
 }
 </style>
 <div class = "container">
@@ -22,8 +22,8 @@
     </div>
     <div class="field">
         <%= f.label :categories %>
-        <%= text_field_tag("project[categories]",@project.categories) %> 
-    </div><br>
+        <%= text_field_tag("project[categories]",Project.printarray(@project.categories)) %> 
+    </div>
     <div class="radio">
         <%= f.radio_button :formal, 'Formal'%> 
         <%= label :formal, 'Formal' %>
@@ -32,22 +32,18 @@
         <br>
     </div>
     <div class="field">
-        <div class="field">Age Target</div></br>
+        <div class="field">Age Target</div>
         <%= f.label "From" %>
-       <%= f.text_field :minAge %>
+        <%= f.text_field :minAge %>
         <%= f.label "To" %>
-        <%= f.text_field :maxAge %> 
-        <!-- <form class="form-inline">
-          <input type="text" class="input-small" placeholder="From" value="<%= @minAge %>">
-          <input type="text" class="input-small" placeholder="To" value="<%= @maxAge %>">
-      </form> -->
-  </div>
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-</div>
-<div class="actions">
-    <%= f.submit %>
-</div>
+        <%= f.text_field :maxAge %>
+    </div>
+    <div class="field">
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+    </div>
+    <div class="actions">
+        <%= f.submit %>
+    </div>
 </div>
 <% end %>
