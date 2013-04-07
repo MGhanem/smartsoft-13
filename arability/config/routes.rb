@@ -43,6 +43,9 @@ Arability::Application.routes.draw do
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
+
+  match '/projects/add_word' => "projects#add_word"
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,7 +1,7 @@
 
-<%= link_to 'Import CSV file', import_csv_project_path %>
 <div class="container" border="1"> 
 	<h3>Project: <%=@project.name %></h3><br>
+	<!-- <h1><%=@project.id%></h1> -->
 		<div class="container well">
 			<div class="btn-toolbar" style="margin: 0;">
 				<div class="btn-group">
@@ -18,7 +18,7 @@
 				</div>
 				<div class="btn-group">
 					<!-- <button class="btn"><i class="icon-plus-sign"></i> Add words <span></span></button> -->
-					<%= button_to "Add words", action: "search",controller: "search", :project_id => @project.id %>
+					<%= button_to "Add words", action: "search", controller: "search", :project_id => @project.id %>
 					
 				</div>
 				<div class="btn-group">
