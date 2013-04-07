@@ -67,7 +67,8 @@ Arability::Application.routes.draw do
     end
   end
   
-  
+  get "games/getprizes"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

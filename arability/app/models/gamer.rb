@@ -33,6 +33,22 @@ class Gamer < ActiveRecord::Base
   validates :gender , :presence => true  
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
+  
+
+  def receive_prize(prize_id)
+    prize = Prize.find(prize_id)
+    
+    if prize == nil
+      return false
+    end
+    
+    if self.prizes.include? prize
+      return false
+    else
+      self.prizes << prize
+      return true
+    end
+  end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
