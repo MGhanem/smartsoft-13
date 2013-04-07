@@ -1,0 +1,29 @@
+<section id="deviseauth">
+    <h2>Authentication Services - Setting</h2>
+
+    <div id="currservices">
+        <h3>The following <%= @services.count == 1 ? 'account is' : 'accounts are' %> connected with your local account at CommunityGuides:</h3>
+    
+        <% @services.each do |service| %>  
+          <div class="services_used">  
+              <%= image_tag "#{service.provider}_64.png", :size => "64x64" %>
+              <div class = "user">
+                <div class="line1">Name: <%= service.uname %> (ID: <%= service.uid %>)</div>  
+                <div class="line2">Email: <%= service.uemail != '' ? service.uemail : 'not set' %></div>
+                <div class="line3">
+                    <% @services.count == 1 ? @msg = 'Removing the last account linked might lock you out of your account if you do not know the email/password sign-in of your local account!' : @msg = '' %>
+                    <%= link_to "Remove this service", service, :confirm => 'Are you sure you want to remove this authentication service? ' + @msg, :method => :delete, :class => "remove" %>
+                </div>
+              </div>
+          </div>  
+        <% end %>
+    </div>
+
+    <div id="availableservices">
+        <h3>You can connect more services to your account:</h3>
+        <div id="services">
+            <a href="/auth/google" class="services"><%= image_tag "google_64.png", :size => "64x64",  :alt => "Google" %>Google</a>
+        </div>
+        <h4>If you signed-up for CommunityGuides via an authentication service a random password has been set for the local password. You can request a new password using the "Forgot your Password?" link on the sign-in page.</h4>
+    </div>  
+</section>
