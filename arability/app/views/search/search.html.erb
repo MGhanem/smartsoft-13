@@ -45,7 +45,7 @@
 	<div class="well">
 		<span>
 			<%= t(:keyword_not_found) %>
-			<%= link_to t(:add_word), "add_path" %>
+			<%= link_to t(:add_word), keywords_create_path(:name => @search_keyword, :redirect_url => search_url)%>
 		</span>
 	</div>
 <% end %>
