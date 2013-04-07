@@ -179,6 +179,7 @@ function dropAblockCont(clss, btn, randNum, counter){
 
 						setTimeout(function(){$('tr').fadeIn('slow');
 							$('tr').empty();
+
 						}, 500);
 						return;
 					}
@@ -676,7 +677,6 @@ function setLang(l){
 		
 		newGame();
 	}, 1100);
-}
 
 function calculateScore(){
 	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
