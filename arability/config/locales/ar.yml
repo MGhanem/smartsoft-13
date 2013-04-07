@@ -58,8 +58,4 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
-    models:
-      gamer:
-        attributes:
-          password: " ثتمبنير"            
+              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"          
