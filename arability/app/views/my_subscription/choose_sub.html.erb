@@ -1,0 +1,14 @@
+<h2>Register as developer Step2: choose your subscription model</h2>
+<%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "pick" }) do |f| %>
+<% @all_subscription_models.each do |sm| %>
+	<%#= radio_button_tag "subs", sm.id, %>
+	<%if(@developer.my_subscription)
+		selected_sub_id = @developer.my_subscription.subscription_models_id
+	else
+		selected_sub_id = 1
+	end%>
+	
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %></p>
+<% end %>
+<%= submit_tag "select subscriptions"%>
+<% end %>
