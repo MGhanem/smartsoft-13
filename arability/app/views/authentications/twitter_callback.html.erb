@@ -1,0 +1,15 @@
+<h2 align="right">الخاص بك Twitter الخطوة الثالثة: تواصل مع</h2>
+<br>
+<div align="right">
+    <div>
+        <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+        <%= link_to "Twitter إلغاء الاتصال مع", "/authentications/remove_twitter_connection" %>
+        <!--<button class="btn btn-link" type="button" action="remove_twitter_connection">Twitter إلغاء الاتصال مع</button>
+        <%= current_gamer%>
+        <%= gamer_signed_in? %>-->
+       <% gamer = Authentication.find_by_gamer_id(current_gamer) %>
+       <%= gamer.gid %>
+    </div>
+    <br>
+    <%= link_to "إنتهاء", "" %>
+</div>

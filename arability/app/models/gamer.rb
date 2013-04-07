@@ -17,7 +17,7 @@ class Gamer < ActiveRecord::Base
   validates :education_level, :presence => true, :length => { :minimum => 2 }
   validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i,:message => "can't be except low, medium or high" }
 
-  
+  has_many :authentications
 
 
 end

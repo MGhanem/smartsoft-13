@@ -27,6 +27,10 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
+  get "authentications/twitter"
+
+  get "authentications/remove_twitter_connection"
+
   resources :projects
   post "keywords/create"
 
@@ -37,7 +41,7 @@ Arability::Application.routes.draw do
 
   match 'search' => 'search#search'
 
-  match '/auth/:twitter/callback', :to => 'social#twitter'
+  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
