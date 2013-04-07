@@ -14,4 +14,3 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require nicescroll
-//= require game

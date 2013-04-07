@@ -1,33 +1,38 @@
-var award_zone = '<div class="award-zone" id="award-list"></div>';
-var won_prizes = '<h1 class="award-type">الجوائز التي تم الحصول عليها</h1>';
-var not_won_prizes = '<h1 class="award-type">الجوائز التي بإمكانك الحصول عليه </h1>';
-$("#zone").append($(award_zone));
-
-$("#award-list").append($(won_prizes));
-
-<% won_prizes = current_gamer.get_won_prizes %>
-
-<% if won_prizes.length == 0 %>
-    prize_error = '<div class="award-desc-unlocked">لم تربح أي جوائز حت الآن</div>';
-    $("#award-list").append($(prize_error));
+<% if !gamer_signed_in? %>
+    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات</h1>';
+    $("#zone").append($(error));
 <% else %>
-  <% won_prizes.each do |wp| %>
-    prize = '<div class="award-desc-unlocked"><%= wp.name %></div>';
-    $("#award-list").append($(prize));
+
+  var award_zone = '<div class="award-zone" id="award-list"></div>';
+  var won_prizes = '<h1 class="award-type">الجوائز التي تم الحصول عليها</h1>';
+  var not_won_prizes = '<h1 class="award-type">الجوائز التي بإمكانك الحصول عليه </h1>';
+  $("#zone").append($(award_zone));
+
+  $("#award-list").append($(won_prizes));
+
+  <% won_prizes = current_gamer.get_won_prizes %>
+
+  <% if won_prizes.length == 0 %>
+      prize_error = '<div class="award-desc-unlocked">لم تربح أي جوائز حت الآن</div>';
+      $("#award-list").append($(prize_error));
+  <% else %>
+    <% won_prizes.each do |wp| %>
+      prize = '<div class="award-desc-unlocked"><%= wp.name %></div>';
+      $("#award-list").append($(prize));
+    <% end %>
+  <% end %>
+
+  $("#award-list").append($(not_won_prizes));
+
+  <% not_won_prizes = current_gamer.get_available_prizes %>
+
+  <% if not_won_prizes.length == 0 %>
+      prize_error = '<div class="award-desc-locked">لقد ربحت كل الجوائز </div>';
+      $("#award-list").append($(prize_error));
+  <% else %>
+      <% not_won_prizes.each do |nwp| %>
+          prize = '<div class="award-desc-locked"><%= nwp.name %></div>';
+          $("#award-list").append($(prize));
+      <% end %>
   <% end %>
 <% end %>
-
-$("#award-list").append($(not_won_prizes));
-
-<% not_won_prizes = current_gamer.get_available_prizes %>
-
-<% if not_won_prizes.length == 0 %>
-    prize_error = '<div class="award-desc-locked">لقد ربحت كل الجوائز </div>';
-    $("#award-list").append($(prize_error));
-<% else %>
-    <% not_won_prizes.each do |nwp| %>
-        prize = '<div class="award-desc-locked"><%= nwp.name %></div>';
-        $("#award-list").append($(prize));
-    <% end %>
-<% end %>
-

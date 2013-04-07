@@ -4,7 +4,7 @@
     <div class="nav-box">
       الرتبة
     </div>
-    <div class="nav-box">
+    <div class="nav-box" onclick="showPrizes()">
       جوائز
   </div>
     <div class="nav-box">
@@ -24,3 +24,12 @@
 
   </div>
 </div>
+<script type="text/javascript" charset="utf-8">
+  function clear() {
+    $("#zone").empty();
+  }
+  function showPrizes() {
+    clear();
+    $.get("/games/showprizes"); 
+  }
+</script>
