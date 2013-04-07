@@ -94,9 +94,41 @@
 						</div>
 					</div>
 				</div>
-				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
+				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<!-- add charts here -->
+						<% if Vote.where('synonym_id=?', synonym.id).exists? %>
+				    <div class="container-fluid">
+              <div class="row-fluide">
+                <div class="span2">
+                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %> 
+                </div>
+                <div class="span2">
+                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+             </div>
+		        </div>
+		        <% else %>
+		        <%= t(:stats_no_votes) %>
+		        <% end %>
 					</div>
 				</div>
 			</div>

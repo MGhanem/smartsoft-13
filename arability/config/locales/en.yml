@@ -24,4 +24,5 @@ en:
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
+  stats_no_votes: "Sorry! this synonym has no votes yet!"
 
