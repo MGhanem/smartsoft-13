@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require highcharts
 //= require game
+//= require bootstrap
+

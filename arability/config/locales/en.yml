@@ -53,3 +53,13 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
+  no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
+  follow_word: "Follow word"
+  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
+  add_word: "Add Keyword"
+  stats_gender: "Gender Statistics"
+  stats_country: "Country Statistics"
+  stats_age: "Age Statistics"
+  stats_education: "Education Statistics"
+  stats_no_votes: "Sorry! this synonym has no votes yet!"
+
