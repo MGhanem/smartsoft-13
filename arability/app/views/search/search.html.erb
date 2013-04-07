@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="span12">
-		<legend><%= t(:search)%></legend>
 		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
@@ -42,14 +41,23 @@
 	</div>
 </div>
 
-	<% if @no_synonyms_found %>
-		<div class="well">
-			<span>
-				<%= t(:no_synonyms_found) %>
-				<%= link_to t(:follow_word), "follow_path" %>
-			</span>
-		</div>
-	<% end %>
+<% if @display_add %>
+	<div class="well">
+		<span>
+			<%= t(:keyword_not_found) %>
+			<%= link_to t(:add_word), "add_path" %>
+		</span>
+	</div>
+<% end %>
+
+<% if @no_synonyms_found %>
+	<div class="well">
+		<span>
+			<%= t(:no_synonyms_found) %>
+			<%= link_to t(:follow_word), "follow_path" %>
+		</span>
+	</div>
+<% end %>
 
 <% if !@synonyms.blank? %>
 	<div class="accordion-group">

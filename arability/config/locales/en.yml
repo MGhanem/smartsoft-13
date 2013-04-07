@@ -18,6 +18,8 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
-  no_synonyms_found: "Sorry! We couldn't find the search keyword in our database. "
+  no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
+  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
+  add_word: "Add Keyword"
 
