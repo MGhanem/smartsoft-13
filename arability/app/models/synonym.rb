@@ -3,32 +3,9 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
   has_many :votes
-  # validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-  #   :message => "ﺔﻴﺑﺮﻌﻟا ﺔﻐﻠﻟﺎﺑ ﺲﻴﻟ ﻰﻨﻌﻤﻟا اﺬﻫ"
-    
-  # Author:
-  #   Nourhan Mohamed
-  # Description:
-  #   gets the vote count for a certain synonym
-  # Parameters:
-  #   filter: optional parameter used for vote count filtering
-  # Success:
-  #   returns vote count for the given synonym
-  # Failure:
-  #   returns -1 if the synonym or the keyword to which the synonym belongs
-  #   is not approved
-    def get_votes(filter = [])
-      if(filter.blank?)
-        keyword_model = Keyword.find(self.keyword_id)
-        if(self.approved && keyword_model.approved)
-          return Synonym.joins(:votes).where(:id => self.id).count
-        else
-          return -1
-        end
-      # else
-        #Handling filters reside here
-      end
-    end
+
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
+    :message => "ﺔﻴﺑﺮﻌﻟا ﺔﻐﻠﻟﺎﺑ ﺲﻴﻟ ﻰﻨﻌﻤﻟا اﺬﻫ"
 
   class << self
     include StringHelper
@@ -83,34 +60,6 @@ class Synonym < ActiveRecord::Base
           synonym.approved = true
           return synonym.save
         end
-      end
-
-    # Author: 
-    #   Nourhan Mohamed
-    # Description:
-    #   retrieved approved synonyms for a given keyword
-    # Parameters:
-    #   keyword: a string representing the keyword for which the synonyms will
-    #     be retrieved
-    # Success:
-    #   returns a list of synonyms for the passed keyword
-    # Failure:
-    #   returns an empty list if the keyword doesn't exist or if no approved
-    #   synonyms where found for the keyword  
-      def retrieve_synonyms(keyword)
-        if(is_english_string(keyword))
-          keyword.downcase!
-        end
-        keyword_model = Keyword.where(:name => keyword, :approved => true)
-        if(!keyword_model.exists?)
-          return []
-        end
-        keyword_id = keyword_model.first.id
-        synonym_list = Synonym
-          .where(:keyword_id => keyword_id, :approved => true)
-        synonym_list = synonym_list.sort_by { |synonym| synonym.get_votes }
-          .reverse!
-        return synonym_list
       end
   end
 end
