@@ -11,31 +11,35 @@ class Gamer < ActiveRecord::Base
          # :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, 
+  attr_accessible :email, :password, :password_confirmation, :remember_me,:gender, 
                   :username, :country, :education_level, :date_of_birth
 
   has_many :services, :dependent => :destroy
                   
 
+  validates :gender , :presence => true
+                  
   validates :username, :presence => true, :length => { :minimum => 3 }
   
+  #author: kareem ali
   def self.check
     if I18n.locale==:ar
-      return "انت غبي؟"
+      return "اسم المستخدم يجب ان يكون مكون من حروف انجليزية فقط."
     else
-      return "Kareem"
+      return "username must be made up characters only. "
     end
   end
+
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
+  # validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
+  #   :message => "can't be anything except letters." }
 
-  validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i }
+  validates :education_level, :format => { :with => /\A^(low|medium|high|منخفض|متوسط|عالي)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
