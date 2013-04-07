@@ -1,3 +1,4 @@
+<!-- a=["3|4","1|2"].map {|x| x.split("|")} -->
 <div class="container">
 <h3>اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع </h3>
 <h6 style="color:red;">تبقى لك عدد 2 كلمة</h6>
@@ -16,9 +17,10 @@
   <% counter_syn = 0 %>
   <% size = @words_in_database_before.size %>
   <%while counter < size %> 
-    <%word = @words_in_database_before[counter]%> 
+    <%word = @words_in_database_before[counter]%>
+    <%prefred_syn = @id_first_synonyms_words_in_database_before[counter]  %> 
     <tr>
-    <td><%= check_box_tag "words_ids[]", word.id %></td>
+    <td><%= check_box_tag "words_ids[]", "#{word.id}|#{prefred_syn}" %></td>
     <td><%= word.name %></td>
     <td>
       <% num_syns = @num_synonyms_words_in_database_before[counter].to_i %>
@@ -52,9 +54,10 @@
   <% counter_syn = 0 %>
   <% size = @words_not_in_database_before.size %>
   <%while counter < size %> 
-    <%word = @words_not_in_database_before[counter]%> 
+    <%word = @words_not_in_database_before[counter]%>
+    <%prefred_syn = @id_first_synonyms_words_not_in_database_before[counter]  %> 
     <tr>
-    <td><%= check_box_tag "words_ids[]", word.id %></td>
+    <td><%= check_box_tag "words_ids[]", "#{word.id}|#{prefred_syn}" %></td>
     <td><%= word.name %><span style="color:red;">*new*</span></td>
     <td>
       <% num_syns = @num_synonyms_words_not_in_database_before[counter].to_i %>

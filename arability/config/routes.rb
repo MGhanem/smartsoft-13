@@ -64,7 +64,7 @@ Arability::Application.routes.draw do
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
-      
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
       get "keywords/new"
 
@@ -81,7 +81,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-    post "projects/upload"
+
   end
   
   

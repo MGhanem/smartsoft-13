@@ -1,6 +1,6 @@
 <h1>استيراد ملف CSV</h1>
 
-<form action="/projects/upload" enctype="multipart/form-data" method="POST">
+<form action="<%= upload_csv_project_path %>" enctype="multipart/form-data" method="POST">
   <input type="file" id="csvfile" name="csvfile">
   <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
   <input type="hidden" value="<%= @project_id %>" name="project_id">
