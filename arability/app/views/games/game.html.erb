@@ -41,8 +41,8 @@
       
     </div>
   </div>
-  <div class="zone">
 
+  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
     <div class="divaya">
       <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
@@ -69,3 +69,17 @@
 </div>
 
 
+    
+<script type="text/javascript" charset="utf-8">
+  function clear() {
+    $("#zone").empty();
+  }
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getScore() {
+    return 123456;
+  }
+</script>
