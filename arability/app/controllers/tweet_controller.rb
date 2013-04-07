@@ -1,6 +1,6 @@
 class TweetController < ApplicationController
 
-def tweet_score
+def tweet_invitation
 	#@varName = params[:incomming]
 end
 

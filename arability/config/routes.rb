@@ -34,7 +34,7 @@ Arability::Application.routes.draw do
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
-  match '/tweet/tweet_score' => "tweet#tweet_score"
+  match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
 
   match 'search' => 'search#search'
 
