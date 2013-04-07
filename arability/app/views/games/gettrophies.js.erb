@@ -11,7 +11,7 @@
     <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
     <% if won_trophies.length == 0 %>
-        success = '<h1 class="award-title">لقد ربحت كل الجوائز لهذه المرحلة </h1>';
+        success = '<h1 class="award-title">لقد انهيت كل الانجازات لهذه المرحلة</h1>';
     <% else %>
         <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
         success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
