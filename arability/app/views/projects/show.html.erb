@@ -49,7 +49,13 @@
 			<table class="table table-hover table-bordered table-condensed"style="width:940px;background-color:white">
 				<col style="width:25%">
         		<col style="width:75%">
-        		
+        		<% count=0 %>
+        		<% while count<@words.size %>
+        		<tr>
+					<td style="text-align:center"><%= @words[count].name %></td>
+					<td style="text-align:center"><%= @synonyms[count].name %></td>
+					<% count = count+1 %>
+				</tr>
 			</table>
 		</div>
 	</form>

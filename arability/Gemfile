@@ -9,8 +9,6 @@ gem 'sqlite3'
 
 gem 'omniauth'
 
-gem "oa-openid"
-
 # gem 'omniauth-google-oauth2'
 
 # Gems required for automated documentation
