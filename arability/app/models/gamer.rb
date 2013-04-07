@@ -1,11 +1,14 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
-  
+
   has_and_belongs_to_many :prizes
   has_and_belongs_to_many :trophies
+  has_many :votes
+  has_many :synonyms, :through => :votes
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          # :omniauthable, :omniauth_providers => [:google_oauth2]
@@ -41,8 +44,6 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
   has_many :services, :dependent => :destroy
-  has_many :synonyms, :through => :votes
-  has_many :votes
 
   #Author: Kareem ALi
   #This method is used to select a synonym 
