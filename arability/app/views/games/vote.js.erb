@@ -33,8 +33,10 @@ vote_form.push('<% if i%2==1 %><div class="btn-group" id="synonym_buttons_row"><
 vote_form.push('<% if syn.approved %>');
 vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn.id %>)"><%= syn.name %></button>');
 vote_form.push('<% end %>');
+vote_form.push('<% if syn.approved %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
+vote_form.push('<% end %>');
 vote_form.push('<% end %>');
 vote_form.push('</br><div class="span6">');
 vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button">سجل هذا المعني</button>');
