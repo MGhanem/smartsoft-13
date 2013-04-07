@@ -40,7 +40,26 @@ ar:
   new_project: "مشروع جديد"
   back: "عودة"
   edit_project: "تعديل المشروع"
-
+  gender: "النوع"
+  gamer: "اللاعب"
   errors:
     messages:
       not_saved:
+        one: "خطأ واحد منع التسجيل:"
+        other: "%{count} اخطآء منعت من التسجيل:"
+  devise:
+    registrations:
+      gamer:
+        signed_up: "تم التسجيل بنجاح"
+
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+    models:
+      gamer:
+        attributes:
+          password: " ثتمبنير"            
