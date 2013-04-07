@@ -1,27 +1,14 @@
-class ProjectsController < ApplicationController
- # author:Noha hesham
- # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the 
- #   project is successfully deleted 
- # failure:
- #   project is not deleted
-  def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
-    end
-  end
 
-  # GET /projects
-  # GET /projects.json
-  
+class ProjectsController < ApplicationController
+  # class ProjectsController < BackendController 
+  #   def index
+  #     if gamer_signed_in?
+  #       @projects = Project.where(:owner_id => current_gamer.id)
+  #     else
+  #       flash[:error] = "You are not authorized to view this page"
+  #       render 'pages/home'
+  #     end
+  #   end
 
   # author: 
   #   Mohamed Tamer 
@@ -52,22 +39,6 @@ class ProjectsController < ApplicationController
   	end
 
   end
-  # def index
-  #   if current_gamer != nil 
-  #     developer = Developer.where(:gamer_id => current_gamer.id).first
-  #     if developer != nil
-  #       @my_projects = Project.where(:owner_id => developer.id)
-  #       # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
-  #      # @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
-  #     else
-  #       flash[:notice] = "Please sign up as a developer first"
-  #       render 'developers/new'
-  #     end
-  #   else
-  #     flash[:notice] = "Please sign in"
-  #     render 'pages/home'
-  #   end  
-  # end
 
 
   # author:
@@ -86,6 +57,7 @@ class ProjectsController < ApplicationController
   def create
     if gamer_signed_in?
       @project = Project.createproject(params[:project],current_gamer.id)
+      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
@@ -115,6 +87,7 @@ class ProjectsController < ApplicationController
   def new
     if gamer_signed_in?
       @project = Project.new
+      @categories = @project.categories
       respond_to do |format|
         format.html
         format.json { render json: @project }
@@ -151,6 +124,8 @@ class ProjectsController < ApplicationController
     end
     render "projects/share"
   end
+
+
   def remove_developer_from_project
     dev = Developer.find(params[:dev_id])
     project = Project.find(params[:project_id])
@@ -236,5 +211,24 @@ def show
     flash[:error] = "You are not authorized to view this page"
   end
 end
-end
 
+ # author:Noha hesham
+ # Description:
+ #   finds the project by its id then destroys it
+ # params:
+ #   none
+ # success:
+ #   a pop up appears and makes sure the user wants to
+ #   delete the project by choosing ok the 
+ #   project is successfully deleted 
+ # failure:
+ #   project is not deleted
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to projects_url }
+      format.json { head :no_content }
+end
+end
+end
