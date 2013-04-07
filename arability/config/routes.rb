@@ -12,7 +12,7 @@ Arability::Application.routes.draw do
   post "admin/login"
   post "admin/wordadd"
   
-  resources :projects
+  
   match "projects/share/:id" => "projects#share"
   match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :post
 
@@ -34,7 +34,7 @@ Arability::Application.routes.draw do
 
   get "keywords/suggest_add"
 
-  resources :projects
+  
   post "keywords/create"
 
   match '/developers/new' => "developer#new"

@@ -72,19 +72,17 @@ class MySubscriptionController < ApplicationController
 
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
-    @developer = Developer.first#for testing
+    @developer = Developer.find_by_gamer_id(current_gamer.id)
+    # @developer = Developer.first#for testing
   end
 
   def pick
-    #recieve parameters
     @all_subscription_models = SubscriptionModel.all
-    @developer = Developer.first#for testing
+    @developer = Developer.find_by_gamer_id(current_gamer.id)
+    # @developer = Developer.first#for testing
     sub_id = params[:my_subscription]
     dev_id = @developer.id
-    # we need this to be the action for a form
-    # and to make this form we need another method with an equiv view to render 
-    # it so lets call this choose_sub
-    
+  
     if MySubscription.choose(dev_id,sub_id)
       flash[:notice] = "You have successfully chosen your subscription model"
         redirect_to root_url
@@ -93,10 +91,4 @@ class MySubscriptionController < ApplicationController
       render 'my_subscription/choose_sub'
     end
   end
-
-  #private 
-
-  #def prepare_subscriptions
-    #@all_subscription_models = SubscriptionModel.all
-  #end
 end
