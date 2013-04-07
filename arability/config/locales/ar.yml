@@ -62,6 +62,8 @@ ar:
   gender: "النوع"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
+  follow_word: "تابع الكلمة"
   errors:
     messages:
       not_saved:
@@ -78,3 +80,5 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+
+  

@@ -42,7 +42,16 @@
 	</div>
 </div>
 
-<% if !@synonyms.blank?%>
+	<% if @no_synonyms_found %>
+		<div class="well">
+			<span>
+				<%= t(:no_synonyms_found) %>
+				<%= link_to t(:follow_word), "follow_path" %>
+			</span>
+		</div>
+	<% end %>
+
+<% if !@synonyms.blank? %>
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
@@ -59,6 +68,7 @@
 			</div>
 		</div>
 	</div>
+
 	<% @synonyms.each do |synonym|%>
 		<div class="accordion-group">
 			<div class="accordion-heading">

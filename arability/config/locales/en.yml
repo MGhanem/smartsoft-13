@@ -53,3 +53,6 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
+
+  no_synonyms_found: "Sorry! We couldn't find the search keyword in our database. "
+  follow_word: "Follow word"
