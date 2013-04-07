@@ -236,5 +236,5 @@ def show
     flash[:error] = "You are not authorized to view this page"
   end
 end
-
+end
 
