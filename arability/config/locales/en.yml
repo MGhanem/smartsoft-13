@@ -12,4 +12,10 @@ en:
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
   add_to_project: "Add to project"
+  votes: "votes"
+  filer: "Filter results"
+  country: "Country"
+  age_from: "Age from:"
+  age_to: "Age to:"
+  gender: "Gender"
 
