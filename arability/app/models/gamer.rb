@@ -30,8 +30,6 @@ class Gamer < ActiveRecord::Base
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }
   validates :country, :presence => true, :length => { :minimum => 2 }
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
   validates :education_level, :format => { :with => /\A^(low|medium|high|منخفض|متوسط|عالي)\Z/i }
   validates :gender , :presence => true  
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
