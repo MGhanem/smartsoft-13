@@ -17,8 +17,7 @@ class ProjectsController < BackendController
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
-        @projects = Project.where(:owner_id => developer.id)
-        @shared_projects = Developer.find(developer.id).projects_shared
+        @my_projects = Project.where(:owner_id => developer.id)
       else
         flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'
@@ -209,28 +208,25 @@ end
 
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
-    id_project =  params[:id]
+    project_id =  params[:id]
     if id_words_project != nil
-      words_synonyms_array=[id_words_project].map {|x| x.split("|")}
-      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.
-      counter = 0
-      # while counter < id_words_project.size
-      #   index = id_words_in_database_before.index(id_words_project[counter])
-      #   if index == nil
-      #     index = id_words_not_in_database_before.index(id_words_project[counter])
-      #     id_synonym = id_synonyms_words_not_in_database_before[index]          
-      #   else
-      #     id_synonym = id_synonyms_words_in_database_before[index]
-      #   end
-      #   PreferedSynonym.add_keyword_and_synonym_to_project(id_synonym, id_words_project[counter], id_project)
-      #   counter = counter+1
-      # end 
+      words_synonyms_array = [id_words_project].map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+        flash[:notice] = "كن أكثر ذكاء من ذلك"
+      else
+        words_synonyms_array.each do |word_syn|
+          if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+
+          end
+        end
+      end
     end
-    redirect_to action: "show", id: id_project
+    redirect_to action: "show", id: project_id
   end
 
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
+    project_id =  params[:id]
     if message != 0
       if message == 1
         flash[:notice] = "أنت لم تقم بإختيار ملف"
@@ -244,7 +240,7 @@ end
       if message == 4
         flash[:notice] = "هذا الملف ليس CSV"
       end
-      redirect_to action: "import_csv", id: params[:project_id]
+      redirect_to action: "import_csv", id: project_id
     else
       @id_words_in_database_before = Array.new
       @id_synonyms_words_in_database_before = Array.new
@@ -255,7 +251,7 @@ end
       arr_of_arrs.each do |row|
         keywrd = Keyword.find_by_name(row[0])
         if keywrd != nil
-          if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
+          if !PreferedSynonym.find_word_in_project(project_id, keywrd.id)
             for i in 1..row.size
               Synonym.record_synonym(row[i],keywrd.id)
             end
@@ -275,7 +271,7 @@ end
         else
           @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
           if @isSaved
-            if !PreferedSynonym.find_word_in_project(params[:project_id], keywrd.id)
+            if !PreferedSynonym.find_word_in_project(project_id, keywrd.id)
               for i in 1..row.size
                 Synonym.record_synonym(row[i],keywrd.id)
               end
@@ -297,7 +293,7 @@ end
       end
       if @id_words_in_database_before.empty? and @id_words_not_in_database_before.empty?
         flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
-        redirect_to action: "show", id: params[:project_id]
+        redirect_to action: "show", id: project_id
       else
         if  Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
           @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i

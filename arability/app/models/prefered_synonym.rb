@@ -7,11 +7,13 @@ class PreferedSynonym < ActiveRecord::Base
   # attr_accessible :title, :body
   class << self
   	def add_keyword_and_synonym_to_project(synonym_id, keyword_id, project_id)
-  		entry = PreferedSynonym.new
-  		entry.project_id = project_id
-  		entry.synonym_id = synonym_id
-  		entry.keyword_id = keyword_id
-  		return entry.save
+      if Keyword.find(keyword_id) != nil and Synonym.find(synonym_id) != nil
+        entry = PreferedSynonym.new
+        entry.project_id = project_id
+        entry.synonym_id = synonym_id
+        entry.keyword_id = keyword_id
+        return entry.save
+      end
   	end
 
     def find_word_in_project(project_id, keyword_id)
