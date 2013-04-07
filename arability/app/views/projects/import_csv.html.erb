@@ -1,0 +1,14 @@
+<h1>استيراد ملف CSV</h1>
+
+<form action="/projects/upload" enctype="multipart/form-data" method="POST">
+  <input type="file" id="csvfile" name="csvfile">
+  <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+  <input type="hidden" value="<%= @project_id %>" name="project_id">
+  <input type="submit" class="btn btn-success" value="Upload">
+</form>
+<p>لتحميل ملف CSV:</br></p>
+<ol>
+	<li>الكلمات التي بها أرقام لن تقبل</li>
+	<li>المعاني الغير عربية لن تقبل </li>
+	<li>الملفات يجب ان تكون بـبتقنية UTF-8</li>
+</ol>

@@ -9,7 +9,10 @@ Arability::Application.routes.draw do
     get "admin/index"
 
     get "admin/login"
+    
     get "admin/logout"
+  
+    post "admin/wordadd"
 
     post "admin/login"
 
@@ -18,10 +21,13 @@ Arability::Application.routes.draw do
     post "admin/upload"
 
     post "admin/addword"
+    
     post "admin/addtrophy"
+    
     post "admin/addprize"
 
     get "admin/deletetrophy"
+    
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
@@ -52,11 +58,21 @@ Arability::Application.routes.draw do
 
       match "followed" => "follow#list_followed", :as => "list_followed_words"
 
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
+      
+
       get "keywords/new"
 
 			post "keywords/create"
 
       get "keywords/suggest_add"
+
+      match "keywords" => "keywords#viewall"
 
 			match 'search' => 'search#search'
 
@@ -65,6 +81,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
+    post "projects/upload"
   end
   
   

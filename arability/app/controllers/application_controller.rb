@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
       wasSaved, keywrd = Keyword.add_keyword_to_database(row[0])
       if wasSaved
         for index in 1..row.size
-          Synonym.recordsynonym(row[index], keywrd.id)
+          Synonym.record_synonym(row[index], keywrd.id)
         end
       end
     end
