@@ -1,10 +1,18 @@
+<% if I18n.locale==:en %>
+
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
+<% else I18n.locale==:ar %>
+
+<em><h3 class="text-info">تغيير البيانات</h3></em>
+<% end %>
 
 <div class="well">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
   <% if resource.errors.any? %>
   <div class="alert"><%= devise_error_messages! %></div>
   <% end %>
+
+  <% if I18n.locale==:en %>
 
   <div class="container">
   <div class="control-group"><%= f.label :username, :class => "control-label" %>
@@ -37,5 +45,38 @@
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
 </div>
+    <% else I18n.locale==:ar %>
+
+    <div class="container">
+  <div class="control-group"><%= f.label t(:username), :class => "control-label" %>
+  <%= f.text_field :username, :placeholder => "اسم المستخدم", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
+  <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
+  <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
+
+  <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
+
+            <div><%= f.label t(:country), :class => "control-label" %>
+                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
+                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                {:style => "margin-left: 10px;" }) %>
+                 </div></br>
+
+  <div><%= f.label t(:education_level), :class => "control-label" %>
+    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+  <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
+<% end %>
 <% end %>

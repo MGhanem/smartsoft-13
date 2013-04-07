@@ -2,6 +2,7 @@ ar:
   arability: "عربيليتي"
   sign_up: "إنشاء حساب"
   sign_in: "تسجيل الدخول"
+  sign_out: "تسجيل خروج"
   english: "الإنجليزية"
   arabic: "العربية"
   email: "البريد الالكتروني"
@@ -47,6 +48,7 @@ ar:
   age_to: "السن الي"
   gender: "النوع"
   gamer: "اللاعب"
+  current_password: "كلمة السر الحالية"
   errors:
     messages:
       not_saved:
