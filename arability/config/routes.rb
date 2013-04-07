@@ -37,16 +37,14 @@ Arability::Application.routes.draw do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
-
- 
-
     scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
+
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
 			resources :projects
-			
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -62,15 +60,10 @@ Arability::Application.routes.draw do
 
 			match 'search' => 'search#search'
 
-      
-
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
-
-  
-
     end
   end
   
