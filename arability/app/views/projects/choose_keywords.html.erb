@@ -1,5 +1,6 @@
 <div class="container">
 <h3>اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع </h3>
+<h6 style="color:red;">تبقى لك عدد 2 كلمة</h6>
 <%= form_tag add_from_csv_keywords_project_path, :method => :put, :id => 'form_to_select_words' do %>
   <input type="hidden" value="<%= @id_words_in_database_before %>" name="id_words_in_database_before">
   <input type="hidden" value="<%= @id_first_synonyms_words_in_database_before %>" name="id_synonyms_words_in_database_before">

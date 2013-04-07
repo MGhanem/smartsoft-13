@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
@@ -20,11 +21,11 @@ class ProjectsController < BackendController
         # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
         @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
       else
-        # flash[:notice] = "من فضلك سجل كمطور"
+        flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'
       end
     else
-      # flash[:notice] = "من فضلك قم بالدخول"
+      flash[:notice] = "من فضلك قم بالدخول"
       render 'pages/home'
     end  
   end
@@ -153,16 +154,16 @@ class ProjectsController < BackendController
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
       if message == 1
-        # flash[:notice] = "أنت لم تقم بإختيار ملف"
+        flash[:notice] = "أنت لم تقم بإختيار ملف"
       end
       if message == 2
-        # flash[:notice] = "هذا الملف ليس بتقنية UTF-8"
+        flash[:notice] = "هذا الملف ليس بتقنية UTF-8"
       end
       if message == 3
-        # flash[:notice] = "يوجد خطأ بهذا الملف"
+        flash[:notice] = "يوجد خطأ بهذا الملف"
       end
       if message == 4
-        # flash[:notice] = "هذا الملف ليس CSV"
+        flash[:notice] = "هذا الملف ليس CSV"
       end
       redirect_to action: "import_csv", id: params[:project_id]
     else
@@ -216,7 +217,7 @@ class ProjectsController < BackendController
         end
       end
       if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
-        # flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+        flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
         redirect_to action: "show", id: params[:project_id]
       else
         redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before, a2:id_synonyms_words_in_database_before, a3:id_words_not_in_database_before, a4:id_synonyms_words_not_in_database_before, a5:num_synonyms_words_in_database_before, a6:num_synonyms_words_not_in_database_before
