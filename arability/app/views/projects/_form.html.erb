@@ -1,22 +1,30 @@
-<div class = "container">
-  <style>
-  .radio{
-  display:float;
+<style>
+.radio{
+    display:float;
 }
-  </style>
-
-<%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
+</style>
+<div class = "container" >
+    <%= form_for(@project) do |f| %>
+    <% if @project.errors.any? %>
     <div id="error_explanation">
+
       <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
 
       <ul>
       <% @project.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
+
     </div>
-  <% end %>
+    <% end %>
+
+<!--   <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+ -->
 
   <div class="field">
     <%= f.label :name %>
@@ -40,12 +48,15 @@
     <%= f.label "To" %>
     <%= f.text_field :maxAge %>
   </div>
-  <div class="field">
-    <%= f.label :description %>
+  <div>
+    <%= t(:desc) %>
     <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
 </div>
+
+  <div class="actions">
+
+    <%= f.submit %>
+</div>
+</div>
+<% end %>
