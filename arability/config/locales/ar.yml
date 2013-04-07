@@ -15,3 +15,7 @@ ar:
   age_from: "السن من"
   age_to: "السن الي"
   gender: "النوع"
+  stats_gender: "احصائيات الجنس"
+  stats_country: "احصائيات البلاد"
+  stats_age: "احصائيات السن"
+  stats_education: "احصائيات التعليم"

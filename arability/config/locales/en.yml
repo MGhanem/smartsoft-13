@@ -18,4 +18,9 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+  stats_gender: "Gender Statistics"
+  stats_country: "Country Statistics"
+  stats_age: "Age Statistics"
+  stats_education: "Education Statistics"
+
 

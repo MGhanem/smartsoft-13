@@ -2,7 +2,7 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
   has_many :votes
-  has_many :gamers, :through => :votes
+  has_many :gamers, :through => :vote
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "The synonym is not in the correct form"
 
@@ -59,7 +59,6 @@ class Synonym < ActiveRecord::Base
             end
         end
       end
-  end
 
   def get_visual_stats_country(synonym_id)
         voters = Gamer.joins(:synonyms).where("synonym_id = ?", synonym_id)

@@ -27,7 +27,4 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
-
-  has_many :synonyms, :through => :votes
-  has_many :votes
 end
