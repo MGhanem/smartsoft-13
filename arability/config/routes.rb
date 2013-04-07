@@ -110,6 +110,7 @@ Arability::Application.routes.draw do
 
   match '/projects/add_word' => "projects#add_word"
   match '/projects/remove_word' => "projects#remove_word"
+  match '/projects/export_csv' => "projects#export_to_csv"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

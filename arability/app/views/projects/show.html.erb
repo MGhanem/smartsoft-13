@@ -1,6 +1,8 @@
 <div class="container" border="1"> 
 	<h3><%= t(:project)%>: <%=@project.name %></h3><br>
 	<%= link_to 'Import CSV file', import_csv_project_path %>
+	<br>
+	<%= link_to 'Export Project Data to CSV file', action: "export_to_csv", controller: "projects", :project_id => @project.id %>
 	<%= button_to "Add words", action: "search", controller: "search", :project_id => @project.id %>
 	<form>
 		<div class="container well">
