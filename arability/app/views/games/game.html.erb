@@ -1,0 +1,38 @@
+
+<div class="game-zone">
+  <div class="game-nav">
+    <div class="nav-box">
+      الرتبة
+    </div>
+    <div class="nav-box">
+      جوائز
+  </div>
+    <div class="nav-box">
+      الإنجازات
+    </div>
+    <div class="nav-box">
+     بروفيل 
+    </div>
+    <div class="nav-box">
+     إعدادات 
+    </div>
+    <div id="level" class="nav-box">
+      
+    </div>
+  </div>
+  <div class="zone" id="zone">
+    
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+  function clear() {
+    $("#zone").empty();
+  }
+  function getTrophies(level, score) {
+    var request = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request);
+  }
+  function getScore() {
+    return 123456;
+  }
+</script>

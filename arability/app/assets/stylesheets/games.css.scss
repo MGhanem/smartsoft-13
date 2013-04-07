@@ -1,0 +1,60 @@
+// Place all the styles related to the games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.game-zone {
+  margin-left: auto;
+  margin-right: auto;
+  width: 780px;
+  height: 600px;
+  border-color: white;
+  border-style: solid;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+  padding: 0;
+}
+
+.game-nav {
+  direction: rtl;
+  width: 780px;
+  padding: 0;
+  height: 70px;
+  border-bottom: solid;
+  border-color: #f3f3f3;
+}
+
+.nav-box {
+  float: right;
+  width: 130px;
+  background-color: rgba(243,243,243,0.4);
+  height:50px;
+  padding: 0;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 20px;
+  
+}
+
+.zone {
+  height: 530px;
+  width: 100%;
+}
+
+.award-title {
+ padding: 20px;
+ direction:rtl;
+ text-align:right; 
+}
+
+.award {
+  font-size: 20px; 
+  padding: 10px;
+  margin-left:10px; 
+  margin-right:10px; 
+  margin-top: 10px; 
+  direction: rtl; 
+  text-align:right; 
+  background-color: rgba(200,200,200, 0.3); 
+}

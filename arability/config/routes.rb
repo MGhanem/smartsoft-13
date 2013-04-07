@@ -38,7 +38,10 @@ Arability::Application.routes.draw do
 
   match 'search' => 'search#search'
 
-  #get "tweet/tweet"
+
+  match '/game' => 'games#game'
+  get 'games/gettrophies'
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
