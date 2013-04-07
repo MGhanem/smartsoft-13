@@ -10,6 +10,34 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
+			<div class="row" style="padding:10px;">
+				<div class="span12">
+						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
+  						<span class="icon-plus"></span>
+						</button>
+						<span><%= t(:filter) %></span>
+						<div id="filter" class="collapse"> 
+							<div style="padding:10px;">
+								<p>
+									<%= label_tag t(:country) %>
+									<%= text_field_tag(:country, @country) %>
+								</p>
+								<p>
+									<%= label_tag t(:age_from) %>
+									<%= number_field_tag :age_from, nil, :in => 10...101 %>
+								</p>
+								<p>
+									<%= label_tag t(:age_to) %>
+									<%= number_field_tag :age_to, nil, :in => 10...101 %>
+								</p>
+								<p>
+									<%= label_tag t(:gender) %>
+									<%= select_tag :gender, options_for_select(["male", "female"]), :include_blank => true %>
+								</p>	
+							</div>
+						</div>
+				</div>
+			</div>
 		<% end %>
 	</div>
 </div>
@@ -28,33 +56,40 @@
 		</div>
 	</div>
 	<% @synonyms.each do |synonym|%>
-			<div class="accordion-group">
-				<div class="accordion-heading">
-					<div class="row">
-						<div class="span12">
-							<div class="accordion-toggle" style="padding-bottom:30px;">
-								<div class="pull-left">
-									<span>
-										<%= synonym.name %>
-									</span>
-								</div>
-								<div class="pull-right">
-									<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
-										<span><%= t(:view_stats)%></span>
-									</button>
-									<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-										<%= content_tag(:span, t(:add_to_project))%>
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<div class="row">
+					<div class="span12">
+						<div class="accordion-toggle" style="padding-bottom:30px;">
+							<div class="pull-left">
+								<span class="span1">
+									<%= synonym.name %>
+								</span>
+								<span class="span2" style="color:#bbb;"><i>
+									<% if @votes[synonym.id] != nil%>
+										<%= @votes[synonym.id] %>/<%= @total_votes.to_s + " " + t(:votes) %>
+									<% else %>
+										0/<%= @total_votes.to_s + " " + t(:votes)%> 
 									<% end %>
-								</div>
+								</i></span>
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
+									<span><%= t(:view_stats)%></span>
+								</button>
+								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
+									<%= content_tag(:span, t(:add_to_project))%>
+								<% end %>
 							</div>
 						</div>
 					</div>
-					<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
-						<div class="accordion-inner">
-							<!-- add charts here -->
-						</div>
+				</div>
+				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<!-- add charts here -->
 					</div>
 				</div>
 			</div>
+		</div>
 	<% end %>
 <% end %>
