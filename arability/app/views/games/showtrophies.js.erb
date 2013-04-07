@@ -1,5 +1,6 @@
 <% if !gamer_signed_in? %>
-
+    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات</h1>';
+    $("#zone").append($(error));
 <% else %>
 
   var award_zone = '<div class="award-zone" id="award-list"></div>';
