@@ -24,3 +24,12 @@
     
   </div>
 </div>
+<script type="text/javascript" charset="utf-8">
+  function clear() {
+    $("#zone").empty();
+  }
+  function getTrophies(level, score) {
+    var request = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request);
+  }
+</script>
