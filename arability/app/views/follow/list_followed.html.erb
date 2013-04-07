@@ -1,4 +1,4 @@
-<legend><%= t(:words_followed_by_you)%></legend>
+<% if !@keywords.empty? %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -10,9 +10,12 @@
   <% @keywords.each do |keyword| %>
     <tr>
         <td><%= keyword.name %></td>
-        <td><%= button_to t(:words), unfollow_word_path(keyword.id), :class => "btn btn-info" %></td>
+        <td><%= link_to t(:unfollow), unfollow_word_path(keyword.id), :class => "btn btn-danger" %></td>
     </tr>
   <% end %> 
   </tbody>
 </table>
+<% else %>
+<h4><%= t(:no_followed_words) %></h4>
+<% end %> 
               

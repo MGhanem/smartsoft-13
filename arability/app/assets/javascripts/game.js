@@ -179,7 +179,7 @@ function dropAblockCont(clss, btn, randNum, counter){
 
 						setTimeout(function(){$('tr').fadeIn('slow');
 							$('tr').empty();
-							document.getElementById('main-table').style.background = "url(img/Game_over_2.jpg)";
+
 						}, 500);
 						return;
 					}
@@ -670,10 +670,14 @@ if(level == 6){
 }
 
 function setLang(l){
+	$(".zone").slideUp(1000);
+	$(".zone").slideDown(1000);
 	lang = l;
-	newGame();
+	setTimeout(function(){
+		
+		newGame();
+	}, 1100);
 }
-
 function calculateScore(){
 	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	var newScore = currentScore + (100 * level);

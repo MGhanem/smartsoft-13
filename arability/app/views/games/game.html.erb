@@ -58,12 +58,21 @@
   <div class="zone">
 
     <div class="divaya">
+      <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
     <div class="game-lang">
       <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
       <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
       <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
     </div>
+    <% else I18n.locale==:en %>
+    <h2 class="lang-header">Pick the language you want to play with</h2><br>
+    <div class="game-lang">
+      <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
+      <button class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button><br><br><br><br>
+      <button class="btn btn-warning both-btn" onclick="setLang(2)">Both</button>
+    </div>
+    <% end %>
     </div>
 
   </div>
