@@ -11,6 +11,8 @@
     <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
     <% if won_trophies.length == 0 %>
+        score_space = '<div class="award">لقد نلت ' + getScore() + '  نقطة!</div>';
+        $("#zone").append($(score_space));
         success = '<h1 class="award-title">لقد انهيت كل الانجازات لهذه المرحلة</h1>';
     <% else %>
         <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
