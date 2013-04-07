@@ -30,7 +30,9 @@ vote_form.push('<div class="btn-toolbar" id="synonym_buttons">');
 vote_form.push('<% i=1 %>');
 vote_form.push('<%synonym_list.each do |syn|%>');
 vote_form.push('<% if i%2==1 %><div class="btn-group" id="synonym_buttons_row"><% end%>');
+vote_form.push('<% if syn.approved %>');
 vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn.id %>)"><%= syn.name %></button>');
+vote_form.push('<% end %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
@@ -43,7 +45,6 @@ vote_form.push('<div style="float:left;" id="skip_button">');
 vote_form.push('<button class="btn btn-primary" type="submit" onclick="skip_keyword()"> <<  تخطي هذه الكلمة</button>');
 vote_form.push('</div>');
 vote_form.push('</div>');
-
 vote_form=vote_form.join('');
 
 $('.vote_form').append(vote_form);
