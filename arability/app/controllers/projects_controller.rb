@@ -496,29 +496,31 @@ class ProjectsController < BackendController
 #     keyword does not exist or is not in the project, developer trying to remove word is not owner 
 #     of the project nor is the project shared with him/her, not registered developer.
   def remove_word
-     if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
-      if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
-        # check of project is shared with me too
-        @word_id = params[:word_id]
-        if Keyword.find_by_id(@word_id) != nil
-          @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          if  @removed_word != nil
-            @removed_word.destroy
-            flash[:notice] = "Word removed successfully."
-            # render project's page
-          else
-            flash[:notice] = "This word is not in the project."
-            # render project's page
-          end
-        else
-          flash[:notice] = "The word you're trying to remove does not exist."
-          # render the project's page and add link to add this word to the database
-        end
+      # if Project.find_by_owner_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
+        # check if project is shared with me too
+      @word_id = params[:word_id]
+        # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
+      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+      @removed_word.each { |word| 
+        if word.project_id = @project_id
+          @remove = word
+        end }
+      if  @remove != nil
+        @remove.destroy
+        flash[:notice] = "Word removed successfully."
+        redirect_to project_path(@project_id), :flash => flash
+        return
       else
-        flash[:notice] = "You can't remove a word from someone else's project!"
-        render 'pages/home'
+        flash[:notice] = "This word is not in the project."
+        redirect_to project_path(@project_id), :flash => flash
+        return
       end
+      # else
+      #   flash[:notice] = "You can't remove a word from someone else's project!"
+      #   render 'pages/home'
+      # end
     else
       flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
       render 'pages/home'
