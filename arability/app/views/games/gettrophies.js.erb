@@ -26,7 +26,8 @@
           for(var i = 0; i < trophies.length; i++) {
             $("#zone").append($(trophies[i]));
           }
-          var to_prizes_btn = '<br><a style="margin: 10px" class="btn btn-success" onclick="getPrizes(level,score)">كشف الجوائز </a>';
+          var to_prizes_btn = '<br><a style="margin: 10px" class="btn btn-success" onclick="getPrizes(' + getLevel() + ',' getScore() + '">كشف الجوائز </a>';
+
           $("#zone").append($(to_prizes_btn));
   <% end %>
 <% end %>

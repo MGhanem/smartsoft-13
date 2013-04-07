@@ -14,6 +14,7 @@ class SearchController < BackendController
 	#			returns an empty list if the search keyword had synonyms
   def search
     @search_keyword = params['search']
+    @project_id = params['project_id']
     @country = params['country']
     @age_from = params['age_from']
     if(!@age_from.blank?)

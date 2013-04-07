@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class PreferedSynonym < ActiveRecord::Base
-  attr_accessible :keyword_id, :synonym_id, :keyword_id
+  attr_accessible :project_id, :synonym_id, :keyword_id
   belongs_to :project
   belongs_to :keyword
   belongs_to :synonym

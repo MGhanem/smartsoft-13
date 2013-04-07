@@ -20,9 +20,9 @@ class Gamer < ActiveRecord::Base
   #author: kareem ali
   def self.check
     if I18n.locale==:ar
-      return "انت غبي؟"
+      return "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
     else
-      return "Kareem"
+      return "username must be made up of english letters or digits"
     end
   end
 
