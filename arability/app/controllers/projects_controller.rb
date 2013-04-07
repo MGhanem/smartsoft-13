@@ -1,12 +1,20 @@
-class ProjectsController < ApplicationController 
+# encoding: UTF-8
+class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
   require 'csv'
   def index
-    if gamer_signed_in?
-      @projects = Project.where(:owner_id => current_gamer.id)
+    if current_gamer != nil 
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      if developer != nil
+        @projects = Project.where(:owner_id => developer.id)
+        @shared_projects = Developer.find(developer.id).projects_shared
+      else
+        flash[:notice] = "من فضلك سجل كمطور"
+        render 'developers/new'
+      end
     else
-      flash[:error] = "You are not authorized to view this page"
+      flash[:notice] = "من فضلك قم بالدخول"
       render 'pages/home'
     end
   end
@@ -44,9 +52,10 @@ class ProjectsController < ApplicationController
   def create
     if gamer_signed_in?
       @project = Project.createproject(params[:project],current_gamer.id)
+      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
@@ -56,6 +65,57 @@ class ProjectsController < ApplicationController
     else
      flash[:error] = "Please log in to view this page."
      render 'pages/home'
+   end
+ end
+
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that views the form that  instantiates an empty project object
+  # after checking that the user is signed in.
+  # params:
+  #     none
+  # success:
+  #     An empty project will be instantiated
+  # failure:
+  #     none
+  def new
+    if gamer_signed_in?
+      @project = Project.new
+      @categories = @project.categories
+      respond_to do |format|
+        format.html
+        format.json { render json: @project }
+      end
+    else
+      flash[:error] = "Please log in to view this page."
+      render 'pages/home'
+    end
+  end
+
+
+  def share
+    @project = Project.find(params[:id])
+  end
+
+  def share_project_with_developer
+    @project = Project.find(params[:id])
+    gamer = Gamer.find_by_email(params[:email])
+    if(!gamer.present?)
+      flash[:notice] = "Email doesn't exist"
+    else
+      developer = Developer.find_by_gamer_id(gamer.id)
+      if developer == nil
+        flash[:notice] = "Email address is for gamer, not a developer"
+      else
+
+        developer.projects_shared << @project
+        if(developer.save)
+          flash[:notice] = "Project has been shared successfully with #{developer.name}"
+        else
+          flash[:notice] = "Failed to share project with developer"
+        end
+      end
     end
   end
 
@@ -99,45 +159,29 @@ class ProjectsController < ApplicationController
     else
       flash[:error] = "You are not authorized to view this page"
     end
+    render "projects/share"
+  end
+
+  def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+   redirect_to "/projects"
   end
 
   # author:
   #      Salma Farag
   # description:
-  #     A method that checks if the fields of the form editting the project have been changed.
-  #If yes, the new values will replace the old ones otherwise nothing will happen.
+  #     A method that specifies an already existing project by its ID
   # params:
   #     none
   # success:
-  #     An existing project will be updated.
+  #     A form that contains the existing data of the project will open from the views.
   # failure:
-  #     The old values will be kept.
-  def update
-    if gamer_signed_in?
-     @project = Project.find(params[:id])
-     @project = Project.createcategories(@project, params([:project][:categories]))
-     if @project.update_attributes(params[:project])
-      redirect_to :action => "index"
-      flash[:notice] = "Project has been successfully updated."
-    else
-      render :action => 'edit'
-    end
-  else
-    flash[:error] = "You are not authorized to view this page"
-  end
-  end
-
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that finds a project by its ID to view it.
-  # params:
   #     none
-  # success:
-  #     A project page will open.
-  # failure:
-  #     None.
-  def show
+  def edit
     if gamer_signed_in?
       @project = Project.find(params[:id])
     else
@@ -223,31 +267,110 @@ class ProjectsController < ApplicationController
       render 'pages/home'
     end
   end
-
-def show
-    @project = Project.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that checks if the fields of the form editting the project have been changed.
+  #If yes, the new values will replace the old ones otherwise nothing will happen.
+  # params:
+  #     none
+  # success:
+  #     An existing project will be updated.
+  # failure:
+  #     The old values will be kept.
+  def update
+    if gamer_signed_in?
+     @project = Project.find(params[:id])
+     @project = Project.createcategories(@project, params[:project][:categories])
+     if @project.update_attributes(params.except(:categories,:utf8, :_method,
+      :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
+      redirect_to :action => "index"
+      flash[:notice] = "Project has been successfully updated."
+    else
+      render :action => 'edit'
     end
+  else
+    flash[:error] = "You are not authorized to view this page"
   end
+end
+
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that finds a project by its ID to view it.
+  # params:
+  #     none
+  # success:
+  #     A project page will open.
+  # failure:
+  #     None.
+def show
+  if gamer_signed_in?
+    @project = Project.find(params[:id])
+  else
+    flash[:error] = "You are not authorized to view this page"
+  end
+end
+
+ # author:Noha hesham
+ # Description:
+ #   finds the project by its id then destroys it
+ # params:
+ #   none
+ # success:
+ #   a pop up appears and makes sure the user wants to
+ #   delete the project by choosing ok the 
+ #   project is successfully deleted 
+ # failure:
+ #   project is not deleted
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to projects_url }
+      format.json { head :no_content }
+end
+end
 
   def choose_keywords
     @id_words_in_database_before = params[:a1]
     @id_synonyms_words_in_database_before = params[:a2]
     @id_words_not_in_database_before = params[:a3]
     @id_synonyms_words_not_in_database_before = params[:a4]
+    @num_synonyms_words_in_database_before = params[:a5]
+    @num_synonyms_words_not_in_database_before = params[:a6]
     @words_in_database_before = Array.new
     @words_not_in_database_before = Array.new
     if @id_words_in_database_before != nil
       @id_words_in_database_before.each do |id_word|
         @words_in_database_before.push(Keyword.find(id_word))
       end
+      @all_synonyms_words_in_database_before = Array.new
+      @id_synonyms_words_in_database_before.each do |id_syn|
+        synonym = Synonym.find(id_syn)
+        @all_synonyms_words_in_database_before.push(synonym)
+      end
+      @id_first_synonyms_words_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_in_database_before.push(@id_synonyms_words_in_database_before[counter])
+        counter = counter + num_syns.to_i
+      end
     end
     if @id_words_not_in_database_before != nil
       @id_words_not_in_database_before.each do |id_word|
         @words_not_in_database_before.push(Keyword.find(id_word))
+      end
+      @all_synonyms_words_not_in_database_before = Array.new
+      @id_synonyms_words_not_in_database_before.each do |id_syn|
+        synonym = Synonym.find(id_syn)
+        @all_synonyms_words_not_in_database_before.push(synonym)
+      end
+      @id_first_synonyms_words_not_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_not_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_not_in_database_before.push(@id_synonyms_words_not_in_database_before[counter])
+        counter = counter + num_syns.to_i
       end
     end
   end
@@ -279,12 +402,26 @@ def show
   def upload
     arr_of_arrs, message = parseCSV(params[:csvfile])
     if message != 0
-      redirect_to action: "import_csv", id: params[:project_id], message: message
+      if message == 1
+        flash[:notice] = "أنت لم تقم بإختيار ملف"
+      end
+      if message == 2
+        flash[:notice] = "هذا الملف ليس بتقنية UTF-8"
+      end
+      if message == 3
+        flash[:notice] = "يوجد خطأ بهذا الملف"
+      end
+      if message == 4
+        flash[:notice] = "هذا الملف ليس CSV"
+      end
+      redirect_to action: "import_csv", id: params[:project_id]
     else
       id_words_in_database_before = Array.new
       id_synonyms_words_in_database_before = Array.new
       id_words_not_in_database_before = Array.new
       id_synonyms_words_not_in_database_before = Array.new
+      num_synonyms_words_in_database_before = Array.new
+      num_synonyms_words_not_in_database_before = Array.new
       arr_of_arrs.each do |row|
         keywrd = Keyword.find_by_name(row[0])
         if keywrd != nil
@@ -292,13 +429,17 @@ def show
             for i in 1..row.size
               Synonym.record_synonym(row[i],keywrd.id)
             end
+            counter = 0
             for i in 1..row.size
               synonm = Synonym.find_by_name(row[i], keywrd.id)
               if synonm != nil
-                id_words_in_database_before.push(keywrd.id)
+                counter = counter + 1
                 id_synonyms_words_in_database_before.push(synonm.id)
-                break
               end
+            end
+            if counter > 0
+              id_words_in_database_before.push(keywrd.id)
+              num_synonyms_words_in_database_before.push(counter)
             end
           end
         else
@@ -308,23 +449,27 @@ def show
               for i in 1..row.size
                 Synonym.record_synonym(row[i],keywrd.id)
               end
+              counter = 0
               for i in 1..row.size
                 synonm = Synonym.find_by_name(row[i], keywrd.id)
                 if synonm != nil
-                  id_words_not_in_database_before.push(keywrd.id)
+                  counter = counter + 1
                   id_synonyms_words_not_in_database_before.push(synonm.id)
-                  break
                 end
+              end
+              if counter > 0
+                id_words_not_in_database_before.push(keywrd.id)
+                num_synonyms_words_not_in_database_before.push(counter)
               end
             end
           end
         end
       end
       if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
-        flash[:notice] = "There are no words to import to this project"
+        flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
         redirect_to action: "show", id: params[:project_id]
       else
-        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before ,a2:id_synonyms_words_in_database_before ,a3:id_words_not_in_database_before ,a4:id_synonyms_words_not_in_database_before 
+        redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before, a2:id_synonyms_words_in_database_before, a3:id_words_not_in_database_before, a4:id_synonyms_words_not_in_database_before, a5:num_synonyms_words_in_database_before, a6:num_synonyms_words_not_in_database_before
      end
     end
   end

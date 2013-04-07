@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class PreferedSynonym < ActiveRecord::Base
   attr_accessible :keyword_id, :synonym_id, :keyword_id
   belongs_to :project
@@ -10,7 +11,7 @@ class PreferedSynonym < ActiveRecord::Base
   		entry.project_id = project_id
   		entry.synonym_id = synonym_id
   		entry.keyword_id = keyword_id
-  		entry.save
+  		return entry.save
   	end
 
     def find_word_in_project(project_id, keyword_id)
