@@ -14,19 +14,17 @@
 
 <div role="main" id="main">
   <div class="container">
-    <% flash.each do |key,msg| %>
-      <div class="alert alert-<%= key %>">
-        <div class="message-inner">
-          <%= content_tag :div, msg %>
+    <div class="content">
+      <div class="row">
+        <div class="span12">
+          <%= render 'layouts/messages' %>
+          <%= yield %>
         </div>
       </div>
-    <% end %>
     </div>
   </div>
 </div>
 
-<%= yield %>
 <%= render 'shared/navbardropdownjs' %>
-
 </body>
 </html>

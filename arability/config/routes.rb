@@ -1,4 +1,6 @@
 Arability::Application.routes.draw do
+  get "authentications/home"
+
   get "admin/index"
 
   get "admin/login"
@@ -12,8 +14,10 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   # required for routing by the devise module(gem)
+  devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   devise_for :gamers
   devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+
 
   get "admin/import_csv"
 
@@ -34,7 +38,10 @@ Arability::Application.routes.draw do
   match '/my_subscriptions/create' => "my_subscription#create"
 
   match 'search' => 'search#search'
-  
+
+  match '/authentications/facebook_connect' => 'authentications#facebook_connect'
+  match '/authentications/twitter' => 'authentications#twitter'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
