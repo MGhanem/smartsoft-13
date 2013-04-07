@@ -18,7 +18,7 @@ var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
 var successfulWords = [];
-
+var score;
 
 
 function newGame(){
@@ -211,11 +211,13 @@ function calculatePossible(){
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).addClass('text-warning');
+				$('#' + lsId).css( "color", "orange" );
 			}
 			else{
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).removeClass('text-warning');
+				$('#' + lsId).css( "color", "" );
 			}
 			for(var l = 0; l < wordsArray[k].length; l++){
 				canBeFormed = false;
@@ -240,6 +242,7 @@ function calculatePossible(){
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).addClass('text-warning');
+			$('#' + lsId).css( "color", "orange" );
 		}
 }
 
@@ -382,6 +385,11 @@ function fadeSomething(x){
 					generateWord();
 					removeAblockCont();
 					gameOver = true;
+					// $(".zone").slideUp(1000);
+					// setTimeout(function(){
+					// 	getPrizes(10,10)
+					// 	$(".zone").slideDown(1000);
+					// }, 1000);	
 					alert("Congrats You have Finished The Level, off to the next");
 					nextLevel();
 					return;
@@ -499,6 +507,15 @@ function clearWord(){
 // }
 
 function nextLevel(){
+	$('.zone').empty();
+	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
+	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol></div>' +
+	'<div class="well label-div"><label id="wordLabel" class="label1"></label></div>' +
+	'<br><br><div><button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button></div>' +
+	'<div class="buttons-div">' +
+	'<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a></div>' +
+	'<br><br>'+ 
+	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>');
 	$('#main-table').empty();
 	$('#wordsList').empty();
 	$('#level').empty();
@@ -679,7 +696,7 @@ function setLang(l){
 	}, 1100);
 }
 function calculateScore(){
-	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
-	var newScore = currentScore + (100 * level);
-	document.getElementById('score').innerHTML = "SCORE: " + newScore;
+	score = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
+	score = score + (100 * level);
+	document.getElementById('score').innerHTML = "SCORE: " + score;
 }
