@@ -1,20 +1,13 @@
-<<<<<<< HEAD
 #encoding: UTF-8
-=======
->>>>>>> 878528ff22e3832d92b715b1f57bdfc6b7faad18
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
   has_many :votes
-<<<<<<< HEAD
-=======
   has_many :gamers, :through => :vote
->>>>>>> 878528ff22e3832d92b715b1f57bdfc6b7faad18
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "The synonym is not in the correct form"
 
   class << self
-<<<<<<< HEAD
     include StringHelper
     
   # author:
@@ -49,8 +42,7 @@ class Synonym < ActiveRecord::Base
         return false
       end
     end
-=======
->>>>>>> 878528ff22e3832d92b715b1f57bdfc6b7faad18
+
     # Author:
     #  Mirna Yacout
     # Description:
@@ -72,15 +64,12 @@ class Synonym < ActiveRecord::Base
         return false
       end
 
-<<<<<<< HEAD
     def find_by_name(synonym_name, keyword_id)
       word = Keyword.find(keyword_id)
       synonym = Synonym.where("name = ? AND keyword_id = ?", synonym_name, keyword_id).first
       return synonym
     end
-  end
-end
-=======
+
     # author:
     #   Omar Hossam
     # description:
@@ -157,5 +146,3 @@ end
 
  end
 end
-
->>>>>>> 878528ff22e3832d92b715b1f57bdfc6b7faad18

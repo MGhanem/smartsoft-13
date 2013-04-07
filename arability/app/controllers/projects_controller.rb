@@ -18,7 +18,7 @@ class ProjectsController < BackendController
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @projects = Project.where(:owner_id => developer.id)
-        # @shared_projects = Developer.find(developer.id).projects_shared
+        @shared_projects = Developer.find(developer.id).projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'
@@ -204,57 +204,15 @@ end
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
-end
-end
-
-  # def choose_keywords
-  #   @id_words_in_database_before = params[:a1]
-  #   @id_synonyms_words_in_database_before = params[:a2]
-  #   @id_words_not_in_database_before = params[:a3]
-  #   @id_synonyms_words_not_in_database_before = params[:a4]
-  #   @num_synonyms_words_in_database_before = params[:a5]
-  #   @num_synonyms_words_not_in_database_before = params[:a6]
-  #   @words_in_database_before = Array.new
-  #   @words_not_in_database_before = Array.new
-  #   if @id_words_in_database_before != nil
-  #     @id_words_in_database_before.each do |id_word|
-  #       @words_in_database_before.push(Keyword.find(id_word))
-  #     end
-  #     @all_synonyms_words_in_database_before = Array.new
-  #     @id_synonyms_words_in_database_before.each do |id_syn|
-  #       synonym = Synonym.find(id_syn)
-  #       @all_synonyms_words_in_database_before.push(synonym)
-  #     end
-  #     @id_first_synonyms_words_in_database_before = Array.new
-  #     counter = 0
-  #     @num_synonyms_words_in_database_before.each do |num_syns|
-  #       @id_first_synonyms_words_in_database_before.push(@id_synonyms_words_in_database_before[counter])
-  #       counter = counter + num_syns.to_i
-  #     end
-  #   end
-  #   if @id_words_not_in_database_before != nil
-  #     @id_words_not_in_database_before.each do |id_word|
-  #       @words_not_in_database_before.push(Keyword.find(id_word))
-  #     end
-  #     @all_synonyms_words_not_in_database_before = Array.new
-  #     @id_synonyms_words_not_in_database_before.each do |id_syn|
-  #       synonym = Synonym.find(id_syn)
-  #       @all_synonyms_words_not_in_database_before.push(synonym)
-  #     end
-  #     @id_first_synonyms_words_not_in_database_before = Array.new
-  #     counter = 0
-  #     @num_synonyms_words_not_in_database_before.each do |num_syns|
-  #       @id_first_synonyms_words_not_in_database_before.push(@id_synonyms_words_not_in_database_before[counter])
-  #       counter = counter + num_syns.to_i
-  #     end
-  #   end
-  # end
+    end
+  end
 
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     id_project =  params[:id]
     if id_words_project != nil
       words_synonyms_array=[id_words_project].map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.
       counter = 0
       # while counter < id_words_project.size
       #   index = id_words_in_database_before.index(id_words_project[counter])
@@ -288,12 +246,12 @@ end
       end
       redirect_to action: "import_csv", id: params[:project_id]
     else
-      id_words_in_database_before = Array.new
-      id_synonyms_words_in_database_before = Array.new
-      id_words_not_in_database_before = Array.new
-      id_synonyms_words_not_in_database_before = Array.new
-      num_synonyms_words_in_database_before = Array.new
-      num_synonyms_words_not_in_database_before = Array.new
+      @id_words_in_database_before = Array.new
+      @id_synonyms_words_in_database_before = Array.new
+      @id_words_not_in_database_before = Array.new
+      @id_synonyms_words_not_in_database_before = Array.new
+      @num_synonyms_words_in_database_before = Array.new
+      @num_synonyms_words_not_in_database_before = Array.new
       arr_of_arrs.each do |row|
         keywrd = Keyword.find_by_name(row[0])
         if keywrd != nil
@@ -306,12 +264,12 @@ end
               synonm = Synonym.find_by_name(row[i], keywrd.id)
               if synonm != nil
                 counter = counter + 1
-                id_synonyms_words_in_database_before.push(synonm.id)
+                @id_synonyms_words_in_database_before.push(synonm.id)
               end
             end
             if counter > 0
-              id_words_in_database_before.push(keywrd.id)
-              num_synonyms_words_in_database_before.push(counter)
+              @id_words_in_database_before.push(keywrd.id)
+              @num_synonyms_words_in_database_before.push(counter)
             end
           end
         else
@@ -326,41 +284,58 @@ end
                 synonm = Synonym.find_by_name(row[i], keywrd.id)
                 if synonm != nil
                   counter = counter + 1
-                  id_synonyms_words_not_in_database_before.push(synonm.id)
+                  @id_synonyms_words_not_in_database_before.push(synonm.id)
                 end
               end
               if counter > 0
-                id_words_not_in_database_before.push(keywrd.id)
-                num_synonyms_words_not_in_database_before.push(counter)
+                @id_words_not_in_database_before.push(keywrd.id)
+                @num_synonyms_words_not_in_database_before.push(counter)
               end
             end
           end
         end
       end
-      if id_words_in_database_before.empty? and id_words_not_in_database_before.empty?
+      if @id_words_in_database_before.empty? and @id_words_not_in_database_before.empty?
         flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
         redirect_to action: "show", id: params[:project_id]
       else
+        if  Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
+          @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i
+        else
+          @words_remaining = 150
+        end
         @words_in_database_before = Array.new
         @words_not_in_database_before = Array.new
-        if id_words_in_database_before != nil
-          id_words_in_database_before.each do |id_word|
+        if @id_words_in_database_before != nil
+          @id_words_in_database_before.each do |id_word|
             @words_in_database_before.push(Keyword.find(id_word))
           end
           @all_synonyms_words_in_database_before = Array.new
-          id_synonyms_words_in_database_before.each do |id_syn|
+          @id_synonyms_words_in_database_before.each do |id_syn|
             synonym = Synonym.find(id_syn)
             @all_synonyms_words_in_database_before.push(synonym)
           end
+          @id_first_synonyms_words_in_database_before = Array.new
+          counter = 0
+          @num_synonyms_words_in_database_before.each do |num_syns|
+            @id_first_synonyms_words_in_database_before.push(@id_synonyms_words_in_database_before[counter])
+            counter = counter + num_syns.to_i
+          end
         end
-        if id_words_not_in_database_before != nil
-          id_words_not_in_database_before.each do |id_word|
+        if @id_words_not_in_database_before != nil
+          @id_words_not_in_database_before.each do |id_word|
             @words_not_in_database_before.push(Keyword.find(id_word))
           end
           @all_synonyms_words_not_in_database_before = Array.new
-          id_synonyms_words_not_in_database_before.each do |id_syn|
+          @id_synonyms_words_not_in_database_before.each do |id_syn|
             synonym = Synonym.find(id_syn)
             @all_synonyms_words_not_in_database_before.push(synonym)
+          end
+          @id_first_synonyms_words_not_in_database_before = Array.new
+          counter = 0
+          @num_synonyms_words_not_in_database_before.each do |num_syns|
+            @id_first_synonyms_words_not_in_database_before.push(@id_synonyms_words_not_in_database_before[counter])
+            counter = counter + num_syns.to_i
           end
         end
       end

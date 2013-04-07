@@ -61,6 +61,7 @@ class Keyword < ActiveRecord::Base
     end  
 
   class << self
+    require 'string_helper'
   include StringHelper
 
   # Author:
