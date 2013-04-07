@@ -66,7 +66,7 @@ class ProjectsController < BackendController
      flash[:error] = "Please log in to view this page."
      render 'pages/home'
    end
- end
+  end
 
   # author:
   #      Salma Farag
@@ -282,17 +282,17 @@ class ProjectsController < BackendController
     if gamer_signed_in?
      @project = Project.find(params[:id])
      @project = Project.createcategories(@project, params[:project][:categories])
-     if @project.update_attributes(params.except(:categories,:utf8, :_method,
-      :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-      redirect_to :action => "index"
-      flash[:notice] = "Project has been successfully updated."
+      if @project.update_attributes(params.except(:categories,:utf8, :_method,
+        :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
+        redirect_to :action => "index"
+        flash[:notice] = "Project has been successfully updated."
+      else
+        render :action => 'edit'
+      end
     else
-      render :action => 'edit'
+      flash[:error] = "You are not authorized to view this page"
     end
-  else
-    flash[:error] = "You are not authorized to view this page"
   end
-end
 
   # author:
   #      Salma Farag
@@ -304,13 +304,24 @@ end
   #     A project page will open.
   # failure:
   #     None.
-def show
-  if gamer_signed_in?
+  def show
+    @projects = Project.where(:owner_id => current_gamer.id)
     @project = Project.find(params[:id])
-  else
-    flash[:error] = "You are not authorized to view this page"
+    if @projects.include?(@project)
+      @words = []
+      @synonyms = []
+      @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
+      @words_synonyms.each do |word_synonym|
+        word = Keyword.find(word_synonym.keyword_id)
+        syn = Synonym.find(word_synonym.synonym_id)
+        @words.push(word)
+        @synonyms.push(syn)
+      end
+    else
+      redirect_to :action => "index"
+      flash[:error] = "You are not authorized to view this page"
+    end
   end
-end
 
  # author:Noha hesham
  # Description:
@@ -329,8 +340,8 @@ end
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
-end
-end
+    end
+  end
 
   def choose_keywords
     @id_words_in_database_before = params[:a1]
@@ -512,6 +523,7 @@ end
       flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
       render 'pages/home'
     end
+  end
 
   def import_csv
     current_project = Project.find(params[:id])
