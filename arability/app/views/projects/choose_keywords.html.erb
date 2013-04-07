@@ -1,22 +1,96 @@
-<h3>Please select from the words below to be imported to your project</h3>
+<!-- a=["3|4","1|2"].map {|x| x.split("|")} -->
+<div class="container">
+<h3>اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع </h3>
+<h6 style="color:red;">تبقى لك عدد 2 كلمة</h6>
 <%= form_tag add_from_csv_keywords_project_path, :method => :put, :id => 'form_to_select_words' do %>
   <input type="hidden" value="<%= @id_words_in_database_before %>" name="id_words_in_database_before">
-  <input type="hidden" value="<%= @id_synonyms_words_in_database_before %>" name="id_synonyms_words_in_database_before">
+  <input type="hidden" value="<%= @id_first_synonyms_words_in_database_before %>" name="id_synonyms_words_in_database_before">
   <input type="hidden" value="<%= @id_words_not_in_database_before %>" name="id_words_not_in_database_before">
-  <input type="hidden" value="<%= @id_synonyms_words_not_in_database_before %>" name="id_synonyms_words_not_in_database_before">
-  <% for word in @words_in_database_before %>
-    <%= check_box_tag "words_ids[]", word.id %>
-    <%= word.name %>
-    <br />
+  <input type="hidden" value="<%= @id_first_synonyms_words_not_in_database_before %>" name="id_synonyms_words_not_in_database_before">
+  <table class="table table-bordered">
+  <tr>
+    <td style="width:20px;"></td>
+    <td style="width:300px;"><strong>Word</strong></td>
+    <td><strong>Synonyms</strong></td>
+  </tr>
+  <% counter = 0 %>
+  <% counter_syn = 0 %>
+  <% size = @words_in_database_before.size %>
+  <%while counter < size %> 
+    <%word = @words_in_database_before[counter]%>
+    <%prefred_syn = @id_first_synonyms_words_in_database_before[counter]  %> 
+    <tr>
+    <td><%= check_box_tag "words_ids[]", "#{word.id}|#{prefred_syn}" %></td>
+    <td><%= word.name %></td>
+    <td>
+      <% num_syns = @num_synonyms_words_in_database_before[counter].to_i %>
+      <% counter_print = 1 %>
+      <% while counter_print <= num_syns %>
+        <% syn = @all_synonyms_words_in_database_before[counter_syn] %>
+        <% if num_syns == 1 %>
+            <span style="color:red;"><strong><%=syn.name%></strong></span>
+        <%else%>
+          <% if counter_print < num_syns %>
+            <% if counter_print == 1 %>
+              <span style="color:red;"><strong><%=syn.name%></strong></span>,
+              <%flag = false%>
+            <%end%>
+            <% if flag == true %>
+              <%= syn.name %>,
+            <% end %>
+          <% else %>
+            <%= syn.name %>
+          <%end%>
+        <%end%>
+        <%counter_print = counter_print +1%>
+        <%flag = true%>
+        <% counter_syn = counter_syn + 1 %>
+      <%end%>
+    </td>
+    </tr>
+    <% counter = counter + 1 %>
   <% end %>
-  <% for word in @words_not_in_database_before %>
-    <%= check_box_tag "words_ids[]", word.id %>
-    <%= word.name %> <span style="color:red;">*new*</span>
-    <br />
+  <% counter = 0 %>
+  <% counter_syn = 0 %>
+  <% size = @words_not_in_database_before.size %>
+  <%while counter < size %> 
+    <%word = @words_not_in_database_before[counter]%>
+    <%prefred_syn = @id_first_synonyms_words_not_in_database_before[counter]  %> 
+    <tr>
+    <td><%= check_box_tag "words_ids[]", "#{word.id}|#{prefred_syn}" %></td>
+    <td><%= word.name %><span style="color:red;">*new*</span></td>
+    <td>
+      <% num_syns = @num_synonyms_words_not_in_database_before[counter].to_i %>
+      <% counter_print = 1 %>
+      <% while counter_print <= num_syns %>
+        <% syn = @all_synonyms_words_not_in_database_before[counter_syn] %>
+        <% if num_syns == 1 %>
+            <span style="color:red;"><strong><%=syn.name%></strong></span>
+        <%else%>
+          <% if counter_print < num_syns %>
+            <% if counter_print == 1 %>
+              <span style="color:red;"><strong><%=syn.name%></strong></span>,
+              <%flag = false%>
+            <%end%>
+            <% if flag == true %>
+              <%= syn.name %>,
+            <% end %>
+          <% else %>
+            <%= syn.name %>
+          <%end%>
+        <%end%>
+        <%counter_print = counter_print +1%>
+        <%flag = true%>
+        <% counter_syn = counter_syn + 1 %>
+      <%end%>
+    </td>
+    </tr>
+    <% counter = counter + 1 %>
   <% end %>
-  <br />
-  <%= submit_tag "Import to project" %>
+  </table>
+  <%= submit_tag "اضف إلى المشروع", :class => "btn btn-primary"%>
 <% end %>
+</div>
 <script type="text/javascript">
 checkboxlimit(form_to_select_words, 2)
 </script>

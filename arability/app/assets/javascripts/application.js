@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require highcharts
+//= require game
 function checkboxlimit(checkgroup, limit){
 	var checkgroup=checkgroup
 	var limit=limit
