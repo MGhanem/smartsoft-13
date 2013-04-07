@@ -14,6 +14,15 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,:gender, 
                   :username, :country, :education_level, :date_of_birth
 
+  #author: kareem ali
+  def self.check
+    if I18n.locale==:ar
+      return "انت غبي؟"
+    else
+      return "Kareem"
+    end
+  end
+
   validates :username, :presence => true, :length => { :minimum => 3 }
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }
@@ -49,15 +58,6 @@ class Gamer < ActiveRecord::Base
       return true
     else
       return false
-    end
-  end
-
-  #author: kareem ali
-  def self.check
-    if I18n.locale==:ar
-      return "انت غبي؟"
-    else
-      return "Kareem"
     end
   end
 end
