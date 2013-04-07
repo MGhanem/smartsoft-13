@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Developer < ActiveRecord::Base
  belongs_to :gamer
  has_and_belongs_to_many :keywords

@@ -677,7 +677,7 @@ function setLang(l){
 		
 		newGame();
 	}, 1100);
-
+}
 function calculateScore(){
 	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	var newScore = currentScore + (100 * level);
