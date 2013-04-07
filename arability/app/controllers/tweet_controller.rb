@@ -1,7 +1,7 @@
 class TweetController < ApplicationController
 
 def tweet_score
-	#@varName = params[:incomming]
+	@varName = 10 #params[:incomming]
 end
 
 end
