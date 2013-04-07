@@ -12,8 +12,11 @@ Arability::Application.routes.draw do
     
     get "admin/logout"
   
+
     post "admin/wordadd"
 
+  
+ 
     post "admin/login"
 
 		get "admin/import_csv"
@@ -50,6 +53,9 @@ Arability::Application.routes.draw do
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
 			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
@@ -60,7 +66,12 @@ Arability::Application.routes.draw do
 
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
+
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  
+  post "keywords/create"
+
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 

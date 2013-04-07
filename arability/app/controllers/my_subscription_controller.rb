@@ -73,7 +73,6 @@ class MySubscriptionController < ApplicationController
 
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
-    
     @developer= Developer.find_by_gamer_id(current_gamer.id)
   end
 
@@ -83,6 +82,7 @@ class MySubscriptionController < ApplicationController
     
     sub_id = params[:my_subscription]
     dev_id = @developer.id
+
     if MySubscription.choose(dev_id,sub_id)
       flash[:notice] = "You have successfully chosen your subscription model"
         redirect_to root_url
