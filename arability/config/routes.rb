@@ -106,6 +106,12 @@ Arability::Application.routes.draw do
     end
   end
 
+  post "games/record_vote"
+
+  post "games/vote_errors"
+
+  post "games/record_synonym"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
