@@ -18,9 +18,10 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+  no_synonyms_found: "Sorry! We couldn't find the search keyword in our database. "
+  follow_word: "Follow word"
   stats_gender: "Gender Statistics"
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
-
 

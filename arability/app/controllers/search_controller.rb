@@ -25,9 +25,13 @@ class SearchController < ApplicationController
     end
     @gender = params['gender']
     if(!@search_keyword.blank?)
+      @no_synonyms_found = false
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       @synonyms, @votes =
         @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender)
+        if(@synonyms.blank?)
+          @no_synonyms_found = true
+        end
       @total_votes = 0
       @votes.each do |synonym_id, synonym_votes|
         @total_votes += synonym_votes
