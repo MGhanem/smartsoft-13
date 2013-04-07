@@ -44,10 +44,6 @@ class Gamer < ActiveRecord::Base
 
     #Author: Kareem ALi
       def suggest_synonym(synonym_name, keyword_id)
-        if Synonym.record_suggested_synonym(synonym_name, keyword_id)
-          return true
-        else
-          return false
-        end
+        return Synonym.record_suggested_synonym(synonym_name, keyword_id)
       end
 end
