@@ -25,7 +25,4 @@ ar:
   words_followed_by_you: "الكلمات المتابعة:"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
-  errors:
-    messages:
-      not_saved:
-
+  backend: "المطورون"

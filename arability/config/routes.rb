@@ -2,11 +2,6 @@ Arability::Application.routes.draw do
   
   root :to => 'pages#home'
   
-  match '/game' => 'games#game'
-
-  post "games/vote" 
-
-  post "games/record_vote"
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
@@ -27,7 +22,9 @@ Arability::Application.routes.draw do
 
     match '/game' => 'games#game'
 
+    post "games/vote" 
 
+    post "games/record_vote"
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -38,9 +35,8 @@ Arability::Application.routes.draw do
 
     post "admin/upload"
   
-    resources :projects
-
     scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -62,7 +58,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 
-  match 'search' => 'search#search'
+      match 'search' => 'search#search'
 
     end
   end
