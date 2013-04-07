@@ -46,7 +46,7 @@
 		<div class="well">
 			<span>
 				<%= t(:no_synonyms_found) %>
-				<%= link_to t(:follow_word), "follow_path" %>
+				<%= link_to t(:follow_word), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
 			</span>
 		</div>
 	<% end %>
@@ -61,10 +61,14 @@
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
 				<% key_id = Keyword.where(:name => @search_keyword).first.id %>
-				 <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+				<% if !chart_keyword_synonym(key_id).empty? %>
+				 	<%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
           <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
           <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-      <% end %>
+          <% end %>
+        <% else %>
+          <p><%= t(:no_votes_for_word)%></p>
+      	<% end %>
 			</div>
 		</div>
 	</div>
@@ -106,4 +110,10 @@
 			</div>
 		</div>
 	<% end %>
+	<div class="well">
+			<span>
+				<%= t(:follow_word_link) %>
+				<%= link_to t(:follow_word_end_of_search), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+			</span>
+	</div>
 <% end %>
