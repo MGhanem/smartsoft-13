@@ -1,14 +1,10 @@
 <h1>استيراد ملف CSV</h1>
 
 <form action="/projects/upload" enctype="multipart/form-data" method="POST">
-	<div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="input-append">
-    <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-  </div>
-</div>
-	<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
-	<input type="hidden" value="<%= @project_id %>" name="project_id">
-	<input type="submit" class="btn btn-success" value="Upload">
+  <input type="file" id="csvfile" name="csvfile">
+  <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+  <input type="hidden" value="<%= @project_id %>" name="project_id">
+  <input type="submit" class="btn btn-success" value="Upload">
 </form>
 <p>لتحميل ملف CSV:</br></p>
 <ol>
