@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
-  # attr_accessible :title, :body
+
   validate :validate_gamer_exists, :validate_synonym_exists, 
     :validate_voting_for_new_keyword
   validates :gamer_id, :uniqueness => { :scope => :synonym_id,

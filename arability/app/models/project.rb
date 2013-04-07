@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 
+
   belongs_to :developer
 
   has_many :shared_projects
@@ -9,6 +10,11 @@ class Project < ActiveRecord::Base
 
   # has_and_belongs_to_many :shared_with, :class_name => "Developer"
   # has_one :owner, :class_name => "Developer"
+
+
+  attr_accessible :name
+  belongs_to :developer
+
 
   has_and_belongs_to_many :categories
   has_many :keywords
@@ -29,19 +35,6 @@ class Project < ActiveRecord::Base
 #new categories and inserting them into the project categories array
 # failure:
 #     None
-
- 
-  # def self.createproject(params)
-  # 	project = Project.new(params.except(:categories))
-  # 	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  #   catArray = []
-  # 	array.each do |m|
-  #     catArray.push(Category.where(:name => m).first_or_create)
-  # 	end
-  #   project.categories = catArray
-  #   project.save
-  # 	return project
-  #  end
 
 def self.createproject(params,gamer_id)
   project = Project.new(params.except(:categories,:developer))
@@ -91,3 +84,4 @@ def self.printarray(array)
 end
 
 end
+

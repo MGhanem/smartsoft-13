@@ -1,6 +1,5 @@
 ar:
-  hello: "ahlan wasahlan"
-  arability: "عربلتي"
+  arability: "عربيليتي"
   sign_up: "إنشاء حساب"
   sign_in: "تسجيل الدخول"
   english: "الإنجليزية"
@@ -25,6 +24,7 @@ ar:
   words_followed_by_you: "الكلمات المتابعة:"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
+  backend: "المطورون"
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"
@@ -40,7 +40,26 @@ ar:
   new_project: "مشروع جديد"
   back: "عودة"
   edit_project: "تعديل المشروع"
-
+  votes: "صوت"
+  filter: "تصفية النتائج"
+  country: "البلد"
+  age_from: "السن من"
+  age_to: "السن الي"
+  gender: "النوع"
+  gamer: "اللاعب"
   errors:
     messages:
       not_saved:
+        one: "خطأ واحد منع التسجيل:"
+        other: "%{count} اخطآء منعت من التسجيل:"
+  devise:
+    registrations:
+      gamer:
+        signed_up: "تم التسجيل بنجاح"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"

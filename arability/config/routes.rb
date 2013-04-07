@@ -2,14 +2,6 @@ Arability::Application.routes.draw do
   
   root :to => 'pages#home'
   
-  match '/game' => 'games#game'
-
-  post "games/vote" 
-
-  post "games/record_vote"
-
-  get 'games/getnewwords'
-
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
@@ -21,7 +13,7 @@ Arability::Application.routes.draw do
 
     post "admin/login"
 
-    get "admin/import_csv"
+		get "admin/import_csv"
 
     post "admin/upload"
 
@@ -33,30 +25,26 @@ Arability::Application.routes.draw do
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
+
+    post "games/vote" 
+
+    post "games/record_vote"
+
+		get 'games/getnewwords'
+
     # required for routing by the devise module(gem)
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
- 
-  get "projects/remove_developer_from_project"
-  match "projects/share/:id" => "projects#share"
-  match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  post "keywords/create"
-
-  resources :projects
-
-  
-  match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
-  match '/my_subscriptions/pick' => "my_subscription#pick"
-  
-
-
-
-    # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-
-
     scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
+
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -65,28 +53,21 @@ Arability::Application.routes.draw do
       match "followed" => "follow#list_followed", :as => "list_followed_words"
 
       get "keywords/new"
-      match "keywords" => "keywords#viewall"
-      match "keywords/new" => "keywords#new"
-      match "keywords/create" => "keywords#create"
-      post "keywords/create"
 
+			post "keywords/create"
 
-      get "keywords/suggest_add" => "keywords#suggest_add"
+      get "keywords/suggest_add"
 
-      resources :projects
-      get "projects/update"
-     
+			match 'search' => 'search#search'
+
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
-
-      match 'search' => 'search#search'
-
-      match 'follow' => 'follow#follow', :as => "list_followed_words"
-
     end
   end
+  
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
