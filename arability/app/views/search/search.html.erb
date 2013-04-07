@@ -9,6 +9,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
+			<input type="hidden" value="<%= @project_id %>" name="project_id">
 			<div class="row" style="padding:10px;">
 				<div class="span12">
 						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
@@ -97,7 +98,7 @@
 									<% if @votes[synonym.id] != nil%>
 										<%= @votes[synonym.id] %>/<%= @total_votes.to_s + " " + t(:votes) %>
 									<% else %>
-										0/<%= @total_votes.to_s + " " + t(:votes)%> 
+										0/<%= @total_votes.to_s + " " + t(:votes)%>
 									<% end %>
 								</i></span>
 							</div>
@@ -107,6 +108,7 @@
 								</button>
 								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
 									<%= content_tag(:span, t(:add_to_project))%>
+									<%= button_to "Add to Project", action: "add_word",controller: "projects", :project_id => @project_id, :synonym_id => synonym.id, :keyword => @search_keyword %>
 								<% end %>
 							</div>
 						</div>

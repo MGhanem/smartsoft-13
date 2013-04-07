@@ -3,16 +3,6 @@ class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
   require 'csv'
-  
-  # author: 
-  #   Mohamed Tamer 
-  # description: 
-  #   function shows all the projects of a certain developer
-  # params: 
-  #   none
-  # returns:
-  #   on success: returns an array of projects of the developer currently logged in.
-  #   on failure: notifies the user that he can't see this page.
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
@@ -28,7 +18,23 @@ class ProjectsController < BackendController
       render 'pages/home'
     end
   end
-
+ 
+  # def index
+  #   if current_gamer != nil 
+  #     developer = Developer.where(:gamer_id => current_gamer.id).first
+  #     if developer != nil
+  #       @my_projects = Project.where(:owner_id => developer.id)
+  #       # @shared_projects = Project.joins(:shared_projects).where(:developer => developer.id)
+  #      # @shared_projects = Project.find_by_sql("SELECT * FROM projects INNER JOIN shared_projects ON projects.id = shared_projects.project_id WHERE shared_projects.developer_id = #{developer.id}")
+  #     else
+  #       flash[:notice] = "Please sign up as a developer first"
+  #       render 'developers/new'
+  #     end
+  #   else
+  #     flash[:notice] = "Please sign in"
+  #     render 'pages/home'
+  #   end  
+  # end
 
   # author:
   #      Salma Farag
@@ -60,7 +66,7 @@ class ProjectsController < BackendController
      flash[:error] = "Please log in to view this page."
      render 'pages/home'
    end
- end
+  end
 
   # author:
   #      Salma Farag
@@ -111,9 +117,50 @@ class ProjectsController < BackendController
         end
       end
     end
-    render "projects/share"
   end
 
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that views the form that  instantiates an empty project object
+  # after checking that the user is signed in.
+  # params:
+  #     none
+  # success:
+  #     An empty project will be instantiated
+  # failure:
+  #     none
+  def new
+    if gamer_signed_in?
+      @project = Project.new
+      respond_to do |format|
+        format.html
+        format.json { render json: @project }
+      end
+    else
+      flash[:error] = "Please log in to view this page."
+      render 'pages/home'
+    end
+  end
+
+  # author:
+  #      Salma Farag
+  # description:
+  #     A method that specifies an already existing project by its ID
+  # params:
+  #     none
+  # success:
+  #     A form that contains the existing data of the project will open from the views.
+  # failure:
+  #     none
+  def edit
+    if gamer_signed_in?
+      @project = Project.find(params[:id])
+    else
+      flash[:error] = "You are not authorized to view this page"
+    end
+    render "projects/share"
+  end
 
   def remove_developer_from_project
     dev = Developer.find(params[:dev_id])
@@ -141,7 +188,85 @@ class ProjectsController < BackendController
       flash[:error] = "You are not authorized to view this page"
     end
   end
-
+# author:
+#      Khloud Khalid
+# description:
+#     method adds a keyword and a synonym to an existing project and if word already exists in the project updates
+#     its synonym
+# params:
+#     project_id, word_id, synonym_id
+# success:
+#     keyword and synonym are added to project or synonym of word updated 
+# failure:
+#     object not valid (no project or word id), word already exists in project, keyword or synonym does not exist, 
+#     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
+#     developer, or keyword is not in the project.
+  def add_word
+    # if the word doesn't have synonyms redirect to follow word
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      # redirect_to project_path(@project_id)
+      # return
+      # @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+      # @owner_project = Project.where(owner_id: @developer_id).all
+      # # @owner_projects = Project.find_by_owner_id(Developer.find_by_gamer_id(current_gamer.id))
+      # @owner_projects.each { |project| if project.id = @project_id
+      #     @owned = true
+      #   else
+      #     @owned = false
+      #   end }
+      # if owned
+        # check if project is shared with me too
+        # check for free users, if the words exceeds 20 words
+        @word_id = Keyword.find_by_name(params[:keyword]).id
+        if Keyword.find_by_id(@word_id) != nil
+          @synonym_id = params[:synonym_id]
+          if PreferedSynonym.find_word_in_project(@project_id, @word_id)
+            @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+            @synonym_id = params[:synonym_id]
+            if Synonym.find_by_id(@synonym_id) != nil
+              @edited_word.synonym_id = @synonym_id
+              if @edited_word.save
+                flash[:notice] = "Synonym changed successfully."
+                redirect_to project_path(@project_id), :flash => flash
+                return
+              else
+                flash[:notice] = "Failed to update synonym"
+                redirect_to project_path(@project_id), :flash => flash
+                return
+              end
+            else
+              flash[:notice] = "This synonym does not exist."
+              redirect_to project_path(@project_id), :flash => flash
+              return
+            end
+          else
+            @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
+            if @added_word
+              flash[:notice] = "You have successfully added the word to your project."
+              redirect_to project_path(@project_id), :flash => flash
+              return
+            else
+              flash[:notice] = "Word cannot be added to your project."
+              redirect_to project_path(@project_id), :flash => flash
+              return
+            end
+          end
+        else
+          flash[:notice] = "The word you're trying to add does not exist."
+          redirect_to project_path(@project_id), :flash => flash
+          return
+          # render the project's page and add link to add this word to the database
+        end
+      # else
+      #   flash[:notice] = "You can't add a word to someone else's project!"
+      #   render 'pages/home'
+      # end
+    else
+      flash[:notice] = "You have to register as a developer before trying to add a word to your project."
+      render 'pages/home'
+    end
+  end
   # author:
   #      Salma Farag
   # description:
@@ -157,17 +282,17 @@ class ProjectsController < BackendController
     if gamer_signed_in?
      @project = Project.find(params[:id])
      @project = Project.createcategories(@project, params[:project][:categories])
-     if @project.update_attributes(params.except(:categories,:utf8, :_method,
-      :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-      redirect_to :action => "index"
-      flash[:notice] = "Project has been successfully updated."
+      if @project.update_attributes(params.except(:categories,:utf8, :_method,
+        :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
+        redirect_to :action => "index"
+        flash[:notice] = "Project has been successfully updated."
+      else
+        render :action => 'edit'
+      end
     else
-      render :action => 'edit'
+      flash[:error] = "You are not authorized to view this page"
     end
-  else
-    flash[:error] = "You are not authorized to view this page"
   end
-end
 
   # author:
   #      Salma Farag
@@ -179,13 +304,24 @@ end
   #     A project page will open.
   # failure:
   #     None.
-def show
-  if gamer_signed_in?
+  def show
+    @projects = Project.where(:owner_id => current_gamer.id)
     @project = Project.find(params[:id])
-  else
-    flash[:error] = "You are not authorized to view this page"
+    if @projects.include?(@project)
+      @words = []
+      @synonyms = []
+      @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
+      @words_synonyms.each do |word_synonym|
+        word = Keyword.find(word_synonym.keyword_id)
+        syn = Synonym.find(word_synonym.synonym_id)
+        @words.push(word)
+        @synonyms.push(syn)
+      end
+    else
+      redirect_to :action => "index"
+      flash[:error] = "You are not authorized to view this page"
+    end
   end
-end
 
  # author:Noha hesham
  # Description:
@@ -204,8 +340,8 @@ end
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
-end
-end
+    end
+  end
 
   def choose_keywords
     @id_words_in_database_before = params[:a1]
@@ -346,6 +482,48 @@ end
       else
         redirect_to action: "choose_keywords",id: params[:project_id], a1:id_words_in_database_before, a2:id_synonyms_words_in_database_before, a3:id_words_not_in_database_before, a4:id_synonyms_words_not_in_database_before, a5:num_synonyms_words_in_database_before, a6:num_synonyms_words_not_in_database_before
      end
+    end
+  end
+# author:
+#      Khloud Khalid
+# description:
+#     method removes a given word from a project
+# params:
+#     project_id, word_id
+# success:
+#     word removed successfully
+# failure:
+#     keyword does not exist or is not in the project, developer trying to remove word is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
+  def remove_word
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      # if Project.find_by_owner_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
+        # check if project is shared with me too
+      @word_id = params[:word_id]
+        # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
+      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+      @removed_word.each { |word| 
+        if word.project_id = @project_id
+          @remove = word
+        end }
+      if  @remove != nil
+        @remove.destroy
+        flash[:notice] = "Word removed successfully."
+        redirect_to project_path(@project_id), :flash => flash
+        return
+      else
+        flash[:notice] = "This word is not in the project."
+        redirect_to project_path(@project_id), :flash => flash
+        return
+      end
+      # else
+      #   flash[:notice] = "You can't remove a word from someone else's project!"
+      #   render 'pages/home'
+      # end
+    else
+      flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
+      render 'pages/home'
     end
   end
 

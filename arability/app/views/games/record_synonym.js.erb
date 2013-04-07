@@ -1,8 +1,9 @@
 <% record_output=current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id].to_i) %>
+alert(record_output);
 <% if record_output == 0 %>
 	<% if I18n.locale==:en %>
 			$('.errors').append('<p style="font-size:20px; color:white;">The synonym has been added successfully</p>');
-		<% else %>
+	<% else %>
 			$('.errors').append('<p style="font-size:20px; color:white;">الكلمة حفظت بنجاح.</p>');
 	<% end %>
 <% elsif record_output == 1 %>

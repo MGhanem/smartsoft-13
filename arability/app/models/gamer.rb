@@ -20,9 +20,9 @@ class Gamer < ActiveRecord::Base
   #author: kareem ali
   def self.check
     if I18n.locale==:ar
-      return "انت غبي؟"
+      return "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
     else
-      return "Kareem"
+      return "username must be made up of english letters or digits"
     end
   end
 
@@ -79,6 +79,22 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
   has_many :services, :dependent => :destroy
+  
+  
+  def receive_trophy(trohpy_id)
+    trophy = Trophy.find(trophy_id)
+    
+    if trophy == nil
+      return false
+    end
+    
+    if self.trophies.include? trophy
+      return false
+    else
+      self.trophies << trophy
+      return true
+    end
+  end
 
   #Author: Kareem ALi
   #This method is used to select a synonym 
