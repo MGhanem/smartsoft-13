@@ -205,6 +205,7 @@ class Keyword < ActiveRecord::Base
     #   on failure: Empty array
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
 
     # finds a keyword by name from the database
     # @author Mohamed Ashraf
