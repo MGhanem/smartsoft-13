@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="span12">
-		<legend><%= t(:search)%></legend>
 		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
@@ -42,7 +41,27 @@
 	</div>
 </div>
 
-<% if !@synonyms.blank?%>
+
+<% if @display_add %>
+	<div class="well">
+		<span>
+			<%= t(:keyword_not_found) %>
+			<%= link_to t(:add_word), "add_path" %>
+		</span>
+	</div>
+<% end %>
+
+<% if @no_synonyms_found %>
+	<div class="well">
+		<span>
+			<%= t(:no_synonyms_found) %>
+			<%= link_to t(:follow_word), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+		</span>
+	</div>
+<% end %>
+
+
+<% if !@synonyms.blank? %>
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
@@ -52,13 +71,18 @@
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
 				<% key_id = Keyword.where(:name => @search_keyword).first.id %>
-				 <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+				<% if Keyword.get_keyword_synonym_visual(key_id) != [] %>
+				 	<%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
           <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
           <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-      <% end %>
+          <% end %>
+        <% else %>
+          <p><%= t(:no_votes_for_word)%></p>
+      	<% end %>
 			</div>
 		</div>
 	</div>
+
 	<% @synonyms.each do |synonym|%>
 		<div class="accordion-group">
 			<div class="accordion-heading">
@@ -88,12 +112,50 @@
 						</div>
 					</div>
 				</div>
-				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
+				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<!-- add charts here -->
+						<% if Vote.where('synonym_id=?', synonym.id).exists? %>
+				    <div class="container-fluid">
+              <div class="row-fluide">
+                <div class="span2">
+                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %> 
+                </div>
+                <div class="span2">
+                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+             </div>
+		        </div>
+		        <% else %>
+		        <%= t(:stats_no_votes) %>
+		        <% end %>
 					</div>
 				</div>
 			</div>
 		</div>
 	<% end %>
+	<div class="well">
+			<span>
+				<%= t(:follow_word_link) %>
+				<%= link_to t(:follow_word_end_of_search), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+			</span>
+	</div>
 <% end %>

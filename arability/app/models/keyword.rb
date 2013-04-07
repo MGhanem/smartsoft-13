@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
@@ -52,7 +53,7 @@ class Keyword < ActiveRecord::Base
         synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
       end
       synonym_list.uniq!
-      synonym_list = synonym_list.sort_by { |synonym, count| votes_count[synonym] }
+      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
         .reverse!
       synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
       synonym_list = synonym_list + synonyms_with_no_votes
@@ -82,21 +83,25 @@ class Keyword < ActiveRecord::Base
       return false
     end
 
-  # author:
-  #   Omar Hossam
-  # description:
-  #   feature takes no input and returns a list of all unapproved keywords
-  # success: 
-  #   takes no arguments and returns to the admin a list containing the keywords
-  #   that are pending for approval in the database
-  # failure:
-  #   returns an empty list if no words are pending for approval
-    def list_unapproved_keywords
-      return Keyword.where(approved: false).all
-    end
+# author:
+#   Omar Hossam
+# description:
+#   feature takes no input and returns a list of all unapproved keywords
+# success: 
+#   takes no arguments and returns to the admin a list containing the keywords 
+#   that are pending for approval in the database
+# failure:
+#   returns an empty list if no words are pending for approval
+
+  def listunapprovedkeywords
+
+    return Keyword.where(approved: false).all
+  end
 
     # adds a new keyword to the database
     # author:
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -106,6 +111,7 @@ class Keyword < ActiveRecord::Base
     # returns:
     #   success: the first return is true and the second is the saved keyword
     #   failure: the first return is false and the second is the unsaved keyword
+
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
       name.strip!
       keyword = where(name: name).first_or_create
@@ -167,7 +173,6 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -196,7 +201,8 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-		# finds a keyword by name from the database
+
+    # finds a keyword by name from the database
     # @author Mohamed Ashraf
     # @params name [string] the search string
     # ==returns
@@ -211,9 +217,9 @@ class Keyword < ActiveRecord::Base
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(:keyword_id => keyword_id)
         .joins(:votes).count(:group => "synonym_id")
-         sum = votes.sum{|v| v.last}
-         v = votes.map {|key, value| [Synonym.find(key).name, value]}
-        return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+      sum = votes.sum{|v| v.last}
+      v = votes.map {|key, value| [Synonym.find(key).name, value]}
+      return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
 
    
