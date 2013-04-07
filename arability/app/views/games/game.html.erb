@@ -11,6 +11,7 @@
   }
 
   function display_error_sign_in(locale){
+    $('.zone').empty();
     $('#workspace').remove();
     if(locale=="english"){
       $('.zone').append('<div class=\"vote_form\" style="font-size:20px; float:left; margin-left:30px;"><p>You have to be signed in to display vote form</p></div>');
@@ -21,12 +22,13 @@
   }
 
   function request_vote_form(){
+    $('.zone').empty();
     if(words.length==0){
       alert('empty');
       return;
     }
     $('#workspace').remove();
-    $('.zone').append('<div class=\"vote_form\"></div><div class=\"alert\"></br></div>');    
+    $('.zone').append('<div class=\"vote_form\"></div><</br>');    
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }

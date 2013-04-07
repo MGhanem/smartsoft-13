@@ -11,7 +11,7 @@ function display_next_word(){
 		$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
 		return;
 	}
-	$('.zone').append('<div class=\"vote_form\"></div><div class=\"alert\"></br></div>');
+	$('.zone').append('<div class=\"vote_form\"><div class=\"errors\"></br></div></div>');
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
 }
