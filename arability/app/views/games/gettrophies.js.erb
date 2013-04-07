@@ -1,5 +1,5 @@
 <% if !gamer_signed_in? %>
-    error = '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
+    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
     $("#zone").append($(error));
 <% else %>
   <% if params[:level] == nil || params[:score] == nil%>
@@ -12,21 +12,25 @@
     <% if won_trophies.length == 0 %>
         score_space = '<div class="award">لقد نلت ' + getScore() + '  نقطة!</div>';
         $("#zone").append($(score_space));
-        success = '<h1 class="award-title">لقد انهيت كل الانجازات لهذه المرحلة</h1>';
-    <% else %>
-        <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
-        success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
-        trophies = [];
+        <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
-        <% won_trophies.each do |t| %>
-          trophies.push('<div class="award">' + '<%= t.name %>' + '</div>');
+      <% if won_trophies.length == 0 %>
+          success = '<h1 class="award-title">لقد انهيت كل الانجازات لهذه المرحلة</h1>';
+      <% else %>
+          <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
+          success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
+          trophies = [];
+
+          <% won_trophies.each do |t| %>
+            trophies.push('<div class="award">' + '<%= t.name %>' + '</div>');
+          <% end %>
       <% end %>
+          $("#zone").append($(success));
+          for(var i = 0; i < trophies.length; i++) {
+            $("#zone").append($(trophies[i]));
+          }
+          var to_prizes_btn = <a class="btn btn-success">View Won Prizes</a>
+          $("#zone").append($(to_prizes_btn));
     <% end %>
-        $("#zone").append($(success));
-        (var i = 0; i < trophies.length; i++) {
-          $("#zone").append($(trophies[i]));
-        }
-        var to_prizes_btn = <a class="btn btn-success">View Won Prizes</a>
-        $("#zone").append($(to_prizes_btn));
-    <% end %>
+  <% end %>
 <% end %>

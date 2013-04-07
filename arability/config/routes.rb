@@ -92,6 +92,8 @@ Arability::Application.routes.draw do
   post "games/vote_errors"
 
   post "games/record_synonym"
+  match '/game' => 'games#game'
+  get 'games/gettrophies'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

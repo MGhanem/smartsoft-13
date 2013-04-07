@@ -85,7 +85,6 @@
 </div>
 
 
-    
 <script type="text/javascript" charset="utf-8">
   function clear() {
     $("#zone").empty();
@@ -102,5 +101,9 @@
   }
   function getScore() {
     return 123456;
+  }
+  function getTrophies(level, score) {
+    var request = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request);
   }
 </script>

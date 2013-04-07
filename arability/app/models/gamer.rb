@@ -79,6 +79,22 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
   has_many :services, :dependent => :destroy
+  
+  
+  def receive_trophy(trohpy_id)
+    trophy = Trophy.find(trophy_id)
+    
+    if trophy == nil
+      return false
+    end
+    
+    if self.trophies.include? trophy
+      return false
+    else
+      self.trophies << trophy
+      return true
+    end
+  end
 
   #Author: Kareem ALi
   #This method is used to select a synonym 
