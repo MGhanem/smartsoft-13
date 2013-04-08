@@ -50,7 +50,8 @@
 
   def create
     if gamer_signed_in?
-      @project = Project.createproject(params[:project],current_gamer.id)
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      @project = Project.createproject(params[:project],developer.id)
       @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
@@ -103,11 +104,11 @@
   # failure:
   #     none
   def edit
-    if gamer_signed_in?
+    # if gamer_signed_in?
       @project = Project.find(params[:id])
-    else
-      flash[:error] = "You are not authorized to view this page"
-    end
+    # else
+    #   flash[:error] = "You are not authorized to view this page"
+    # end
   end
 
   # author:
@@ -148,7 +149,8 @@ end
   # failure:
   #     None.
   def show
-    @projects = Project.where(:owner_id => current_gamer.id)
+    developer = Developer.where(:gamer_id => current_gamer.id).first
+    @projects = Project.where(:owner_id => developer.id)
     @project = Project.find(params[:id])
     if @projects.include?(@project)
       @words = []
