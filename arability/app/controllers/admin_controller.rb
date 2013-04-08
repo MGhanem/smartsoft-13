@@ -142,7 +142,7 @@ class AdminController < ApplicationController
     if message == 0
       uploadCSV(array_of_arrays)
     end
-    redirect_to action: "import_csv", message: message
+    redirect_to action: "index", anchor: "admin-import-csv-file", message: message
   end
 
 end
