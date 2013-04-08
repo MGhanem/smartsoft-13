@@ -7,43 +7,14 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i>إضافة مشروع</a>
+      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i> إضافة مشروع</a>
 <br />
 <br />
 <% @my_projects.each do |project| %>
   <div class="well well-small">
-  <strong>اسم:  </strong><%= project.name %>
+  <strong>اسم:  </strong><%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
   <br />
   <strong>فئات: </strong>
-  <% size = project.categories.length %>
-  <% counter = 1 %>
-  <% project.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-      <% end %>
-    <br />
-    <%= project.description %>
-    <br />
-  <% end %>
-  <br />
-  <strong>وصف:  </strong><%= project.description %>
-</div>
-<br />
-<% end %></p>
-    </div>
-    <div class="tab-pane" id="tab2">
-      <p>
-        <% @shared_projects.each do |project| %>
-  <div class="well well-small">
-  <strong>اسم:</strong>
-  <br />
-  <%= project.name %>
-  <br />
-  <strong>فئات:</strong>
-  <br />
   <% size = project.categories.length %>
   <% counter = 1 %>
   <% project.categories.each do |c| %>
@@ -55,10 +26,32 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:</strong>
-  <br />  
-  <%= project.description %>
+  <strong>وصف:  </strong><%= project.description %>
   <br />
+  <a class="btn" href="/developers/projects/<%= project.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+</div>
+<br />
+<% end %></p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>
+        <% @my_projects.each do |project| %>
+  <div class="well well-small">
+  <strong>اسم:  </strong><%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
+  <br />
+  <strong>فئات: </strong>
+  <% size = project.categories.length %>
+  <% counter = 1 %>
+  <% project.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project.description %>
 </div>
 <br />
 <% end %>

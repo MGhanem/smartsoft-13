@@ -18,13 +18,15 @@ class ProjectsController < BackendController
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:owner_id => developer.id)
-        @shared_projects = developer.projects_shared
+        # @shared_projects = developer.projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'
       end
     else
       flash[:notice] = "من فضلك قم بالدخول"
+    end
+  end
 
   # author:
   #      Salma Farag
@@ -55,8 +57,8 @@ class ProjectsController < BackendController
     else
      developer_unauthorized
      render 'pages/home'
-   end
- end
+    end
+  end
 
   # author:
   #      Salma Farag
@@ -137,7 +139,6 @@ class ProjectsController < BackendController
     end
   end
 
-=======
   # author:
   #      Salma Farag
   # description:
@@ -151,30 +152,19 @@ class ProjectsController < BackendController
   #     The old values will be kept.
   def update
     if developer_signed_in?
-     @project = Project.find(params[:id])
-     @project = Project.createcategories(@project, params[:project][:categories])
-     if @project.update_attributes(params.except(:categories,:utf8, :_method,
+      @project = Project.find(params[:id])
+      @project = Project.createcategories(@project, params[:project][:categories])
+      if @project.update_attributes(params.except(:categories,:utf8, :_method,
       :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-     redirect_to :action => "index"
-     flash[:notice] = "Project has been successfully updated."
-   else
-    render :action => 'edit'
+        redirect_to :action => "index"
+        flash[:notice] = "Project has been successfully updated."
+      else
+        render :action => 'edit'
+      end
+    else
+      developer_unauthorized
+    end
   end
-else
-  developer_unauthorized
-end
-end
-
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that finds a project by its ID to view it.
-  # params:
-  #     none
-  # success:
-  #     A project page will open.
-  # failure:
-  #     None.
 
  # author:Noha hesham
  # Description:
@@ -193,6 +183,8 @@ end
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
+    end
+  end
 
   def show
     @projects = Project.where(:owner_id => current_developer.id)
