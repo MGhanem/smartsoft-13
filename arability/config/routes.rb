@@ -49,6 +49,7 @@ Arability::Application.routes.draw do
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
+      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
 			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
