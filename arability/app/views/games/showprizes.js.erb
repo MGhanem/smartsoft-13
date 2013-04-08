@@ -22,7 +22,6 @@
     <% end %>
   <% end %>
 
-   + '<img width="60" src="<%= p.image %>">'
 
   $("#award-list").append($(not_won_prizes));
 
@@ -33,7 +32,7 @@
       $("#award-list").append($(prize_error));
   <% else %>
       <% not_won_prizes.each do |nwp| %>
-          prize = '<div class="award-desc-locked"><%= nwp.name %></div>';
+      prize = '<div class="award-desc-locked">' + '<img width="60" src="<%= nwp.image :w%>"' + '<%= nwp.name %></div>';
           $("#award-list").append($(prize));
       <% end %>
   <% end %>
