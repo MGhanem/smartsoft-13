@@ -41,8 +41,11 @@
       
     </div>
   </div>
+  <% if I18n.locale==:ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-
+    <% else I18n.locale==:en %>
+    <div class="zone" id="zone">
+      <% end %> 
     <div class="divaya">
       <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
@@ -79,5 +82,15 @@
   }
   function getScore() {
     return 123456;
+  }
+
+  function setButtons(){
+    <% if I18n.locale==:ar %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a>';
+    <% else I18n.locale==:en %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">Restart Game</a>';
+    <% end %>
   }
 </script>

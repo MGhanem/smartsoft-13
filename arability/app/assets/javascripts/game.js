@@ -18,21 +18,29 @@ var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
 var successfulWords = [];
-var score;
+var score = 0;
+var gameButtonClear;
+var gameButtonRestart;
 
 
 function newGame(){
 	$('.zone').empty();
+	setButtons();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol></div>' +
-	'<div class="well label-div"><label id="wordLabel" class="label1"></label></div>' +
-	'<br><br><div><button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button></div>' +
-	'<div class="buttons-div">' +
-	'<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a></div>' +
+	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
+	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
+	'<br><br><div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
 	'<br><br>'+ 
-	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: 0</h3></div>');
+	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>'+
+	'<div id ="level-popup" style="font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
 	$.ajaxSetup({async: false});
-	startGame();
+	$('#level-popup').fadeTo(0,0);
+	$('#level-popup').fadeTo(1500,1);
+	$('#level-popup').fadeTo(1500,0);
+	setTimeout(function(){
+		$('#level-popup').remove();
+		startGame();
+	}, 3500);
 }
 function startGame(){
 	levelTitle = $('#level');
@@ -507,30 +515,36 @@ function clearWord(){
 // }
 
 function nextLevel(){
+	level++;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol></div>' +
-	'<div class="well label-div"><label id="wordLabel" class="label1"></label></div>' +
-	'<br><br><div><button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button></div>' +
-	'<div class="buttons-div">' +
-	'<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a></div>' +
+	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
+	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
+	'<br><br><div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
 	'<br><br>'+ 
-	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>');
-	$('#main-table').empty();
-	$('#wordsList').empty();
-	$('#level').empty();
-	buttonArray = [];
-	bigTower = '';
-	gameOver = false;
-	level++;
-	numberOfCalls = 0;
-	successfulWords = [];
-	clearTimeout(pullingBlocks);
-	clearTimeout(droppingBlocks);
-	if(numberOfCalls > 0){
-		clearTimeout(suspenseTimer);
-	}
-	startGame();
+	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>'+
+	'<div id ="level-popup" style="font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
+	$('#level-popup').fadeTo(0,0);
+	$('#level-popup').fadeTo(1500,1);
+	$('#level-popup').fadeTo(1500,0);
+	setTimeout(function(){
+		$('#level-popup').remove();
+		$('#main-table').empty();
+		$('#wordsList').empty();
+		$('#level').empty();
+		buttonArray = [];
+		bigTower = '';
+		gameOver = false;
+		successfulWords = [];
+		clearTimeout(pullingBlocks);
+		clearTimeout(droppingBlocks);
+		if(numberOfCalls > 0){
+			alert('here dawg');
+			clearTimeout(suspenseTimer);
+			numberOfCalls = 0;
+		}
+		startGame();
+	}, 3500);
 	
 }
 
@@ -699,4 +713,11 @@ function calculateScore(){
 	score = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
 	document.getElementById('score').innerHTML = "SCORE: " + score;
+}
+
+function getScore(){
+	return score;
+}
+function getLevel(){
+	return level;
 }
