@@ -74,7 +74,7 @@
             <%= f.select(:education_level, options_for_select(['','منخفض','متوسط','عالي']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
-  <%= f.password_field t(:current_password), :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
+  <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
 
   <div><%= f.submit "تغيير", :class => "btn btn-success" %></div>
   <% end %>
