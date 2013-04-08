@@ -69,17 +69,9 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
-<<<<<<< HEAD
-
-=======
->>>>>>> C4_m0hamed_C5F2_switch_locales
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
 end
-<<<<<<< HEAD
-
-=======
->>>>>>> C4_m0hamed_C5F2_switch_locales
