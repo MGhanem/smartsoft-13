@@ -179,7 +179,6 @@ function dropAblockCont(clss, btn, randNum, counter){
 
 						setTimeout(function(){$('tr').fadeIn('slow');
 							$('tr').empty();
-
 						}, 500);
 						return;
 					}
@@ -682,4 +681,6 @@ function calculateScore(){
 	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	var newScore = currentScore + (100 * level);
 	document.getElementById('score').innerHTML = "SCORE: " + newScore;
+
 }
+

@@ -10,7 +10,7 @@ class Gamer < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth
+                  :username, :country, :education_level, :date_of_birth, :gender
 
   validates :username, :presence => true, :length => { :minimum => 3 }
 
