@@ -88,14 +88,17 @@ class AdminController < ApplicationController
   def addword
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
       flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
+      flash.keep
+      redirect_to action: "index", anchor: "home"
     else
       flash[:error] = @keyword.errors.messages
+      flash[:errortype] = "addword"
+      flash.keep
+      redirect_to action: "index", anchor: "admin-add-word", fargs: params
     end
-    flash.keep
-    redirect_to action: "index"
   end
 
   # author:
