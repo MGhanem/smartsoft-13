@@ -21,7 +21,7 @@ module SearchHelper
       header = t(:stats_education)
     end
       chart = LazyHighCharts::HighChart.new('pie') do |f|
-          f.chart({:defaultSeriesType=>"pie" , :margin=> [0, 10, 150,25], :width => 150, :hieght => 50} )
+          f.chart({:defaultSeriesType=>"pie" , :margin=> [0, 10, 150,25], :width => 157, :hieght => 50} )
           series = {
                    :type=> 'pie',
                    :name=> 'Browser share',
