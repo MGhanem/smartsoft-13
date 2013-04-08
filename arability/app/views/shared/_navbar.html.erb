@@ -10,13 +10,13 @@
       <a class="brand" href="/"><%= t :arability %></a>
 
       <div class="nav-collapse">
-      <ul class="nav pull-right">
+      <% if !gamer_signed_in? %>
+        <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
           <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
         <% else %>
           <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
         <% end %>
-      <% if !gamer_signed_in? %>
           <li class="divider-vertical"></li>
           <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
           <li class="divider-vertical"></li>
@@ -31,6 +31,7 @@
               <% end %>
             </div>
           </li>
+        </ul>
       <% else %>
         <li><%= link_to t(:backend), backend_home_path %></li>
         <% if I18n.locale==:en %>
@@ -41,7 +42,6 @@
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>تعئيير البيانات</a></li>
         <% end %>
       <% end %>
-      </ul>
       </div>
     </div>
   </div>
