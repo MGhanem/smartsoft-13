@@ -56,7 +56,6 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
-
   follow_word_link: "If you don't like these synonyms or want updates to this word, you can always"
   follow_word_end_of_search: "follow the word!"
   follow_keyword_alert_fail: "This word is already followed:"
@@ -70,5 +69,6 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
-
-
+  female: "female"
+  male: "male"
+  out_of: "from"

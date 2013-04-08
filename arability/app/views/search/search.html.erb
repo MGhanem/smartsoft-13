@@ -1,42 +1,134 @@
 <div class="row">
-	<legend>Search Keywords:</legend>
-	<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
-  	<%= content_tag(:div, :class => 'input-append') do %>
-  		<% text_field_tag(:search, @search_keyword,
-  											:placeholder => 'search keywords here...',
-  											:class => 'search-query') + %>
-			<% button_tag(:type => "submit",:class => 'btn') do %>
-				<% content_tag(:i, nil,:class => "icon-search") %>
+	<div class="span12">
+		<%= form_tag(search_path, :method => "post", :class => "form-search form-horizontal") do %>
+			<%= content_tag(:div, :class => 'input-append') do %>
+				<% text_field_tag(:search, @search_keyword,
+													:placeholder => t(:search_here),
+													:class => 'search-query') + %>
+				<% button_tag(:type => "submit",:class => 'btn') do %>
+					<% content_tag(:i, nil,:class => "icon-search") %>
+				<% end %>
 			<% end %>
+			<div class="row" style="padding:10px;">
+				<div class="span12">
+						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
+							<span id="filter_btn" class="icon-plus" onClick="toggle_me()"></span>
+							<script type="text/javascript">
+								function toggle_me(){
+									$("#filter_btn").toggleClass('icon-minus');
+								}
+							</script>
+						</button>
+						<span>&nbsp;<%= t(:filter) %></span>
+						<div id="filter" class="collapse"> 
+							<div style="padding:10px;">
+								<div class="control-group">
+									<%= label_tag t(:country), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= text_field_tag :country, @country, :class => "control" %>
+								</div>
+								<div class="control-group">
+									<%= label_tag t(:gender), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= select_tag :gender, options_for_select([t(:male), t(:female)]), :include_blank => true,  :class => "control" %>
+								</div>	
+								<div class="control-group">
+									<%= label_tag t(:age_from), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
+								</div>
+								<div class="control-group">
+									<%= label_tag t(:age_to), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= number_field_tag :age_to, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
 		<% end %>
-	<% end %>
+	</div>
 </div>
 
-<div class="row">
-	<% if @is_successful == 'true' %>
-	<div class="alert alert-success">
-		<%= content_tag(:span, "Keyword successfully added!") %>
-	</div>
-	<% elsif @is_successful == 'false' %>
-	<div class="alert alert-danger">
-		<%= content_tag(:span, 
-			"Sorry, we failed to add your word to database! Check it and try " +
-			"again") %>
-	</div>
-	<% end %>
-	<% if @similar_keywords.blank? && !@search_keyword.blank? && @is_successful == nil %>
+<% if @display_add %>
 	<div class="well">
-		<%= content_tag(:span, 
-			"Sorry! No matched were found for the keyword you searched for!" +
-			" Do you wish to add it to our database?") %>
-		<%= link_to "Add", :controller => "keywords", :action => "suggest_add",
-		:search => @search_keyword, :method => :get %>
-	</div>
-	<% else %>
-		<ul class="unstyled">
-			<% @similar_keywords.each do |c| %>
-			<%= content_tag(:li, c.name) %>
+		<span>
+			<%= t(:keyword_not_found) %>
+			<%= form_tag(keywords_create_path, :method => "post", :class => "form-search") do %>
+				<input name='keyword[name]' value='<%= @search_keyword %>' type="hidden">
+				<input name="redirect" value="<%= search_path %>" type="hidden">
+				<input value="<%= t(:add_word) %>"type="submit">
 			<% end %>
-		</ul>
+		</span>
+	</div>
+<% end %>
+
+<% if @no_synonyms_found %>
+	<div class="well">
+		<span>
+			<%= t(:no_synonyms_found) %>
+			<%= link_to t(:follow_word), follow_word_path(keyword_id: Keyword.where(:name => @search_keyword).first.id) %>
+		</span>
+	</div>
+<% end %>
+
+<% if !@synonyms.blank? %>
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<span class="accordion-toggle" data-toggle="false" href="#collective">
+				<span><%= t(:view_collectives)%><i><b><%= @search_keyword %></b></i></span>
+			</span>
+		</div>
+		<div id="collective" class="accordion-body collapse in">
+			<div class="accordion-inner">
+				<% key_id = Keyword.where(:name => @search_keyword).first.id %>
+				<% if Keyword.get_keyword_synonym_visual(key_id) != [] %>
+				 	<%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+          <% end %>
+        <% else %>
+          <p><%= t(:no_votes_for_word)%></p>
+      	<% end %>
+			</div>
+		</div>
+	</div>
+
+	<% @synonyms.each do |synonym|%>
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<div class="row">
+					<div class="span12">
+						<div class="accordion-toggle" style="padding-bottom:30px;">
+							<div class="pull-left">
+								<span class="span1">
+									<%= synonym.name %>
+								</span>
+								<span class="span2" style="color:#bbb;"><i>
+									<% if @votes[synonym.id] != nil%>
+										<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
+									<% else %>
+										<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
+									<% end %>
+								</i></span>
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
+									<span><%= t(:view_stats)%></span>
+								</button>
+								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
+									<%= content_tag(:span, t(:add_to_project))%>
+								<% end %>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
+					<div class="accordion-inner">
+						<!-- add charts here -->
+					</div>
+				</div>
+			</div>
+		</div>
 	<% end %>
-</div>
+<% end %>
