@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class AdminController < ApplicationController
 
   require 'csv'
@@ -23,7 +24,7 @@ class AdminController < ApplicationController
   #     none
   def require_login
     unless logged_in?
-      flash[:error] = "You must be logged in"
+      flash[:error] = "يجب تسجيل الدخول"
       redirect_to action: "login"
     end
   end
@@ -64,7 +65,7 @@ class AdminController < ApplicationController
         create_session
         redirect_to action: "index"
       else
-        flash[:error] = "Invalid username or password"
+        flash[:error] = "اسم المستخدم او كلمة السر غير صحيحة"
         @username = params[:username]
       end
     end
@@ -85,7 +86,7 @@ class AdminController < ApplicationController
     is_english = params[:keyword][:is_english]
     success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
     if success
-      flash[:success] = "Keyword #{@keyword.name} has been created"
+      flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
     else
       flash[:error] = @keyword.errors.messages
     end
