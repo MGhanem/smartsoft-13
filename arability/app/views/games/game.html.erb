@@ -1,18 +1,34 @@
 <script type="text/javascript" charset="utf-8">
   
-  var words=["car","dead","ok"];
+  var words=["car","sar","sad","sfd"];
 
   function get_words(){
     return words;
   }
 
+  function have_to_sign_in(){
+    $.post("/games/vote_errors.js");
+  }
+
+  function display_error_sign_in(locale){
+    $('.zone').empty();
+    $('#workspace').remove();
+    if(locale == "english"){
+      $('.zone').append('<div class=\"vote_form\" style="font-size:20px; color:white; float:left; margin-left:30px;"><p>You have to be signed in to display vote form</p></div>');
+    }
+    if(locale == "arabic"){
+      $('.zone').append('<div class=\"vote_form\"style="font-size:20px; color:white; float:left; margin-left:30px;" ><p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
+    }
+  }
+
   function request_vote_form(){
+    $('.zone').empty();
     if(words.length==0){
       alert('empty');
       return;
     }
     $('#workspace').remove();
-    $('.zone').append('<div class=\"vote_form\"></div>');
+    $('.zone').append('<div class=\"vote_form\"></div></br>');    
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }
@@ -41,13 +57,45 @@
       
     </div>
   </div>
-  <div class="zone">
+
+  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+    <div class="divaya">
+      <% if I18n.locale==:ar %>
+    <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
+    <div class="game-lang">
+      <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
+      <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
+      <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
+    </div>
+    <% else I18n.locale==:en %>
+    <h2 class="lang-header">Pick the language you want to play with</h2><br>
+    <div class="game-lang">
+      <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
+      <button class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button><br><br><br><br>
+      <button class="btn btn-warning both-btn" onclick="setLang(2)">Both</button>
+    </div>
+    <% end %>
+    </div>
 
   </div>
 </div>
 
 <div id="workspace" style="position:relative; left: 10px; ">
-  <a onclick="request_vote_form()"  id="btn">start voting</a>
+  <a onclick="have_to_sign_in()"  id="btn">start voting</a>
 </div>
 
 
+    
+<script type="text/javascript" charset="utf-8">
+  function clear() {
+    $("#zone").empty();
+  }
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getScore() {
+    return 123456;
+  }
+</script>
