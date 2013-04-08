@@ -45,7 +45,11 @@
 	<div class="well">
 		<span>
 			<%= t(:keyword_not_found) %>
-			<%= link_to t(:add_word), keywords_create_path(:name => @search_keyword, :redirect_url => search_url)%>
+			<%= form_tag(keywords_create_path, :method => "post", :class => "form-search") do %>
+				<input name='keyword[name]' value='<%= @search_keyword %>' type="hidden">
+				<input name="redirect" value="<%= search_path %>" type="hidden">
+				<input value="<%= t(:add_word) %>"type="submit">
+			<% end %>
 		</span>
 	</div>
 <% end %>
