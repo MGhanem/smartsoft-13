@@ -2,6 +2,7 @@ class Trophy < ActiveRecord::Base
   include Paperclip::Glue
   validates :name, :presence => true, :length => { :in => 6..24 },
     :uniqueness => true
+  validates_format_of :name, :with =>  /^([\u0621-\u0652 ])+$/
   validates :level, :presence => true, :numericality => {
     :greater_than_or_equal_to => 1, :less_than_or_equal_to => 100 }
   validates :score, :presence => true, :numericality => {
@@ -17,6 +18,7 @@ class Trophy < ActiveRecord::Base
 
   class << self
 
+<<<<<<< HEAD
     # author:
     #     Karim ElNaggar
     # description:
@@ -35,6 +37,15 @@ class Trophy < ActiveRecord::Base
         return false, new_trophy
       end
     end
+=======
+  # has_attached_file :photo
+  
+  def self.get_new_trophies_for_gamer(gamer_id, score, level)
+    trophies_all = Trophy.where(:score => score, :level => level)
+    trophies_gamer = Gamer.find(gamer_id).trophies
+    return trophies_all - trophies_gamer
+  end
+>>>>>>> 53548f14fa4f14bdfc23897aeba563a9de9ae408
 
   end
 end
