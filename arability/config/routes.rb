@@ -16,8 +16,6 @@ Arability::Application.routes.draw do
 
     post "admin/login"
 
-		get "admin/import_csv"
-
     post "admin/upload"
 
     post "admin/addword"
