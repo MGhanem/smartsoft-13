@@ -1,7 +1,6 @@
 Arability::Application.routes.draw do
   
   root :to => 'pages#home'
-  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
@@ -78,9 +77,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/create' => "my_subscription#create"
     end
 
-  end
-  
-  
+  end  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
