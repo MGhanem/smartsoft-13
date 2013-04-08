@@ -5,14 +5,12 @@ class AuthenticationsController < ApplicationController
 	end
 
 	def twitter_callback
-	  flash[:notice] = "تم الاتصال مع تويتر"
 	  auth = request.env["omniauth.auth"]
-      authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["gid"]) || Authentication.create_with_omniauth(auth)
+      authentication = Authentication.find_by_provider_and_gid(auth["provider"], current_gamer.id) || Authentication.create_with_omniauth(auth, current_gamer)
 	end
 
 	def remove_twitter_connection
-	  flash[:notice] = "تم إلغاء الاتصال مع تويتر"
-	  Authentication.find_by_gamer_id_and_provider(current_gamer, "Twitter").destroy
+	  Authentication.remove_conn(current_gamer)
 	  render :action => "twitter"
 	end
 

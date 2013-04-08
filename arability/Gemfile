@@ -75,3 +75,4 @@ group :test do
   gem "guard-rspec"
 end
 
+gem 'omniauth-twitter'
