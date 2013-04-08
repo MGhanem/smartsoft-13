@@ -19,12 +19,14 @@ class Gamer < ActiveRecord::Base
   
   #author: kareem ali
   def self.check
-    if I18n.locale==:ar
-      return "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
-    else
-      return "username must be made up of english letters or digits"
+    if I18n.locale == :ar
+      "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
+    end
+    if I18n.locale == :en
+      "username must be made up of english letters or digits"
     end
   end
+
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }

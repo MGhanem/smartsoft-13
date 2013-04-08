@@ -23,9 +23,7 @@ ar:
   view_stats: "الإحصائيات"
   add_to_project: "اضف لمشروعك"
   gender: "النوع"
-  errors:
-    messages:
-      not_saved:
+  gamer: "اللاعب"
   errors:
     messages:
       not_saved:
