@@ -1,4 +1,4 @@
-<%= form_for @project, :url => "/projects/share_project_with_developer" do |f| %>
+<%= form_for @project, :url => "/developers/projects/share_project_with_developer" do |f| %>
 <%= hidden_field_tag "id", @project.id%>
   <%= f.label "Email Address"%>
   <%= text_field :email,""%>
