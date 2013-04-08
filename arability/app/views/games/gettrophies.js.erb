@@ -1,5 +1,6 @@
 <% if !gamer_signed_in? %>
-
+    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
+    $("#zone").append($(error));
 <% else %>
   <% if params[:level] == nil || params[:score] == nil%>
       error = '<div class="alert" style="text-align:right; margin:10px;">' +
