@@ -4,24 +4,24 @@
     <div class="nav-box">
       الرتبة
     </div>
-    <div class="nav-box">
+    <div class="nav-box" onclick="showPrizes()">
       جوائز
   </div>
     <div class="nav-box">
       الإنجازات
     </div>
     <div class="nav-box">
-     بروفيل 
+     بروفيل
     </div>
     <div class="nav-box">
-     إعدادات 
+     إعدادات
     </div>
     <div id="level" class="nav-box">
       
     </div>
   </div>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-    
+
   </div>
 </div>
 <script type="text/javascript" charset="utf-8">
@@ -40,5 +40,9 @@
   }
   function getScore() {
     return 123456;
+  }
+  function showPrizes() {
+    clear();
+    $.get("/games/showprizes"); 
   }
 </script>

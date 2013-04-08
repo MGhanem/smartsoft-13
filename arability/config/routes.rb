@@ -106,6 +106,7 @@ Arability::Application.routes.draw do
   
   
   get "games/getprizes"
+  get "games/showprizes"
 
   post "games/record_vote"
 
