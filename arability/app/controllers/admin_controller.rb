@@ -46,6 +46,7 @@ class AdminController < ApplicationController
   end
 
   def index
+    @trophies_list = Trophy.all
   end
 
   # author:
@@ -92,6 +93,20 @@ class AdminController < ApplicationController
     end
     flash.keep
     redirect_to action: "index"
+  end
+
+  def deletetrophy
+    params[:id] = params[:id].strip
+    status_trophy = Trophy.find_by_id(params[:id])
+    if status_trophy.present?
+      name = status_trophy.name
+      status_trophy.delete
+      flash[:success] = "تم مسح مدالية #{name} بنجاح"
+    else
+      flash[:error] = "Trophy number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "delete-trophy"
   end
 
   # author:
