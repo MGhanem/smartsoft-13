@@ -10,13 +10,13 @@
       <a class="brand" href="/"><%= t :arability %></a>
 
       <div class="nav-collapse">
-      <% if !gamer_signed_in? %>
-        <ul class="nav pull-right">
+      <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
           <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
         <% else %>
           <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
         <% end %>
+      <% if !gamer_signed_in? %>
           <li class="divider-vertical"></li>
           <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
           <li class="divider-vertical"></li>
@@ -32,15 +32,13 @@
               <% end %>
             </div>
           </li>
-        </ul>
       <% else %>
 
-      <ul class="nav pull-right">
         <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>Account Settings</a></li>
-      </ul>
 
       <% end %>
+      </ul>
       </div>
     </div>
   </div>
