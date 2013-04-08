@@ -26,3 +26,26 @@ ar:
   errors:
     messages:
       not_saved:
+  errors:
+    messages:
+      not_saved:
+        one: "خطأ واحد منع التسجيل:"
+        other: "%{count} اخطآء منعت من التسجيل:"
+  devise:
+    registrations:
+      gamer:
+        signed_up: "تم التسجيل بنجاح"
+    sessions:
+      gamer:
+        signed_in: "لقد تم تسجيل الدخول بنجاح"
+        signed_out: "لقد تم تسجيل الخروج بنجاح"
+    failure:
+      gamer:
+        invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"

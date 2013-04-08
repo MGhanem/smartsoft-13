@@ -66,9 +66,9 @@
             <%= f.select(:gender,options_for_select(['ذكر','انثي']),{}, :style => "margin-left: 10px;" ) %></div></br>  
 
             <div><%= f.label t(:country), :class => "control-label" %>
-                <span style="margin-left: 10px;">
-                    <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
-                </span>
+                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
+                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                {:style => "margin-left: 10px;" }) %>
             </div></br>
 
             <div><%= f.label t(:education_level), :class => "control-label" %>

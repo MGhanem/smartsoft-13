@@ -17,11 +17,12 @@ class Gamer < ActiveRecord::Base
                   
   validates :username, :presence => true, :length => { :minimum => 3 }
   
+  #author: kareem ali
   def self.check
     if I18n.locale==:ar
-      return "انت غبي؟"
+      return "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
     else
-      return "Kareem"
+      return "username must be made up of english letters or digits"
     end
   end
 
@@ -30,10 +31,8 @@ class Gamer < ActiveRecord::Base
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
 
-  validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i }
+  validates :education_level, :format => { :with => /\A^(low|medium|high|منخفض|متوسط|عالي)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
