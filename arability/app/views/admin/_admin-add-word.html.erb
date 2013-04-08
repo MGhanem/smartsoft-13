@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="wordadd" method="post">
+<form class="form-horizontal" action="/admin/addword" method="post">
 	<fieldset>
 		<legend>
 			<a>
@@ -10,7 +10,7 @@
 			<label class="control-label" for="inputkeyword">الكلمة</label>
 			<div class="controls">
 				<input type="text" id="inputkeyword" name="keyword[name]" placeholder="الكلمة" value="<%=@fargs && @fargs[:keyword]? @fargs[:keyword][:name] : ''%>">
-				<button type="submit" class="btn btn-primary">إضافة الكلمة</button>
+				<button type="submit" class="btn btn-primary pull-left">إضافة الكلمة</button>
 				<% if flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name] %>
 					<% flash[:error][:name].each do |er| %>
 						<span class="help-block"><%= er %></span>

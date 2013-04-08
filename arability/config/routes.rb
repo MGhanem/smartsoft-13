@@ -12,7 +12,7 @@ Arability::Application.routes.draw do
     
     get "admin/logout"
   
-    post "admin/wordadd"
+    post "admin/addword"
 
     post "admin/login"
 
