@@ -1,4 +1,4 @@
-class FollowController < ApplicationController
+class FollowController < BackendController
   
   def follow
     developer = Developer.where(:gamer_id => current_gamer.id).first
