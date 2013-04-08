@@ -17,10 +17,12 @@
       $("#award-list").append($(prize_error));
   <% else %>
     <% won_prizes.each do |wp| %>
-      prize = '<div class="award-desc-unlocked"><%= wp.name %></div>';
+      prize = '<div class="award-desc-unlocked">' + '<img width="60" src="<%= wp.image %>">' + '<%= wp.name %></div>';
       $("#award-list").append($(prize));
     <% end %>
   <% end %>
+
+   + '<img width="60" src="<%= p.image %>">'
 
   $("#award-list").append($(not_won_prizes));
 
