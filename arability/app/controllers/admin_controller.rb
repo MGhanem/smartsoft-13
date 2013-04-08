@@ -46,6 +46,7 @@ class AdminController < ApplicationController
   end
 
   def index
+    @fargs = params[:fargs]
   end
 
   # author:
@@ -124,6 +125,39 @@ class AdminController < ApplicationController
       redirect_to action: "index"
     else
       redirect_to action: "index", anchor: "admin-add-trophy", fargs: {addtrophy: params}
+    end
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a prize as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the prize
+  #     level: the level required to earn the prize
+  #     score: the score required to earn the prize
+  #     image: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addprize
+    params[:name] = params[:name].strip
+    params[:level] = params[:level].strip
+    params[:score] = params[:score].strip
+    success, prize = Prize.add_prize_to_database(params[:name], params[:level], params[:score], params[:image])
+    if success
+      flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
+    else
+      flash[:error] = prize.errors.messages
+      flash[:errortype] = "addprize"
+    end
+    flash.keep
+    if success
+      redirect_to action: "index"
+    else
+      redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
     end
   end
 
