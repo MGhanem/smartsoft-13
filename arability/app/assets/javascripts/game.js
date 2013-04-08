@@ -688,3 +688,25 @@ function calculateScore(){
 
 }
 
+function loseGame(){
+	if(tower > dimension - 1){
+		gameOver = true;
+		buttonArray = [];
+		generateWord();
+		clearTimeout(suspenseTimer);
+		clearTimeout(pullingBlocks);
+		clearTimeout(droppingBlocks);
+		$('tr').fadeOut('slow');
+		setTimeout(function(){$('tr').fadeIn('slow');
+		$('tr').empty();
+		}, 500);
+		setWordsArray();
+		have_to_sign_in();
+		return true;
+	}
+	else{
+		return false;
+	}
+
+}
+
