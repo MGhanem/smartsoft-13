@@ -1,6 +1,6 @@
 class Keyword < ActiveRecord::Base
-  attr_accessible :approved, :is_english, :name
   has_many :synonyms
+  attr_accessible :approved, :is_english, :name
   has_and_belongs_to_many :categories
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"
@@ -130,6 +130,24 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
+    
+    # Author: Mostafa Hassaan
+    # Description: Method gets the synonym of a certain word with the highest
+    #               number of votes.
+    # params: 
+    #   word: a Keyword to get the highest voted synonym for
+    # return:
+    #   on success: the highest voted Synonym of word gets returned. If two 
+    #               synonyms have an equal number of votes, the first synonym 
+    #               entered to the list is returned.
+    #   on failure: if word has no synonyms, nothing is returned
+    def highest_voted_synonym(keyword)
+      grouped_synonyms = Synonym.where(:keyword_id => keyword.id)
+        .joins(:votes).count(:group => "synonym_id")
+      highest_synonym = grouped_synonyms.max_by{ |key, count|count }
+      return Synonym.where(:id => highest_synonym[0])
+    end
+
     # Author: Mostafa Hassaan
     # Method takes no inputs and returns an array of "Keywords"
     # with "synonyms" that haven't been approved yet.
@@ -140,6 +158,5 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
-
   end
 end
