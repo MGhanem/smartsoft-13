@@ -304,8 +304,6 @@ float:right;
   background-color: rgba(200,204,190, 0.3);
 }
 
-
-
 .award-type {
   padding-right: 20px;
   padding-left: 20px;
@@ -320,4 +318,12 @@ float:right;
 .award-zone {
   overflow-y: scroll;
   height:100%;
+}
+
+.score {
+  padding-top: 50px;
+  width: 200px;
+  font-size: 30px;
+  margin-right: auto;
+  margin-left: auto;
 }

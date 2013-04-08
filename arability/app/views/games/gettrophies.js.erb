@@ -8,6 +8,12 @@
               '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
       $("#zone").append($(error));
   <% else %>
+
+      score_title_space = '<div class="score">مجموع النقاط </div>';
+      score_space = '<div class="score">' + <%= params[:score] %> +  '</div>';
+      $("#zone").append($(score_title_space));
+      $("#zone").append($(score_space));
+
     <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
 
     <% if won_trophies.length == 0 %>

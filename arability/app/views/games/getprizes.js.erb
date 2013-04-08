@@ -19,7 +19,7 @@
         prizes = [];
 
         <% won_prizes.each do |p| %>
-          prizes.push('<div class="award">' + '<%= p.name %>' + '</div>');
+          prizes.push('<div class="award">' + '<img width="60" src="<%= p.image %>">' + '<%= p.name %>' + '</div>');
         <% end %>
 
     <% end %>
