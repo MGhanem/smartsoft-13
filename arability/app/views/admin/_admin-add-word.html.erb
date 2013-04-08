@@ -1,8 +1,22 @@
-<%= form_for :keyword, :url => { :action => "wordadd" }, :html => {:class => "form-inline"} do |f| %>
-  <div class="row">
-    <div class="input-append">
-      <%= f.text_field :name %>
-      <%= f.submit "Create", :class=>"btn btn-primary" %>
-    </div>
-  </div>
-<% end %>
+<form class="form-horizontal" action="wordadd" method="post">
+	<fieldset>
+		<legend>
+			<a>
+				إضافة كلمة جديدة
+			</a>
+		</legend>
+		<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name]? ' error' : ''%>">
+			<label class="control-label" for="inputkeyword">الكلمة</label>
+			<div class="controls">
+				<input type="text" id="inputkeyword" name="keyword[name]" placeholder="الكلمة" value="<%=@fargs && @fargs[:keyword]? @fargs[:keyword][:name] : ''%>">
+				<button type="submit" class="btn btn-primary">إضافة الكلمة</button>
+				<% if flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name] %>
+					<% flash[:error][:name].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</fieldset>
+</form>
