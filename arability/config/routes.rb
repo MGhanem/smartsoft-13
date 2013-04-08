@@ -38,6 +38,8 @@ Arability::Application.routes.draw do
 
 		get 'games/getnewwords'
 
+    match "/post_score"=>'pages#post', :as => "post_facebook"
+
     # required for routing by the devise module(gem)
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
