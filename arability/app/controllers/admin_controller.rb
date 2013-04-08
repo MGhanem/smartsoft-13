@@ -128,36 +128,21 @@ class AdminController < ApplicationController
   # author:
   #   Amr Abdelraouf
   # description:
-  #   this function takes a csvfile as a parameter, parses it as an array of arrays
-  #   saves the first word of each arrays as a Keyword and the rest of the array as its
-  #   corresponding synonyms
+  #   method calls parseCSV to return an array of arrays
+  #   if the message is zero (file is valid and ready for insertion)
+  #   uploadCSV is called and the words are inserted
   # params:
-  #   POST csvfile is the csvfile to be parsed
+  #   POST csvfile
   # success:
-  #   file is parsed, words are saved and the return message is '0'
+  #   redirected to import_csv and status message is displayed
   # failure:
-  #   the file is nil and message is '1'
-  #   the file is not UTF-8 encoded and message is '2'
+  #   none
   def upload
-    begin
-      @csvfile = params[:csvfile]
-      if @csvfile != nil
-        @content = File.read(@csvfile.tempfile)
-        arr_of_arrs = CSV.parse(@content)
-        arr_of_arrs.each do |row|
-          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-          if @isSaved
-            for i in 1..row.size
-              Synonym.recordsynonym(row[i],keywrd.id)
-            end
-          end
-      end
-        redirect_to action: "import_csv", message: "0"
-      else 
-        redirect_to action: "import_csv", message: "1"
-      end
-    rescue ArgumentError
-        redirect_to action: "import_csv", message: "2"
+    array_of_arrays, message = parseCSV(params[:csvfile])
+    if message == 0
+      uploadCSV(array_of_arrays)
     end
+    redirect_to action: "import_csv", message: message
   end
+
 end
