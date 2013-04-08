@@ -8,10 +8,11 @@
   <% if I18n.locale == :ar %>
     <%= stylesheet_link_tag "bootstrap.rtl", :media => "all" %>
     <%= stylesheet_link_tag "bootstrap-responsive.rtl", :media => "all" %>
-    <%= stylesheet_link_tag "bootstrap-rtl-overrides", :media => "all" %>
-    <%= javascript_include_tag "bootstrap.rtl" %>
+    <%= stylesheet_link_tag "bootstrap-rtl-overrides", :media => "all"%>
+    <%= javascript_include_tag "bootstrap.rtl", :media => "all" %>
   <% else %>
     <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+    <%= javascript_include_tag "bootstrap" %>
   <% end %>
   <%= csrf_meta_tags %>
 </head>

@@ -1,9 +1,10 @@
   class ProjectsController < BackendController 
+    include ApplicationHelper
     def index
-      if gamer_signed_in?
-        @projects = Project.where(:owner_id => current_gamer.id)
+      if developer_signed_in?
+        @projects = Project.where(:owner_id => current_developer.id)
       else
-        flash[:error] = "You are not authorized to view this page"
+        developer_unauthorized
         render 'pages/home'
       end
     end
@@ -48,9 +49,8 @@
   #     Gives status errors
 
   def create
-    if gamer_signed_in?
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      @project = Project.createproject(params[:project],developer.id)
+    if developer_signed_in?
+      @project = Project.createproject(params[:project],current_developer.id)
       @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
@@ -62,7 +62,7 @@
         end
       end
     else
-     flash[:error] = "Please log in to view this page."
+     developer_unauthorized
      render 'pages/home'
    end
  end
@@ -79,7 +79,7 @@
   # failure:
   #     none
   def new
-    if gamer_signed_in?
+    if developer_signed_in?
       @project = Project.new
       @categories = @project.categories
       respond_to do |format|
@@ -87,7 +87,7 @@
         format.json { render json: @project }
       end
     else
-      flash[:error] = "Please log in to view this page."
+      developer_unauthorized
       render 'pages/home'
     end
   end
@@ -103,10 +103,10 @@
   # failure:
   #     none
   def edit
-    if gamer_signed_in?
+    if developer_signed_in?
       @project = Project.find(params[:id])
     else
-      flash[:error] = "You are not authorized to view this page"
+      developer_unauthorized
     end
   end
 
@@ -122,7 +122,7 @@
   # failure:
   #     The old values will be kept.
   def update
-    if gamer_signed_in?
+    if developer_signed_in?
      @project = Project.find(params[:id])
      @project = Project.createcategories(@project, params[:project][:categories])
      if @project.update_attributes(params.except(:categories,:utf8, :_method,
@@ -133,7 +133,7 @@
     render :action => 'edit'
   end
 else
-  flash[:error] = "You are not authorized to view this page"
+  developer_unauthorized
 end
 end
 
@@ -148,8 +148,7 @@ end
   # failure:
   #     None.
   def show
-    developer = Developer.where(:gamer_id => current_gamer.id).first
-    @projects = Project.where(:owner_id => developer.id)
+    @projects = Project.where(:owner_id => current_developer.id)
     @project = Project.find(params[:id])
     if @projects.include?(@project)
       @words = []
@@ -163,7 +162,7 @@ end
       end
     else
       redirect_to :action => "index"
-      flash[:error] = "You are not authorized to view this page"
+      developer_unauthorized
     end
   end
 end
