@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-  
   root :to => 'pages#home'
 
   # Only two languages are accepted: Arabic and English
@@ -20,7 +19,7 @@ Arability::Application.routes.draw do
 
     post "admin/login"
 
-		get "admin/import_csv"
+    get "admin/import_csv"
 
     post "admin/upload"
 
@@ -40,7 +39,28 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
+    get 'games/getnewwords'
+
+    root :to => 'pages#home'
+
+    #here only two languages are accepted: english and arabic
+
+    match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+    match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+
+    match "followed" => "follow#list_followed", :as => "list_followed_words"
+    
+    get "admin/index"
+
+    get "admin/login"
+    get "admin/logout"
+
+    post "admin/login"
+    post "admin/wordadd"
+
+
 
     scope "developers/" do
 
@@ -53,7 +73,7 @@ Arability::Application.routes.draw do
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
 
   		get "projects/update"
-			
+
       resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
@@ -94,6 +114,7 @@ Arability::Application.routes.draw do
   end
   
   get "games/getprizes"
+  get "games/showprizes"
 
   post "games/record_vote"
 
@@ -106,7 +127,28 @@ Arability::Application.routes.draw do
   match '/authentications/facebook_connect' => 'authentications#facebook_connect'
 
   match '/authentications/twitter' => 'authentications#twitter'
+  match '/projects/add_word' => "projects#add_word"
+  match '/game' => 'games#game'
   
+  get 'games/gettrophies'
+  get 'games/showtrophies'
+
+  
+  get 'games/getnewwords'
+
+  # The priority is based upon order of creation:s
+    match 'search' => 'search#search'
+ 
+    match '/game' => 'games#game'
+    get "games/getprizes"
+
+    post "games/record_vote"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
