@@ -1,5 +1,4 @@
   class ProjectsController < BackendController 
-    before_filter :authenticate_developer!
     def index
       if gamer_signed_in?
         @projects = Project.where(:owner_id => current_gamer.id)
@@ -104,11 +103,11 @@
   # failure:
   #     none
   def edit
-    # if gamer_signed_in?
+    if gamer_signed_in?
       @project = Project.find(params[:id])
-    # else
-    #   flash[:error] = "You are not authorized to view this page"
-    # end
+    else
+      flash[:error] = "You are not authorized to view this page"
+    end
   end
 
   # author:
