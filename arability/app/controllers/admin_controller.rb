@@ -2,6 +2,8 @@ class AdminController < ApplicationController
 
   require 'csv'
 
+  layout 'admin'
+
   before_filter :require_login
   skip_before_filter :require_login, only: [:login]
 
