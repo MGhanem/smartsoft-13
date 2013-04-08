@@ -14,7 +14,7 @@ Arability::Application.routes.draw do
 
     post "admin/login"
 
-		get "admin/import_csv"
+    get "admin/import_csv"
 
     post "admin/upload"
 
@@ -34,17 +34,27 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
+    get 'games/getnewwords'
 
     root :to => 'pages#home'
 
     #here only two languages are accepted: english and arabic
 
-		match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+    match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
-  	match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+    match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
 
-  	match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+    match "followed" => "follow#list_followed", :as => "list_followed_words"
+    
+    get "admin/index"
+
+    get "admin/login"
+    get "admin/logout"
+
+    post "admin/login"
+    post "admin/wordadd"
+
 
 
     # required for routing by the devise module(gem)
@@ -55,11 +65,11 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
-			get "projects/remove_developer_from_project"
-  		match "projects/share/:id" => "projects#share"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  		get "projects/update"
-			resources :projects
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
+      resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -149,6 +159,12 @@ Arability::Application.routes.draw do
  
     match '/game' => 'games#game'
     get "games/getprizes"
+
+    post "games/record_vote"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
 
 
   # The priority is based upon order of creation:
