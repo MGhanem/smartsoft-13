@@ -23,8 +23,8 @@ class Project < ActiveRecord::Base
 
 def self.createproject(params,gamer_id)
   project = Project.new(params.except(:categories,:developer))
-  developer = Developer.where(:gamer_id => gamer_id).first
-  project.owner_id = developer.gamer_id
+  developer = Developer.where(:gamer_id => current_gamer.id).first
+  project.owner_id = developer.id
   project = createcategories(project,params[:categories])
   return project
 end

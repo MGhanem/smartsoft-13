@@ -8,7 +8,7 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :gprovider, :gid
+                  :provider, :uid, :gprovider, :gid
 
   has_many :services, :dependent => :destroy
                   
@@ -29,15 +29,26 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
 
+# author:
+#     Salma Farag
+# description:
+#     A  method that returns a gamer with an email equal to the email signed in on Google from
+#the access token.
+# params:
+#     The access token granted from Google and a signed in resources that is equal to nil.
+# success:
+#     Returns the gamer with the matching email.
+# failure:
+#     Creates a new gamer using the email and password
 def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
     gamer = Gamer.where(:email => data["email"]).first
 
     unless gamer
-        gamer = Gamer.create(name: data["name"],
-             email: data["email"],
-             password: Devise.friendly_token[0,20]
-            )
+         gamer = Gamer.create(
+              email: data["email"],
+              password: Devise.friendly_token[0,20]
+             )
     end
     gamer
 end

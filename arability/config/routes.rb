@@ -4,11 +4,10 @@ Arability::Application.routes.draw do
   scope "(:locale)", :locale => /en|ar/ do
     # required for routing by the devise module(gem)
     devise_for :gamers, :controllers => { :omniauth_callbacks => "gamers/omniauth_callbacks" } do
-       get 'sign_in', :to => 'devise/sessions#new', :as => :new_gamer_session
-       get '/gamers/sign_out' => 'devise/sessions#destroy', :as => :destroy_gamer_session
+       get 'gamers/sign_in', :to => 'devise/sessions#new', :as => :new_gamer_session
+       get 'gamers/sign_out', :to => 'devise/sessions#destroy', :as => :destroy_gamer_session
 
     end
-    devise_for :gamers
     get "admin/index"
 
     post "admin/login"
