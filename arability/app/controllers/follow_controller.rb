@@ -12,4 +12,12 @@ class FollowController < BackendController
       redirect_to :search, :flash => {:fail => "#{t(:follow_keyword_alert_fail)} #{word}"}
     end
   end
+
+  #mostafa hassaan
+  def unfollow
+    developer = Developer.where(:gamer_id => current_gamer.id).first
+    developer.unfollow(params[:keyword_id])
+    word = Keyword.find(params[:keyword_id]).name
+    redirect_to :list_followed_words, :flash => {:success => "#{t(:unfollow_keyword_alert)} #{word}"}
+  end
 end

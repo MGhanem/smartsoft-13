@@ -18,4 +18,11 @@ class Developer < ActiveRecord::Base
       keyword = Keyword.find(keyword_id)
       developer.keywords << keyword
   end
+
+  #mostafa hassaan
+  def unfollow(keyword_id)
+      developer = Developer.find(self.id)
+      keyword = Keyword.find(keyword_id)
+      developer.keywords.delete(keyword)
+  end
 end
