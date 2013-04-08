@@ -27,6 +27,9 @@
     <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
+         <div><%= f.label :gender, :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>
+
   <div><%= f.label :country, :class => "control-label" %>
         <span style="margin-left: 10px;">
             <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
@@ -58,14 +61,17 @@
     <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
+        <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['ذكر','انثي']),{}, :style => "margin-left: 10px;" ) %></div></br>
+
   <div><%= f.label t(:country), :class => "control-label" %>
-        <span style="margin-left: 10px;">
-            <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
-        </span>
-    </div><br>
+                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
+                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                {:style => "margin-left: 10px;" }) %>
+            </div></br>
 
   <div><%= f.label t(:education_level), :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+            <%= f.select(:education_level, options_for_select(['','منخفض','متوسط','عالي']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field t(:current_password), :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
