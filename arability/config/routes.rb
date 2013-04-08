@@ -1,50 +1,114 @@
 Arability::Application.routes.draw do
-  get "authentications/home"
-
-  get "admin/index"
-
-  get "admin/login"
-  get "admin/logout"
-
-  post "admin/login"
-  post "admin/wordadd"
   
-  resources :projects
-
   root :to => 'pages#home'
 
-  # required for routing by the devise module(gem)
-  devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+  # Only two languages are accepted: Arabic and English
+  scope "(:locale)", :locale => /en|ar/ do
 
+    get "admin/index"
 
-  get "admin/import_csv"
+    get "admin/login"
+    
+    get "admin/logout"
+  
+    post "admin/wordadd"
 
-  post "admin/upload"
+    # required for routing by the devise module(gem)
+    devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
+    devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
-  match "keywords" => "keywords#viewall"
+    post "admin/login"
 
-  get "keywords/new"
+		get "admin/import_csv"
 
-  get "keywords/suggest_add"
+    post "admin/upload"
 
-  resources :projects
-  post "keywords/create"
+    post "admin/addword"
+    
+    post "admin/addtrophy"
+    
+    post "admin/addprize"
 
-  match '/developers/new' => "developer#new"
-  match '/developers/create' => "developer#create"
-  match '/my_subscriptions/new' => "my_subscription#new"
-  match '/my_subscriptions/create' => "my_subscription#create"
+    get "admin/deletetrophy"
+    
+    get "admin/deleteprize"
+
+    match '/game' => 'games#game'
+
+    post "games/vote" 
+
+    post "games/record_vote"
+
+		get 'games/getnewwords'
+
+    scope "developers/" do
+
+      match "/" => "backend#home", :as => "backend_home"
+
+			get "projects/remove_developer_from_project"
+
+  		match "projects/share/:id" => "projects#share"
+
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+
+  		get "projects/update"
+			
+      resources :projects
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
+
+      get "keywords/new"
+
+      post "keywords/create"
+
+      get "keywords/suggest_add"
+
+      match "keywords" => "keywords#viewall"
+
+      match 'search' => 'search#search'
+
+      match '/developers/new' => "developer#new"
+
+      match '/developers/create' => "developer#create"
+
+      match '/my_subscriptions/new' => "my_subscription#new"
+
+      match '/my_subscriptions/create' => "my_subscription#create"
+    end
+
+  end
+  
+  get "games/getprizes"
+
+  post "games/record_vote"
+
+  post "games/vote_errors"
+
+  post "games/record_synonym"
 
   match 'search' => 'search#search'
 
   match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-  match '/authentications/twitter' => 'authentications#twitter'
 
+  match '/authentications/twitter' => 'authentications#twitter'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
