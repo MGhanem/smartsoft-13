@@ -498,8 +498,7 @@ class ProjectsController < BackendController
   def remove_word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
-      # if Project.find_by_owner_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil
-        # check if project is shared with me too
+        # check if owner of project or is shared with me too
       @word_id = params[:word_id]
         # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
       @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
@@ -509,18 +508,14 @@ class ProjectsController < BackendController
         end }
       if  @remove != nil
         @remove.destroy
-        flash[:notice] = "Word removed successfully."
+        flash[:notice] = t(:word_removed_successfully)
         redirect_to project_path(@project_id), :flash => flash
         return
       else
-        flash[:notice] = "This word is not in the project."
+        flash[:notice] = t(:word_does_not_exist)
         redirect_to project_path(@project_id), :flash => flash
         return
       end
-      # else
-      #   flash[:notice] = "You can't remove a word from someone else's project!"
-      #   render 'pages/home'
-      # end
     else
       flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
       render 'pages/home'

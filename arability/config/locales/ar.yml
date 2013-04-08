@@ -94,3 +94,6 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  remove_from_project: "إزالة من المشروع"
+  word_removed_successfully: "تم إزالة الكلمة بنجاح."
+  word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
