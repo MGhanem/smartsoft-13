@@ -12,7 +12,7 @@
 						<a href="#admin-add-word" data-toggle="tab">إضافة كلمة جديدة</a>
 					</li>
 					<li>
-						<a href="#admin-import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV </a>
+						<a href="#admin-import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV</a>
 					</li>
 					<li class="divider"></li>
 					<li class="nav-header">إدارة الميداليات</li>
@@ -25,6 +25,9 @@
 					<li class="nav-header">إدارة الجوائز</li>
 					<li>
 						<a href="#admin-add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-list-prizes" data-toggle="tab">عرض الجوائز</a>
 					</li>
 				</ul>
 			</div>
@@ -48,6 +51,9 @@
 				</div>
 				<div class="tab-pane well span7" id="admin-add-prize">
 					<%= render 'admin-add-prize' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-list-prizes">
+					<%= render 'admin-list-prizes' %>
 				</div>
 			</div>
 		</div>

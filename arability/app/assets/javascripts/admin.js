@@ -27,5 +27,27 @@ $(document).ready(function() {
 				.html() + "</div>");
 		$("div#myModalTrophy div.prize-view a").remove();
 	});
+
+	$("a.edit-link-prize").click(function(ev) {
+		$("div#myModalPrize a").attr("href", $(this).attr("data-href"));
+		$("div#myModalPrize div.prize-view").html("<div class='trophy well'>" + $(this).parent().parent()
+				.html() + "</div>");
+		$("div#myModalPrize div.prize-view a").remove();
+	});
+
+	
 	
 });
+
+function readURL(input, previewID) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(previewID).attr('src', e.target.result);
+        }
+	    reader.readAsDataURL(input.files[0]);
+    } else {
+    	$(previewID).attr('src', '/assets/noimage.gif');
+    }
+}

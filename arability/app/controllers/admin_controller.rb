@@ -46,8 +46,10 @@ class AdminController < ApplicationController
   end
 
   def index
+    @message = params[:message]
     @fargs = params[:fargs]
     @trophies_list = Trophy.all
+    @prizes_list = Prize.all
   end
 
   # author:
@@ -189,22 +191,6 @@ class AdminController < ApplicationController
   def logout
     destroy_session
     redirect_to action: "login"
-  end
-  
-  # author:
-  #   Amr Abdelraouf
-  # description:
-  #   this function loads a view which allows the user to import a csv file and lists the rules for uploading
-  #   in addition when a file is uploaded it gives the user feedback whether the file was successfully
-  #   uploaded or not and gives the reason why not
-  # params:
-  #   GET message is feedback message
-  # success:
-  #   displays upload button, rules and feedback message (if applicable)
-  # failure:
-  #   no failure
-  def import_csv
-    @message = params[:message]
   end
 
   # author:

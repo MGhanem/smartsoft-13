@@ -39,17 +39,17 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:image]? ' error' : ''%>" data-provides="fileupload">
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:image]? ' error' : ''%>">
 			<label class="control-label">الصورة</label>
 			<div class="controls">
 				<div class="uploader-controls">
 					<div class="uploader-preview fileupload-preview thumbnail">
-						<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image">
+						<img src="/assets/noimage.gif" id="prizepre">
 					</div>
 					<div class="uploader-side">
 						<button class="btn uploader-button" type="button">إختيار الصورة</button>
 						<div class="uploader-file-input">
-							<input type="file" accept="image/*" name="image">
+							<input type="file" accept="image/*" name="image" onchange="readURL(this, '#prizepre');">
 						</div>
 						<p class="uploader-help" dir="ltr">Maximum size of 1MB. PNG, JPEG, GIF.</p>
 					</div>
