@@ -24,6 +24,11 @@ class SearchController < ApplicationController
     if(!@age_to.blank?)
       @age_to = @age_to.to_i
     end
+    if(!@age_from.blank? && !@age_to.blank? && @age_from > @age_to)
+      temp = @age_from
+      @age_from = @age_to
+      @age_to = temp
+    end
     @gender = params['gender']
     if(@search_keyword.blank? && @search_keyword_model.blank?)
       @display_add = false
