@@ -9,8 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
-.boxed {
-  border: 3px inset orange
+body { 
+  padding-top: 60px; 
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
 }

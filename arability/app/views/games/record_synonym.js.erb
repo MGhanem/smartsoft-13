@@ -1,4 +1,2 @@
-<% record_output=current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id].to_i) %>
-<% if record_output == 0 %>
-$('.alert').append("<p>The synonym has been added successfully</p>");
-<% end %>
+<% record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) %>
+update_errors(<%= record_output %>);

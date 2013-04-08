@@ -32,7 +32,32 @@
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }
+    function clear() {
+    $("#zone").empty();
+  }
 
+  function getTrophies(level, score) {
+    clear();
+    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getScore() {
+    return 123456;
+  }
+
+  function showPrizes() {
+    clear();
+    $.get("/games/showprizes"); 
+  }
+  function showTrophies() {
+    clear();
+    $.get("/games/showtrophies");
+  }
 
 </script>
 
@@ -41,17 +66,17 @@
     <div class="nav-box">
       الرتبة
     </div>
-    <div class="nav-box">
+    <div class="nav-box" onclick="showPrizes()">
       جوائز
   </div>
-    <div class="nav-box">
+    <div class="nav-box" onclick="showTrophies()">
       الإنجازات
     </div>
     <div class="nav-box">
-     بروفيل 
+     بروفيل
     </div>
     <div class="nav-box">
-     إعدادات 
+     إعدادات
     </div>
     <div id="level" class="nav-box">
       
@@ -84,18 +109,3 @@
   <a onclick="have_to_sign_in()"  id="btn">start voting</a>
 </div>
 
-
-    
-<script type="text/javascript" charset="utf-8">
-  function clear() {
-    $("#zone").empty();
-  }
-  function getPrizes(level, score) {
-    clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
-    $.get(request_string);
-  }
-  function getScore() {
-    return 123456;
-  }
-</script>
