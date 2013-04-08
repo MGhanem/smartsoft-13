@@ -158,5 +158,14 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
+
+    #mostafa hassaan
+    def get_keyword_synonym_visual(keyword_id)
+      votes = Synonym.where(:keyword_id => keyword_id)
+        .joins(:votes).count(:group => "synonym_id")
+      sum = votes.sum{|v| v.last}
+      v = votes.map {|key, value| [Synonym.find(key).name, value]}
+      return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+    end
   end
 end
