@@ -16,6 +16,7 @@ class SearchController < BackendController
     @search_keyword = params['search']
     @country = params['country']
     @age_from = params['age_from']
+    @project_id = params['project_id']
     if(!@age_from.blank?)
       @age_from = @age_from.to_i
     end
