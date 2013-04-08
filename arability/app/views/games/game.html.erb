@@ -7,7 +7,7 @@
     <div class="nav-box" onclick="showPrizes()">
       جوائز
   </div>
-    <div class="nav-box">
+    <div class="nav-box" onclick="showTrophies()">
       الإنجازات
     </div>
     <div class="nav-box">
@@ -44,5 +44,9 @@
   function showPrizes() {
     clear();
     $.get("/games/showprizes"); 
+  }
+  function showTrophies() {
+    clear();
+    $.get("/games/showtrophies");
   }
 </script>

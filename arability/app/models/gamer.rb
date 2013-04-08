@@ -11,7 +11,6 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth
-                  
 
   validates :username, :presence => true, :length => { :minimum => 3 }
 
@@ -66,5 +65,13 @@ class Gamer < ActiveRecord::Base
 
   def get_available_prizes
     return Prize.all - self.prizes
+  end
+  
+  def get_won_trophies
+    return self.trophies
+  end
+
+  def get_available_trophies
+    return Trophy.all - self.trophies
   end
 end
