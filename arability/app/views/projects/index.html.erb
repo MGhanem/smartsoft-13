@@ -7,17 +7,14 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i>إضافة مشروع</a>
 <br />
 <br />
 <% @my_projects.each do |project| %>
   <div class="well well-small">
-  <strong>اسم:</strong>
+  <strong>اسم:  </strong><%= project.name %>
   <br />
-  <%= project.name %>
-  <br />
-  <strong>فئات:</strong>
-  <br />
+  <strong>فئات: </strong>
   <% size = project.categories.length %>
   <% counter = 1 %>
   <% project.categories.each do |c| %>
@@ -29,16 +26,14 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:</strong>
-  <br />  
-  <%= project.description %>
+  <strong>وصف:  </strong><%= project.description %>
 </div>
 <br />
 <% end %></p>
     </div>
     <div class="tab-pane" id="tab2">
       <p>
-        <% @my_projects.each do |project| %>
+        <% @shared_projects.each do |project| %>
   <div class="well well-small">
   <strong>اسم:</strong>
   <br />
@@ -61,7 +56,6 @@
   <br />  
   <%= project.description %>
   <br />
-  <%= link_to 'Open', project %>
 </div>
 <br />
 <% end %>

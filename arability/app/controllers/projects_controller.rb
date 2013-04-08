@@ -18,6 +18,7 @@ class ProjectsController < BackendController
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:owner_id => developer.id)
+        @shared_projects = developer.projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         render 'developers/new'

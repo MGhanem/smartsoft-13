@@ -43,7 +43,7 @@ Arability::Application.routes.draw do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
-    scope "developers/" do 
+    scope "developers" do 
       match "/" => "backend#home", :as => "backend_home"
 
 			get "projects/remove_developer_from_project"
@@ -69,8 +69,6 @@ Arability::Application.routes.draw do
 			post "keywords/create"
 
       get "keywords/suggest_add"
-
-      match "keywords" => "keywords#viewall"
 
 			match 'search' => 'search#search'
 
