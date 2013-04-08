@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-  
   root :to => 'pages#home'
   
 
@@ -37,6 +36,26 @@ Arability::Application.routes.draw do
     post "games/record_vote"
 
 		get 'games/getnewwords'
+
+    root :to => 'pages#home'
+
+    #here only two languages are accepted: english and arabic
+
+		match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+  	match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+  	match "followed" => "follow#list_followed", :as => "list_followed_words"
+    
+    get "admin/index"
+
+    get "admin/login"
+    get "admin/logout"
+
+    post "admin/login"
+    post "admin/wordadd"
+
+    resources :projects
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -99,6 +118,32 @@ Arability::Application.routes.draw do
   match '/projects/add_word' => "projects#add_word"
   
   # The priority is based upon order of creation:
+    get "admin/import_csv"
+
+    post "admin/upload"
+
+    match "keywords" => "keywords#viewall"
+
+    get "keywords/new"
+
+    get "keywords/suggest_add"
+
+    resources :projects
+
+    post "keywords/create"
+
+    match '/developers/new' => "developer#new"
+    match '/developers/create' => "developer#create"
+    match '/my_subscriptions/new' => "my_subscription#new"
+    match '/my_subscriptions/create' => "my_subscription#create"
+
+    match 'search' => 'search#search'
+ 
+    match '/game' => 'games#game'
+    get "games/getprizes"
+
+
+   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
