@@ -1,14 +1,24 @@
 <script type="text/javascript" charset="utf-8">
   
-  var words=["car","sar","sad","sfd"];
+  var words;
 
-  function clear() {
+  function setWordsArray(){
+    for(var x=0; x < successfulWords.length;x++){
+      successfulWords[x]=successfulWords[x].toLowerCase();
+    }
+    words=successfulWords;
+  }
+
+  function clear(){
+
+  }
 
   function get_words(){
     return words;
   }
 
   function have_to_sign_in(){
+    alert(successfulWords);
     $.post("/games/vote_errors.js");
   }
 
