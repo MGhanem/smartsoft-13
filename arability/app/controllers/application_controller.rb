@@ -4,14 +4,9 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     if params[:locale].nil?
-      if session[:locale].nil?
-        I18n.locale = :ar
-      else
-        I18n.locale = session[:locale]
-      end
+      I18n.locale = "ar"
     else
       I18n.locale = params[:locale]
-      session[:locale] = params[:locale]
     end
   end
 
