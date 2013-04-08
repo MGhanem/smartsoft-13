@@ -116,6 +116,8 @@ Arability::Application.routes.draw do
   match 'search' => 'search#search'
 
   match '/projects/add_word' => "projects#add_word"
+  match '/game' => 'games#game'
+  get 'games/gettrophies'
   
   # The priority is based upon order of creation:
     get "admin/import_csv"

@@ -1,5 +1,6 @@
 class Gamer < ActiveRecord::Base
-  
+
+  has_and_belongs_to_many :trophies
   has_and_belongs_to_many :prizes
   
   # Include default devise modules. Others available are:
@@ -28,6 +29,21 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
   
+  
+  
+  def receive_trophy(trohpy_id)
+    trophy = Trophy.find(trophy_id)
+    
+    if trophy == nil
+      return false
+    end
+    
+    if self.trophies.include? trophy
+      return false
+    else
+      self.trophies << trophy
+    end
+  end
 
   def receive_prize(prize_id)
     prize = Prize.find(prize_id)
