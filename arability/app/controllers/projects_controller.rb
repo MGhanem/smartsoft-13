@@ -3,7 +3,7 @@ class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
   require 'csv'
-  
+
   # author: 
   #   Mohamed Tamer 
   # description: 
@@ -25,10 +25,6 @@ class ProjectsController < BackendController
       end
     else
       flash[:notice] = "من فضلك قم بالدخول"
-      render 'pages/home'
-    end
-  end
-
 
   # author:
   #      Salma Farag
@@ -44,8 +40,8 @@ class ProjectsController < BackendController
   #     Gives status errors
 
   def create
-    if gamer_signed_in?
-      @project = Project.createproject(params[:project],current_gamer.id)
+    if developer_signed_in?
+      @project = Project.createproject(params[:project],current_developer.id)
       @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
@@ -57,7 +53,7 @@ class ProjectsController < BackendController
         end
       end
     else
-     flash[:error] = "Please log in to view this page."
+     developer_unauthorized
      render 'pages/home'
    end
  end
@@ -74,7 +70,7 @@ class ProjectsController < BackendController
   # failure:
   #     none
   def new
-    if gamer_signed_in?
+    if developer_signed_in?
       @project = Project.new
       @categories = @project.categories
       respond_to do |format|
@@ -82,11 +78,10 @@ class ProjectsController < BackendController
         format.json { render json: @project }
       end
     else
-      flash[:error] = "Please log in to view this page."
+      developer_unauthorized
       render 'pages/home'
     end
   end
-
 
   def share
     @project = Project.find(params[:id])
@@ -114,7 +109,6 @@ class ProjectsController < BackendController
     render "projects/share"
   end
 
-
   def remove_developer_from_project
     dev = Developer.find(params[:dev_id])
     project = Project.find(params[:project_id])
@@ -124,6 +118,7 @@ class ProjectsController < BackendController
    redirect_to "/projects"
   end
 
+  
   # author:
   #      Salma Farag
   # description:
@@ -135,13 +130,14 @@ class ProjectsController < BackendController
   # failure:
   #     none
   def edit
-    if gamer_signed_in?
+    if developer_signed_in?
       @project = Project.find(params[:id])
     else
-      flash[:error] = "You are not authorized to view this page"
+      developer_unauthorized
     end
   end
 
+=======
   # author:
   #      Salma Farag
   # description:
@@ -154,19 +150,19 @@ class ProjectsController < BackendController
   # failure:
   #     The old values will be kept.
   def update
-    if gamer_signed_in?
+    if developer_signed_in?
      @project = Project.find(params[:id])
      @project = Project.createcategories(@project, params[:project][:categories])
      if @project.update_attributes(params.except(:categories,:utf8, :_method,
       :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-      redirect_to :action => "index"
-      flash[:notice] = "Project has been successfully updated."
-    else
-      render :action => 'edit'
-    end
-  else
-    flash[:error] = "You are not authorized to view this page"
+     redirect_to :action => "index"
+     flash[:notice] = "Project has been successfully updated."
+   else
+    render :action => 'edit'
   end
+else
+  developer_unauthorized
+end
 end
 
   # author:
@@ -179,13 +175,6 @@ end
   #     A project page will open.
   # failure:
   #     None.
-def show
-  if gamer_signed_in?
-    @project = Project.find(params[:id])
-  else
-    flash[:error] = "You are not authorized to view this page"
-  end
-end
 
  # author:Noha hesham
  # Description:
@@ -204,6 +193,23 @@ end
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
+
+  def show
+    @projects = Project.where(:owner_id => current_developer.id)
+    @project = Project.find(params[:id])
+    if @projects.include?(@project)
+      @words = []
+      @synonyms = []
+      @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
+      @words_synonyms.each do |word_synonym|
+        word = Keyword.find(word_synonym.keyword_id)
+        syn = Synonym.find(word_synonym.synonym_id)
+        @words.push(word)
+        @synonyms.push(syn)
+      end
+    else
+      redirect_to :action => "index"
+      developer_unauthorized
     end
   end
 

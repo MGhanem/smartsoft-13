@@ -9,13 +9,11 @@ class Project < ActiveRecord::Base
 
 
 
-  # has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  # has_one :owner, :class_name => "Developer"
-
-
   attr_accessible :name
   belongs_to :developer
 
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  has_one :owner, :class_name => "Developer"
 
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
@@ -39,8 +37,7 @@ class Project < ActiveRecord::Base
 
 def self.createproject(params,gamer_id)
   project = Project.new(params.except(:categories,:developer))
-  developer = Developer.where(:gamer_id => gamer_id).first
-  project.owner_id = developer.gamer_id
+  project.owner_id = current_developer.id
   project = createcategories(project,params[:categories])
   return project
 end
@@ -83,6 +80,4 @@ def self.printarray(array)
   t = t.join(", ")
   return t
 end
-
 end
-

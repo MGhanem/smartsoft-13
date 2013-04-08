@@ -9,6 +9,7 @@ en:
   password: "Password"
   english: "English"
   arabic: "Arabic"
+  
   search: "Search Keywords"
   search_here: "search keywords here"
   keyword_add_success: "Keyword added to our database successfully"
@@ -27,6 +28,7 @@ en:
   words: "Words"
   unfollow: "Unfollow"
   backend: "Developers"
+
   project: "Project"
   my_projects: "My Projects"
   name: "Name"
@@ -41,12 +43,14 @@ en:
   new_project: "New Project"
   back: "Back"
   edit_project: "Edit Project"
+
   votes: "votes"
   filer: "Filter results"
   country: "Country"
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+
   import: "Import"
   export: "Export"
   add_words: "Add words"
@@ -70,5 +74,3 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
-
-
