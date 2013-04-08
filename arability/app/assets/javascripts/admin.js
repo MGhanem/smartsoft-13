@@ -14,5 +14,11 @@ $(document).ready(function() {
 			$('.nav-tabs a:first').tab('show');
 		}
 	});
+
+	window.setTimeout(function() {
+		$(".alert-info, .alert-success").fadeTo(500, 0).slideUp(500, function(){
+			$(this).remove(); 
+		});
+	}, 5000);
 	
 });
