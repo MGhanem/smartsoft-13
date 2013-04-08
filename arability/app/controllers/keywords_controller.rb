@@ -1,4 +1,4 @@
-class KeywordsController < ApplicationController
+class KeywordsController < BackendController
   # displays the form for adding a new word
   def new
     @keyword = Keyword.new(params[:name])
