@@ -1,5 +1,6 @@
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
+  #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
 # author:
 #   Khloud Khalid
 # description:
@@ -14,6 +15,7 @@ class MySubscriptionController < ApplicationController
     if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
       if Developer.find_by_gamer_id(current_gamer.id) != nil
         @my_subscription = MySubscription.new
+        @my_subscription.save
       else
         flash[:notice] = "Please register as a developer before you choose your subscription model."
         render 'pages/home'
@@ -33,10 +35,12 @@ class MySubscriptionController < ApplicationController
 #   my_subscription created successfully and linked to developer
 # failure:
 #   invalid information
+
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       if MySubscription.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id).id) == nil
-        if SubscriptionModel.find_by_id(params[:my_subscription]) != nil
+        if Subscrip
+          tionModel.find_by_id(params[:my_subscription]) != nil
           @my_subscription = MySubscription.new
           @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
           @my_subscription.subscription_models_id = params[:my_subscription]
@@ -64,5 +68,27 @@ class MySubscriptionController < ApplicationController
       flash[:notice] = "Please register as a developer before you choose your subscription model."
       render 'pages/home'
     end  
+  end
+
+
+  def choose_sub
+    @all_subscription_models = SubscriptionModel.all
+    @developer= Developer.find_by_gamer_id(current_gamer.id)
+  end
+
+  def pick
+    @all_subscription_models = SubscriptionModel.all
+    @developer= Developer.find_by_gamer_id(current_gamer.id)
+    
+    sub_id = params[:my_subscription]
+    dev_id = @developer.id
+
+    if MySubscription.choose(dev_id,sub_id)
+      flash[:notice] = "You have successfully chosen your subscription model"
+        redirect_to root_url
+    else
+      flash[:notice] = "Please choose your subscription model"
+      render 'my_subscription/choose_sub'
+    end
   end
 end
