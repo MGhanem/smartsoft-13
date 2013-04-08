@@ -47,6 +47,7 @@ class AdminController < ApplicationController
 
   def index
     @fargs = params[:fargs]
+    @trophies_list = Trophy.all
   end
 
   # author:
@@ -95,7 +96,7 @@ class AdminController < ApplicationController
     redirect_to action: "index"
   end
 
-   # author:
+  # author:
   #     Karim ElNaggar
   # description:
   #     this action takes a trophy as input and creates one and stores it in
@@ -159,6 +160,20 @@ class AdminController < ApplicationController
     else
       redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
     end
+  end
+
+  def deletetrophy
+    params[:id] = params[:id].strip
+    status_trophy = Trophy.find_by_id(params[:id])
+    if status_trophy.present?
+      name = status_trophy.name
+      status_trophy.delete
+      flash[:success] = "تم مسح مدالية #{name} بنجاح"
+    else
+      flash[:error] = "Trophy number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "delete-trophy"
   end
 
   # author:

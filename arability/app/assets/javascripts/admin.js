@@ -20,5 +20,12 @@ $(document).ready(function() {
 			$(this).remove(); 
 		});
 	}, 5000);
+
+	$("a.edit-link-trophy").click(function(ev) {
+		$("div#myModalTrophy a").attr("href", $(this).attr("data-href"));
+		$("div#myModalTrophy div.prize-view").html("<div class='trophy well'>" + $(this).parent().parent()
+				.html() + "</div>");
+		$("div#myModalTrophy div.prize-view a").remove();
+	});
 	
 });
