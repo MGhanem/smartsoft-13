@@ -46,7 +46,6 @@ class Prize < ActiveRecord::Base
                                     message: "الصورة يجب ان تكون بصيغة png, gif او jpeg"
 
   class << self
-    include StringHelper
     
     # author:
     #     Karim ElNaggar
