@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
+  include ApplicationHelper
 
   belongs_to :developer
 
