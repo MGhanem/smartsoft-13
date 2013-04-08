@@ -17,7 +17,7 @@ var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
-var successfulWords = [];
+var successfulWords = ['CAR'];
 
 
 
@@ -100,6 +100,9 @@ function getCells(x, y){
 }
 
 function dropAblock(){
+	if( gameOver == true ){
+		return;
+	}
 	letter = generateLetter();
 	var randNum = Math.floor(Math.random()*dimension);
 	var clss = 'col0-' + randNum;
@@ -109,6 +112,9 @@ function dropAblock(){
 	dropAblockCont(clss, btn, randNum, 0);
 }
 function dropAblockCont(clss, btn, randNum, counter){
+	if(gameOver==true){
+		return;
+	}
 	var stop;
 	var newCounter = counter + 1;
 	var newClss = 'col' + newCounter  + '-' + randNum;
@@ -122,6 +128,9 @@ function dropAblockCont(clss, btn, randNum, counter){
 					suspense();
 				
 				blockId++;
+				if(loseGame(tower)){
+					return;
+				}
 					if(level == 5){
 						Time = 500;
 					}
@@ -145,6 +154,8 @@ function dropAblockCont(clss, btn, randNum, counter){
 						suspense();
 					
 					blockId++;
+					if(loseGame(tower)){
+						return;
 					}
 					if(level == 5){
 						Time = 500;
@@ -268,6 +279,9 @@ function generateWord(){
 }
  	
 function callMethods(id){
+	if(gameOver == true){
+		return;
+	}
 	formWord(id);
 	generateWord();
 	removeAblock();
@@ -643,8 +657,8 @@ function calculateScore(){
 
 }
 
-function loseGame(){
-	if(tower > dimension - 1){
+function loseGame(t){
+	if(t > dimension - 1){
 		gameOver = true;
 		buttonArray = [];
 		generateWord();
