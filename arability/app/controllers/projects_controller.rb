@@ -205,18 +205,7 @@ class ProjectsController < BackendController
     # if the word doesn't have synonyms redirect to follow word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
-      # redirect_to project_path(@project_id)
-      # return
-      # @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
-      # @owner_project = Project.where(owner_id: @developer_id).all
-      # # @owner_projects = Project.find_by_owner_id(Developer.find_by_gamer_id(current_gamer.id))
-      # @owner_projects.each { |project| if project.id = @project_id
-      #     @owned = true
-      #   else
-      #     @owned = false
-      #   end }
-      # if owned
-        # check if project is shared with me too
+        # check if project owner or is shared with me too
         # check for free users, if the words exceeds 20 words
         @word_id = Keyword.find_by_name(params[:keyword]).id
         if Keyword.find_by_id(@word_id) != nil
@@ -227,41 +216,37 @@ class ProjectsController < BackendController
             if Synonym.find_by_id(@synonym_id) != nil
               @edited_word.synonym_id = @synonym_id
               if @edited_word.save
-                flash[:notice] = "Synonym changed successfully."
+                flash[:notice] = t(:Synonym_changed_successfully)
                 redirect_to project_path(@project_id), :flash => flash
                 return
               else
-                flash[:notice] = "Failed to update synonym"
+                flash[:notice] = t(:Failed_to_update_synonym)
                 redirect_to project_path(@project_id), :flash => flash
                 return
               end
             else
-              flash[:notice] = "This synonym does not exist."
+              flash[:notice] = t(:synonym_does_not_exist)
               redirect_to project_path(@project_id), :flash => flash
               return
             end
           else
             @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
             if @added_word
-              flash[:notice] = "You have successfully added the word to your project."
+              flash[:notice] = t(:successfully_added_word_to_project)              
               redirect_to project_path(@project_id), :flash => flash
               return
             else
-              flash[:notice] = "Word cannot be added to your project."
+              flash[:notice] = t(:failed_to_add_word_to_project)
               redirect_to project_path(@project_id), :flash => flash
               return
             end
           end
         else
-          flash[:notice] = "The word you're trying to add does not exist."
+          flash[:notice] = t(:word_does_not_exist)
           redirect_to project_path(@project_id), :flash => flash
           return
           # render the project's page and add link to add this word to the database
         end
-      # else
-      #   flash[:notice] = "You can't add a word to someone else's project!"
-      #   render 'pages/home'
-      # end
     else
       flash[:notice] = "You have to register as a developer before trying to add a word to your project."
       render 'pages/home'

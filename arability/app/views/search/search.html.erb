@@ -101,8 +101,7 @@
 									<span><%= t(:view_stats)%></span>
 								</button>
 								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-									<%= content_tag(:span, t(:add_to_project))%>
-									<%= button_to "Add to Project", action: "add_word",controller: "projects", :project_id => @project_id, :synonym_id => synonym.id, :keyword => @search_keyword %>
+									<%= link_to t(:add_to_project), {action: "add_word",controller: "projects", :project_id => @project_id, :synonym_id => synonym.id, :keyword => @search_keyword}, {:style=>'color:#000000', :class => "css_class"}  %>
 								<% end %>
 							</div>
 						</div>
