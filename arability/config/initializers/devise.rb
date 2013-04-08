@@ -31,7 +31,7 @@ Devise.setup do |config|
   # or not authentication should be aborted when the value is not present.
   # config.authentication_keys = [ :email ]
   require "omniauth-google-oauth2"
-  config.omniauth :google_oauth2, "APP_ID", "APP_SECRET", { access_type: "offline", approval_prompt: "" }
+  config.omniauth :google_oauth2, "572595320157.apps.googleusercontent.com", "Z3mU_zT6UtUhOqhNc-iQHqpk",  :client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the

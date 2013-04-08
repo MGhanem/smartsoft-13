@@ -29,4 +29,16 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
 
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    gamer = Gamer.where(:email => data["email"]).first
+
+    unless gamer
+        gamer = Gamer.create(name: data["name"],
+             email: data["email"],
+             password: Devise.friendly_token[0,20]
+            )
+    end
+    gamer
+end
 end

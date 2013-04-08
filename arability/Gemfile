@@ -9,6 +9,7 @@ gem 'sqlite3'
 
 gem 'omniauth-google-oauth2'
 
+gem 'certified'
 # Gems required for automated documentation
 gem 'yard'
 gem 'redcarpet'
