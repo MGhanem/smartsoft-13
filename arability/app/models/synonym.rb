@@ -94,7 +94,7 @@ class Synonym < ActiveRecord::Base
             return 3
           end
       else
-        return false
+        return 3
       end
     end
 
