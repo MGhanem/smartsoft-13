@@ -106,6 +106,7 @@
 					<div class="accordion-inner">
 						<!-- add charts here -->
 						<% if Vote.where('synonym_id=?', synonym.id).exists? %>
+						<div style="background-color: white; width: 880px; margin: 0 auto;">
 				    <div class="container-fluid">
               <div class="row-fluide">
                 <div class="span2">
@@ -126,7 +127,7 @@
                       <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
                   <% end %>
                 </div>
-                <div class="span2">
+                <div class="span2" id="test">
                   <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
                       <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
                       <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
@@ -134,6 +135,7 @@
                 </div>
              </div>
 		        </div>
+		      	</div>
 		        <% else %>
 		        <%= t(:stats_no_votes) %>
 		        <% end %>
@@ -143,3 +145,16 @@
 		</div>
 	<% end %>
 <% end %>
+<script type="text/javascript">
+var renderer = new Highcharts.renderer(
+$('#test')[0],
+400,
+100
+);
+renderer.rect(10,10,100,50,5).translate(100,100).attr({
+fill: 'blue',
+stroke: 'black',
+'stroke-width':1
+}).add();
+
+</script>
