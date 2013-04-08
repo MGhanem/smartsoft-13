@@ -9,12 +9,7 @@ gem 'sqlite3'
 
 gem 'omniauth'
 
-<<<<<<< HEAD
-=======
-gem "oa-openid"
-
->>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467
-# gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2'
 
 # Gems required for automated documentation
 gem 'yard'
@@ -33,11 +28,8 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.3.1.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
-<<<<<<< HEAD
-  gem 'tabulous'
-=======
   gem 'tabulous', '1.3.0'
->>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467
+
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -76,17 +68,9 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
 end
-<<<<<<< HEAD
-=======
-
->>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467

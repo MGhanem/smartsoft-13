@@ -4,7 +4,7 @@
       if developer_signed_in?
         @projects = Project.where(:owner_id => current_developer.id)
       else
-        developer_unauthorized
+        flash[:error] = "You are not authorized to view this page"
         render 'pages/home'
       end
     end

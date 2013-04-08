@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  include ApplicationHelper
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
   has_one :owner, :class_name => "Developer"
   has_and_belongs_to_many :categories
@@ -21,9 +22,9 @@ class Project < ActiveRecord::Base
 # failure:
 #     None
 
-def self.createproject(params,gamer_id)
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
-  project.owner_id = current_developer.id
+  project.owner_id = developer_id
   project = createcategories(project,params[:categories])
   return project
 end
