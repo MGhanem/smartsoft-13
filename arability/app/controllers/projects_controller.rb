@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-  class ProjectsController < BackendController 
-    include ApplicationHelper
+class ProjectsController < BackendController 
+  include ApplicationHelper
 
   # author: 
   #   Mohamed Tamer 
@@ -56,8 +55,8 @@
     else
      developer_unauthorized
      render 'pages/home'
-    end
-  end
+   end
+ end
 
   # author:
   #      Salma Farag
@@ -116,7 +115,7 @@
     project.developers_shared.delete(dev)
     project.save
     flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
+    redirect_to "/projects"
   end
 
   
@@ -154,16 +153,16 @@
       @project = Project.find(params[:id])
       @project = Project.createcategories(@project, params[:project][:categories])
       if @project.update_attributes(params.except(:categories,:utf8, :_method,
-      :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-        redirect_to :action => "index"
-        flash[:notice] = "Project has been successfully updated."
-      else
-        render :action => 'edit'
-      end
+        :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
+      redirect_to :action => "index"
+      flash[:notice] = "Project has been successfully updated."
     else
-      developer_unauthorized
+      render :action => 'edit'
     end
+  else
+    developer_unauthorized
   end
+end
 
  # author:Noha hesham
  # Description:
@@ -176,34 +175,50 @@
  #   project is successfully deleted 
  # failure:
  #   project is not deleted
-  def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
-    end
+ def destroy
+  @project = Project.find(params[:id])
+  @project.destroy
+  respond_to do |format|
+    format.html { redirect_to projects_url }
+    format.json { head :no_content }
   end
+end
 
-  def show
-    @projects = Project.where(:owner_id => current_developer.id)
-    @project = Project.find(params[:id])
-    if @projects.include?(@project)
-      @words = []
-      @synonyms = []
-      @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
-      @words_synonyms.each do |word_synonym|
-        word = Keyword.find(word_synonym.keyword_id)
-        syn = Synonym.find(word_synonym.synonym_id)
-        @words.push(word)
-        @synonyms.push(syn)
-      end
-    else
-      redirect_to :action => "index"
-      developer_unauthorized
+def show
+  @projects = Project.where(:owner_id => current_developer.id)
+  @project = Project.find(params[:id])
+  if @projects.include?(@project)
+    @words = []
+    @synonyms = []
+    @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
+    @words_synonyms.each do |word_synonym|
+      word = Keyword.find(word_synonym.keyword_id)
+      syn = Synonym.find(word_synonym.synonym_id)
+      @words.push(word)
+      @synonyms.push(syn)
     end
+  else
+    redirect_to :action => "index"
+    developer_unauthorized
   end
+end
 
+  # add words and their synonym from the imported csv file to the project 
+  #
+  # == Parameters:
+  # words_ids::
+  #   array of hashes of word id and their corresponding synonym id
+  #
+  # id::
+  #   current project id
+  #
+  # == Success return:
+  # adds the word and synonym to project and redirects back to project
+  #
+  # == Failure return :  
+  # if the array size is bigger than the word_search of that developer nothing is added
+  #
+  # @author Mohamed Tamer
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
@@ -221,7 +236,25 @@
     end
     redirect_to action: "show", id: project_id
   end
-
+  
+  # calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
+  # are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
+  # of synonyms and the synonyms accepted for each word
+  #
+  # == Parameters:
+  # csvfile::
+  #   the csv file the user imported
+  #
+  # id::
+  #   the project id
+  #
+  # == Success return:
+  # returnas an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
+  #
+  # == Failure return :  
+  # redirect back to the import_csv view with the error message
+  #
+  # @author Mohamed Tamer
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
     project_id =  params[:id]
@@ -336,10 +369,55 @@
     end
   end
 
+  # add words and their synonym from the imported csv file to the project 
+  #
+  # == Parameters:
+  # words_ids::
+  #   array of hashes of word id and their corresponding synonym id
+  #
+  # id::
+  #   current project id
+  #
+  # == Success return:
+  # adds the word and synonym to project and redirects back to project
+  #
+  # == Failure return :  
+  # if the array size is bigger than the word_search of that developer nothing is added
+  #
+  # @author Mohamed Tamer
+  def add_from_csv_keywords
+    id_words_project = params[:words_ids]
+    project_id =  params[:id]
+    if id_words_project != nil
+      words_synonyms_array = [id_words_project].map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+        flash[:error] = t(:java_script_disabled)
+      else
+        words_synonyms_array.each do |word_syn|
+          if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+
+          end
+        end
+      end
+    end
+    redirect_to action: "show", id: project_id
+  end
+  
+  # finds the project and renders the view
+  #
+  # == Parameters:
+  # id::
+  #   the project id
+  #
+  # == Success return:
+  #  loads the view
+  #
+  # == Failure return :  
+  # no failure
+  #
+  # @author Mohamed Tamer
   def import_csv
     current_project = Project.find(params[:id])
-    @project_id = current_project.id
-    @message = params[:message]
   end
 # author:
 #      Khloud Khalid
@@ -354,7 +432,7 @@
 #     object not valid (no project or word id), word already exists in project, keyword or synonym does not exist, 
 #     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
 #     developer, or keyword is not in the project.
-  def add_word
+def add_word
     # if the word doesn't have synonyms redirect to follow word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
@@ -400,9 +478,46 @@
           return
           # render the project's page and add link to add this word to the database
         end
-    else
-      flash[:notice] = "You have to register as a developer before trying to add a word to your project."
-      render 'pages/home'
+      else
+        flash[:notice] = "You have to register as a developer before trying to add a word to your project."
+        render 'pages/home'
+      end
     end
-  end
-end
+# author:
+#      Khloud Khalid
+# description:
+#     method removes a given word from a project
+# params:
+#     project_id, word_id
+# success:
+#     word removed successfully
+# failure:
+#     keyword does not exist or is not in the project, developer trying to remove word is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
+def remove_word
+  if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    @project_id = params[:project_id]
+        # check if owner of project or is shared with me too
+        @word_id = params[:word_id]
+        # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
+        @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+        @removed_word.each { |word| 
+          if word.project_id = @project_id
+            @remove = word
+          end }
+          if  @remove != nil
+            @remove.destroy
+            flash[:notice] = t(:word_removed_successfully)
+            redirect_to project_path(@project_id), :flash => flash
+            return
+          else
+            flash[:notice] = t(:word_does_not_exist)
+            redirect_to project_path(@project_id), :flash => flash
+            return
+          end
+        else
+          flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
+          render 'pages/home'
+        end
+      end
+    end
