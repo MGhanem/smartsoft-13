@@ -1,13 +1,12 @@
 <div class="container" border="1"> 
 	<h3><%= t(:project)%>: <%=@project.name %></h3><br>
-	<%= link_to 'Import CSV file', import_csv_project_path %>
 	<form>
 		<div class="container well">
 			<div class="btn-toolbar" style="margin: 0;">
 				<div class="btn-group">
 					<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-file"></i> <%= t(:import) %> <span class="caret"></span></button>
 					<ul class="dropdown-menu">
-						<li><a href= "#">csv</a></li>
+						<li><a href= "<%=import_csv_project_path%>">csv</a></li>
 					</ul>
 				</div>
 				<div class="btn-group">

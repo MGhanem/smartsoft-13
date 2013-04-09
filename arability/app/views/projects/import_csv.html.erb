@@ -2,22 +2,19 @@
   <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 	<legend>
 	  <a>
-	    استيراد ملف كلمات بصيغة CSV
+	    <%=t(:import_csv_title)%>
 	  </a>
 	</legend>
  
 	<div class="control-group">
-		<ol class="controls">
-			<li>لا يجب ان تحتوى الكلمات على ارقام</li>
-			<li>المعانى غير العربية لن يتم قبولها</li>
-			<li>يجب ان يكون الملف UTF-8 و بصيغة CSV</li>
+		<ol class="controls" style="color:red;">
+			<li><%=t(:import_csv_list1)%></li>
+			<li><%=t(:import_csv_list2)%></li>
+			<li><%=t(:import_csv_list3)%></li>
 		</ol>
 	</div>
  
 	<div class="control-group">
-		<label class="control-label">
-			اختيار الملف
-		</label>
 		<div class="fileupload fileupload-new controls" data-provides="fileupload">
 		  <div class="input-append">
 		    <div class="uneditable-input span3">
@@ -25,18 +22,18 @@
 		    	<span class="fileupload-preview"></span>
 		    </div>
 		    	<span class="btn-file btn">
-		    		<span class="fileupload-new">اختيار الملف</span>
-		    		<span class="fileupload-exists">تغيير الملف</span>
+		    		<span class="fileupload-new"><%=t(:import_csv_choose_file)%></span>
+		    		<span class="fileupload-exists"><%=t(:import_csv_change_file)%></span>
 		    		<input type="file" name="csvfile" id="csvfile">
 		    	</span>
-		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">الغاء</a>
+		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%=t(:import_csv_remove_file)%></a>
 		  </div>
 		</div>
 	</div>
  
 	<div class="control-group">
 		<div class="controls">
-			<button type="submit" class="btn btn-primary btn-large">تحميل الملف</button>
+			<button type="submit" class="btn btn-primary btn-large"><%=t(:import_csv_submit)%></button>
 		</div>
 	</div>
 </form>

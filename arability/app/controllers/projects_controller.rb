@@ -212,7 +212,7 @@ class ProjectsController < BackendController
     if id_words_project != nil
       words_synonyms_array = [id_words_project].map {|x| x.split("|")}
       if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
-        flash[:notice] = "كن أكثر ذكاء من ذلك"
+        flash[:error] = t(:java_script_disabled)
       else
         words_synonyms_array.each do |word_syn|
           if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
@@ -229,16 +229,16 @@ class ProjectsController < BackendController
     project_id =  params[:id]
     if message != 0
       if message == 1
-        flash[:notice] = "أنت لم تقم بإختيار ملف"
+        flash[:error] = t(:upload_file_error1)
       end
       if message == 2
-        flash[:notice] = "هذا الملف ليس بتقنية UTF-8"
+        flash[:error] = t(:upload_file_error2)
       end
       if message == 3
-        flash[:notice] = "يوجد خطأ بهذا الملف"
+        flash[:error] = t(:upload_file_error3)
       end
       if message == 4
-        flash[:notice] = "هذا الملف ليس CSV"
+        flash[:error] = t(:upload_file_error4)
       end
       redirect_to action: "import_csv", id: project_id
     else
@@ -292,7 +292,7 @@ class ProjectsController < BackendController
         end
       end
       if @id_words_in_database_before.empty? and @id_words_not_in_database_before.empty?
-        flash[:notice] = "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+        flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
         if  Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
