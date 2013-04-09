@@ -9,7 +9,7 @@
               '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
       $("#zone").append($(error));
   <% else %>
-    <% won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, params[:level], params[:score]) %>
+    <% won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, params[:score], params[:level]) %>
 
     <% if won_prizes.length == 0 %>
         success = '<h1 class="award-title">لقد ربحت كل الجوائز لهذه المرحلة </h1>';
