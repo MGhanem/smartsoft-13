@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  project: 
+  keyword: 
+  synonym: 
+
+two:
+  project: 
+  keyword: 
+  synonym: 

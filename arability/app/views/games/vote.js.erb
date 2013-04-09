@@ -71,7 +71,6 @@ vote_form.push('<% if syn.approved %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
-vote_form.push('<% end %>');
 vote_form.push('</br><div class="span6" id="box_buttons">');
 vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button"  onclick="suggest_synonym_to_word(<%= keyword.id %>);" >سجل هذا المعني</button>');
 vote_form.push('<input type="text" class="span3" id="suggest_synonym_textbox" placeholder="ادخل معني مختلف" >');

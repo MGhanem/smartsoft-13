@@ -8,4 +8,8 @@ class GamesController < ApplicationController
   def record_vote
 
   end
+
+  def record_synonym
+  end
+
 end
