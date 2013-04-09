@@ -1,6 +1,5 @@
 class Gamer < ActiveRecord::Base
 
-
   has_and_belongs_to_many :trophies
   has_and_belongs_to_many :prizes
   
@@ -11,7 +10,7 @@ class Gamer < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth, :gender
+                  :username, :country, :education_level, :date_of_birth
 
   validates :username, :presence => true, :length => { :minimum => 3 }
 
@@ -72,7 +71,30 @@ class Gamer < ActiveRecord::Base
     return self.trophies
   end
 
+
+    #This method is used to select a synonym 
+    #by a certain gamer
+    #Parameters:
+    #  synonym_id: the synonym ID that the gamer voted for
+    #Returns:
+    #  On success: returns true if selecting synonym is true, when 
+    #  Vote.record_vote returns true
+    #  On failure: returns false if no new vote was created 
+      def select_synonym(synonym_id)
+        if Vote.record_vote(self.id,synonym_id)[0]
+          return true
+        else
+          return false
+        end
+      end
+
+    #Author: Kareem ALi
+      def suggest_synonym(synonym_name, keyword_id)
+        return Synonym.record_suggested_synonym(synonym_name, keyword_id)
+      end
+
   def get_available_trophies
     return Trophy.all - self.trophies
   end
+
 end
