@@ -11,8 +11,8 @@ var droppingBlocks;
 var pullingBlocks;
 var suspenseTimer;
 var blockId = 0;
-var Time = 200;
-var newTime = Time - 150;
+var Time = 1000;
+var newTime = Time - 800;
 var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
@@ -21,6 +21,7 @@ var successfulWords = [];
 var score = 0;
 var gameButtonClear;
 var gameButtonRestart;
+var gameOverPopUp;
 
 
 function newGame(){
@@ -406,9 +407,18 @@ function fadeSomething(x){
 					// 	getPrizes(10,10)
 					// 	$(".zone").slideDown(1000);
 					// }, 1000);	
-					alert("Congrats You have Finished The Level, off to the next");
-					nextLevel();
-					return;
+					// alert("Congrats You have Finished The Level, off to the next");
+					$('.zone').empty();
+					$('.zone').append('<div id ="gameover-popup"' +
+					'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
+					'Score: ' + score + '</div>');
+					$('#gameover-popup').fadeTo(0,0);
+					$('#gameover-popup').fadeTo(1500,1);
+					$('#gameover-popup').fadeTo(1500,0);
+					setTimeout(function(){
+						nextLevel();
+						return;
+					}, 3000);
 				}		
 				
 				buttonArray = [];
