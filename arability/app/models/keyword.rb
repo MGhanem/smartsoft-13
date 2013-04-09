@@ -9,46 +9,93 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
-  class << self
-
-  # Author:
-  #  Mirna Yacout
+  # Author: 
+  #   Nourhan Mohamed
   # Description:
-  #  This method is to record the aproval of the admin to a certain keyword in the database
+  #   retrieved approved synonyms for a keyword through optional filters
   # Parameters:
-  #  id: the id of the keyword to be approved
+  #   keyword: a string representing the keyword for which the synonyms will
+  #     be retrieved
+  #   country: [optional] filter by country name
+  #   age_from: [optional] filter by age - lower limit
+  #   age_to: [optional] filter by age - upper limit
+  #   gender: [optional] filter by gender
+  #   education: [optional] filter by education level
   # Success:
-  #  returns true on saving the approval correctly in the database
+  #   returns a list of synonyms for the passed keyword
   # Failure:
-  #  returns false if the keyword doesnot exist in the database
-  #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
-        keyword.approved = true
-        return keyword.save
+  #   returns an empty list if the keyword doesn't exist or if no approved
+  #   synonyms where found for the keyword  
+    def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
+          gender = nil,education = nil)
+      if(!self.approved)
+        return [], {} 
       end
-      return false
-    end
+      keyword_id = self.id
+      filtered_data = Gamer
+      filtered_data = filtered_data
+        .filter_by_country(country) unless country.blank?
+      filtered_data = filtered_data
+        .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
+      filtered_data = filtered_data
+        .filter_by_gender(gender) unless gender.blank?
+      filtered_data = filtered_data
+        .filter_by_education(education.downcase) unless education.blank?
+      filtered_data = filtered_data.joins(:synonyms)
+      filtered_data = filtered_data
+        .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
+      votes_count = filtered_data.count(:group => "synonyms.id")
+      synonym_list = []
+      filtered_data.each do |gamer|
+        synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
+      end
+      synonym_list.uniq!
+      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
+        .reverse!
+      synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+      synonym_list = synonym_list + synonyms_with_no_votes
+      return synonym_list, votes_count
+    end  
 
-# author:
-#   Omar Hossam
-# description:
-#   feature takes no input and returns a list of all unapproved keywords
-# success: 
-#   takes no arguments and returns to the admin a list containing the keywords 
-#   that are pending for approval in the database
-# failure:
-#   returns an empty list if no words are pending for approval
+  class << self
+    # Author:
+    #  Mirna Yacout
+    # Description:
+    #  This method is to record the aproval of the admin to a certain keyword in the database
+    # Parameters:
+    #  id: the id of the keyword to be approved
+    # Success:
+    #  returns true on saving the approval correctly in the database
+    # Failure:
+    #  returns false if the keyword doesnot exist in the database
+    #  or if the approval failed to be saved in the database 
+      def approve_keyword(keyword_id)
+        if Keyword.exists?(id: keyword_id)
+          keyword = Keyword.find(keyword_id)
+          keyword.approved = true
+          return keyword.save
+        end
+        return false
+      end
 
-  def listunapprovedkeywords
-
-    return Keyword.where(approved: false).all
-
-  end
-
-    # adds a new keyword to the database
     # author:
+    #   Omar Hossam
+    # description:
+    #   feature takes no input and returns a list of all unapproved keywords
+    # success: 
+    #   takes no arguments and returns to the admin a list containing the keywords 
+    #   that are pending for approval in the database
+    # failure:
+    #   returns an empty list if no words are pending for approval
+
+      def listunapprovedkeywords
+
+        return Keyword.where(approved: false).all
+
+      end
+
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -59,7 +106,9 @@ class Keyword < ActiveRecord::Base
     #   success: the first return is true and the second is the saved keyword
     #   failure: the first return is false and the second is the unsaved keyword
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
-      keyword = self.new(:name => name, :approved => approved)
+      name.strip!
+      keyword = where(name: name).first_or_create
+      keyword.approved = approved
       if is_english != nil
         keyword.is_english = is_english
       else
@@ -116,7 +165,9 @@ class Keyword < ActiveRecord::Base
     	if (search_word.blank?)
     		return []
     	end
-      search_word.downcase!
+      if(is_english_keyword(search_word))
+        search_word.downcase!
+      end
     	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
@@ -130,7 +181,6 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -157,6 +207,18 @@ class Keyword < ActiveRecord::Base
     #   on failure: Empty array
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
     end
   end
 end

@@ -51,11 +51,13 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+      resources :projects
+      match "keywords/create" => "keywords#create"
+
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
-			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -76,11 +78,10 @@ Arability::Application.routes.draw do
 
       post "keywords/create"
 
-      get "keywords/suggest_add"
-
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
+      match 'search_keywords' => 'search#search_keywords'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
