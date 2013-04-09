@@ -1,6 +1,7 @@
 <script type="text/javascript" charset="utf-8">
   
-  var words=["car","sar","sad","sfd"];
+  var words;
+  var win=true ;
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -9,13 +10,24 @@
     words=successfulWords;
   }
 
-  function clear(){
-    $("#zone").empty();
-  }
-
   function get_words(){
     return words;
   }
+
+  function check_empty_words(){
+    if(words.length == 0){
+    //$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
+      if(win == true){
+        $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
+      }
+      else{
+        $('.zone').append('<div><a class="btn btn-success" href="http://localhost:3000/game">Restart Game</a></div>');
+      }
+      return true;
+    }else{
+      return false;
+    }
+  } 
 
   function have_to_sign_in(){
     alert(successfulWords);
@@ -24,7 +36,7 @@
 
   function display_error_sign_in(locale){
     $('.zone').empty();
-    $('#workspace').remove();
+    //$('#workspace').remove();
     if(locale == "english"){
       $('.zone').append('<div class=\"vote_form\" style="font-size:20px; color:white; float:left; margin-left:30px;"><p>You have to be signed in to display vote form</p></div>');
     }
@@ -34,18 +46,19 @@
   }
 
   function request_vote_form(){
+    alert("from vote form");
     $('.zone').empty();
-    if(words.length==0){
-      alert('empty');
+    //$('#workspace').remove();
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
+    if(check_empty_words()){
+      //alert('empty');
       return;
     }
-    $('#workspace').remove();
-    $('.zone').append('<div class=\"vote_form\"></div><</br>');    
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }
 
-  function clear() {
+    function clear() {
     $("#zone").empty();
   }
 
@@ -153,29 +166,6 @@ function getPrizes(level, score) {
   </div>
 </div>
 
-<div id="workspace" style="position:relative; left: 10px; ">
+<!-- <div id="workspace" style="position:relative; left: 10px; ">
   <a onclick="have_to_sign_in()"  id="btn">start voting</a>
-<<<<<<< HEAD
-</div>
-
-<script type="text/javascript" charset="utf-8">
-  function clear() {
-    $("#zone").empty();
-  }
-  function getPrizes(level, score) {
-    clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
-    $.get(request_string);
-  }
-  function getTrophies(level, score) {
-    clear();
-    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
-    $.get(request_string);
-  }
-  function getScore() {
-    return 123456;
-  }
-</script>
-=======
-</div>
->>>>>>> 1651294bc0b7435a4c4a4ac7d7cf2ec512d59ff7
+ -->
