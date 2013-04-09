@@ -1,13 +1,42 @@
-<h1>استيراد ملف CSV</h1>
-
-<form action="<%= choose_keywords_project_path %>" enctype="multipart/form-data" method="POST">
-  <input type="file" id="csvfile" name="csvfile">
+<form class="form-horizontal" action="<%=choose_keywords_project_path%>" enctype="multipart/form-data" method="POST">
   <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
-  <input type="submit" class="btn btn-success" value="رفع الملف">
+	<legend>
+	  <a>
+	    استيراد ملف كلمات بصيغة CSV
+	  </a>
+	</legend>
+ 
+	<div class="control-group">
+		<ol class="controls">
+			<li>لا يجب ان تحتوى الكلمات على ارقام</li>
+			<li>المعانى غير العربية لن يتم قبولها</li>
+			<li>يجب ان يكون الملف UTF-8 و بصيغة CSV</li>
+		</ol>
+	</div>
+ 
+	<div class="control-group">
+		<label class="control-label">
+			اختيار الملف
+		</label>
+		<div class="fileupload fileupload-new controls" data-provides="fileupload">
+		  <div class="input-append">
+		    <div class="uneditable-input span3">
+		    	<i class="icon-file fileupload-exists"></i> 
+		    	<span class="fileupload-preview"></span>
+		    </div>
+		    	<span class="btn-file btn">
+		    		<span class="fileupload-new">اختيار الملف</span>
+		    		<span class="fileupload-exists">تغيير الملف</span>
+		    		<input type="file" name="csvfile" id="csvfile">
+		    	</span>
+		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">الغاء</a>
+		  </div>
+		</div>
+	</div>
+ 
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary btn-large">تحميل الملف</button>
+		</div>
+	</div>
 </form>
-<p>لتحميل ملف CSV:</br></p>
-<ol>
-	<li>الكلمات التي بها أرقام لن تقبل</li>
-	<li>المعاني الغير عربية لن تقبل </li>
-	<li>الملفات يجب ان تكون بـبتقنية UTF-8</li>
-</ol>
