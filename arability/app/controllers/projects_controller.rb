@@ -207,6 +207,22 @@ class ProjectsController < BackendController
     end
   end
 
+  # add words and their synonym from the imported csv file to the project 
+  #
+  # == Parameters:
+  # words_ids::
+  #   array of hashes of word id and their corresponding synonym id
+  #
+  # id::
+  #   current project id
+  #
+  # == Success return:
+  # adds the word and synonym to project and redirects back to project
+  #
+  # == Failure return :  
+  # if the array size is bigger than the word_search of that developer nothing is added
+  #
+  # @author Mohamed Tamer
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
@@ -224,7 +240,25 @@ class ProjectsController < BackendController
     end
     redirect_to action: "show", id: project_id
   end
-
+  
+  # calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
+  # are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
+  # of synonyms and the synonyms accepted for each word
+  #
+  # == Parameters:
+  # csvfile::
+  #   the csv file the user imported
+  #
+  # id::
+  #   the project id
+  #
+  # == Success return:
+  # returnas an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
+  #
+  # == Failure return :  
+  # redirect back to the import_csv view with the error message
+  #
+  # @author Mohamed Tamer
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
     project_id =  params[:id]
@@ -339,10 +373,55 @@ class ProjectsController < BackendController
     end
   end
 
+  # add words and their synonym from the imported csv file to the project 
+  #
+  # == Parameters:
+  # words_ids::
+  #   array of hashes of word id and their corresponding synonym id
+  #
+  # id::
+  #   current project id
+  #
+  # == Success return:
+  # adds the word and synonym to project and redirects back to project
+  #
+  # == Failure return :  
+  # if the array size is bigger than the word_search of that developer nothing is added
+  #
+  # @author Mohamed Tamer
+  def add_from_csv_keywords
+    id_words_project = params[:words_ids]
+    project_id =  params[:id]
+    if id_words_project != nil
+      words_synonyms_array = [id_words_project].map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+        flash[:error] = t(:java_script_disabled)
+      else
+        words_synonyms_array.each do |word_syn|
+          if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+
+          end
+        end
+      end
+    end
+    redirect_to action: "show", id: project_id
+  end
+  
+  # finds the project and renders the view
+  #
+  # == Parameters:
+  # id::
+  #   the project id
+  #
+  # == Success return:
+  #  loads the view
+  #
+  # == Failure return :  
+  # no failure
+  #
+  # @author Mohamed Tamer
   def import_csv
     current_project = Project.find(params[:id])
-    @project_id = current_project.id
-    @message = params[:message]
   end
 # author:
 #      Khloud Khalid
