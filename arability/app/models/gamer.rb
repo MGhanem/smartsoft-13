@@ -74,4 +74,14 @@ class Gamer < ActiveRecord::Base
   def get_available_trophies
     return Trophy.all - self.trophies
   end
+
+  def won_prizes?(score, level)
+    if Prize.get_new_prizes_for_gamer(self.id, score, level).count > 0
+      return true
+    else
+      return false
+    end
+  end
+
+
 end
