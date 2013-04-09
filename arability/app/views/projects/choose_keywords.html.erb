@@ -1,12 +1,16 @@
 <div class="container">
-<h3>اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع </h3>
-<h6 style="color:red;">تبقى لك عدد <%= @words_remaining %> كلمة</h6>
+<legend>
+  <a>
+    <%= t(:choose_keyword_title) %>
+  </a>
+</legend>
+<h6 style="color:red;"><%=t(:choose_keyword_remaining)%> <%= @words_remaining %> <%=t(:choose_keywords_remaining2)%> </h6>
 <%= form_tag add_from_csv_keywords_project_path, :method => :put, :id => 'form_to_select_words' do %>
   <table class="table table-bordered" id="words_synonyms_table">
   <tr>
     <td style="width:20px;"></td>
-    <td style="width:300px;"><strong>Word</strong></td>
-    <td><strong>Synonyms</strong></td>
+    <td style="width:300px;"><strong><%=t(:choose_keyword_table_title)%></strong></td>
+    <td><strong><%=t(:choose_keyword_table_title2)%></strong></td>
   </tr>
   <% counter = 0 %>
   <% counter_syn = 0 %>
@@ -53,7 +57,7 @@
     <%prefred_syn = @id_first_synonyms_words_not_in_database_before[counter]  %> 
     <tr>
     <td><%= check_box_tag "words_ids[]", "#{word.id}|#{prefred_syn}" %></td>
-    <td><%= word.name %><span style="color:red;">*new*</span></td>
+    <td><%= word.name %><span style="color:red;"><%=t(:choose_keyword_table_span)%></span></td>
     <td>
       <% num_syns = @num_synonyms_words_not_in_database_before[counter].to_i %>
       <% counter_print = 1 %>
@@ -83,7 +87,7 @@
     <% counter = counter + 1 %>
   <% end %>
   </table>
-  <%= submit_tag "اضف إلى المشروع", :class => "btn btn-primary"%>
+  <%= submit_tag "#{t(:import_csv_submit)}", :class => "btn btn-primary btn-large"%>
 <% end %>
 </div>
 <script type="text/javascript">
