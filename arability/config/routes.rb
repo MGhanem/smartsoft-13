@@ -87,7 +87,6 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -144,4 +143,6 @@ Arability::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  match '*path', :to => 'pages#routing_error'
 end
