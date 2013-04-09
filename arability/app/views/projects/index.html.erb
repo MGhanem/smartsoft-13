@@ -1,4 +1,4 @@
-<h1>Projects</h1>
+<h1>مشاريع</h1>
 <br />
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
@@ -7,6 +7,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
+<!-- <<<<<<< HEAD
       <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> New Project</a>
       <br />
       <% @my_projects.each do |project| %>
@@ -75,3 +76,136 @@
     </div>
   </div>
 </div>  
+======= -->
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> إضافة مشروع</a>
+<br />
+<br />
+<%counter = 0%>
+<%size = @my_projects.size%>
+<table>
+<% while counter < size %>
+<%project1 = @my_projects[counter]%>
+<%project2 = @my_projects[counter+1]%>
+  <tr>
+    <td class="span5">
+      <div class="well well-small">
+        <strong>اسم:  </strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+        <br />
+  <strong>فئات: </strong>
+  <% size = project1.categories.length %>
+  <% counter = 1 %>
+  <% project1.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project1.description %>
+  <br />
+  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+</br>
+  <% project1.developers_shared.each do |dev|%>
+            <%= dev.name %>
+            <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
+          <% end %>
+
+</div>
+    </td>
+    <td class="sapn12"></td>
+    <%if project2 != nil%>
+      <td class="span5">
+      <div class="well well-small">
+  <strong>اسم:  </strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+  <br />
+  <strong>فئات: </strong>
+  <% size = project2.categories.length %>
+  <% counter = 1 %>
+  <% project2.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project2.description %>
+  <br />
+  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+</div>
+    </td>
+    <%end%>
+  </tr>
+  <% counter = counter +2 %>
+<% end %>
+</table>
+</p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>
+        <%if @shared_projects == nil%>
+          <span style="color:red;">ليس لديك أي مشاريع مشتركة</span>
+        <%else%>
+          <%counter = 0%>
+<%size = @shared_projects.size%>
+<table>
+<% while counter < size %>
+<%project1 = @shared_projects[counter]%>
+<%project2 = @shared_projects[counter+1]%>
+  <tr>
+    <td class="span5">
+      <div class="well well-small">
+        <strong>اسم:  </strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+        <br />
+  <strong>فئات: </strong>
+  <% size = project1.categories.length %>
+  <% counter = 1 %>
+  <% project1.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project1.description %>
+  <br />
+</div>
+    </td>
+    <td class="sapn12"></td>
+    <%if project2 != nil%>
+      <td class="span5">
+      <div class="well well-small">
+  <strong>اسم:  </strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+  <br />
+  <strong>فئات: </strong>
+  <% size = project2.categories.length %>
+  <% counter = 1 %>
+  <% project2.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project2.description %>
+  <br />
+</div>
+    </td>
+    <%end%>
+  </tr>
+  <% counter = counter +2 %>
+<% end %>
+</table>
+        <%end%>
+      </p>
+    </div>
+  </div>
+</div>
+

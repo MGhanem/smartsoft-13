@@ -1,22 +1,20 @@
 Arability::Application.routes.draw do
   
   root :to => 'pages#home'
-  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
     get "admin/index"
 
+
     get "admin/login"
     
     get "admin/logout"
   
-
     post "admin/wordadd"
 
   
- 
     post "admin/login"
 
     get "admin/import_csv"
@@ -117,6 +115,7 @@ Arability::Application.routes.draw do
   match '/projects/add_word' => "projects#add_word"
   match '/projects/remove_word' => "projects#remove_word"
   
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
