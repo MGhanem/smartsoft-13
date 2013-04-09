@@ -98,7 +98,7 @@
 								</span>
 								<span class="span2" style="color:#bbb;"><i>
 									<% if @votes[synonym.id] != nil%>
-										<%= @votes[synonym.id] + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
+										<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
 									<% else %>
 										<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
 									<% end %>
