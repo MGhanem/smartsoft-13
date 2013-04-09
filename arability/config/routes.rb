@@ -10,7 +10,7 @@ Arability::Application.routes.draw do
     
     get "admin/logout"
   
-    post "admin/wordadd"
+    post "admin/addword"
 
     post "admin/login"
 
@@ -121,7 +121,6 @@ Arability::Application.routes.draw do
   get 'games/gettrophies'
   get 'games/showtrophies'
   # The priority is based upon order of creation:
-    get "admin/import_csv"
 
     post "admin/upload"
 

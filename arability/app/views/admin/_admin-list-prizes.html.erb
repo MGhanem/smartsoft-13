@@ -1,0 +1,32 @@
+  <div id="myModalPrize" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">تأكيد المسح</h3>
+  </div>
+  <div class="modal-body">
+    <p>هل أنت متأكد من مسح الجائزة؟؟</p>
+    <div class="prize-view"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">غلق</button>
+    <a class="btn btn-warning">مسح</a>
+  </div>
+</div>
+<legend>
+  <a>
+    عرض الجوائز
+  </a>
+</legend>
+<% @prizes_list.each do |t| %>
+	<div class="trophy well">
+		<span>الاسم: <%= t.name %></span>
+		<div class="uploader-controls">
+			<div class="uploader-preview fileupload-preview thumbnail">
+				<img src="<%= t.image %>">
+			</div>
+		</div>
+		<span>المستوى: <%= t.level %></span>
+		<span>مجموع النقاط: <%= t.score %></span>
+		<span><a href="#myModalPrize" data-href="/admin/deleteprize?id=<%= t.id %>" role="button" class="edit-link-prize" data-toggle="modal">delete</a></span>
+	</div>
+<% end %>
