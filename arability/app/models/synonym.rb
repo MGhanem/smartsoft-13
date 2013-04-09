@@ -1,4 +1,4 @@
-#encoding:utf-8
+#encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
@@ -90,7 +90,6 @@ class Synonym < ActiveRecord::Base
         return synonym_list
       end
 
-
   # author:
   #   kareem ali
   #  blanck => 1
@@ -98,7 +97,7 @@ class Synonym < ActiveRecord::Base
   #  synonym not saved in database => 3
   #  synonym saved successfully => 0
     def record_suggested_synonym(synonym_name, keyword_id, approved= false)
-            if synonym_name.blank?
+      if synonym_name.blank?
         return  1
       elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
         return  2

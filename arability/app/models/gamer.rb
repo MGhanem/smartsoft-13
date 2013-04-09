@@ -1,10 +1,10 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
 
-  has_and_belongs_to_many :trophies
   has_and_belongs_to_many :prizes
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          # :omniauthable, :omniauth_providers => [:google_oauth2]
@@ -33,8 +33,6 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
   
-  
-  
   def receive_trophy(trohpy_id)
     trophy = Trophy.find(trophy_id)
     
@@ -46,6 +44,24 @@ class Gamer < ActiveRecord::Base
       return false
     else
       self.trophies << trophy
+      return true
+    end
+  end
+
+  #Author: Kareem ALi
+  #This method is used to select a synonym 
+  #by a certain gamer
+  #Parameters:
+  #  synonym_id: the synonym ID that the gamer voted for
+  #Returns:
+  #  On success: returns true if selecting synonym is true, when 
+  #  Vote.record_vote returns true
+  #  On failure: returns false if no new vote was created 
+  def select_synonym(synonym_id)
+    if Vote.record_vote(self.id,synonym_id)[0]
+      return true
+    else
+      return false
     end
   end
 

@@ -1,4 +1,5 @@
 <% if I18n.locale==:en %>
+
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
 <% else I18n.locale==:ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
@@ -29,7 +30,6 @@
   <div><%= f.label :date_of_birth, :class => "control-label" %>
     <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
-
          <div><%= f.label :gender, :class => "control-label" %>
             <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>
 
@@ -44,6 +44,12 @@
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
+
+  <div class="Twitter">
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
+    <%= link_to ">> Connect to your Twitter account", "/authentications/twitter" %>
+  </div>
+  <br>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
 
@@ -112,6 +118,12 @@
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div class="Twitter">
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
+    <%= link_to ">> تواصل مع تويتر الخاص بك", "/authentications/twitter" %>
+  </div>
+  <br>
 
   <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>

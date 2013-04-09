@@ -10,6 +10,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
+
 			<div class="row" style="padding:10px;">
 				<div class="span12">
 						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
@@ -42,7 +43,26 @@
 	</div>
 </div>
 
-<% if !@synonyms.blank?%>
+
+<% if @display_add %>
+	<div class="well">
+		<span>
+			<%= t(:keyword_not_found) %>
+			<%= link_to t(:add_word), "add_path" %>
+		</span>
+	</div>
+<% end %>
+
+<% if @no_synonyms_found %>
+	<div class="well">
+		<span>
+			<%= t(:no_synonyms_found) %>
+			<%= link_to t(:follow_word), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+		</span>
+	</div>
+<% end %>
+
+<% if !@synonyms.blank? %>
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
@@ -59,6 +79,7 @@
 			</div>
 		</div>
 	</div>
+
 	<% @synonyms.each do |synonym|%>
 		<div class="accordion-group">
 			<div class="accordion-heading">
