@@ -11,9 +11,7 @@
   <% else %>
     <% won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, params[:score], params[:level]) %>
 
-    <% if won_prizes.length == 0 %>
-        success = '<h1 class="award-title">لقد ربحت كل الجوائز لهذه المرحلة </h1>';
-    <% else %>
+    <% if won_prizes.length != 0 %>
         <% won_prizes.map { |wp| current_gamer.prizes << wp } %>
         success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
         prizes = [];
