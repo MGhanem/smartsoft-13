@@ -1,18 +1,18 @@
 class SearchController < ApplicationController
   before_filter :authenticate_gamer!
 	#Description:
-  #   search for keywords (in a particular category)
+  #   search for synonyms for a particular keyword
   # Author:
   #   Nourhan Mohamed
 	#	params:
 	#		search: a string representing the search keyword, from the params list
-	#     from a textbox in the search view
+	#     from a textbox in the search_keywords view
 	#	returns:
 	#		success: 
 	#			returns to the search view a list of synonyms for the keyword
 	#     sorted by relevance
 	#		failure:
-	#			returns an empty list if the search keyword had synonyms
+	#			returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params['search']
     @country = params['country']
