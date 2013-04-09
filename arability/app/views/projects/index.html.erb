@@ -2,8 +2,7 @@
   <a>
     <%= t(:projects_index_title)%>
   </a>
-</legend>
-<br />
+</legend> 
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
@@ -11,7 +10,9 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a>
+
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> إضافة مشروع</a>
+
 <br />
 <br />
 <%counter = 0%>
@@ -39,7 +40,17 @@
   <br />
   <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
   <br />
+
+  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+</br>
+  <% project1.developers_shared.each do |dev|%>
+            <%= dev.name %>
+            <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
+          <% end %>
+
+<!-- =======
   <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+>>>>>>> e9301e82cd115c68d70ce003d5a9c53afc87fdfa -->
 </div>
     </td>
     <td class="sapn12"></td>
@@ -136,3 +147,4 @@
     </div>
   </div>
 </div>
+

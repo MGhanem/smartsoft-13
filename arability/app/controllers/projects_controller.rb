@@ -15,7 +15,7 @@ class ProjectsController < BackendController
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:owner_id => developer.id)
-        # @shared_projects = developer.projects_shared
+        @shared_projects = developer.projects_shared
       else
         flash[:notice] = t(:projects_index_error1)
         render 'developers/new'
@@ -86,38 +86,6 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
   end
 
-  def share_project_with_developer
-    @project = Project.find(params[:id])
-    gamer = Gamer.find_by_email(params[:email])
-    if(!gamer.present?)
-      flash[:notice] = "Email doesn't exist"
-    else
-      developer = Developer.find_by_gamer_id(gamer.id)
-      if developer == nil
-        flash[:notice] = "Email address is for gamer, not a developer"
-      else
-
-        developer.projects_shared << @project
-        if(developer.save)
-          flash[:notice] = "Project has been shared successfully with #{developer.name}"
-        else
-          flash[:notice] = "Failed to share project with developer"
-        end
-      end
-    end
-    render "projects/share"
-  end
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-    redirect_to "/projects"
-  end
-
-  
   # author:
   #      Salma Farag
   # description:
@@ -237,6 +205,7 @@ end
     end
     redirect_to action: "show", id: project_id
   end
+
   
   # calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
   # are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
