@@ -14,11 +14,6 @@ module Arability
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.generators do |g|
-    g.orm             :active_record
-    g.template_engine :erb
-    g.test_framework  :test_unit, :fixture => false
-    end
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
