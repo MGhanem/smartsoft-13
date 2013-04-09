@@ -41,6 +41,7 @@ en:
   to: "To"
   desc: "Description"
   new_project: "New Project"
+  create_project: "Create Project"
   back: "Back"
   edit_project: "Edit Project"
 

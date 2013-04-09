@@ -43,6 +43,7 @@ ar:
   to: "الى"
   desc: "عن"
   new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
   back: "عودة"
   edit_project: "تعديل المشروع"
   import: "استيراد"
