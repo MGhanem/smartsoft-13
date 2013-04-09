@@ -1,55 +1,96 @@
 Arability::Application.routes.draw do
+
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
-		match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
-
-  	match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
-
-  	match "followed" => "follow#list_followed", :as => "list_followed_words"
-    
     get "admin/index"
 
     get "admin/login"
+
     get "admin/logout"
 
-    post "admin/login"
     post "admin/wordadd"
 
-    resources :projects
+    post "admin/login"
+
+		get "admin/import_csv"
+
+    post "admin/upload"
+
+    post "admin/addword"
+
+    post "admin/addtrophy"
+
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+
+    get "admin/deleteprize"
+
+    match '/game' => 'games#game'
+
+    post "games/vote" 
+
+    post "games/record_vote"
+
+		get 'games/getnewwords'
+
+    get "games/getprizes"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
-    get "admin/import_csv"
+    scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
 
-    post "admin/upload"
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+			resources :projects
 
-    match "keywords" => "keywords#viewall"
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
-    get "keywords/new"
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
 
-    get "keywords/suggest_add"
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
 
-    resources :projects
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
-    post "keywords/create"
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-    match '/developers/new' => "developer#new"
-    match '/developers/create' => "developer#create"
-    match '/my_subscriptions/new' => "my_subscription#new"
-    match '/my_subscriptions/create' => "my_subscription#create"
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
-    match 'search' => 'search#search'
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
+      get "keywords/new"
+
+      post "keywords/create"
+
+      get "keywords/suggest_add"
+
+      match "keywords" => "keywords#viewall"
+
+      match 'search' => 'search#search'
+
+      match '/developers/new' => "developer#new"
+      match '/developers/create' => "developer#create"
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
+    end
+
   end
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
