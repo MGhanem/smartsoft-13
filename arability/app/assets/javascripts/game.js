@@ -11,8 +11,8 @@ var droppingBlocks;
 var pullingBlocks;
 var suspenseTimer;
 var blockId = 0;
-var Time = 1000;
-var newTime = Time - 800;
+var waitTime = 1000;
+var fallingTime = 200;
 var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
@@ -22,9 +22,13 @@ var score = 0;
 var gameButtonClear;
 var gameButtonRestart;
 var gameOverPopUp;
+var wordsInDb = true;
 
 
 function newGame(){
+	$.ajaxSetup({async: false});
+	getNewWords(1);
+	if(wordsInDb == true){
 	$('.zone').empty();
 	setButtons();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
@@ -33,7 +37,6 @@ function newGame(){
 	'<br><br><div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
-	$.ajaxSetup({async: false});
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -41,6 +44,7 @@ function newGame(){
 		$('#level-popup').remove();
 		startGame();
 	}, 3500);
+}
 }
 function startGame(){
 	levelTitle = $('#level');
@@ -137,32 +141,14 @@ function dropAblockCont(clss, btn, randNum, counter){
 					suspense();
 				
 				blockId++;
-				if(tower > dimension - 1){
-					gameOver = true;
-					buttonArray = [];
-					generateWord();
-					clearTimeout(suspenseTimer);
-					clearTimeout(pullingBlocks);
-					clearTimeout(droppingBlocks);
-					$('tr').fadeOut('slow');
-					setTimeout(function(){$('tr').fadeIn('slow');
-						$('tr').empty();
-					}, 500);
-					$('.zone').append('<div id ="gameover-popup"' +
-					'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
-					'Game Over!</div>');
-					$('#gameover-popup').fadeTo(0,0);
-					$('#gameover-popup').fadeTo(1500,1);
-					$('#gameover-popup').fadeTo(1500,0);
+
+
+				if(loseGame(tower)){
 					return;
 				}
-				
-				
-					if(level == 5){
-						Time = 500;
-					}
+					
 					droppingBlocks = setTimeout(function() {  
-                	  dropAblock() } , Time);
+                	  dropAblock() } , waitTime);
 				
 			}
 			else{
@@ -181,35 +167,16 @@ function dropAblockCont(clss, btn, randNum, counter){
 						suspense();
 					
 					blockId++;
-					if(tower > dimension - 1){
-						gameOver = true;
-						clearTimeout(suspenseTimer);
-						clearTimeout(pullingBlocks);
-						clearTimeout(droppingBlocks);
-						buttonArray = [];
-						generateWord();
-						$('tr').fadeOut('slow');
-						setTimeout(function(){$('tr').fadeIn('slow');
-							$('tr').empty();
-						}, 500);
-						$('.zone').append('<div id ="gameover-popup"' +
-						'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
-						'Game Over!</div>');
-						$('#gameover-popup').fadeTo(0,0);
-						$('#gameover-popup').fadeTo(1500,1);
-						$('#gameover-popup').fadeTo(1500,0);
+					if(loseGame(tower)){
 						return;
 					}
-					if(level == 5){
-						Time = 500;
-						newTime = Time - 425;
-					}
+					
 					droppingBlocks = setTimeout(function() {
 						dropAblock() 
-					}, Time);// <-------- set the new block arrive time, here
+					}, waitTime);// <-------- set the new block arrive time, here
 				}
 			}
-		}, newTime);// <------set the drop fall time here
+		}, fallingTime);// <------set the drop fall time here
 }
 
 function calculatePossible(){
@@ -367,7 +334,7 @@ function removeAblock(){
 	var x;
 	var word = document.getElementById("wordLabel").innerHTML;
 		for(x = 0; x < wordsArray.length; x++){
-			if(wordsArray[x] == word){
+			if(wordsArray[x] == word && wordExistsInArray[x] == true){
 				for(var i = 0; i < buttonArray.length; i++){
 					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
 					$('#' + toBeRemovedId).fadeTo('slow',0.5);
@@ -399,7 +366,7 @@ function fadeSomething(x){
 				}
 				if(win == true){
 					buttonArray = [];
-					generateWord();
+					// generateWord();
 					removeAblockCont();
 					gameOver = true;
 					// $(".zone").slideUp(1000);
@@ -420,11 +387,12 @@ function fadeSomething(x){
 						return;
 					}, 3000);
 				}		
-				
-				buttonArray = [];
-				generateWord();
-				removeAblockCont();
+				else{
+					buttonArray = [];
+					generateWord();
+					removeAblockCont();
 				}
+}
 function removeAblockCont(){
 	var hasUpper;
 	var count;
@@ -534,6 +502,8 @@ function clearWord(){
 
 function nextLevel(){
 	level++;
+	fallingTime = fallingTime - 15;
+	waitTime = waitTime - 70;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
@@ -642,6 +612,14 @@ function highestTowerId(){
 
 function getNewWords(num){
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
+	if(wordsArray.length == 0){
+		wordsInDb = false;
+		$('.zone').empty();
+		$('.zone').append('<h2 id ="empty-db-msg"' +
+			'style="font: helvetica; width: 400px; color: white; margin-left: 190px; position: absolute; margin-top: 120px;">' +
+			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
+			'and we hope that you enjoyed our game</h2>');
+	}
 }
 
 function setLevelAttributes(level){
@@ -732,6 +710,39 @@ function calculateScore(){
 	score = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
 	document.getElementById('score').innerHTML = "SCORE: " + score;
+
+}
+
+function loseGame(t){
+	if(t > dimension - 1){
+		gameOver = true;
+		win = false;
+		buttonArray = [];
+		generateWord();
+		clearTimeout(suspenseTimer);
+		clearTimeout(pullingBlocks);
+		clearTimeout(droppingBlocks);
+		$('tr').fadeOut('slow');
+		setTimeout(function(){$('tr').fadeIn('slow');
+		$('tr').empty();
+		}, 500);
+		$('.zone').append('<div id ="gameover-popup"' +
+		'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
+		'Game Over!</div>');
+		$('#gameover-popup').fadeTo(0,0);
+		$('#gameover-popup').fadeTo(1500,1);
+		$('#gameover-popup').fadeTo(1500,0);
+		setWordsArray();
+		setTimeout(function(){
+			have_to_sign_in();
+			return true;
+		}, 3000);
+	}
+
+	else{
+		return false;
+	}
+
 }
 
 function getScore(){
