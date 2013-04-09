@@ -1,13 +1,17 @@
-<h1>مشاريع</h1>
+<legend>
+  <a>
+    <%= t(:projects_index_title)%>
+  </a>
+</legend>
 <br />
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">مشاريعي</a></li>
-    <li><a href="#tab2" data-toggle="tab">مشاريع مشتركة معي</a></li>
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:projects_index_tab2)%></a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> إضافة مشروع</a>
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a>
 <br />
 <br />
 <%counter = 0%>
@@ -19,9 +23,9 @@
   <tr>
     <td class="span5">
       <div class="well well-small">
-        <strong>اسم:  </strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+        <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
         <br />
-  <strong>فئات: </strong>
+  <strong><%= t(:projects_index_categories)%></strong>
   <% size = project1.categories.length %>
   <% counter = 1 %>
   <% project1.categories.each do |c| %>
@@ -33,18 +37,18 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:  </strong><%= project1.description %>
+  <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
   <br />
-  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
 </div>
     </td>
     <td class="sapn12"></td>
     <%if project2 != nil%>
       <td class="span5">
       <div class="well well-small">
-  <strong>اسم:  </strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
   <br />
-  <strong>فئات: </strong>
+  <strong><%= t(:projects_index_categories)%></strong>
   <% size = project2.categories.length %>
   <% counter = 1 %>
   <% project2.categories.each do |c| %>
@@ -56,9 +60,9 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:  </strong><%= project2.description %>
+  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
   <br />
-  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i> تعديل</a>
+  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
 </div>
     </td>
     <%end%>
@@ -71,7 +75,7 @@
     <div class="tab-pane" id="tab2">
       <p>
         <%if @shared_projects == nil%>
-          <span style="color:red;">ليس لديك أي مشاريع مشتركة</span>
+          <span style="color:red;"><%= t(:projects_index_no_shared_projects)%></span>
         <%else%>
           <%counter = 0%>
 <%size = @shared_projects.size%>
@@ -82,9 +86,9 @@
   <tr>
     <td class="span5">
       <div class="well well-small">
-        <strong>اسم:  </strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+        <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
         <br />
-  <strong>فئات: </strong>
+  <strong><%= t(:projects_index_categories)%></strong>
   <% size = project1.categories.length %>
   <% counter = 1 %>
   <% project1.categories.each do |c| %>
@@ -96,7 +100,7 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:  </strong><%= project1.description %>
+  <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
   <br />
 </div>
     </td>
@@ -104,9 +108,9 @@
     <%if project2 != nil%>
       <td class="span5">
       <div class="well well-small">
-  <strong>اسم:  </strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
   <br />
-  <strong>فئات: </strong>
+  <strong><%= t(:projects_index_categories)%></strong>
   <% size = project2.categories.length %>
   <% counter = 1 %>
   <% project2.categories.each do |c| %>
@@ -118,7 +122,7 @@
     <% end %>
   <% end %>
   <br />
-  <strong>وصف:  </strong><%= project2.description %>
+  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
   <br />
 </div>
     </td>

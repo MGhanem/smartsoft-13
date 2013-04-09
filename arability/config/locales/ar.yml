@@ -93,6 +93,17 @@ ar:
   upload_file_error3: "يوجد خطأ بهذا الملف"
   upload_file_error4: "هذا الملف ليس CSV"
   upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+  projects_index_error1: "من فضلك سجل كمطور"
+  projects_index_error2: "من فضلك قم بالدخول"
+  projects_index_title: "مشاريع"
+  projects_index_tab1: "مشاريعي"
+  projects_index_tab2: "مشاريع مشتركة معي"
+  projects_index_add: " إضافة مشروع"
+  projects_index_name: "اسم: "
+  projects_index_categories: "فئات: "
+  projects_index_description: "وصف: "
+  projects_index_edit: " تعديل"
+  projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
 
   errors:
     messages:

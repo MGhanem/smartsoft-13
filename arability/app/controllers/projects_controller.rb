@@ -21,11 +21,12 @@ class ProjectsController < BackendController
         @my_projects = Project.where(:owner_id => developer.id)
         # @shared_projects = developer.projects_shared
       else
-        flash[:notice] = "من فضلك سجل كمطور"
+        flash[:notice] = t(:projects_index_error1)
         render 'developers/new'
       end
     else
-      flash[:notice] = "من فضلك قم بالدخول"
+      flash[:error] = t(:projects_index_error2)
+      render 'pages/home'
     end
   end
 
