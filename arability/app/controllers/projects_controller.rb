@@ -5,15 +5,20 @@ class ProjectsController < BackendController
   # GET /projects.json
   require 'csv'
 
-  # author: 
-  #   Mohamed Tamer 
-  # description: 
-  #   function shows all the projects of a certain developer
-  # params: 
-  #   none
-  # returns:
-  #   on success: returns an array of projects of the developer currently logged in.
-  #   on failure: notifies the user that he can't see this page.
+  
+  #   function shows all the projects that a certain developer owns and the projects shared with him
+  #
+  # == Parameters:
+  # current_gamer::
+  #   the current currently logged in, will be nil if there is no logged in gamer
+  #
+  # == Success return:
+  # array of projects that the developer own and the projects shared with him
+  #
+  # == Failure return :  
+  # redirects to dvelopers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
+  #
+  # @author Adam Ghanem
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
