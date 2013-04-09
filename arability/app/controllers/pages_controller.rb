@@ -8,7 +8,7 @@ class PagesController < ApplicationController
 
   def post
 	@graph = Koala::Facebook::API.new("BAACEdEose0cBADPNP6sJt8PUPNCX5xC0HrcE393iZAHieQijMZBzMJD3uZCWrGgNu8oZAKZBZCXbg8aZB70LByDsMtEqVPdkCllZB6cmUT0bL1fGBVqGjbJ3") # 1.2beta and beyond
-	@graph.put_wall_post("fb button")
+	@graph.put_wall_post("لقد حصلت على" + getScore() + " نقطة في ")
 	render 'pages/home'
   end
 
