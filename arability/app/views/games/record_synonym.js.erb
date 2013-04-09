@@ -3,8 +3,8 @@
 <% if record_output == 2 %>
 	<% if already_existing_synonym%>
 		<% if already_existing_synonym.approved == false %>
-			record_vote(<%= already_existing_synonym.id %>);
 			alert(already_existing_synonym);
+			record_vote(<%= already_existing_synonym.id %>);
 		<% end %>
 	<% end %>
 <% elsif record_output == 0 %>
