@@ -144,5 +144,5 @@ Arability::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 
-  match '*path', :to => 'pages#routing_error'
+  match '*path', :to => 'application#routing_error'
 end
