@@ -18,6 +18,7 @@ var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
 var successfulWords = [];
+var win = true;
 
 
 
@@ -129,6 +130,7 @@ function dropAblockCont(clss, btn, randNum, counter){
 				
 				blockId++;
 				if(loseGame(tower)){
+					win = false;
 					return;
 				}
 					if(level == 5){
@@ -155,6 +157,7 @@ function dropAblockCont(clss, btn, randNum, counter){
 					
 					blockId++;
 					if(loseGame(tower)){
+						win = false;
 						return;
 					}
 					if(level == 5){
@@ -344,7 +347,6 @@ function fadeSomething(x){
 				successfulWords.push(wordsArray[x]);
 				wordExistsInArray[x] = false;
 				calculatePossible();
-				var win = true;
 				for(var finished = 0; finished < wordExistsInArray.length; finished++){
 					if(wordExistsInArray[finished] == true){
 						win = false;
@@ -469,22 +471,22 @@ function clearWord(){
 // 		}
 // 	}
 // }
-
 function nextLevel(){
 	$('#main-table').empty();
 	$('#wordsList').empty();
 	$('#level').empty();
+	win = true;
 	buttonArray = [];
 	bigTower = '';
 	gameOver = false;
 	level++;
-	numberOfCalls = 0;
 	successfulWords = [];
 	clearTimeout(pullingBlocks);
 	clearTimeout(droppingBlocks);
 	if(numberOfCalls > 0){
 		clearTimeout(suspenseTimer);
 	}
+	numberOfCalls = 0;
 	startGame();
 	
 }
