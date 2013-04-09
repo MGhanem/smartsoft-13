@@ -244,9 +244,16 @@ float:right;
   direction: rtl;
   text-align:right;
   background-color: rgba(0,204,190, 0.3);
+  color:white;
 }
 
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
+
+
 .award-desc-locked {
+  color: white;
    font-size: 20px;
   padding: 10px;
   margin-left:10px;
@@ -255,6 +262,10 @@ float:right;
   direction: rtl;
   text-align:right;
   background-color: rgba(200,204,190, 0.3);
+}
+
+.award-desc-locked img {
+  margin-left: 14px;
 }
 
 
