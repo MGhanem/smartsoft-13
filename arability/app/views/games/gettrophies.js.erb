@@ -19,13 +19,10 @@
 
     score = '<h1 class="award-title">لقد سجلت النقاط التالية  <span id="score"><%= params[:score] %></span> </h1>';
     $("#zone").append($(score));
-    <% if won_trophies.length == 0 %>
-        success = '<h1 class="award-title">لقد أكملت كل الانجازات لهذه المرحلة  </h1>';
-    <% else %>
+    <% if won_trophies.length != 0 %>
         <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
         success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
         trophies = [];
-
         <% won_trophies.each do |t| %>
           trophies.push('<div class="award">' + '<img width="60" src="<%= t.image %>">' + '<%= t.name %>' + '</div>');
         <% end %>

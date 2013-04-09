@@ -31,7 +31,7 @@
       return;
     }
     $('#workspace').remove();
-    $('.zone').append('<div class=\"vote_form\"></div></br>');    
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }
