@@ -46,7 +46,6 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
-      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
@@ -136,6 +135,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
+      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -193,6 +193,7 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
     if @projects.include?(@project)
       @words = []
+      @words.sort! { |a,b| a.name.downcase <=> b.name.downcase }
       @synonyms = []
       @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
       @words_synonyms.each do |word_synonym|
