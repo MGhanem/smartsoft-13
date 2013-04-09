@@ -9,7 +9,9 @@ function record_vote(syn_id){
 
 function display_next_word(){
 	$('.vote_form').remove();
-	check_empty_words();
+	if(check_empty_words()){
+		return;
+	}
 	$('.zone').append('<div class=\"vote_form\"></div>');
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
