@@ -16,7 +16,7 @@ class SearchController < ApplicationController
 	#		failure:
 	#			returns an empty list if the search keyword had no matches or no
 	#     similar keywords were found
-  def search
+  def search_keywords
     @categories = params[:categories]
     if @categories.present?
       categories_array = @categories.split(/,/)
@@ -26,7 +26,6 @@ class SearchController < ApplicationController
     else
       categories_array = []
     end
-    @is_successful = params['is_successful']
     @search_keyword = params['search']
   	@similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
