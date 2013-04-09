@@ -87,11 +87,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-
   end
-
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
