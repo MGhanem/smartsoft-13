@@ -127,4 +127,10 @@
 			</div>
 		</div>
 	<% end %>
+	<div class="well">
+			<span>
+				<%= t(:follow_word_link) %>
+				<%= link_to t(:follow_word_end_of_search), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+			</span>
+	</div>
 <% end %>
