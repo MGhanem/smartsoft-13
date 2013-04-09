@@ -19,9 +19,12 @@ class Prize < ActiveRecord::Base
   # has_attached_file :photo
 
   def self.get_new_prizes_for_gamer(gamer_id, score, level)
-    prizes_all = Prize.where(:score => score, :level => level)
+    prizes_for_score = []
     prizes_gamer = Gamer.find(gamer_id).prizes
-    return prizes_all - prizes_gamer
+    prizes_of_level = Prize.where(:level => level)
+    new_prizes = prizes_of_level - prizes_gamer
+    new_prizes.map { |nt| prizes_for_score << nt if nt.score <= score }
+    return prizes_for_score
   end
 
 end
