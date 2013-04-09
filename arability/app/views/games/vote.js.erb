@@ -1,16 +1,14 @@
 var words=get_words();
 var translation="";
 
+
 function record_vote(syn_id){
 	$.post("/games/record_vote.js", {synonym_id: syn_id } );
 }
 
 function display_next_word(){
 	$('.vote_form').remove();
-	if(words.length==0){
-		$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
-		return;
-	}
+	check_empty_words();
 	$('.zone').append('<div class=\"vote_form\"></div>');
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});

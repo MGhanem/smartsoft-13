@@ -658,6 +658,7 @@ function calculateScore(){
 }
 
 function loseGame(t){
+	//alert("game finished");
 	if(t > dimension - 1){
 		gameOver = true;
 		buttonArray = [];
