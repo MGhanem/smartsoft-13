@@ -189,6 +189,7 @@ margin-left: 80px;
   color: white;
   width: 200px;
   height: 38px;
+  padding-left:30px;
 }
 
 #btn-restart{
@@ -197,8 +198,10 @@ margin-left: 80px;
   margin-left: 30px;
 }
 
-#score{
+#game-score{
   color: white;
+  width: 220px;
+  float: right;
 }
 
 .award-title {

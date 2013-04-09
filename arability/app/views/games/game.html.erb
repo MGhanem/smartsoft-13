@@ -117,6 +117,15 @@ function getPrizes(level, score) {
     return 123456;
   }
 
+
+  function setLevelPopUpTitle(){
+    <% if I18n.locale==:ar %>
+    levelPopUpTitle = 'مرحلة رقم';
+    <% else I18n.locale==:en %>
+    levelPopUpTitle = 'Level';
+    <% end %> 
+  }
+
 </script>
 
 <div class="game-zone">
