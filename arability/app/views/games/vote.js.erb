@@ -6,6 +6,7 @@ function record_vote(syn_id){
 	$.post("/games/record_vote.js", {synonym_id: syn_id } );
 }
 
+
 function display_next_word(){
 	$('.vote_form').remove();
 	check_empty_words();
@@ -42,11 +43,18 @@ function update_errors(record_output){
 			$('.alert').append('<p style="font-size:20px; ">المعني موجود بالفعل.</p>');
 		<% end %>
 	}
-	if( record_output!=0 && record_output!=1 && record_output!=2){
+	if( record_output!=0 && record_output!=1 && record_output!=2 && record_output != 4){
 		<% if I18n.locale == :en %>
 			$('.alert').append('<p style="font-size:20px; ">the synonym cannot be added</p>');
 		<% else %>
 			$('.alert').append('<p style="font-size:20px; ">المعني لم يحفظ.</p>');
+		<% end %>
+	}
+	if( record_output == 4)
+		<% if I18n.locale == :en %>
+			$('.alert').append('<p style="font-size:20px; ">Thank you</p>');
+		<% else %>
+			$('.alert').append('<p style="font-size:20px; ">شكرا</p>');
 		<% end %>
 	}
 }
