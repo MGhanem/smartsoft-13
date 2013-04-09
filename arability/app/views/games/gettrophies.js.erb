@@ -8,7 +8,7 @@
               '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
       $("#zone").append($(error));
   <% else %>
-    <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
+    <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level].to_i, params[:score].to_i) %>
 
     <% if won_trophies.length == 0 %>
         success = '<h1 class="award-title">لقد أكملت كل الانجازات لهذه المرحلة  </h1>';
@@ -18,7 +18,7 @@
         trophies = [];
 
         <% won_trophies.each do |t| %>
-          trophies.push('<div class="award">' + '<img width="60" src="<%= p.image %>">' + '<%= t.name %>' + '</div>');
+          trophies.push('<div class="award">' + '<img width="60" src="<%= t.image %>">' + '<%= t.name %>' + '</div>');
         <% end %>
          
     <% end %>
