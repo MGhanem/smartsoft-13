@@ -2,13 +2,10 @@
 .radio{
     display:float;
 }
+.req{
+    color: red;
+}
 </style>
-<div class="tabbable tabs-left">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
-    <li><a href="#tab2" data-toggle="tab"><%= t(:projects_index_tab2)%></a></li>
-  </ul>
-  </div>
 <div class = "container" >
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
@@ -23,10 +20,12 @@
     <% end %>
 
     <div class="field">
+        <span class="req">* </span>
         <%= t(:name)%>
         <%= f.text_field :name, :placeholder=>t(:name) %>
     </div>
     <div class="field">
+        <span class="req">* </span>
         <%= t(:categories)%>
         <%= text_field_tag("project[categories]", @categories,:placeholder=>t(:enter_as_csv)) %> 
     </div><br>
@@ -40,18 +39,20 @@
     </br>
     </div>
     <div class="field">
-        <div class="field"><%= t(:age)%></div>
+        <span class="req">* </span>
+        <%= t(:age)%></div>
         <%= t(:from)%>
-        <%= f.text_field :minAge %>
+        <%= f.text_field :minAge, :class => "input-small" %>
         <%= t(:to)%>
-        <%= f.text_field :maxAge %>
+        <%= f.text_field :maxAge, :class => "input-small" %>
   </div>
+  <br>
   <div>
     <%= t(:desc) %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, :size => "10x10" %>
 </div>
-<div class="actions">
-    <%= f.submit %>
+<div>
+    <%= f.submit t(:create_project), :class => "btn btn-success" %>
 </div>
 </div>
 <% end %>

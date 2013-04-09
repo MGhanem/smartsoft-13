@@ -42,6 +42,7 @@ en:
   new_project: "New Project"
   back: "Back"
   edit_project: "Edit Project"
+  create_project: "Create Project"
   click_here: "Click here"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
