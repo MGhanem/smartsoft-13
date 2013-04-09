@@ -108,13 +108,13 @@
 
 .label1{
       font-size:100%;
-      text-align: center;
       height: 50px; 
       color: white;
       background-color: transparent;
       overflow: hidden;
       width: 190px;
       line-height: 50px;
+      margin-left: 45px;
     }
 
 .label-div{
@@ -151,13 +151,11 @@
 }
 
 .buttons-div{
-float:right;
+float:left;
+margin-top: 30px;
+margin-left: 80px;
 }
 
-#btn-next, #btn-clear{
-  color: white;
-  padding-left: 10px;
-}
 
 #btn-next{
   margin-left: 10px;
@@ -184,12 +182,15 @@ float:right;
 }
 
 #btn-clear{
-  float: left;
-  width: 110px;
+  color: white;
+  width: 200px;
+  height: 38px;
 }
 
 #btn-restart{
-  width: 90px;
+  width: 200px;
+  height: 29px;
+  margin-left: 30px;
 }
 
 #score{
