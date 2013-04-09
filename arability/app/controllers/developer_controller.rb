@@ -1,4 +1,4 @@
-class DeveloperController < BackendController
+class DeveloperController < ApplicationController
   before_filter :authenticate_gamer!
 # author:
 #   Khloud Khalid
