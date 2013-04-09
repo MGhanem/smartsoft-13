@@ -69,7 +69,6 @@ ar:
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-
   errors:
     messages:
       not_saved:
@@ -93,7 +92,6 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
-
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   stats_gender: "احصائيات الجنس"
   stats_country: "احصائيات البلاد"
@@ -103,3 +101,4 @@ ar:
   female: "انثي"
   male: "ذكر"
   out_of: "من"
+  keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
