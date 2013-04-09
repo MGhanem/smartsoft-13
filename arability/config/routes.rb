@@ -66,6 +66,9 @@ Arability::Application.routes.draw do
       
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
+  resources :projects
+  match "keywords/create" => "keywords#create"
+
       match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
 
@@ -97,6 +100,8 @@ Arability::Application.routes.draw do
   match 'search' => 'search#search'
 
   match '/projects/add_word' => "projects#add_word"
+
+  match 'search_keywords' => 'search#search_keywords'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

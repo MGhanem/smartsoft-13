@@ -31,24 +31,4 @@ class KeywordsController < ApplicationController
       redirect_to redirect_url, :flash => flash
     end
   end
-
-  #Description:
-  #   adds a keyword suggested by user to database
-  # Author:
-  #   Nourhan Mohamed
-  # params:
-  #   search: a string representing the search keyword that was suggested to
-  #     be added to the database
-  # returns:
-  #   success:
-  #     redirects to the search page again after adding the keyword to
-  #     database and displays a message indicating successful adding
-  #   failure:
-  #     returns an error message indicating failure to add
-  def suggest_add
-    keyword_to_add = params[:search]
-    add_success = Keyword.add_keyword_to_database(keyword_to_add)
-    redirect_to :controller => 'search', :action => 'search',
-      :search => keyword_to_add, :is_successful => add_success[0]
-  end
 end

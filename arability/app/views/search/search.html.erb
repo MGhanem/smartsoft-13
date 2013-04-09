@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="span12">
-		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
+		<%= form_tag(search_path, :method => "post", :class => "form-search form-horizontal", :style => "margin-bottom:0px;") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
 													:placeholder => t(:search_here),
@@ -12,27 +12,36 @@
 			<div class="row" style="padding:10px;">
 				<div class="span12">
 						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
-  						<span class="icon-plus"></span>
+							<span id="filter_btn" class="icon-plus" onClick="toggle_me()"></span>
+							<script type="text/javascript">
+								function toggle_me(){
+									$("#filter_btn").toggleClass('icon-minus');
+								}
+							</script>
 						</button>
-						<span><%= t(:filter) %></span>
+						<span>&nbsp;<%= t(:filter) %></span>
 						<div id="filter" class="collapse"> 
 							<div style="padding:10px;">
-								<p>
-									<%= label_tag t(:country) %>
-									<%= text_field_tag(:country, @country) %>
-								</p>
-								<p>
-									<%= label_tag t(:age_from) %>
-									<%= number_field_tag :age_from, nil, :in => 10...101 %>
-								</p>
-								<p>
-									<%= label_tag t(:age_to) %>
-									<%= number_field_tag :age_to, nil, :in => 10...101 %>
-								</p>
-								<p>
-									<%= label_tag t(:gender) %>
-									<%= select_tag :gender, options_for_select(["male", "female"]), :include_blank => true %>
-								</p>	
+								<div class="control-group">
+									<%= label_tag t(:country), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= text_field_tag :country, @country, :class => "control" %>
+								</div>
+								<div class="control-group">
+									<%= label_tag t(:gender), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= select_tag :gender, options_for_select([t(:male), t(:female)]), :include_blank => true,  :class => "control" %>
+								</div>	
+								<div class="control-group">
+									<%= label_tag t(:age_from), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
+								</div>
+								<div class="control-group">
+									<%= label_tag t(:age_to), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<%= number_field_tag :age_to, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
+								</div>
 							</div>
 						</div>
 				</div>
@@ -40,15 +49,6 @@
 		<% end %>
 	</div>
 </div>
-
-<% if @display_add %>
-	<div class="well">
-		<span>
-			<%= t(:keyword_not_found) %>
-			<%= link_to t(:add_word), "add_path" %>
-		</span>
-	</div>
-<% end %>
 
 <% if @no_synonyms_found %>
 	<div class="well">
@@ -80,14 +80,14 @@
 					<div class="span12">
 						<div class="accordion-toggle" style="padding-bottom:30px;">
 							<div class="pull-left">
-								<span class="span1">
+								<span class="span2">
 									<%= synonym.name %>
 								</span>
 								<span class="span2" style="color:#bbb;"><i>
 									<% if @votes[synonym.id] != nil%>
-										<%= @votes[synonym.id] %>/<%= @total_votes.to_s + " " + t(:votes) %>
+										<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
 									<% else %>
-										0/<%= @total_votes.to_s + " " + t(:votes)%> 
+										<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
 									<% end %>
 								</i></span>
 							</div>
