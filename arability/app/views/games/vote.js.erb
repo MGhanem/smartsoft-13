@@ -22,13 +22,6 @@ function update_errors(record_output){
 	$('.alert').remove();
 	$('#box_buttons').append('<div class="alert"></div>');
 	//$('.zone').append('<div class="alert"></div>');
-	if(record_output == 0){
-		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">The synonym has been added successfully</p>');
-		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">الكلمة حفظت بنجاح.</p>');
-		<% end %>
-	}
 	if(record_output == 1) {
 		<% if I18n.locale ==:en %>
 			$('.alert').append('<p style="font-size:20px; ">you cannot insert a blank synonym</p>');
@@ -43,18 +36,11 @@ function update_errors(record_output){
 			$('.alert').append('<p style="font-size:20px; ">المعني موجود بالفعل.</p>');
 		<% end %>
 	}
-	if( record_output!=0 && record_output!=1 && record_output!=2 && record_output != 4){
+	if( record_output == 3){
 		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">the synonym cannot be added</p>');
+			$('.alert').append('<p style="font-size:20px; ">The synonym should be in arabic</p>');
 		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">المعني لم يحفظ.</p>');
-		<% end %>
-	}
-	if( record_output == 4){
-		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">Thank you</p>');
-		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">شكرا</p>');
+			$('.alert').append('<p style="font-size:20px; ">يجب ان يكون المعني باللغة العربية</p>');
 		<% end %>
 	}
 }
