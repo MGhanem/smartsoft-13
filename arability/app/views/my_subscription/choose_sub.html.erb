@@ -1,9 +1,4 @@
-<% if I18n.locale==:en %>
 <h2>Register as developer Step2: choose your subscription model</h2>
-<% else I18n.locale==:ar %>
-<h2>تسجيل الدخول المطور: المرحلة رقم 2 ، إختر نموذج الاشتراك</h2>
-<% end %>
-
 <%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "pick" }) do |f| %>
 <% @all_subscription_models.each do |sm| %>
 	<%#= radio_button_tag "subs", sm.id, %>
@@ -15,9 +10,5 @@
 	
 	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %></p>
 <% end %>
-<% if I18n.locale==:en %>
 <%= submit_tag "select subscriptions"%>
-<% else I18n.locale==:ar %>
-<%= submit_tag "إختر"%>
-<% end %>
 <% end %>

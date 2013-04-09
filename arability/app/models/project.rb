@@ -15,6 +15,8 @@ class Project < ActiveRecord::Base
 
   attr_accessible :name
   belongs_to :developer
+
+
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
@@ -83,3 +85,4 @@ def self.printarray(array)
 end
 
 end
+

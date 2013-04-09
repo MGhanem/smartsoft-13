@@ -53,7 +53,7 @@ class Keyword < ActiveRecord::Base
         synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
       end
       synonym_list.uniq!
-      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
+      synonym_list = synonym_list.sort_by { |synonym, count| votes_count[synonym] }
         .reverse!
       synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
       synonym_list = synonym_list + synonyms_with_no_votes
@@ -214,9 +214,9 @@ class Keyword < ActiveRecord::Base
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(:keyword_id => keyword_id)
         .joins(:votes).count(:group => "synonym_id")
-      sum = votes.sum{|v| v.last}
-      v = votes.map {|key, value| [Synonym.find(key).name, value]}
-      return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+         sum = votes.sum{|v| v.last}
+         v = votes.map {|key, value| [Synonym.find(key).name, value]}
+        return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
 
    
