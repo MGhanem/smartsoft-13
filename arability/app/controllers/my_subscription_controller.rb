@@ -15,11 +15,11 @@ class MySubscriptionController < ApplicationController
       if Developer.find_by_gamer_id(current_gamer.id) != nil
         @my_subscription = MySubscription.new
       else
-        flash[:notice] = "Please register as a developer before you choose your subscription model."
+        flash[:notice] = t(:no_developer)
         render 'pages/home'
       end
     else
-      flash[:notice] = "You have already chosen your subscription model."
+      flash[:notice] = t(:subscription_model_already_chosen)
       render 'pages/home'
     end
   end
@@ -41,27 +41,27 @@ class MySubscriptionController < ApplicationController
           @my_subscription.developer_id = Developer.find_by_gamer_id(current_gamer.id).id
           @my_subscription.subscription_models_id = params[:my_subscription]
           if @my_subscription.save
-            flash[:notice] = "You have successfully registered as a developer."
+            flash[:notice] = t(:success_developer_registration:)
             render 'pages/home'
           else
-            flash[:notice] = "Failed to complete registration."
+            flash[:notice] = t(:failed_developer_registration)
             render 'my_subscription/new'
           end
         else
           if params[:my_subscription] == nil
-            flash[:notice] = "Please choose a subscription model."
+            flash[:notice] = t(:choose_subscription_model)
             render 'my_subscription/new'
           else
-            flash[:notice] = "Failed to complete registration: the subscription model you chose does not exist."
+            flash[:notice] = t(:subscription_model_does_not_exist)
             render 'my_subscription/new'
           end
         end
       else
-        flash[:notice] = "You have already chosen your subscription model. Don't you remember?"
+        flash[:notice] = t(:subscription_model_already_chosen)
         render 'pages/home'
       end
     else
-      flash[:notice] = "Please register as a developer before you choose your subscription model."
+      flash[:notice] = t(:no_developer)
       render 'pages/home'
     end  
   end

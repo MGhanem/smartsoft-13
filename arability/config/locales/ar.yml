@@ -101,3 +101,20 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  already_registered_developer: "لقد انشأت حساب كمطور من قبل."
+  failed_developer_registration: "فشل إنشاء حساب المطور. تأكد من إدخال المعلومات الصحيحة. "
+  no_developer: "انشئ حساب مطور قبل أن تختار نظام الاشتراك."
+  subscription_model_already_chosen: "لقد اخترت نظام الاشتراك من قبل."
+  success_developer_registration: "تم إنشاء حسابك كمطور بنجاح."
+  choose_subscription_model: "إختر نظام الاشتراك."
+  subscription_model_does_not_exist: "نظام الاشتراك الذي اخترته ليس موجود."
+  register_as_developer: "أدخل بياناتك للاشتراك كمطور"
+  next: "التالي"
+  done: "إنتهاء"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"

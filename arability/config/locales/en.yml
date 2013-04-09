@@ -70,5 +70,23 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  already_registered_developer: "You are already registered as a developer. Don't you remember?"
+  failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
+  no_developer: "Please register as a developer before you choose your subscription model."
+  subscription_model_already_chosen: "You have already chosen your subscription model. Don't you remember?"
+  success_developer_registration: "You have successfully registered as a developer."
+  choose_subscription_model: "Please choose a subscription model."
+  subscription_model_does_not_exist: "Failed to complete registration: the subscription model you chose does not exist."
+  register_as_developer: "Register as a developer"
+  next: "Next"
+  done: "Done!"
+  activerecord:
+    models:
+      developer: "Developer"
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"
+
 
 

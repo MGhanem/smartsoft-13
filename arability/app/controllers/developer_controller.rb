@@ -12,7 +12,7 @@ class DeveloperController < ApplicationController
 #   gamer not signed in
   def new
     if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = "You are already registered as a developer. Don't you remember?"
+      flash[:notice] = t(:already_registered_developer)
       render 'pages/home'
     else
       @developer = Developer.new
@@ -30,7 +30,7 @@ class DeveloperController < ApplicationController
 #   invalid information, user already registered as developer
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = "You are already registered as a developer. Don't you remember?"
+      flash[:notice] = t(:already_registered_developer)
       render 'pages/home'
     else
       @developer = Developer.new(params[:developer])
@@ -38,7 +38,7 @@ class DeveloperController < ApplicationController
       if @developer.save
         render 'my_subscription/new'
       else
-        flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+        flash[:notice] = t(:failed_developer_registration)
         render :action => 'new'
       end
     end
