@@ -1,11 +1,25 @@
 <script type="text/javascript" charset="utf-8">
   
+<<<<<<< HEAD
   var words=["car","sar","sad","sfd"];
+
+  function setWordsArray(){
+    for(var x=0; x < successfulWords.length;x++){
+      successfulWords[x]=successfulWords[x].toLowerCase();
+    }
+    words=successfulWords;
+  }
+
+  function clear(){
+    $("#zone").empty();
+  }
+
   function get_words(){
     return words;
   }
 
   function have_to_sign_in(){
+    alert(successfulWords);
     $.post("/games/vote_errors.js");
   }
 

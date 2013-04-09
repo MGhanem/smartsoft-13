@@ -11,13 +11,13 @@ var droppingBlocks;
 var pullingBlocks;
 var suspenseTimer;
 var blockId = 0;
-var Time = 1000;
+var Time = 800;
 var newTime = Time - 800;
 var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
-var successfulWords = [];
+var successfulWords = ['CAR'];
 
 
 
@@ -140,6 +140,8 @@ function dropAblockCont(clss, btn, randNum, counter){
 					setTimeout(function(){$('tr').fadeIn('slow');
 					$('tr').empty();
 					}, 500);
+					setWordsArray();
+					have_to_sign_in();
 					return;
 				}
 				
@@ -180,6 +182,8 @@ function dropAblockCont(clss, btn, randNum, counter){
 						setTimeout(function(){$('tr').fadeIn('slow');
 							$('tr').empty();
 						}, 500);
+						setWordsArray();
+						have_to_sign_in();
 						return;
 					}
 					if(level == 5){
