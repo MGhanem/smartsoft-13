@@ -11,7 +11,7 @@ var droppingBlocks;
 var pullingBlocks;
 var suspenseTimer;
 var blockId = 0;
-var Time = 1000;
+var Time = 600;
 var newTime = Time - 800;
 var numberOfCalls = 0;
 var wordExistsInArray = new Array();
