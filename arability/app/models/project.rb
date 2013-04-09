@@ -1,16 +1,17 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-  include ApplicationHelper
 
-  belongs_to :developer
-
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  # has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
 
 
 
+
   attr_accessible :name
   belongs_to :developer
+
 
 
 
@@ -34,6 +35,7 @@ class Project < ActiveRecord::Base
 # failure:
 #     None
 
+
  
   # def self.createproject(params)
   # 	project = Project.new(params.except(:categories))
@@ -47,9 +49,10 @@ class Project < ActiveRecord::Base
   # 	return project
   #  end
 
-def self.createproject(params,gamer_id)
+
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
-  project.owner_id = current_developer.id
+  project.owner_id = developer_id
   project = createcategories(project,params[:categories])
   return project
 end

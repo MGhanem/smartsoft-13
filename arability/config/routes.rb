@@ -62,6 +62,11 @@ Arability::Application.routes.draw do
       resources :projects
       match "projects/:id/share" => "projects#share", :as => "share_project"
 
+			get "projects/remove_developer_from_project"
+  		
+      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
+      match '/projects/remove_word' => "projects#remove_word"
+
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
       match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"

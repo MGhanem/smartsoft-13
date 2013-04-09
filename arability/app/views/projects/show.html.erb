@@ -1,6 +1,7 @@
+
 <div class="container" border="1"> 
 	<h3><%= t(:project)%>: <%=@project.name %></h3><br>
-	<form>
+	
 		<div class="container well">
 			<div class="btn-toolbar" style="margin: 0;">
 				<div class="btn-group">
@@ -22,8 +23,8 @@
 					<button class="btn"><i class="icon-thumbs-up"></i> <%= t(:recommended_words) %> <span></span></button>
 				</div>
 				<div class="btn-group">
-					<button class="btn" ><a href= "share_project_path"><i class="icon-share"></i> <%= t(:share) %> </a></button>
-					
+
+					<button class="btn" onclick="window.location='<%=share_project_path(@project)%>'"><i class="icon-share"></i> <%= t(:share) %></button>
 				</div>
 				<div class="btn-group">
 					<button class="btn"><i class="icon-edit"></i> <%= t(:edit_project) %> <span></span></button>
@@ -38,25 +39,29 @@
 					<button class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-question-sign"></i>  <%= t(:help) %> <span class="caret"></span></button>
 				</div>
 			</div><br>
-			<table class="table table-bordered" style="width:940px;background-color:white" >
+			<table class="table table-bordered" style="width:800px;background-color:white" >
 				<col style="width:25%">
-        		<col style="width:75%">
-				<tr>
+				<col style="width:75%">
+				<tr> 
 					<td style="text-align:center"><%= t(:word) %></td>
 					<td style="text-align:center"><%= t(:meaning) %></td>
 				</tr>
 			</table>
-			<table class="table table-hover table-bordered table-condensed"style="width:940px;background-color:white">
+			<table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">
 				<col style="width:25%">
-        		<col style="width:75%">
-        		
-			</table>
-		</div>
-	</form>
+				<col style="width:25%">
+				<col style="width:50%">
+				<% count=0 %>
+				<% while count<@words.count %>
+				<tr>
+					<td style="text-align:center"><%= @words[count].name %></td>
+					<td style="text-align:center"><%= @synonyms[count].name %></td>
+					<td><!-- <a class="btn btn-danger" style="float:left;" href="<%= new_project_path %>"><i class="icon-remove"></i></a> -->
+						<%= link_to t(:remove_from_project), action: "remove_word", controller: "projects", :project_id => @project.id, :word_id => @words[count].id %></td>
+						<% count = count+1 %>
+					</tr>
+					<% end %>
+				</table>
+			</div>
 
-<p id="notice"><%= notice %></p>
-<p>
-  <b>Name:</b>
-  <%= @project.name %>
-</p>
-<%= link_to 'Back', projects_path %>
+		
