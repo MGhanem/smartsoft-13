@@ -1,5 +1,5 @@
-class AdminController < ApplicationController
-
+class AdminController < ActionController::Base
+  protect_from_forgery
   require 'csv'
 
   before_filter :require_login
@@ -97,6 +97,8 @@ class AdminController < ApplicationController
   end
 
   def index
+    @trophies_list = Trophy.all
+    @prizes_list = Prize.all
   end
 
   # author:
@@ -132,15 +134,80 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def wordadd
+  def addword
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
       flash[:success] = "Keyword #{@keyword.name} has been created"
     else
       flash[:error] = @keyword.errors.messages
     end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a trophy as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the trophy
+  #     score: the level required to earn the trophy
+  #     rank: the score required to earn the trophy
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addtrophy
+    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:score], params[:rank], params[:photo])
+    if success
+      flash[:success] = "Trophy #{trophy.name} has been created"
+    else
+      flash[:error] = trophy.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a prize as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the prize
+  #     score: the level required to earn the prize
+  #     rank: the score required to earn the prize
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addprize
+    success, prize = Prize.add_prize_to_database(params[:name], params[:score], params[:rank], params[:photo])
+    if success
+      flash[:success] = "Prize #{prize.name} has been created"
+    else
+      flash[:error] = prize.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+
+  def deletetrophy
+    Trophy.find_by_name(params[:name]).delete
+    flash[:success] = "Trophy #{params[:name]} has been deleted"
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  def deleteprize
+    Prize.find_by_name(params[:name]).delete
+    flash[:success] = "Prize #{params[:name]} has been deleted"
     flash.keep
     redirect_to action: "index"
   end
@@ -179,36 +246,21 @@ class AdminController < ApplicationController
   # author:
   #   Amr Abdelraouf
   # description:
-  #   this function takes a csvfile as a parameter, parses it as an array of arrays
-  #   saves the first word of each arrays as a Keyword and the rest of the array as its
-  #   corresponding synonyms
+  #   method calls parseCSV to return an array of arrays
+  #   if the message is zero (file is valid and ready for insertion)
+  #   uploadCSV is called and the words are inserted
   # params:
-  #   POST csvfile is the csvfile to be parsed
+  #   POST csvfile
   # success:
-  #   file is parsed, words are saved and the return message is '0'
+  #   redirected to import_csv and status message is displayed
   # failure:
-  #   the file is nil and message is '1'
-  #   the file is not UTF-8 encoded and message is '2'
+  #   none
   def upload
-    begin
-      @csvfile = params[:csvfile]
-      if @csvfile != nil
-        @content = File.read(@csvfile.tempfile)
-        arr_of_arrs = CSV.parse(@content)
-        arr_of_arrs.each do |row|
-          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-          if @isSaved
-            for i in 1..row.size
-              Synonym.recordsynonym(row[i],keywrd.id)
-            end
-          end
-      end
-        redirect_to action: "import_csv", message: "0"
-      else 
-        redirect_to action: "import_csv", message: "1"
-      end
-    rescue ArgumentError
-        redirect_to action: "import_csv", message: "2"
+    array_of_arrays, message = parseCSV(params[:csvfile])
+    if message == 0
+      uploadCSV(array_of_arrays)
     end
+    redirect_to action: "import_csv", message: message
   end
+
 end

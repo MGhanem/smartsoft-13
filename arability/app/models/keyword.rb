@@ -11,6 +11,54 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
+  # Author: 
+  #   Nourhan Mohamed
+  # Description:
+  #   retrieved approved synonyms for a keyword through optional filters
+  # Parameters:
+  #   keyword: a string representing the keyword for which the synonyms will
+  #     be retrieved
+  #   country: [optional] filter by country name
+  #   age_from: [optional] filter by age - lower limit
+  #   age_to: [optional] filter by age - upper limit
+  #   gender: [optional] filter by gender
+  #   education: [optional] filter by education level
+  # Success:
+  #   returns a list of synonyms for the passed keyword
+  # Failure:
+  #   returns an empty list if the keyword doesn't exist or if no approved
+  #   synonyms where found for the keyword  
+    def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
+          gender = nil,education = nil)
+      if(!self.approved)
+        return [], {} 
+      end
+      keyword_id = self.id
+      filtered_data = Gamer
+      filtered_data = filtered_data
+        .filter_by_country(country) unless country.blank?
+      filtered_data = filtered_data
+        .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
+      filtered_data = filtered_data
+        .filter_by_gender(gender) unless gender.blank?
+      filtered_data = filtered_data
+        .filter_by_education(education.downcase) unless education.blank?
+      filtered_data = filtered_data.joins(:synonyms)
+      filtered_data = filtered_data
+        .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
+      votes_count = filtered_data.count(:group => "synonyms.id")
+      synonym_list = []
+      filtered_data.each do |gamer|
+        synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
+      end
+      synonym_list.uniq!
+      synonym_list = synonym_list.sort_by { |synonym, count| votes_count[synonym] }
+        .reverse!
+      synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+      synonym_list = synonym_list + synonyms_with_no_votes
+      return synonym_list, votes_count
+    end  
+
   class << self
   include StringHelper
 
@@ -159,12 +207,17 @@ class Keyword < ActiveRecord::Base
       keyword = Keyword.where(name: name).first
       return keyword
     end
-  end
 
-  # def notify_developer(synonym.id)
-  #   keyword = Keyword.find(self.id)
-  #   developers = keyword.developers
-  #   developers.each do |dev|
-  #   end
-  # end
-end
+    def get_keyword_synonym_visual(keyword_id)
+      votes = Synonym.where(:keyword_id => keyword_id)
+        .joins(:votes).count(:group => "synonym_id")
+         sum = votes.sum{|v| v.last}
+         v = votes.map {|key, value| [Synonym.find(key).name, value]}
+        return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+    end
+
+   
+
+
+  end
+end 

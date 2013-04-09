@@ -1,7 +1,7 @@
 <script type="text/javascript" charset="utf-8">
   
   var words;
-  var win =false;
+  var win=true ;
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -46,7 +46,7 @@
   }
 
   function request_vote_form(){
-    //alert("from vote form");
+    alert("from vote form");
     $('.zone').empty();
     //$('#workspace').remove();
     $('.zone').append('<div class=\"vote_form\"></div></br>');
@@ -84,6 +84,36 @@
     clear();
     $.get("/games/showtrophies");
   }
+  function  setLevelTitle(){
+    <% if I18n.locale==:ar %>
+    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
+    <% else I18n.locale==:en %>
+     levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
+    <% end %>
+    return levelTitle; 
+  }
+
+
+function setButtons(){
+    <% if I18n.locale==:ar %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a>';
+    <% else I18n.locale==:en %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">Restart Game</a>';
+    <% end %>
+  }
+
+
+function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  function getScore() {
+    return 123456;
+  }
 
 </script>
 
@@ -109,7 +139,11 @@
     </div>
   </div>
 
+  <% if I18n.locale==:ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+    <% else I18n.locale==:en %>
+    <div class="zone" id="zone">
+      <% end %> 
     <div class="divaya">
       <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
@@ -133,5 +167,6 @@
 
 <!-- <div id="workspace" style="position:relative; left: 10px; ">
   <a onclick="have_to_sign_in()"  id="btn">start voting</a>
+<<<<<<< HEAD
 </div>
  -->
