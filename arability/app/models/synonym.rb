@@ -1,36 +1,14 @@
-#encoding:utf-8
+#encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
   has_many :votes
+
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "ﺔﻴﺑﺮﻌﻟا ﺔﻐﻠﻟﺎﺑ ﺲﻴﻟ ﻰﻨﻌﻤﻟا اﺬﻫ"
-    
-  # Author:
-  #   Nourhan Mohamed
-  # Description:
-  #   gets the vote count for a certain synonym
-  # Parameters:
-  #   filter: optional parameter used for vote count filtering
-  # Success:
-  #   returns vote count for the given synonym
-  # Failure:
-  #   returns -1 if the synonym or the keyword to which the synonym belongs
-  #   is not approved
-    def get_votes(filter = [])
-      if(filter.blank?)
-        keyword_model = Keyword.find(self.keyword_id)
-        if(self.approved && keyword_model.approved)
-          return Synonym.joins(:votes).where(:id => self.id).count
-        else
-          return -1
-        end
-      # else
-        #Handling filters reside here
-      end
-    end
 
   class << self
+    include StringHelper
     # author:
     #   Omar Hossam
     # description:
@@ -112,7 +90,6 @@ class Synonym < ActiveRecord::Base
         return synonym_list
       end
 
-
   # author:
   #   kareem ali
   #  blanck => 1
@@ -120,7 +97,7 @@ class Synonym < ActiveRecord::Base
   #  synonym not saved in database => 3
   #  synonym saved successfully => 0
     def record_suggested_synonym(synonym_name, keyword_id, approved= false)
-            if synonym_name.blank?
+      if synonym_name.blank?
         return  1
       elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
         return  2
@@ -138,6 +115,5 @@ class Synonym < ActiveRecord::Base
         return false
       end
     end 
-
   end
 end

@@ -1,5 +1,6 @@
-Arability::Application.routes.draw do
+Arability::Application.routes.draw do  
   root :to => 'pages#home'
+  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
@@ -12,9 +13,11 @@ Arability::Application.routes.draw do
   
     post "admin/addword"
 
+    post "admin/wordadd"
+ 
     post "admin/login"
 
-    get "admin/import_csv"
+		get "admin/import_csv"
 
     post "admin/upload"
 
@@ -36,26 +39,6 @@ Arability::Application.routes.draw do
 
     get 'games/getnewwords'
 
-    root :to => 'pages#home'
-
-    #here only two languages are accepted: english and arabic
-
-    match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
-
-    match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
-
-
-    match "followed" => "follow#list_followed", :as => "list_followed_words"
-    
-    get "admin/index"
-
-    get "admin/login"
-    get "admin/logout"
-
-    post "admin/login"
-    post "admin/wordadd"
-
-
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -65,11 +48,15 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
-      get "projects/remove_developer_from_project"
-      match "projects/share/:id" => "projects#share"
-      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-      get "projects/update"
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
       resources :projects
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
+			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -79,7 +66,12 @@ Arability::Application.routes.draw do
 
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
+
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  
+      post "keywords/create"
+
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
@@ -104,9 +96,9 @@ Arability::Application.routes.draw do
 
   end
   
-  
+  get 'games/getnewwords'
+  match '/game' => 'games#game'
   get "games/getprizes"
-  get "games/showprizes"
 
   post "games/record_vote"
 
@@ -119,9 +111,9 @@ Arability::Application.routes.draw do
   match '/projects/add_word' => "projects#add_word"
   match '/game' => 'games#game'
   get 'games/gettrophies'
+  
+  get 'games/showprizes'
   get 'games/showtrophies'
-  # The priority is based upon order of creation:
-
     post "admin/upload"
 
     scope "developers/" do 
@@ -155,16 +147,11 @@ Arability::Application.routes.draw do
 
   # The priority is based upon order of creation:s
     match 'search' => 'search#search'
+  get "authentications/twitter"
+  get "authentications/remove_twitter_connection"
+  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+  match '/auth/failure', :to => 'authentications#twitter'
  
-    match '/game' => 'games#game'
-    get "games/getprizes"
-
-    post "games/record_vote"
-
-    post "games/vote_errors"
-
-    post "games/record_synonym"
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

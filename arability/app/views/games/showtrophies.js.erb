@@ -17,7 +17,7 @@
       $("#award-list").append($(trophy_error));
   <% else %>
     <% won_trophies.each do |wt| %>
-    trophy = '<div class="award-desc-unlocked">' + '<img width="60" src="<%= wt.image %>">' + '<%= wt.name %> <span style="margin-top:30px;" class="pull-left">المرحلة <%= wt.level %> النقاط <%= wt.score %></span></div>';
+    trophy = '<div class="award-desc-unlocked">' + '<img width="60" src="<%= wt.image %>">' + '<%= wt.name %> <span class="pull-left">المرحلة <%= wt.level %> النقاط <%= wt.score %></span></div>';
       $("#award-list").append($(trophy));
     <% end %>
   <% end %>
@@ -31,7 +31,7 @@
       $("#award-list").append($(trophy_error));
   <% else %>
       <% not_won_trophies.each do |nwt| %>
-        trophy = '<div class="award-desc-locked">' + '<img width="60" src="<%= nwt.image %>">' + '<%= nwt.name %> <span style="margin-top:30px;" class="pull-left">المرحلة <%= nwt.level %> النقاط <%= nwt.score %></span></div>';
+        trophy = '<div class="award-desc-locked">' + '<img width="60" src="<%= nwt.image %>">' + '<%= nwt.name %> <span class="pull-left">المرحلة <%= nwt.level %> النقاط <%= nwt.score %></span></div>';
         $("#award-list").append($(trophy));
       <% end %>
     <% end %>

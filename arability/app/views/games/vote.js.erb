@@ -1,16 +1,15 @@
 var words=get_words();
 var translation="";
 
+
 function record_vote(syn_id){
 	$.post("/games/record_vote.js", {synonym_id: syn_id } );
 }
 
+
 function display_next_word(){
 	$('.vote_form').remove();
-	if(words.length==0){
-		$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
-		return;
-	}
+	check_empty_words();
 	$('.zone').append('<div class=\"vote_form\"></div>');
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
@@ -23,13 +22,6 @@ function update_errors(record_output){
 	$('.alert').remove();
 	$('#box_buttons').append('<div class="alert"></div>');
 	//$('.zone').append('<div class="alert"></div>');
-	if(record_output == 0){
-		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">The synonym has been added successfully</p>');
-		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">الكلمة حفظت بنجاح.</p>');
-		<% end %>
-	}
 	if(record_output == 1) {
 		<% if I18n.locale ==:en %>
 			$('.alert').append('<p style="font-size:20px; ">you cannot insert a blank synonym</p>');
@@ -44,11 +36,11 @@ function update_errors(record_output){
 			$('.alert').append('<p style="font-size:20px; ">المعني موجود بالفعل.</p>');
 		<% end %>
 	}
-	if( record_output!=0 && record_output!=1 && record_output!=2){
+	if( record_output == 3){
 		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">the synonym cannot be added</p>');
+			$('.alert').append('<p style="font-size:20px; ">The synonym should be in arabic</p>');
 		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">المعني لم يحفظ.</p>');
+			$('.alert').append('<p style="font-size:20px; ">يجب ان يكون المعني باللغة العربية</p>');
 		<% end %>
 	}
 }
@@ -61,13 +53,12 @@ function suggest_synonym_to_word(keyword_id){
 	//alert(translation+","+keyword_id);
 }
 
-
 vote_form=[];
 vote_form.push('<div style="position:relative; left: 10px;" >');
 vote_form.push('<% submitted_word=params[:word] %>');
 vote_form.push('<% keyword=Keyword.where(:name => submitted_word).first%>');
 vote_form.push('<%synonym_list=keyword.synonyms.limit(4) %>');
-vote_form.push('<p id="text" style="color:white;" > من فضلك اختار معني لكلمة "<%= keyword.name %>"!</p>');
+vote_form.push('<p id="text" style="color:white;" > من فضلك اختر معني لكلمة "<%= keyword.name %>"!</p>');
 vote_form.push('<br/>');
 vote_form.push('<div class="btn-toolbar" id="synonym_buttons">');
 vote_form.push('<% i=1 %>');
@@ -79,7 +70,6 @@ vote_form.push('<% end %>');
 vote_form.push('<% if syn.approved %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
-vote_form.push('<% end %>');
 vote_form.push('<% end %>');
 vote_form.push('</br><div class="span6" id="box_buttons">');
 vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button"  onclick="suggest_synonym_to_word(<%= keyword.id %>);" >سجل هذا المعني</button>');

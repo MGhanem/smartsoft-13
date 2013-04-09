@@ -81,6 +81,7 @@
   margin-left:20px;
   font-size:21px;
 }
+
 .zone {
   height: 530px;
   width: 100%;
@@ -110,27 +111,26 @@
 }
 
 .label1{
-      font-size:300%;
-      text-align: center;
-      height: 50px;
-      width:500px; 
-      margin-left:auto;
-      margin-right:auto;
-      color: #155B84;
-      broder: 1px solid black;
+      font-size:100%;
+      height: 50px; 
+      color: white;
       background-color: transparent;
-
+      overflow: hidden;
+      width: 190px;
+      line-height: 50px;
+      margin-left: 45px;
+      text-align: center;
     }
 
 .label-div{
-    background-color: transparent; 
-    width: 500px; 
+    background-color: #333333; 
+    width: 190px; 
     border-color: black; 
-    position: relative; 
     float: left; 
     height: 50px; 
-    margin-left: 10px; 
-    margin-bottom: 10px;
+    margin-left: -20px; 
+    border-radius: 30px;
+
 }
 
 
@@ -139,7 +139,7 @@
   float: left; 
   width: 550px; 
   border:2px solid black; 
-  width:500px; 
+  width:500px;
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
@@ -156,13 +156,11 @@
 }
 
 .buttons-div{
-float:right;
+float:left;
+margin-top: 30px;
+margin-left: 80px;
 }
 
-#btn-next, #btn-clear{
-  color: white;
-  padding-left: 10px;
-}
 
 #btn-next{
   margin-left: 10px;
@@ -189,12 +187,15 @@ float:right;
 }
 
 #btn-clear{
-  float: left;
-  width: 110px;
+  color: white;
+  width: 200px;
+  height: 38px;
 }
 
 #btn-restart{
-  width: 90px;
+  width: 200px;
+  height: 29px;
+  margin-left: 30px;
 }
 
 #score{
@@ -309,6 +310,7 @@ float:right;
   text-align:right;
   background-color: rgba(200,200,200, 0.3); 
 }
+
 .award-desc-unlocked {
    font-size: 20px;
   padding: 10px;
@@ -367,29 +369,7 @@ float:right;
   min-height: 50px;
 }
 
-.label1{
-      font-size:300%;
-      text-align: center;
-      height: 50px;
-      width:500px; 
-      margin-left:auto;
-      margin-right:auto;
-      color: #155B84;
-      broder: 1px solid black;
-      background-color: transparent;
 
-    }
-
-.label-div{
-    background-color: transparent; 
-    width: 500px; 
-    border-color: black; 
-    position: relative; 
-    float: left; 
-    height: 50px; 
-    margin-left: 10px; 
-    margin-bottom: 10px;
-}
 
 
 .table1{
@@ -413,14 +393,6 @@ float:right;
   margin-right: 10px;
 }
 
-.buttons-div{
-float:right;
-}
-
-#btn-next, #btn-clear{
-  color: white;
-  padding-left: 10px;
-}
 
 #btn-next{
   margin-left: 10px;
@@ -446,14 +418,7 @@ float:right;
   padding-top: 20px;
 }
 
-#btn-clear{
-  float: left;
-  width: 110px;
-}
 
-#btn-restart{
-  width: 90px;
-}
 
 #score {
   color: white;
@@ -461,4 +426,3 @@ float:right;
   margin-left:auto;
   margin-right: auto;
 }
-

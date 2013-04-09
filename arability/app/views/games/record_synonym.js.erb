@@ -1,2 +1,13 @@
 <% record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) %>
-update_errors(<%= record_output %>);
+<% if record_output == 2 %>
+	<% already_existing_synonym = Synonym.where(:name => params[:synonym_name], :keyword_id => params[:keyword_id]).first %>
+	<% if already_existing_synonym.approved == false %>
+		record_vote(<%= already_existing_synonym.id %>);
+		alert("already_existing_synonym");
+	<% end %>
+<% elsif record_output == 0 %>
+	record_vote(<%= already_existing_synonym.id %>);
+<% else %>
+	update_errors(<%= record_output %>);
+<% end %>
+

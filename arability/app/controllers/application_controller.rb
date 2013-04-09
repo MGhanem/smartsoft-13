@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'csv'
   protect_from_forgery
   before_filter :set_locale
 
@@ -19,7 +20,6 @@ class ApplicationController < ActionController::Base
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { :locale => I18n.locale }
   end
-  require 'csv'
 
   # author:
   #   Amr Abdelraouf
@@ -79,4 +79,3 @@ class ApplicationController < ActionController::Base
   end
 
 end
-

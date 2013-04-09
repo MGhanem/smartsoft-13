@@ -22,12 +22,14 @@
 </head>
 <body>
 	<%= render 'admin/admin-navbar' %>
+	<%= render 'admin/navbar' %>
 
 	<%= yield %>
 
 	<%= javascript_include_tag "jquery.min" %>
 	<%= javascript_include_tag "bootstrap.rtl" %>
 	<%= javascript_include_tag "jquery.validate" %>
+	<%= javascript_include_tag "bootstrap-fileupload.min" %>
 	<%= javascript_include_tag "admin" %>
 </body>
 </html>

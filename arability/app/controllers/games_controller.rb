@@ -18,6 +18,7 @@ class GamesController < ApplicationController
     end
   end
 
-
+  def record_synonym
+  end
 
 end
