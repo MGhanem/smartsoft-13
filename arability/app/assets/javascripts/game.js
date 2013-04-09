@@ -383,7 +383,7 @@ function fadeSomething(x){
 					$('#gameover-popup').fadeTo(1500,1);
 					$('#gameover-popup').fadeTo(1500,0);
 					setTimeout(function(){
-						nextLevel();
+						getTrophies(level, score);
 						return;
 					}, 3000);
 				}		
@@ -734,7 +734,7 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			have_to_sign_in();
+			getTrophies(level, score);
 			return true;
 		}, 3000);
 	}
