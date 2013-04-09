@@ -103,7 +103,14 @@ class Gamer < ActiveRecord::Base
       gamer = Gamer.where(:id => id).first
       gamer.provider = auth.provider
       gamer.uid = auth.uid
+      gamer.token = auth.token
+      gamer.token_secret = auth.token_secret
       gamer.save
+    end
+
+    def getToken(id)
+      gamer = Gamer.where(id => id).first
+      return gamer.token
     end
 
   end
