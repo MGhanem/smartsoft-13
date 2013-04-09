@@ -22,3 +22,4 @@ ar:
   female: "انثي"
   male: "ذكر"
   out_of: "من"
+  keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"

@@ -25,3 +25,4 @@ en:
   female: "female"
   male: "male"
   out_of: "from"
+  keyword_not_empty: "Search Keyword can not be empty"
