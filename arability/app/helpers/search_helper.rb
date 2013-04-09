@@ -6,18 +6,27 @@ module SearchHelper
   @@AGE = 2
   @@EDUCATION = 3
 
+  #Author: Nourhan Zakaria
+  #This is the method resposible for passing all attributes needed to draw the charts showing the 
+  #different statistics of votes for certain synonym.
+  #Parameters:
+  #  synonym_id: the ID of the synonym that we need to get the statisitics of gamers voted for it.
+  #   type: the type decides which attribute we need to get a chart for whether gender statistics, country statistics,
+  #   age statistics or educational level statistics.
+  #Returns: --  
   def piechart (synonym_id, type)
+    synonym = Synonym.find(synonym_id)
     if type == @@GENDER
-      stats = Synonym.get_visual_stats_gender(synonym_id)
+      stats = synonym.get_visual_stats_gender
       header = t(:stats_gender)
     elsif type == @@COUNTRY
-      stats = Synonym.get_visual_stats_country(synonym_id)
+      stats = synonym.get_visual_stats_country
       header = t(:stats_country)
     elsif type == @@AGE
-      stats = Synonym.get_visual_stats_age(synonym_id)
+      stats = synonym.get_visual_stats_age
       header = t(:stats_age)
     else
-      stats = Synonym.get_visual_stats_education(synonym_id)
+      stats = synonym.get_visual_stats_education
       header = t(:stats_education)
     end
       chart = LazyHighCharts::HighChart.new('pie') do |f|
