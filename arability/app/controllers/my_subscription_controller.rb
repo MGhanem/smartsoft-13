@@ -42,7 +42,8 @@ class MySubscriptionController < ApplicationController
           @my_subscription.subscription_models_id = params[:my_subscription]
           if @my_subscription.save
             flash[:notice] = t(:success_developer_registration:)
-            render 'pages/home'
+            redirect_to projects_path, :flash => flash
+            return
           else
             flash[:notice] = t(:failed_developer_registration)
             render 'my_subscription/new'

@@ -1,5 +1,5 @@
 class DeveloperController < ApplicationController
-  before_filter :authenticate_gamer!
+ before_filter :authenticate_gamer!
 # author:
 #   Khloud Khalid
 # description:
@@ -27,7 +27,6 @@ class DeveloperController < ApplicationController
 # success:
 #   developer created successfully
 # failure:
-#   invalid information, user already registered as developer
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       flash[:notice] = t(:already_registered_developer)

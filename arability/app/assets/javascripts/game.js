@@ -180,6 +180,8 @@ function dropAblockCont(clss, btn, randNum, counter){
 						setTimeout(function(){$('tr').fadeIn('slow');
 							$('tr').empty();
 
+							document.getElementById('main-table').style.background = "url(img/Game_over_2.jpg)";
+
 						}, 500);
 						return;
 					}
@@ -670,6 +672,12 @@ if(level == 6){
 }
 
 function setLang(l){
+<<<<<<< HEAD
+	lang = l;
+	newGame();
+}
+
+=======
 	$(".zone").slideUp(1000);
 	$(".zone").slideDown(1000);
 	lang = l;
@@ -678,8 +686,13 @@ function setLang(l){
 		newGame();
 	}, 1100);
 }
+>>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467
 function calculateScore(){
 	var currentScore = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	var newScore = currentScore + (100 * level);
 	document.getElementById('score').innerHTML = "SCORE: " + newScore;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5b2d0e76e1ef574773c5618780281427ce5ba467

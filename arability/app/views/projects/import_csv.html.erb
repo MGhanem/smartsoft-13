@@ -1,0 +1,39 @@
+<form class="form-horizontal" action="<%=choose_keywords_project_path%>" enctype="multipart/form-data" method="POST">
+  <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+	<legend>
+	  <a>
+	    <%=t(:import_csv_title)%>
+	  </a>
+	</legend>
+ 
+	<div class="control-group">
+		<ol class="controls" style="color:red;">
+			<li><%=t(:import_csv_list1)%></li>
+			<li><%=t(:import_csv_list2)%></li>
+			<li><%=t(:import_csv_list3)%></li>
+		</ol>
+	</div>
+ 
+	<div class="control-group">
+		<div class="fileupload fileupload-new controls" data-provides="fileupload">
+		  <div class="input-append">
+		    <div class="uneditable-input span3">
+		    	<i class="icon-file fileupload-exists"></i> 
+		    	<span class="fileupload-preview"></span>
+		    </div>
+		    	<span class="btn-file btn">
+		    		<span class="fileupload-new"><%=t(:import_csv_choose_file)%></span>
+		    		<span class="fileupload-exists"><%=t(:import_csv_change_file)%></span>
+		    		<input type="file" name="csvfile" id="csvfile">
+		    	</span>
+		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload"><%=t(:import_csv_remove_file)%></a>
+		  </div>
+		</div>
+	</div>
+ 
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary btn-large"><%=t(:import_csv_submit)%></button>
+		</div>
+	</div>
+</form>

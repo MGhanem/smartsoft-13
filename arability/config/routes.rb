@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
@@ -8,7 +7,6 @@ Arability::Application.routes.draw do
     get "admin/index"
 
     get "admin/login"
-
     get "admin/logout"
 
     post "admin/wordadd"
@@ -48,13 +46,16 @@ Arability::Application.routes.draw do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
-    scope "developers/" do 
+    scope "developers" do 
       match "/" => "backend#home", :as => "backend_home"
 
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
+      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
+      match '/projects/remove_word' => "projects#remove_word"
+      match '/projects/export_csv' => "projects#export_to_csv"
 			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
@@ -69,26 +70,21 @@ Arability::Application.routes.draw do
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
-      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-
-      match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
 
-      post "keywords/create"
+			post "keywords/create"
 
       get "keywords/suggest_add"
 
-      match "keywords" => "keywords#viewall"
-
-      match 'search' => 'search#search'
+			match 'search' => 'search#search'
 
       match '/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-
-  end
+ 
+  end  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
