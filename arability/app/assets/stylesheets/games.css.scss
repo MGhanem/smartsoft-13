@@ -251,7 +251,13 @@ float:right;
   direction: rtl;
   text-align:right;
   background-color: rgba(0,204,190, 0.3);
+  color:white;
 }
+
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
+
 
 .award-desc-locked {
   color:white;
@@ -271,8 +277,6 @@ float:right;
 
 .award-desc-locked img {
   margin-left: 14px;
-}
-
 
 .award-type {
   padding-right: 20px;
