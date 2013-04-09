@@ -1,0 +1,45 @@
+<% record_output=current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id].to_i) %>
+alert(record_output);
+<% if record_output == 0 %>
+	<% if I18n.locale==:en %>
+			$('.errors').append('<p style="font-size:20px; color:white;">The synonym has been added successfully</p>');
+	<% else %>
+			$('.errors').append('<p style="font-size:20px; color:white;">الكلمة حفظت بنجاح.</p>');
+	<% end %>
+<% elsif record_output == 1 %>
+	<% if I18n.locale==:en %>
+		$('.errors').append('<p style="font-size:20px; color:white;">you cannot insert a blanck synonym.</p>');
+	<% else %>
+		$('.errors').append('<p style="font-size:20px; color:white;">يجب ان تكتب معني.</p>');
+	<% end %>
+<% elsif record_output == 2 %>
+	<% if I18n.locale==:en %>
+		$('.errors').append('<p style="font-size:20px; color:white;">the synonym already exists for this word.</p>');
+	<% else %>
+		$('.errors').append('<p style="font-size:20px; color:white;">المعني موجود بالفعل.</p>');
+	<% end %>
+<% elsif record_output != 0 && record_output != 1 && record_output != 2 %>
+	<% if I18n.locale==:en %>
+		$('.errors').append('<p style="font-size:20px; color:white;">the synonym cannot be added.</p>');
+	<% else %>
+		$('.errors').append('<p style="font-size:20px; color:white;">المعني لم يحفظ.</p>');
+	<% end %>
+<% end %>
+
+<% record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) %>
+<% if record_output == 0 %>
+	<% current_gamer.select_synonym(already_existing_synonym.id) %>
+<% end %>
+<% if record_output == 2 %>
+	<% already_existing_synonym = Synonym.where(:name => params[:synonym_name], :keyword_id => params[:keyword_id]).first %>
+	<% if already_existing_synonym.approved == false %>
+		update_errors(0);
+		$('#suggest_synonym_button').attr("disabled", true);
+		<% current_gamer.select_synonym(already_existing_synonym.id) %>
+	<% else %>
+		update_errors(4);
+		//$('#suggest_synonym_button').attr("disabled", true);
+	<% end %>
+<% else %>
+	update_errors(<%= record_output %>);
+<% end %>

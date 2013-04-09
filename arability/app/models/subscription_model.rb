@@ -1,3 +1,3 @@
 class SubscriptionModel < ActiveRecord::Base
-  # attr_accessible :title, :body
+	has_many :my_subscriptions
 end

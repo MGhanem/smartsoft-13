@@ -1,5 +1,4 @@
-Arability::Application.routes.draw do
-  
+Arability::Application.routes.draw do  
   root :to => 'pages#home'
   
 
@@ -11,9 +10,9 @@ Arability::Application.routes.draw do
     get "admin/login"
     
     get "admin/logout"
-  
-    post "admin/wordadd"
 
+    post "admin/wordadd"
+ 
     post "admin/login"
 
 		get "admin/import_csv"
@@ -36,7 +35,8 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
+    get 'games/getnewwords'
+
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -50,6 +50,10 @@ Arability::Application.routes.draw do
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
+      resources :projects
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
 			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
@@ -60,7 +64,12 @@ Arability::Application.routes.draw do
 
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
+
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  
+      post "keywords/create"
+
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
@@ -85,7 +94,8 @@ Arability::Application.routes.draw do
 
   end
   
-  
+  get 'games/getnewwords'
+  match '/game' => 'games#game'
   get "games/getprizes"
 
   post "games/record_vote"
@@ -94,10 +104,12 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
-  match 'search' => 'search#search'
+  get "authentications/twitter"
+  get "authentications/remove_twitter_connection"
+  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+  match '/auth/failure', :to => 'authentications#twitter'
+ 
 
-  match '/projects/add_word' => "projects#add_word"
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

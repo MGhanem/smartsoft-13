@@ -1,14 +1,23 @@
 class Authentication < ActiveRecord::Base
+  belongs_to :gamer
   attr_accessible :gid, :provider, :token, :token_secret
-  require 'open-uri'
-  require 'json'
-
+  
   class << self
 
-    def common_twitter_followers(gid)
-  	  result = JSON.parse("https://api.twitter.com/1/followers/ids.json?user_id=:gid&screen_name=twitterapi")
+  def create_with_omniauth(auth, current_gamer)
+    create! do |authentication|
+      authentication.provider = auth["provider"]
+      authentication.gid = auth["uid"]
+      authentication.token = auth['credentials']['token']
+      authentication.token_secret = auth['credentials']['secret']
+      authentication.gamer_id = current_gamer.id
     end
-
   end
 
+  def remove_conn(current_gamer)
+    authentication = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
+    authentication.destroy
+  end
+
+  end
 end

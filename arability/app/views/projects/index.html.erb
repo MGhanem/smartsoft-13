@@ -1,22 +1,47 @@
 <h1>Projects</h1>
 <br />
-<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">My projects</a></li>
+    <li><a href="#tab2" data-toggle="tab">Shared projects with me</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> New Project</a>
 <br />
 <% @projects.each do |project| %>
-  <div class="boxed">
-  Name:
+  <div class="well well-small">
+  <strong>Name:</strong>
   <br />
   <%= project.name %>
   <br />
-  Categories:
+  <% project.developers_shared.each do |dev|%>
+  <%= dev.name %>
+   <a href="/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=project.id%>">Remove Share</a>
+  <%end%>
+  <strong>Categories:</strong>
   <br />
+  <% size = project.categories.length %>
+  <% counter = 1 %>
   <% project.categories.each do |c| %>
-    <%= c.name %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+  <div class="boxed">
+    <a class="btn" href="/developers/projects/<%= project.id %>/edit"><i class="icon-edit"></i></a>
+    <br />
+    Name:  <%= link_to project.name, :controller => "projects", :action => "show", :id =>project %>
+    <br />
+  <% end %>
   <% end %>
   <br />
   Description:
   <br />	
   <%= project.description %>
+  <%= link_to 'Destroy', project, method: 
+    delete, data: { confirm: 'Are you sure?' } %>
 </div>
 <br />
 <% end %>
+
