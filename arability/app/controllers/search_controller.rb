@@ -79,7 +79,7 @@ class SearchController < ApplicationController
         redirect_to search_keywords_path(:search => @search_keyword)
       end
     else
-      flash = { :warning => 'Search Keyword can\'t be empty' }
+      flash = { :warning => t(:keyword_not_empty) }
       redirect_to search_keywords_path, :flash => flash
     end
   end
