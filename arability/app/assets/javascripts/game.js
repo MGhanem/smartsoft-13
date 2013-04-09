@@ -2,10 +2,10 @@ var dimension = 10;
 var table;
 var cells;
 var levelTitle;
-var buttonArray = new Array();	
-var gameOver = false;
+var buttonArray = new Array();
 var wordsArray = [];
 var pauseFlag = true;
+var gameOver = false;
 var level = 1;
 var droppingBlocks;
 var pullingBlocks;
@@ -18,6 +18,7 @@ var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
 var successfulWords = [];
+var win = true;
 var score = 0;
 var gameButtonClear;
 var gameButtonRestart;
@@ -112,9 +113,8 @@ function getCells(x, y){
 }
 
 function dropAblock(){
-	if(gameOver == true){
+	if( gameOver == true ){
 		return;
-
 	}
 	letter = generateLetter();
 	var randNum = Math.floor(Math.random()*dimension);
@@ -125,7 +125,7 @@ function dropAblock(){
 	dropAblockCont(clss, btn, randNum, 0);
 }
 function dropAblockCont(clss, btn, randNum, counter){
-	if(gameOver == true){
+	if(gameOver==true){
 		return;
 	}
 	var stop;
@@ -141,12 +141,9 @@ function dropAblockCont(clss, btn, randNum, counter){
 					suspense();
 				
 				blockId++;
-
-
 				if(loseGame(tower)){
 					return;
 				}
-					
 					droppingBlocks = setTimeout(function() {  
                 	  dropAblock() } , waitTime);
 				
@@ -295,7 +292,6 @@ function callMethods(id){
 	if(gameOver == true){
 		return;
 	}
-
 	formWord(id);
 	generateWord();
 	removeAblock();
@@ -358,7 +354,7 @@ function fadeSomething(x){
 				successfulWords.push(wordsArray[x]);
 				wordExistsInArray[x] = false;
 				calculatePossible();
-				var win = true;
+				win = true;
 				for(var finished = 0; finished < wordExistsInArray.length; finished++){
 					if(wordExistsInArray[finished] == true){
 						win = false;
@@ -499,7 +495,6 @@ function clearWord(){
 // 		}
 // 	}
 // }
-
 function nextLevel(){
 	level++;
 	fallingTime = fallingTime - 15;

@@ -1,4 +1,3 @@
-
 class ProjectsController < ApplicationController
   # class ProjectsController < BackendController 
   #   def index
@@ -121,6 +120,51 @@ class ProjectsController < ApplicationController
           flash[:notice] = "Failed to share project with developer"
         end
       end
+      @id_first_synonyms_words_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_in_database_before.push(@id_synonyms_words_in_database_before[counter])
+        counter = counter + num_syns.to_i
+      end
+    end
+    if @id_words_not_in_database_before != nil
+      @id_words_not_in_database_before.each do |id_word|
+        @words_not_in_database_before.push(Keyword.find(id_word))
+      end
+      @all_synonyms_words_not_in_database_before = Array.new
+      @id_synonyms_words_not_in_database_before.each do |id_syn|
+        synonym = Synonym.find(id_syn)
+        @all_synonyms_words_not_in_database_before.push(synonym)
+      end
+      @id_first_synonyms_words_not_in_database_before = Array.new
+      counter = 0
+      @num_synonyms_words_not_in_database_before.each do |num_syns|
+        @id_first_synonyms_words_not_in_database_before.push(@id_synonyms_words_not_in_database_before[counter])
+        counter = counter + num_syns.to_i
+      end
+    end
+  end
+
+  def add_from_csv_keywords
+    id_words_project = params[:words_ids]
+    id_project =  params[:id]
+    id_words_in_database_before = params[:id_words_in_database_before]
+    id_synonyms_words_in_database_before = params[:id_synonyms_words_in_database_before]
+    id_words_not_in_database_before = params[:id_words_not_in_database_before]
+    id_synonyms_words_not_in_database_before = params[:id_synonyms_words_not_in_database_before]
+    if id_words_project != nil
+      counter = 0
+      while counter < id_words_project.size
+        index = id_words_in_database_before.index(id_words_project[counter])
+        if index == nil
+          index = id_words_not_in_database_before.index(id_words_project[counter])
+          id_synonym = id_synonyms_words_not_in_database_before[index]          
+        else
+          id_synonym = id_synonyms_words_in_database_before[index]
+        end
+        PreferedSynonym.add_keyword_and_synonym_to_project(id_synonym, id_words_project[counter], id_project)
+        counter = counter+1
+      end 
     end
     render "projects/share"
   end
@@ -138,13 +182,13 @@ class ProjectsController < ApplicationController
 
 
 # author:
-#      Salma Farag
+#      Khloud Khalid
 # description:
-#     A method that views the form that  instantiates an empty project object
+#     method removes a given word from a project
 # params:
-#     none
+#     project_id, word_id
 # success:
-#     An empty project will be instantiated
+#     word removed successfully
 # failure:
 #     none
 

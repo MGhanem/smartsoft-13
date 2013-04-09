@@ -30,7 +30,8 @@ group :assets do
   gem 'bootstrap-sass', '~> 2.3.1.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
-  gem 'tabulous'
+  gem 'tabulous', '1.3.0'
+
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -75,3 +76,5 @@ group :test do
   gem "capybara"
   gem "guard-rspec"
 end
+
+gem 'omniauth-twitter'

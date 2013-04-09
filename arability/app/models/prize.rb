@@ -1,6 +1,7 @@
-# ecoding: UTF-8
+#encoding: UTF-8
 class Prize < ActiveRecord::Base
-  
+  include Paperclip::Glue
+
   validates :name, :presence => true, :length => { :in => 6..24 }, 
     :uniqueness => true
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/
@@ -14,13 +15,94 @@ class Prize < ActiveRecord::Base
   validates_attachment_size :image, :in => 0.megabytes..0.5.megabytes
   
   has_and_belongs_to_many :gamers
+  attr_accessible :name, :level, :score, :image
+  has_attached_file :image
 
+  validates_format_of :name, 
+                      :with => /^([\u0621-\u0652 ])+$/, 
+                      :message => "اسم الجائزة يجب ان يكون بالعربية"
+
+  validates_length_of :name, 
+                      :maximum => 10,
+                      :message => "اسم الجائزة لا يمكن ان يزيد عن 10 حروف"
+
+  validates_presence_of :name, 
+                        message: "اسم الجائزة لا يمكن ان يكون فارغ"
+
+  validates_presence_of :level, 
+                        message: "المستوى لا يمكن ان يكون فارغ"
+
+  validates_presence_of :score, 
+                        message: "مجموع النقاط لا يمكن ان يكون فارغ"
+
+  validates_presence_of :image, 
+                        message: "الصورة لا يمكن ان تكون فارغة"
+
+  validates_uniqueness_of :name, 
+                          message: "اسم الجائزة مستعمل"
+
+  validates_numericality_of :level, 
+                            only_integer: true, 
+                            greater_than: 0, 
+                            less_than_or_equal_to: 10, 
+                            message: "المستوى يجب ان يكون بين 0 و 10"
+
+  validates_numericality_of :score, 
+                            only_integer: true, 
+                            greater_than: 0, 
+                            less_than_or_equal_to: 10000,
+                            message: "مجموع النقاط يجب ان يكون بين 0 و  10000"
+
+  validates_attachment_content_type :image, 
+                                    :content_type => /^image\/(png|gif|jpeg)/,
+                                    message: "الصورة يجب ان تكون بصيغة png, gif او jpeg"
   attr_accessible :name, :level, :score, :image
 
   has_attached_file :image
-
+ 
   class << self
     
+    # author:
+    #     Karim ElNaggar
+    # description:
+    #     a function adds a new prize to the database
+    # params
+    #     name, level, score, image
+    # success: 
+    #     returns true and the new prize if it is added to the database
+    # failure: 
+    #     returns false and the prize if it is not added to the database
+    def add_prize_to_database(name, level, score, image)
+      new_prize = Prize.new(name: name, level: level, score: score, image: image)
+      if new_prize.save
+        return true, new_prize
+      else
+        return false, new_prize
+      end
+    end
+
+    def edit_prize(name, level, score, image)
+      cur_prize = Prize.find_by_name(name)
+      if cur_prize == nil
+        return false, cur_prize
+      else
+        if level
+          cur_prize.level = level
+        end
+        if score
+          cur_prize.score = score
+        end
+        if image
+          cur_prize.image = image
+        end
+        if cur_prize.save
+          return true, cur_prize
+        else
+          return false, cur_prize
+        end
+      end
+    end
+
     # author:
     #     Karim ElNaggar
     # description:
@@ -42,10 +124,14 @@ class Prize < ActiveRecord::Base
 
 
 
+    
     def get_new_prizes_for_gamer(gamer_id, score, level)
-      prizes_all = Prize.where(:score => score, :level => level)
+      prizes_for_score = []
       prizes_gamer = Gamer.find(gamer_id).prizes
-      return prizes_all - prizes_gamer
+      prizes_of_level = Prize.where(:level => level)
+      new_prizes = prizes_of_level - prizes_gamer
+      new_prizes.map { |nt| prizes_for_score << nt if nt.score <= score }
+      return prizes_for_score
     end
   end
 end

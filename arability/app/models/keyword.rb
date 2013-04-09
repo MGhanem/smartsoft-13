@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
@@ -97,6 +98,8 @@ class Keyword < ActiveRecord::Base
 
     # adds a new keyword to the database
     # author:
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -106,6 +109,7 @@ class Keyword < ActiveRecord::Base
     # returns:
     #   success: the first return is true and the second is the saved keyword
     #   failure: the first return is false and the second is the unsaved keyword
+
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
       name.strip!
       keyword = where(name: name).first_or_create
@@ -167,7 +171,6 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
