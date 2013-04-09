@@ -51,11 +51,13 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+      resources :projects
+      match "keywords/create" => "keywords#create"
+
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
-			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -76,18 +78,16 @@ Arability::Application.routes.draw do
 
       post "keywords/create"
 
-      get "keywords/suggest_add"
-
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
+      match 'search_keywords' => 'search#search_keywords'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.
