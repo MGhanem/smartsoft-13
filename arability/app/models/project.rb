@@ -1,19 +1,19 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-  include ApplicationHelper
 
-  belongs_to :developer
-
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  # has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
+
 
 
 
   attr_accessible :name
   belongs_to :developer
 
-  has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  has_one :owner, :class_name => "Developer"
+
+
 
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
@@ -35,9 +35,24 @@ class Project < ActiveRecord::Base
 # failure:
 #     None
 
-def self.createproject(params,gamer_id)
+
+ 
+  # def self.createproject(params)
+  # 	project = Project.new(params.except(:categories))
+  # 	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+  #   catArray = []
+  # 	array.each do |m|
+  #     catArray.push(Category.where(:name => m).first_or_create)
+  # 	end
+  #   project.categories = catArray
+  #   project.save
+  # 	return project
+  #  end
+
+
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
-  project.owner_id = current_developer.id
+  project.owner_id = developer_id
   project = createcategories(project,params[:categories])
   return project
 end
