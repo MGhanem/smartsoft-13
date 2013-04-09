@@ -80,6 +80,7 @@ vote_form.push('<% if syn.approved %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
+<<<<<<< HEAD
 vote_form.push('<% end %>');
 vote_form.push('</br><div class="span6" id="box_buttons">');
 vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button"  onclick="suggest_synonym_to_word(<%= keyword.id %>);" >سجل هذا المعني</button>');
@@ -90,7 +91,16 @@ vote_form.push('<div style="float:left;" id="skip_button">');
 vote_form.push('<button class="btn btn-primary" id="skip_button" type="submit" onclick="skip_keyword()"> <<  تخطي هذه الكلمة</button>');
 vote_form.push('</div>');
 vote_form.push('</div>');
-
+vote_form.push('</div></div>');
+//vote_form.push('</br><div class="span6">');
+//vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button">سجل هذا المعني</button>');
+//vote_form.push('<input type="text" class="span3" id="suggest_synonym_textbox" placeholder="ادخل معني مختلف">');
+//vote_form.push('</div>')
+//vote_form.push('</div></br>');
+//vote_form.push('<div style="float:left;" id="skip_button">');
+//vote_form.push('<button class="btn btn-primary" type="submit" onclick="skip_keyword()"> <<  تخطي هذه الكلمة</button>');
+//vote_form.push('</div>');
+//vote_form.push('</div>');
 vote_form=vote_form.join('');
 
 $('.vote_form').append(vote_form);
