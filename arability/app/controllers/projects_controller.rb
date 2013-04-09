@@ -42,7 +42,6 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
-      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
@@ -132,6 +131,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
+      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -183,6 +183,7 @@ end
     format.json { head :no_content }
   end
 end
+
 
 def show
   @projects = Project.where(:owner_id => current_developer.id)
