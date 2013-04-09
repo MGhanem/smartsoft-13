@@ -79,8 +79,7 @@ class SearchController < BackendController
         redirect_to search_keywords_path(:search => @search_keyword)
       end
     else
-      flash = { :warning => t(:keyword_not_empty) }
-      redirect_to search_keywords_path, :flash => flash
+      redirect_to search_keywords_path
     end
   end
 end
