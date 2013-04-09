@@ -51,6 +51,7 @@ Arability::Application.routes.draw do
   		get "projects/update"
       match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
       match '/projects/remove_word' => "projects#remove_word"
+      match '/projects/export_csv' => "projects#export_to_csv"
 			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
