@@ -43,6 +43,46 @@ def create
     end
   end
 end
+def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project1_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+   redirect_to "/developers/projects"
+  end
+
+  def share_project_with_developer
+    @project = Project.find(params[:id])
+    gamer = Gamer.find_by_email(params[:email])
+    if(!gamer.present?)
+      flash[:notice] = "Email doesn't exist"
+    else
+      developer = Developer.find_by_gamer_id(gamer.id)
+      if developer == nil
+        flash[:notice] = "Email address is for gamer, not a developer"
+      else
+
+        developer.projects_shared << @project
+        if(developer.save)
+          
+          flash[:notice] = "Project has been shared successfully with #{developer.name}"
+          redirect_to "/developers/projects"
+        else
+          flash[:notice] = "Failed to share project with developer"
+        end
+      end
+# =======
+#     else
+#       flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+#       render :action => 'new'
+# >>>>>>> 9f94335568499d915363f0e5dad48fb57a372c50
+#     end
+#     redirect_to "/developers/projects"
+#   end
+# end
+end 
+end
 end
 
 
