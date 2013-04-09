@@ -14,8 +14,8 @@ class Gamer < ActiveRecord::Base
          # :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,:gender, 
-                  :username, :country, :education_level, :date_of_birth
+  attr_accessible :email, :password, :password_confirmation, :remember_me, 
+                  :username, :country, :education_level, :date_of_birth, :gender
 
   #author: kareem ali
   def self.check
@@ -80,6 +80,8 @@ class Gamer < ActiveRecord::Base
 
   has_many :services, :dependent => :destroy
   
+  validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
+    :before_or_equal_to => 10.years.ago }
   
   def receive_trophy(trohpy_id)
     trophy = Trophy.find(trophy_id)
@@ -111,5 +113,36 @@ class Gamer < ActiveRecord::Base
     else
       return false
     end
+  end
+
+  def receive_prize(prize_id)
+    prize = Prize.find(prize_id)
+    
+    if prize == nil
+      return false
+    end
+    
+    if self.prizes.include? prize
+      return false
+    else
+      self.prizes << prize
+      return true
+    end
+  end
+  
+  def get_won_prizes
+    return self.prizes
+  end
+
+  def get_available_prizes
+    return Prize.all - self.prizes
+  end
+  
+  def get_won_trophies
+    return self.trophies
+  end
+
+  def get_available_trophies
+    return Trophy.all - self.trophies
   end
 end

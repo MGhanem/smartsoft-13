@@ -44,6 +44,10 @@ class SearchController < BackendController
       else
         @display_add = true
       end
+
+    if(!@search_keyword.blank?)
+      @synonyms =
+        Synonym.retrieve_synonyms(@search_keyword)
     end
   end
 end

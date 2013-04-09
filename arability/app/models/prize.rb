@@ -46,4 +46,5 @@ class Prize < ActiveRecord::Base
       return prizes_all - prizes_gamer
     end
   end
+
 end

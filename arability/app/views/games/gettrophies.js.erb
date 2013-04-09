@@ -9,6 +9,7 @@
       $("#zone").append($(error));
   <% else %>
     <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
+
     <% if won_trophies.length == 0 %>
         score_space = '<div class="award">لقد نلت ' + getScore() + '  نقطة!</div>';
         $("#zone").append($(score_space));
@@ -29,5 +30,23 @@
           var to_prizes_btn = '<br><a style="margin: 10px" class="btn btn-success" onclick="getPrizes(' + getLevel() + ',' getScore() + '">كشف الجوائز </a>';
 
           $("#zone").append($(to_prizes_btn));
+
+    <% if won_trophies.length == 0 %>
+        success = '<h1 class="award-title">لقد ربحت كل الجوائز لهذه المرحلة </h1>';
+    <% else %>
+        <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
+        success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
+        trophies = [];
+
+        <% won_trophies.each do |t| %>
+          trophies.push('<div class="award">' + '<%= t.name %>' + '</div>');
+        <% end %>
+         
+    <% end %>
+        $("#zone").append($(success));
+        for(var i = 0; i < trophies.length; i++) {
+          $("#zone").append($(trophies[i]));
+        }
+
   <% end %>
 <% end %>

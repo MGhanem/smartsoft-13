@@ -7,14 +7,13 @@ class ProjectsController < BackendController
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
-        @projects = Project.where(:owner_id => developer.id)
-        @shared_projects = Developer.find(developer.id).projects_shared
+        @projects = Project.where(:developer_id => developer.id)
       else
-        flash[:notice] = "من فضلك سجل كمطور"
+        flash[:notice] = "Please sign up as a developer first"
         render 'developers/new'
       end
     else
-      flash[:notice] = "من فضلك قم بالدخول"
+      flash[:notice] = "Please sign in"
       render 'pages/home'
     end
   end

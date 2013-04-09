@@ -1,5 +1,9 @@
 var words=get_words();
+<<<<<<< HEAD
 var translation;
+=======
+var translation="";
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 
 function record_vote(syn_id){
 	$.post("/games/record_vote.js", {synonym_id: syn_id } );
@@ -11,18 +15,67 @@ function display_next_word(){
 		$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
 		return;
 	}
+<<<<<<< HEAD
 	$('.zone').append('<div class=\"vote_form\"><div class=\"errors\"></div></div>');
+=======
+	$('.zone').append('<div class=\"vote_form\"></div>');
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
 }
 function skip_keyword(){
+<<<<<<< HEAD
 	display_next_word();
 } 
+=======
+	$('.alert').remove();
+	display_next_word();
+} 
+function update_errors(record_output){
+	$('.alert').remove();
+	$('#box_buttons').append('<div class="alert"></div>');
+	//$('.zone').append('<div class="alert"></div>');
+	if(record_output == 0){
+		<% if I18n.locale == :en %>
+			$('.alert').append('<p style="font-size:20px; ">The synonym has been added successfully</p>');
+		<% else %>
+			$('.alert').append('<p style="font-size:20px; ">الكلمة حفظت بنجاح.</p>');
+		<% end %>
+	}
+	if(record_output == 1) {
+		<% if I18n.locale ==:en %>
+			$('.alert').append('<p style="font-size:20px; ">you cannot insert a blank synonym</p>');
+		<% else %>
+			$('.alert').append('<p style="font-size:20px; ">يجب ان تكتب معني.</p>');
+		<% end %>
+	} 
+	if(record_output == 2){
+		<% if I18n.locale == :en %>
+			$('.alert').append('<p style="font-size:20px; ">the synonym already exists for this word</p>');
+		<% else %>
+			$('.alert').append('<p style="font-size:20px; ">المعني موجود بالفعل.</p>');
+		<% end %>
+	}
+	if( record_output!=0 && record_output!=1 && record_output!=2){
+		<% if I18n.locale == :en %>
+			$('.alert').append('<p style="font-size:20px; ">the synonym cannot be added</p>');
+		<% else %>
+			$('.alert').append('<p style="font-size:20px; ">المعني لم يحفظ.</p>');
+		<% end %>
+	}
+}
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 
 
 function suggest_synonym_to_word(keyword_id){
 	translation = document.getElementById('suggest_synonym_textbox').value;
+<<<<<<< HEAD
 	$.post("/games/record_synonym.js" ,{synonym_name:translation, keyword_id:keyword_id});
+=======
+	//alert(translation+","+keyword_id);
+	$.post("/games/record_synonym.js" ,{synonym_name: translation, keyword_id: keyword_id});
+	//alert(translation+","+keyword_id);
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 }
 
 
@@ -31,7 +84,11 @@ vote_form.push('<div style="position:relative; left: 10px;" >');
 vote_form.push('<% submitted_word=params[:word] %>');
 vote_form.push('<% keyword=Keyword.where(:name => submitted_word).first%>');
 vote_form.push('<%synonym_list=keyword.synonyms.limit(4) %>');
+<<<<<<< HEAD
 vote_form.push('</br></br><p id="text" style="color:white;" >!"<%= keyword.name %>"  من فضلك اختار معني لكلمة</p>');
+=======
+vote_form.push('<p id="text" style="color:white;" > من فضلك اختار معني لكلمة "<%= keyword.name %>"!</p>');
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 vote_form.push('<br/>');
 vote_form.push('<div class="btn-toolbar" id="synonym_buttons">');
 vote_form.push('<% i=1 %>');
@@ -45,7 +102,11 @@ vote_form.push('<% if i%2==0 %></div></br><% end %>');
 vote_form.push('<% i=i+1 %>');
 vote_form.push('<% end %>');
 vote_form.push('<% end %>');
+<<<<<<< HEAD
 vote_form.push('</br><div class="span6">');
+=======
+vote_form.push('</br><div class="span6" id="box_buttons">');
+>>>>>>> 62c183c1d5b03e9a6cecc5fe4f803d96d0fda60e
 vote_form.push('</br><button class="btn btn-primary span2" type="submit" id="suggest_synonym_button"  onclick="suggest_synonym_to_word(<%= keyword.id %>);" >سجل هذا المعني</button>');
 vote_form.push('<input type="text" class="span3" id="suggest_synonym_textbox" placeholder="ادخل معني مختلف" >');
 vote_form.push('</div>')

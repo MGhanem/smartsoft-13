@@ -1,9 +1,10 @@
 <div class="row">
 	<div class="span12">
+		<legend>Search Keywords:</legend>
 		<%= form_tag(search_path, :method => "post", :class => "form-search") do %>
 			<%= content_tag(:div, :class => 'input-append') do %>
 				<% text_field_tag(:search, @search_keyword,
-													:placeholder => t(:search_here),
+													:placeholder => 'search keywords here...',
 													:class => 'search-query') + %>
 				<% button_tag(:type => "submit",:class => 'btn') do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
@@ -60,7 +61,6 @@
 		</span>
 	</div>
 <% end %>
-
 
 <% if !@synonyms.blank? %>
 	<div class="accordion-group">

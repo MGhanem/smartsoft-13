@@ -30,3 +30,5 @@ function checkboxlimit(checkgroup, limit){
 		}
 	}
 }
+
+//= require nicescroll
