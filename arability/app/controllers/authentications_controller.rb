@@ -15,6 +15,10 @@ class AuthenticationsController < ApplicationController
 	end
 
 	def twitter_hall_of_fame
+		if Authentication.get_common_twitter_followers(current_gamer).nil?
+		  render :action => "twitter"
+		  return
+		end
 	end
 
 end
