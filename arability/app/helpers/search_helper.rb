@@ -13,7 +13,9 @@ module SearchHelper
   #  synonym_id: the ID of the synonym that we need to get the statisitics of gamers voted for it.
   #   type: the type decides which attribute we need to get a chart for whether gender statistics, country statistics,
   #   age statistics or educational level statistics.
-  #Returns: --  
+  #Returns:
+  #  On Success: Draw the chart with the attributes soecified.
+  #  On Failure: No failure scenario as this method is called only if there's data to br represented by the chart 
   def piechart (synonym_id, type)
     synonym = Synonym.find(synonym_id)
     if type == @@GENDER
