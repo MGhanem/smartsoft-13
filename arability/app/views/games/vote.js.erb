@@ -9,7 +9,9 @@ function record_vote(syn_id){
 
 function display_next_word(){
 	$('.vote_form').remove();
-	check_empty_words();
+	if(check_empty_words()){
+		return;
+	}
 	$('.zone').append('<div class=\"vote_form\"></div>');
 	var word = words.shift();
     $.post("/games/vote.js", { word: word});
@@ -58,7 +60,12 @@ vote_form.push('<div style="position:relative; left: 10px;" >');
 vote_form.push('<% submitted_word=params[:word] %>');
 vote_form.push('<% keyword=Keyword.where(:name => submitted_word).first%>');
 vote_form.push('<%synonym_list=keyword.synonyms.limit(4) %>');
+vote_form.push('<% if synonym_list.size > 0 %>');
 vote_form.push('<p id="text" style="color:white;" > من فضلك اختر معني لكلمة "<%= keyword.name %>"!</p>');
+vote_form.push('<% end %>');
+vote_form.push('<% if synonym_list.size == 0 %>');
+vote_form.push('<p id="text" style="color:white;" > من فضلك ادخل معني مناسب لكلمة "<%= keyword.name %>"!</p>');
+vote_form.push('<% end %>');
 vote_form.push('<br/>');
 vote_form.push('<div class="btn-toolbar" id="synonym_buttons">');
 vote_form.push('<% i=1 %>');
