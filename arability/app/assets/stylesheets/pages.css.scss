@@ -1,3 +1,14 @@
-// Place all the styles related to the pages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div.item {
+	height: 390px;
+	text-align: center;
+}
+
+div.item img {
+	margin: auto;
+}
+
+ol.carousel-indicators {
+	position: relative;
+	margin-left: 47%;
+	margin-right: 43%;
+}
