@@ -168,6 +168,8 @@ class Keyword < ActiveRecord::Base
       if(is_english_keyword(search_word))
         search_word.downcase!
       end
+      search_word = search_word.strip
+      search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
