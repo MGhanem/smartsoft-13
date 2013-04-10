@@ -8,7 +8,7 @@
         <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
     </div>
     <br>
-    <%= link_to "Finish", root_path %>
+    <%= link_to "Finish", "/gamers/edit" %>
 </div>
 
 <% else I18n.locale==:ar %>
@@ -21,7 +21,7 @@
         <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
     </div>
     <br>
-    <%= link_to "إنتهاء", root_path %>
+    <%= link_to "إنتهاء", "/gamers/edit" %>
 </div>
 
 <% end %>
