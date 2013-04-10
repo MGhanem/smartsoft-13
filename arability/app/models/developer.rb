@@ -30,7 +30,17 @@ class Developer < ActiveRecord::Base
       developer.keywords << keyword
   end
 
-  #mostafa hassaan
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function removes relation between a develoepr and a keyword
+  # params:
+  #     keyword_id: id of the keyword to unfollow
+  # success:
+  #     returns true on removing the relation between the developer and the keyword
+  # failure:
+  #     returns false if there was no keywords matching the keyword_id in 
+  #       the database
   def unfollow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)
