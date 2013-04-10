@@ -9,7 +9,7 @@ class Gamer < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, 
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :username, :country, :education_level, :date_of_birth, :provider, :uid
 
   validates :username, :presence => true, :length => { :minimum => 3 }
@@ -103,8 +103,8 @@ class Gamer < ActiveRecord::Base
       gamer = Gamer.where(:id => id).first
       gamer.provider = auth.provider
       gamer.uid = auth.uid
-      gamer.token = auth.token
-      gamer.token_secret = auth.token_secret
+      gamer.token = auth['credentials']['token']
+      # gamer.token_secret = auth.token_secret
       gamer.save
     end
 

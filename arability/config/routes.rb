@@ -4,12 +4,13 @@ Arability::Application.routes.draw do
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
 
+
     get "admin/index"
 
     get "admin/login"
-    
+
     get "admin/logout"
-  
+
     post "admin/wordadd"
 
     # required for routing by the devise module(gem)
@@ -24,13 +25,13 @@ Arability::Application.routes.draw do
     post "admin/upload"
 
     post "admin/addword"
-    
+
     post "admin/addtrophy"
-    
+
     post "admin/addprize"
 
     get "admin/deletetrophy"
-    
+
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
@@ -61,6 +62,16 @@ Arability::Application.routes.draw do
     post "admin/wordadd"
 
 
+    get "games/getprizes"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
+
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
 
     scope "developers/" do
 
