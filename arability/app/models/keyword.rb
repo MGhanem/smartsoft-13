@@ -1,6 +1,8 @@
 class Keyword < ActiveRecord::Base
   has_many :synonyms
+  has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
+  has_many :synonyms
   has_and_belongs_to_many :categories
   validates_presence_of :name, 
     :message => "You need to enter a keyword to save"
@@ -58,25 +60,26 @@ class Keyword < ActiveRecord::Base
     end  
 
   class << self
-    # Author:
-    #  Mirna Yacout
-    # Description:
-    #  This method is to record the aproval of the admin to a certain keyword in the database
-    # Parameters:
-    #  id: the id of the keyword to be approved
-    # Success:
-    #  returns true on saving the approval correctly in the database
-    # Failure:
-    #  returns false if the keyword doesnot exist in the database
-    #  or if the approval failed to be saved in the database 
-      def approve_keyword(keyword_id)
-        if Keyword.exists?(id: keyword_id)
-          keyword = Keyword.find(keyword_id)
-          keyword.approved = true
-          return keyword.save
-        end
-        return false
+	include StringHelper
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to record the aproval of the admin to a certain keyword in the database
+  # Parameters:
+  #  id: the id of the keyword to be approved
+  # Success:
+  #  returns true on saving the approval correctly in the database
+  # Failure:
+  #  returns false if the keyword doesnot exist in the database
+  #  or if the approval failed to be saved in the database 
+    def approve_keyword(keyword_id)
+      if Keyword.exists?(id: keyword_id)
+        keyword = Keyword.find(keyword_id)
+        keyword.approved = true
+        return keyword.save
       end
+      return false
+    end
 
     # author:
     #   Omar Hossam
@@ -109,10 +112,11 @@ class Keyword < ActiveRecord::Base
       name.strip!
       keyword = where(name: name).first_or_create
       keyword.approved = approved
+      name.downcase! if is_english_string(name)
       if is_english != nil
         keyword.is_english = is_english
       else
-        keyword.is_english = self.is_english_keyword(name)
+        keyword.is_english = is_english_string(name)
       end
 
       if keyword.save
@@ -126,22 +130,6 @@ class Keyword < ActiveRecord::Base
         return true, keyword
       else
         return false, keyword
-      end
-    end
-
-    # checks if the keyword is formed of english letters only
-    # author:
-    #   Mohamed Ashraf
-    # params:
-    #   name: the string being checked
-    # returns:
-    #   success: returns true if the keyword is in english
-    #   failure: returns false if the keyword contains non english letters
-    def is_english_keyword(name)
-      if name.match /^[a-zA-Z]+$/
-        true
-      else
-        false
       end
     end
 
@@ -181,6 +169,18 @@ class Keyword < ActiveRecord::Base
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	return relevant_first_list
+    end
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
     end
 
     # Author: Mostafa Hassaan
