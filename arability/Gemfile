@@ -69,7 +69,6 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
-
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
