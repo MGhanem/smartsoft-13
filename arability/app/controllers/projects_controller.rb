@@ -1,15 +1,20 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
 
-  # author: 
-  #   Mohamed Tamer 
-  # description: 
-  #   function shows all the projects of a certain developer
-  # params: 
-  #   none
-  # returns:
-  #   on success: returns an array of projects of the developer currently logged in.
-  #   on failure: notifies the user that he can't see this page.
+  
+  #   function shows all the projects that a certain developer owns and the projects shared with him
+  #
+  # == Parameters:
+  # current_gamer::
+  #   the current currently logged in, will be nil if there is no logged in gamer
+  #
+  # == Success return:
+  # array of projects that the developer own and the projects shared with him
+  #
+  # == Failure return :  
+  # redirects to dvelopers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
+  #
+  # @author Adam Ghanem
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
@@ -42,10 +47,10 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
-      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects",
+            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
@@ -100,6 +105,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
+      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -151,6 +157,7 @@ end
     format.json { head :no_content }
   end
 end
+
 
 def show
   @projects = Project.where(:owner_id => current_developer.id)
@@ -448,7 +455,7 @@ def add_word
           # render the project's page and add link to add this word to the database
         end
       else
-        flash[:notice] = "You have to register as a developer before trying to add a word to your project."
+        flash[:notice] = t(:not_developer)
         render 'pages/home'
       end
     end
@@ -463,30 +470,78 @@ def add_word
 # failure:
 #     keyword does not exist or is not in the project, developer trying to remove word is not owner 
 #     of the project nor is the project shared with him/her, not registered developer.
-def remove_word
-  if Developer.find_by_gamer_id(current_gamer.id) != nil 
-    @project_id = params[:project_id]
+  def remove_word
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
         # check if owner of project or is shared with me too
         @word_id = params[:word_id]
         # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
         @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
         @removed_word.each { |word| 
           if word.project_id = @project_id
-            @remove = word
+              @remove = word
           end }
-          if  @remove != nil
-            @remove.destroy
-            flash[:notice] = t(:word_removed_successfully)
-            redirect_to project_path(@project_id), :flash => flash
-            return
+        if  @remove != nil
+          @remove.destroy
+          flash[:notice] = t(:word_removed_successfully)
+          redirect_to project_path(@project_id), :flash => flash
+          return
+        else
+          flash[:notice] = t(:word_does_not_exist)
+          redirect_to project_path(@project_id), :flash => flash
+          return
+        end
+    else
+      flash[:notice] = t(:not_developer)
+      render 'pages/home'
+    end
+  end
+  # author:
+#      Khloud Khalid
+# description:
+#     method exports words and synonyms of a given project to a .csv file
+# params:
+#     project_id
+# success:
+#     data exported successfully
+# failure:
+#     project does not exist, developer trying to export data is not owner 
+#     of the project nor is the project shared with him/her, not registered developer.
+  def export_to_csv 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
+      @project_id = params[:project_id]
+      if Project.find_by_id(@project_id) != nil  
+        # if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil 
+          # check of project is shared with me too   
+        @exported_data = PreferedSynonym.where(project_id: @project_id).all
+        csv_string = CSV.generate do |csv|
+          csv << ["Keyword", "Synonym"]
+          if @exported_data != nil
+            @exported_data.each do |word|
+              @keyword = Keyword.find_by_id(word.keyword_id).name
+              @synonym = Synonym.find_by_id(word.synonym_id).name
+              csv << [@keyword, @synonym]
+            end
           else
-            flash[:notice] = t(:word_does_not_exist)
+            flash[:notice] = t(:no_words)
             redirect_to project_path(@project_id), :flash => flash
             return
           end
-        else
-          flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
-          render 'pages/home'
-        end
+        end         
+        send_data csv_string,
+        :type => 'text/csv; charset=iso-8859-1; header=present',
+        :disposition => "attachment; filename=project_data.csv" 
+        # else
+        #   flash[:notice] = "You can't export the data of someone else's project!"
+        #   render 'pages/home'
+        # end
+      else
+        flash[:notice] = t(:no_project)
+        render 'pages/home'
       end
+    else
+      flash[:notice] = t(:not_developer)
+      render 'pages/home'
     end
+  end 
+end
