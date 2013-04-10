@@ -9,8 +9,8 @@
 <div class = "container" >
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
-    <div id="error_explanation">
-        <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+    <div id="error_explanation" class="req">
+        <h2><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
         <ul>
             <% @project.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -22,12 +22,12 @@
     <div class="field">
         <span class="req">* </span>
         <%= t(:name)%>
-        <%= f.text_field :name, :placeholder=>t(:name) %>
+        <%= f.text_field :name, :placeholder => t(:name) %>
     </div>
     <div class="field">
         <span class="req">* </span>
         <%= t(:categories)%>
-        <%= text_field_tag("project[categories]", @categories,:placeholder=>t(:enter_as_csv)) %> 
+        <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %> 
     </div><br>
     <div class="radio">
         <%= t(:formal)%>

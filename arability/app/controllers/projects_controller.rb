@@ -48,7 +48,8 @@ class ProjectsController < BackendController
       @project = Project.createproject(params[:project],current_developer.id)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects",
+            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
