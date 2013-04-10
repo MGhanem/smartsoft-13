@@ -77,7 +77,7 @@
     </div>
     <div class="tab-pane" id="tab2">
       <p>
-        <%if @shared_projects == nil%>
+        <%if @shared_projects.size == 0%>
           <span style="color:red;"><%= t(:projects_index_no_shared_projects)%></span>
         <%else%>
           <%counter_bigloop = 0%>

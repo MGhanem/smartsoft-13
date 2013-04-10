@@ -1,4 +1,6 @@
 require "spec_helper"
+include Warden::Test::Helpers
+
 describe "Project" do
   let(:gamer1){
 	  gamer = Gamer.new
@@ -52,15 +54,13 @@ describe "Project" do
   }
 
   it "developer2 should see project that developer1 shared" do
+
     shared = SharedProject.new
     shared.developer_id = developer2.id
     shared.project_id = project.id
     shared.save
-    visit root_path
-    click_link I18n.t(:sign_in)
-    fill_in 'gamer_email', :with => gamer2.email
+    login_as gamer2
     visit backend_home_path
-    # page.should have_content(I18n.t(:projects_index_tab2))
     page.find("#projects_shared").click
     page.should have_content(project.name)
   end

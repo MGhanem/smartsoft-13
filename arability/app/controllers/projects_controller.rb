@@ -21,11 +21,11 @@ class ProjectsController < BackendController
         @shared_projects = developer.projects_shared
       else
         flash[:notice] = t(:projects_index_error1)
-        redirect_to :action => "new", :controller => "developers"
+        redirect_to developers_new_path
       end
     else
       flash[:error] = t(:projects_index_error2)
-      redirect_to "gamers/sign_in"      
+      redirect_to new_gamer_session_path      
     end
   end
 
