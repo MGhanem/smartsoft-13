@@ -109,7 +109,7 @@ class Gamer < ActiveRecord::Base
     end
 
     def getToken(id)
-      gamer = Gamer.where(id => id).first
+      gamer = Gamer.where(:id => id).first
       return gamer.token
     end
 
