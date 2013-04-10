@@ -1,3 +1,4 @@
+=begin
 #encoding: UTF-8
 require 'spec_helper'
 
@@ -113,3 +114,4 @@ describe SearchHelper do
 
 
 end
+=end
