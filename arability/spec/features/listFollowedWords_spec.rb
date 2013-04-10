@@ -1,4 +1,5 @@
 require "spec_helper"
+include Warden::Test::Helpers 
 describe  do
   let(:gamer){
   gamer = Gamer.new
@@ -41,16 +42,16 @@ describe  do
   
 
   it "developer should be able to see a list of followed words" do
-    visit /   
-    page.find("Sign in").click
-    fill_in 'gamer_email', :with => gamer.email
-    fill_in 'gamer_password', :with => gamer.password
+    # visit root_path
+    # click_link I18n.t(:sign_in)
 
-    developer.follow(word)
-    developer.follow(word2)
-    developer.follow(word3)
+    # fill_in 'gamer_email', :with => gamer.email
+    # fill_in 'gamer_password', :with => gamer.password
+    # page
 
-    visit list_followed_words
+    login_as gamer
+
+    visit list_followed_words_path
 
     page.should have_content(word.name)
     page.should have_content(word2.name)
