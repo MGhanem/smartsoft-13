@@ -16,6 +16,11 @@ class AuthenticationsController < ApplicationController
 
 	def twitter_hall_of_fame
 		if Authentication.get_common_twitter_followers(current_gamer).nil?
+		  if I18n.locale==:en
+	  	    flash[:notice] = "You've not connected your account to twitter"
+	  	  else I18n.locale==:ar
+	  	    flash[:notice] = "لم يتم التواصل بتويتر"
+	  	  end
 		  render :action => "twitter"
 		  return
 		end
