@@ -77,4 +77,11 @@ en:
   sign_in_first: "Sign in or register first to view this page"
   scored: "You have scored "
   congrats_prizes: "Congratulations! You have one the following prizes"
-
+  sign_in_first: "Please sign in first to view this page"
+  hello: "Hello world"
+  earned_prizes: "Prizes that you have earned"
+  available_prizes: "Prizes that you can earn"
+  didnt_win_prizes: "You didn't win any prizes so far"
+  won_all_prizes: "You have won all prizes"
+  level: "Level"
+  score: "Score"
