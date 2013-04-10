@@ -206,23 +206,20 @@ class ProjectsController < BackendController
       developer_unauthorized
     end
   end
-
-  # add words and their synonym from the imported csv file to the project 
+  
+  # author:
+  #   Mohamed tamer
   #
-  # == Parameters:
-  # words_ids::
-  #   array of hashes of word id and their corresponding synonym id
+  # description:
+  #   add words and their synonym from the imported csv file to the project 
   #
-  # id::
-  #   current project id
+  # Params:
+  #   words_ids: array of hashes of word id and their corresponding synonym id
+  #   id: current project id
   #
-  # == Success return:
-  # adds the word and synonym to project and redirects back to project
-  #
-  # == Failure return :  
-  # if the array size is bigger than the word_search of that developer nothing is added
-  #
-  # @author Mohamed Tamer
+  # returns:
+  #   Success: adds the word and synonym to project and redirects back to project
+  #   Failure: if the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
@@ -241,24 +238,21 @@ class ProjectsController < BackendController
     redirect_to action: "show", id: project_id
   end
   
-  # calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
-  # are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
-  # of synonyms and the synonyms accepted for each word
+  # Author:
+  #   Mohamed Tamer
   #
-  # == Parameters:
-  # csvfile::
-  #   the csv file the user imported
+  # Description:
+  #   calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
+  #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
+  #   of synonyms and the synonyms accepted for each word
   #
-  # id::
-  #   the project id
+  # Params:
+  #   csvfile: the csv file the user imported
+  #   id: the project id
   #
-  # == Success return:
-  # returnas an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
-  #
-  # == Failure return :  
-  # redirect back to the import_csv view with the error message
-  #
-  # @author Mohamed Tamer
+  # returns:
+  #   Success: returns an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
+  #   Failure: redirect back to the import_csv view with the error message
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
     project_id =  params[:id]
@@ -372,23 +366,20 @@ class ProjectsController < BackendController
       end
     end
   end
-
-  # add words and their synonym from the imported csv file to the project 
+  
+  # Author:
+  #   Mohamed Tamer
   #
-  # == Parameters:
-  # words_ids::
-  #   array of hashes of word id and their corresponding synonym id
+  # Description:
+  #   add words and their synonym from the imported csv file to the project 
   #
-  # id::
-  #   current project id
+  # Params:
+  #   words_ids: array of hashes of word id and their corresponding synonym id
+  #   id: current project id
   #
-  # == Success return:
-  # adds the word and synonym to project and redirects back to project
-  #
-  # == Failure return :  
-  # if the array size is bigger than the word_search of that developer nothing is added
-  #
-  # @author Mohamed Tamer
+  # returns:
+  #   Success: adds the word and synonym to project and redirects back to project
+  #   Failure: if the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
@@ -407,19 +398,18 @@ class ProjectsController < BackendController
     redirect_to action: "show", id: project_id
   end
   
-  # finds the project and renders the view
+  # Author:
+  #   Mohamed Tamer
   #
-  # == Parameters:
-  # id::
-  #   the project id
+  # Description: 
+  #   finds the project and renders the view
   #
-  # == Success return:
-  #  loads the view
-  #
-  # == Failure return :  
-  # no failure
-  #
-  # @author Mohamed Tamer
+  # Params:
+  #   id: the project id
+  # 
+  # returns:
+  #   Success: loads the view
+  #   Failure: no failure
   def import_csv
     current_project = Project.find(params[:id])
   end

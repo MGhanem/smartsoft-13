@@ -6,26 +6,22 @@ class PreferedSynonym < ActiveRecord::Base
   belongs_to :synonym
   # attr_accessible :title, :body
   class << self
-
-    # add keyword id and synonym id and a project id into a new record of PreferedSynonym
+    
+    # Author:
+    #   Mohamed Tamer
     #
-    # == Parameters:
-    # synonym_id::
-    #   synonym id
+    # Description
+    #   add keyword id and synonym id and a project id into a new record of PreferedSynonym
     #
-    # keyword_id::
-    #   keyword id
+    # == 
+    # Params:
+    #   synonym_id: synonym id
+    #   keyword_id: keyword id
+    #   project_id: the project id
     #
-    # project_id::
-    #   the project id
-    #
-    # == Success return:
-    #  returns true if the word is saved
-    #
-    # == Failure return :  
-    # if the word isn't saved returns false
-    #
-    # @author Mohamed Tamer
+    # returns:
+    #   Success: returns true if the word is saved
+    #   Failure: if the word isn't saved returns false
   	def add_keyword_and_synonym_to_project(synonym_id, keyword_id, project_id)
       keyword = Keyword.find(keyword_id)
       if keyword != nil and keyword.synonyms.where(:synonym_id => synonym_id) != nil
@@ -37,22 +33,19 @@ class PreferedSynonym < ActiveRecord::Base
       end
   	end
     
-    # finds if a keyword exists in a project
+    # Author:
+    #   Mohamed Tamer
     #
-    # == Parameters:
-    # keyword_id::
-    #   keyword id
+    # Description:
+    #   finds if a keyword exists in a project
     #
-    # project_id::
-    #   the project id
+    # Params:
+    #   keyword_id: keyword id
+    #   project_id: the project id
     #
-    # == Success return:
-    #  returns true if the word exists
-    #
-    # == Failure return :  
-    # if the word doesn't exist returns false
-    #
-    # @author Mohamed Tamer
+    # returns:
+    #   Success: returns true if the word exists
+    #   Failure: if the word doesn't exist returns false
     def find_word_in_project(project_id, keyword_id)
       keyword = PreferedSynonym.where("project_id = ? AND keyword_id = ?", project_id, keyword_id).first
       if keyword != nil
