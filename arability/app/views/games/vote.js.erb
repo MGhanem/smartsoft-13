@@ -50,7 +50,7 @@ function update_errors(record_output){
 
 
 function suggest_synonym_to_word(keyword_id){
-	translation = document.getElementById('suggest_synonym_textbox').value;
+	translation = document.getElementById('<% if I18n.locale == :en %>suggest_synonym_textbox<% else %>suggest_synonym_textbox_arabic<% end %>').value;
 	//alert(translation+","+keyword_id);
 	$.post("/games/record_synonym.js" ,{synonym_name: translation, keyword_id: keyword_id});
 	//alert(translation+","+keyword_id);
