@@ -70,6 +70,11 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
-
-
+  sign_in_first: "Please sign in first to view this page"
   hello: "Hello world"
+  earned_prizes: "Prizes that you have earned"
+  available_prizes: "Prizes that you can earn"
+  didnt_win_prizes: "You didn't win any prizes so far"
+  won_all_prizes: "You have won all prizes"
+  level: "Level"
+  score: "Score"
