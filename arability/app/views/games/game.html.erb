@@ -88,14 +88,14 @@
     clear();
     $.get("/games/showtrophies");
   }
-  function  setLevelTitle(){
-    <% if I18n.locale==:ar %>
-    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
-    <% else I18n.locale==:en %>
-     levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
-    <% end %>
-    return levelTitle; 
-  }
+  // function  setLevelTitle(){
+  //   <% if I18n.locale==:ar %>
+  //   levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
+  //   <% else I18n.locale==:en %>
+  //    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
+  //   <% end %>
+  //   return levelTitle; 
+  // }
 
 
 function setButtons(){
@@ -126,6 +126,15 @@ function getPrizes(level, score) {
     <% else I18n.locale==:en %>
     levelPopUpTitle = 'Level';
     <% end %> 
+  }
+
+  function setScoreTitle(){
+    <% if I18n.locale==:ar %>
+    document.getElementById('game-score').innerHTML = score + ' :نقاط'
+    <% else I18n.locale==:en %>
+    document.getElementById('game-score').innerHTML = 'Score: ' + score;
+    <% end %>
+
   }
 
 </script>
