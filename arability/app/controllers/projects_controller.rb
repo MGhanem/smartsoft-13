@@ -1,20 +1,18 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
 
-  
-  #   function shows all the projects that a certain developer owns and the projects shared with him
+  # author: 
+  #    Mohamed Tamer
+  # description:
+  #    function shows all the projects that a certain developer owns and the projects shared with him
   #
-  # == Parameters:
-  # current_gamer::
-  #   the current currently logged in, will be nil if there is no logged in gamer
+  # Params:
+  #    current_gamer: the current currently logged in, will be nil if there is no logged in gamer
   #
-  # == Success return:
-  # array of projects that the developer own and the projects shared with him
+  # returns:
+  #    Success: array of projects that the developer own and the projects shared with him
   #
-  # == Failure return :  
-  # redirects to dvelopers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
-  #
-  # @author Adam Ghanem
+  #    Failure: redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
@@ -23,11 +21,11 @@ class ProjectsController < BackendController
         @shared_projects = developer.projects_shared
       else
         flash[:notice] = t(:projects_index_error1)
-        render 'developers/new'
+        redirect_to :action => "new", :controller => "developers"
       end
     else
       flash[:error] = t(:projects_index_error2)
-      render 'pages/home'
+      redirect_to "gamers/sign_in"      
     end
   end
 
