@@ -10,7 +10,8 @@ class Developer < ActiveRecord::Base
  validates_length_of :first_name, :minimum => 3
  validates_length_of :last_name, :maximum => 18
  validates_length_of :last_name, :minimum => 3
- validates :gamer_id, :presence => true, :uniqueness => 
+ validates :gamer_id, :presence => true, :uniqueness => true
+
 
 
   # author:
@@ -24,11 +25,16 @@ class Developer < ActiveRecord::Base
   # failure:
   #     returns false if there was not keywords matching the keyword_id in 
   #       the database
+
+ 
+
+
   def follow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)
       developer.keywords << keyword
   end
+
 
   # author:
   #   Mostafa Hassaan
