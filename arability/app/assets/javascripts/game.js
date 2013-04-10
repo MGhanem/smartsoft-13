@@ -1,7 +1,6 @@
 var dimension = 10;
 var table;
 var cells;
-var levelTitle;
 var buttonArray = new Array();
 var wordsArray = [];
 var pauseFlag = true;
@@ -37,7 +36,7 @@ function newGame(){
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' + 
+	'<br><br><div><h3 id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
@@ -45,6 +44,7 @@ function newGame(){
 	$('#level-popup').fadeTo(1500,0);
 	setTimeout(function(){
 		$('#level-popup').remove();
+		setScoreTitle();
 		startGame();
 	}, 3500);
 }
@@ -93,8 +93,6 @@ function initializeGame(){
 	}
 	trHtml = trHtml.join('');
 	table.append($(trHtml));
-	l = setLevelTitle();
-	$('#level').append(levelTitle);
 }
 
 function initializeList(){
@@ -507,7 +505,7 @@ function nextLevel(){
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' +
+	'<br><br><div><h3 id="game-score"></h3></div>' +
 	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
@@ -704,10 +702,8 @@ function setLang(l){
 	}, 1100);
 }
 function calculateScore(){
-	score = parseInt(document.getElementById('game-score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
-	document.getElementById('game-score').innerHTML = "SCORE: " + score;
-
+	setScoreTitle();
 }
 
 function loseGame(t){
