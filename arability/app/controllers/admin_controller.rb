@@ -92,7 +92,7 @@ class AdminController < ApplicationController
     if success
       flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
       flash.keep
-      redirect_to action: "index", anchor: "home"
+      redirect_to action: "index", anchor: "admin-add-word"
     else
       flash[:error] = @keyword.errors.messages
       flash[:errortype] = "addword"
@@ -121,7 +121,7 @@ class AdminController < ApplicationController
     params[:score] = params[:score].strip
     success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:image])
     if success
-      flash[:success] = "تم ادخال مدالية #{trophy.name} بنجاح"
+      flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
     else
       flash[:error] = trophy.errors.messages
       flash[:errortype] = "addtrophy"

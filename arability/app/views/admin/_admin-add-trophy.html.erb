@@ -2,14 +2,14 @@
 	<fieldset>
 		<legend>
 			<a>
-				إضافة مدالية جديدة
+				إضافة انجاز جديدة
 			</a>
 		</legend>
 		<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:name]? ' error' : ''%>">
-			<label class="control-label" for="inputName">إسم المدالية</label>
+			<label class="control-label" for="inputName">إسم الانجاز</label>
 			<div class="controls">
-				<input type="text" id="inputName" placeholder="إسم المدالية" name="name" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:name] : ''%>">
+				<input type="text" id="inputName" placeholder="إسم الانجاز" name="name" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:name] : ''%>">
 				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:name] %>
 					<% flash[:error][:name].each do |er| %>
 						<span class="help-block"><%= er %></span>
@@ -20,7 +20,7 @@
 		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:level]? ' error' : ''%>">
 			<label class="control-label" for="inputScore">المستوى</label>
 			<div class="controls">
-				<input type="text" id="inputScore" placeholder="المستوى المطلوب للحصول على المدالية" name="level" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:level] : ''%>">
+				<input type="text" id="inputScore" placeholder="المستوى المطلوب للحصول على الانجاز" name="level" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:level] : ''%>">
 				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:level] %>
 					<% flash[:error][:level].each do |er| %>
 						<span class="help-block"><%= er %></span>
@@ -31,7 +31,7 @@
 		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:score]? ' error' : ''%>">
 			<label class="control-label" for="inputRank">مجموع النقاط</label>
 			<div class="controls">
-				<input type="text" id="inputRank" placeholder="مجموع النقاط المطلوب للحصول على المدالية" name="score" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:score] : ''%>">
+				<input type="text" id="inputRank" placeholder="مجموع النقاط المطلوب للحصول على الانجاز" name="score" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:score] : ''%>">
 				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:score] %>
 					<% flash[:error][:score].each do |er| %>
 						<span class="help-block"><%= er %></span>
@@ -39,7 +39,7 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && (flash[:error][:image] || flash[:error][:image_content_type])? ' error' : ''%>" data-provides="fileupload">
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && (flash[:error][:image] || flash[:error][:image_content_type])? ' error' : ''%>">
 			<label class="control-label">الصورة</label>
 			<div class="controls">
 				<div class="uploader-controls">
@@ -69,7 +69,7 @@
 		</div>
 		<div class="control-group">
 			<div class="controls">
-				<button type="submit" class="btn btn-large btn-primary pull-left">إضافة المدالية</button>
+				<button type="submit" class="btn btn-large btn-primary pull-left">إضافة الانجاز</button>
 			</div>
 		</div>
 	</fieldset>

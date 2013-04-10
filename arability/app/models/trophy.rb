@@ -8,14 +8,14 @@ class Trophy < ActiveRecord::Base
 
   validates_format_of :name, 
                       :with => /^([\u0621-\u0652 ])+$/, 
-                      :message => "اسم المدالية يجب ان يكون بالعربية"
+                      :message => "اسم الانجاز يجب ان يكون بالعربية"
 
   validates_length_of :name, 
                       :maximum => 10,
-                      :message => "اسم المدالية لا يمكن ان يزيد عن 10 حروف"
+                      :message => "اسم الانجاز لا يمكن ان يزيد عن 10 حروف"
 
   validates_presence_of :name, 
-                        message: "اسم المدالية لا يمكن ان يكون فارغ"
+                        message: "اسم الانجاز لا يمكن ان يكون فارغ"
 
   validates_presence_of :level, 
                         message: "المستوى لا يمكن ان يكون فارغ"
@@ -27,7 +27,7 @@ class Trophy < ActiveRecord::Base
                         message: "الصورة لا يمكن ان تكون فارغة"
 
   validates_uniqueness_of :name, 
-                          message: "اسم المدالية مستعمل"
+                          message: "اسم الانجاز مستعمل"
 
   validates_numericality_of :level, 
                             only_integer: true, 

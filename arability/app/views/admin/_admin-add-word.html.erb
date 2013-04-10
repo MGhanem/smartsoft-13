@@ -5,6 +5,14 @@
 				إضافة كلمة جديدة
 			</a>
 		</legend>
+		<% if flash[:success] %>
+			<div class="alert alert-success">
+	    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	    	<div>
+	    		<%= flash[:success] %>
+	    	</div>
+	  	</div>
+		<% end %>
 		<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name]? ' error' : ''%>">
 			<label class="control-label" for="inputkeyword">الكلمة</label>
