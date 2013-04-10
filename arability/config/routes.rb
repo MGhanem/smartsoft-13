@@ -76,6 +76,8 @@ Arability::Application.routes.draw do
       match '/projects/export_csv' => "projects#export_to_csv"
 
 
+      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
+
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
       match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
