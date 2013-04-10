@@ -40,7 +40,7 @@
     </div><br>
 
   <div><%= f.label :education_level, :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+    <%= f.select(:education_level, options_for_select(['','School','University','Graduate ']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
@@ -61,7 +61,7 @@
   <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
-  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(leave blank if you don't want to change it)</i></div>
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(ضعها فارغة إذا لم تريد تغيرها)</i></div>
 
   <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
@@ -80,10 +80,11 @@
             </div></br>
 
   <div><%= f.label t(:education_level), :class => "control-label" %>
-            <%= f.select(:education_level, options_for_select(['','منخفض','متوسط','عالي']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+            <%= f.select(:education_level, options_for_select(['','مدرسة','جامعة','خريج']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
-  <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
+
+  <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(نحتاج كلمة سرك الحالية لتأكيد التغيرات)</i></div>
 
   <div><%= f.submit "تغيير", :class => "btn btn-success" %></div>
   <% end %>
