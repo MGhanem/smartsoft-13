@@ -1,47 +1,35 @@
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 <% if !gamer_signed_in? %>
-    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
+    error =  '<h1 class="award-title"><%= t(:sign_in_first) %></h1>';
     $("#zone").append($(error));
 <% else %>
-  <% if params[:level] == nil || params[:score] == nil%>
-      error = '<div class="alert" style="text-align:right; margin:10px;">' +
+  <% if @level == 0 || @score == 0 %>
+      error = '<div class="aletr" style="text-align:right; margin:10px;">' +
               '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-              '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
+              '<strong><%= t(:warning) %></strong> <%= t(:nil_trophies) %>' + '</div>';
       $("#zone").append($(error));
   <% else %>
-    <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:level], params[:score]) %>
-
-    <% if won_trophies.length == 0 %>
-        score_space = '<div class="award">لقد نلت ' + getScore() + '  نقطة! </div>';
-        
-
-'<a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على'  + getScore() +  'نقطة" data-via="arability">Tweet</a>'
-
-!function(d,s,id){
-  var js,fjs=d.getElementsByTagName(s)[0];
-  if(!d.getElementById(id))
-
-    {js=d.createElement(s);
-    js.id=id;js.src="//platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js,fjs);}
-    
-  }(document,"script","twitter-wjs");
-
-        $("#zone").append($(score_space));
-        success = '<h1 class="award-title">لقد انهيت كل الانجازات لهذه المرحلة</h1>';
+    <% if @won_prizes %>
+        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى الجوائز </a>';
+        $("#zone").append($(button));
     <% else %>
-        <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
-        success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
-        trophies = [];
+        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
+        $("#zone").append($(button));
+    <% end %>
 
-        <% won_trophies.each do |t| %>
-          trophies.push('<div class="award">' + '<%= t.name %>' + '</div>');
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="arability">Tweet</a> </h1>';
+    $("#zone").append($(score));
+    <% if @won_trophies.length != 0 %>
+        success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';
+        trophies = [];
+        <% @won_trophies.each do |t| %>
+          trophies.push('<div class="award">' + '<img width="60" src="<%= t.image %>">' + '<%= t.name %>' + '</div>');
         <% end %>
-         
     <% end %>
         $("#zone").append($(success));
         for(var i = 0; i < trophies.length; i++) {
           $("#zone").append($(trophies[i]));
         }
-     
-    <% end %>
+  <% end %>
 <% end %>
