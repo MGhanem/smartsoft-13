@@ -91,9 +91,16 @@
 									<% end %>
 								</i></span>
 							</div>
+
 							<div id="buttons<%=synonym.id%>" class="pull-right">
-								<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
-									<span><%= t(:view_stats)%></span>
+								<button id="bstats<%=synonym.id%>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
+									    <span><%=t(:view_stats)%></span>
+     									<span style="display:none"><%=t(:hide_stats)%></span>
+		     							<script type="text/javascript">
+												function reduce_div_height(){
+													$('.centered_div .highcharts-container').css('height', '250px');
+												}
+		                  </script>
 								</button>
 								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
 									<%= content_tag(:span, t(:add_to_project))%>
@@ -108,12 +115,51 @@
 									$('#buttons<%=synonym.id%>').attr('class','pull-right');
 								<% end %>
 							</script>
+							<script>
+								$('#bstats<%=synonym.id%>').click(function() {
+								    $('span',this).toggle();
+								});
+							</script>
 						</div>
 					</div>
 				</div>
-				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
+				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<!-- add charts here -->
+						<% if Vote.where('synonym_id=?', synonym.id).exists? %>
+						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
+				    <div class="container-fluid">
+              <div class="row-fluide">
+                <div class="span2">
+                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %> 
+                </div>
+                <div class="span2">
+                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2" id="test">
+                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+             </div>
+		        </div>
+		      	</div>
+		        <% else %>
+		        <%= t(:stats_no_votes) %>
+		        <% end %>
 					</div>
 				</div>
 			</div>
