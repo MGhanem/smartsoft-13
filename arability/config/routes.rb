@@ -104,6 +104,8 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
+  get '/authentications/twitter'
+  get  '/authentications/remove_twitter_connection'
   match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
   match '/auth/failure', :to => 'authentications#twitter_failure'
  
