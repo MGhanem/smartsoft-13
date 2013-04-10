@@ -5,10 +5,11 @@
 	  		<% text_field_tag(:search, @search_keyword,
 	  											:placeholder => t(:search_here),
 	  											:class => 'search-query') + %>
-				<% button_tag(:type => "submit",:class => 'btn') do %>
+				<% button_tag(:type => "submit",:class => 'btn', :id => 'search_button') do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
+      <input name="categories" type="text" placeholder="<%= t :enter_categories %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
