@@ -9,21 +9,24 @@ class GamesController < ApplicationController
   end
 
   def post
+    if !current_gamer.is_connected_to_facebook
+      redirect_to "/gamers/edit" :flash => {notice: t(:connect_your_account)}
+    end
     begin
-      token = curret_gamer.getToken
+      token = current_gamer.getToken
       # raise Exception, token
       @graph = Koala::Facebook::API.new(token)
       @graph.put_wall_post("Checkout the new Arability game @ www.arability.net")
-      redirect_to '/game', :flash => {success: "You get extra brownie points"}
+      redirect_to '/game', :flash => {success: t(:shared_on_fb)}
     rescue Koala::Facebook::AuthenticationError
       redirect_to "/gamers/auth/facebook"
     rescue Koala::Facebook::ClientError
-      redirect_to "/game", :flash => {notice: "We're very sorry but we don't want to spam your timeline"}
+      redirect_to "/game", :flash => {notice: t(:error_fb)}
     end
   end
 
   def disconnect_facebook
     current_gamer.disconnect_from_facebook
-    redirect_to "/gamers/edit", :flash => {alert: "Your facebook account was disconnected"}
+    redirect_to "/gamers/edit", :flash => {alert: t(:logged_out_of_fb)}
   end
 end

@@ -75,6 +75,11 @@ en:
   facebook: "facebook"
   my_info: "My Information"
   social_media: "Social Media"
+  logged_in_to_fb: "CONGRATULATIONS!! You are now connected to Facebook! Enjoy your new features"
+  logged_out_of_fb: "Your account was disconnected from Facebook"
+  shared_on_fb: "You get extra brownie points"
+  error_fb: "It's okay, we don't want to spam your timeline"
+  connect_your_account: "It seems like your account is not connected to facebook, click on Social Media and connect"
 
 
   hello: "Hello world"
