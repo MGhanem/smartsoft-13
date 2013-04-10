@@ -1,8 +1,16 @@
 class TweetController < ApplicationController
-
-def tweet_score
-	@varName = 10 #params[:incomming]
-end
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As a gamer, I could tweet my score through twitter.
+  # Parameters:
+  #   None.
+  # Success:
+  #   Gamer's score tweeted on twitter.
+  # Failure: 
+  #   twitter failure reported by API.
+    def tweet_score
+    end
 
 end
 
