@@ -1,15 +1,14 @@
-  #require "koala"
+#encoding: utf-8
 class PagesController < ApplicationController
 
   def home
-  		#@graph = Koala::Facebook::GraphAPI.new(155521981280754|yRtdxQ-tSd00v0KEnptk8WK8bZM) # pre 1.2beta
-	
   end
 
   def post
-	@graph = Koala::Facebook::API.new("BAACEdEose0cBADPNP6sJt8PUPNCX5xC0HrcE393iZAHieQijMZBzMJD3uZCWrGgNu8oZAKZBZCXbg8aZB70LByDsMtEqVPdkCllZB6cmUT0bL1fGBVqGjbJ3") # 1.2beta and beyond
-	@graph.put_wall_post("لقد حصلت على" + getScore() + " نقطة في ")
-	render 'pages/home'
+    token = Gamer.fetToken(current_gamer.id)
+	  @graph = Koala::Facebook::API.new(token)
+	  @graph.put_wall_post("لقد حصلت على ١٢٣ نقطة في عربيلتي")
+	  render 'pages/home'
   end
 
 end
