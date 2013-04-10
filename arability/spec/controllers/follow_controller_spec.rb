@@ -9,4 +9,10 @@ describe FollowController do
     end
   end
 
+  
+
+  describe "it redirects the search page after following a word"
+  
+  end
+
 end

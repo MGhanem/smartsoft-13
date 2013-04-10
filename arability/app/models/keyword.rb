@@ -229,5 +229,15 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
+
+    
   end
+  def notify_developer(synonym_id)
+      keyword = Keyword.find(self.id)
+      synonym = Synonym.find(synonym_id)
+      developers = keyword.developers
+      developers.each do |dev|
+        UserMailer.follow_notification(dev, keyword, synonym).deliver
+      end
+    end
 end
