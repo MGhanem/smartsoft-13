@@ -59,7 +59,7 @@ ar:
   filter: "تصفية النتائج"
   country: "البلد"
   age_from: "السن من"
-  age_to: "السن الي"
+  age_to: "الي"
   gender: "النوع"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
