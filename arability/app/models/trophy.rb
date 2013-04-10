@@ -67,6 +67,7 @@ class Trophy < ActiveRecord::Base
       trophies_gamer = Gamer.find(gamer_id).trophies
       return trophies_all - trophies_gamer
     end
+
     # author:
     #     Karim ElNaggar
     # description:
@@ -118,6 +119,8 @@ class Trophy < ActiveRecord::Base
       return trophies_for_score
     end
 
+
+  # has_attached_file :photo
 
   end
 end
