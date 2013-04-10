@@ -1,11 +1,10 @@
+ <link rel="stylesheet" type="text/css" href="projects.css.scss" />
  <div class = "container well" >
-    <table width="275" border="0">
-        <tr>
-            <td>
+    
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
     <div id="error_explanation" class="req">
-        <h2><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
+        <h2 class="req"><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
         <ul>
             <% @project.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -13,7 +12,9 @@
         </ul>
     </div>
     <% end %>
-
+    <table width="275" border="0">
+        <tr>
+            <td>
     <div class="field">
         <!-- <span class="req">* </span> -->
         <%= f.label t(:name)%>
@@ -48,7 +49,7 @@
     <%= f.text_area :description, :size => "10x10" %>
 </div>
 <div>
-    <%= f.submit t(:edit_project), :class => "btn btn-success" %>
+    <%= f.submit t(:save_project), :class => "btn btn-success" %>
 </div>
 </div>
 </div>
