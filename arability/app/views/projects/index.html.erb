@@ -10,90 +10,82 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-
-      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i> إضافة مشروع</a>
-
-<br />
-<br />
-<%counter = 0%>
-<%size = @my_projects.size%>
-<table>
-<% while counter < size %>
-<%project1 = @my_projects[counter]%>
-<%project2 = @my_projects[counter+1]%>
-  <tr>
-    <td class="span5">
-      <div class="well well-small">
-        <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
-        <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project1.categories.length %>
-  <% counter = 1 %>
-  <% project1.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <br />
-  <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
-  <br />
-
-  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i> تعديل</a>
-</br>
-  <% project1.developers_shared.each do |dev|%>
-            <%= dev.name %>
-            <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
-          <% end %>
-
-<!-- =======
-  <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
->>>>>>> e9301e82cd115c68d70ce003d5a9c53afc87fdfa -->
-</div>
-    </td>
-    <td class="sapn12"></td>
-    <%if project2 != nil%>
-      <td class="span5">
-      <div class="well well-small">
-  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
-  <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project2.categories.length %>
-  <% counter = 1 %>
-  <% project2.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <br />
-  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
-  <br />
-  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-</div>
-    </td>
-    <%end%>
-  </tr>
-  <% counter = counter +2 %>
-<% end %>
-</table>
-</p>
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a>
+      <br />
+      <br />
+      <%counter_bigloop = 0%>
+      <%size_bigloop = @my_projects.size%>
+      <table>
+      <% while counter_bigloop < size_bigloop %>
+        <%project1 = @my_projects[counter_bigloop]%>
+        <%project2 = @my_projects[counter_bigloop + 1]%>
+        <tr>
+          <td class="span5">
+            <div class="well well-small">
+              <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+              <br />
+              <strong><%= t(:projects_index_categories)%></strong>
+              <% size = project1.categories.length %>
+              <% counter = 1 %>
+              <% project1.categories.each do |c| %>
+                <% if counter < size %>
+                  <%= c.name %>,
+                  <% counter = counter + 1 %>
+                <% else %>
+                  <%= c.name %>
+                <% end %>
+              <% end %>
+              <br />
+              <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
+              <br />
+              <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+              <% project1.developers_shared.each do |dev|%>
+                <%= dev.name %>
+                <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
+              <% end %>
+            </div>
+          </td>
+          <td class="sapn12"></td>
+            <%if project2 != nil%>
+              <td class="span5">
+                <div class="well well-small">
+                  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+                  <br />
+                  <strong><%= t(:projects_index_categories)%></strong>
+                  <% size = project2.categories.length %>
+                  <% counter = 1 %>
+                  <% project2.categories.each do |c| %>
+                    <% if counter < size %>
+                      <%= c.name %>,
+                      <% counter = counter + 1 %>
+                    <% else %>
+                      <%= c.name %>
+                    <% end %>
+                  <% end %>
+                  <br />
+                  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
+                  <br />
+                  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                </div>
+              </td>
+            <%end%>
+          </tr>
+          <% counter_bigloop = counter_bigloop +2 %>
+        <% end %>
+      </table>
+    </p>
     </div>
     <div class="tab-pane" id="tab2">
       <p>
         <%if @shared_projects == nil%>
           <span style="color:red;"><%= t(:projects_index_no_shared_projects)%></span>
         <%else%>
-          <%counter = 0%>
-<%size = @shared_projects.size%>
+          <%counter_bigloop = 0%>
+<%size_bigloop = @shared_projects.size%>
 <table>
-<% while counter < size %>
-<%project1 = @shared_projects[counter]%>
-<%project2 = @shared_projects[counter+1]%>
+<% while counter_bigloop < size_bigloop %>
+<%project1 = @shared_projects[counter_bigloop]%>
+<%project2 = @shared_projects[counter_bigloop + 1]%>
   <tr>
     <td class="span5">
       <div class="well well-small">
@@ -139,7 +131,7 @@
     </td>
     <%end%>
   </tr>
-  <% counter = counter +2 %>
+  <% counter_bigloop = counter_bigloop +2 %>
 <% end %>
 </table>
         <%end%>
@@ -147,4 +139,3 @@
     </div>
   </div>
 </div>
-
