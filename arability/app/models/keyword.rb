@@ -210,6 +210,7 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
+
     # finds a keyword by name from the database
     # @author Mohamed Ashraf
     # @params name [string] the search string
@@ -222,6 +223,21 @@ class Keyword < ActiveRecord::Base
       return keyword
     end
 
+
+    
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function created for high charts to get model information. 
+  #       It returns a hash with the name of each synonym and a the 
+  #         percentage of total votes
+  # params:
+  #     keyword_id: id of the keyword needed
+  # success:
+  #     returns a hash contating each synonym name in a string with a 
+  #       percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
+  # failure:
+  #     returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(:keyword_id => keyword_id)
         .joins(:votes).count(:group => "synonym_id")
@@ -229,8 +245,6 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-
-    
   end
   def notify_developer(synonym_id)
       keyword = Keyword.find(self.id)

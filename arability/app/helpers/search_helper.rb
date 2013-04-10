@@ -1,9 +1,19 @@
 module SearchHelper
 
-  #mostafa hassaan
+
+  
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function creates the highcharts pie chart
+  # params:
+  #    keyword_id: id of the keyword needed
+  # success:
+  #     creates the pie chart in view
+  # failure:
+  #     fails to show a chart if synonyms have no votes
   def chart_keyword_synonym(keyword_id)
     stats = Keyword.get_keyword_synonym_visual(keyword_id)
-    name = Keyword.find(keyword_id).name
     chart = LazyHighCharts::HighChart.new('pie') do |f|
       f.chart({:defaultSeriesType=>"pie" , :margin=> [50, 200, 60, 170]} )
       series = {
