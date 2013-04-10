@@ -74,3 +74,4 @@ en:
   nil_prizes: "You have requested invalid data."
   warning: "Warning!"
   won_prizes: "Congratulations! You have won these prizes"
+  sign_in_first: "Sign in or register first to view this page"
