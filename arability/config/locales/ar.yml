@@ -6,6 +6,7 @@ ar:
   english: "الإنجليزية"
   arabic: "العربية"
   email: "البريد الالكتروني"
+  email2: "البريد الالكتروني"
   password: "كلمة السر"
   password_confirmation: "تأكيد كلمة السر"
   username: "اسم المستخدم"
@@ -151,3 +152,4 @@ ar:
   remove_from_project: "إزالة من المشروع"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  not_shared: "ةذا المشروع غير مشارك مع احد"

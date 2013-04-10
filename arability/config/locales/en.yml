@@ -123,3 +123,6 @@ en:
   remove_from_project: "Remove from project"
   word_removed_successfully: "Word removed successfully."
   word_does_not_exist: "The word you're trying to remove does not exist."
+
+  email2: "Email Address"
+  not_shared: "This project is not shared with anyone yet"

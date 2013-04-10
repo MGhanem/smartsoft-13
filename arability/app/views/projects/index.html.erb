@@ -42,11 +42,6 @@
   <br />
 
   <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i> تعديل</a>
-</br>
-  <% project1.developers_shared.each do |dev|%>
-            <%= dev.name %>
-            <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
-          <% end %>
 
 <!-- =======
   <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>

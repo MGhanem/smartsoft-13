@@ -45,11 +45,11 @@ def create
 end
 def remove_developer_from_project
     dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project1_id])
+    project = Project.find(params[:project_id])
     project.developers_shared.delete(dev)
     project.save
     flash[:notice] = "Developer Unshared!"
-   redirect_to "/developers/projects"
+    redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
 
   def share_project_with_developer
@@ -67,7 +67,7 @@ def remove_developer_from_project
         if(developer.save)
           
           flash[:notice] = "Project has been shared successfully with #{developer.name}"
-          redirect_to "/developers/projects"
+          redirect_to :action => "share",:controller => "projects", :id => params[:id]
         else
           flash[:notice] = "Failed to share project with developer"
         end
