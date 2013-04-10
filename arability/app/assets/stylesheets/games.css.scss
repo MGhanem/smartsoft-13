@@ -76,10 +76,19 @@
   font-size:25px;
 }
 
-#suggest_synonym_textbox{
-  text-align:right;
-  margin-left:20px;
-  font-size:21px;
+#suggest_synonym_textbox_arabic{
+  margin-right: 40px;
+}
+
+#suggest_synonym_button_arabic{
+  margin-right: 70px;
+  font-size: 21px;
+}
+
+
+#suggest_synonym_button_english{
+  margin-left: 70px;
+  font-size: 19px;
 }
 
 .zone {
@@ -400,3 +409,23 @@ margin-left: 80px;
 #score{
   color: white;
 }
+
+.text_english{
+  color: white;
+  font-size: 30px;
+  margin-right: 200px;
+}
+
+.text_arabic{
+  color:white;
+  font-size: 40px;
+  margin-right: 40px;
+  
+}
+
+#keywordName{
+  font-weight:bold;
+  margin-right:100px;
+}
+
+
