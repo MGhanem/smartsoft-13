@@ -24,7 +24,6 @@
         <% @won_trophies.each do |t| %>
           trophies.push('<div class="award">' + '<img width="60" src="<%= t.image %>">' + '<%= t.name %>' + '</div>');
         <% end %>
-
     <% end %>
         $("#zone").append($(success));
         for(var i = 0; i < trophies.length; i++) {
