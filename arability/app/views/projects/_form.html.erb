@@ -1,12 +1,7 @@
-<style>
-.radio{
-    display:float;
-}
-.req{
-    color: red;
-}
-</style>
-<div class = "container" >
+ <div class = "container well" >
+    <table width="275" border="0">
+        <tr>
+            <td>
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
     <div id="error_explanation" class="req">
@@ -20,13 +15,13 @@
     <% end %>
 
     <div class="field">
-        <span class="req">* </span>
-        <%= t(:name)%>
+        <!-- <span class="req">* </span> -->
+        <%= f.label t(:name)%>
         <%= f.text_field :name, :placeholder => t(:name) %>
     </div>
     <div class="field">
         <span class="req">* </span>
-        <%= t(:categories)%>
+        <%= f.label t(:categories)%>
         <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %> 
     </div><br>
     <div class="radio">
@@ -40,7 +35,8 @@
     </div>
     <div class="field">
         <span class="req">* </span>
-        <%= t(:age)%></div>
+        <%= t(:age)%>
+        <br>
         <%= t(:from)%>
         <%= f.text_field :minAge, :class => "input-small" %>
         <%= t(:to)%>
@@ -52,7 +48,11 @@
     <%= f.text_area :description, :size => "10x10" %>
 </div>
 <div>
-    <%= f.submit t(:create_project), :class => "btn btn-success" %>
+    <%= f.submit t(:edit_project), :class => "btn btn-success" %>
+</div>
 </div>
 </div>
 <% end %>
+</td>
+</tr>
+</table>

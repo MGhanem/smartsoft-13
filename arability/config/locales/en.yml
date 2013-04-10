@@ -53,6 +53,14 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+  error: "error"
+  prohibited_project_error: "errors prohibited this project from being saved:"
+  not_in_range: "is not in range"
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'Project was successfully created.'
+         project_was_successfully_updated: 'Project was successfully updated.'
 
   import: "Import"
   export: "Export"
