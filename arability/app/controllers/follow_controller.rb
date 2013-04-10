@@ -52,7 +52,16 @@ class FollowController < BackendController
     redirect_to :list_followed_words, :flash => {:success => "#{t(:unfollow_keyword_alert)} #{word}"}
   end
 
-  #mostafa hassaan
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function returns a hash with all keywords followed by a developer
+  # params:
+  #     gamer_id: id used to get the developer
+  # success:
+  #     returns a hash containing all keywords followed by the given developer
+  # failure:
+  #     returns empty hash if the developer doesn't follow any keywords
   def list_followed
     developer = Developer.where(:gamer_id => current_gamer.id).first
     keyword_ids_array = developer.keyword_ids
