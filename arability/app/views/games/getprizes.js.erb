@@ -1,0 +1,32 @@
+<% if !gamer_signed_in? %>
+    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
+    $("#zone").append($(error));
+
+<% else %>
+  <% if params[:level] == nil || params[:score] == nil %>
+      error = '<div class="alert" style="text-align:right; margin:10px;">' +
+              '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+              '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
+      $("#zone").append($(error));
+  <% else %>
+    <% won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, params[:score].to_i, params[:level].to_i) %>
+
+    <% if won_prizes.length == 0 %>
+        success = '<h1 class="award-title">لقد ربحت كل الجوائز لهذه المرحلة </h1>';
+    <% else %>
+        <% won_prizes.map { |wp| current_gamer.prizes << wp } %>
+        success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
+        prizes = [];
+
+        <% won_prizes.each do |p| %>
+          prizes.push('<div class="award">' + '<img src="<%= p.image %>">' +'<%= p.name %>' + '</div>');
+        <% end %>
+
+    <% end %>
+        $("#zone").append($(success));
+        for(var i = 0; i < prizes.length; i++) {
+          $("#zone").append($(prizes[i]));
+        }
+
+  <% end %>
+<% end %>
