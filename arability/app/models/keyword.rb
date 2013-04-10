@@ -159,7 +159,20 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-    #mostafa hassaan
+    
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function created for high charts to get model information. 
+  #       It returns a hash with the name of each synonym and a the 
+  #         percentage of total votes
+  # params:
+  #     keyword_id: id of the keyword needed
+  # success:
+  #     returns a hash contating each synonym name in a string with a 
+  #       percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
+  # failure:
+  #     returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(:keyword_id => keyword_id)
         .joins(:votes).count(:group => "synonym_id")
