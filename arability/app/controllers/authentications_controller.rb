@@ -17,4 +17,7 @@ class AuthenticationsController < ApplicationController
 	def twitter_hall_of_fame
 	end
 
+	def facebook_hall_of_fame
+	end
+
 end

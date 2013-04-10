@@ -137,5 +137,23 @@ class Gamer < ActiveRecord::Base
   has_many :synonyms, :through => :votes
   has_many :votes
 
+  class << self
+
+  def get_common_facebook_friends(current_gamer)
+    @graph = Koala::Facebook::API.new(current_gamer.token)
+    friends = @graph.get_connections("me", "friends")
+    common = Array.new
+    i = 0
+    while i<friends.count
+      if Gamer.exists?(:uid => friends.at(i), :provider => "facebook")
+        common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+      end
+      i = i + 1
+      return common
+    end
+  end
+
+  end  
+
 end
 
