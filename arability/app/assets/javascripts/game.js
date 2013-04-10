@@ -381,6 +381,7 @@ function fadeSomething(x){
 					$('#gameover-popup').fadeTo(1500,1);
 					$('#gameover-popup').fadeTo(1500,0);
 					setTimeout(function(){
+						setWordsArray();
 						getTrophies(level, score);
 						return;
 					}, 3000);
