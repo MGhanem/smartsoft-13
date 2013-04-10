@@ -133,6 +133,8 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
+  get "/devise/games/disconnect_facebook"
+
   match 'search' => 'search#search'
 
   match '/authentications/facebook_connect' => 'authentications#facebook_connect'

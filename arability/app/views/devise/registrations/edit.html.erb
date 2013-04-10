@@ -92,7 +92,25 @@
     </div>
     <div class="tab-pane" id="tab2">
       <div class="well" style="width:1100px; height:480px">
-        <p font='20'><%= t(:connect_to)%> <%= link_to t(:facebook), gamer_omniauth_authorize_path(:facebook) %></p>
+        <% if !current_gamer.is_connected_to_facebook %>
+        <div>
+          <% if I18n.locale == :en %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
+          <% else %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
+          <% end %>
+          <p font='20' style="position:relative; padding:40px;"><%= t(:connect_to)%> <%= link_to t(:facebook), gamer_omniauth_authorize_path(:facebook) %></p>
+        </div>
+        <% else %>
+        <div>
+          <% if I18n.locale == :en %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
+          <% else %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
+          <% end %>
+          <p font='20' style="position:relative; padding:40px;"><%= t(:disconnect_from)%> <%= link_to t(:facebook), :controller => :games, :action => :disconnect_facebook %></p>
+        </div>
+        <% end %>
       </div>
     </div>
   </div>

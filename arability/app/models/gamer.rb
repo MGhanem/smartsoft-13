@@ -97,21 +97,26 @@ class Gamer < ActiveRecord::Base
     return Trophy.all - self.trophies
   end
 
-  class << self
-
-    def connect_to_facebook(id, auth)
-      gamer = Gamer.where(:id => id).first
-      gamer.provider = auth.provider
-      gamer.uid = auth.uid
-      gamer.token = auth['credentials']['token']
-      # gamer.token_secret = auth.token_secret
-      gamer.save
+    def connect_to_facebook(auth)
+      self.provider = auth.provider
+      self.uid = auth.uid
+      self.token = auth['credentials']['token']
+      self.save
     end
 
-    def getToken(id)
-      gamer = Gamer.where(:id => id).first
-      return gamer.token
+    def disconnect_from_facebook
+      self.provider = nil
+      self.uid = nil
+      self.token = nil
+      self.save
     end
 
-  end
+    def is_connected_to_facebook
+      return self.token != nil
+    end
+
+    def getToken
+      return self.token
+    end
+
 end
