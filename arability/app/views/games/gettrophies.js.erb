@@ -17,8 +17,8 @@
         $("#zone").append($(button));
     <% end %>
 
-    score = '<h1 class="award-title">لقد سجلت النقاط التالية  <span id="score"><%= params[:score] %></span> </h1>';
-    $("#zone").append($(score));
+    var score_title = '<h1 class="award-title">لقد سجلت النقاط التالية  <span id="score"><%= params[:score] %></span> </h1>';
+    $("#zone").append($(score_title));
     <% if won_trophies.length != 0 %>
         <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
         success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
