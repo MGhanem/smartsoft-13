@@ -19,5 +19,20 @@ class Authentication < ActiveRecord::Base
     authentication.destroy
   end
 
+  def get_common_twitter_followers(current_gamer)
+    auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
+    result = JSON.parse(open("https://api.twitter.com/1/followers/ids.json?user_id=#{auth.gid}").read)
+    followers = Array.new(result["ids"])
+    common = Array.new
+    i = 0
+    while i<followers.count
+      if Authentication.exists?(:gid => followers.at(i), :provider => "twitter")
+        common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
+      end
+      i = i + 1
+      return common
+    end
+  end
+
   end
 end

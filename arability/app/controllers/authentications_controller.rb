@@ -14,4 +14,7 @@ class AuthenticationsController < ApplicationController
 	  render :action => "twitter"
 	end
 
+	def twitter_hall_of_fame
+	end
+
 end

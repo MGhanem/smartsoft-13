@@ -178,6 +178,7 @@ Arability::Application.routes.draw do
   match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
   match '/auth/failure', :to => 'authentications#twitter'
  
+  get "authentications/twitter_hall_of_fame"
 
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
