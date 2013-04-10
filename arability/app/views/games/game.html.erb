@@ -20,7 +20,7 @@
         $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
       }
       else{
-        $('.zone').append('<div><a class="btn btn-success" href="http://localhost:3000/game">Restart Game</a></div>');
+        $('.zone').append('<div><a class="btn btn-success" href="/game">Restart Game</a></div>');
       }
       return true;
     }else{
@@ -53,8 +53,12 @@
       //alert('empty');
       return;
     }
-    var first_word = words.shift();
-    $.post("/games/vote.js", { word: first_word});
+    else{
+      //$('#workspace').remove();
+      //$('.zone').append('<div class=\"vote_form\"></div></br>');
+      var first_word = words.shift();
+      $.post("/games/vote.js", { word: first_word});
+    }
   }
 
     function clear() {
