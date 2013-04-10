@@ -1,8 +1,19 @@
 class TweetController < ApplicationController
 
-def tweet_invitation
-	#@varName = params[:incomming]
-end
+  # Author:
+  #   Omar Hossam.
+  # Description:
+  #   As a gamer, I could tweet an invitation link to the Arability website game
+  #   using the twitter button.
+  # Parameters:
+  #   None.
+  # Success:
+  #   Twitter button pressed, and an invitation link is tweeted on gamer's
+  #   twitter account.
+  # Failure: 
+  #   twitter failure reported by API.
+    def tweet_invitation
+    end
 
 end
 
