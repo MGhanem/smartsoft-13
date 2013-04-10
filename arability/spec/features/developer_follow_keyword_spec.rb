@@ -2,16 +2,21 @@
 require "spec_helper"
 
 describe "DeveloperFollowsKeyword" do
-  # before :each do
-  #   # @gamer
-
-  #   @word = Keyword.new
-  #   @word.name = "testkeyword"
-  #   @word.save
-  # end
+  let(:gamer1){
+  gamer = Gamer.new
+    gamer.username = "Mostafa"
+    gamer.country = "Egypt"
+    gamer.education_level = "high"
+    gamer.gender = "male"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "mer92@gmail.com"
+    gamer.password = "1234567"
+    gamer.save
+    gamer
+  }
 
   let(:dev) {dev = Developer.new
-    dev.gamer_id = 1
+    dev.gamer_id = gamed1.id
     dev.first_name = "first"
     dev.last_name = "last"
     dev.verified = true

@@ -37,6 +37,30 @@ describe "KeywordSynonymTests_mostafa" do
     syn.save
     syn
     }
+
+    let(:gamer1){ gamer = Gamer.new
+    gamer.username = "Mostafa"
+    gamer.country = "Egypt"
+    gamer.education_level = "high"
+    gamer.gender = "male"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "mer92@gmail.com"
+    gamer.password = "1234567"
+    gamer.save
+    gamer
+    }
+
+    let(:gamer2){ gamer = Gamer.new
+    gamer.username = "Hassaan"
+    gamer.country = "Egypt"
+    gamer.education_level = "high"
+    gamer.gender = "male"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "mer92w@gmail.com"
+    gamer.password = "1234567"
+    gamer.save
+    gamer
+    }
     
 
 
@@ -87,8 +111,8 @@ describe "KeywordSynonymTests_mostafa" do
     syn1.approved = true
     syn1.save
     Vote.record_vote(1, syn.id)
-    Vote.record_vote(1, syn.id)
-    result = Keyword.highest_voted_synonym(word.id).name
+    Vote.record_vote(2, syn.id)
+    result = Keyword.highest_voted_synonym(word).name
     expect(result).to eq (syn.name)
   end
 
