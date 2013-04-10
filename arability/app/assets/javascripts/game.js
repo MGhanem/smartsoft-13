@@ -11,8 +11,8 @@ var droppingBlocks;
 var pullingBlocks;
 var suspenseTimer;
 var blockId = 0;
-var Time = 600;
-var newTime = Time - 800;
+var waitTime = 1000;
+var fallingTime = 200;
 var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
@@ -23,18 +23,23 @@ var score = 0;
 var gameButtonClear;
 var gameButtonRestart;
 var gameOverPopUp;
+var wordsInDb = true;
+var levelPopUpTitle;
 
 
 function newGame(){
+	$.ajaxSetup({async: false});
+	getNewWords(1);
+	if(wordsInDb == true){
 	$('.zone').empty();
 	setButtons();
+	setLevelPopUpTitle();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>' + 
+	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
-	'<div id ="level-popup" style="font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
-	$.ajaxSetup({async: false});
+	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -42,6 +47,7 @@ function newGame(){
 		$('#level-popup').remove();
 		startGame();
 	}, 3500);
+}
 }
 function startGame(){
 	levelTitle = $('#level');
@@ -137,16 +143,11 @@ function dropAblockCont(clss, btn, randNum, counter){
 					suspense();
 				
 				blockId++;
-
 				if(loseGame(tower)){
-					win = false;
 					return;
 				}
-					if(level == 5){
-						Time = 500;
-					}
 					droppingBlocks = setTimeout(function() {  
-                	  dropAblock() } , Time);
+                	  dropAblock() } , waitTime);
 				
 			}
 			else{
@@ -166,19 +167,15 @@ function dropAblockCont(clss, btn, randNum, counter){
 					
 					blockId++;
 					if(loseGame(tower)){
-						win = false;
 						return;
 					}
-					if(level == 5){
-						Time = 500;
-						newTime = Time - 425;
-					}
+					
 					droppingBlocks = setTimeout(function() {
 						dropAblock() 
-					}, Time);// <-------- set the new block arrive time, here
+					}, waitTime);// <-------- set the new block arrive time, here
 				}
 			}
-		}, newTime);// <------set the drop fall time here
+		}, fallingTime);// <------set the drop fall time here
 }
 
 function calculatePossible(){
@@ -335,7 +332,7 @@ function removeAblock(){
 	var x;
 	var word = document.getElementById("wordLabel").innerHTML;
 		for(x = 0; x < wordsArray.length; x++){
-			if(wordsArray[x] == word){
+			if(wordsArray[x] == word && wordExistsInArray[x] == true){
 				for(var i = 0; i < buttonArray.length; i++){
 					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
 					$('#' + toBeRemovedId).fadeTo('slow',0.5);
@@ -367,7 +364,7 @@ function fadeSomething(x){
 				}
 				if(win == true){
 					buttonArray = [];
-					generateWord();
+					// generateWord();
 					removeAblockCont();
 					gameOver = true;
 					// $(".zone").slideUp(1000);
@@ -384,16 +381,16 @@ function fadeSomething(x){
 					$('#gameover-popup').fadeTo(1500,1);
 					$('#gameover-popup').fadeTo(1500,0);
 					setTimeout(function(){
-						setWordsArray();
-						have_to_sign_in();
+						getTrophies(level, score);
 						return;
 					}, 3000);
 				}		
-				
-				buttonArray = [];
-				generateWord();
-				removeAblockCont();
+				else{
+					buttonArray = [];
+					generateWord();
+					removeAblockCont();
 				}
+}
 function removeAblockCont(){
 	var hasUpper;
 	var count;
@@ -502,14 +499,15 @@ function clearWord(){
 // }
 function nextLevel(){
 	level++;
+	fallingTime = fallingTime - 15;
+	waitTime = waitTime - 70;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
+	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
-	'<br><br><div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br>'+ 
-	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>'+
-	'<div id ="level-popup" style="font: helvetica; font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
+	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
+	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' +
+	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -610,6 +608,14 @@ function highestTowerId(){
 
 function getNewWords(num){
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
+	if(wordsArray.length == 0){
+		wordsInDb = false;
+		$('.zone').empty();
+		$('.zone').append('<h2 id ="empty-db-msg"' +
+			'style="font: helvetica; width: 400px; color: white; margin-left: 190px; position: absolute; margin-top: 120px;">' +
+			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
+			'and we hope that you enjoyed our game</h2>');
+	}
 }
 
 function setLevelAttributes(level){
@@ -697,16 +703,16 @@ function setLang(l){
 	}, 1100);
 }
 function calculateScore(){
-	score = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
+	score = parseInt(document.getElementById('game-score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
-	document.getElementById('score').innerHTML = "SCORE: " + score;
+	document.getElementById('game-score').innerHTML = "SCORE: " + score;
 
 }
 
 function loseGame(t){
-	//alert("game finished");
 	if(t > dimension - 1){
 		gameOver = true;
+		win = false;
 		buttonArray = [];
 		generateWord();
 		clearTimeout(suspenseTimer);
@@ -724,7 +730,7 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			have_to_sign_in();
+			getTrophies(level, score);
 			return true;
 		}, 3000);
 	}

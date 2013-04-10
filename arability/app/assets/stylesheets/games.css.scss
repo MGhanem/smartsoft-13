@@ -118,7 +118,6 @@
       overflow: hidden;
       width: 190px;
       line-height: 50px;
-      margin-left: 45px;
       text-align: center;
     }
 
@@ -190,6 +189,7 @@ margin-left: 80px;
   color: white;
   width: 200px;
   height: 38px;
+  padding-left:30px;
 }
 
 #btn-restart{
@@ -198,8 +198,10 @@ margin-left: 80px;
   margin-left: 30px;
 }
 
-#score{
+#game-score{
   color: white;
+  width: 220px;
+  float: right;
 }
 
 .award-title {
@@ -217,13 +219,18 @@ margin-left: 80px;
   direction: rtl;
   text-align:right;
   background-color: rgba(200,200,200, 0.3);
+  color: white;
+}
 
+.award img {
+  margin-left: 24px;
 }
 
 .award-title {
  padding: 20px;
  direction:rtl;
  text-align:right;
+ color: white;
 }
 
 .award {
@@ -238,7 +245,8 @@ margin-left: 80px;
 }
 
 .award-desc-unlocked {
-   font-size: 20px;
+  color:white;
+  font-size: 20px;
   padding: 10px;
   margin-left:10px;
   margin-right:10px;
@@ -246,10 +254,17 @@ margin-left: 80px;
   direction: rtl;
   text-align:right;
   background-color: rgba(0,204,190, 0.3);
+  color:white;
 }
 
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
+
+
 .award-desc-locked {
-   font-size: 20px;
+  color:white;
+  font-size: 30px;
   padding: 10px;
   margin-left:10px;
   margin-right:10px;
@@ -259,8 +274,17 @@ margin-left: 80px;
   background-color: rgba(200,204,190, 0.3);
 }
 
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
 
+.award-desc-locked img {
+  margin-left: 14px;
+}
 
+.award-desc-locked img {
+  margin-left: 14px;
+}
 .award-type {
   padding-right: 20px;
   padding-left: 20px;
@@ -275,17 +299,17 @@ margin-left: 80px;
 .award-zone {
   overflow-y: scroll;
   height:100%;
- text-align:right; 
+  text-align:right;
 }
 
 .award {
-  font-size: 20px; 
+  font-size: 20px;
   padding: 10px;
-  margin-left:10px; 
-  margin-right:10px; 
-  margin-top: 10px; 
-  direction: rtl; 
-  text-align:right; 
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
   background-color: rgba(200,200,200, 0.3); 
 }
 
@@ -398,6 +422,9 @@ margin-left: 80px;
 
 
 
-#score{
+#score {
   color: white;
+  width: 330px;
+  margin-left:auto;
+  margin-right: auto;
 }

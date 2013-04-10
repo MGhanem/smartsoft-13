@@ -10,6 +10,8 @@ Arability::Application.routes.draw do
     get "admin/login"
     
     get "admin/logout"
+  
+    post "admin/addword"
 
     post "admin/wordadd"
  
@@ -104,6 +106,47 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
+  match 'search' => 'search#search'
+
+  match '/projects/add_word' => "projects#add_word"
+  match '/game' => 'games#game'
+  get 'games/gettrophies'
+  
+  get 'games/showprizes'
+  get 'games/showtrophies'
+    post "admin/upload"
+
+    scope "developers/" do 
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match "keywords" => "keywords#viewall"
+
+      get "keywords/new"
+
+
+      get "keywords/suggest_add"
+
+      resources :projects
+
+      post "keywords/create"
+      match '/developers/new' => "developer#new"
+      match '/developers/create' => "developer#create"
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
+      match 'search' => 'search#search'
+    end
+  
+
+  
+  get 'games/getnewwords'
+
+  # The priority is based upon order of creation:s
+    match 'search' => 'search#search'
   get "authentications/twitter"
   get "authentications/remove_twitter_connection"
   match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 

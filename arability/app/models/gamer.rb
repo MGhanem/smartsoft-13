@@ -118,6 +118,15 @@ class Gamer < ActiveRecord::Base
   def get_available_trophies
     return Trophy.all - self.trophies
   end
+
+  def won_prizes?(score, level)
+    if Prize.get_new_prizes_for_gamer(self.id, score, level).count > 0
+      return true
+    else
+      return false
+    end
+  end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }

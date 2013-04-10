@@ -1,7 +1,6 @@
 <script type="text/javascript" charset="utf-8">
   
-  var words;
-  var win=true ;
+  var words=["car","sar","sad","sfd"];
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -9,6 +8,7 @@
     }
     words=successfulWords;
   }
+
 
   function get_words(){
     return words;
@@ -54,6 +54,8 @@
       //alert('empty');
       return;
     }
+    $('#workspace').remove();
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
     var first_word = words.shift();
     $.post("/games/vote.js", { word: first_word});
   }
@@ -113,6 +115,15 @@ function getPrizes(level, score) {
 
   function getScore() {
     return 123456;
+  }
+
+
+  function setLevelPopUpTitle(){
+    <% if I18n.locale==:ar %>
+    levelPopUpTitle = 'مرحلة رقم';
+    <% else I18n.locale==:en %>
+    levelPopUpTitle = 'Level';
+    <% end %> 
   }
 
 </script>
