@@ -122,8 +122,6 @@ class Prize < ActiveRecord::Base
       end
     end
 
-
-
     
     def get_new_prizes_for_gamer(gamer_id, score, level)
       prizes_for_score = []
