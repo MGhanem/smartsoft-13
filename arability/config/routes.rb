@@ -70,8 +70,11 @@ Arability::Application.routes.draw do
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
-
+      
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+  resources :projects
+  match "keywords/create" => "keywords#create"
 
       match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
@@ -89,6 +92,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/create' => "my_subscription#create"
     end
   end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

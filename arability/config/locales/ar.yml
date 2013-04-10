@@ -62,7 +62,7 @@ ar:
   filter: "تصفية النتائج"
   country: "البلد"
   age_from: "السن من"
-  age_to: "السن الي"
+  age_to: "الي"
   gender: "النوع"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
@@ -106,4 +106,3 @@ ar:
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
-  enter_categories: "التصفية حسب الفئات"

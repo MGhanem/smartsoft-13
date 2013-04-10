@@ -11,7 +11,7 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
-	# Author: 
+  # Author: 
   #   Nourhan Mohamed
   # Description:
   #   retrieved approved synonyms for a keyword through optional filters
@@ -81,24 +81,24 @@ class Keyword < ActiveRecord::Base
       return false
     end
 
-# author:
-#   Omar Hossam
-# description:
-#   feature takes no input and returns a list of all unapproved keywords
-# success: 
-#   takes no arguments and returns to the admin a list containing the keywords 
-#   that are pending for approval in the database
-# failure:
-#   returns an empty list if no words are pending for approval
-
-  def listunapprovedkeywords
-
-    return Keyword.where(approved: false).all
-
-  end
-
-    # adds a new keyword to the database
     # author:
+    #   Omar Hossam
+    # description:
+    #   feature takes no input and returns a list of all unapproved keywords
+    # success: 
+    #   takes no arguments and returns to the admin a list containing the keywords 
+    #   that are pending for approval in the database
+    # failure:
+    #   returns an empty list if no words are pending for approval
+
+      def listunapprovedkeywords
+
+        return Keyword.where(approved: false).all
+
+      end
+
+    # adds a new keyword to the database or returns it if it exists
+    # Author:
     #   Mohamed Ashraf
     # params:
     #   name: the actual keyword string
@@ -153,7 +153,11 @@ class Keyword < ActiveRecord::Base
     	if (search_word.blank?)
     		return []
     	end
-      search_word.downcase! if is_english_string(search_word)
+      if(is_english_keyword(search_word))
+        search_word.downcase!
+      end
+      search_word = search_word.strip
+      search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
@@ -205,6 +209,18 @@ class Keyword < ActiveRecord::Base
     #   on failure: Empty array
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
+    end
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
     end
   end
 end
