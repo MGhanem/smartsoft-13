@@ -140,6 +140,9 @@ class Gamer < ActiveRecord::Base
   class << self
 
   def get_common_facebook_friends(current_gamer)
+    if (current_gamer.token.nil?)
+      return nil
+    end
     @graph = Koala::Facebook::API.new(current_gamer.token)
     friends = @graph.get_connections("me", "friends")
     common = Array.new

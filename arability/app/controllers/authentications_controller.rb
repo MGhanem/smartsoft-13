@@ -18,6 +18,15 @@ class AuthenticationsController < ApplicationController
 	end
 
 	def facebook_hall_of_fame
+	  if Gamer.get_common_facebook_friends(current_gamer).nil?
+	  	if I18n.locale==:en
+	  	  flash[:notice] = "You've not connected your account to facebook"
+	  	else I18n.locale==:ar
+	  	  flash[:notice] = "لم يتم التواصل بفايس بوك"
+	  	end
+	    redirect_to "/gamers/edit"
+	    return
+	  end
 	end
 
 end
