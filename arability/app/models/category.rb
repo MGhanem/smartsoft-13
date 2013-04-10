@@ -18,10 +18,8 @@ class Category < ActiveRecord::Base
   class << self
     include StringHelper
     def add_category_to_database_if_not_exists(name)
-      if is_english_string(name)
-        name.downcase!
-      end
       name.strip!
+      name.downcase! if is_english_string(name)
       category = Category.where(:name => name).first_or_create
       if category.save
         return true, category

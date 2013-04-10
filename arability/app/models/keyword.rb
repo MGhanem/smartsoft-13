@@ -8,8 +8,92 @@ class Keyword < ActiveRecord::Base
   validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
   validates_uniqueness_of :name
 
+  # Author: 
+  #   Nourhan Mohamed
+  # Description:
+  #   retrieved approved synonyms for a keyword through optional filters
+  # Parameters:
+  #   keyword: a string representing the keyword for which the synonyms will
+  #     be retrieved
+  #   country: [optional] filter by country name
+  #   age_from: [optional] filter by age - lower limit
+  #   age_to: [optional] filter by age - upper limit
+  #   gender: [optional] filter by gender
+  #   education: [optional] filter by education level
+  # Success:
+  #   returns a list of synonyms for the passed keyword
+  # Failure:
+  #   returns an empty list if the keyword doesn't exist or if no approved
+  #   synonyms where found for the keyword  
+    def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
+          gender = nil,education = nil)
+      if(!self.approved)
+        return [], {} 
+      end
+      keyword_id = self.id
+      filtered_data = Gamer
+      filtered_data = filtered_data
+        .filter_by_country(country) unless country.blank?
+      filtered_data = filtered_data
+        .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
+      filtered_data = filtered_data
+        .filter_by_gender(gender) unless gender.blank?
+      filtered_data = filtered_data
+        .filter_by_education(education.downcase) unless education.blank?
+      filtered_data = filtered_data.joins(:synonyms)
+      filtered_data = filtered_data
+        .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
+      votes_count = filtered_data.count(:group => "synonyms.id")
+      synonym_list = []
+      filtered_data.each do |gamer|
+        synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
+      end
+      synonym_list.uniq!
+      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
+        .reverse!
+      synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+      synonym_list = synonym_list + synonyms_with_no_votes
+      return synonym_list, votes_count
+    end  
+
   class << self
-  include StringHelper
+	include StringHelper
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to record the aproval of the admin to a certain keyword in the database
+  # Parameters:
+  #  id: the id of the keyword to be approved
+  # Success:
+  #  returns true on saving the approval correctly in the database
+  # Failure:
+  #  returns false if the keyword doesnot exist in the database
+  #  or if the approval failed to be saved in the database 
+    def approve_keyword(keyword_id)
+      if Keyword.exists?(id: keyword_id)
+        keyword = Keyword.find(keyword_id)
+        keyword.approved = true
+        return keyword.save
+      end
+      return false
+    end
+
+    # author:
+    #   Omar Hossam
+    # description:
+    #   feature takes no input and returns a list of all unapproved keywords
+    # success: 
+    #   takes no arguments and returns to the admin a list containing the keywords 
+    #   that are pending for approval in the database
+    # failure:
+    #   returns an empty list if no words are pending for approval
+
+      def listunapprovedkeywords
+
+        return Keyword.where(approved: false).all
+
+      end
+
     # adds a new keyword to the database or returns it if it exists
     # Author:
     #   Mohamed Ashraf
@@ -25,9 +109,7 @@ class Keyword < ActiveRecord::Base
       name.strip!
       keyword = where(name: name).first_or_create
       keyword.approved = approved
-      if is_english_string(name) 
-        name.downcase!
-      end
+      name.downcase! if is_english_string(name)
       if is_english != nil
         keyword.is_english = is_english
       else
@@ -68,7 +150,11 @@ class Keyword < ActiveRecord::Base
     	if (search_word.blank?)
     		return []
     	end
-      search_word.downcase!
+      if(is_english_keyword(search_word))
+        search_word.downcase!
+      end
+      search_word = search_word.strip
+      search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
@@ -82,7 +168,18 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
+
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -111,7 +208,7 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-		# finds a keyword by name from the database
+    # finds a keyword by name from the database
     # @author Mohamed Ashraf
     # @params name [string] the search string
     # ==returns
@@ -123,11 +220,4 @@ class Keyword < ActiveRecord::Base
       return keyword
     end
   end
-
-  # def notify_developer(synonym.id)
-  #   keyword = Keyword.find(self.id)
-  #   developers = keyword.developers
-  #   developers.each do |dev|
-  #   end
-  # end
 end
