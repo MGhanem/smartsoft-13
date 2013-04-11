@@ -420,24 +420,21 @@ end
     current_project = Project.find(params[:id])
   end
 # author:
-#      Khloud Khalid
+#   Khloud Khalid
 # description:
-#     method adds a keyword and a synonym to an existing project and if word already exists in the project updates
-#     its synonym
+#   method adds a keyword and a synonym to an existing project and if word already exists in the project updates
+#   its synonym
 # params:
-#     project_id, word_id, synonym_id
+#   project_id, word_id, synonym_id
 # success:
-#     keyword and synonym are added to project or synonym of word updated 
+#   keyword and synonym are added to project or synonym of word updated 
 # failure:
-#     object not valid (no project or word id), word already exists in project, keyword or synonym does not exist, 
-#     developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
-#     developer, or keyword is not in the project.
+#   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist, 
+#   developer trying to add word is not owner of the project nor is the project shared with him/her, not registered
+#   developer, or keyword is not in the project.
 def add_word
-    # if the word doesn't have synonyms redirect to follow word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
-        # check if project owner or is shared with me too
-        # check for free users, if the words exceeds 20 words
         @word_id = Keyword.find_by_name(params[:keyword]).id
         if Keyword.find_by_id(@word_id) != nil
           @synonym_id = params[:synonym_id]
@@ -476,7 +473,6 @@ def add_word
           flash[:notice] = t(:word_does_not_exist)
           redirect_to project_path(@project_id), :flash => flash
           return
-          # render the project's page and add link to add this word to the database
         end
       else
         flash[:notice] = "You have to register as a developer before trying to add a word to your project."
