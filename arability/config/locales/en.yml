@@ -84,8 +84,6 @@ en:
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
   hide_stats: "Hide Stats"
-  female: "female"
-  male: "male"
   out_of: "from"
   keyword_not_empty: "Search Keyword can not be empty"
   enter_categories: "filter by categories"
