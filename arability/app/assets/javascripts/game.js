@@ -382,7 +382,7 @@ function fadeSomething(x){
 					$('#gameover-popup').fadeTo(1500,0);
 					setTimeout(function(){
 						setWordsArray();
-						getTrophies(level, score);
+						have_to_sign_in();
 						return;
 					}, 3000);
 				}		
@@ -623,8 +623,7 @@ function getNewWords(num){
 	if(wordsArray.length == 0){
 		wordsInDb = false;
 		$('.zone').empty();
-		$('.zone').append('<h2 id ="empty-db-msg"' +
-			'style="font: helvetica; width: 400px; color: white; margin-left: 190px; position: absolute; margin-top: 120px;">' +
+		$('.zone').append('<h2 id ="empty-db-msg">' +
 			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
 			'and we hope that you enjoyed our game</h2>');
 	}
@@ -740,7 +739,7 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			getTrophies(level, score);
+			have_to_sign_in();
 			return true;
 		}, 3000);
 	}

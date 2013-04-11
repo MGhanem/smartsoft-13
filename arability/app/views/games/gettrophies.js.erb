@@ -13,7 +13,12 @@
         button = '<a onclick="getPrizes(<%= params[:level] %>, <%= params[:score] %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى الجوائز </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
+        if(win == true){
+          button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى المرحلة التالية</a>';
+        }
+        else{
+          button = '<a href="/game" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إعادة اللعبة</a>';
+        }
         $("#zone").append($(button));
     <% end %>
 
