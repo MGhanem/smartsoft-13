@@ -1,9 +1,14 @@
+#encoding: UTF-8
 class AdminController < ApplicationController
 
   require 'csv'
 
+  layout 'admin'
+
+  include AdminHelper
+
   before_filter :require_login
-  skip_before_filter :require_login, only: [:login]
+  skip_before_filter :require_login, only: [:login, :logout]
 
   before_filter :check_login, only: [:login]
 
@@ -19,7 +24,7 @@ class AdminController < ApplicationController
   #     none
   def require_login
     unless logged_in?
-      flash[:error] = "You must be logged in"
+      flash[:error] = "يجب تسجيل الدخول"
       redirect_to action: "login"
     end
   end
@@ -40,63 +45,11 @@ class AdminController < ApplicationController
     end
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     checks if the user is logged in
-  # params
-  #     none
-  # success: 
-  #     returns true if the user is logged in as admin
-  # failure: 
-  #     none
-  def logged_in?
-    current_user == "admin"
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     current_user method
-  # params
-  #     none
-  # success: 
-  #     returns the session variable :who_is_this
-  # failure: 
-  #     none
-  def current_user
-    session[:who_is_this]
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     create session method
-  # params
-  #     none
-  # success: 
-  #     sets the session variable :who_is_this to "admin"
-  # failure: 
-  #     none
-  def create_session
-    session[:who_is_this] = "admin"
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     destroy_session method
-  # params
-  #     none
-  # success: 
-  #     unsets the session variable :who_is_this
-  # failure: 
-  #     none
-  def destroy_session
-    session[:who_is_this] = nil
-  end
-
   def index
+    @message = params[:message]
+    @fargs = params[:fargs]
+    @trophies_list = Trophy.all
+    @prizes_list = Prize.all
   end
 
   # author:
@@ -116,7 +69,7 @@ class AdminController < ApplicationController
         create_session
         redirect_to action: "index"
       else
-        flash[:error] = "Invalid username or password"
+        flash[:error] = "اسم المستخدم او كلمة السر غير صحيحة"
         @username = params[:username]
       end
     end
@@ -132,17 +85,139 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def wordadd
+  def addword
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
-      flash[:success] = "Keyword #{@keyword.name} has been created"
+      flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
+      flash[:successtype] = "addword"
+      flash.keep
+      redirect_to action: "index", anchor: "admin-add-word"
     else
       flash[:error] = @keyword.errors.messages
+      flash[:errortype] = "addword"
+      flash.keep
+      redirect_to action: "index", anchor: "admin-add-word", fargs: params
+    end
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a trophy as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the trophy
+  #     level: the level required to earn the trophy
+  #     score: the score required to earn the trophy
+  #     image: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addtrophy
+    params[:name] = params[:name].strip
+    params[:level] = params[:level].strip
+    params[:score] = params[:score].strip
+    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:image])
+    if success
+      flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
+      flash[:successtype] = "addtrophy"
+    else
+      flash[:error] = trophy.errors.messages
+      flash[:errortype] = "addtrophy"
     end
     flash.keep
-    redirect_to action: "index"
+    if success
+      redirect_to action: "index", anchor: "admin-list-trophies"
+    else
+      redirect_to action: "index", anchor: "admin-add-trophy", fargs: {addtrophy: params}
+    end
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a prize as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the prize
+  #     level: the level required to earn the prize
+  #     score: the score required to earn the prize
+  #     image: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addprize
+    params[:name] = params[:name].strip
+    params[:level] = params[:level].strip
+    params[:score] = params[:score].strip
+    success, prize = Prize.add_prize_to_database(params[:name], params[:level], params[:score], params[:image])
+    if success
+      flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
+      flash[:successtype] = "addprize"
+    else
+      flash[:error] = prize.errors.messages
+      flash[:errortype] = "addprize"
+    end
+    flash.keep
+    if success
+      redirect_to action: "index", anchor: "admin-list-prizes"
+    else
+      redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
+    end
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a trophy selected by id
+  # params
+  #     id the id of the trophy
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def deletetrophy
+    params[:id] = params[:id].strip
+    status_trophy = Trophy.find_by_id(params[:id])
+    if status_trophy.present?
+      name = status_trophy.name
+      status_trophy.delete
+      flash[:success] = "تم مسح مدالية #{name} بنجاح"
+      flash[:successtype] = "deletetrophy"
+    else
+      flash[:error] = "Trophy number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "admin-list-trophies"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a prize selected by id
+  # params
+  #     id the id of the prize
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def deleteprize
+    params[:id] = params[:id].strip
+    status_prize = Prize.find_by_id(params[:id])
+    if status_prize.present?
+      name = status_prize.name
+      status_prize.delete
+      flash[:success] = "تم مسح جائزة #{name} بنجاح"
+      flash[:successtype] = "deleteprize"
+    else
+      flash[:error] = "Prize number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "admin-list-prizes"
   end
 
   # author:
@@ -159,56 +234,25 @@ class AdminController < ApplicationController
     destroy_session
     redirect_to action: "login"
   end
-  
-  # author:
-  #   Amr Abdelraouf
-  # description:
-  #   this function loads a view which allows the user to import a csv file and lists the rules for uploading
-  #   in addition when a file is uploaded it gives the user feedback whether the file was successfully
-  #   uploaded or not and gives the reason why not
-  # params:
-  #   GET message is feedback message
-  # success:
-  #   displays upload button, rules and feedback message (if applicable)
-  # failure:
-  #   no failure
-  def import_csv
-    @message = params[:message]
-  end
 
   # author:
   #   Amr Abdelraouf
   # description:
-  #   this function takes a csvfile as a parameter, parses it as an array of arrays
-  #   saves the first word of each arrays as a Keyword and the rest of the array as its
-  #   corresponding synonyms
+  #   method calls parseCSV to return an array of arrays
+  #   if the message is zero (file is valid and ready for insertion)
+  #   uploadCSV is called and the words are inserted
   # params:
-  #   POST csvfile is the csvfile to be parsed
+  #   POST csvfile
   # success:
-  #   file is parsed, words are saved and the return message is '0'
+  #   redirected to import_csv and status message is displayed
   # failure:
-  #   the file is nil and message is '1'
-  #   the file is not UTF-8 encoded and message is '2'
+  #   none
   def upload
-    begin
-      @csvfile = params[:csvfile]
-      if @csvfile != nil
-        @content = File.read(@csvfile.tempfile)
-        arr_of_arrs = CSV.parse(@content)
-        arr_of_arrs.each do |row|
-          @isSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-          if @isSaved
-            for i in 1..row.size
-              Synonym.recordsynonym(row[i],keywrd.id)
-            end
-          end
-      end
-        redirect_to action: "import_csv", message: "0"
-      else 
-        redirect_to action: "import_csv", message: "1"
-      end
-    rescue ArgumentError
-        redirect_to action: "import_csv", message: "2"
+    array_of_arrays, message = parseCSV(params[:csvfile])
+    if message == 0
+      uploadCSV(array_of_arrays)
     end
+    redirect_to action: "index", anchor: "admin-import-csv-file", message: message
   end
+
 end

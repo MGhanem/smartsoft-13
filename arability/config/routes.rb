@@ -10,12 +10,10 @@ Arability::Application.routes.draw do
     get "admin/login"
 
     get "admin/logout"
-
-    post "admin/wordadd"
+  
+    post "admin/addword"
 
     post "admin/login"
-
-		get "admin/import_csv"
 
     post "admin/upload"
 
