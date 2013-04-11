@@ -106,7 +106,6 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
     end
-
   end
 
     get "games/getprizes"
