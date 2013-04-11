@@ -153,7 +153,7 @@ class Keyword < ActiveRecord::Base
     	if (search_word.blank?)
     		return []
     	end
-      if(is_english_keyword(search_word))
+      if(is_english_string(search_word))
         search_word.downcase!
       end
       search_word = search_word.strip
