@@ -1,7 +1,6 @@
- <link rel="stylesheet" type="text/css" href="projects.css.scss" />
- <div class = "container well" >
-    
-    <%= form_for(@project) do |f| %>
+<div class = "container well" >
+    <p class="req"><%= t(:required) %></p>
+    <%= form_for @project, :html => {:class => "form-horizontal"} do |f| %>
     <% if @project.errors.any? %>
     <div id="error_explanation" class="req">
         <h2 class="req"><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
@@ -12,48 +11,56 @@
         </ul>
     </div>
     <% end %>
-    <table width="275" border="0">
-        <tr>
-            <td>
-    <div class="field">
-        <!-- <span class="req">* </span> -->
-        <%= f.label t(:name)%>
-        <%= f.text_field :name, :placeholder => t(:name) %>
-    </div>
-    <div class="field">
-        <span class="req">* </span>
-        <%= f.label t(:categories)%>
-        <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %> 
-    </div><br>
-    <div class="radio">
-        <%= t(:formal)%>
-        <%= f.radio_button :formal, 'Formal'%> 
-        <br>
-        <%= t(:slang)%>
-        <%= f.radio_button :formal, 'Slang' %>
-        </br>
-    </br>
-    </div>
-    <div class="field">
-        <span class="req">* </span>
-        <%= t(:age)%>
-        <br>
-        <%= t(:from)%>
-        <%= f.text_field :minAge, :class => "input-small" %>
-        <%= t(:to)%>
-        <%= f.text_field :maxAge, :class => "input-small" %>
+    <div class="control-group">
+        <%= f.label :name, :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :name, :placeholder => t(:name) %>
+          <span class="req">* </span>
+      </div>
   </div>
-  <br>
-  <div>
-    <%= t(:desc) %>
-    <%= f.text_area :description, :size => "10x10" %>
+  <div class="control-group">
+    <%= f.label :categories, :class => "control-label" %>
+    <div class="controls">
+      <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %>
+      <span class="req">* </span>
+  </div>
 </div>
-<div>
-    <%= f.submit t(:save_project), :class => "btn btn-success" %>
+<div class="control-group">
+    <label class="control-label">
+    <span class="help-block"><%= t(:formality) %></span>
+    </label>
+    <div class="controls">
+        <label class="radio">
+            <%= f.radio_button :formal, 'Formal' %>
+          <%= t(:formal) %>
+        </label>
+        <label class="radio">
+          <%= f.radio_button :formal, 'Slang' %>
+          <%= t(:slang) %>
+        </label>
+    </div>
 </div>
+<div class="control-group">
+    <label class="control-label">
+    <span class="help-block"><%= t(:age) %></span>
+    </label>
+    <div class="controls d5pxup">
+        <%= f.text_field :minAge, :class => "input-small", :placeholder =>  t(:from) %>
+        <%= f.text_field :maxAge, :class => "input-small", :placeholder =>  t(:to) %>
+        <span class="req">* </span>
+    </div>
 </div>
+<div class="control-group">
+    <%= f.label :description, :class => "control-label" %>
+    <div class="controls">
+        <%= f.text_area :description, :size => "10x10" %>
+    </div>
+</div>
+<div class="control-group">
+    <div class="controls">
+        <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+        <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+    </div>
 </div>
 <% end %>
-</td>
-</tr>
-</table>
+</div>

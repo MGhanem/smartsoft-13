@@ -33,15 +33,17 @@ ar:
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"
+  required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
+  formality: "النوع"
   formal: "رسمي"
   slang: "غير رسمي"
   age: "السن"
   from: "من"
   to: "الى"
-  desc: "عن"
+  desc: "الوصف"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
   back: "عودة"
@@ -107,6 +109,7 @@ ar:
   projects_index_edit: " تعديل"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
   error: "اخطاء"
+  cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
   success: "اسشرلايبتاش"
 
@@ -132,6 +135,8 @@ ar:
         name: 'الاسم'
         minAge: 'السن'
         maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
         
     errors:
       models:
@@ -145,7 +150,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"

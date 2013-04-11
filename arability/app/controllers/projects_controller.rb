@@ -129,7 +129,7 @@ class ProjectsController < BackendController
       if @project.update_attributes(params.except(:categories,:utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
       redirect_to :action => "index"
-      flash[:notice] = "Project has been successfully updated."
+      flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
     else
       render :action => 'edit'
     end
