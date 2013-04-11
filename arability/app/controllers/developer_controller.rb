@@ -48,7 +48,7 @@ def remove_developer_from_project
     project = Project.find(params[:project_id])
     project.developers_shared.delete(dev)
     project.save
-    flash[:notice] = "Developer Unshared!"
+    flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
     redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
 
@@ -56,24 +56,25 @@ def remove_developer_from_project
     @project = Project.find(params[:id])
     gamer = Gamer.find_by_email(params[:email])
     if(!gamer.present?)
-      flash[:notice] = "Email doesn't exist"
+      flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_doesnt_exist')
     else
       developer = Developer.find_by_gamer_id(gamer.id)
       if developer == nil
-        flash[:notice] = "Email address is for gamer, not a developer"
+        flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_for_a_gamer_not_a_developer')
       else
         developer2 = Developer.find_by_gamer_id(current_gamer.id)
         if developer == developer2
-          flash[:notice] = "You cant share the project with yourself"
+          
+        flash[:notice] = I18n.t('controller.my_subscription.flash_messages.you_cant_share_the_project_with_yourself')
           redirect_to "/developers/projects/#{@project.id}/share"
           return
         end
         if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
-          flash[:notice] = "Already shared"
+          flash[:notice] = I18n.t('controller.my_subscription.flash_messages.already_shared')
         else
           developer.projects_shared << @project
           if(developer.save)
-            flash[:notice] = "Project has been shared successfully with #{developer.name}"
+            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.project_has_been_successfully_shared')
             redirect_to :action => "share",:controller => "projects", :id => params[:id]
             return
           else
