@@ -32,6 +32,18 @@ class GamesController < ApplicationController
   end
   
 
+  # Author:
+  # 	Kareem Ali
+  # Description:
+  # 	displayes the vote form for the gamer
+  # params:
+  # 	word: takes a keyword name for which the synonym choices whill be displayed
+  # success:
+  # 	retrieve the approved synonym list limited to 4 only choosen randomly 
+  # 	if the approved synonyms for the keyword is more than 4
+  # failure:
+  #  	--------- 
   def record_vote
+  	@synonym_id=params[:synonym_id]
   end
 end
