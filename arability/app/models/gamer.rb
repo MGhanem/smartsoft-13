@@ -15,28 +15,19 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth, :gender
 
-  validates :gender , :presence => true
+  validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
                   
   validates :username, :presence => true, :length => { :minimum => 3 }
   
-  #author: kareem ali
-  def self.check
-    if I18n.locale == :ar
-      "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
-    end
-    if I18n.locale == :en
-      "username must be made up of english letters or digits"
-    end
-  end
 
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
-    :message => check }
+     }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
 
-  validates :education_level, :format => { :with => /\A^(School|University|graduate|مدرسة|جامعة|خريج)\Z/i }
+  validates :education_level, :format => { :with => /\A^(School|University|graduate)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
