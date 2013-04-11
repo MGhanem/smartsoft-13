@@ -1,6 +1,45 @@
 module SearchHelper
 
 
+
+  
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #     function creates the highcharts pie chart
+  # params:
+  #    keyword_id: id of the keyword needed
+  # success:
+  #     creates the pie chart in view
+  # failure:
+  #     fails to show a chart if synonyms have no votes
+  def chart_keyword_synonym(keyword_id)
+    stats = Keyword.get_keyword_synonym_visual(keyword_id)
+    name1 = Keyword.find(keyword_id).name
+    chart = LazyHighCharts::HighChart.new('pie') do |f|
+      f.chart({:defaultSeriesType=>"pie" , :margin=> [50, 200, 60, 170]} )
+      series = {
+               :type=> 'pie',
+               :name=> 'Browser share',
+               :data=>  stats
+      }
+      f.series(series)
+      f.options[:title][:text] = "Synonyms of #{name1}"
+      f.legend(:layout=> 'vertical',:style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '100px'}) 
+      f.plot_options(:pie=>{
+        :allowPointSelect=>true, 
+        :cursor=>"pointer" , 
+        :dataLabels=>{
+          :enabled=>true,
+          :color=>"black",
+          :style=>{
+            :font=>"13px Trebuchet MS, Verdana, sans-serif"
+          }
+        }
+      })
+    end
+  end
+
   @@GENDER = 0
   @@COUNTRY = 1
   @@AGE = 2

@@ -1,18 +1,25 @@
-<legend>Words followed by you:</legend>
-<table class="table table-striped">
+<% if !@keywords.empty? %>
+<div style="width:800px; margin:0 auto;">
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Words</th>
-      <th></th>
+      <th><%= t(:words)%></th>
     </tr>
   </thead>
   <tbody>
   <% @keywords.each do |keyword| %>
     <tr>
         <td><%= keyword.name %></td>
-        <td><%= button_to "Unfollow", unfollow_word_path(keyword.id), :class => "btn btn-info" %></td>
+        <% if I18n.locale==:en %>
+        <td><span class="pull-right"><%= link_to t(:unfollow), unfollow_word_path(keyword.id), :class => "btn btn-primary" %></span></td>
+        <% else %>
+        <td><span class="pull-left"><%= link_to t(:unfollow), unfollow_word_path(keyword.id), :class => "btn btn-primary" %></span></td>
+        <% end %>
     </tr>
   <% end %> 
   </tbody>
 </table>
-              
+</div>
+<% else %>
+<h4><%= t(:no_followed_words) %></h4>
+<% end %> 
