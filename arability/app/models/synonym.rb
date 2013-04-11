@@ -76,7 +76,11 @@ class Synonym < ActiveRecord::Base
         voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
         groups = voters.count(group: :country)
         sum = groups.sum{|v| v.last}
-        return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        if sum == 0
+          return groups.map {|key, value| [key,0]}
+        else  
+          return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        end
   end 
 
   #Author: Nourhan Zakaria
@@ -91,7 +95,12 @@ class Synonym < ActiveRecord::Base
       voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
       groups = voters.count(group: :gender)
       sum = groups.sum{|v| v.last}
-      return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+      if sum == 0
+          return groups.map {|key, value| [key,0]}
+      else  
+          return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+      end
+
   end 
 
   #Author: Nourhan Zakaria
@@ -119,7 +128,11 @@ class Synonym < ActiveRecord::Base
 
          sum = one + two + three
          list = [["10-25", one], ["26-45", two], ["46+", three]]
-         return list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        if sum == 0
+          return list.map {|key, value| [key,0]}
+        else  
+          return list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        end
   end 
 
   #Author: Nourhan Zakaria
@@ -134,7 +147,11 @@ class Synonym < ActiveRecord::Base
         voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
         groups = voters.count(group: :education_level)
         sum = groups.sum{|v| v.last}
-        return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        if sum == 0
+          return groups.map {|key, value| [key,0]}
+        else  
+          return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        end
   end 
 end
 

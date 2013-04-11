@@ -29,6 +29,7 @@ module SearchHelper
       f.plot_options(:pie=>{
         :allowPointSelect=>true, 
         :cursor=>"pointer" , 
+        :size =>'90%',
         :dataLabels=>{
           :enabled=>true,
           :color=>"black",
