@@ -148,12 +148,9 @@ Arability::Application.routes.draw do
 
   # The priority is based upon order of creation:s
     match 'search' => 'search#search'
-
-    match 'tweet/tweet_invitation' => 'tweet#tweet_invitation'
  
     match '/game' => 'games#game'
     get "games/getprizes"
-
     post "games/record_vote"
 
     post "games/vote_errors"
