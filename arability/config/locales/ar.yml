@@ -72,6 +72,7 @@ ar:
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
+  register_developer: "من فضلك سجل كمطور أولا"
   errors:
     messages:
       not_saved:
@@ -102,8 +103,10 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  hide_stats: "اخفاء الإحصائيات"
   female: "انثي"
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
   enter_categories: "التصنيفات التي تبحث فيها"
+  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
