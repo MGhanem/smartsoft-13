@@ -1,6 +1,9 @@
 <script type="text/javascript" charset="utf-8">
   
   var words=["car","sar","sad","sfd"];
+  
+  var cache = "";
+  var nav_locked = false;
 
   function get_words(){
     return words;
@@ -41,22 +44,53 @@
     request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
+
   function getPrizes(level, score) {
     clear();
     request_string = "/games/getprizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
+
   function getScore() {
     return 123456;
   }
 
   function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
-    $.get("/games/showprizes"); 
+    $.get("/games/showprizes");
   }
+
   function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
     $.get("/games/showtrophies");
+  }
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    nav_licked = false;
   }
 
 </script>

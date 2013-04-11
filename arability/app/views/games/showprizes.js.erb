@@ -4,7 +4,7 @@
 <% else %>
 
   var award_zone = '<div class="award-zone" id="award-list"></div>';
-  var won_prizes = '<h1 class="award-type"><%= t(:earned_prizes) %></h1>';
+  var won_prizes = '<h1 style="color:white;" class="award-type"><%= t(:earned_prizes) %> <a class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %></a></h1>';
   var not_won_prizes = '<h1 class="award-type"><%= t(:available_prizes) %></h1>';
   $("#zone").append($(award_zone));
 
@@ -15,7 +15,7 @@
       $("#award-list").append($(prize_error));
   <% else %>
     <% @won_prizes.each do |wp| %>
-    prize = '<div class="award-desc-unlocked">' + '<img width="60" src="<%= wp.image %>">' + '<%= wp.name %> <span style="margin-top:30px;" class="pull-left"><%= t(:level) %> <%= wp.level %> <%= t(:score) %> <%= wp.score %></span></div>';
+      prize = '<div class="award-desc-unlocked">' + '<img width="60" src="/assets/rails.png">' + '<%= wp.name %> <span style="margin-top:30px;" class="pull-left"><%= t(:level) %> <%= wp.level %> <%= t(:score) %> <%= wp.score %></span></div>';
       $("#award-list").append($(prize));
     <% end %>
   <% end %>
@@ -28,7 +28,7 @@
       $("#award-list").append($(prize_error));
   <% else %>
       <% @not_won_prizes.each do |nwp| %>
-          prize = '<div class="award-desc-locked">' + '<img width="60" src="<%= nwp.image %>"' + '<%= nwp.name %> <span style="margin-top:30px;" class="pull-left"><%= t(:level) %> <%= nwp.level %> <%= t(:score) %> <%= nwp.score %></span><</div>';
+          prize = '<div class="award-desc-locked">' + '<img width="60" src="/assets/rails.png"' + '<%= nwp.name %> <span style="margin-top:30px;" class="pull-left"><%= t(:level) %> <%= nwp.level %> <%= t(:score) %> <%= nwp.score %></span><</div>';
           $("#award-list").append($(prize));
       <% end %>
   <% end %>
