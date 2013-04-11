@@ -13,7 +13,12 @@ class Gamer < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
+<<<<<<< HEAD
                   :username, :country, :education_level, :date_of_birth
+=======
+                  :username, :country, :education_level, :date_of_birth, :gender,
+                  :highest_score
+>>>>>>> c1s12_adamggg_get_trophies
 
   #author: kareem ali
   def self.check
