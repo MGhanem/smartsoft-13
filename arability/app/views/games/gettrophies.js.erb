@@ -12,7 +12,7 @@
         button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
+        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
         $("#zone").append($(button));
     <% end %>
 
@@ -28,6 +28,7 @@
         $("#zone").append($(success));
         for(var i = 0; i < trophies.length; i++) {
           $("#zone").append($(trophies[i]));
+
         }
   <% end %>
 <% end %>
