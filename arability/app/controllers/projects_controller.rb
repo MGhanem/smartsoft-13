@@ -5,14 +5,12 @@ class ProjectsController < BackendController
   #    Mohamed Tamer
   # description:
   #    function shows all the projects that a certain developer owns and the projects shared with him
-  #
   # Params:
   #    current_gamer: the current currently logged in, will be nil if there is no logged in gamer
-  #
-  # returns:
-  #    Success: array of projects that the developer own and the projects shared with him
-  #
-  #    Failure: redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
+  # Success:
+  #    returns array of projects that the developer own and the projects shared with him
+  # Failure:
+  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
