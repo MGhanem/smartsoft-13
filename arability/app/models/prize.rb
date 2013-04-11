@@ -11,8 +11,8 @@ class Prize < ActiveRecord::Base
                       :message => "اسم الجائزة يجب ان يكون بالعربية"
 
   validates_length_of :name, 
-                      :maximum => 15,
-                      :message => "اسم الجائزة لا يمكن ان يزيد عن 10 حروف"
+                      :maximum => 20,
+                      :message => "اسم الجائزة لا يمكن ان يزيد عن 20 حروف"
 
   validates_presence_of :name, 
                         message: "اسم الجائزة لا يمكن ان يكون فارغ"

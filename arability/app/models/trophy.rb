@@ -11,8 +11,8 @@ class Trophy < ActiveRecord::Base
                       :message => "اسم الانجاز يجب ان يكون بالعربية"
 
   validates_length_of :name, 
-                      :maximum => 15,
-                      :message => "اسم الانجاز لا يمكن ان يزيد عن 10 حروف"
+                      :maximum => 20,
+                      :message => "اسم الانجاز لا يمكن ان يزيد عن 20 حروف"
 
   validates_presence_of :name, 
                         message: "اسم الانجاز لا يمكن ان يكون فارغ"
