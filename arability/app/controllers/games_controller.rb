@@ -24,9 +24,10 @@ class GamesController < ApplicationController
   def post_score_facebook
     #token = Gamer.fetToken(current_gamer.id)
     #@graph = Koala::Facebook::API.new(token)
-    @graph = Koala::Facebook::API.new("BAACEdEose0cBAL9WZBwBZBiZAFxMXl6OSZA1RlWIpcy2FwUiZAkuUvZBUXyHZBS1TkeXBTIwVbDXiFzNiZCoiaxqGt3KD6rs6V3cDglZAxmFXujYyY9YOIwRI")
-    @graph.put_wall_post("لقد حصلت على ١٢٣ نقطة في عربيلتي")
-    render 'pages/home'
+    score = params[:score]
+    @graph = Koala::Facebook::API.new("BAACEdEose0cBAHD1vyIaZCg0aY2iTJuZAZBuGQA0hZAYKFPJlvsywlD5nMlC6h2hOFjNrO7pafhnJPGV90IVAZAQxpV9spHF76AkintlgON0Ty6n39fUt")
+    @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
+    render 'games/share-facebook'
   end
 
   # Description:
