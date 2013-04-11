@@ -248,6 +248,19 @@ class Keyword < ActiveRecord::Base
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
   end
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #    functioni is used to notify developers of new synonyms or 
+  #     updated keywords
+  # params:
+  #     synonym_id: the synonym that has been changed or added.
+  # success:
+  #     sends an email to all developers following the word that has 
+  #       the synonym
+  # failure:
+  #     --
   def notify_developer(synonym_id)
       keyword = Keyword.find(self.id)
       synonym = Synonym.find(synonym_id)
