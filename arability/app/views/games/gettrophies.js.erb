@@ -9,10 +9,10 @@
       $("#zone").append($(error));
   <% else %>
     <% if @won_prizes %>
-        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى الجوائز </a>';
+        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
+        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
         $("#zone").append($(button));
     <% end %>
 
