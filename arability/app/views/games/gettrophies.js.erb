@@ -1,36 +1,34 @@
 <% if !gamer_signed_in? %>
-    error =  '<h1 class="award-title">سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات</h1>';
+    error =  '<h1 class="award-title"><%= t(:sign_in_first) %></h1>';
     $("#zone").append($(error));
 <% else %>
-  <% if params[:level] == nil || params[:score] == nil %>
+  <% if @level == 0 || @score == 0 %>
       error = '<div class="alert" style="text-align:right; margin:10px;">' +
               '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-              '<strong>تحذير!</strong> حاولت طلب بيانات غير صالحة.' + '</div>';
+              '<strong><%= t(:warning) %></strong> <%= t(:nil_trophies) %>' + '</div>';
       $("#zone").append($(error));
   <% else %>
-    <% won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, params[:score].to_i, params[:level].to_i) %>
-    <% if current_gamer.won_prizes?(params[:score].to_i, params[:level].to_i) %>
-        button = '<a onclick="getPrizes(<%= params[:level] %>, <%= params[:score] %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى الجوائز </a>';
+    <% if @won_prizes %>
+        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
+        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
         $("#zone").append($(button));
     <% end %>
 
-    score = '<h1 class="award-title">لقد سجلت النقاط التالية  <span id="score"><%= params[:score] %></span> </h1>';
-    $("#zone").append($(score));
-    <% if won_trophies.length != 0 %>
-        <% won_trophies.map { |nt| current_gamer.trophies << nt } %>
-        success = '<h1 class="award-title">مبروك! لقد فزت الجوائز التالية!</h1>';
+    game_score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
+    $("#zone").append($(game_score));
+    <% if @won_trophies.length != 0 %>
+        success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';
         trophies = [];
-        <% won_trophies.each do |t| %>
+        <% @won_trophies.each do |t| %>
           trophies.push('<div class="award">' + '<img width="60" src="<%= t.image %>">' + '<%= t.name %>' + '</div>');
         <% end %>
-
     <% end %>
         $("#zone").append($(success));
         for(var i = 0; i < trophies.length; i++) {
           $("#zone").append($(trophies[i]));
+
         }
   <% end %>
 <% end %>
