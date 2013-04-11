@@ -16,7 +16,7 @@
         $("#zone").append($(button));
     <% end %>
 
-    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="<%= share_on_facebook_path %>"><img src="/assets/fb.png"></a></h1> ';
     $("#zone").append($(score));
     <% if @won_trophies.length != 0 %>
         success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';

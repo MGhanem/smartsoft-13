@@ -57,7 +57,7 @@ Arability::Application.routes.draw do
 
 
 
-    match "/post_score"=>'pages#post', :as => "post_facebook"
+    match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
 
     # required for routing by the devise module(gem)
     devise_for :gamers do

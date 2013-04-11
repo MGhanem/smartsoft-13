@@ -15,9 +15,10 @@ class PagesController < ApplicationController
   #   facebook and confirmed by API.
   # Failure: 
   #   Facebook failure reported by API.
-    def post
-      token = Gamer.fetToken(current_gamer.id)
-      @graph = Koala::Facebook::API.new(token)
+    def post_score_facebook
+      #token = Gamer.fetToken(current_gamer.id)
+      #@graph = Koala::Facebook::API.new(token)
+      @graph = Koala::Facebook::API.new("BAACEdEose0cBAIWVHefGfyOPDfPA6rNSqZCi0hBoDXlhFCuAkkUIpFB7K23SBARYjSIzdPdDtEqQQib0hwezzqBBXKLMOdDJaCA4WphX5jMQ8aeCa")
       @graph.put_wall_post("لقد حصلت على ١٢٣ نقطة في عربيلتي")
       render 'pages/home'
     end
