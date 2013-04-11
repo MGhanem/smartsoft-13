@@ -35,24 +35,29 @@ class MySubscription < ActiveRecord::Base
       def get_permissions(dev_id,type)
         errors = []
         errors.empty?
+        
         my_subscription = 
          MySubscription.joins(:developer).where(:developer_id => dev_id).first
         if type = @@search
           if my_subscription.word_search == 0 
-            errors << "You have exceeded your search limit"
+            return false
+          else
+            return true
           end
         elsif  type = @@add
           if my_subscription.word_add == 0
-            errors << "You have exceeded your add limit"
+            return false
+          else
+            return true
           end 
         else type = @@follow
-             #@followed_words=Developer.keywords.count
-
-          if my_subscription.word_follow == 0
-            errors << "You have exceeded your follow limit"
+          if @count < my_subscription.word_follow 
+            return false
+          else
+            return true
           end
         end
-        return errors
+        
       end
   end 
 
@@ -85,11 +90,25 @@ class MySubscription < ActiveRecord::Base
         return false
       end 
     end
-    def decrement
+    def decrement_word_add
+    developer = Developer.find(self.developer_id)
+    subscription = @developer.my_subscription
+     if subscription.word_add !=0 
+       subscription.word_add-=1
+       subscription.save
     end
+    end
+    def decrement_word_search
+    developer = Developer.find(self.developer_id) 
+    subscription = @developer.my_subscription
+     if subscription.word_add !=0 
+       subscription.word_search-=1
+       subscription.save
+     end
+ end
+ def count_follow
+  @developer = Developer.find(self.developer_id)
+  @count_follow=@developer.Keywords.count
+
+ end
 end
-#@follow=developer.keywords --gets the currently followed words 
-#@follow.count -- gets the number of words followed 
-#then compare it to limit 
-
-
