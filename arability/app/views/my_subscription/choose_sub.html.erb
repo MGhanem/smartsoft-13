@@ -5,6 +5,7 @@
 <% end %>
 
 <%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "pick" }) do |f| %>
+<div style = "width:1000px; margin: 0 auto;">
 <table>
 		<tr>
 <% @all_subscription_models.each do |sm| %>
@@ -15,19 +16,33 @@
 		selected_sub_id = 1
 	end%>
 	
-			<td width="400px">
-	<div class="well"
+			<td width="300px">
+	<div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
 	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br /><h5>The limit for the word search is:</h5>
-		<%=sm.limit_search%></p>
+		<%=sm.limit_search%><br />
+		<h5>The limit for the word follow is:</h5>
+		<%=sm.limit_follow%><br/>
+		<h5>The limit for the word add is:</h5>
+		<%=sm.limit%><br />
+		<h5>The limit for the projects:</h5>
+
+
+
+
+	</p>
     </div>
             </td>
         
 <% end %>
 <tr>
     </table>
+
+<center>
 <% if I18n.locale==:en %>
-<%= submit_tag "select subscriptions"%>
+<%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px; 	" %>
 <% else I18n.locale==:ar %>
 <%= submit_tag "إختر"%>
+</div>
+</center>
 <% end %>
 <% end %>

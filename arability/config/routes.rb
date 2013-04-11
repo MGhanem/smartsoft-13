@@ -71,8 +71,7 @@ Arability::Application.routes.draw do
   match '/developers/create' => "developer#create"
   match '/my_subscriptions/new' => "my_subscription#new"
   match '/my_subscriptions/create' => "my_subscription#create"
-  match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
-  match '/my_subscriptions/pick' => "my_subscription#pick"
+  
 
 
     scope "developers/" do 
@@ -82,6 +81,9 @@ Arability::Application.routes.draw do
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
 			resources :projects
 
 

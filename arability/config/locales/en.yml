@@ -26,6 +26,7 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  select subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
   my_projects: "My Projects"
