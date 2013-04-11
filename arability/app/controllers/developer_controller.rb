@@ -68,9 +68,12 @@ def remove_developer_from_project
           
           flash[:notice] = "Project has been shared successfully with #{developer.name}"
           redirect_to :action => "share",:controller => "projects", :id => params[:id]
+          return
         else
           flash[:notice] = "Failed to share project with developer"
+
         end
+
       end
 # =======
 #     else
@@ -81,8 +84,10 @@ def remove_developer_from_project
 #     redirect_to "/developers/projects"
 #   end
 # end
-end 
 end
+redirect_to "/developers/projects/#{@project.id}/share" 
+end
+
 end
 
 
