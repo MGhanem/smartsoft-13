@@ -539,8 +539,8 @@ def add_word
           # check of project is shared with me too   
         @exported_data = PreferedSynonym.where(project_id: @project_id).all
         csv_string = CSV.generate do |csv|
-          csv << ["Keyword", "Synonym"]
-          if @exported_data != nil
+          # csv << ["Keyword", "Synonym"]
+          if @exported_data != []
             @exported_data.each do |word|
               @keyword = Keyword.find_by_id(word.keyword_id).name
               @synonym = Synonym.find_by_id(word.synonym_id).name
