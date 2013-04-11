@@ -1,5 +1,6 @@
 class SearchController < BackendController
   before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
 
   #Description:
   #   search for keywords (in a particular category)
