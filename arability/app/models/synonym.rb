@@ -60,6 +60,7 @@ class Synonym < ActiveRecord::Base
           synonym.approved = true
           return synonym.save
         end
+        return false
       end
 
     # Author: 

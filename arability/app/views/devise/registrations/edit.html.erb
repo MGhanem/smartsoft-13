@@ -5,6 +5,13 @@
 <em><h3 class="text-info">تغيير البيانات</h3></em>
 <% end %>
 
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:my_info)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:social_media)%></a></li>
+  </ul>
+  <div class="tab-content" style="width:1200px;">
+    <div class="tab-pane active" id="tab1">
 <div class="well">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
   <% if resource.errors.any? %>
@@ -44,12 +51,6 @@
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
-
-  <div class="Twitter">
-    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
-    <%= link_to ">> Connect to your Twitter account", "/authentications/twitter" %>
-  </div>
-  <br>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
 
@@ -120,13 +121,39 @@
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
 
-  <div class="Twitter">
-    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
-    <%= link_to ">> تواصل مع تويتر الخاص بك", "/authentications/twitter" %>
-  </div>
-  <br>
-
   <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
 <% end %>
+</div>
 <% end %>
+    </div>
+
+    <div class="tab-pane" id="tab2">
+      <div class="well" style="width:1100px; height:480px">
+
+        <div class="Twitter" align="center">
+          <% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
+          <% if I18n.locale==:en %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+            already connected to Twitter!</h5>
+          <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
+          <% else I18n.locale==:ar %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+          التواصل بالفعل موجود!</h5>
+          <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
+          <% end %>
+          <% else %>
+          <% if I18n.locale==:en %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+          <%= link_to ">> Connect to your Twitter account", "/auth/twitter" %>          
+          <% else I18n.locale==:ar %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+          <%= link_to ">> تواصل مع تويتر الخاص بك", "/auth/twitter" %>
+          <% end %>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
