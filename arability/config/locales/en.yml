@@ -72,7 +72,6 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
-
   follow_word_link: "If you don't like these synonyms or want updates to this word, you can always"
   follow_word_end_of_search: "follow the word!"
   follow_keyword_alert_fail: "This word is already followed:"
@@ -143,3 +142,5 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
+  register_developer: "Please register as a developer first"
+  developer_cant_see_project: "You are not allowed to view this project"

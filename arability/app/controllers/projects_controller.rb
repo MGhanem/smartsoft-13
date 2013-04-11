@@ -1,6 +1,8 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
-
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
+  before_filter :developer_can_see_this_project?, :only => [:show, :add_from_csv_keywords, :choose_keywords, :import_csv]
   
   #   function shows all the projects that a certain developer owns and the projects shared with him
   #
