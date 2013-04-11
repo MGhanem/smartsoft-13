@@ -126,4 +126,5 @@ class GamesController < ApplicationController
       format.js
     end
   end
+  
 end
