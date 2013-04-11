@@ -110,13 +110,19 @@
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
             <div><%= f.label t(:country), :class => "control-label" %>
-                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
-                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
+                    ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
+                    ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
+                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['اخري','others']]), {},
                 {:style => "margin-left: 10px;" }) %>
-                 </div></br>
+            </div></br>
+            <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']]),{}, :style => "margin-left: 10px;" ) %></div></br>
 
   <div><%= f.label t(:education_level), :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>

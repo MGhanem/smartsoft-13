@@ -24,12 +24,12 @@
 
   function check_empty_words(){
     if(words.length == 0){
-    //$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
-      if(win == true){
-        $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
+        if(win == true){
+          alert('yo win is true');
+         getTrophies(level, score);
       }
       else{
-        $('.zone').append('<div><a class="btn btn-success" href="/game">Restart Game</a></div>');
+        getScoreOnly(score);
       }
       return true;
     }else{
