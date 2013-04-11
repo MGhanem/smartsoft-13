@@ -5,6 +5,8 @@
 <% end %>
 
 <%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "pick" }) do |f| %>
+<table>
+		<tr>
 <% @all_subscription_models.each do |sm| %>
 	<%#= radio_button_tag "subs", sm.id, %>
 	<%if(@developer.my_subscription)
@@ -13,8 +15,16 @@
 		selected_sub_id = 1
 	end%>
 	
-	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %></p>
+			<td width="400px">
+	<div class="well"
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br /><h5>The limit for the word search is:</h5>
+		<%=sm.limit_search%></p>
+    </div>
+            </td>
+        
 <% end %>
+<tr>
+    </table>
 <% if I18n.locale==:en %>
 <%= submit_tag "select subscriptions"%>
 <% else I18n.locale==:ar %>
