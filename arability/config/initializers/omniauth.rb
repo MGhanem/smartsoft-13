@@ -6,7 +6,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   	OmniAuth::FailureEndpoint.new(env).redirect_to_failure
   }
 
-  OmniAuth.config.logger = Rails.logger
-  OmniAuth.logger.progname = "omniauth"
 end
+  OmniAuth.config.logger = Rails.logger
   #OmniAuth.config.logger = Logger.new(STDOUT)
+  #OmniAuth.logger.progname = "omniauth"

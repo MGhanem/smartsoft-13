@@ -134,7 +134,6 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
-<<<<<<< HEAD
   match 'search' => 'search#search'
 
   match '/projects/add_word' => "projects#add_word"
