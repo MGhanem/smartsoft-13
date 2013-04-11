@@ -35,7 +35,7 @@ class DeveloperController < ApplicationController
       @developer = Developer.new(params[:developer])
       @developer.gamer_id = current_gamer.id
       if @developer.save
-        render 'my_subscription/new'
+        redirect_to action: "choose_sub", controller: "my_subscription"
       else
         flash[:notice] = t(:failed_developer_registration)
         render :action => 'new'
