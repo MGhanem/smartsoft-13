@@ -5,6 +5,7 @@
   </a>
 </legend>
 <h6 style="color:red;"><%=t(:choose_keyword_remaining)%> <%= @words_remaining %> <%=t(:choose_keywords_remaining2)%> </h6>
+<h6><%= t(:description_choose_keywords) %></h6>
 <%= form_tag add_from_csv_keywords_project_path, :method => :put, :id => 'form_to_select_words' do %>
   <table class="table table-bordered" id="words_synonyms_table">
   <tr>

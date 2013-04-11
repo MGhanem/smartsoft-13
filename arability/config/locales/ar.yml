@@ -87,6 +87,8 @@ ar:
   import_csv_list1: "لا يجب ان تحتوى الكلمات على ارقام"
   import_csv_list2: "المعانى غير العربية لن يتم قبولها"
   import_csv_list3: "يجب ان يكون الملف UTF-8 و بصيغة CSV"
+  import_csv_list4: "بإمكانك ادخل أكثر من مرادف لكلمة لكن أول واحد سيتم استخدامه في مشروعك"
+  import_csv_list5: "بإمكانك تغيير المرادف لاحقا"
   java_script_disabled: "كن أكثر ذكاء من ذلك"
   upload_file_error1: "انت لم تقم بإختيار ملف"
   upload_file_error2: "هذا الملف ليس بتقنية UTF-8"
@@ -104,6 +106,7 @@ ar:
   projects_index_description: "وصف: "
   projects_index_edit: " تعديل"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
+  description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
 
   errors:
     messages:
