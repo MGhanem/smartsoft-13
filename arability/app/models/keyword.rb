@@ -33,16 +33,16 @@ class Keyword < ActiveRecord::Base
     end
 
   # author:
-  #  Omar Hossam
+  #   Omar Hossam
   # Description:
-  #  feature takes no input and returns a list of all unapproved keywords.
+  #   feature takes no input and returns a list of all unapproved keywords.
   # Parameters:
-  #  None.
+  #   None.
   # Success: 
-  #  takes no arguments and returns to the admin a list containing the keywords.
-  #  that are pending for approval in the database.
+  #   takes no arguments and returns to the admin a list containing the keywords.
+  #   that are pending for approval in the database.
   # Failure:
-  #  returns an empty list if no words are pending for approval.
+  #   returns an empty list if no words are pending for approval.
   def list_unapproved_keywords
     return Keyword.where(approved: false).all
   end
