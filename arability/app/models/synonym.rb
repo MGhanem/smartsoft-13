@@ -38,24 +38,24 @@ class Synonym < ActiveRecord::Base
     end
 
   # Author:
-  #  Omar Hossam
+  #   Omar Hossam
   # Description:
-  #  This is the modified function of "recordsynonym". Feature adds synonym to
-  #  database and returns a boolean result
-  #  indicatiing success or failure of saving.
+  #   This is the modified function of "recordsynonym". Feature adds synonym to
+  #   database and returns a boolean result
+  #   indicatiing success or failure of saving.
   # Parameters:
-  #  synonym_name: string input parameter that represents the synonym name.
-  #  keyword_id: integer input parameter representing the keyword id
-  #    the synonym points to.
-  #  approved: an optional boolean input parameter with a default false
-  #    represents if an admin has approved a synonym on database or not.
+  #   synonym_name: string input parameter that represents the synonym name.
+  #   keyword_id: integer input parameter representing the keyword id
+  #     the synonym points to.
+  #   approved: an optional boolean input parameter with a default false
+  #     represents if an admin has approved a synonym on database or not.
   # Success:
-  #  Output is boolean -- this method returns true if
-  #    the vote has been recorded.
+  #   Output is boolean -- this method returns true if
+  #     the vote has been recorded.
   # Failure: 
-  #  returns false if word not saved to database due to incorrect expression
-  #  of synonym name or an incorrect keyword id for
-  #  an unavaialable keyword in database.
+  #   returns false if word not saved to database due to incorrect expression
+  #   of synonym name or an incorrect keyword id for
+  #   an unavaialable keyword in database.
   def record_synonym(synonym_name, keyword_id, approved = false)
     if synonym_name.blank?
       return false
