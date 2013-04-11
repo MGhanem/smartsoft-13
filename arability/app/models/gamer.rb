@@ -1,4 +1,8 @@
 class Gamer < ActiveRecord::Base
+
+  has_and_belongs_to_many :trophies
+  has_and_belongs_to_many :prizes
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,8 +10,8 @@ class Gamer < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth
-                  
+                  :username, :country, :education_level, :date_of_birth, :gender,
+                  :highest_score
 
   validates :username, :presence => true, :length => { :minimum => 3 }
 
@@ -24,5 +28,61 @@ class Gamer < ActiveRecord::Base
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
+  
+  
+  
+  def receive_trophy(trohpy_id)
+    trophy = Trophy.find(trophy_id)
+    
+    if trophy == nil
+      return false
+    end
+    
+    if self.trophies.include? trophy
+      return false
+    else
+      self.trophies << trophy
+    end
+  end
+
+  def receive_prize(prize_id)
+    prize = Prize.find(prize_id)
+    
+    if prize == nil
+      return false
+    end
+    
+    if self.prizes.include? prize
+      return false
+    else
+      self.prizes << prize
+      return true
+    end
+  end
+  
+  def get_won_prizes
+    return self.prizes
+  end
+
+  def get_available_prizes
+    return Prize.all - self.prizes
+  end
+  
+  def get_won_trophies
+    return self.trophies
+  end
+
+  def get_available_trophies
+    return Trophy.all - self.trophies
+  end
+
+  def won_prizes?(score, level)
+    if Prize.get_new_prizes_for_gamer(self.id, score, level).count > 0
+      return true
+    else
+      return false
+    end
+  end
+
 
 end

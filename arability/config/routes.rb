@@ -1,34 +1,116 @@
 Arability::Application.routes.draw do
-  get "admin/index"
-
-  get "admin/login"
-  get "admin/logout"
-
-  post "admin/login"
-  post "admin/wordadd"
-  
-  resources :projects
-
-  # get "admin/import_csv"
-
   root :to => 'pages#home'
 
-  # required for routing by the devise module(gem)
-  devise_for :gamers
-  devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
+  scope "(:locale)", :locale => /en|ar/ do
+    #here only two languages are accepted: english and arabic
 
-  get "admin/import_csv"
+    get "admin/index"
 
-  post "admin/upload"
+    get "admin/login"
+    
+    get "admin/logout"
+  
+    post "admin/wordadd"
 
-  match "keywords" => "keywords#viewall"
+    post "admin/login"
 
-  get "keywords/new"
+    get "admin/import_csv"
 
-  get "keywords/suggest_add"
+    post "admin/upload"
 
-  resources :projects
-  post "keywords/create"
+    post "admin/addword"
+    
+    post "admin/addtrophy"
+    
+    post "admin/addprize"
+
+    get "admin/deletetrophy"
+    
+    get "admin/deleteprize"
+
+    match '/game' => 'games#game'
+
+    post "games/vote" 
+
+    post "games/record_vote"
+
+    get 'games/getnewwords'
+
+    root :to => 'pages#home'
+
+    #here only two languages are accepted: english and arabic
+
+    match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+    match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+
+    match "followed" => "follow#list_followed", :as => "list_followed_words"
+    
+    get "admin/index"
+
+    get "admin/login"
+    get "admin/logout"
+
+    post "admin/login"
+    post "admin/wordadd"
+
+
+
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
+
+    scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
+
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
+      resources :projects
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
+      get "keywords/new"
+
+      post "keywords/create"
+
+      get "keywords/suggest_add"
+
+      match "keywords" => "keywords#viewall"
+
+      match 'search' => 'search#search'
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match "keywords" => "keywords#viewall"
+
+      get "keywords/new"
+
+
+      get "keywords/suggest_add"
+
+
+      match 'search' => 'search#search'
 
   match '/developers/new' => "developer#new"
   match '/developers/create' => "developer#create"
@@ -38,11 +120,49 @@ Arability::Application.routes.draw do
 
   match 'search' => 'search#search'
 
-  #get "tweet/tweet"
+    end
+  end
   
+  get "games/getprizes"
+  get "games/showprizes"
+  get "games/get_score_only"
+  post "games/record_vote"
+
+  post "games/vote_errors"
+
+  post "games/record_synonym"
+
+  match '/projects/add_word' => "projects#add_word"
+  match '/game' => 'games#game'
+  get 'games/gettrophies'
+  get 'games/showtrophies'
+  # The priority is based upon order of creation:
+    get "admin/import_csv"
+
+    post "admin/upload"
+
+  
+
+  
+  get 'games/getnewwords'
+
+  # The priority is based upon order of creation:s
+    match 'search' => 'search#search'
+
+    match 'tweet/tweet_invitation' => 'tweet#tweet_invitation'
+ 
+    match '/game' => 'games#game'
+    get "games/getprizes"
+
+    post "games/record_vote"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
