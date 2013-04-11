@@ -1,7 +1,6 @@
 <script type="text/javascript" charset="utf-8">
   
   var words;
-  
   var cache = "";
   var nav_locked = false;
 
@@ -160,6 +159,7 @@ function setButtons(){
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
   }
+  
   function backToGame() {
     document.getElementById("zone").innerHTML = cache;
     cache = "";
