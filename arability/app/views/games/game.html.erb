@@ -141,11 +141,24 @@ function getPrizes(level, score) {
     <% end %>
   }
 
+  function hallOfFame(){
+    clear();
+    <% if I18n.locale==:en %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
+    <% else I18n.locale==:ar %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
+    <% end %>
+    $('#loading-server').fadeTo(0,0);
+    $('#loading-server').fadeTo(1000,1);
+    $('#loading-server').fadeTo(1000,0);
+    $.get("/games/halloffame");
+  }
+
 </script>
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box">
+    <div class="nav-box" onclick="hallOfFame()">
       الرتبة
     </div>
 
@@ -193,5 +206,5 @@ function getPrizes(level, score) {
 
   </div>
 </div>
-
+</div>
 
