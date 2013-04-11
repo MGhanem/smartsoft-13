@@ -7,8 +7,11 @@
     <label class="checkbox"><%= f.check_box :remember_me %><%= t(:remember_me) %></label>
   <% end -%>
   <br>
-
-  <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-left", :style => "margin-top:-30px;" %></div>
+  <% if I18n.locale == :ar %>
+    <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-left", :style => "margin-top:-30px;" %></div>
+  <% else %>
+    <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-right", :style => "margin-top:-30px;" %></div>
+  <% end %>
   
 <% end %>
 
