@@ -1,4 +1,6 @@
-class ProjectsController < ApplicationController
+class ProjectsController < BackendController
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
   # GET /projects
   # GET /projects.json
   
