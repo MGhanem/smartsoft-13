@@ -1,7 +1,6 @@
 var dimension = 10;
 var table;
 var cells;
-var levelTitle;
 var buttonArray = new Array();
 var wordsArray = [];
 var pauseFlag = true;
@@ -13,7 +12,6 @@ var suspenseTimer;
 var blockId = 0;
 var waitTime = 1000;
 var fallingTime = 200;
-var numberOfCalls = 0;
 var wordExistsInArray = new Array();
 var bigTower = '';
 var lang;
@@ -25,6 +23,8 @@ var gameButtonRestart;
 var gameOverPopUp;
 var wordsInDb = true;
 var levelPopUpTitle;
+var booleanSuspense = new Array(dimension);
+var suspenseTimerArray = new Array(dimension);
 
 
 function newGame(){
@@ -37,14 +37,15 @@ function newGame(){
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' + 
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
-	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	'<div id ="level-popup" style="font-size: 1270%; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
 	setTimeout(function(){
 		$('#level-popup').remove();
+		setScoreTitle();
 		startGame();
 	}, 3500);
 }
@@ -93,8 +94,6 @@ function initializeGame(){
 	}
 	trHtml = trHtml.join('');
 	table.append($(trHtml));
-	l = setLevelTitle();
-	$('#level').append(levelTitle);
 }
 
 function initializeList(){
@@ -364,26 +363,18 @@ function fadeSomething(x){
 				}
 				if(win == true){
 					buttonArray = [];
-					// generateWord();
 					removeAblockCont();
 					gameOver = true;
-					// $(".zone").slideUp(1000);
-					// setTimeout(function(){
-					// 	getPrizes(10,10)
-					// 	$(".zone").slideDown(1000);
-					// }, 1000);	
-					// alert("Congrats You have Finished The Level, off to the next");
-					$('.zone').empty();
-					$('.zone').append('<div id ="gameover-popup"' +
-					'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
-					'Score: ' + score + '</div>');
-					$('#gameover-popup').fadeTo(0,0);
-					$('#gameover-popup').fadeTo(1500,1);
-					$('#gameover-popup').fadeTo(1500,0);
+					$(".zone").slideUp(1000);
 					setTimeout(function(){
-						getTrophies(level, score);
+						getPrizes(10,10)
+						$(".zone").slideDown(1000);
+					}, 1000);	
+					setTimeout(function(){
+						setWordsArray();
+						have_to_sign_in();
 						return;
-					}, 3000);
+					}, 2000);
 				}		
 				else{
 					buttonArray = [];
@@ -426,6 +417,7 @@ function removeAblockCont(){
 			
 		}
 	}
+	stopSuspense();
 }
 
 
@@ -506,8 +498,8 @@ function nextLevel(){
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 id="game-score">SCORE: ' + score + '</h3></div>' +
-	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<div id ="level-popup" style="font-size: 1270%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -516,16 +508,18 @@ function nextLevel(){
 		$('#main-table').empty();
 		$('#wordsList').empty();
 		$('#level').empty();
+		setScoreTitle();
 		buttonArray = [];
 		bigTower = '';
 		gameOver = false;
 		successfulWords = [];
 		clearTimeout(pullingBlocks);
 		clearTimeout(droppingBlocks);
-		if(numberOfCalls > 0){
-			// alert('here dawg');
-			clearTimeout(suspenseTimer);
-			numberOfCalls = 0;
+		for(var x = 0; x < booleanSuspense.length; x++){
+			if(booleanSuspense[x] == true){
+				clearTimeout(suspenseTimerArray[x]);
+				booleanSuspense[x] = false;
+			}
 		}
 		startGame();
 	}, 3500);
@@ -561,23 +555,31 @@ function animate(){
 }
 
 function suspense(){
-	if(bigTower == highestTowerId()){	
-		return;
+
+	for(x = 0; x < dimension; x++){
+		var id = 'col2-' + x;
+		if(document.getElementById(id).innerHTML != '' && booleanSuspense[x] != true){
+			suspenseCont(x);
+			booleanSuspense[x] = true;
+		
+		}
 	}
-	else{
-		bigTower = highestTowerId();
-		numberOfCalls = 0;
-		if(highestTower() > 7){
-			if(numberOfCalls == 0){
-				numberOfCalls++;
-				suspenseCont(bigTower);
+}
+
+function stopSuspense(){
+	for(x = 0; x < booleanSuspense.length; x++){
+		if(booleanSuspense[x] == true){
+			var id = 'col2-' + x;
+			if(document.getElementById(id).innerHTML == ''){
+				clearTimeout(suspenseTimerArray[x]);
+				booleanSuspense[x] = false;
 			}
 		}
 	}
 }
 
 function suspenseCont(col){
-		suspenseTimer = setTimeout(function(){
+		suspenseTimerArray[col] = setTimeout(function(){
 			var suffix = "-" + col;
 			$("td[id*=" + suffix + "]").fadeTo('fast', 0.7).fadeTo('fast',1);
 			suspenseCont(col);
@@ -611,8 +613,7 @@ function getNewWords(num){
 	if(wordsArray.length == 0){
 		wordsInDb = false;
 		$('.zone').empty();
-		$('.zone').append('<h2 id ="empty-db-msg"' +
-			'style="font: helvetica; width: 400px; color: white; margin-left: 190px; position: absolute; margin-top: 120px;">' +
+		$('.zone').append('<h2 id ="empty-db-msg">' +
 			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
 			'and we hope that you enjoyed our game</h2>');
 	}
@@ -703,10 +704,8 @@ function setLang(l){
 	}, 1100);
 }
 function calculateScore(){
-	score = parseInt(document.getElementById('game-score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
-	document.getElementById('game-score').innerHTML = "SCORE: " + score;
-
+	setScoreTitle();
 }
 
 function loseGame(t){
@@ -723,14 +722,14 @@ function loseGame(t){
 		$('tr').empty();
 		}, 500);
 		$('.zone').append('<div id ="gameover-popup"' +
-		'style="font-size: 1000%; color: white; position: absolute; margin-top: 120px;">' + 
-		'Game Over!</div>');
+		'style="font-size: 2000%; color: white; position: absolute; margin-top: 120px;"><p style="text-align: center;">' + 
+		'النهاية</p></div>');
 		$('#gameover-popup').fadeTo(0,0);
 		$('#gameover-popup').fadeTo(1500,1);
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			getTrophies(level, score);
+			have_to_sign_in();
 			return true;
 		}, 3000);
 	}

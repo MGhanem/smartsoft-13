@@ -1,8 +1,10 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
+
   has_one :authentication
   has_and_belongs_to_many :prizes
-  has_and_belongs_to_many :gamers_trophies
+  has_and_belongs_to_many :trophies
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
@@ -11,15 +13,20 @@ class Gamer < ActiveRecord::Base
          # :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
+
+
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth
+                  :username, :country, :education_level, :date_of_birth, :gender,
+                  :highest_score
+
 
   #author: kareem ali
   def self.check
-    if I18n.locale==:ar
-      return "انت غبي؟"
-    else
-      return "Kareem"
+    if I18n.locale == :ar
+      "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
+    end
+    if I18n.locale == :en
+      "username must be made up of english letters or digits"
     end
   end
 
@@ -27,10 +34,12 @@ class Gamer < ActiveRecord::Base
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }
   validates :country, :presence => true, :length => { :minimum => 2 }
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
-  validates :education_level, :format => { :with => /\A^(low|medium|high|منخفض|متوسط|عالي)\Z/i }
+
   validates :gender , :presence => true  
+
+
+  validates :education_level, :format => { :with => /\A^(School|University|graduate|مدرسة|جامعة|خريج)\Z/i }
+  
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
   

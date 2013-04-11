@@ -1,6 +1,8 @@
 <script type="text/javascript" charset="utf-8">
   
-  var words=["car","sar","sad","sfd"];
+  var words;
+  var cache = "";
+  var nav_locked = false;
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -9,19 +11,24 @@
     words=successfulWords;
   }
 
-
+  
+  function getScoreOnly(score) {
+    clear();
+    $.get("/games/get_score_only?score=" + score)
+  }
+  
   function get_words(){
     return words;
   }
 
   function check_empty_words(){
     if(words.length == 0){
-    //$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
-      if(win == true){
-        $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
+        if(win == true){
+          alert('yo win is true');
+         getTrophies(level, score);
       }
       else{
-        $('.zone').append('<div><a class="btn btn-success" href="http://localhost:3000/game">Restart Game</a></div>');
+        getScoreOnly(score);
       }
       return true;
     }else{
@@ -30,7 +37,7 @@
   } 
 
   function have_to_sign_in(){
-    alert(successfulWords);
+    //alert(successfulWords);
     $.post("/games/vote_errors.js");
   }
 
@@ -46,7 +53,7 @@
   }
 
   function request_vote_form(){
-    alert("from vote form");
+    //alert("from vote form");
     $('.zone').empty();
     //$('#workspace').remove();
     $('.zone').append('<div class=\"vote_form\"></div></br>');
@@ -54,10 +61,12 @@
       //alert('empty');
       return;
     }
-    $('#workspace').remove();
-    $('.zone').append('<div class=\"vote_form\"></div></br>');
-    var first_word = words.shift();
-    $.post("/games/vote.js", { word: first_word});
+    else{
+      //$('#workspace').remove();
+      //$('.zone').append('<div class=\"vote_form\"></div></br>');
+      var first_word = words.shift();
+      $.post("/games/vote.js", { word: first_word});
+    }
   }
 
     function clear() {
@@ -69,31 +78,48 @@
     request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
+
   function getPrizes(level, score) {
     clear();
     request_string = "/games/getprizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
+
   function getScore() {
     return 123456;
   }
 
   function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
-    $.get("/games/showprizes"); 
+    $.get("/games/showprizes");
   }
+
   function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
     $.get("/games/showtrophies");
   }
-  function  setLevelTitle(){
-    <% if I18n.locale==:ar %>
-    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
-    <% else I18n.locale==:en %>
-     levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
-    <% end %>
-    return levelTitle; 
-  }
+  // function  setLevelTitle(){
+  //   <% if I18n.locale==:ar %>
+  //   levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
+  //   <% else I18n.locale==:en %>
+  //    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
+  //   <% end %>
+  //   return levelTitle; 
+  // }
 
 
 function setButtons(){
@@ -107,7 +133,7 @@ function setButtons(){
   }
 
 
-function getPrizes(level, score) {
+  function getPrizes(level, score) {
     clear();
     request_string = "/games/getprizes/?level=" + level + "&score=" + score;
     $.get(request_string);
@@ -126,11 +152,46 @@ function getPrizes(level, score) {
     <% end %> 
   }
 
+  function setScoreTitle(){
+    <% if I18n.locale==:ar %>
+    document.getElementById('game-score').innerHTML = score + ' :نقاط'
+    <% else I18n.locale==:en %>
+    document.getElementById('game-score').innerHTML = 'Score: ' + score;
+    <% end %>
+  }
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    nav_licked = false;
+  }
+
+  function hallOfFame(){
+    clear();
+    <% if I18n.locale==:en %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
+    <% else I18n.locale==:ar %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
+    <% end %>
+    $('#loading-server').fadeTo(0,0);
+    $('#loading-server').fadeTo(1000,1);
+    $('#loading-server').fadeTo(1000,0);
+    $.get("/games/halloffame");
+  }
+
 </script>
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box">
+    <div class="nav-box" onclick="hallOfFame()">
       الرتبة
     </div>
 
@@ -153,9 +214,11 @@ function getPrizes(level, score) {
 
   <% if I18n.locale==:ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+
     <% else I18n.locale==:en %>
     <div class="zone" id="zone">
       <% end %> 
+
     <div class="divaya">
       <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
@@ -176,7 +239,5 @@ function getPrizes(level, score) {
 
   </div>
 </div>
+</div>
 
-<!-- <div id="workspace" style="position:relative; left: 10px; ">
-  <a onclick="have_to_sign_in()"  id="btn">start voting</a>
- -->
