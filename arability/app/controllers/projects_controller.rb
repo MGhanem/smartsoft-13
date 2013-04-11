@@ -126,7 +126,7 @@ class ProjectsController < BackendController
     if developer_signed_in?
       @project = Project.find(params[:id])
       @project = Project.createcategories(@project, params[:project][:categories])
-      if @project.update_attributes(params.except(:categories,:utf8, :_method,
+      if @project.update_attributes(params[:project].except(:categories,:utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
       redirect_to :action => "index"
       flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
