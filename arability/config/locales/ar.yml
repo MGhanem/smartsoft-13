@@ -102,6 +102,7 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  hide_stats: "اخفاء الإحصائيات"
   female: "انثي"
   male: "ذكر"
   out_of: "من"

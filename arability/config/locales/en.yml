@@ -83,7 +83,7 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
-  keyword_not_empty: "Search Keyword can not be empty"
   hide_stats: "Hide Stats"
+  keyword_not_empty: "Search Keyword can not be empty"
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
