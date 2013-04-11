@@ -91,14 +91,22 @@ class Synonym < ActiveRecord::Base
       end
 
 
-  # author:
-  #   kareem ali
-  #  blanck => 1
-  #  synonyms exists => 2
-  #  synonym not saved in database => 3
-  #  synonym saved successfully => 0
+    # author:
+    #   kareem ali
+    # Description:
+    #   records a synonym for a specific keyword with approved = false by default
+    # Params:
+    #   synonym_name: the string name of the new synonym
+    #   keyword_id: the id of the keyword for which the synonym is suggested
+    #   approved: whether the syonnym is approved or not , by default is not approved 
+    # Success:
+    #   returns 0 when the synonym is saved
+    # Failure:
+    #   returns 1 when the synonym written by the gamer is blank
+    #   returns 2 when the synonym is already existing
+    #   returns 3 when the synonym is not saved because it didn't pass the arabic regex validation
     def record_suggested_synonym(synonym_name, keyword_id, approved= false)
-            if synonym_name.blank?
+      if synonym_name.blank?
         return  1
       elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
         return  2
@@ -116,5 +124,6 @@ class Synonym < ActiveRecord::Base
         return false
       end
     end 
+    
   end
 end
