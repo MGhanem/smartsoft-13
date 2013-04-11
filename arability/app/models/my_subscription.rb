@@ -52,8 +52,7 @@ class MySubscription < ActiveRecord::Base
           end
         end
         return errors
-      end
-  end 
+      end 
 
     def get_word_search
       return @@search
