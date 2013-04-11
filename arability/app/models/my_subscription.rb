@@ -72,7 +72,7 @@ class MySubscription < ActiveRecord::Base
       my_sub.word_search=submodel.limit_search
       my_sub.word_add=submodel.limit
       my_sub.word_follow=submodel.limit_follow
-      # my_sub.project=submodel.limit_project
+      my_sub.project=submodel.limit_project
       my_sub.subscription_models_id = submodel.id
       if my_sub.save!
         return true

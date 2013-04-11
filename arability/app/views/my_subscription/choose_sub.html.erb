@@ -1,3 +1,4 @@
+
 <% if I18n.locale==:en %>
 <h2>Register as developer Step2: choose your subscription model</h2>
 <% else I18n.locale==:ar %>
@@ -18,17 +19,31 @@
 	
 			<td width="300px">
 	<div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
-	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br /><h5>The limit for the word search is:</h5>
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br />
+		<% if I18n.locale==:en %>
+		<h5>The limit for the word search is:</h5>
+		<% else I18n.locale==:ar %>
+		<h5> الحد الاقصى للبحث عن الكلمات:</h5>
+		<% end %>
 		<%=sm.limit_search%><br />
+		<% if I18n.locale==:en %>
 		<h5>The limit for the word follow is:</h5>
+		<% else I18n.locale==:ar %>
+		<h5>الحد الاقصى لمتابعة الكلمات:</h5>
+		<% end %>
 		<%=sm.limit_follow%><br/>
+		<% if I18n.locale==:en %>
 		<h5>The limit for the word add is:</h5>
+		<% else I18n.locale==:ar %>
+		<h5>الحد الاقصى لاضافة الكلمات:</h5>
+		<% end %>
 		<%=sm.limit%><br />
+		<% if I18n.locale==:en %>
 		<h5>The limit for the projects:</h5>
-
-
-
-
+		<% else I18n.locale==:ar %>
+		<h5>الحد الاقصى لاضافة المشارىع:</h5>
+		<% end %>
+		<%=sm.limit_project%>
 	</p>
     </div>
             </td>
@@ -41,7 +56,7 @@
 <% if I18n.locale==:en %>
 <%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px; 	" %>
 <% else I18n.locale==:ar %>
-<%= submit_tag "إختر"%>
+<%= submit_tag "إختر",:class => "btn btn-success btn-large", :style => "margin-top: 20px; 	"%>
 </div>
 </center>
 <% end %>
