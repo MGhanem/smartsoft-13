@@ -170,6 +170,16 @@ class AdminController < ApplicationController
     end
   end
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a trophy selected by id
+  # params
+  #     id the id of the trophy
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
   def deletetrophy
     params[:id] = params[:id].strip
     status_trophy = Trophy.find_by_id(params[:id])
@@ -185,6 +195,16 @@ class AdminController < ApplicationController
     redirect_to action: "index", anchor: "admin-list-trophies"
   end
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a prize selected by id
+  # params
+  #     id the id of the prize
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
   def deleteprize
     params[:id] = params[:id].strip
     status_prize = Prize.find_by_id(params[:id])
