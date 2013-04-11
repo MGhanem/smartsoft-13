@@ -1,0 +1,103 @@
+ar:
+  arability: "عربيليتي"
+  sign_up: "إنشاء حساب"
+  sign_in: "تسجيل الدخول"
+  sign_out: "تسجيل خروج"
+  english: "الإنجليزية"
+  arabic: "العربية"
+  email: "البريد الالكتروني"
+  password: "كلمة السر"
+  password_confirmation: "تأكيد كلمة السر"
+  username: "اسم المستخدم"
+  date_of_birth: "تاريخ الميلاد"
+  country: "الدولة"
+  education_level: "المستوي التعليمي"
+  search: "اﻟﺒﺤﺚ"
+  search_here: "اﺑﺤﺚ اﻟﻜﻠﻤﺎﺕ ﻫﻨﺎ"
+  keyword_add_success: "ﺗﻤﺖ ﺇﺿﺎﻓﺔ اﻟﻜﻠﻤﺔ ﺑﻨﺠﺎﺡ"
+  keyword_pending: "اﻟﻜﻠﻤﺔ ﻓﻲ اﻧﺘﻈﺎﺭ اﻟﻤﻮاﻓﻘﺔ"
+  keyword_in_wrong_format: "!ﻳﺠﺐ اﻥ ﺗﺤﺘﻮﻱ اﻟﻜﻠﻤﺔ ﻋﻠﻲ اﻷﺣﺮﻑ اﻹﻧﺠﻠﻴﺰﻳﺔ ﺃﻭ اﻟﻌﺮﺑﻴﺔ ﻓﻘﻂ"
+  keyword_suggest_add: "ﻻ ﺗﻮﺟﺪ اﻟﻜﻠﻤﻪ ﻓﻲ ﻗﺎﻋﺪﺓ ﺑﻴﺎﻧﺎﺕ ﻋﺮﺑﻴﻠﻴﺘﻲ؟ ﻫﻞ ﺗﻮﺩ اﻻﺿﺎﻓﻪ؟"
+  click_here: "اﺿﻐﻂ ﻫﻨﺎ"
+  no_followed_words: "لا توجد كلمات متابعة."
+  unfollow_keyword_alert: "لقد تم إلغاء متابعة هذه الكلمة:"
+  follow_keyword_alert: "لقد تم متابعة هذه الكلمة:"
+  view_collectives: "عرض الإحصائيات الجماعية للكلمة "
+  view_stats: "الإحصائيات"
+  add_to_project: "اضف لمشروعك"
+  words_followed_by_you: "الكلمات المتابعة:"
+  followed_words: "الكلمات المتابعة"
+  words: "كلمات"
+  unfollow: "إلغاء المتابعة"
+  backend: "المطورون"
+  project: "مشروع"
+  projects: "مشاريع"
+  my_projects: "مشاريعي"
+  name: "الاسم"
+  category: "الفئة"
+  categories: "الفئات"
+  formal: "رسمي"
+  slang: "غير رسمي"
+  age: "السن"
+  from: "من"
+  to: "الى"
+  desc: "عن"
+  new_project: "مشروع جديد"
+  back: "عودة"
+  edit_project: "تعديل المشروع"
+  import: "استيراد"
+  export: "تصدير"
+  add_words: "اضف كلمات"
+  recommended_words: "الكلمات المرشحة"
+  share: "مشاركة"
+  delete: "مسح"
+  word: "الكلمة"
+  meaning: "المعنى"
+  help: "مساعدة"
+  enter_as_csv: "ادخل الكلمات منفصلة"
+  votes: "صوت"
+  filter: "تصفية النتائج"
+  country: "البلد"
+  age_from: "السن من"
+  age_to: "السن الي"
+  gender: "النوع"
+  gamer: "اللاعب"
+  current_password: "كلمة السر الحالية"
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
+  follow_word: "تابع الكلمة"
+  follow_word_link: "إذا لم تعجبك هذه المرادفات أو تريد متابعة هذه الكلمة"
+  follow_word_end_of_search: "إضغط هنا!"
+  follow_keyword_alert_fail: "هذه الكلمة متابعة:"
+  no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
+
+  errors:
+    messages:
+      not_saved:
+        one: "خطأ واحد منع التسجيل:"
+        other: "%{count} اخطآء منعت من التسجيل:"
+  devise:
+    registrations:
+      gamer:
+        signed_up: "تم التسجيل بنجاح"
+    sessions:
+      gamer:
+        signed_in: "لقد تم تسجيل الدخول بنجاح"
+        signed_out: "لقد تم تسجيل الخروج بنجاح"
+    failure:
+      gamer:
+        invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: "يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+
+  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
+  add_word: "اضف الكلمة"
+  stats_gender: "احصائيات الجنس"
+  stats_country: "احصائيات البلاد"
+  stats_age: "احصائيات السن"
+  stats_education: "احصائيات التعليم"
+  stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
