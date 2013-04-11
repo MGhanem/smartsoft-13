@@ -25,6 +25,7 @@ en:
   age_from: "Age from:"
   age_to: "to:"
   gender: "Gender:"
+  education: "Education:"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
   keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
@@ -86,3 +87,4 @@ en:
   keyword_not_empty: "Search Keyword can not be empty"
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
+  age_range: "(Kindly enter a value between 10 and 100)"

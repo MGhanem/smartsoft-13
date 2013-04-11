@@ -30,6 +30,10 @@ class SearchController < BackendController
       categories_array = []
     end
     @search_keyword = params['search']
+    if(!@search_keyword.blank?)
+      @search_keyword = @search_keyword.strip
+      @search_keyword = @search_keyword.split(" ").join(" ")
+    end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
   end
@@ -64,12 +68,15 @@ class SearchController < BackendController
       @age_to = temp
     end
     @gender = params['gender']
+    @education = params['education']
     if(!@search_keyword.blank?)
+      @search_keyword = @search_keyword.strip
+      @search_keyword = @search_keyword.split(" ").join(" ")
       @no_synonyms_found = false
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if(!@search_keyword_model.blank?)
         @synonyms, @votes =
-          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender)
+          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender, @education)
           if(@synonyms.blank?)
             @no_synonyms_found = true
           end

@@ -64,6 +64,7 @@ ar:
   age_from: "السن من"
   age_to: "الي"
   gender: "النوع"
+  education: "التعليم"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
   no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
@@ -108,3 +109,4 @@ ar:
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
   enter_categories: "ﺎﻠﺘﺼﻔﻳﺓ ﺢﺴﺑ ﺎﻠﻔﺋﺎﺗ"
+  age_range: "(من فضلك ادخل رقم من 10 الي 100)"
