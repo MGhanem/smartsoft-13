@@ -67,6 +67,19 @@
     clear();
     $.get("/games/showtrophies");
   }
+
+  // Author:
+  //   Omar Hossam.
+  // Description:
+  //   a twitter image is placed on page and links to twitter to tweet an
+  //   invitation to the website's link.
+  // Parameters:
+  //   None.
+  // Success:
+  //   Gamer presses on the image and goes to twitter page to tweet an
+  //   invitation to the website
+  // Failure:
+  //   None.
   function inviteTwitter() {
     clear();
     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;right:190px;"></a>')
