@@ -23,19 +23,8 @@ class MySubscription < ActiveRecord::Base
     #   or follow limit
     # fail:
     #   none
-      #errors = dev.my_sub.get_permissions(dev_id, type)
-      #if(errors.empty?)
-        #all valid
-        #continue save
-      #else
-        #Stop further actions
-        
-        #flash[:notice] = errors.join("\n")
-      #end
+    
       def get_permissions(dev_id,type)
-        errors = []
-        errors.empty?
-        
         my_subscription = 
          MySubscription.joins(:developer).where(:developer_id => dev_id).first
         if type = @@search
@@ -52,9 +41,9 @@ class MySubscription < ActiveRecord::Base
           end 
         else type = @@follow
           if @count < my_subscription.word_follow 
-            return false
-          else
             return true
+          else
+            return false
           end
         end
         
