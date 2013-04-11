@@ -1,6 +1,8 @@
 <script type="text/javascript" charset="utf-8">
   
   var words;
+  var cache = "";
+  var nav_locked = false;
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -63,12 +65,41 @@
   }
 
   function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
-    $.get("/games/showprizes"); 
+    $.get("/games/showprizes");
   }
+
   function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
     clear();
     $.get("/games/showtrophies");
+  }
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    nav_licked = false;
   }
 
 </script>
