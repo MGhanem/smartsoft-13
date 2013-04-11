@@ -3,6 +3,11 @@ require "spec_helper"
 
 describe Prize do
 
+	it "should not be saved" do
+		prize = Prize.new
+		expect(prize.save).to eq(false)
+	end
+
 	it "should return false since name and image is empty" do
 		success, prize = Prize.add_prize_to_database(nil, 1, 1, nil)
 		expect(success).to eq(false)
