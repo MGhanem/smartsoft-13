@@ -21,9 +21,12 @@
 
   function check_empty_words(){
     if(words.length == 0){
-    //$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
-        // $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
-        getTrophies(level, score);
+        if(win == true){
+         getTrophies(level, score);
+      }
+      else{
+        getScoreOnly(score);
+      }
       return true;
     }else{
       return false;
