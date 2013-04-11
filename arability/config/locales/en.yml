@@ -110,7 +110,7 @@ en:
   upload_file_error4: "This file is not in csv format"
   upload_file_error5: "There are no words to be added to this project"
   projects_index_error1: "Please sign up as a developer first"
-  projects_index_error2: "Please sign in"
+  projects_index_error2: "Please sign in first"
   projects_index_title: "Projects"
   projects_index_tab1: "My projects"
   projects_index_tab2: "Projects shared with me"
