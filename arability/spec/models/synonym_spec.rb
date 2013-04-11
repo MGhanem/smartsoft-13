@@ -1,3 +1,4 @@
+=begin
 #encoding: UTF-8
 require 'spec_helper'
 
@@ -134,3 +135,4 @@ describe Synonym do
   end
   
 end
+=end 
