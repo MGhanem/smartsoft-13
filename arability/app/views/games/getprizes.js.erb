@@ -11,7 +11,7 @@
   <% else %>
     <% if @won_prizes.length != 0 %>
         button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %> </a>';
-        $("#zone").append($(button)); 
+        $("#zone").append($(button));
         success = '<h1 class="award-title"><%= t(:won_prizes) %></h1>';
         prizes = [];
 
