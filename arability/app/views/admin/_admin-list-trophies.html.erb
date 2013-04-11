@@ -17,6 +17,14 @@
     عرض الانجازات
   </a>
 </legend>
+<% if flash[:successtype] && (flash[:successtype] == "addtrophy" || flash[:successtype] == "deletetrophy") && flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div>
+          <%= flash[:success] %>
+        </div>
+      </div>
+    <% end %>
 <% @trophies_list.each do |t| %>
 	<div class="trophy well">
 		<span>الاسم: <%= t.name %></span>
@@ -27,6 +35,6 @@
 		</div>
 		<span>المستوى: <%= t.level %></span>
 		<span>مجموع النقاط: <%= t.score %></span>
-		<span><a href="#myModalTrophy" data-href="/admin/deletetrophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">delete</a></span>
+		<span><a href="#myModalTrophy" data-href="/admin/deletetrophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">مسح</a></span>
 	</div>
 <% end %>

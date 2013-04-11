@@ -91,6 +91,7 @@ class AdminController < ApplicationController
     success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
       flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
+      flash[:successtype] = "addword"
       flash.keep
       redirect_to action: "index", anchor: "admin-add-word"
     else
@@ -122,13 +123,14 @@ class AdminController < ApplicationController
     success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:image])
     if success
       flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
+      flash[:successtype] = "addtrophy"
     else
       flash[:error] = trophy.errors.messages
       flash[:errortype] = "addtrophy"
     end
     flash.keep
     if success
-      redirect_to action: "index"
+      redirect_to action: "index", anchor: "admin-list-trophies"
     else
       redirect_to action: "index", anchor: "admin-add-trophy", fargs: {addtrophy: params}
     end
@@ -155,13 +157,14 @@ class AdminController < ApplicationController
     success, prize = Prize.add_prize_to_database(params[:name], params[:level], params[:score], params[:image])
     if success
       flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
+      flash[:successtype] = "addprize"
     else
       flash[:error] = prize.errors.messages
       flash[:errortype] = "addprize"
     end
     flash.keep
     if success
-      redirect_to action: "index"
+      redirect_to action: "index", anchor: "admin-list-prizes"
     else
       redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
     end
@@ -174,11 +177,12 @@ class AdminController < ApplicationController
       name = status_trophy.name
       status_trophy.delete
       flash[:success] = "تم مسح مدالية #{name} بنجاح"
+      flash[:successtype] = "deletetrophy"
     else
       flash[:error] = "Trophy number #{params[:id]} is not found"
     end
     flash.keep
-    redirect_to action: "index", anchor: "delete-trophy"
+    redirect_to action: "index", anchor: "admin-list-trophies"
   end
 
   def deleteprize
@@ -188,11 +192,12 @@ class AdminController < ApplicationController
       name = status_prize.name
       status_prize.delete
       flash[:success] = "تم مسح جائزة #{name} بنجاح"
+      flash[:successtype] = "deleteprize"
     else
       flash[:error] = "Prize number #{params[:id]} is not found"
     end
     flash.keep
-    redirect_to action: "index", anchor: "delete-prize"
+    redirect_to action: "index", anchor: "admin-list-prizes"
   end
 
   # author:

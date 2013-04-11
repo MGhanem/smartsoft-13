@@ -17,16 +17,28 @@
     عرض الجوائز
   </a>
 </legend>
-<% @prizes_list.each do |t| %>
-	<div class="trophy well">
-		<span>الاسم: <%= t.name %></span>
-		<div class="uploader-controls">
-			<div class="uploader-preview fileupload-preview thumbnail">
-				<img src="<%= t.image %>">
-			</div>
-		</div>
-		<span>المستوى: <%= t.level %></span>
-		<span>مجموع النقاط: <%= t.score %></span>
-		<span><a href="#myModalPrize" data-href="/admin/deleteprize?id=<%= t.id %>" role="button" class="edit-link-prize" data-toggle="modal">delete</a></span>
-	</div>
+<% if flash[:successtype] && (flash[:successtype] == "addprize" || flash[:successtype] == "deleteprize") && flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div>
+          <%= flash[:success] %>
+        </div>
+      </div>
+    <% end %>
+<% if @prizes_list.length != 0 %>
+  <% @prizes_list.each do |t| %>
+  	<div class="trophy well">
+  		<span>الاسم: <%= t.name %></span>
+  		<div class="uploader-controls">
+  			<div class="uploader-preview fileupload-preview thumbnail">
+  				<img src="<%= t.image %>">
+  			</div>
+  		</div>
+  		<span>المستوى: <%= t.level %></span>
+  		<span>مجموع النقاط: <%= t.score %></span>
+  		<span><a href="#myModalPrize" data-href="/admin/deleteprize?id=<%= t.id %>" role="button" class="edit-link-prize" data-toggle="modal">مسح</a></span>
+  	</div>
+  <% end %>
+<% else %>
+  عفون لا يوجد جوائز
 <% end %>

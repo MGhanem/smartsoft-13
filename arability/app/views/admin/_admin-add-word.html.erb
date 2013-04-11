@@ -5,7 +5,7 @@
 				إضافة كلمة جديدة
 			</a>
 		</legend>
-		<% if flash[:success] %>
+		<% if flash[:successtype] && flash[:successtype] == "addword" && flash[:success] %>
 			<div class="alert alert-success">
 	    	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	    	<div>

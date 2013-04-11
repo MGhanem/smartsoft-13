@@ -11,7 +11,7 @@ class Prize < ActiveRecord::Base
                       :message => "اسم الجائزة يجب ان يكون بالعربية"
 
   validates_length_of :name, 
-                      :maximum => 10,
+                      :maximum => 15,
                       :message => "اسم الجائزة لا يمكن ان يزيد عن 10 حروف"
 
   validates_presence_of :name, 
@@ -32,8 +32,8 @@ class Prize < ActiveRecord::Base
   validates_numericality_of :level, 
                             only_integer: true, 
                             greater_than: 0, 
-                            less_than_or_equal_to: 10, 
-                            message: "المستوى يجب ان يكون بين 0 و 10"
+                            less_than_or_equal_to: 5, 
+                            message: "المستوى يجب ان يكون بين 0 و 5"
 
   validates_numericality_of :score, 
                             only_integer: true, 
