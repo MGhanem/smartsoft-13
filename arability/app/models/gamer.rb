@@ -19,7 +19,7 @@ class Gamer < ActiveRecord::Base
   validates :country, :presence => true, :length => { :minimum => 2 }
 
 
-  validates :education_level, :format => { :with => /\A^(School|University|graduate)\Z/i }
+  validates :education_level, :format => { :with => /\A^(School|University|Graduate)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }

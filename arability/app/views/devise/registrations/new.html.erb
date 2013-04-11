@@ -38,7 +38,7 @@
             </div></br>
 
             <div><%= f.label :education_level, :class => "control-label" %>
-            <%= f.select(:education_level, options_for_select(['','School','University','graduate']), {}, { :style => "margin-left: 10px;" }) %></br></div>
+            <%= f.select(:education_level, options_for_select(['','School','University','Graduate']), {}, { :style => "margin-left: 10px;" }) %></br></div>
 
             <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
 
@@ -81,7 +81,7 @@
 
             <div><%= f.label t(:education_level), :class => "control-label" %>
             <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
-            ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div>
+            ['خريج','Graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div>
 
             <div><%= f.submit "سجل الحساب", :class => "btn btn-success" %></div>
 
