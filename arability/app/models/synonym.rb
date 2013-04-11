@@ -105,21 +105,27 @@ class Synonym < ActiveRecord::Base
   def get_visual_stats_age
         voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
         
-         groupOne = voters.select('date_of_birth').group("date_of_birth")
-        .having("date_of_birth <= ? AND date_of_birth >= ?", 10.years.ago.to_date, 25.years.ago.to_date).count
-         one = groupOne.sum{|v| v.last}
+        groupOne = voters.select('date_of_birth').group("date_of_birth")
+        .having("date_of_birth <= ? AND date_of_birth >= ?", 
+        10.years.ago.to_date, 25.years.ago.to_date).count
+        one = groupOne.sum{|v| v.last}
 
-         groupTwo = voters.select('date_of_birth').group("date_of_birth")
-        .having("date_of_birth < ? AND date_of_birth >= ?", 25.years.ago.to_date, 45.years.ago.to_date).count
-         two = groupTwo.sum{|v| v.last}
+        groupTwo = voters.select('date_of_birth').group("date_of_birth")
+        .having("date_of_birth < ? AND date_of_birth >= ?", 
+        25.years.ago.to_date, 45.years.ago.to_date).count
+        two = groupTwo.sum{|v| v.last}
 
-         groupThree = voters.select('date_of_birth').group("date_of_birth")
+        groupThree = voters.select('date_of_birth').group("date_of_birth")
         .having("date_of_birth < ?", 45.years.ago.to_date).count
-         three = groupThree.sum{|v| v.last}
+        three = groupThree.sum{|v| v.last}
 
-         sum = one + two + three
+        sum = one + two + three
+        if sum !=0
          list = [["10-25", one], ["26-45", two], ["46+", three]]
-         return list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+          return list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+        else
+          return []
+        end
   end 
 
   #Author: Nourhan Zakaria
