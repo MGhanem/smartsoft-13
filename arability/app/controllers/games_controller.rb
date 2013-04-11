@@ -35,12 +35,11 @@ class GamesController < ApplicationController
   # Author:
   # 	Kareem Ali
   # Description:
-  # 	displayes the vote form for the gamer
+  # 	makes the action of saving the vote for the gamer
   # params:
-  # 	word: takes a keyword name for which the synonym choices whill be displayed
+  # 	word: takes the synonym id for which the gamer voted for
   # success:
-  # 	retrieve the approved synonym list limited to 4 only choosen randomly 
-  # 	if the approved synonyms for the keyword is more than 4
+  # 	passes the synonym_id to the record_vote view
   # failure:
   #  	--------- 
   def record_vote
