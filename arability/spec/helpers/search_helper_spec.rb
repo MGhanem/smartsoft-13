@@ -115,3 +115,4 @@ describe SearchHelper do
 
 end
 =end
+
