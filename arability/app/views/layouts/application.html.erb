@@ -2,8 +2,18 @@
 <html>
 <head>
   <title>Arability</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "games", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <% if I18n.locale == :ar %>
+    <%= stylesheet_link_tag "bootstrap.rtl", :media => "all" %>
+    <%= stylesheet_link_tag "bootstrap-responsive.rtl", :media => "all" %>
+    <%= stylesheet_link_tag "bootstrap-rtl-overrides", :media => "all"%>
+    <%= javascript_include_tag "bootstrap.rtl", :media => "all" %>
+  <% else %>
+    <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
+    <%= javascript_include_tag "bootstrap" %>
+  <% end %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -13,19 +23,13 @@
 
 <div role="main" id="main">
   <div class="container">
-    <% flash.each do |key,msg| %>
-      <div class="alert alert-<%= key %>">
-        <div class="message-inner">
-          <%= content_tag :div, msg %>
-        </div>
-      </div>
-    <% end %>
+    <div class="content">
+      <%= render 'layouts/messages' %>
+      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
     </div>
   </div>
 </div>
 
-<%= yield %>
 <%= render 'shared/navbardropdownjs' %>
-
 </body>
 </html>
