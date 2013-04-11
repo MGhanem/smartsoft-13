@@ -2,15 +2,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
 
+  # Author:
+  #   Mohamed Ashraf
   # Desciption:
   #   This function sets the locale to the default locale of ar or the
   #   whichever locale stored in the session. If a locale is chosen it is
   #   automatically stored in the session.
-  # Author:
-  #   Mohamed Ashraf
   # params:
   #   locale: from the url if exists
-  # returns:
+  # success:
+  #   --
+  # failure:
   #   --
   def set_locale
     if params[:locale].nil?
@@ -25,10 +27,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Author:
+  #   Mohamed Ashraf
   # Description:
-  #   It adds the current locale to th url  if not specified so that pages
+  #   It adds the current locale to the url if not specified
+  # params:
+  #   locale: from the url if exists
+  # success:
+  #   --
+  # failure:
+  #   --
   def default_url_options(options={})
-    logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { :locale => I18n.locale }
   end
 end
