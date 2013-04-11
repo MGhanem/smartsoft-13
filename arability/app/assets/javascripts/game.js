@@ -1,7 +1,6 @@
 var dimension = 10;
 var table;
 var cells;
-var levelTitle;
 var buttonArray = new Array();
 var wordsArray = [];
 var pauseFlag = true;
@@ -24,6 +23,9 @@ var gameButtonClear;
 var gameButtonRestart;
 var gameOverPopUp;
 var wordsInDb = true;
+var levelPopUpTitle;
+var booleanSuspense = new Array(dimension);
+var suspenseTimerArray = new Array(dimension);
 
 
 function newGame(){
@@ -32,17 +34,19 @@ function newGame(){
 	if(wordsInDb == true){
 	$('.zone').empty();
 	setButtons();
+	setLevelPopUpTitle();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>' + 
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
-	'<div id ="level-popup" style="font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
+	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
 	setTimeout(function(){
 		$('#level-popup').remove();
+		setScoreTitle();
 		startGame();
 	}, 3500);
 }
@@ -91,8 +95,6 @@ function initializeGame(){
 	}
 	trHtml = trHtml.join('');
 	table.append($(trHtml));
-	l = setLevelTitle();
-	$('#level').append(levelTitle);
 }
 
 function initializeList(){
@@ -379,6 +381,7 @@ function fadeSomething(x){
 					$('#gameover-popup').fadeTo(1500,1);
 					$('#gameover-popup').fadeTo(1500,0);
 					setTimeout(function(){
+						setWordsArray();
 						getTrophies(level, score);
 						return;
 					}, 3000);
@@ -424,6 +427,7 @@ function removeAblockCont(){
 			
 		}
 	}
+	stopSuspense();
 }
 
 
@@ -501,12 +505,11 @@ function nextLevel(){
 	waitTime = waitTime - 70;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
+	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
-	'<br><br><div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br>'+ 
-	'<div style="float: right;width: 220px;"><h3 id="score">SCORE: ' + score + '</h3></div>'+
-	'<div id ="level-popup" style="font: helvetica; font-size: 1400%; color: white; position: absolute; margin-top: 120px;"> LEVEL ' + level  +'</div>');
+	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<div id ="level-popup" style="font-size: 1300%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -515,16 +518,18 @@ function nextLevel(){
 		$('#main-table').empty();
 		$('#wordsList').empty();
 		$('#level').empty();
+		setScoreTitle();
 		buttonArray = [];
 		bigTower = '';
 		gameOver = false;
 		successfulWords = [];
 		clearTimeout(pullingBlocks);
 		clearTimeout(droppingBlocks);
-		if(numberOfCalls > 0){
-			// alert('here dawg');
-			clearTimeout(suspenseTimer);
-			numberOfCalls = 0;
+		for(var x = 0; x < booleanSuspense.length; x++){
+			if(booleanSuspense[x] == true){
+				clearTimeout(suspenseTimerArray[x]);
+				booleanSuspense[x] = false;
+			}
 		}
 		startGame();
 	}, 3500);
@@ -560,23 +565,31 @@ function animate(){
 }
 
 function suspense(){
-	if(bigTower == highestTowerId()){	
-		return;
+
+	for(x = 0; x < dimension; x++){
+		var id = 'col2-' + x;
+		if(document.getElementById(id).innerHTML != '' && booleanSuspense[x] != true){
+			suspenseCont(x);
+			booleanSuspense[x] = true;
+		
+		}
 	}
-	else{
-		bigTower = highestTowerId();
-		numberOfCalls = 0;
-		if(highestTower() > 7){
-			if(numberOfCalls == 0){
-				numberOfCalls++;
-				suspenseCont(bigTower);
+}
+
+function stopSuspense(){
+	for(x = 0; x < booleanSuspense.length; x++){
+		if(booleanSuspense[x] == true){
+			var id = 'col2-' + x;
+			if(document.getElementById(id).innerHTML == ''){
+				clearTimeout(suspenseTimerArray[x]);
+				booleanSuspense[x] = false;
 			}
 		}
 	}
 }
 
 function suspenseCont(col){
-		suspenseTimer = setTimeout(function(){
+		suspenseTimerArray[col] = setTimeout(function(){
 			var suffix = "-" + col;
 			$("td[id*=" + suffix + "]").fadeTo('fast', 0.7).fadeTo('fast',1);
 			suspenseCont(col);
@@ -702,10 +715,8 @@ function setLang(l){
 	}, 1100);
 }
 function calculateScore(){
-	score = parseInt(document.getElementById('score').innerHTML.replace('SCORE: ', ''));
 	score = score + (100 * level);
-	document.getElementById('score').innerHTML = "SCORE: " + score;
-
+	setScoreTitle();
 }
 
 function loseGame(t){

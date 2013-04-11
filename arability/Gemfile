@@ -7,9 +7,9 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 
-gem 'omniauth'
+#gem 'omniauth'
 
-gem "oa-openid"
+#gem "oa-openid"
 
 # gem 'omniauth-google-oauth2'
 
@@ -78,3 +78,5 @@ group :test do
 end
 
 gem 'omniauth-twitter'
+
+gem 'certified'
