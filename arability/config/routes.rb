@@ -70,16 +70,14 @@ Arability::Application.routes.draw do
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
-      
+
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
-  resources :projects
-  match "keywords/create" => "keywords#create"
+      resources :projects
+      match "keywords/create" => "keywords#create", :as => :keywords_create
 
       match '/projects/add_word' => "projects#add_word"
-      get "keywords/new"
-
-      post "keywords/create"
+      match "keywords/new" => "keywords#new", :as => :keywords_new
 
       match "keywords" => "keywords#viewall"
 
