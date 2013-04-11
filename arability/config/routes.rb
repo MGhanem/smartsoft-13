@@ -157,7 +157,7 @@ end
 
   post "games/record_synonym"
 
-  get "/devise/games/disconnect_facebook"
+  get "/games/disconnect_facebook"
 
   match 'search' => 'search#search'
 

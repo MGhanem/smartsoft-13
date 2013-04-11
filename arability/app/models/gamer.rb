@@ -124,27 +124,84 @@ class Gamer < ActiveRecord::Base
     return Trophy.all - self.trophies
   end
 
-    def connect_to_facebook(auth)
-      self.provider = auth.provider
-      self.uid = auth.uid
-      self.token = auth['credentials']['token']
-      self.save
-    end
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Takes the values from the input authentication token and inserts it
+  # Params:
+  #   auth: an omniauth authentication hash coming form Facebook
+  # Success:
+  #   The values are saved into the database
+  # Failure:
+  #   None
+  def connect_to_facebook(auth)
+    self.provider = auth.provider
+    self.uid = auth.uid
+    self.token = auth['credentials']['token']
+    self.save
+  end
 
-    def disconnect_from_facebook
-      self.provider = nil
-      self.uid = nil
-      self.token = nil
-      self.save
-    end
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Disconnects the user's facebook information
+  # Params:
+  #   None
+  # Success:
+  #   The user's facebook uid and token are deleted from the database 
+  # Failure:
+  #   None
+  def disconnect_from_facebook
+    self.provider = nil
+    self.uid = nil
+    self.token = nil
+    self.save
+  end
 
-    def is_connected_to_facebook
-      return self.token != nil
-    end
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Updates the user's token field
+  # Params:
+  #   auth: an omniauth authentication hash coming form Facebook
+  # Success:
+  #   The values are saved into the database
+  # Failure:
+  #   None
+  def update_access_token(auth)
+    self.uid = auth.uid
+    self.token = auth['credentials']['token']
+    self.save
+  end
 
-    def getToken
-      return self.token
-    end
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Checks whether the user is connected to Facebook
+  # Params:
+  #   None
+  # Success:
+  #   Boolean value is returned indicating whether or not the user
+  #   has a saved token
+  # Failure:
+  #   None
+  def is_connected_to_facebook
+    return self.token != nil
+  end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Return's the user's facebook access token
+  # Params:
+  #   None
+  # Success:
+  #   Return's the user's access token
+  # Failure:
+  #   None
+  def getToken
+    return self.token
+  end
 
   def won_prizes?(score, level)
     if Prize.get_new_prizes_for_gamer(self.id, score, level).count > 0
@@ -163,6 +220,5 @@ class Gamer < ActiveRecord::Base
   has_many :services, :dependent => :destroy
   has_many :synonyms, :through => :votes
   has_many :votes
-
 end
 

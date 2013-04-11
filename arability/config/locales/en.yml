@@ -79,7 +79,6 @@ en:
   shared_on_fb: "You get extra brownie points"
   error_fb: "It's okay, we don't want to spam your timeline"
   connect_your_account: "It seems like your account is not connected to facebook, click on Social Media and connect"
-
-
+  sign_in_facebook: "You need to be signed in to invite people"
   hello: "Hello world"
 
