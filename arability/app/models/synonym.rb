@@ -1,8 +1,9 @@
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
-  attr_accessible :approved, :name
+  attr_accessible :approved, :name, :keyword_id
   has_many :votes
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, :on => :create, :message => "The synonym is not in the correct form"
+  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/, 
+    :message => "The synonym is not in the correct form"
 
   class << self
 
@@ -47,7 +48,7 @@ class Synonym < ActiveRecord::Base
   def recordsynonym(syn, key_id, approved = false)
     if syn == ""
       return false
-    else if Keyword.exists?(id: key_id)
+    elsif Keyword.exists?(id: key_id)
         synew = Synonym.new
         synew.name = syn
         synew.keyword_id = key_id 
@@ -58,4 +59,3 @@ class Synonym < ActiveRecord::Base
     end
   end
  end
-end
