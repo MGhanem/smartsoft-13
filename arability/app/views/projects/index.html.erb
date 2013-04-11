@@ -21,7 +21,7 @@
         <%project2 = @my_projects[counter_bigloop + 1]%>
         <tr>
           <td class="span5">
-            <div class="well well-small">
+            <div class="well well-small" style="padding-bottom: 20px;">
               <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
               <br />
               <strong><%= t(:projects_index_categories)%></strong>
@@ -37,18 +37,19 @@
               <% end %>
               <br />
               <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
-              <br />
-              <a class="btn" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-              <% project1.developers_shared.each do |dev|%>
-                <%= dev.name %>
-                <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project1_id=<%=project1.id%>">Remove Share</a>
-              <% end %>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
             </div>
           </td>
           <td style="width:40px;"></td>
             <%if project2 != nil%>
               <td class="span5">
-                <div class="well well-small">
+                <div class="well well-small" style="padding-bottom: 20px;">
                   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
@@ -64,8 +65,13 @@
                   <% end %>
                   <br />
                   <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
-                  <br />
-                  <a class="btn" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
                 </div>
               </td>
             <%end%>
@@ -88,7 +94,7 @@
 <%project2 = @shared_projects[counter_bigloop + 1]%>
   <tr>
     <td class="span5">
-      <div class="well well-small">
+      <div class="well well-small" style="padding-bottom: 20px;">
         <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
         <br />
   <strong><%= t(:projects_index_categories)%></strong>
@@ -105,12 +111,18 @@
   <br />
   <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
   <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
 </div>
     </td>
     <td style="width:40px;"></td>
     <%if project2 != nil%>
       <td class="span5">
-      <div class="well well-small">
+      <div class="well well-small" style="padding-bottom: 20px;">
   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
   <br />
   <strong><%= t(:projects_index_categories)%></strong>
@@ -126,6 +138,12 @@
   <% end %>
   <br />
   <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
   <br />
 </div>
     </td>

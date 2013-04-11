@@ -54,7 +54,6 @@ describe "Project" do
   }
 
   it "developer2 should see project that developer1 shared" do
-
     shared = SharedProject.new
     shared.developer_id = developer2.id
     shared.project_id = project.id
