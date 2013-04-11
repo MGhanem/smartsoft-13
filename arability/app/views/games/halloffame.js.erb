@@ -1,8 +1,9 @@
 $('#loading-server').remove();
-english = '<div style = "color: white; width:600px; margin:0 auto" align="center"><h2>Hall of Fame</h2><label>Your Twitter Followers</label><br>' +
+english = '<div style = "color: white; width:600px; margin:0 auto" align="center"><h2>Hall of Fame</h2>' +
+    '<img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" /><p>Your Twitter Followers</p>'+
     '<% common = Authentication.get_common_twitter_followers(current_gamer) %>'+
     '<% if common.nil? %>' +
-    '<p>You are not connected to Twitter</p>' +
+    '<p>>> You are not connected to Twitter</p>' +
     '<% else %>' +
     '<table class="table"><thead align="center"><tr><td>Rank</td><td>name</td><td>Score</td><td>Trophies' +
          '</td></tr></thead>' +
@@ -28,10 +29,11 @@ english = '<div style = "color: white; width:600px; margin:0 auto" align="center
     '<% end %>' +
   '</tbody>' +
 '</table></div>'+
-'<div style = "color: white; width:600px; margin:0 auto" align="center"><label>Your Facebook Friends</label><br>' +
+'<div style = "color: white; width:600px; margin:0 auto" align="center">' +
+    '<img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" /><br><p>Your Facebook Friends</p>'+
     '<% common = Gamer.get_common_facebook_friends(current_gamer) %>'+
     '<% if common.nil? %>' +
-    '<p>You are not connected to Facebook</p>' +
+    '<p>>> You are not connected to Facebook</p>' +
     '<% else %>' +
     '<table class="table"><thead align="center"><tr><td>Rank</td><td>name</td><td>Score</td><td>Trophies' +
          '</td></tr></thead>' +
@@ -57,10 +59,11 @@ english = '<div style = "color: white; width:600px; margin:0 auto" align="center
     '<% end %>' +
   '</tbody>'+
 '</table></div>';
-arabic = '<div style = "color: white; width:600px; margin:0 auto" align="center"><h2>قاعة المجد</h2><label>أصدقائك في تويتر</label><br>' +
+arabic = '<div style = "color: white; width:600px; margin:0 auto" align="center"><h2>قاعة الشهرة</h2>' +
+    '<div><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" /><p>أصدقائك في تويتر</p></div>'+
     '<% common = Authentication.get_common_twitter_followers(current_gamer) %>'+
     '<% if common.nil? %>' +
-    '<p>انت غير متصل بتويتر</p>' +
+    '<p>>> انت غير متصل بتويتر</p>' +
     '<% else %>' +
     '<table class="table"><thead align="center"><tr><td>ترتيب</td><td>الإسم</td><td>مجموع النقاط</td><td>الجوائز' +
          '</td></tr></thead>' +
@@ -86,10 +89,11 @@ arabic = '<div style = "color: white; width:600px; margin:0 auto" align="center"
     '<% end %>' +
   '</tbody>' +
 '</table></div>'+
-'<div style = "color: white; width:600px; margin:0 auto" align="center"><label>أصدقائك في فايس بوك</label><br>' +
+'<div style = "color: white; width:600px; margin:0 auto" align="center">' +
+    '<div><img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" /><br><p>أصدقائك في فايس بوك</p></div>'+
     '<% common = Gamer.get_common_facebook_friends(current_gamer) %>'+
     '<% if common.nil? %>' +
-    '<p>انت غير متصل بفايس بوك</p>' +
+    '<p>>> انت غير متصل بفايس بوك</p>' +
     '<% else %>' +
     '<table class="table"><thead align="center"><tr><td>ترتيب</td><td>الإسم</td><td>مجموع النقاط</td><td>الجوائز' +
          '</td></tr></thead>' +
