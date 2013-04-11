@@ -70,10 +70,28 @@ hassan_dev.keywords << sign_in
 
 SubscriptionModel.delete_all
 free=SubscriptionModel.create(name: "Free")
-premium=SubscriptionModel.create(title: "Premium")
-deluxe=SubscriptionModel.create(title: "Deluxe")
+premium=SubscriptionModel.create(name: "Premium")
+deluxe=SubscriptionModel.create(name: "Deluxe")
 
-MySubscription.delete_all
-MySubscription.create(developer_id: timo_dev.id, subscribtion_model_id: free.id)
-MySubscription.create(developer_id: noha_dev.id, subscribtion_model_id: free.id)
-MySubscription.create(developer_id: hassan_dev.id, subscribtion_model_id: free.id)
+
+Trophy.delete_all
+t1= Trophy.new(name: "أول كلمة", level: 1, score: 1, image_file_name: "big_89eaf3e487fe47e4fc467c23735e6c5332280449.jpg", image_content_type: "image/jpeg", image_file_size: 628755, image_updated_at: "2013-04-11 18:21:23").save
+
+t2 = Trophy.new(name: "تبشمت", level: 1, score: 1, image_file_name: "10Lf29161.png", image_content_type: "image/png", image_file_size: 54152, image_updated_at: "2013-04-11 18:45:49").save
+
+t3 = Trophy.new(name: "شتمتبش", level: 1, score: 1, image_file_name: "5L30ba5f.png", image_content_type: "image/png", image_file_size: 40637, image_updated_at: "2013-04-11 18:46:05").save
+
+t4 = Trophy.new(name: "يتيتش", level: 1, score: 1, image_file_name: "images.jpg", image_content_type: "image/jpeg", image_file_size: 4312, image_updated_at: "2013-04-11 18:46:22").save
+
+t4 = Trophy.new(name: "ابسشام", level: 1, score: 1, image_file_name: "images_(1).jpg", image_content_type: "image/jpeg", image_file_size: 8423, image_updated_at: "2013-04-11 18:46:38").save
+
+Prize.delete_all
+t1 = Prize.new(name: "أول كلمة", level: 1, score: 1, image_file_name: "big_89eaf3e487fe47e4fc467c23735e6c5332280449.jpg", image_content_type: "image/jpeg", image_file_size: 628755, image_updated_at: "2013-04-11 18:21:23").save
+
+t2 = Prize.new(name: "تبشمت", level: 1, score: 1, image_file_name: "10Lf29161.png", image_content_type: "image/png", image_file_size: 54152, image_updated_at: "2013-04-11 18:45:49").save
+
+t3 = Prize.new(name: "شتمتبش", level: 1, score: 1, image_file_name: "5L30ba5f.png", image_content_type: "image/png", image_file_size: 40637, image_updated_at: "2013-04-11 18:46:05").save
+
+t4 = Prize.new(name: "يتيتش", level: 1, score: 1, image_file_name: "images.jpg", image_content_type: "image/jpeg", image_file_size: 4312, image_updated_at: "2013-04-11 18:46:22").save
+
+t4 = Prize.new(name: "ابسشام", level: 1, score: 1, image_file_name: "images_(1).jpg", image_content_type: "image/jpeg", image_file_size: 8423, image_updated_at: "2013-04-11 18:46:38").save
