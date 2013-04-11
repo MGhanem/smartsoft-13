@@ -1,0 +1,76 @@
+<form class="form-horizontal" action="/admin/addtrophy" method="post" enctype="multipart/form-data">
+	<fieldset>
+		<legend>
+			<a>
+				إضافة انجاز جديد
+			</a>
+		</legend>
+		<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:name]? ' error' : ''%>">
+			<label class="control-label" for="inputName">إسم الانجاز</label>
+			<div class="controls">
+				<input type="text" id="inputName" placeholder="إسم الانجاز" name="name" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:name] : ''%>" class="span4">
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:name] %>
+					<% flash[:error][:name].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:level]? ' error' : ''%>">
+			<label class="control-label" for="inputScore">المستوى</label>
+			<div class="controls">
+				<input type="text" id="inputScore" placeholder="المستوى المطلوب للحصول على الانجاز" name="level" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:level] : ''%>" class="span4">
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:level] %>
+					<% flash[:error][:level].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:score]? ' error' : ''%>">
+			<label class="control-label" for="inputRank">مجموع النقاط</label>
+			<div class="controls">
+				<input type="text" id="inputRank" placeholder="مجموع النقاط المطلوب للحصول على الانجاز" name="score" value="<%= @fargs && @fargs[:addtrophy]? @fargs[:addtrophy][:score] : ''%>" class="span4">
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:score] %>
+					<% flash[:error][:score].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && (flash[:error][:image] || flash[:error][:image_content_type])? ' error' : ''%>">
+			<label class="control-label">الصورة</label>
+			<div class="controls">
+				<div class="uploader-controls">
+					<div class="uploader-preview fileupload-preview thumbnail">
+						<img src="/assets/noimage.gif" id="trophypre">
+					</div>
+					<div class="uploader-side">
+						<button class="btn uploader-button" type="button">إختيار الصورة</button>
+						<div class="uploader-file-input">
+							<input type="file" accept="image/*" name="image" onchange="readURL(this, '#trophypre');">
+						</div>
+						<p class="uploader-help" dir="ltr">Maximum size of 1MB. PNG, JPEG, GIF.</p>
+					</div>
+				</div>
+				<br>
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:image] %>
+					<% flash[:error][:image].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:image_content_type] %>
+					<% flash[:error][:image_content_type].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-large btn-primary pull-left">إضافة الانجاز</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
