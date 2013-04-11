@@ -52,7 +52,10 @@ class Trophy < ActiveRecord::Base
     # description:
     #     a function adds a new trophy to the database
     # params
-    #     name, level, score, image
+    #     name: the name of the trophy
+    #     level: the level of the trophy
+    #     score: the score of the trophy 
+    #     image: the image of the trophy
     # success: 
     #     returns true and the new trophy if it is added to the database
     # failure: 
@@ -66,6 +69,19 @@ class Trophy < ActiveRecord::Base
       end
     end
 
+    # author:
+    #     Karim ElNaggar
+    # description:
+    #     a function that edits a trophy
+    # params
+    #     name: the name of the trophy
+    #     level: the level of the trophy
+    #     score: the score of the trophy 
+    #     image: the image of the trophy
+    # success: 
+    #     returns true and the trophy if it is edited successfully
+    # failure: 
+    #     returns false and the trophy if it is not edited successfully
     def edit_trophy(name, level, score, image)
       cur_trophy = Trophy.find_by_name(name)
       if cur_trophy == nil
