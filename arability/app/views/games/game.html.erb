@@ -9,7 +9,12 @@
     words=successfulWords;
   }
 
-
+  
+  function getScoreOnly(score) {
+    clear();
+    $.get("/games/get_score_only?score=" + score)
+  }
+  
   function get_words(){
     return words;
   }
@@ -130,7 +135,6 @@ function getPrizes(level, score) {
     <% else I18n.locale==:en %>
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
-
   }
 
 </script>

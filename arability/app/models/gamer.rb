@@ -16,7 +16,8 @@ class Gamer < ActiveRecord::Base
 
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth, :gender
+                  :username, :country, :education_level, :date_of_birth, :gender,
+                  :highest_score
 
 
   #author: kareem ali
