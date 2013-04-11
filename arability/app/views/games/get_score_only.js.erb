@@ -2,16 +2,9 @@
     error =  '<h1 class="award-title"><%= t(:sign_in_first) %></h1>';
     $("#zone").append($(error));
 <% else %>
-  <% if @score == 0 %>
-      error = '<div class="alert" style="text-align:right; margin:10px;">' +
-              '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-              '<strong><%= t(:warning) %></strong> <%= t(:nil_trophies) %>' + '</div>';
-      $("#zone").append($(error));
-  <% else %>
       score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
       $("#zone").append($(score));
       button = '<a href="/game" class="btn btn-success btn-large" style="postion:top;margin:20px; padding:10px; font-size:24px;"><%= t(:restart_game) %></a>';
       $("#zone").append($(button));
-  <% end %>
 <% end %>
 
