@@ -108,9 +108,9 @@ Tabulous.setup do |config|
   # Tabulous expects every controller action to be associated with a tab.
   # When an action does not have an associated tab (or subtab), you can
   # instruct tabulous how to behave:
-  config.when_action_has_no_tab = :raise_error      # the default behavior
+  # config.when_action_has_no_tab = :raise_error      # the default behavior
   # config.when_action_has_no_tab = :do_not_render  # no tab navigation HTML will be generated
-  # config.when_action_has_no_tab = :render         # the tab navigation HTML will be generated,
+  config.when_action_has_no_tab = :render         # the tab navigation HTML will be generated,
                                                     # but no tab or subtab will be active
 
   #--------------------

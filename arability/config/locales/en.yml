@@ -76,7 +76,6 @@ en:
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
   add_word: "Add Keyword"
   stats_gender: "Gender Statistics"
   stats_country: "Country Statistics"
@@ -84,7 +83,6 @@ en:
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
   hide_stats: "Hide Stats"
-  out_of: "from"
   keyword_not_empty: "Search Keyword can not be empty"
   enter_categories: "filter by categories"
-
+  register_developer: "Please register as a developer first"
