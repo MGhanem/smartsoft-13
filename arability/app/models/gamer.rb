@@ -148,6 +148,16 @@ class Gamer < ActiveRecord::Base
 
   class << self
 
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to retrieve the list of common arability friends and Facebook friends
+  # Parameters:
+  #  current_gamer: the record in Gamer table for the current user
+  # Success:
+  #  returns the list of common followers
+  # Failure:
+  #  returns nil if no gamer token is found
   def get_common_facebook_friends(current_gamer)
     if (current_gamer.token.nil?)
       return nil
@@ -159,6 +169,7 @@ class Gamer < ActiveRecord::Base
     while i<friends.count
       if Gamer.exists?(:uid => friends.at(i), :provider => "facebook")
         common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+        common.push(current_gamer.id)
       end
       i = i + 1
       return common
