@@ -3,8 +3,16 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
   has_many :votes
+  
+  def self.find_loacle
+    if I18n.locale == :ar 
+      "هذا المعنى ليس باللغة العربية"
+    elsif I18n.locale == :en 
+      "This synonym in not in arabic"
+    end
+  end
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => "هذا المعنى ليس باللغة العربية"
+    :message => Synonym.find_loacle
 
   class << self
 
