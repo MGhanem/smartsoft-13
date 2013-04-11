@@ -73,6 +73,30 @@ free=SubscriptionModel.create(name: "Free")
 premium=SubscriptionModel.create(name: "Premium")
 deluxe=SubscriptionModel.create(name: "Deluxe")
 
+project = Project.new
+project.name = "Read"
+project.minAge = "19"
+project.maxAge = "50"
+project.description = "This project is awesome"
+project.owner_id = timo_dev.id
+project.save
+
+project1 = Project.new
+project1.name = "HSBC"
+project1.minAge = "30"
+project.maxAge = "40"
+project1.description = "This project includes information about all the banks in egypt"
+project1.owner_id = timo_dev.id
+project1.save
+
+project2 = Project.new
+project2.name = "Fun Integrated"
+project2.minAge = "30"
+project2.maxAge = "60"
+project2.description = "Our website is all about games and entertainment for both children and adults..."
+project2.owner_id = noha_dev.id
+project2.save
+
 
 Trophy.delete_all
 t1= Trophy.new(name: "أول كلمة", level: 1, score: 1, image_file_name: "big_89eaf3e487fe47e4fc467c23735e6c5332280449.jpg", image_content_type: "image/jpeg", image_file_size: 628755, image_updated_at: "2013-04-11 18:21:23")
