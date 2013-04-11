@@ -7,9 +7,8 @@ Arability::Application.routes.draw do
     get "admin/index"
 
     get "admin/login"
-    
     get "admin/logout"
-  
+
     post "admin/wordadd"
 
     post "admin/login"
@@ -19,13 +18,13 @@ Arability::Application.routes.draw do
     post "admin/upload"
 
     post "admin/addword"
-    
+
     post "admin/addtrophy"
-    
+
     post "admin/addprize"
 
     get "admin/deletetrophy"
-    
+
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
@@ -56,6 +55,12 @@ Arability::Application.routes.draw do
     post "admin/wordadd"
 
 
+
+    get "games/getprizes"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -103,23 +108,22 @@ Arability::Application.routes.draw do
     end
 
   end
-  
-  
-  get "games/getprizes"
-  get "games/showprizes"
 
-  post "games/record_vote"
+    get "games/getprizes"
+    get "games/showprizes"
 
-  post "games/vote_errors"
+    post "games/record_vote"
 
-  post "games/record_synonym"
+    post "games/vote_errors"
 
-  match 'search' => 'search#search'
+    post "games/record_synonym"
 
-  match '/projects/add_word' => "projects#add_word"
-  match '/game' => 'games#game'
-  get 'games/gettrophies'
-  get 'games/showtrophies'
+    match 'search' => 'search#search'
+
+    match '/projects/add_word' => "projects#add_word"
+    match '/game' => 'games#game'
+    get 'games/gettrophies'
+    get 'games/showtrophies'
   # The priority is based upon order of creation:
     get "admin/import_csv"
 
@@ -152,7 +156,7 @@ Arability::Application.routes.draw do
   
 
   
-  get 'games/getnewwords'
+    get 'games/getnewwords'
 
   # The priority is based upon order of creation:s
     match 'search' => 'search#search'
