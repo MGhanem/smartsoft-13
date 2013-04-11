@@ -4,12 +4,9 @@ class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
   has_many :synonyms
   has_and_belongs_to_many :categories
-  validates_presence_of :name, 
-    :message => "You need to enter a keyword to save"
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
-    :message => "The keyword may contain only english or only arabic characters"
-  validates_uniqueness_of :name,
-    :message => "This keyword is already in the database"
+  validates_presence_of :name 
+  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
+  validates_uniqueness_of :name
 
   # Author: 
   #   Nourhan Mohamed
@@ -211,7 +208,6 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
-
 
     # finds a keyword by name from the database
     # @author Mohamed Ashraf
