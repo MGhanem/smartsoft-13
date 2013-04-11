@@ -4,12 +4,9 @@ class Keyword < ActiveRecord::Base
   attr_accessible :approved, :is_english, :name
   has_many :synonyms
   has_and_belongs_to_many :categories
-  validates_presence_of :name, 
-    :message => "You need to enter a keyword to save"
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/,
-    :message => "The keyword may contain only english or only arabic characters"
-  validates_uniqueness_of :name,
-    :message => "This keyword is already in the database"
+  validates_presence_of :name 
+  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
+  validates_uniqueness_of :name
 
   # Author: 
   #   Nourhan Mohamed
@@ -28,36 +25,36 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #   returns an empty list if the keyword doesn't exist or if no approved
   #   synonyms where found for the keyword  
-    def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
-          gender = nil,education = nil)
-      if(!self.approved)
-        return [], {} 
-      end
-      keyword_id = self.id
-      filtered_data = Gamer
-      filtered_data = filtered_data
-        .filter_by_country(country) unless country.blank?
-      filtered_data = filtered_data
-        .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
-      filtered_data = filtered_data
-        .filter_by_gender(gender) unless gender.blank?
-      filtered_data = filtered_data
-        .filter_by_education(education.downcase) unless education.blank?
-      filtered_data = filtered_data.joins(:synonyms)
-      filtered_data = filtered_data
-        .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
-      votes_count = filtered_data.count(:group => "synonyms.id")
-      synonym_list = []
-      filtered_data.each do |gamer|
-        synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
-      end
-      synonym_list.uniq!
-      synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
-        .reverse!
-      synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
-      synonym_list = synonym_list + synonyms_with_no_votes
-      return synonym_list, votes_count
-    end  
+  def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
+        gender = nil,education = nil)
+    if(!self.approved)
+      return [], {} 
+    end
+    keyword_id = self.id
+    filtered_data = Gamer
+    filtered_data = filtered_data
+      .filter_by_country(country) unless country.blank?
+    filtered_data = filtered_data
+      .filter_by_dob(age_from,age_to) unless age_from.blank? || age_to.blank?
+    filtered_data = filtered_data
+      .filter_by_gender(gender) unless gender.blank?
+    filtered_data = filtered_data
+      .filter_by_education(education.downcase) unless education.blank?
+    filtered_data = filtered_data.joins(:synonyms)
+    filtered_data = filtered_data
+      .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
+    votes_count = filtered_data.count(:group => "synonyms.id")
+    synonym_list = []
+    filtered_data.each do |gamer|
+      synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
+    end
+    synonym_list.uniq!
+    synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
+      .reverse!
+    synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+    synonym_list = synonym_list + synonyms_with_no_votes
+    return synonym_list, votes_count
+  end  
 
   class << self
   require "string_helper"
@@ -211,7 +208,6 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
-
 
     # finds a keyword by name from the database
     # @author Mohamed Ashraf
