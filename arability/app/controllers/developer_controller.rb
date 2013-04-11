@@ -23,10 +23,11 @@ class DeveloperController < ApplicationController
 # description:
 #   creates new developer using parameters from registration form and renders my_subscription#new
 # params:
-#   first_name, last_name
+#   parameters passed from form(params[:developer]):first_name, last_name
 # success:
-#   developer created successfully
+#   developer created successfully, redirects to choose subscription page
 # failure:
+#   gamer not signed in, data entered is invalid
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       flash[:notice] = t(:already_registered_developer)
