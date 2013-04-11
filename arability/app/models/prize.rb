@@ -52,7 +52,10 @@ class Prize < ActiveRecord::Base
     # description:
     #     a function adds a new prize to the database
     # params
-    #     name, level, score, image
+    #     name: the name of the prize
+    #     level: the level of the prize
+    #     score: the score of the prize
+    #     image: the image of the prize
     # success: 
     #     returns true and the new prize if it is added to the database
     # failure: 
@@ -66,6 +69,19 @@ class Prize < ActiveRecord::Base
       end
     end
 
+    # author:
+    #     Karim ElNaggar
+    # description:
+    #     a function edits a prize
+    # params
+    #     name: the name of the prize
+    #     level: the level of the prize
+    #     score: the score of the prize
+    #     image: the image of the prize
+    # success: 
+    #     returns true and the  prize if it is successfully updated
+    # failure: 
+    #     returns false and the prize if it is not successfully updated
     def edit_prize(name, level, score, image)
       cur_prize = Prize.find_by_name(name)
       if cur_prize == nil
