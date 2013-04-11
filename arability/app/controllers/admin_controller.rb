@@ -178,6 +178,20 @@ class AdminController < ApplicationController
     redirect_to action: "index", anchor: "delete-trophy"
   end
 
+  def deleteprize
+    params[:id] = params[:id].strip
+    status_prize = Prize.find_by_id(params[:id])
+    if status_prize.present?
+      name = status_prize.name
+      status_prize.delete
+      flash[:success] = "تم مسح جائزة #{name} بنجاح"
+    else
+      flash[:error] = "Prize number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "delete-prize"
+  end
+
   # author:
   #     Karim ElNaggar
   # description:
