@@ -10,17 +10,17 @@ class GamesController < ApplicationController
 
   end
   # Author:
-  #  Omar Hossam
+  #   Omar Hossam
   # Description:
-  #  As a gamer, I could post my score on my facebook timeline by pressing on
-  #  the facebook share score button.
+  #   As a gamer, I could post my score on my facebook timeline by pressing on
+  #   the facebook share score button.
   # Parameters:
-  #  None.
+  #   None.
   # Success:
-  #  Gamer presser the facebook share score button, and his score is shared on
-  #  facebook and confirmed by API.
+  #   Gamer presser the facebook share score button, and his score is shared on
+  #   facebook and confirmed by API.
   # Failure: 
-  #  Facebook failure reported by API.
+  #   Facebook failure reported by API.
   def post_score_facebook
     token = Gamer.getToken(current_gamer.id)
     @graph = Koala::Facebook::API.new(token)
