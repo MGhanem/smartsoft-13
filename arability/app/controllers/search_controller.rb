@@ -14,9 +14,24 @@ class SearchController < BackendController
 	#			returns an empty list if the search keyword had synonyms
   def search
     @search_keyword = params['search']
+    @country = params['country']
+    @age_from = params['age_from']
+    if(!@age_from.blank?)
+      @age_from = @age_from.to_i
+    end
+    @age_to = params['age_to']
+    if(!@age_to.blank?)
+      @age_to = @age_to.to_i
+    end
+    @gender = params['gender']
     if(!@search_keyword.blank?)
-      @synonyms =
-        Synonym.retrieve_synonyms(@search_keyword)
+      @search_keyword_model = Keyword.find_by_name(@search_keyword)
+      @synonyms, @votes =
+        @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender)
+      @total_votes = 0
+      @votes.each do |synonym_id, synonym_votes|
+        @total_votes += synonym_votes
+      end
     end
   end
 end

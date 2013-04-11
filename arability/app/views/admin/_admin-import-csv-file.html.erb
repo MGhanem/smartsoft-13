@@ -1,0 +1,69 @@
+<form class="form-horizontal" action="/admin/upload" enctype="multipart/form-data" method="POST">
+	<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+	<legend>
+	  <a>
+	    استيراد ملف كلمات بصيغة CSV
+	  </a>
+	</legend>
+
+	<% if @message == "0" %>
+		<div class="alert alert-success">
+	    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	    	<div>
+	    		تم التحميل بنجاح
+	    	</div>
+	  	</div>
+	<% end %>
+
+	<% if @message == "1" %>
+		<div class="alert alert-error">
+	    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	    	<div>
+	    		لم يقم باختيار ملف
+	    	</div>
+	  	</div>
+	<% end %>
+
+	<% if @message && @message != "0" && @message != "1" %>
+		<div class="alert alert-error">
+	    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	    	<div>
+	    		الملف يجب ان يكون UTF-8 و بصيغة CSV
+	    	</div>
+	  	</div>
+	<% end %>
+
+	<div class="control-group">
+		<ol class="controls">
+			<li>لا يجب ان تحتوى الكلمات على ارقام</li>
+			<li>المعانى غير العربية لن يتم قبولها</li>
+			<li>يجب ان يكون الملف UTF-8 و بصيغة CSV</li>
+		</ol>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">
+			اختيار الملف
+		</label>
+		<div class="fileupload fileupload-new controls" data-provides="fileupload">
+		  <div class="input-append">
+		    <div class="uneditable-input span3">
+		    	<i class="icon-file fileupload-exists"></i> 
+		    	<span class="fileupload-preview"></span>
+		    </div>
+		    	<span class="btn-file btn">
+		    		<span class="fileupload-new">اختيار </span>
+		    		<span class="fileupload-exists">تغيير</span>
+		    		<input type="file" name="csvfile" id="csvfile">
+		    	</span>
+		    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">الغاء</a>
+		  </div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<button type="submit" class="btn btn-primary btn-large pull-left">تحميل الملف</button>
+		</div>
+	</div>
+</form>

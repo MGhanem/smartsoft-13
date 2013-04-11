@@ -1,1 +1,62 @@
-<p>You have reached mirna's twitter view</p>
+<% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
+
+<% if I18n.locale==:en %>
+
+<h2>Connect to your Twitter account</h2>
+<br>
+<div>
+    <label>connected to twitter!</label>
+    <div>
+        <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+        <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
+    </div>
+    <br>
+    <%= link_to "Finish", "/gamers/edit" %>
+</div>
+
+<% else I18n.locale==:ar %>
+
+<h2 align="right">تواصل مع تويتر الخاص بك</h2>
+<br>
+<div align="right">
+    <label>التواصل بالفعل موجود!</label>
+    <div>
+        <%= link_to "إلغاء الاتصال", "/authentications/remove_twitter_connection" %>
+        <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+    </div>
+    <br>
+    <%= link_to "إنتهاء", "/gamers/edit" %>
+</div>
+
+<% end %>
+
+<% else %>
+
+<% if I18n.locale==:en %>
+
+<h2>Connect to your Twitter account</h2>
+<br>
+<div>
+    <div>
+        <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+        <%= link_to "Connect", "/auth/twitter" %>
+    </div>
+    <br>
+    <%= link_to "Finish", "/gamers/edit" %>
+</div>
+
+<% else I18n.locale==:ar %>
+
+<h2 align="right">تواصل مع تويتر الخاص بك</h2>
+<br>
+<div align="right">
+    <div>
+    	<%= link_to "تواصل", "/auth/twitter" %>
+        <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+    </div>
+    <br>
+    <%= link_to "إنتهاء", "/gamers/edit" %>
+</div>
+
+<% end %>
+<% end %>

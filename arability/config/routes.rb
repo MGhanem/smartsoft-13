@@ -1,5 +1,8 @@
 Arability::Application.routes.draw do
+
   root :to => 'pages#home'
+  
+ # devise_for :gamers
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
@@ -11,16 +14,20 @@ Arability::Application.routes.draw do
 
     get "admin/logout"
 
-    post "admin/wordadd"
-
     # required for routing by the devise module(gem)
     devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     devise_for :gamers
     devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
+  
+
+    post "admin/wordadd"
+ 
     post "admin/login"
 
-    get "admin/import_csv"
+		get "admin/import_csv"
+
+
 
     post "admin/upload"
 
@@ -40,26 +47,33 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-    get 'games/getnewwords'
+		get 'games/getnewwords'
 
-    root :to => 'pages#home'
+    # required for routing by the devise module(gem)
+    devise_for :gamers do
+       get '/gamers/sign_out' => 'devise/sessions#destroy'
+    end
 
-    #here only two languages are accepted: english and arabic
+    scope "developers/" do 
+      match "/" => "backend#home", :as => "backend_home"
 
-    match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+      resources :projects
 
-    match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
+			resources :projects
 
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
-    match "followed" => "follow#list_followed", :as => "list_followed_words"
-    
-    get "admin/index"
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
 
-    get "admin/login"
-    get "admin/logout"
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
 
-    post "admin/login"
-    post "admin/wordadd"
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
 
     get "games/getprizes"
@@ -67,11 +81,12 @@ Arability::Application.routes.draw do
     post "games/vote_errors"
 
     post "games/record_synonym"
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-    # required for routing by the devise module(gem)
-    devise_for :gamers do
-       get '/gamers/sign_out' => 'devise/sessions#destroy'
-    end
+  
+      post "keywords/create"
+end
+
 
     scope "developers/" do
 
@@ -79,13 +94,20 @@ Arability::Application.routes.draw do
 
 			get "projects/remove_developer_from_project"
 
-  		match "projects/share/:id" => "projects#share"
-
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-
-  		get "projects/update"
-
       resources :projects
+
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
+      get "keywords/new"
+
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -124,8 +146,10 @@ Arability::Application.routes.draw do
 
   end
   
+
+  get 'games/getnewwords'
+  match '/game' => 'games#game'
   get "games/getprizes"
-  get "games/showprizes"
 
   post "games/record_vote"
 
@@ -141,25 +165,31 @@ Arability::Application.routes.draw do
 
   match '/authentications/twitter' => 'authentications#twitter'
   match '/projects/add_word' => "projects#add_word"
+
   match '/game' => 'games#game'
-  
+
   get 'games/gettrophies'
+  
+  get 'games/showprizes'
   get 'games/showtrophies'
 
+    post "admin/upload"
+
+    
   
   get 'games/getnewwords'
 
-  # The priority is based upon order of creation:s
     match 'search' => 'search#search'
+  get "authentications/twitter"
+  get "authentications/remove_twitter_connection"
+  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+  match '/auth/failure', :to => 'authentications#twitter'
  
-    match '/game' => 'games#game'
-    get "games/getprizes"
+  get "authentications/twitter_hall_of_fame"
 
-    post "games/record_vote"
+  get "/en/gamers" => redirect('/en/gamers/sign_up')
 
-    post "games/vote_errors"
-
-    post "games/record_synonym"
+  get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
     match "/post_score"=>'games#post', :as => "post_facebook"
 

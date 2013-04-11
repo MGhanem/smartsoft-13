@@ -1,4 +1,5 @@
 <% if I18n.locale==:en %>
+
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
 <% else I18n.locale==:ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
@@ -12,10 +13,13 @@
   <div class="tab-content" style="width:1200px;">
     <div class="tab-pane active" id="tab1">
       <div class="well" style="width:1100px; height:480px">
+
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
   <% if resource.errors.any? %>
   <div class="alert"><%= devise_error_messages! %></div>
   <% end %>
+
+  <% if I18n.locale==:en %>
 
   <div class="container">
     <% if I18n.locale==:en %>
@@ -34,7 +38,6 @@
   <div><%= f.label :date_of_birth, :class => "control-label" %>
     <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
-
          <div><%= f.label :gender, :class => "control-label" %>
             <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>
 
@@ -45,10 +48,16 @@
     </div><br>
 
   <div><%= f.label :education_level, :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+    <%= f.select(:education_level, options_for_select(['','School','University','Graduate ']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
+
+  <div class="Twitter">
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
+    <%= link_to ">> Connect to your Twitter account", "/authentications/twitter" %>
+  </div>
+  <br>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
 
@@ -60,7 +69,7 @@
   <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
   <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
-  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(leave blank if you don't want to change it)</i></div>
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(ضعها فارغة إذا لم تريد تغيرها)</i></div>
 
   <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
@@ -79,16 +88,56 @@
             </div></br>
 
   <div><%= f.label t(:education_level), :class => "control-label" %>
-            <%= f.select(:education_level, options_for_select(['','منخفض','متوسط','عالي']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+            <%= f.select(:education_level, options_for_select(['','مدرسة','جامعة','خريج']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
-  <%= f.password_field t(:current_password), :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
+
+  <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(نحتاج كلمة سرك الحالية لتأكيد التغيرات)</i></div>
 
   <div><%= f.submit "تغيير", :class => "btn btn-success" %></div>
   <% end %>
 </div>
+    <% else I18n.locale==:ar %>
+
+    <div class="container">
+  <div class="control-group"><%= f.label t(:username), :class => "control-label" %>
+  <%= f.text_field :username, :placeholder => "اسم المستخدم", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
+  <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
+  <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
+
+  <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
+
+            <div><%= f.label t(:country), :class => "control-label" %>
+                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
+                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                {:style => "margin-left: 10px;" }) %>
+                 </div></br>
+
+  <div><%= f.label t(:education_level), :class => "control-label" %>
+    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+  <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div class="Twitter">
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
+    <%= link_to ">> تواصل مع تويتر الخاص بك", "/authentications/twitter" %>
+  </div>
+  <br>
+
+  <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
 <% end %>
+    </div>
     </div>
     <div class="tab-pane" id="tab2">
       <div class="well" style="width:1100px; height:480px">
@@ -111,16 +160,8 @@
           <p font='20' style="position:relative; padding:40px;"><%= t(:disconnect_from)%> <%= link_to t(:facebook), :controller => :games, :action => :disconnect_facebook %></p>
         </div>
         <% end %>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
