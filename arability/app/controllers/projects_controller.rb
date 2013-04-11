@@ -447,7 +447,7 @@ def add_word
             if Synonym.find_by_id(@synonym_id) != nil
               @edited_word.synonym_id = @synonym_id
               if @edited_word.save
-                flash[:notice] = t(:Synonym_changed_successfully)
+                flash[:success] = t(:Synonym_changed_successfully)
                 redirect_to project_path(@project_id), :flash => flash
                 return
               else
@@ -463,7 +463,7 @@ def add_word
           else
             @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
             if @added_word
-              flash[:notice] = t(:successfully_added_word_to_project)              
+              flash[:success] = t(:successfully_added_word_to_project)              
               redirect_to project_path(@project_id), :flash => flash
               return
             else
@@ -507,7 +507,7 @@ def remove_word
           end }
           if  @remove != nil
             @remove.destroy
-            flash[:notice] = t(:word_removed_successfully)
+            flash[:success] = t(:word_removed_successfully)
             redirect_to project_path(@project_id), :flash => flash
             return
           else

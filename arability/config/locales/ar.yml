@@ -151,3 +151,4 @@ ar:
   remove_from_project: "إزالة من المشروع"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  no_words_in_project: "لا توجد كلمات في هذا المشروع."
