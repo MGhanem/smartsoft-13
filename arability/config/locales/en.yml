@@ -94,6 +94,8 @@ en:
   keyword_not_empty: "Search Keyword can not be empty"
   hide_stats: "Hide Stats"
   enter_categories: "filter by categories"
+  register_developer: "Please register as a developer first"
+  follow_words_info: "Follow a word to recieve an email with every update. Updates include a new Synonym addition to a Keyword or the top voted Synonym gets changed."
   activerecord:
     errors:
       models:

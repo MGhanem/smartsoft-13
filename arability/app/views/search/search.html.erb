@@ -11,8 +11,8 @@
 			<% end %>
 			<div class="row" style="padding:10px;">
 				<div class="span12">
-						<button type="button" class="btn btn-mini" data-toggle="collapse" data-target="#filter">
-							<span id="filter_btn" class="icon-plus" onClick="toggle_me()"></span>
+						<button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
+							<span id="filter_btn" class="icon-plus"></span>
 							<script type="text/javascript">
 								function toggle_me(){
 									$("#filter_btn").toggleClass('icon-minus');
@@ -53,7 +53,7 @@
 	<div class="well">
 		<span>
 			<%= t(:no_synonyms_found) %>
-			<%= link_to t(:follow_word), "follow_path" %>
+			<%= link_to t(:follow_word), follow_word_path(keyword_id: Keyword.where(:name => @search_keyword).first.id) %>
 		</span>
 	</div>
 <% end %>
@@ -67,7 +67,15 @@
 		</div>
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
-				<!-- collective chart here -->
+				<% key_id = Keyword.where(:name => @search_keyword).first.id %>
+				<% if Keyword.get_keyword_synonym_visual(key_id) != [] %>
+				 	<%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+          <% end %>
+        <% else %>
+          <p><%= t(:no_votes_for_word)%></p>
+      	<% end %>
 			</div>
 		</div>
 	</div>
@@ -125,7 +133,7 @@
 				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<!-- add charts here -->
-						<% if Vote.where('synonym_id=?', synonym.id).exists? %>
+						<% if @votes[synonym.id] != nil%>
 						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
 				    <div class="container-fluid">
               <div class="row-fluide">
@@ -164,4 +172,10 @@
 			</div>
 		</div>
 	<% end %>
+	<div class="well">
+			<span>
+				<%= t(:follow_word_link) %>
+				<%= link_to t(:follow_word_end_of_search), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
+			</span>
+	</div>
 <% end %>
