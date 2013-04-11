@@ -134,6 +134,7 @@ Arability::Application.routes.draw do
 
   post "games/record_synonym"
 
+<<<<<<< HEAD
   match 'search' => 'search#search'
 
   match '/projects/add_word' => "projects#add_word"
@@ -178,7 +179,7 @@ Arability::Application.routes.draw do
   get "authentications/twitter"
   get "authentications/remove_twitter_connection"
   match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
-  match '/auth/failure', :to => 'authentications#twitter'
+  match '/auth/failure', :to => 'authentications#twitter_failure'
  
   get "authentications/twitter_hall_of_fame"
 
