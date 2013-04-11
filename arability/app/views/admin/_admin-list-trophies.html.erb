@@ -25,16 +25,20 @@
         </div>
       </div>
     <% end %>
-<% @trophies_list.each do |t| %>
-	<div class="trophy well">
-		<span>الاسم: <%= t.name %></span>
-		<div class="uploader-controls">
-			<div class="uploader-preview fileupload-preview thumbnail">
-				<img src="<%= t.image %>">
-			</div>
-		</div>
-		<span>المستوى: <%= t.level %></span>
-		<span>مجموع النقاط: <%= t.score %></span>
-		<span><a href="#myModalTrophy" data-href="/admin/deletetrophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">مسح</a></span>
-	</div>
+<% if @trophies_list.length != 0 %>
+  <% @trophies_list.each do |t| %>
+  	<div class="trophy well">
+  		<span>الاسم: <%= t.name %></span>
+  		<div class="uploader-controls">
+  			<div class="uploader-preview fileupload-preview thumbnail">
+  				<img src="<%= t.image %>">
+  			</div>
+  		</div>
+  		<span>المستوى: <%= t.level %></span>
+  		<span>مجموع النقاط: <%= t.score %></span>
+  		<span><a href="#myModalTrophy" data-href="/admin/deletetrophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">مسح</a></span>
+  	</div>
+  <% end %>
+<% else %>
+  عفون لا يوجد انجازات
 <% end %>
