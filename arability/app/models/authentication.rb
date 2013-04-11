@@ -40,6 +40,16 @@ class Authentication < ActiveRecord::Base
     authentication.destroy
   end
 
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to retrieve the list of common arability friends and Twitter followers
+  # Parameters:
+  #  current_gamer: the record in Gamer table for the current user
+  # Success:
+  #  returns the list of common followers
+  # Failure:
+  #  returns nil if no authentication is found
   def get_common_twitter_followers(current_gamer)
     auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
     if (auth.nil?)
@@ -52,6 +62,7 @@ class Authentication < ActiveRecord::Base
     while i<followers.count
       if Authentication.exists?(:gid => followers.at(i), :provider => "twitter")
         common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
+        common.push(current_gamer.id)
       end
       i = i + 1
       return common
