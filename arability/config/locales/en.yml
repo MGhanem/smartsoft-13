@@ -84,7 +84,7 @@ en:
   success_developer_registration: "You have successfully registered as a developer."
   choose_subscription_model: "Please choose a subscription model."
   subscription_model_does_not_exist: "Failed to complete registration: the subscription model you chose does not exist."
-  register_as_developer: "Register as a developer"
+  register_as_developer: "Developer Registration"
   next: "Next"
   done: "Done!"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
@@ -144,6 +144,8 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
+  first_name: "First Name"
+  last_name: "Last Name"
   activerecord:
     models:
       developer: "Developer"

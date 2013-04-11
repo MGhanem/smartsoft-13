@@ -165,6 +165,8 @@ ar:
   register_as_developer: "أدخل بياناتك للاشتراك كمطور"
   next: "التالي"
   done: "إنتهاء"
+  first_name: "الاسم الاول"
+  last_name: "إسم العائلة"
   activerecord:
     models:
       developer: "مطور"
