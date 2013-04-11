@@ -12,14 +12,19 @@
 <% else %>
     <table class="table table-hover table-bordered" style="width:600px">
     	<tr>
-    		<td>
-<% @project.developers_shared.each do |dev|%>
+    	<% @project.developers_shared.each do |dev|%>
+            <td>
             <%= dev.name %>
-            
+          </td>
+          <td>
+            <%= dev.email %>
+          </td>
+
+            <td>
             <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=@project.id%>"><i class="icon-remove"></i></a>
+          </td>
             <br />
           <% end %>
-      </td>
       </tr>
       </table>
 <%end%>

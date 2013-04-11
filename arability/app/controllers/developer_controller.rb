@@ -62,32 +62,28 @@ def remove_developer_from_project
       if developer == nil
         flash[:notice] = "Email address is for gamer, not a developer"
       else
-
-        developer.projects_shared << @project
-        if(developer.save)
-          
-          flash[:notice] = "Project has been shared successfully with #{developer.name}"
-          redirect_to :action => "share",:controller => "projects", :id => params[:id]
+        developer2 = Developer.find_by_gamer_id(current_gamer.id)
+        if developer == developer2
+          flash[:notice] = "You cant share the project with yourself"
+          redirect_to "/developers/projects/#{@project.id}/share"
           return
-        else
-          flash[:notice] = "Failed to share project with developer"
-
         end
-
+        if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
+          flash[:notice] = "Already shared"
+        else
+          developer.projects_shared << @project
+          if(developer.save)
+            flash[:notice] = "Project has been shared successfully with #{developer.name}"
+            redirect_to :action => "share",:controller => "projects", :id => params[:id]
+            return
+          else
+            flash[:notice] = "Failed to share project with developer"
+          end
+        end
       end
-# =======
-#     else
-#       flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
-#       render :action => 'new'
-# >>>>>>> 9f94335568499d915363f0e5dad48fb57a372c50
-#     end
-#     redirect_to "/developers/projects"
-#   end
-# end
-end
-redirect_to "/developers/projects/#{@project.id}/share" 
-end
-
+    end
+    redirect_to "/developers/projects/#{@project.id}/share"
+  end
 end
 
 
