@@ -20,6 +20,7 @@ class GamesController < ApplicationController
   #   score: the score that the gamer earns
   # returns:
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
+  #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
   def gettrophies
     @level = params[:level].to_i
@@ -28,6 +29,9 @@ class GamesController < ApplicationController
                                                       @score, @level)
     @won_prizes = current_gamer.won_prizes?(@score, @level)
     @won_trophies.map { |nt| current_gamer.trophies << nt }
+    if @score > current_gamer.highest_score.to_i
+      current_gamer.update_attributes!(:highest_score => @score)
+    end
     respond_to do |format|
       format.js
     end
