@@ -198,7 +198,7 @@ end
       else
         words_synonyms_array.each do |word_syn|
           if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-
+            
           end
         end
       end
@@ -292,11 +292,11 @@ end
           end
         end
       end
-      if @id_words_in_database_before.empty? and @id_words_not_in_database_before.empty?
+      if @id_words_in_database_before.empty? && @id_words_not_in_database_before.empty?
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
-        if  Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
+        if Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
           @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i
         else
           @words_remaining = 150
