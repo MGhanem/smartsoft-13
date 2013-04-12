@@ -1,5 +1,8 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+# require "omniauth-google-oauth2"
+# config.omniauth :google_oauth2, "APP_ID", "APP_SECRET", { access_type: "offline", approval_prompt: "" }
+
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -211,6 +214,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  require "omniauth-facebook"
+  config.omniauth :facebook, "155521981280754", "a4d4684f0554e3637085e72eaa132890",
+  {:scope => 'email, offline_access, publish_stream', :client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

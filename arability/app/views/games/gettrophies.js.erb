@@ -1,9 +1,11 @@
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 <% if !gamer_signed_in? %>
     error =  '<h1 class="award-title"><%= t(:sign_in_first) %></h1>';
     $("#zone").append($(error));
 <% else %>
   <% if @level == 0 || @score == 0 %>
-      error = '<div class="alert" style="text-align:right; margin:10px;">' +
+      error = '<div class="aletr" style="text-align:right; margin:10px;">' +
               '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
               '<strong><%= t(:warning) %></strong> <%= t(:nil_trophies) %>' + '</div>';
       $("#zone").append($(error));
@@ -12,12 +14,13 @@
         button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
+        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_next_level) %></a>';
         $("#zone").append($(button));
     <% end %>
 
-    game_score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
-    $("#zone").append($(game_score));
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a> <a target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h1>';
+    $("#zone").append($(score));
+
     <% if @won_trophies.length != 0 %>
         success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';
         trophies = [];
