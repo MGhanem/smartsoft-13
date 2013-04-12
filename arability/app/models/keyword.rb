@@ -164,7 +164,7 @@ class Keyword < ActiveRecord::Base
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
-    	return relevant_first_list
+    	relevant_first_list
     end
 
     # finds a keyword by name from the database
