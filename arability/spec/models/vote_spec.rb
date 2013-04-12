@@ -69,7 +69,7 @@ describe Vote do
       g.gender = "male"
       g.email = "trialC@example.com"
       g.password = "1234567"
-      g.save (:validate => false)
+      g.save (validate: false)
       g
     }
 
@@ -82,7 +82,7 @@ describe Vote do
       gTwo.gender = "female"
       gTwo.email = "trialD@example.com"
       gTwo.password = "123456"
-      gTwo.save (:validate => false)
+      gTwo.save (validate: false)
       gTwo
     }
 
