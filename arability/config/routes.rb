@@ -63,15 +63,14 @@ Arability::Application.routes.draw do
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
+      match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
+      match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export"
       resources :projects
       match "projects/:id/share" => "projects#share", :as => "share_project"
 
 			get "projects/remove_developer_from_project"
-  		
-      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
-      match '/projects/:project_id/remove_word' => "projects#remove_word"
-
-      match '/projects/:project_id/export_csv' => "projects#export_to_csv"
+  	
 
 
       match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
