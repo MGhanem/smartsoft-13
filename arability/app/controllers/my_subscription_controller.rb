@@ -101,10 +101,10 @@ class MySubscriptionController < ApplicationController
     sub_id = params[:my_subscription]
     dev_id = @developer.id
     if MySubscription.choose(dev_id,sub_id)
-      flash[:notice] = "You have successfully chosen your subscription model"
+      flash[:notice] = I18n.t('controller.subscription.messages_errors.you_have_successfully_chosen_your_model')
       redirect_to root_url
     else
-      flash[:notice] = "Please choose your subscription model"
+      flash[:notice] = I18n.t('controller.subscription.messages_errors.please_choose')
       render 'my_subscription/choose_sub'
     end
   end

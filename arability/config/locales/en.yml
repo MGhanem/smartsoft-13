@@ -70,3 +70,8 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
+        please_choose: 'please choose your subscription model'

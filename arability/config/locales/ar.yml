@@ -102,3 +102,8 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
+        please_choose: 'من فضلك إختر نظامك'
