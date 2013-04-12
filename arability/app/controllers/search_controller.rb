@@ -23,8 +23,8 @@ class SearchController < BackendController
     @categories = params[:categories]
     if @categories.present?
       categories_array = @categories.split(/,/)
-      categories_array.reject! { |x| x.blank? }
       categories_array.map! { |x| x.strip }
+      categories_array.reject! { |x| x.blank? }
       categories_array.uniq!
     else
       categories_array = []
@@ -36,6 +36,7 @@ class SearchController < BackendController
     end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
+    @categories = categories_array.join(", ")
   end
 
 	#Description:

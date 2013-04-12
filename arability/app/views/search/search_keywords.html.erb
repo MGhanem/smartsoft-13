@@ -9,7 +9,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-      <input name="categories" type="text" placeholder="<%= t :enter_categories %>"/>
+      <input name="categories" type="text" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>

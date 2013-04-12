@@ -108,6 +108,8 @@ class Keyword < ActiveRecord::Base
     #   failure: the first return is false and the second is the unsaved keyword
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
       name.strip!
+      name.downcase!
+      name = name.split(" ").join(" ")
       keyword = where(name: name).first_or_create
       keyword.approved = approved
       name.downcase! if is_english_string(name)
@@ -156,7 +158,7 @@ class Keyword < ActiveRecord::Base
       end
       search_word = search_word.strip
       search_word = search_word.split(" ").join(" ")
-    	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
+    	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(:approved => true)
       if categories != []
         keyword_list = 

@@ -7,16 +7,19 @@ describe Keyword do
     success, keyword = Keyword.add_keyword_to_database("ينسب")
     success.should eq(true)
   end
+
   it "Doesnt add keyword to database if english and arabic letters" do
     success, keyword = Keyword.add_keyword_to_database("ينسب dj")
     success.should eq(false)
   end
+
   it "Doesnt add keyword to database if anything other than letters" do
     success, keyword = Keyword.add_keyword_to_database("test2")
     success.should eq(false)
     success, keyword = Keyword.add_keyword_to_database("ستمب2")
     success.should eq(false)
   end
+
   it "should strip keyword before adding to database" do
     success, keyword = Keyword.add_keyword_to_database("test ")
     success.should eq(true)
@@ -25,17 +28,56 @@ describe Keyword do
     success.should eq(true)
     keyword.name.should eq("ينسب")
   end
+
+  it "should add two word keywords" do
+    success, keyword = Keyword.add_keyword_to_database("test testing")
+    success.should eq(true)
+    keyword.name.should eq("test testing")
+    success, keyword = Keyword.add_keyword_to_database("ينسب ينسب")
+    success.should eq(true)
+    keyword.name.should eq("ينسب ينسب")
+  end
+
+  it "should add two word keywords without spaces in between" do
+    success, keyword = Keyword.add_keyword_to_database("   test     testing   ")
+    success.should eq(true)
+    keyword.name.should eq("test testing")
+    success, keyword = Keyword.add_keyword_to_database("  ينسب     ينسب  ")
+    success.should eq(true)
+    keyword.name.should eq("ينسب ينسب")
+  end
+
+  it "should add keywords with categories" do
+    success, category = Category.add_category_to_database_if_not_exists("test")
+    success, keyword = Keyword.add_keyword_to_database("test",true,true, ["test"])
+    success.should eq(true)
+    category.keywords.include?(keyword).should eq(true)
+    success, keyword = Keyword.add_keyword_to_database("ينسب", true, false, ["test"])
+    success.should eq(true)
+    category.keywords.include?(keyword).should eq(true)
+  end
+  it "should add keywords approved and unapproved" do
+    success, keyword = Keyword.add_keyword_to_database("test", true)
+    success.should eq(true)
+    keyword.approved.should eq(true)
+    success, keyword = Keyword.add_keyword_to_database("ينسب", false)
+    success.should eq(true)
+    keyword.approved.should eq(false)
+  end
+
   it "should downcase keyword before adding to database" do
     success, keyword = Keyword.add_keyword_to_database("Dj")
     success.should eq(true)
     keyword.name.should eq("dj")
   end
+
   it "should find keyword by name" do
     success, keyword = Keyword.add_keyword_to_database("dj")
     success.should eq(true)
     keyword2 = Keyword.find_by_name("dj")
     keyword2.id.should eq(keyword.id)
   end
+
 	it "should return an empty list for an empty search keyword" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
