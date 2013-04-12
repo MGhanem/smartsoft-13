@@ -9,4 +9,6 @@
   <% end -%>
 
   <div><%= f.submit "Sign in", :class => "btn btn-large btn-primary pull-right", :style => "margin-top:-30px;" %></div>
+  <br>
+  <%= link_to "Sign in with Google", gamer_omniauth_authorize_path(:google_oauth2) %>
 <% end %>
