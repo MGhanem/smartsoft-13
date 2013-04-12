@@ -195,7 +195,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		synonyms, votes = keyword.retrieve_synonyms
@@ -212,7 +212,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
@@ -230,7 +230,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
@@ -250,7 +250,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
@@ -276,7 +276,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
@@ -296,7 +296,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
@@ -316,7 +316,7 @@ describe Keyword do
 		gamer.date_of_birth = "1993-03-23"
 		gamer.email = "nour@gmail.com"
 		gamer.password = "1234567"
-		gamer.save
+		gamer.save(validate: false)
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		synonym2 = Synonym.create(name: "دوس", keyword_id: keyword.id, approved: true)
