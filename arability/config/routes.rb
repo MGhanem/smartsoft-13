@@ -80,7 +80,7 @@ Arability::Application.routes.draw do
 
 			match 'search' => 'search#search'
 
-      match '/new' => "developer#new"
+      match '/new' => "developer#new", :as => :developers_new
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
