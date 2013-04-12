@@ -23,19 +23,20 @@ class SearchController < BackendController
     @categories = params[:categories]
     if @categories.present?
       categories_array = @categories.split(/,/)
-      categories_array.reject! { |x| x.blank? }
       categories_array.map! { |x| x.strip }
+      categories_array.reject! { |x| x.blank? }
       categories_array.uniq!
     else
       categories_array = []
     end
-    @search_keyword = params['search']
+    @search_keyword = params["search"]
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
     end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
+    @categories = categories_array.join(", ")
   end
 
 	#Description:

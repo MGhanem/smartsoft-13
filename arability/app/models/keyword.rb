@@ -108,6 +108,8 @@ class Keyword < ActiveRecord::Base
     #   failure: the first return is false and the second is the unsaved keyword
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
       name.strip!
+      name.downcase!
+      name = name.split(" ").join(" ")
       keyword = where(name: name).first_or_create
       keyword.approved = approved
       name.downcase! if is_english_string(name)
@@ -148,16 +150,12 @@ class Keyword < ActiveRecord::Base
   	#			returns an empty list if the search keyword had no matches or no 
     #     similar keywords were found
     def get_similar_keywords(search_word, categories = [])
-    	if (search_word.blank?)
-    		return []
-    	end
-      if(is_english_string(search_word))
-        search_word.downcase!
-      end
+  		return [] if search_word.blank?
+      search_word.downcase! if is_english_string(search_word)
       search_word = search_word.strip
       search_word = search_word.split(" ").join(" ")
-    	keyword_list = self.where("name LIKE ?", "%#{search_word}%")
-        .where(:approved => true)
+    	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
+        .where(approved: true)
       if categories != []
         keyword_list = 
           keyword_list.joins(:categories)
@@ -166,7 +164,7 @@ class Keyword < ActiveRecord::Base
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
-    	return relevant_first_list
+    	relevant_first_list
     end
 
     # finds a keyword by name from the database
