@@ -69,40 +69,5 @@ class Prize < ActiveRecord::Base
       end
     end
 
-    # author:
-    #     Karim ElNaggar
-    # description:
-    #     a function edits a prize
-    # params
-    #     name: the name of the prize
-    #     level: the level of the prize
-    #     score: the score of the prize
-    #     image: the image of the prize
-    # success: 
-    #     returns true and the  prize if it is successfully updated
-    # failure: 
-    #     returns false and the prize if it is not successfully updated
-    def edit_prize(name, level, score, image)
-      cur_prize = Prize.find_by_name(name)
-      if cur_prize == nil
-        return false, cur_prize
-      else
-        if level
-          cur_prize.level = level
-        end
-        if score
-          cur_prize.score = score
-        end
-        if image
-          cur_prize.image = image
-        end
-        if cur_prize.save
-          return true, cur_prize
-        else
-          return false, cur_prize
-        end
-      end
-    end
-
   end
 end
