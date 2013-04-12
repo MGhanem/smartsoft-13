@@ -1,5 +1,4 @@
 <script type="text/javascript" charset="utf-8">
-  
   var words;
   var cache = "";
   var nav_locked = false;
@@ -14,7 +13,7 @@
   
   function getScoreOnly(score) {
     clear();
-    $.get("/games/get_score_only?score=" + score)
+    $.get("/games/get_score_only?score=" + score);
   }
   
   function get_words(){
@@ -44,10 +43,14 @@
     $('.zone').empty();
     //$('#workspace').remove();
     if(locale == "english"){
-      $('.zone').append('<div class=\"vote_form\" style="font-size:20px; color:white; float:left; margin-left:30px;"><p>You have to be signed in to display vote form</p></div>');
+      $('.zone').append('<div class=\"vote_form\" style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;">' +
+        '<p>You have to be signed in to display vote form</p></div>');
     }
     if(locale == "arabic"){
-      $('.zone').append('<div class=\"vote_form\"style="font-size:20px; color:white; float:left; margin-left:30px;" ><p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
+      $('.zone').append('<div class=\"vote_form\"style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;" >' +
+        '<p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
     }
   }
 
@@ -61,8 +64,6 @@
       return;
     }
     else{
-      //$('#workspace').remove();
-      //$('.zone').append('<div class=\"vote_form\"></div></br>');
       var first_word = words.shift();
       $.post("/games/vote.js", { word: first_word});
     }
@@ -240,4 +241,3 @@ function setButtons(){
   </div>
 </div>
 </div>
-
