@@ -150,16 +150,12 @@ class Keyword < ActiveRecord::Base
   	#			returns an empty list if the search keyword had no matches or no 
     #     similar keywords were found
     def get_similar_keywords(search_word, categories = [])
-    	if (search_word.blank?)
-    		return []
-    	end
-      if(is_english_string(search_word))
-        search_word.downcase!
-      end
+  		return [] if search_word.blank?
+      search_word.downcase! if is_english_string(search_word)
       search_word = search_word.strip
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
-        .where(:approved => true)
+        .where(approved: true)
       if categories != []
         keyword_list = 
           keyword_list.joins(:categories)
