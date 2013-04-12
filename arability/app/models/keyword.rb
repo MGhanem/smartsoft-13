@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
@@ -133,23 +134,22 @@ class Keyword < ActiveRecord::Base
       end
       return false
     end
-
-    # author:
-    #   Omar Hossam
-    # description:
-    #   feature takes no input and returns a list of all unapproved keywords
-    # success: 
-    #   takes no arguments and returns to the admin a list containing the keywords 
-    #   that are pending for approval in the database
-    # failure:
-    #   returns an empty list if no words are pending for approval
-
-      def listunapprovedkeywords
-
-        return Keyword.where(approved: false).all
-
-      end
   end
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   feature takes no input and returns a list of all unapproved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords.
+  #   that are pending for approval in the database.
+  # Failure:
+  #   returns an empty list if no words are pending for approval.
+  def self.list_unapproved_keywords
+    return Keyword.where(approved: false).all
+  end
+
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -255,5 +255,5 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
-    end
+  end
 end

@@ -1,10 +1,20 @@
+#encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
   has_many :votes
   has_many :gamers, :through => :vote
+
+  def self.find_loacle
+    if I18n.locale == :ar 
+      "هذا المعنى ليس باللغة العربية"
+    elsif I18n.locale == :en 
+      "This synonym in not in arabic"
+    end
+  end
+
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => "The synonym is not arabic"
+    :message => Synonym.find_loacle 
 
   class << self
     # Author:
@@ -28,40 +38,43 @@ class Synonym < ActiveRecord::Base
         end
         return false
       end
+  end
 
-  # author:
+  # Author:
   #   Omar Hossam
-  # description:
-  #   feature adds synonym to database and returns a boolean result
-  #   indicatiing success or failure of saving
-  # parameters:
-  #   synonym_name: string input parameter that represents the synonym name
+  # Description:
+  #   This is the modified function of "recordsynonym". Feature adds synonym to
+  #   database and returns a boolean result
+  #   indicatiing success or failure of saving.
+  # Parameters:
+  #   synonym_name: string input parameter that represents the synonym name.
   #   keyword_id: integer input parameter representing the keyword id
-  #     the synonym points to
+  #     the synonym points to.
   #   approved: an optional boolean input parameter with a default false
-  #     represents if an admin has approved a synonym on database or not
-  # success:
+  #     represents if an admin has approved a synonym on database or not.
+  # Success:
   #   Output is boolean -- this method returns true if
-  #     the vote has been recorded
-  # failure: 
+  #     the vote has been recorded.
+  # Failure: 
   #   returns false if word not saved to database due to incorrect expression
   #   of synonym name or an incorrect keyword id for
-  #   an unavaialable keyword in database
-    def record_synonym(synonym_name, keyword_id, approved = false)
-      if synonym_name.blank?
-        return false
-      elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
-        return false
-      elsif Keyword.exists?(id: keyword_id)
-          new_synonym = Synonym.new
-          new_synonym.name = synonym_name
-          new_synonym.keyword_id = keyword_id
-          return new_synonym.save
-      else
-        return false
-      end
+  #   an unavaialable keyword in database.
+  def self.record_synonym(synonym_name, keyword_id, approved = false)
+    if synonym_name.blank?
+      return false
+    elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
+      return false
+    elsif Keyword.exists?(id: keyword_id)
+      new_synonym = Synonym.new
+      new_synonym.name = synonym_name
+      new_synonym.keyword_id = keyword_id
+      return new_synonym.save
+    else
+      return false
     end
   end
+
+  class << self
 
   #Author: Nourhan Zakaria
   #This method is used to get the percentage of gamers'countries who voted for 
@@ -145,6 +158,7 @@ class Synonym < ActiveRecord::Base
         sum = groups.sum{|v| v.last}
         return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
   
+  end
   end 
 end
 
