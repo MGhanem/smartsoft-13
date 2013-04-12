@@ -11,15 +11,16 @@
       $("#zone").append($(error));
   <% else %>
     <% if @won_prizes %>
-        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى الجوائز </a>';
+        button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
+        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_next_level) %></a>';
         $("#zone").append($(button));
     <% end %>
 
-    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a> </h1>';
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a> <a target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h1>';
     $("#zone").append($(score));
+
     <% if @won_trophies.length != 0 %>
         success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';
         trophies = [];
@@ -30,6 +31,7 @@
         $("#zone").append($(success));
         for(var i = 0; i < trophies.length; i++) {
           $("#zone").append($(trophies[i]));
+
         }
   <% end %>
 <% end %>
