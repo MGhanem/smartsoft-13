@@ -57,7 +57,7 @@ class Gamer < ActiveRecord::Base
   end
   
   # Description:
-  #   Takes in a trophy id and adds it the gamers prizes array
+  #   Takes in a prize id and adds it the gamers prizes array
   # Author:
   #   Adam Ghanem
   # @params:
