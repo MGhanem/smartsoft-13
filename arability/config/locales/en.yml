@@ -26,6 +26,7 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  select subscription: "Select Subscription"
   backend: "Developers"
 
   project: "Project"
@@ -88,6 +89,21 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
+        please_choose: 'please choose your subscription model'
+  already_registered_developer: "You are already registered as a developer. Don't you remember?"
+  failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
+  no_developer: "Please register as a developer before you choose your subscription model."
+  subscription_model_already_chosen: "You have already chosen your subscription model. Don't you remember?"
+  success_developer_registration: "You have successfully registered as a developer."
+  choose_subscription_model: "Please choose a subscription model."
+  subscription_model_does_not_exist: "Failed to complete registration: the subscription model you chose does not exist."
+  register_as_developer: "Developer Registration"
+  next: "Next"
+  done: "Done!"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
   keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
@@ -114,6 +130,8 @@ en:
   import_csv_list1: "Words should not contain any numbers"
   import_csv_list2: "Non-arabic synonyms will not be accepted"
   import_csv_list3: "The file has to be in csv format and UTF-8 encoded"
+  import_csv_list4: "You can import more than one synonym for a keyword but the first one will be used in your project"
+  import_csv_list5: "Tou can change the synonym later"
   java_script_disabled : "Be smarter than that"
   upload_file_error1: "You did not choose a file"
   upload_file_error2: "This file is not UTF-8 encoded"
@@ -121,7 +139,7 @@ en:
   upload_file_error4: "This file is not in csv format"
   upload_file_error5: "There are no words to be added to this project"
   projects_index_error1: "Please sign up as a developer first"
-  projects_index_error2: "Please sign in"
+  projects_index_error2: "Please sign in first"
   projects_index_title: "Projects"
   projects_index_tab1: "My projects"
   projects_index_tab2: "Projects shared with me"
@@ -141,6 +159,11 @@ en:
   word_does_not_exist: "Word does not exist."
   remove_from_project: "Remove from project"
   word_removed_successfully: "Word removed successfully."
+  word_does_not_exist: "The word you're trying to remove does not exist."
+  description_choose_keywords: "The red synonym will be imported to your project"
+  no_words_in_project: "Project has now words yet."
+  email2: "Email Address"
+  not_shared: "This project is not shared with anyone yet"
   not_developer: "You have to register as a developer before proceeding."
   no_words: "No words to export."
   no_project: "Project does not exist!"
@@ -155,3 +178,17 @@ en:
         categories: "Categories"
         description: "Description"
   log_in_google: "Sign In with Google"
+
+  no_categories: "This project has no categories"
+  no_description: "This project has no description"
+  register_developer: "Please register as a developer first"
+  developer_cant_see_project: "You are not allowed to view this project"
+  first_name: "First Name"
+  last_name: "Last Name"
+  activerecord:
+    models:
+      developer: "Developer"
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"

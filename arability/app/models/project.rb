@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
   has_one :owner, :class_name => "Developer"
   has_many :shared_projects
@@ -12,7 +11,7 @@ class Project < ActiveRecord::Base
   validates :name, :presence => true,:length => { :maximum => 30 }
   validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100 }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
-  
+
 # Author:
 #   Salma Farag
 # Description:
