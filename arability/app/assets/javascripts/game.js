@@ -531,7 +531,6 @@ function fadeSomething(x){
 					}
 				}
 				if(win == true){
-					enableNav();
 					buttonArray = [];
 					removeAblockCont();
 					gameOver = true;
@@ -542,6 +541,7 @@ function fadeSomething(x){
 					}, 1000);	
 					setTimeout(function(){
 						setWordsArray();
+						enableNav();
 						have_to_sign_in();
 						return;
 					}, 2000);
@@ -1007,7 +1007,6 @@ function calculateScore(){
 
 function loseGame(t){
 	if(t > dimension - 1){
-		enableNav();
 		gameOver = true;
 		win = false;
 		buttonArray = [];
@@ -1027,6 +1026,7 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
+			enableNav();
 			have_to_sign_in();
 			return true;
 		}, 3000);
