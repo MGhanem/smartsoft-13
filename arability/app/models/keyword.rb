@@ -10,8 +10,6 @@ class Keyword < ActiveRecord::Base
   validates_uniqueness_of :name,
     :message => "This keyword is already in the database"
 
-  class << self
-
   # Author:
   #  Mirna Yacout
   # Description:
@@ -43,7 +41,7 @@ class Keyword < ActiveRecord::Base
   #   that are pending for approval in the database.
   # Failure:
   #   returns an empty list if no words are pending for approval.
-  def list_unapproved_keywords
+  def self.list_unapproved_keywords
     return Keyword.where(approved: false).all
   end
 
@@ -158,5 +156,4 @@ class Keyword < ActiveRecord::Base
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
-  end
 end
