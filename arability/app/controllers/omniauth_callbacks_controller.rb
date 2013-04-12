@@ -17,7 +17,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   	  redirect_to controller: 'games', action: 'post'
   	else
       current_gamer.connect_to_facebook(request.env["omniauth.auth"])
-      redirect_to "/gamers/edit", :flash => {success: t(:logged_in_to_fb)}
+      redirect_to "/gamers/edit", flash: => {success: t(:logged_in_to_fb)}
     end
   end
   

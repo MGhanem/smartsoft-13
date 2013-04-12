@@ -186,7 +186,7 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def is_connected_to_facebook
-    return self.token != nil
+    token != nil
   end
 
   # Author:
@@ -200,7 +200,7 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def getToken
-    return self.token
+    token
   end
 
   def won_prizes?(score, level)
