@@ -25,10 +25,6 @@ class Category < ActiveRecord::Base
     name.strip!
     name.downcase! if is_english_string(name)
     category = Category.where(:name => name).first_or_create
-    if category.save
-      return true, category
-    else
-      return false, category
-    end
+    return category.save ? [true, category] : [false, category]
   end
 end
