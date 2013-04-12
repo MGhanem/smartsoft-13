@@ -54,10 +54,14 @@ describe "gamer suggestion" do
 		result.should eq(3)
 	end
 
+
 	it "should save a suggested synonym if written in arabic" do
 		keyword_id = test_keyword.id
-		result = test_gamer.suggest_synonym("عربية",keyword_id)
+		result = test_gamer.suggest_synonym("يبتنم",keyword_id)
+		added_synonym =  Synonym.where(name: "يبتنم",keyword_id: keyword_id).first
+		added_vote = Vote.where(keyword_id, added_synonym.id)
 		result.should eq(0)
+		added_vote.should_not eq(0) 
 	end
 
 end
