@@ -9,6 +9,7 @@ class GamesController < ApplicationController
   def record_vote
 
   end
+  
   # Author:
   #   Omar Hossam
   # Description:
@@ -26,7 +27,7 @@ class GamesController < ApplicationController
     @graph = Koala::Facebook::API.new(token)
     score = params[:score]
     @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
-    render 'games/share-facebook'
+    render "games/share-facebook"
   end
 
   # Description:
