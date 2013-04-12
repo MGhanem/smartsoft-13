@@ -134,3 +134,5 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
+  no_categories: "This project has no categories"
+  no_description: "This project has no description"

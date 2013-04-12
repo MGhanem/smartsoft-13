@@ -26,6 +26,9 @@
               <br />
               <strong><%= t(:projects_index_categories)%></strong>
               <% size = project1.categories.length %>
+              <% if size == 0 %>
+              <%= t(:no_categories) %>
+              <% else %>
               <% counter = 1 %>
               <% project1.categories.each do |c| %>
                 <% if counter < size %>
@@ -35,8 +38,14 @@
                   <%= c.name %>
                 <% end %>
               <% end %>
+              <% end %>
               <br />
-              <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
+              <strong><%= t(:projects_index_description)%></strong>
+              <% if project1.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project1.description %>
+              <% end %>
   <br />
   <% if I18n.locale == :ar %>
     <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
@@ -54,6 +63,9 @@
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
                   <% size = project2.categories.length %>
+                  <% if size == 0 %>
+              <%= t(:no_categories) %>
+              <% else %>
                   <% counter = 1 %>
                   <% project2.categories.each do |c| %>
                     <% if counter < size %>
@@ -63,8 +75,14 @@
                       <%= c.name %>
                     <% end %>
                   <% end %>
+                  <% end %>
                   <br />
-                  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
+                  <strong><%= t(:projects_index_description)%></strong>
+                  <% if project2.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project2.description %>
+              <% end %>
   <br />
   <% if I18n.locale == :ar %>
     <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
@@ -99,6 +117,9 @@
         <br />
   <strong><%= t(:projects_index_categories)%></strong>
   <% size = project1.categories.length %>
+  <% if size == 0 %>
+  <%= t(:no_categories) %>
+  <% else %>
   <% counter = 1 %>
   <% project1.categories.each do |c| %>
     <% if counter < size %>
@@ -108,8 +129,14 @@
       <%= c.name %>
     <% end %>
   <% end %>
+  <% end %>
   <br />
-  <strong><%= t(:projects_index_description)%></strong><%= project1.description %>
+  <strong><%= t(:projects_index_description)%></strong>
+  <% if project1.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project1.description %>
+              <% end %>
   <br />
   <% if I18n.locale == :ar %>
     <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
@@ -127,6 +154,9 @@
   <br />
   <strong><%= t(:projects_index_categories)%></strong>
   <% size = project2.categories.length %>
+  <% if size == 0 %>
+  <%= t(:no_categories) %>
+  <% else %>
   <% counter = 1 %>
   <% project2.categories.each do |c| %>
     <% if counter < size %>
@@ -136,8 +166,14 @@
       <%= c.name %>
     <% end %>
   <% end %>
+  <% end %>
   <br />
-  <strong><%= t(:projects_index_description)%></strong><%= project2.description %>
+  <strong><%= t(:projects_index_description)%></strong>
+  <% if project2.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project2.description %>
+              <% end %>
   <br />
   <% if I18n.locale == :ar %>
     <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
