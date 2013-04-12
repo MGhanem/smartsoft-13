@@ -112,7 +112,8 @@ class Synonym < ActiveRecord::Base
   #  a key and value.
   #  The key represents the age group and the value is the percentage of 
   #  voters belong to this age group.
-  #  On failure: returns an empty list if no gamers voted for this synonym yet.
+  #  On failure: returns an empty list if no gamers voted for this synonym 
+  #  yet.
   def get_visual_stats_age
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     
