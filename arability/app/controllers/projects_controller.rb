@@ -507,11 +507,9 @@ def add_word
         @remove.destroy
         flash[:success] = t(:word_removed_successfully)
         redirect_to project_path(@project_id), flash: flash
-        return
       else
         flash[:notice] = t(:word_does_not_exist)
         redirect_to project_path(@project_id), flash: flash
-        return
       end
     else
       flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
