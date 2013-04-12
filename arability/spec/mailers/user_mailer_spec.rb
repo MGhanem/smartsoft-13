@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe UserMailer do
   it "sends generic email" do
-    mail = UserMailer.generic_email("to","subject","message")
+    mail = UserMailer.generic_email("to", "subject", "message")
     mail.to.should eq(["to"])
     mail.subject.should eq("subject")
     mail.body.should eq("message")
@@ -21,7 +21,7 @@ describe UserMailer do
   it "sends follow notification" do
     success, keyword = Keyword.add_keyword_to_database("test")
     synonym = Synonym.create(:name => "تبت")
-    mail = UserMailer.follow_notification(developer, keyword,"message")
+    mail = UserMailer.follow_notification(developer, keyword, "message")
     mail.to.should eq([gamer.email])
     mail.subject.should match(keyword.name)
     #mail.body.should match(developer.first_name)

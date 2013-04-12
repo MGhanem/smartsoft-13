@@ -1,26 +1,35 @@
 class UserMailer < ActionMailer::Base
   default from: "arability.smartsoft@gmail.com"
-
-  # Sends a generic email to any address
+  
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   Sends a generic email to any address
   # params:
   #   mail_to: The receivers email address
   #   reason: The subject of the message
   #   message: The actual message body
-  # returns:
-  #   message: a mesage object that you can call on deliver to send the email
+  # success:
+  #   returns a Message object that you can call on deliver to send the email
+  # failure:
+  #   this method doesnt fail
   def generic_email(mail_to,reason,message)
-    mail to: mail_to, subject: reason, body:message
+    mail to: mail_to, subject: reason, body: message
   end
 
-  # Sends a follow notification notice to a developer
+  
   # Author:
   #   Mohamed Ashraf
+  # Description:
+  #   Sends a follow notification notice to a developer
   # Params:
   #   developer: instace of the developer model I amsending an email to
   #   keyword: instace of the keyword model that has a new synonym
   #   synonym: instance of the synonym model representing the newly found synonym
-  # returns:
-  #   message: a mesage object that you can call on deliver to send the email
+  # success:
+  #   returns a Message object that you can call on deliver to send the email
+  # failure:
+  #   this method doesnt fail
   def follow_notification(developer, keyword, synonym)
     subject = "A new meaning for #{keyword.name} has been found"
     @keyword = keyword
@@ -29,14 +38,17 @@ class UserMailer < ActionMailer::Base
     mail to: developer.gamer.email, subject: subject
   end
 
-  # Sends a follow notification notice to a developer
   # Author:
   #   Mohamed Ashraf
+  # Describtion:
+  #   Sends an invite to an email address
   # Params:
   #   email: the address of the invitee
   #   developer: instace of the developer model representing the inviter
-  # returns:
-  #   message: a mesage object that you can call on deliver to send the email
+  # success:
+  #   returns a Message object that you can call on deliver to send the email
+  # failure:
+  #   this method doesnt fail
   def invite(email, developer)
     subject = "You have been invited to arability"
     @developer = developer
