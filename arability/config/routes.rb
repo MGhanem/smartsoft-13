@@ -195,6 +195,7 @@ Arability::Application.routes.draw do
 
     match "/post_score"=>'games#post', :as => "post_facebook"
 
+  get "/games/halloffame"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
