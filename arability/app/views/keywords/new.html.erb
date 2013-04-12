@@ -1,8 +1,7 @@
 <%= form_for @keyword, :url => { :action => "create" }, :html => {:class => "form-inline"} do |f| %>
-  <div class="row">
+    <span><%= t :enter_keyword %>:</span>
     <div class="input-append">
       <%= f.text_field :name %>
       <%= f.submit "Create", :class=>"btn btn-primary" %>
     </div>
-  </div>
 <% end %>
