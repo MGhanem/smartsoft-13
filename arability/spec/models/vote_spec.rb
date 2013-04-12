@@ -69,7 +69,7 @@ describe Vote do
       g.gender = "male"
       g.email = "trialC@example.com"
       g.password = "1234567"
-      g.save (validate: false)
+      g.save(validate: false)
       g
     }
 
@@ -82,7 +82,7 @@ describe Vote do
       gTwo.gender = "female"
       gTwo.email = "trialD@example.com"
       gTwo.password = "123456"
-      gTwo.save (validate: false)
+      gTwo.save(validate: false)
       gTwo
     }
 
@@ -130,10 +130,12 @@ describe Vote do
             keywords_list_gamer_two.length.should eq(2)
       end
 
-      it "never returns a word this gamer voted on before" do
+      it "never returns a word this gamer voted on before and never return non approved keyword" do
             keywords_list = Vote.get_unvoted_keywords(g.id, 2, 2)
             keywords_list.should_not include(k)
             keywords_list.should include (kTwo)
+            keywords_list.should_not include (kThree)
+
       end
     end
 end
