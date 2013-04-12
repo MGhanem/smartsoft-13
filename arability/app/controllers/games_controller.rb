@@ -71,8 +71,7 @@ class GamesController < ApplicationController
           token = current_gamer.get_token
           @graph = Koala::Facebook::API.new(token)
           @graph.put_wall_post(
-            "Checkout the new Arability game @ www.arability.net\n"
-            + Time.now.to_s)
+            "Checkout the new Arability game @ www.arability.net")
           redirect_to "/game", flash: {success: t(:shared_on_fb)}
         rescue Koala::Facebook::AuthenticationError
           redirect_to "/gamers/auth/facebook"

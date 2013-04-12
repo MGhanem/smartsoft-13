@@ -164,6 +164,8 @@ function setButtons(){
   function inviteFriends(){
     clear();
     $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;right:190px;"></a>');
+  }
+  
   function setScoreTitle(){
     <% if I18n.locale==:ar %>
     document.getElementById('game-score').innerHTML = score + ' :نقاط'
@@ -228,7 +230,7 @@ function setButtons(){
     <div class="nav-box btn btn-inverse" id="navItems">
      إعدادات
     </div>
-    <div class="nav-box" onclick="inviteFriends()">
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
       دعوات
     </div>
   </div>
