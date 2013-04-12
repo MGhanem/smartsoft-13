@@ -37,7 +37,7 @@ class Keyword < ActiveRecord::Base
     filtered_data = filtered_data
       .filter_by_gender(gender) unless gender.blank?
     filtered_data = filtered_data
-      .filter_by_education(education.downcase) unless education.blank?
+      .filter_by_education(education) unless education.blank?
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
       .where(synonyms: { keyword_id: keyword_id, approved: true })
