@@ -78,19 +78,13 @@ class Keyword < ActiveRecord::Base
     keyword = where(name: name).first_or_create
     keyword.approved = approved
     name.downcase! if is_english_string(name)
-    if is_english != nil
-      keyword.is_english = is_english
-    else
-      keyword.is_english = is_english_string(name)
-    end
+    keyword.is_english = is_english != nil ? is_english : is_english_string(name)
 
     if keyword.save
       categories.each do |category_name|
         success, category =
           Category.add_category_to_database_if_not_exists(category_name)
-        if success
-          category.keywords << keyword
-        end
+        category.keywords << keyword if success
       end
       return true, keyword
     else
