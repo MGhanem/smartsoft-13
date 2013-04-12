@@ -109,4 +109,8 @@ en:
   restart_game: "Restart Game"
   back_to_game: "Back"
   to_voting: "To Voting Page"
-
+  restart_game: "Restart Game" 
+  username: "Username"
+  password_confirmation: "Password confirmation"
+  education_level: "Education level"
+  date_of_birth: "Date of Birth"

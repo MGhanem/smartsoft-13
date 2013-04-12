@@ -74,7 +74,7 @@ Arability::Application.routes.draw do
       match "followed" => "follow#list_followed", :as => "list_followed_words"
 
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
-
+    end
 
     get "games/getprizes"
 
@@ -140,18 +140,26 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
 
       match '/my_subscriptions/create' => "my_subscription#create"
-
-      get "/en/gamers" => redirect('/en/gamers/sign_up')
-
-      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
-    end
-
   end
   
   match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
   get 'games/getnewwords'
   match '/game' => 'games#game'
   get "games/getprizes"
+
+  
+  
+  
+  get "games/getprizes"
+  get "games/showprizes"
+  get "games/get_score_only"
+  post "games/record_vote"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+  post "games/record_synonym"
 
     get "games/getprizes"
     get "games/showprizes"
@@ -201,6 +209,7 @@ Arability::Application.routes.draw do
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
     match "/post_score"=>'games#post', :as => "post_facebook"
+
 
 
   # The priority is based upon order of creation:

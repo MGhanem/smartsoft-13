@@ -39,7 +39,6 @@ class Synonym < ActiveRecord::Base
     end
   end 
 
-
   class << self
     include StringHelper
 
@@ -124,6 +123,5 @@ class Synonym < ActiveRecord::Base
           .reverse!
         return synonym_list
       end
-
-end
+  end
 end

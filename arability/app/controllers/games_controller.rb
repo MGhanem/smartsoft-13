@@ -277,5 +277,4 @@ class GamesController < ApplicationController
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
   end
-  	
 end

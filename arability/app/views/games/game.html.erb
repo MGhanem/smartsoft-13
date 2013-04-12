@@ -1,4 +1,5 @@
 <script type="text/javascript" charset="utf-8">
+
   var words;
   var cache = "";
   var nav_locked = false;
@@ -15,6 +16,10 @@
     clear();
     $.get("/games/get_score_only?score=" + score);
   }
+  function clear() {
+    $("#zone").empty();
+  }
+  
   
   function get_words(){
     return words;
@@ -64,22 +69,18 @@
     }
   }
 
-    function clear() {
-    $("#zone").empty();
-  }
+
 
   function getTrophies(level, score) {
     clear();
     request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
-
   function getPrizes(level, score) {
     clear();
     request_string = "/games/getprizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
-
   function getScore() {
     return 123456;
   }
@@ -207,6 +208,7 @@ function setButtons(){
 
 
 
+
 <div class="game-zone">
   <div class="game-nav">
     <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
@@ -223,6 +225,7 @@ function setButtons(){
      بروفيل
     </div>
     <div class="nav-box btn btn-inverse" id="navItems">
+
      إعدادات
     </div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
@@ -236,7 +239,6 @@ function setButtons(){
     <% else I18n.locale==:en %>
     <div class="zone" id="zone">
       <% end %> 
-
     <div class="divaya">
       <% if I18n.locale==:ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
@@ -256,5 +258,4 @@ function setButtons(){
     </div>
 
   </div>
-</div>
 </div>

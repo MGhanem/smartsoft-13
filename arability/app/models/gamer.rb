@@ -17,6 +17,9 @@ class Gamer < ActiveRecord::Base
                   :remember_me, :gender, :provider, :uid, :highest_score,
                   :username, :country, :education_level, :date_of_birth
 
+  validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
+
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
 
   #author: kareem ali
   def self.check
@@ -70,24 +73,7 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  #Author: Kareem ALi
-  #This method is used to select a synonym 
-  #by a certain gamer
-  #Parameters:
-  #  synonym_id: the synonym ID that the gamer voted for
-  #Returns:
-  #  On success: returns true if selecting synonym is true, when 
-  #  Vote.record_vote returns true
-  #  On failure: returns false if no new vote was created 
-  def select_synonym(synonym_id)
-    if Vote.record_vote(self.id,synonym_id)[0]
-      return true
-    else
-      return false
-    end
-  end
-  
-  # Description:
+  # :
   #   Takes in a prize id and adds it the gamers prizes array
   # Author:
   #   Adam Ghanem
@@ -145,7 +131,18 @@ class Gamer < ActiveRecord::Base
   def get_available_prizes
     return Prize.all - self.prizes
   end
-  
+
+  # Description:
+  #   returns a list of the trophies that the gamer won
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the trophies that the gamer has won
+  #   failure:
+  #     no failure
   def get_won_trophies
     return self.trophies
   end
@@ -185,6 +182,17 @@ class Gamer < ActiveRecord::Base
   end
     
 
+  # Description:
+  #   returns a list of the gamers prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer has won
+  #   failure:
+  #     no failure
   def get_available_trophies
     return Trophy.all - self.trophies
   end
@@ -317,6 +325,5 @@ class Gamer < ActiveRecord::Base
   end
 
   end  
-
 end
 
