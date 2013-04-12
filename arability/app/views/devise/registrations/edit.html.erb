@@ -1,7 +1,7 @@
-<% if I18n.locale==:en %>
+<% if I18n.locale == :en %>
 
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
-<% else I18n.locale==:ar %>
+<% else I18n.locale == :ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
 <% end %>
 
@@ -160,7 +160,7 @@
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
             already connected to Twitter!</h5>
           <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
-          <% else I18n.locale==:ar %>
+          <% else I18n.locale == :ar %>
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
           التواصل بالفعل موجود!</h5>
           <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
