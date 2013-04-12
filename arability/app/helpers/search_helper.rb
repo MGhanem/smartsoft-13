@@ -117,4 +117,8 @@ module SearchHelper
           })
     end
   end
+
+  def getID(word)
+    return Keyword.where(name: word).first.id
+  end
 end
