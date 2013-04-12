@@ -43,6 +43,7 @@ en:
   create_project: "Create Project"
   back: "Back"
   edit_project: "Edit Project"
+  create_project: "Create Project"
   click_here: "Click here"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
@@ -53,6 +54,14 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+  error: "error"
+  prohibited_project_error: "errors prohibited this project from being saved:"
+  not_in_range: "is not in range"
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'Project was successfully created.'
+         project_was_successfully_updated: 'Project was successfully updated.'
 
   import: "Import"
   export: "Export"
@@ -140,6 +149,12 @@ en:
   word_does_not_exist: "Word does not exist."
   remove_from_project: "Remove from project"
   word_removed_successfully: "Word removed successfully."
+
+  word_does_not_exist: "The word you're trying to remove does not exist."
+
+  email2: "Email Address"
+  not_shared: "This project is not shared with anyone yet"
+
   not_developer: "You have to register as a developer before proceeding."
   no_words: "No words to export."
   no_project: "Project does not exist!"

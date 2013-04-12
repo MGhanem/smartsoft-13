@@ -19,24 +19,26 @@ class ProjectsController < BackendController
       format.json { head :no_content }
     end
   end
-
-  # GET /projects
-  # GET /projects.json
-  # author: 
-  #   Mohamed Tamer 
-  # description: 
-  #   function shows all the projects of a certain developer
-  # params: 
-  #   none
-  # returns:
-  #   on success: returns an array of projects of the developer currently logged in.
-  #   on failure: notifies the user that he can't see this page.
+  
+  #   function shows all the projects that a certain developer owns and the projects shared with him
+  #
+  # == Parameters:
+  # current_gamer::
+  #   the current currently logged in, will be nil if there is no logged in gamer
+  #
+  # == Success return:
+  # array of projects that the developer own and the projects shared with him
+  #
+  # == Failure return :  
+  # redirects to dvelopers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
+  #
+  # @author Adam Ghanem
   def index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:owner_id => developer.id)
-        # @shared_projects = developer.projects_shared
+        @shared_projects = developer.projects_shared
       else
         flash[:notice] = t(:projects_index_error1)
         render 'developers/new'
@@ -63,10 +65,10 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
-      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects",
+            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
@@ -108,38 +110,6 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
   end
 
-  def share_project_with_developer
-    @project = Project.find(params[:id])
-    gamer = Gamer.find_by_email(params[:email])
-    if(!gamer.present?)
-      flash[:notice] = "Email doesn't exist"
-    else
-      developer = Developer.find_by_gamer_id(gamer.id)
-      if developer == nil
-        flash[:notice] = "Email address is for gamer, not a developer"
-      else
-
-        developer.projects_shared << @project
-        if(developer.save)
-          flash[:notice] = "Project has been shared successfully with #{developer.name}"
-        else
-          flash[:notice] = "Failed to share project with developer"
-        end
-      end
-    end
-    render "projects/share"
-  end
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-    redirect_to "/projects"
-  end
-
-  
   # author:
   #      Salma Farag
   # description:
@@ -153,6 +123,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
+      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -204,6 +175,7 @@ end
     format.json { head :no_content }
   end
 end
+
 
 def show
   @projects = Project.where(:owner_id => current_developer.id)
@@ -257,6 +229,7 @@ end
     end
     redirect_to action: "show", id: project_id
   end
+
   
   # calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
   # are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
