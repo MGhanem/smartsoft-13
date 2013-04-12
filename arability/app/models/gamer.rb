@@ -135,8 +135,8 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def connect_to_facebook(auth)
-    self.provider = auth.provider
-    self.uid = auth.uid
+    self.provider = auth["provider"]
+    self.uid = auth["uid"]
     self.token = auth["credentials"]["token"]
     self.save
   end
@@ -169,7 +169,7 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def update_access_token(auth)
-    self.uid = auth.uid
+    self.uid = auth["uid"]
     self.token = auth["credentials"]["token"]
     self.save
   end

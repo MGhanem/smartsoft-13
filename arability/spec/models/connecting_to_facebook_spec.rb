@@ -34,8 +34,8 @@ describe "Tests gamer functions whcih are related to facebook" do
 
   let(:auth) {
     a = {
-        :provider => 'facebook',
-        :uid => '1234567',
+        "provider" => "facebook",
+        "uid" => "1234567",
         :info => {
           :nickname => 'jbloggs',
           :email => 'joe@bloggs.com',
@@ -47,8 +47,8 @@ describe "Tests gamer functions whcih are related to facebook" do
           :location => 'Palo Alto, California',
           :verified => true
         },
-        :credentials => {
-          :token => 'ABCDEF...', # OAuth 2.0 access_token, which you may wish to store
+        "credentials" => {
+          "token" => "ABCDEF1234567890qwertyuiop", # OAuth 2.0 access_token, which you may wish to store
           :expires_at => 1321747205, # when the access token expires (it always will)
           :expires => true # this will always be true
         },
@@ -73,15 +73,15 @@ describe "Tests gamer functions whcih are related to facebook" do
       a
   }
 
-#  it "saves provider, uid and token in database when called by facebook" do
-#    gamer.connect_to_facebook(auth)
-#    has_uid = !gamer.uid.nil?
-#    has_provider = !gamer.provider.nil?
-#    has_token = !gamer.token.nil?
-#    expect(has_uid).to eq (true)
-#    expect(has_provider).to eq (true)
-#    expect(has_token).to eq (true)
-#  end
+  it "saves provider, uid and token in database when called by facebook" do
+    gamer.connect_to_facebook(auth)
+    has_uid = !gamer.uid.nil?
+    has_provider = !gamer.provider.nil?
+    has_token = !gamer.token.nil?
+    expect(has_uid).to eq (true)
+    expect(has_provider).to eq (true)
+    expect(has_token).to eq (true)
+  end
 
 #  it "should return save a token with a different value the older one" do
 #    old_token = connected_gamer.token
