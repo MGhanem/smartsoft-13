@@ -151,6 +151,7 @@ en:
   word_removed_successfully: "Word removed successfully."
 
   word_does_not_exist: "The word you're trying to remove does not exist."
+  no_words_in_project: "Project has now words yet."
 
   email2: "Email Address"
   not_shared: "This project is not shared with anyone yet"

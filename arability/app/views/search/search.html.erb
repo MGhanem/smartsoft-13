@@ -74,42 +74,73 @@
 			</div>
 		</div>
 	</div>
-
-	<% @synonyms.each do |synonym|%>
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<div class="row">
-					<div class="span12">
-						<div class="accordion-toggle" style="padding-bottom:30px;">
-							<div class="pull-left">
-								<span class="span1">
-									<%= synonym.name %>
-								</span>
-								<span class="span2" style="color:#bbb;"><i>
-									<% if @votes[synonym.id] != nil%>
-										<%= @votes[synonym.id] %>/<%= @total_votes.to_s + " " + t(:votes) %>
-									<% else %>
-										0/<%= @total_votes.to_s + " " + t(:votes)%> 
-									<% end %>
-								</i></span>
-							</div>
-							<div class="pull-right">
-								<button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
-									<span><%= t(:view_stats)%></span>
-								</button>
-								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-									<%= link_to t(:add_to_project), projects_add_word_path(:project_id => @project_id, :synonym_id => synonym.id, :keyword => @search_keyword), {:style=>'color:#000000', :class => "css_class"}  %>
-								<% end %>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="collapse<%= synonym.id %>" class="accordion-body collapse">
-					<div class="accordion-inner">
-						<!-- add charts here -->
-					</div>
-				</div>
-			</div>
-		</div>
-	<% end %>
+  <% @synonyms.each do |synonym|%>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <div class="row">
+          <div class="span12">
+            <div class="accordion-toggle" style="padding-bottom:30px;">
+              <div class="pull-left">
+                <span class="span1">
+                  <%= synonym.name %>
+                </span>
+                <span class="span2" style="color:#bbb;"><i>
+                  <% if @votes[synonym.id] != nil%>
+                    <%= @votes[synonym.id] %>/<%= @total_votes.to_s + " " + t(:votes) %>
+                  <% else %>
+                    0/<%= @total_votes.to_s + " " + t(:votes)%>
+                  <% end %>
+                </i></span>
+              </div>
+              <div class="pull-right">
+                <button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
+                  <span><%= t(:view_stats)%></span>
+                </button>
+                <%= button_tag(type: "submit", class: "btn btn-mini", style: "display:inline;") do %>
+                  <%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
+          <div class="accordion-inner">
+            <!-- add charts here -->
+            <% if Vote.where('synonym_id=?', synonym.id).exists? %>
+            <div class="container-fluid">
+              <div class="row-fluide">
+                <div class="span2">
+                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %> 
+                </div>
+                <div class="span2">
+                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+             </div>
+            </div>
+            <% else %>
+            <%= t(:stats_no_votes) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>

@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
@@ -115,7 +114,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/pick' => "my_subscription#pick"
     end
   end
-
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
