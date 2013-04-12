@@ -18,14 +18,14 @@ class Trophy < ActiveRecord::Base
 
   validates_format_of :name, 
                       :with => /^([\u0621-\u0652 ])+$/, 
-                      :message => "اسم المدالية يجب ان يكون بالعربية"
+                      :message => "اسم الانجاز يجب ان يكون بالعربية"
 
   validates_length_of :name, 
-                      :maximum => 10,
-                      :message => "اسم المدالية لا يمكن ان يزيد عن 10 حروف"
+                      :maximum => 20,
+                      :message => "اسم الانجاز لا يمكن ان يزيد عن 20 حروف"
 
   validates_presence_of :name, 
-                        message: "اسم المدالية لا يمكن ان يكون فارغ"
+                        message: "اسم الانجاز لا يمكن ان يكون فارغ"
 
   validates_presence_of :level, 
                         message: "المستوى لا يمكن ان يكون فارغ"
@@ -37,13 +37,13 @@ class Trophy < ActiveRecord::Base
                         message: "الصورة لا يمكن ان تكون فارغة"
 
   validates_uniqueness_of :name, 
-                          message: "اسم المدالية مستعمل"
+                          message: "اسم الانجاز مستعمل"
 
   validates_numericality_of :level, 
                             only_integer: true, 
                             greater_than: 0, 
-                            less_than_or_equal_to: 10, 
-                            message: "المستوى يجب ان يكون بين 0 و 10"
+                            less_than_or_equal_to: 5, 
+                            message: "المستوى يجب ان يكون بين 0 و 5"
 
   validates_numericality_of :score, 
                             only_integer: true, 
@@ -55,12 +55,10 @@ class Trophy < ActiveRecord::Base
                                     :content_type => /^image\/(png|gif|jpeg)/,
                                     message: "الصورة يجب ان تكون بصيغة png, gif او jpeg"
 
-
   attr_accessible :name, :level, :score, :image
 
   has_attached_file :image
 
-  class << self
     # Description:
     #   returns a list of trophies that the gamer got awarded 
     #   and awards it to the current_gamer
@@ -76,7 +74,7 @@ class Trophy < ActiveRecord::Base
     #     an array of the trophies that the gamer won
     #   failure:
     #     no failure
-    def get_new_trophies_for_gamer(gamer_id, score, level)
+    def self.get_new_trophies_for_gamer(gamer_id, score, level)
       trophies_for_score = []
       gamer = Gamer.find(gamer_id)
       trophies_gamer = gamer.trophies
@@ -93,13 +91,15 @@ class Trophy < ActiveRecord::Base
     # description:
     #     a function adds a new trophy to the database
     # params
-    #     name, level, score, image
-    #     name, score, rank, image
+    #     name: the name of the trophy
+    #     level: the level of the trophy
+    #     score: the score of the trophy 
+    #     image: the image of the trophy6
     # success: 
     #     returns true and the new trophy if it is added to the database
     # failure: 
     #     returns false and the trophy if it is not added to the database
-    def add_trophy_to_database(name, level, score, image)
+    def self.add_trophy_to_database(name, level, score, image)
       new_trophy = Trophy.new(name: name, level: level, score: score, image: image)
       if new_trophy.save
         return true, new_trophy
@@ -108,27 +108,4 @@ class Trophy < ActiveRecord::Base
       end
     end
 
-    def edit_trophy(name, level, score, image)
-      cur_trophy = Trophy.find_by_name(name)
-      if cur_trophy == nil
-        return false, nil
-      else
-        if level
-          cur_trophy.level = level
-        end
-        if score
-          cur_trophy.score = score
-        end
-        if image
-          cur_trophy.image = image
-        end
-        if cur_trophy.save
-          return true, cur_trophy
-        else
-          return false, cur_trophy
-        end
-      end
-    end
-
-  end
 end

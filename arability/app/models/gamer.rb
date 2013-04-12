@@ -4,6 +4,8 @@ class Gamer < ActiveRecord::Base
   has_one :authentication
   has_and_belongs_to_many :prizes
   has_and_belongs_to_many :trophies
+  has_many :votes
+  has_many :synonyms, :through => :votes
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -21,29 +23,15 @@ class Gamer < ActiveRecord::Base
 
   validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
 
-  #author: kareem ali
-  def self.check
-    if I18n.locale == :ar
-      "اسم المستخدم يجب ان يكون بحوف او ارقام انجليزية فقط"
-    end
-    if I18n.locale == :en
-      "username must be made up of english letters or digits"
-    end
-  end
-  validates :gender , :presence => true, :format => { :with => /\a^(male|female)\z/i }
+  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
 
-  validates :username, :presence => true, :length => { :minimum => 3 }
-  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
-    :message => check }
   validates :country, :presence => true, :length => { :minimum => 2 }
-
-  
 
   validates :education_level, :format => { :with => /\A^(School|University|Graduate)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
-  
+
   
  # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
@@ -291,8 +279,6 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
   has_many :services, :dependent => :destroy
-  has_many :synonyms, :through => :votes
-  has_many :votes
 
   class << self
 
@@ -324,6 +310,11 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  end  
+  #scopes defined for advanced search aid
+  scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
+  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where :gender => gender }
+  scope :filter_by_education, lambda { |education| where :education_level => education }
+  
 end
 

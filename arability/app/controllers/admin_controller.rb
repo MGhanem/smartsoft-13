@@ -32,7 +32,8 @@ class AdminController < ActionController::Base
   # author:
   #     Karim ElNaggar
   # description:
-  #     a function that checks if the user is logged in and redirects him to /admin/index
+  #     a function that checks if the user is logged in and 
+  #     redirects him to /admin/index
   # params
   #     none
   # success: 
@@ -85,14 +86,15 @@ class AdminController < ActionController::Base
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addword
+  def add_word
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
     success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
     if success
       flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
+      flash[:successtype] = "addword"
       flash.keep
-      redirect_to action: "index", anchor: "home"
+      redirect_to action: "index", anchor: "admin-add-word"
     else
       flash[:error] = @keyword.errors.messages
       flash[:errortype] = "addword"
@@ -115,22 +117,25 @@ class AdminController < ActionController::Base
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addtrophy
+  def add_trophy
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
-    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:image])
+    success, trophy = Trophy.add_trophy_to_database(params[:name],
+                 params[:level], params[:score], params[:image])
     if success
-      flash[:success] = "تم ادخال مدالية #{trophy.name} بنجاح"
+      flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
+      flash[:successtype] = "addtrophy"
     else
       flash[:error] = trophy.errors.messages
       flash[:errortype] = "addtrophy"
     end
     flash.keep
     if success
-      redirect_to action: "index"
+      redirect_to action: "index", anchor: "admin-list-trophies"
     else
-      redirect_to action: "index", anchor: "admin-add-trophy", fargs: {addtrophy: params}
+      redirect_to action: "index", anchor: "admin-add-trophy", 
+                  fargs: {addtrophy: params}
     end
   end
 
@@ -148,37 +153,76 @@ class AdminController < ActionController::Base
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addprize
+  def add_prize
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
-    success, prize = Prize.add_prize_to_database(params[:name], params[:level], params[:score], params[:image])
+    success, prize = Prize.add_prize_to_database(params[:name],
+               params[:level], params[:score], params[:image])
     if success
       flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
+      flash[:successtype] = "addprize"
     else
       flash[:error] = prize.errors.messages
       flash[:errortype] = "addprize"
     end
     flash.keep
     if success
-      redirect_to action: "index"
+      redirect_to action: "index", anchor: "admin-list-prizes"
     else
-      redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
+      redirect_to action: "index", anchor: "admin-add-prize", 
+                  fargs: {addprize: params}
     end
   end
 
-  def deletetrophy
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a trophy selected by id
+  # params
+  #     id the id of the trophy
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def delete_trophy
     params[:id] = params[:id].strip
     status_trophy = Trophy.find_by_id(params[:id])
     if status_trophy.present?
       name = status_trophy.name
       status_trophy.delete
       flash[:success] = "تم مسح مدالية #{name} بنجاح"
+      flash[:successtype] = "deletetrophy"
     else
       flash[:error] = "Trophy number #{params[:id]} is not found"
     end
     flash.keep
-    redirect_to action: "index", anchor: "delete-trophy"
+    redirect_to action: "index", anchor: "admin-list-trophies"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     delete a prize selected by id
+  # params
+  #     id the id of the prize
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def delete_prize
+    params[:id] = params[:id].strip
+    status_prize = Prize.find_by_id(params[:id])
+    if status_prize.present?
+      name = status_prize.name
+      status_prize.delete
+      flash[:success] = "تم مسح جائزة #{name} بنجاح"
+      flash[:successtype] = "deleteprize"
+    else
+      flash[:error] = "Prize number #{params[:id]} is not found"
+    end
+    flash.keep
+    redirect_to action: "index", anchor: "admin-list-prizes"
   end
 
   # author:
@@ -278,7 +322,8 @@ class AdminController < ActionController::Base
     if message == 0
       uploadCSV(array_of_arrays)
     end
-    redirect_to action: "index", anchor: "admin-import-csv-file", message: message
+    redirect_to action: "index", anchor: "admin-import-csv-file", 
+                message: message
   end
 
 end

@@ -4,13 +4,16 @@ Arability::Application.routes.draw do
   
  # devise_for :gamers
 
+
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
 
 
     get "admin/index"
+  get "admin/login"
 
-    get "admin/login"
+
+
 
     get "admin/logout"
 
@@ -20,7 +23,6 @@ Arability::Application.routes.draw do
     devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
   
-
     post "admin/wordadd"
  
     post "admin/login"
@@ -28,18 +30,24 @@ Arability::Application.routes.draw do
     get "admin/import_csv"
 
 
-
     post "admin/upload"
 
-    post "admin/addword"
+  get "admin/logout"
 
-    post "admin/addtrophy"
+  post "admin/add_word"
 
-    post "admin/addprize"
+  post "admin/upload"
 
-    get "admin/deletetrophy"
+  post "admin/add_trophy"
 
-    get "admin/deleteprize"
+  post "admin/add_prize"
+
+  get "admin/delete_trophy"
+  
+  get "admin/delete_prize"
+
+  scope "(:locale)", :locale => /en|ar/ do
+    #here only two languages are accepted: english and arabic
 
     match '/game' => 'games#game'
 
@@ -87,12 +95,10 @@ Arability::Application.routes.draw do
       post "keywords/create"
 
 
-
       match "/" => "backend#home", :as => "backend_home"
 
       get "projects/remove_developer_from_project"
-
-      resources :projects
+      
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
@@ -104,8 +110,7 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       match "projects/share/:id" => "projects#share"
       match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-      get "projects/update"
-      resources :projects
+      get "projects/update"€
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -126,13 +131,18 @@ Arability::Application.routes.draw do
       get "keywords/new"
 
       post "keywords/create"
+      resources :projects
+      match "keywords/create" => "keywords#create", :as => :keywords_create
 
-      get "keywords/suggest_add"
+      match '/projects/add_word' => "projects#add_word"
+      match "keywords/new" => "keywords#new", :as => :keywords_new
 
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
-      
+
+      match 'search_keywords' => 'search#search_keywords'
+
       match '/developers/new' => "developer#new"
 
       match '/developers/create' => "developer#create"
@@ -142,6 +152,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/create' => "my_subscription#create"
 
     end
+
     
   match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
 

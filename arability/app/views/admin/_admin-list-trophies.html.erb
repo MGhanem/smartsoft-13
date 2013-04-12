@@ -4,7 +4,7 @@
     <h3 id="myModalLabel">تأكيد المسح</h3>
   </div>
   <div class="modal-body">
-    <p>هل أنت متأكد من مسح المدالية؟؟</p>
+    <p>هل أنت متأكد من مسح الانجاز</p>
     <div class="prize-view"></div>
   </div>
   <div class="modal-footer">
@@ -14,19 +14,31 @@
 </div>
 <legend>
   <a>
-    عرض المداليات
+    عرض الانجازات
   </a>
 </legend>
-<% @trophies_list.each do |t| %>
-	<div class="trophy well">
-		<span>الاسم: <%= t.name %></span>
-		<div class="uploader-controls">
-			<div class="uploader-preview fileupload-preview thumbnail">
-				<img src="<%= t.image %>">
-			</div>
-		</div>
-		<span>المستوى: <%= t.level %></span>
-		<span>مجموع النقاط: <%= t.score %></span>
-		<span><a href="#myModalTrophy" data-href="/admin/deletetrophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">delete</a></span>
-	</div>
+<% if flash[:successtype] && (flash[:successtype] == "addtrophy" || flash[:successtype] == "deletetrophy") && flash[:success] %>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div>
+          <%= flash[:success] %>
+        </div>
+      </div>
+    <% end %>
+<% if @trophies_list.length != 0 %>
+  <% @trophies_list.each do |t| %>
+  	<div class="trophy well">
+  		<span>الاسم: <%= t.name %></span>
+  		<div class="uploader-controls">
+  			<div class="uploader-preview fileupload-preview thumbnail">
+  				<img src="<%= t.image %>">
+  			</div>
+  		</div>
+  		<span>المستوى: <%= t.level %></span>
+  		<span>مجموع النقاط: <%= t.score %></span>
+  		<span><a href="#myModalTrophy" data-href="/admin/delete_trophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">مسح</a></span>
+  	</div>
+  <% end %>
+<% else %>
+  عفون لا يوجد انجازات
 <% end %>

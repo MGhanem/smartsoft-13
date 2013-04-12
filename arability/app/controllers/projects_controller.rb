@@ -1,14 +1,8 @@
-class ProjectsController < ApplicationController
-  # class ProjectsController < BackendController 
-  #   def index
-  #     if gamer_signed_in?
-  #       @projects = Project.where(:owner_id => current_gamer.id)
-  #     else
-  #       flash[:error] = "You are not authorized to view this page"
-  #       render 'pages/home'
-  #     end
-  #   end
-
+class ProjectsController < BackendController
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
+  # GET /projects
+  # GET /projects.json
   # author: 
   #   Mohamed Tamer 
   # description: 
@@ -31,12 +25,6 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Please sign in"
       render 'pages/home'
     end  
-  	if developer.present?
-  		@projects = Project.where(:owner_id => developer.id)
-  	else
-  		flash[:notice] = "You are not authorized to view this page"
-  	end
-
   end
 
 

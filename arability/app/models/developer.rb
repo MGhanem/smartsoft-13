@@ -26,12 +26,35 @@ class Developer < ActiveRecord::Base
  validates :gamer_id, :presence => true, :uniqueness => true
 
 
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   function creates relation between a develoepr and a keyword
+  # params:
+  #   keyword_id: id of the keyword to follow
+  # success:
+  #   returns true on saving the relation between the developer and the keyword
+  # failure:
+  #   returns false if there was not keywords matching the keyword_id in 
+  #   the database
   def follow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)
       developer.keywords << keyword
   end
-
+  
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   function removes relation between a develoepr and a keyword
+  # params:
+  #   keyword_id: id of the keyword to unfollow
+  # success:
+  #   returns true on removing the relation between the developer and the keyword
+  # failure:
+  #   returns false if there was no keywords matching the keyword_id in 
+  #   the database
   def unfollow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)

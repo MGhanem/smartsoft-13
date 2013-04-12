@@ -23,8 +23,8 @@ class Prize < ActiveRecord::Base
                       :message => "اسم الجائزة يجب ان يكون بالعربية"
 
   validates_length_of :name, 
-                      :maximum => 10,
-                      :message => "اسم الجائزة لا يمكن ان يزيد عن 10 حروف"
+                      :maximum => 20,
+                      :message => "اسم الجائزة لا يمكن ان يزيد عن 20 حروف"
 
   validates_presence_of :name, 
                         message: "اسم الجائزة لا يمكن ان يكون فارغ"
@@ -89,8 +89,8 @@ class Prize < ActiveRecord::Base
   validates_numericality_of :level, 
                             only_integer: true, 
                             greater_than: 0, 
-                            less_than_or_equal_to: 10, 
-                            message: "المستوى يجب ان يكون بين 0 و 10"
+                            less_than_or_equal_to: 5, 
+                            message: "المستوى يجب ان يكون بين 0 و 5"
 
   validates_numericality_of :score, 
                             only_integer: true, 
@@ -105,19 +105,21 @@ class Prize < ActiveRecord::Base
 
   has_attached_file :image
  
-  class << self
-    
+
     # author:
     #     Karim ElNaggar
     # description:
     #     a function adds a new prize to the database
     # params
-    #     name, level, score, image
+    #     name: the name of the prize
+    #     level: the level of the prize
+    #     score: the score of the prize
+    #     image: the image of the prize
     # success: 
     #     returns true and the new prize if it is added to the database
     # failure: 
     #     returns false and the prize if it is not added to the database
-    def add_prize_to_database(name, level, score, image)
+    def self.add_prize_to_database(name, level, score, image)
       new_prize = Prize.new(name: name, level: level, score: score, image: image)
       if new_prize.save
         return true, new_prize
@@ -126,55 +128,5 @@ class Prize < ActiveRecord::Base
       end
     end
 
-    def edit_prize(name, level, score, image)
-      cur_prize = Prize.find_by_name(name)
-      if cur_prize == nil
-        return false, cur_prize
-      else
-        if level
-          cur_prize.level = level
-        end
-        if score
-          cur_prize.score = score
-        end
-        if image
-          cur_prize.image = image
-        end
-        if cur_prize.save
-          return true, cur_prize
-        else
-          return false, cur_prize
-        end
-      end
-    end
-
-    # author:
-    #     Karim ElNaggar
-    # description:
-    #     a function adds a new prize to the database
-    # params
-    #     name, score, rank, image
-    # success: 
-    #     returns true and the new prize if it is added to the database
-    # failure: 
-    #     returns false and the prize if it is not added to the database
-    def add_prize_to_database(name, score, rank, photo)
-      new_prize = Prize.new(name: name, score: score, level: rank, image: photo)
-      if new_prize.save
-        return true, new_prize
-      else
-        return false, new_prize
-      end
-    end
-
-    
-    def get_new_prizes_for_gamer(gamer_id, score, level)
-      prizes_for_score = []
-      prizes_gamer = Gamer.find(gamer_id).prizes
-      prizes_of_level = Prize.where(:level => level)
-      new_prizes = prizes_of_level - prizes_gamer
-      new_prizes.map { |nt| prizes_for_score << nt if nt.score <= score }
-      return prizes_for_score
-    end
-  end
+ 
 end

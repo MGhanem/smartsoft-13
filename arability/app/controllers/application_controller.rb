@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
 
+
   require "csv"
 
   protect_from_forgery
@@ -59,6 +60,7 @@ class ApplicationController < ActionController::Base
     { :locale => I18n.locale }
   end
 
+
   # author:
   #   Amr Abdelraouf
   # description:
@@ -114,6 +116,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Desciption:
+  #   This function sets the locale to the default locale of ar or the
+  #   whichever locale stored in the session. If a locale is chosen it is
+  #   automatically stored in the session.
+  # Author:
+  #   Mohamed Ashraf
+  # params:
+  #   locale: from the url if exists
+  # returns:
+  #   --
   def set_locale
     if params[:locale].nil?
       if session[:locale].nil?
@@ -127,10 +139,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  # Description:
+  #   It adds the current locale to th url  if not specified so that pages
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { :locale => I18n.locale }
   end
-
 end
+
+
