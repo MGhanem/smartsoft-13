@@ -166,10 +166,14 @@ function setButtons(){
   }
 
   function disableNav() {
+    var lists = $("[id*='navItems']");
+    lists.addClass("disabled");
     nav_locked = true;
   }
 
   function enableNav() {
+    var lists = $("[id*='navItems']");
+    lists.removeClass("disabled");
     nav_locked = false;
   }
 
@@ -193,20 +197,20 @@ function setButtons(){
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box" onclick="hallOfFame()">
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
       الرتبة
     </div>
 
-    <div class="nav-box" onclick="showPrizes()">
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
       جوائز
   </div>
-    <div class="nav-box" onclick="showTrophies()">
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
       الإنجازات
     </div>
-    <div class="nav-box">
+    <div class="nav-box btn btn-inverse" id="navItems">
      بروفيل
     </div>
-    <div class="nav-box">
+    <div class="nav-box btn btn-inverse" id="navItems">
      إعدادات
     </div>
     <div id="level" class="nav-box">
