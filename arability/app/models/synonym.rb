@@ -74,8 +74,6 @@ class Synonym < ActiveRecord::Base
     end
   end
 
-  class << self
-
   #Author: Nourhan Zakaria
   #This method is used to get the percentage of gamers'countries who voted for 
   #certain synonym
@@ -159,6 +157,20 @@ class Synonym < ActiveRecord::Base
         return groups.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
   
   end
-  end 
-end
 
+  #  id: the id of the synonym to be approved
+  # Success:
+  #  returns true on saving the approval correctly in the database
+  # Failure:
+  #  returns false if the synonym doesnot exist in the database
+  #  or if the approval failed to be saved in the database 
+
+    def approve_synonym(synonym_id)
+      if Synonym.exists?(id: synonym_id)
+        synonym = Synonym.find(synonym_id)
+        synonym.approved = true
+        return synonym.save
+      end
+      return false
+    end
+end

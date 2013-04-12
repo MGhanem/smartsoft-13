@@ -2,32 +2,28 @@ Arability::Application.routes.draw do
 
   root :to => 'pages#home'
 
+  get "admin/login"
+
+  post "admin/login"
+
+  get "admin/index"
+
+  get "admin/logout"
+
+  post "admin/add_word"
+
+  post "admin/upload"
+
+  post "admin/add_trophy"
+
+  post "admin/add_prize"
+
+  get "admin/delete_trophy"
+  
+  get "admin/delete_prize"
+
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
-
-    get "admin/index"
-
-    get "admin/login"
-
-    get "admin/logout"
-
-    post "admin/wordadd"
-
-    post "admin/login"
-
-		get "admin/import_csv"
-
-    post "admin/upload"
-
-    post "admin/addword"
-
-    post "admin/addtrophy"
-
-    post "admin/addprize"
-
-    get "admin/deletetrophy"
-
-    get "admin/deleteprize"
 
     match '/game' => 'games#game'
 
@@ -88,6 +84,10 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
     end
   end
 
