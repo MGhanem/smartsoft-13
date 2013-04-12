@@ -493,28 +493,29 @@ def add_word
 #   word removed successfully
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
-def remove_word
-  if Developer.find_by_gamer_id(current_gamer.id) != nil 
-    @project_id = params[:project_id]
-        @word_id = params[:word_id]
-        @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-        @removed_word.each { |word| 
-          if word.project_id = @project_id
-            @remove = word
-          end }
-          if  @remove != nil
-            @remove.destroy
-            flash[:success] = t(:word_removed_successfully)
-            redirect_to project_path(@project_id), :flash => flash
-            return
-          else
-            flash[:notice] = t(:word_does_not_exist)
-            redirect_to project_path(@project_id), :flash => flash
-            return
-          end
-        else
-          flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
-          render 'pages/home'
-        end
+  def remove_word
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      @word_id = params[:word_id]
+      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+      @removed_word.each { |word| 
+        if word.project_id = @project_id
+          @remove = word
+        end 
+      }
+      if  @remove != nil
+        @remove.destroy
+        flash[:success] = t(:word_removed_successfully)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      else
+        flash[:notice] = t(:word_does_not_exist)
+        redirect_to project_path(@project_id), flash: flash
+        return
       end
+    else
+      flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
+      render 'pages/home'
     end
+  end
+end

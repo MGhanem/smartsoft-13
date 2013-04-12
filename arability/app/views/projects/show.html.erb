@@ -54,8 +54,9 @@
 				<tr>
 					<td style="text-align:center"><%= @words[count].name %></td>
 					<td style="text-align:center"><%= @synonyms[count].name %></td>
-					<td><!-- <a class="btn btn-danger" style="float:left;" href="<%= new_project_path %>"><i class="icon-remove"></i></a> -->
-						<%= link_to t(:remove_from_project), action: "remove_word", controller: "projects", :project_id => @project.id, :word_id => @words[count].id %></td>
+					<td>
+						<%= link_to t(:remove_from_project), action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id %>
+          </td>
 						<% count = count+1 %>
 					</tr>
 					<% end %>
