@@ -1,4 +1,4 @@
-class KeywordsController < ApplicationController
+class KeywordsController < BackendController
   # displays the form for adding a new word
   def new
     @keyword = Keyword.new(params[:name])
@@ -18,7 +18,7 @@ class KeywordsController < ApplicationController
   def create
     redirect_url = params[:redirect]
     if redirect_url.blank?
-      redirect_url = keywords_new_path
+      redirect_url = search_path
     end
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
@@ -27,28 +27,8 @@ class KeywordsController < ApplicationController
       flash = { :success => "Keyword #{@keyword.name} has been created" }
       redirect_to redirect_url, :flash => flash
     else
-      flash = { :error => @keyword.errors.messages }
-      redirect_to redirect_url, :flash => flash
+      flash = { :error => @keyword.errors.messages[:name] }
+      redirect_to keywords_new_path, :flash => flash
     end
-  end
-
-  #Description:
-  #   adds a keyword suggested by user to database
-  # Author:
-  #   Nourhan Mohamed
-  # params:
-  #   search: a string representing the search keyword that was suggested to
-  #     be added to the database
-  # returns:
-  #   success:
-  #     redirects to the search page again after adding the keyword to
-  #     database and displays a message indicating successful adding
-  #   failure:
-  #     returns an error message indicating failure to add
-  def suggest_add
-    keyword_to_add = params[:search]
-    add_success = Keyword.add_keyword_to_database(keyword_to_add)
-    redirect_to :controller => 'search', :action => 'search',
-      :search => keyword_to_add, :is_successful => add_success[0]
   end
 end

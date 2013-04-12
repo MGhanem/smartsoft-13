@@ -1,3 +1,91 @@
 // Place all the styles related to the admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.offset25top {
+	margin-top: 5%;
+}
+
+/* image file upload css */
+
+.uploader-controls .uploader-preview {
+  display: inline-block;
+  float: right;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.uploader-controls .uploader-preview img {
+  width: 120px;
+  height: 80px;
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
+
+.uploader-controls .uploader-error {
+  color: #bb3636;
+  font-size: 12px;
+}
+.uploader-controls .uploader-side {
+  display: inline-block;
+  max-width: 230px;
+  position: relative;
+  margin-bottom: 5px;
+}
+.uploader-controls .uploader-side .uploader-progress {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
+  margin-right: 7px;
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+.uploader-controls .uploader-side .uploader-help {
+  margin-top: 5px;
+  color: #999;
+  font-size: 12px;
+}
+.uploader-controls .uploader-side .uploader-file-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.uploader-controls .uploader-side .uploader-file-input input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  font-size: 50px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.uploader-controls .uploader-input {
+  padding-top: 10px;
+  clear: right;
+}
+
+
+/* image file upload css END */
+
+div.trophy {
+  display: inline-block !important;
+  max-width: 128px;
+  text-align: center;
+  margin: 15px;
+}
+
+div.trophy span {
+  display: block;
+}
+
+div.trophy span:first-child {
+  height: 40px;
+}
