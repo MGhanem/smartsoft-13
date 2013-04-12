@@ -20,9 +20,7 @@
 				<input type="text" id="inputkeyword" name="keyword[name]" placeholder="الكلمة" value="<%=@fargs && @fargs[:keyword]? @fargs[:keyword][:name] : ''%>" class="span4">
 				<button type="submit" class="btn btn-primary pull-left">إضافة الكلمة</button>
 				<% if flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name] %>
-					<% flash[:error][:name].each do |er| %>
-						<span class="help-block"><%= er %></span>
-					<% end %>
+						<span class="help-block">يجب ادخال كلمة باللغة العربية او الانجليزية</span>
 				<% end %>
 			</div>
 		</div>
