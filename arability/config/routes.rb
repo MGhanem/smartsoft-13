@@ -140,6 +140,10 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
 
       match '/my_subscriptions/create' => "my_subscription#create"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
     end
 
   end
@@ -149,11 +153,14 @@ Arability::Application.routes.draw do
   match '/game' => 'games#game'
   get "games/getprizes"
 
-  post "games/record_vote"
+    get "games/getprizes"
+    get "games/showprizes"
 
-  post "games/vote_errors"
+    post "games/record_vote"
 
-  post "games/record_synonym"
+    post "games/vote_errors"
+
+    post "games/record_synonym"
 
   get "/games/disconnect_facebook"
 
@@ -171,11 +178,15 @@ Arability::Application.routes.draw do
   get 'games/showprizes'
   get 'games/showtrophies'
 
+
+  # The priority is based upon order of creation:
+    get "admin/import_csv"
+
     post "admin/upload"
 
     
   
-  get 'games/getnewwords'
+    get 'games/getnewwords'
 
     match 'search' => 'search#search'
   get "authentications/twitter"

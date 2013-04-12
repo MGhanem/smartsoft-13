@@ -39,8 +39,10 @@ class Synonym < ActiveRecord::Base
     end
   end 
 
+
   class << self
     include StringHelper
+
     # author:
     #   Omar Hossam
     # description:
@@ -122,6 +124,6 @@ class Synonym < ActiveRecord::Base
           .reverse!
         return synonym_list
       end
-    
-  end
+
+end
 end

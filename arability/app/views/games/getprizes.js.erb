@@ -10,13 +10,13 @@
       $("#zone").append($(error));
   <% else %>
     <% if @won_prizes.length != 0 %>
-        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;">إلى صفحة التصويت </a>';
-        $("#zone").append($(button)); 
+        button = '<a onclick="have_to_sign_in()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %> </a>';
+        $("#zone").append($(button));
         success = '<h1 class="award-title"><%= t(:won_prizes) %></h1>';
         prizes = [];
 
         <% @won_prizes.each do |p| %>
-          prizes.push('<div class="award">' + '<img width="60" src="/assets/rails.png">' + '<%= p.name %>' + '</div>');
+          prizes.push('<div class="award">' + '<img width="60" src="<%= p.image %>">' + '<%= p.name %>' + '</div>');
         <% end %>
 
     <% end %>

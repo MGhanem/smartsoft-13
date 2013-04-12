@@ -6,7 +6,8 @@ ar:
       already_confirmed: "تم تأكيده مسبقاً، حاول تسجيل الدخول من فضلك"
       not_locked: "لم يتم إغلاقه"
       not_saved:
-        one: "الخطأ التالي منع ٪{resource} من أن يحفظ:"
+
+        one: "الخطأ التالي منع %{resource} من أن يحفظ:"
         other: " الأخطاء الـ %{count} التالية منعت %{resource} من أن يحفظ:"
   activerecord:
     attributes:
@@ -17,6 +18,7 @@ ar:
         education_level: "المستوي التعليمي"
         date_of_birth: "تاريخ الميلاد"
         gender: "النوع"
+        current_password: "كلمت السر الحالية"
     models:
       gamer: "اللاعب"
 
