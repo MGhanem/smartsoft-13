@@ -14,10 +14,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
   	if current_gamer.is_connected_to_facebook
   	  current_gamer.update_access_token(request.env["omniauth.auth"])
-  	  redirect_to controller: 'games', action: 'post'
+  	  redirect_to controller: "games", action: "post"
   	else
       current_gamer.connect_to_facebook(request.env["omniauth.auth"])
-      redirect_to "/gamers/edit", flash: => {success: t(:logged_in_to_fb)}
+      redirect_to "/gamers/edit", flash: {success: t(:logged_in_to_fb)}
     end
   end
   
