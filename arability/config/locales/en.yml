@@ -26,6 +26,7 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  select subscription: "Select Subscription"
   backend: "Developers"
 
   project: "Project"
@@ -72,7 +73,6 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
-
   follow_word_link: "If you don't like these synonyms or want updates to this word, you can always"
   follow_word_end_of_search: "follow the word!"
   follow_keyword_alert_fail: "This word is already followed:"
@@ -86,6 +86,21 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
+        please_choose: 'please choose your subscription model'
+  already_registered_developer: "You are already registered as a developer. Don't you remember?"
+  failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
+  no_developer: "Please register as a developer before you choose your subscription model."
+  subscription_model_already_chosen: "You have already chosen your subscription model. Don't you remember?"
+  success_developer_registration: "You have successfully registered as a developer."
+  choose_subscription_model: "Please choose a subscription model."
+  subscription_model_does_not_exist: "Failed to complete registration: the subscription model you chose does not exist."
+  register_as_developer: "Developer Registration"
+  next: "Next"
+  done: "Done!"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
   keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
@@ -139,13 +154,21 @@ en:
   word_does_not_exist: "Word does not exist."
   remove_from_project: "Remove from project"
   word_removed_successfully: "Word removed successfully."
-
   word_does_not_exist: "The word you're trying to remove does not exist."
-
+  no_words_in_project: "Project has now words yet."
   email2: "Email Address"
   not_shared: "This project is not shared with anyone yet"
-
   not_developer: "You have to register as a developer before proceeding."
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
+  first_name: "First Name"
+  last_name: "Last Name"
+  activerecord:
+    models:
+      developer: "Developer"
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"
+

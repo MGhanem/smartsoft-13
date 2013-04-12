@@ -1,8 +1,7 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  # has_one :owner, :class_name => "Developer"
+  has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
   belongs_to :developer
@@ -25,7 +24,6 @@ class Project < ActiveRecord::Base
 #new categories and inserting them into the project categories array
 # failure:
 #     None
-
 def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
   project.owner_id = developer_id

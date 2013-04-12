@@ -1,8 +1,8 @@
 #encoding: UTF-8
 class Developer < ActiveRecord::Base
+  has_many :keywords
   belongs_to :gamer 
   has_one :my_subscription
-  # has_many :projects
   has_many :shared_projects
   has_many :projects_shared, :through => :shared_projects, :source => "project"
   has_many :projects, :foreign_key => "owner_id"
