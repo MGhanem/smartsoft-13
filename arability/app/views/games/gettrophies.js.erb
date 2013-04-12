@@ -12,7 +12,7 @@
         button = '<a onclick="getPrizes(<%= @level %>, <%= @score %>)" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_prizes) %> </a>';
         $("#zone").append($(button));
     <% else %>
-        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_voting) %></a>';
+        button = '<a onclick="nextLevel()" class="btn btn-success pull-left" style="margin:20px; padding:10px; font-size:24px;"><%= t(:to_next_level) %></a>';
         $("#zone").append($(button));
     <% end %>
 
