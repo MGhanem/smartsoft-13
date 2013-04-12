@@ -1,11 +1,11 @@
 Arability::Application.routes.draw do
-  root :to => 'pages#home'
+  root :to => 'pages#home'  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
-
     get "admin/index"
 
+    get "admin/login"
 
     get "admin/login"
     get "admin/logout"
@@ -61,18 +61,21 @@ Arability::Application.routes.draw do
       
       get "projects/update"
 
-      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
+      match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
+      match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export"
       resources :projects
       match "projects/:id/share" => "projects#share", :as => "share_project"
 
 			get "projects/remove_developer_from_project"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
   		
-      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
-      match '/projects/remove_word' => "projects#remove_word"
+      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
 
-      match '/projects/export_csv' => "projects#export_to_csv"
-
+      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -104,10 +107,12 @@ Arability::Application.routes.draw do
 
       match 'search' => 'search#search'
 
-      match '/developers/new' => "developer#new"
+      match '/new' => "developer#new", :as => :developers_new
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
     end
   end
   # The priority is based upon order of creation:

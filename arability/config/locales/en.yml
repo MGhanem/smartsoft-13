@@ -26,6 +26,7 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  select subscription: "Select Subscription"
   backend: "Developers"
 
   project: "Project"
@@ -43,6 +44,7 @@ en:
   create_project: "Create Project"
   back: "Back"
   edit_project: "Edit Project"
+  create_project: "Create Project"
   click_here: "Click here"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
@@ -53,6 +55,14 @@ en:
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
+  error: "error"
+  prohibited_project_error: "errors prohibited this project from being saved:"
+  not_in_range: "is not in range"
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'Project was successfully created.'
+         project_was_successfully_updated: 'Project was successfully updated.'
 
   import: "Import"
   export: "Export"
@@ -63,7 +73,6 @@ en:
   word: "Word"
   help: "Help"
   enter_as_csv: "Enter as csv"
-
   follow_word_link: "If you don't like these synonyms or want updates to this word, you can always"
   follow_word_end_of_search: "follow the word!"
   follow_keyword_alert_fail: "This word is already followed:"
@@ -77,6 +86,21 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
+        please_choose: 'please choose your subscription model'
+  already_registered_developer: "You are already registered as a developer. Don't you remember?"
+  failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
+  no_developer: "Please register as a developer before you choose your subscription model."
+  subscription_model_already_chosen: "You have already chosen your subscription model. Don't you remember?"
+  success_developer_registration: "You have successfully registered as a developer."
+  choose_subscription_model: "Please choose a subscription model."
+  subscription_model_does_not_exist: "Failed to complete registration: the subscription model you chose does not exist."
+  register_as_developer: "Developer Registration"
+  next: "Next"
+  done: "Done!"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
   keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
@@ -103,6 +127,8 @@ en:
   import_csv_list1: "Words should not contain any numbers"
   import_csv_list2: "Non-arabic synonyms will not be accepted"
   import_csv_list3: "The file has to be in csv format and UTF-8 encoded"
+  import_csv_list4: "You can import more than one synonym for a keyword but the first one will be used in your project"
+  import_csv_list5: "Tou can change the synonym later"
   java_script_disabled : "Be smarter than that"
   upload_file_error1: "You did not choose a file"
   upload_file_error2: "This file is not UTF-8 encoded"
@@ -130,9 +156,25 @@ en:
   word_does_not_exist: "Word does not exist."
   remove_from_project: "Remove from project"
   word_removed_successfully: "Word removed successfully."
+  word_does_not_exist: "The word you're trying to remove does not exist."
+  description_choose_keywords: "The red synonym will be imported to your project"
+  no_words_in_project: "Project has now words yet."
+  email2: "Email Address"
+  not_shared: "This project is not shared with anyone yet"
   not_developer: "You have to register as a developer before proceeding."
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
   no_categories: "This project has no categories"
   no_description: "This project has no description"
+  register_developer: "Please register as a developer first"
+  developer_cant_see_project: "You are not allowed to view this project"
+  first_name: "First Name"
+  last_name: "Last Name"
+  activerecord:
+    models:
+      developer: "Developer"
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"
