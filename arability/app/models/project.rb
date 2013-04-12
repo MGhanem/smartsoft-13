@@ -2,15 +2,15 @@
 class Project < ActiveRecord::Base
 
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  has_one :owner, :class_name => "Developer"
+  # has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
-  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  belongs_to :developer
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
+  validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100, :message => "is not in range" }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
 # author:
