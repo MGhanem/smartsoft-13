@@ -127,15 +127,15 @@ class ProjectsController < BackendController
       @project = Project.createcategories(@project, params[:project][:categories])
       if @project.update_attributes(params[:project].except(:categories,:utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-      redirect_to :action => "index"
-      flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
+        redirect_to :action => "index"
+        flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
       else
-      render :action => 'edit'
+        render :action => 'edit'
       end
-    else
-    developer_unauthorized
-    end
-end
+      else
+        developer_unauthorized
+      end
+  end
 
  # author:Noha hesham
  # Description:
