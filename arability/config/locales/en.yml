@@ -75,5 +75,8 @@ en:
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
 
-
   hello: "Hello world"
+  username: "Username"
+  password_confirmation: "Password confirmation"
+  education_level: "Education level"
+  date_of_birth: "Date of Birth"
