@@ -37,7 +37,7 @@ class Keyword < ActiveRecord::Base
     filtered_data = filtered_data
       .filter_by_gender(gender) unless gender.blank?
     filtered_data = filtered_data
-      .filter_by_education(education.downcase) unless education.blank?
+      .filter_by_education(education) unless education.blank?
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
       .where(synonyms: { keyword_id: keyword_id, approved: true })
@@ -149,7 +149,7 @@ class Keyword < ActiveRecord::Base
         return Keyword.where(approved: false).all
 
       end
-
+  end
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -168,7 +168,7 @@ class Keyword < ActiveRecord::Base
   	#		failure:
   	#			returns an empty list if the search keyword had no matches or no 
     #     similar keywords were found
-    def get_similar_keywords(search_word, categories = [])
+    def self.get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
       search_word.downcase!
       search_word.strip!
@@ -185,7 +185,7 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	relevant_first_list
     end
-
+  class << self
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -217,16 +217,16 @@ class Keyword < ActiveRecord::Base
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function created for high charts to get model information. 
-  #       It returns a hash with the name of each synonym and a the 
-  #         percentage of total votes
+  #   function created for high charts to get model information. 
+  #   It returns a hash with the name of each synonym and a the 
+  #   percentage of total votes
   # params:
-  #     keyword_id: id of the keyword needed
+  #   keyword_id: id of the keyword needed
   # success:
-  #     returns a hash contating each synonym name in a string with a 
-  #       percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
+  #   returns a hash contating each synonym name in a string with a 
+  #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
-  #     returns empty hash if the synonyms of the given keyword have no votes
+  #   returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(keyword_id: keyword_id)
         .joins(:votes).count(group: "synonym_id")
@@ -239,15 +239,15 @@ class Keyword < ActiveRecord::Base
   # author:
   #   Mostafa Hassaan
   # description:
-  #    functioni is used to notify developers of new synonyms or 
-  #     updated keywords
+  #   functioni is used to notify developers of new synonyms or 
+  #   updated keywords
   # params:
-  #     synonym_id: the synonym that has been changed or added.
+  #   synonym_id: the synonym that has been changed or added.
   # success:
-  #     sends an email to all developers following the word that has 
-  #       the synonym
+  #   sends an email to all developers following the word that has 
+  #   the synonym
   # failure:
-  #     --
+  #   --
   def notify_developer(synonym_id)
       keyword = Keyword.find(self.id)
       synonym = Synonym.find(synonym_id)
