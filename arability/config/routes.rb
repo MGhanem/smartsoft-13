@@ -46,7 +46,6 @@ Arability::Application.routes.draw do
   
   get "admin/delete_prize"
 
-  scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
     match '/game' => 'games#game'
@@ -110,7 +109,7 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       match "projects/share/:id" => "projects#share"
       match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-      get "projects/update"€
+      get "projects/update"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 

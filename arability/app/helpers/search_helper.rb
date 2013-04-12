@@ -56,6 +56,7 @@ module SearchHelper
       }
     })
   end
+  end
 
 
   @@GENDER = 0
@@ -129,5 +130,5 @@ module SearchHelper
   def getID(word)
     return Keyword.where(name: word).first.id
   end
-end
 
+end

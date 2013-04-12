@@ -309,6 +309,7 @@ class Gamer < ActiveRecord::Base
       return common
     end
   end
+end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
