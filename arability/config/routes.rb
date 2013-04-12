@@ -69,9 +69,9 @@ Arability::Application.routes.draw do
 			get "projects/remove_developer_from_project"
   		
       match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
-      match '/projects/remove_word' => "projects#remove_word"
+      match '/projects/:project_id/remove_word' => "projects#remove_word"
 
-      match '/projects/export_csv' => "projects#export_to_csv"
+      match '/projects/:project_id/export_csv' => "projects#export_to_csv"
 
 
       match '/projects/:id/edit' => "projects#edit", :as => "edit_project"

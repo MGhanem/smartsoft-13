@@ -1,5 +1,7 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
+  require 'csv'
+
  # author:Noha hesham
  # Description:
  #   finds the project by its id then destroys it
@@ -505,27 +507,23 @@ end
       render 'pages/home'
     end
   end
-  # author:
-#      Khloud Khalid
+# author:
+#   Khloud Khalid
 # description:
-#     method exports words and synonyms of a given project to a .csv file
+#   method exports words and synonyms of a given project to a .csv file
 # params:
-#     project_id
+#   project_id
 # success:
-#     data exported successfully
+#   data exported successfully
 # failure:
-#     project does not exist, developer trying to export data is not owner 
-#     of the project nor is the project shared with him/her, not registered developer.
+#   project does not exist, not registered developer.
   def export_to_csv 
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
-      if Project.find_by_id(@project_id) != nil  
-        # if Project.find_by_developer_id(Developer.find_by_gamer_id(current_gamer.id)).find_by_id(@project_id) != nil 
-          # check of project is shared with me too   
+      if Project.find_by_id(@project_id) != nil   
         @exported_data = PreferedSynonym.where(project_id: @project_id).all
         csv_string = CSV.generate do |csv|
-          csv << ["Keyword", "Synonym"]
-          if @exported_data != nil
+          if @exported_data != []
             @exported_data.each do |word|
               @keyword = Keyword.find_by_id(word.keyword_id).name
               @synonym = Synonym.find_by_id(word.synonym_id).name
@@ -533,24 +531,20 @@ end
             end
           else
             flash[:notice] = t(:no_words)
-            redirect_to project_path(@project_id), :flash => flash
+            redirect_to project_path(@project_id), flash: flash
             return
           end
         end         
         send_data csv_string,
-        :type => 'text/csv; charset=iso-8859-1; header=present',
-        :disposition => "attachment; filename=project_data.csv" 
-        # else
-        #   flash[:notice] = "You can't export the data of someone else's project!"
-        #   render 'pages/home'
-        # end
+        type: "text/csv; charset=iso-8859-1; header=present",
+        disposition: "attachment; filename=project_data.csv" 
       else
         flash[:notice] = t(:no_project)
-        render 'pages/home'
+        render "pages/home"
       end
     else
       flash[:notice] = t(:not_developer)
-      render 'pages/home'
+      render "pages/home"
     end
   end 
 end

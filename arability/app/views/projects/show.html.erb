@@ -1,4 +1,3 @@
-
 <div class="container" border="1"> 
   <h3>
     <%= t(:project) %>
@@ -34,11 +33,7 @@
             </span>
           </button>
           <ul class="dropdown-menu">
-            <li>
-              <a href= "#">
-                csv
-              </a>
-            </li>
+            <%= link_to t(:file) + ".csv", action: "export_to_csv", controller: "projects", project_id: @project.id %>
           </ul>
         </div>
         <div class="btn-group">
