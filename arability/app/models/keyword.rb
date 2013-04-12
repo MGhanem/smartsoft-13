@@ -235,8 +235,8 @@ class Keyword < ActiveRecord::Base
   # failure:
   #     returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
-      votes = Synonym.where(:keyword_id => keyword_id)
-        .joins(:votes).count(:group => "synonym_id")
+      votes = Synonym.where(keyword_id: keyword_id)
+        .joins(:votes).count(group: "synonym_id")
       sum = votes.sum{|v| v.last}
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}

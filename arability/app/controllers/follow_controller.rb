@@ -22,18 +22,18 @@ class FollowController < BackendController
   #         search page with a failure flash to alert the developer that the
   #           relation failed.
   def follow
-    developer = Developer.where(:gamer_id => current_gamer.id).first
+    developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids = developer.keyword_ids
-    word = Keyword.where(:id => params[:keyword_id]).first
+    word = Keyword.where(id: params[:keyword_id]).first
     if word != nil
       if keyword_ids.include? params[:keyword_id].to_i
-        redirect_to :search_keywords, :flash => {:fail => "#{t(:follow_keyword_alert_fail)} #{word.name}"}
+        redirect_to :search_keywords, flash: {fail: "#{t(:follow_keyword_alert_fail)} #{word.name}"}
       else
         developer.follow(params[:keyword_id])
-        redirect_to :search_keywords, :flash => {:success => "#{t(:follow_keyword_alert)} #{word.name}"}
+        redirect_to :search_keywords, flash: {success: "#{t(:follow_keyword_alert)} #{word.name}"}
       end
     else
-       redirect_to :search_keywords, :flash => {:fail => "#{t(:keyword_not_found)}"}
+       redirect_to :search_keywords, flash: {fail: "#{t(:keyword_not_found)}"}
     end
   end
 
@@ -54,14 +54,14 @@ class FollowController < BackendController
   # failure:
   #     returns false if the relation didn't already exsist in the database
   def unfollow
-    word = Keyword.where(:id => params[:keyword_id]).first
+    word = Keyword.where(id: params[:keyword_id]).first
     if word != nil
-      developer = Developer.where(:gamer_id => current_gamer.id).first
+      developer = Developer.where(gamer_id: current_gamer.id).first
       developer.unfollow(params[:keyword_id])
       word = Keyword.find(params[:keyword_id]).name
-      redirect_to :list_followed_words, :flash => {:success => "#{t(:unfollow_keyword_alert)} #{word}"}
+      redirect_to :list_followed_words, flash: {success: "#{t(:unfollow_keyword_alert)} #{word}"}
     else
-      redirect_to :list_followed_words, :flash => {:fail => "#{t(:keyword_not_found)}"}
+      redirect_to :list_followed_words, flash: {fail: "#{t(:keyword_not_found)}"}
     end
   end
   
@@ -77,7 +77,7 @@ class FollowController < BackendController
   # failure:
   #     returns empty hash if the developer doesn't follow any keywords
   def list_followed
-    developer = Developer.where(:gamer_id => current_gamer.id).first
+    developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids_array = developer.keyword_ids
     @keywords = Keyword.find_all_by_id(keyword_ids_array)
   end

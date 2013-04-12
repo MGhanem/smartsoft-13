@@ -17,27 +17,27 @@ module SearchHelper
     stats = Keyword.get_keyword_synonym_visual(keyword_id)
     name1 = Keyword.find(keyword_id).name
     chart = LazyHighCharts::HighChart.new('pie') do |f|
-      f.chart({:defaultSeriesType=>"pie" , :margin=> [50, 200, 60, 170]} )
+      f.chart({defaultSeriesType:"pie" , margin: [50, 200, 60, 170]} )
       if I18n.locale == :en
         series = {
-               :type=> 'pie',
-               :name=> 'Browser share',
-               :data=>  stats,
+                type: 'pie',
+                name: 'Browser share',
+                data: stats,
         }
       end
       if I18n.locale == :ar
         series = {
-               :type=> 'pie',
-               :name=> 'Browser share',
-               :data=>  stats,
-               :dataLabels => {
-                    :align => 'center',
-                    :enabled => true,
-                    :x =>40
+               type: 'pie',
+               name: 'Browser share',
+               data:  stats,
+               dataLabels: {
+                    align: 'center',
+                    enabled: true,
+                    x: 40
                 }
       }
         tooltip = {
-                  :enabled => false
+                  enabled: false
         }
         f.tooltip(tooltip)
       end
@@ -46,17 +46,17 @@ module SearchHelper
       
       f.series(series)
       f.options[:title][:text] = "#{t(:synonyms_of)} #{name1}"
-      f.legend(:layout=> 'vertical',:style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '100px'}) 
-      f.plot_options(:pie=>{
-        :allowPointSelect=>true, 
-        :cursor=>"pointer" , 
-        :size =>'90%',
-        :align=>'right',
-        :dataLabels=>{
-          :enabled=>true,
-          :color=>"black",
-          :style=>{
-            :font=>"13px Trebuchet MS, Verdana, sans-serif"
+      f.legend(:layout=> 'vertical',:style=> {left: 'auto', bottom: 'auto', right: '50px', top: '100px'}) 
+      f.plot_options(pie:{
+        allowPointSelect: true, 
+        cursor: "pointer" , 
+        size: '90%',
+        align: 'right',
+        dataLabels:{
+          enabled: true,
+          color: "black",
+          style: {
+            font: "13px Trebuchet MS, Verdana, sans-serif"
           }
         }
       })
