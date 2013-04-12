@@ -108,9 +108,9 @@ class Synonym < ActiveRecord::Base
     def record_suggested_synonym(synonym_name, keyword_id, approved= false)
       if synonym_name.blank?
         return  1
-      elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
+      elsif Synonym.exists?(:name => synonym_name, :keyword_id => keyword_id)
         return  2
-      elsif Keyword.exists?(id: keyword_id)
+      elsif Keyword.exists?(:id => keyword_id)
           new_synonym = Synonym.new
           new_synonym.name = synonym_name
           new_synonym.keyword_id = keyword_id
@@ -120,8 +120,6 @@ class Synonym < ActiveRecord::Base
           else
             return 3
           end
-      else
-        return false
       end
     end 
     

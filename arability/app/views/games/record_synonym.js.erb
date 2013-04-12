@@ -1,16 +1,20 @@
-<% record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) %>
-<% already_existing_synonym = Synonym.where(:name => params[:synonym_name], :keyword_id => params[:keyword_id]).first %>
+<% record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id].to_i) %>
+<%# already_existing_synonym = Synonym.where(:name => params[:synonym_name], :keyword_id => params[:keyword_id].to_i).first %>
+alert("hoppa");
+alert("<%=record_output%>");
+alert("<%= Synonym.where(:name => params[:synonym_name], :keyword_id => params[:keyword_id].to_i).first %>");
 <% if record_output == 2 %>
 	<% if already_existing_synonym %>
 		<% if already_existing_synonym.approved == false %>
 			record_vote(<%= already_existing_synonym.id %>);
 		<% end %>
 	<% end %>
-<% elsif record_output == 0 %>
+<% end %>
+<% if record_output == 0 %>
 	<% if already_existing_synonym %>
 		record_vote(<%= already_existing_synonym.id %>);
 	<% end %>
-<% else %>
-	update_errors(<%= record_output %>);
 <% end %>
+//update_errors(<%= record_output %>);
+
 
