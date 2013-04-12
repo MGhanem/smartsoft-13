@@ -95,17 +95,19 @@ class Keyword < ActiveRecord::Base
 
       end
 
-    # adds a new keyword to the database or returns it if it exists
     # Author:
     #   Mohamed Ashraf
+    # Description:
+    #   adds a new keyword to the database or returns it if it exists
     # params:
     #   name: the actual keyword string
     #   approved: is the created keyword is automatically approved
     #   is_english: is the keyword string in English
     #   categories: a list of categories to tag the keyword with
-    # returns:
-    #   success: the first return is true and the second is the saved keyword
-    #   failure: the first return is false and the second is the unsaved keyword
+    # success:
+    #   the first return is true and the second is the saved keyword
+    # failure:
+    #   the first return is false and the second is the unsaved keyword
     def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
       name.strip!
       keyword = where(name: name).first_or_create
@@ -131,22 +133,21 @@ class Keyword < ActiveRecord::Base
       end
     end
 
-  	#Description:
-    #   gets words similar to a search keyword (in a certain category) and sorts 
-    #   result by relevance
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
+  	#Description:
+    #   gets words similar to a search keyword (in a certain category) and sorts
+    #   result by relevance
   	#	params:
-  	#		search_word: a string representing the search keyword that should 
+  	#		search_word: a string representing the search keyword that should
     #     be retrieved if found in the database
     #		categories: one or more categories to limit the search to
-  	#	returns:
-  	#		success:
-  	#			returns a list of the keywords (optionally filtered by categories) 
-    #     similar to the search keyword sorted in lexicographical order
-  	#		failure:
-  	#			returns an empty list if the search keyword had no matches or no 
-    #     similar keywords were found
+  	#	success:
+  	#		returns a list of the keywords (optionally filtered by categories)
+    #   similar to the search keyword sorted in lexicographical order
+  	#	failure:
+  	#		returns an empty list if the search keyword had no matches or no
+    #   similar keywords were found
     def get_similar_keywords(search_word, categories = [])
     	if (search_word.blank?)
     		return []
@@ -169,12 +170,16 @@ class Keyword < ActiveRecord::Base
     	return relevant_first_list
     end
 
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
+    # Author:
+    #   Mohamed Ashraf
+    # Description:
+    #   finds a keyword by name from the database
+    # params:
+    #   name: the search string
+    # success:
+    #   An instance of Keyword
+    # failure:
+    #   nil
     def find_by_name(name)
       name.strip!
       keyword = Keyword.where(name: name).first
@@ -209,20 +214,6 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
-    end
-
-
-    
   # author:
   #   Mostafa Hassaan
   # description:
