@@ -29,7 +29,19 @@ class Gamer < ActiveRecord::Base
     :before_or_equal_to => 10.years.ago }
   
   
-  
+ # Description:
+  #   Takes in a trophy id and adds it the gamers trophies array
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   trophy_id
+  # returns:
+  #   success:
+  #     returns true validating that the gamer has received
+  #     this trophy_id
+  #   failure:
+  #     returns false validating that the gamer has either
+  #     failed to get rewarded this trophy
   def receive_trophy(trohpy_id)
     trophy = Trophy.find(trophy_id)
     
@@ -59,10 +71,33 @@ class Gamer < ActiveRecord::Base
     end
   end
   
+  # Description:
+  #   returns a list of the gamers won prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer has won
+  #   failure:
+  #     no failure
   def get_won_prizes
     return self.prizes
   end
 
+
+  # Description:
+  #   returns a list of prizes that the gamer can win
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer can win
+  #   failure:
+  #     no failure
   def get_available_prizes
     return Prize.all - self.prizes
   end
