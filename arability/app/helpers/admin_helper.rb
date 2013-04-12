@@ -56,4 +56,7 @@ module AdminHelper
     session[:who_is_this] = nil
   end
   
+  def is_logged_in?
+    session["who_is_this"] == "admin"
+  end
 end

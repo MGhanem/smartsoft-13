@@ -9,6 +9,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
+
 			<div class="row" style="padding:10px;">
 				<div class="span12">
 						<button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
@@ -72,6 +73,16 @@
 	</div>
 </div>
 
+
+<% if @display_add %>
+	<div class="well">
+		<span>
+			<%= t(:keyword_not_found) %>
+			<%= link_to t(:add_word), "add_path" %>
+		</span>
+	</div>
+<% end %>
+
 <% if @no_synonyms_found %>
 	<div class="well">
 		<span>
@@ -90,6 +101,7 @@
 		</div>
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
+
 				<% key_id = getID(@search_keyword) %>
 				<% result = Keyword.get_keyword_synonym_visual(key_id) %>
 				<% if  result != [] %>
@@ -100,9 +112,11 @@
         <% else %>
           <p><%= t(:no_votes_for_word)%></p>
       	<% end %>
+
 			</div>
 		</div>
 	</div>
+
 
 	<% @synonyms.each do |synonym| %>
 		<div class="accordion-group">

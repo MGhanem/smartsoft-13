@@ -1,0 +1,10 @@
+<% if !gamer_signed_in? %>
+    error =  '<h1 class="award-title"><%= t(:sign_in_first) %></h1>';
+    $("#zone").append($(error));
+<% else %>
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
+    $("#zone").append($(score));
+    button = '<a href="/game" class="btn btn-success btn-large" style="postion:top;margin:20px; padding:10px; font-size:24px;"><%= t(:restart_game) %></a>';
+    $("#zone").append($(button));
+<% end %>
+

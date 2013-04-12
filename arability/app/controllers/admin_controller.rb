@@ -1,6 +1,6 @@
 #encoding: UTF-8
-class AdminController < ApplicationController
-
+class AdminController < ActionController::Base
+  protect_from_forgery
   require 'csv'
 
   layout 'admin'
@@ -223,6 +223,71 @@ class AdminController < ApplicationController
     end
     flash.keep
     redirect_to action: "index", anchor: "admin-list-prizes"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a trophy as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the trophy
+  #     score: the level required to earn the trophy
+  #     rank: the score required to earn the trophy
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addtrophy
+    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:score], params[:rank], params[:photo])
+    if success
+      flash[:success] = "Trophy #{trophy.name} has been created"
+    else
+      flash[:error] = trophy.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action takes a prize as input and creates one and stores it in
+  #     the database and redirects the user to index
+  # params
+  #     name: name of the prize
+  #     score: the level required to earn the prize
+  #     rank: the score required to earn the prize
+  #     photo: the photo thumbnail which would be displayed
+  # success: 
+  #     refreshes the page and displays notification
+  # failure: 
+  #     refreshes the page with error displayed
+  def addprize
+    success, prize = Prize.add_prize_to_database(params[:name], params[:score], params[:rank], params[:photo])
+    if success
+      flash[:success] = "Prize #{prize.name} has been created"
+    else
+      flash[:error] = prize.errors.messages
+    end
+    flash.keep
+    redirect_to action: "index"
+  end
+
+
+  def deletetrophy
+    Trophy.find_by_name(params[:name]).delete
+    flash[:success] = "Trophy #{params[:name]} has been deleted"
+    flash.keep
+    redirect_to action: "index"
+  end
+
+  def deleteprize
+    Prize.find_by_name(params[:name]).delete
+    flash[:success] = "Prize #{params[:name]} has been deleted"
+    flash.keep
+    redirect_to action: "index"
   end
 
   # author:
