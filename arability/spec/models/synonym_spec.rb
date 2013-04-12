@@ -32,7 +32,7 @@ describe Synonym do
       g.gender = "male"
       g.email = "trialA@example.com"
       g.password = "123456"
-      g.save
+      g.save(validate: false)
       g
     }
 
@@ -45,7 +45,7 @@ describe Synonym do
       gTwo.gender = "female"
       gTwo.email = "trialB@example.com"
       gTwo.password = "123456"
-      gTwo.save
+      gTwo.save(validate: false)
       gTwo
     }
 

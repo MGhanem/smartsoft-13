@@ -31,7 +31,7 @@ describe SearchHelper do
       g.gender = "male"
       g.email = "trialC@example.com"
       g.password = "1234567"
-      g.save
+      g.save(validate: false)
       g
     }
 
@@ -44,7 +44,7 @@ describe SearchHelper do
       gTwo.gender = "female"
       gTwo.email = "trialD@example.com"
       gTwo.password = "123456"
-      gTwo.save
+      gTwo.save(validate: false)
       gTwo
     }
 
@@ -80,7 +80,6 @@ describe SearchHelper do
 
 
       it "draws the chart for given synonym that shows gender statistics" do
-        puts Vote.all
         chart = piechart_gender(s.id)
         chart.first[:title][:text].should match(I18n.t(:stats_gender))
         chart.data.first[:data].should =~ (s.get_visual_stats_gender)
