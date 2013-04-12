@@ -236,7 +236,8 @@ float:right;
 }
 
 .award-desc-unlocked {
-   font-size: 20px;
+  color:white;
+  font-size: 20px;
   padding: 10px;
   margin-left:10px;
   margin-right:10px;
@@ -253,8 +254,8 @@ float:right;
 
 
 .award-desc-locked {
-  color: white;
-   font-size: 20px;
+  color:white;
+  font-size: 30px;
   padding: 10px;
   margin-left:10px;
   margin-right:10px;
@@ -264,11 +265,12 @@ float:right;
   background-color: rgba(200,204,190, 0.3);
 }
 
-.award-desc-locked img {
+.award-desc-unlocked img {
   margin-left: 14px;
 }
 
-
+.award-desc-locked img {
+  margin-left: 14px;
 
 .award-type {
   padding-right: 20px;
@@ -284,17 +286,17 @@ float:right;
 .award-zone {
   overflow-y: scroll;
   height:100%;
- text-align:right; 
+  text-align:right;
 }
 
 .award {
-  font-size: 20px; 
+  font-size: 20px;
   padding: 10px;
-  margin-left:10px; 
-  margin-right:10px; 
-  margin-top: 10px; 
-  direction: rtl; 
-  text-align:right; 
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
   background-color: rgba(200,200,200, 0.3); 
 }
 .award-desc-unlocked {

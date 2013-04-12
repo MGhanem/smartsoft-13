@@ -19,9 +19,12 @@ class Trophy < ActiveRecord::Base
   # has_attached_file :photo
   
   def self.get_new_trophies_for_gamer(gamer_id, score, level)
-    trophies_all = Trophy.where(:score => score, :level => level)
+    trophies_for_score = []
     trophies_gamer = Gamer.find(gamer_id).trophies
-    return trophies_all - trophies_gamer
+    trophies_of_level = Trophy.where(:level => level)
+    new_trophies = trophies_of_level - trophies_gamer
+    new_trophies.map { |nt| trophies_for_score << nt if nt.score <= score }
+    return trophies_for_score
   end
 
 end
