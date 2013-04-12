@@ -1,6 +1,29 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
 
+ # author:Noha hesham
+ # Description:
+ #   finds the project by its id then destroys it
+ # params:
+ #   none
+ # success:
+ #   a pop up appears and makes sure the user wants to
+ #   delete the project by choosing ok the 
+ #   project is successfully deleted 
+ # failure:
+ #   project is not deleted
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to projects_url }
+      format.json { head :no_content }
+    end
+  end
+
+  # GET /projects
+  # GET /projects.json
+
   # author: 
   #    Mohamed Tamer
   # description:
@@ -133,25 +156,6 @@ class ProjectsController < BackendController
   end
 end
 
- # author:Noha hesham
- # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the 
- #   project is successfully deleted 
- # failure:
- #   project is not deleted
- def destroy
-  @project = Project.find(params[:id])
-  @project.destroy
-  respond_to do |format|
-    format.html { redirect_to projects_url }
-    format.json { head :no_content }
-  end
-end
 
 def show
   @projects = Project.where(:owner_id => current_developer.id)
@@ -442,6 +446,7 @@ def add_word
       render 'pages/home'
     end
   end
+  
   # author:
 #      Khloud Khalid
 # description:

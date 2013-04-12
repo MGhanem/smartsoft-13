@@ -1,8 +1,9 @@
 Arability::Application.routes.draw do
-  root :to => 'pages#home'
+  root :to => 'pages#home'  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
+
 
     get "admin/index"
 
@@ -72,6 +73,14 @@ Arability::Application.routes.draw do
       match '/projects/remove_word' => "projects#remove_word"
 
       match '/projects/export_csv' => "projects#export_to_csv"
+
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
+			resources :projects
 
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"

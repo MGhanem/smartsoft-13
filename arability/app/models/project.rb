@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
   has_and_belongs_to_many :shared_with, :class_name => "Developer"
   # has_one :owner, :class_name => "Developer"
   has_many :shared_projects
@@ -11,10 +10,6 @@ class Project < ActiveRecord::Base
 
   attr_accessible :name
   belongs_to :developer
-
-
-
-
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
@@ -34,22 +29,6 @@ class Project < ActiveRecord::Base
 #new categories and inserting them into the project categories array
 # failure:
 #     None
-
-
- 
-  # def self.createproject(params)
-  # 	project = Project.new(params.except(:categories))
-  # 	array = params[:categories].split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  #   catArray = []
-  # 	array.each do |m|
-  #     catArray.push(Category.where(:name => m).first_or_create)
-  # 	end
-  #   project.categories = catArray
-  #   project.save
-  # 	return project
-  #  end
-
-
 def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
   project.owner_id = developer_id

@@ -108,6 +108,7 @@ ar:
   projects_index_edit: " تعديل"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
+  select subscription: "إختر"
 
   errors:
     messages:
