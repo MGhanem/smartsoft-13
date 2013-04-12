@@ -80,7 +80,4 @@ class AuthenticationsController < ApplicationController
 	  redirect_to root_url
 	end
 
-	def twitter_hall_of_fame
-	end
-
 end
