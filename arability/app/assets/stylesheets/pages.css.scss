@@ -8,7 +8,24 @@ div.item img {
 }
 
 ol.carousel-indicators {
-	position: relative;
-	margin-left: 47%;
-	margin-right: 43%;
+	width: 50px;
+	position: absolute;
+	margin-left: 50%;
+	margin-right: 50%;
+}
+
+img.game-preview {
+	width: 450px;
+	height: 320px;
+}
+
+div.game-preview-container a {
+	text-decoration: none;
+	margin-top: 20%;
+	line-height: 30px;
+}
+
+div.game-preview-container div {
+	width: 50%;
+	float: left;
 }

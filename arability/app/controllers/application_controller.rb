@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
   require 'csv'
+  require 'csv'
+
+  def default_url_options(options={})
+    logger.debug "default_url_options is passed options: #{options.inspect}\n"
+    { :locale => I18n.locale }
+  end  
 
   # author:
   #   Amr Abdelraouf
@@ -81,13 +87,6 @@ class ApplicationController < ActionController::Base
       I18n.locale = params[:locale]
       session[:locale] = params[:locale]
     end
-  end
-
-  # Description:
-  #   It adds the current locale to th url  if not specified so that pages
-  def default_url_options(options={})
-    logger.debug "default_url_options is passed options: #{options.inspect}\n"
-    { :locale => I18n.locale }
   end
 end
 
