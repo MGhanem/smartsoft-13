@@ -1,4 +1,6 @@
-class ProjectsController < ApplicationController
+class ProjectsController < BackendController
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
   # GET /projects
   # GET /projects.json
   
@@ -14,7 +16,7 @@ class ProjectsController < ApplicationController
   def index
  	  developer = Developer.where(:gamer_id => current_gamer.id).first
   	if developer.present?
-  		@projects = Project.where(:developer_id => developer.id)
+  		@projects = Project.where(:owner_id => developer.id)
   	else
   		flash[:notice] = "You are not authorized to view this page"
   	end

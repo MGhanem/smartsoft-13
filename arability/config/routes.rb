@@ -2,32 +2,28 @@ Arability::Application.routes.draw do
 
   root :to => 'pages#home'
 
+  get "admin/login"
+
+  post "admin/login"
+
+  get "admin/index"
+
+  get "admin/logout"
+
+  post "admin/add_word"
+
+  post "admin/upload"
+
+  post "admin/add_trophy"
+
+  post "admin/add_prize"
+
+  get "admin/delete_trophy"
+  
+  get "admin/delete_prize"
+
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
-
-    get "admin/index"
-
-    get "admin/login"
-
-    get "admin/logout"
-
-    post "admin/wordadd"
-
-    post "admin/login"
-
-		get "admin/import_csv"
-
-    post "admin/upload"
-
-    post "admin/addword"
-
-    post "admin/addtrophy"
-
-    post "admin/addprize"
-
-    get "admin/deletetrophy"
-
-    get "admin/deleteprize"
 
     match '/game' => 'games#game'
 
@@ -51,11 +47,13 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+      resources :projects
+      match "keywords/create" => "keywords#create"
+
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
-			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -71,24 +69,28 @@ Arability::Application.routes.draw do
 
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
+      resources :projects
+      match "keywords/create" => "keywords#create", :as => :keywords_create
+
       match '/projects/add_word' => "projects#add_word"
-      get "keywords/new"
-
-      post "keywords/create"
-
-      get "keywords/suggest_add"
+      match "keywords/new" => "keywords#new", :as => :keywords_new
 
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
+      match 'search_keywords' => 'search#search_keywords'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
-    end
 
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+    end
   end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
