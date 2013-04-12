@@ -87,7 +87,16 @@ class ProjectsController < BackendController
       render 'pages/home'
     end
   end
-
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  finds the project by the params id
+  # Params:
+  #  none
+  # success:
+  #  project is found 
+  # failure:
+  #  none
   def share
     @project = Project.find(params[:id])
   end
