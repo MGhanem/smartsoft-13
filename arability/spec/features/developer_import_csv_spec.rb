@@ -2,6 +2,7 @@ require "spec_helper"
 include Warden::Test::Helpers
 
 describe "Project" do
+  include Devise::TestHelpers
   let(:gamer1){
 	  gamer = Gamer.new
     gamer.username = "Nourhan"
@@ -48,14 +49,14 @@ describe "Project" do
   }
 
   it "a developer can open the link of import of one of his projects" do
-    login_as gamer1
+    sign_in developer1.gamer
     visit backend_home_path
-    visit project_path(project_id => project.id)
+    visit project_path(locale => "en", project_id => project.id)
     visit import_csv_project
     page.should have_content(I18n.t(:import_csv_title))
   end
   it "a developer cannot import an empty file" do
-    login_as gamer1
+    sign_in developer1.gamer
     visit backend_home_path
     visit project_path(project_id => project.id)
     visit import_csv_project
@@ -63,7 +64,7 @@ describe "Project" do
     page.should have_content(I18n.t(:import_csv_title))
   end
   it "a developer cannot import a non-csv file" do
-    login_as gamer1
+    sign_in developer1.gamer
     visit backend_home_path
     visit project_path(project_id => project.id)
     visit import_csv_project
@@ -73,7 +74,7 @@ describe "Project" do
     page.should have_content(I18n.t(:import_csv_title))
   end
   it "a developer can import a csv file and get redirected to choose keywords view" do
-    login_as gamer1
+    sign_in developer1.gamer
     visit backend_home_path
     visit project_path(project_id => project.id)
     visit import_csv_project
