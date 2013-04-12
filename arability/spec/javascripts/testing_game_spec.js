@@ -73,6 +73,19 @@ describe("nextLevel()", function() {
 });
 
 
+describe("Win", function() {
+  it("Once all words are formed the gamer wins", function() {
+  	for(x = 0; x < wordExistsInArray.length; x++){
+  	wordExistsInArray[x] = false;
+  }
+  expect(win).toBe(true);
+  	});
+});
+
+
+
+
+
 
 
 
