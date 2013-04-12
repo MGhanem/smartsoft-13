@@ -10,7 +10,7 @@ describe AdminController  do
 
 	it "should redirect to login page" do
 		get :index
-		response.should redirect_to("/en/admin/login")
+		response.should redirect_to("/admin/login")
 	end
 
 	it "renders the login template" do
@@ -19,12 +19,9 @@ describe AdminController  do
     end
 
     it "should login as admin" do
-    	visit "/admin/login"
+    	post "/admin/login", :username => "admin", :password => "admin"
     	expect(response.code).to eq("200")
-    	expect(response).to render_template("login")
-    	fill_in "username", :with => "admin"
-    	fill_in "password", :with => "admin"
-    	click_button "تسجيل الدخول"
+    	expect(response).to render_template("index")
     end
 
 end
