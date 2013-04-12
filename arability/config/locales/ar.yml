@@ -168,5 +168,23 @@ ar:
   no_words: "لا يوجد كلمات لاستيرادها."
   no_project: "المشروع الذي تحاول استيراده غير موجود."
   file: "ملف"
+  already_registered_developer: "لقد انشأت حساب كمطور من قبل."
+  failed_developer_registration: "فشل إنشاء حساب المطور. تأكد من إدخال المعلومات الصحيحة. "
+  no_developer: "انشئ حساب مطور قبل أن تختار نظام الاشتراك."
+  subscription_model_already_chosen: "لقد اخترت نظام الاشتراك من قبل."
+  success_developer_registration: "تم إنشاء حسابك كمطور بنجاح."
+  choose_subscription_model: "إختر نظام الاشتراك."
+  subscription_model_does_not_exist: "نظام الاشتراك الذي اخترته ليس موجود."
+  register_as_developer: "أدخل بياناتك للاشتراك كمطور"
+  next: "التالي"
+  done: "إنتهاء"
+  first_name: "الاسم الاول"
+  last_name: "إسم العائلة"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
-
