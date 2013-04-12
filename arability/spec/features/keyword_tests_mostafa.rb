@@ -37,7 +37,6 @@ describe "KeywordSynonymTests_mostafa" do
     syn.save
     syn
     }
-
     let(:gamer1){ gamer = Gamer.new
     gamer.username = "Mostafa"
     gamer.country = "Egypt"
