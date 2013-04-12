@@ -17,7 +17,17 @@ module RequestHelpers
     gamer
   end
 
+  def create_logged_in_developer
+    gamer = create_logged_in_user
+    dev = Developer.new
+    dev.first_name = "test"
+    dev.last_name = "test"
+    dev.gamer_id = gamer.id
+    dev.save
+    dev
+  end
+
   def login(gamer)
-    sign_in(gamer, :scope => :gamer)
+    login_as gamer, :scope => :gamer
   end
 end
