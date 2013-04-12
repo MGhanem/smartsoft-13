@@ -57,6 +57,33 @@ class Prize < ActiveRecord::Base
 
     attr_accessible :name, :level, :score, :photo
 
+  # Description:
+  #   returns a list of prizes that the gamer got awarded 
+  #   and awards it to the current_gamer
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   gamer_id: the gamer id of the current signed in gamer
+  #   score: the score that was just scored in the game
+  #   level: the level that the gamer was on before the method was
+  #          called
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer won
+  #   failure:
+  #     no failure
+  def self.get_new_prizes_for_gamer(gamer_id, score, level)
+    prizes_for_score = []
+    gamer = Gamer.find(gamer_id)
+    prizes_gamer = gamer.prizes
+    prizes_of_level = Prize.where(:level => level)
+    new_prizes = prizes_of_level - prizes_gamer
+    new_prizes.map { |np| prizes_for_score << np if np.score <= score }
+    prizes_for_score.map { |p| gamer.prizes << p }
+    gamer.save
+    return prizes_for_score
+  end
+
     # has_attached_file :photo
     
     # Description:

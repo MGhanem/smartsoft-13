@@ -18,8 +18,7 @@
         $("#zone").append($(button));
     <% end %>
 
-
-    score_title = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a> <a target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h1>';
+    score_title = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span><br> <a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a> <a target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h1>';
     $("#zone").append($(score_title));
 
     <% if @won_trophies.length != 0 %>

@@ -61,7 +61,7 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  # :
+  # Description:
   #   Takes in a prize id and adds it the gamers prizes array
   # Author:
   #   Adam Ghanem
@@ -104,7 +104,6 @@ class Gamer < ActiveRecord::Base
     return self.prizes
   end
 
-
   # Description:
   #   returns a list of the gamers prizes
   # Author:
@@ -134,6 +133,7 @@ class Gamer < ActiveRecord::Base
   def get_won_trophies
     return self.trophies
   end
+  
 
   # Author:
   #   Kareem Ali

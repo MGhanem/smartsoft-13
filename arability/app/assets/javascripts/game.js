@@ -52,7 +52,7 @@ function newGame(){
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
-	'<div id ="level-popup" style="font-size: 1270%; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -703,7 +703,7 @@ function nextLevel(){
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
-	'<div id ="level-popup" style="font-size: 1270%; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -1019,7 +1019,7 @@ function loseGame(t){
 		$('tr').empty();
 		}, 500);
 		$('.zone').append('<div id ="gameover-popup"' +
-		'style="font-size: 2000%; color: white; position: absolute; margin-top: 120px;"><p style="text-align: center;">' + 
+		'style="font-size: 300px; color: white; position: absolute; margin-top: 120px;"><p style="text-align: center;">' + 
 		'النهاية</p></div>');
 		$('#gameover-popup').fadeTo(0,0);
 		$('#gameover-popup').fadeTo(1500,1);
