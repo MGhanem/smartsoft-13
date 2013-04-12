@@ -16,14 +16,14 @@ class GamesController < ApplicationController
   #   As a gamer, I could post my score on my facebook timeline by pressing on
   #   the facebook share score button.
   # Parameters:
-  #   None.
+  #   score: a variable that saves gamer's score recieved from view.
   # Success:
   #   Gamer presser the facebook share score button, and his score is shared on
   #   facebook and confirmed by API.
   # Failure: 
   #   Facebook failure reported by API.
   def post_score_facebook
-    token = Gamer.getToken(current_gamer.id)
+    token = Gamer.get_token(current_gamer.id)
     @graph = Koala::Facebook::API.new(token)
     score = params[:score]
     @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
