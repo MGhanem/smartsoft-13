@@ -234,10 +234,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms('saudi arabia')
+		synonyms, votes = keyword.retrieve_synonyms("saudi arabia")
 		synonyms.first.name.should eq("انقر")
 		votes.should eq({})
-		synonyms, votes = keyword.retrieve_synonyms('egypt')
+		synonyms, votes = keyword.retrieve_synonyms("egypt")
 		votes[synonym.id].should eq(1)
 	end
 
@@ -280,10 +280,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, 'female')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, "female")
 		synonyms.first.name.should eq("انقر")
 		votes[synonym.id].should eq(1)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, 'male')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, "male")
 		votes.should eq({})
 	end
 
@@ -300,10 +300,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, 'high')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, "high")
 		synonyms.first.name.should eq("انقر")
 		votes[synonym.id].should eq(1)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, 'low')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, "low")
 		votes.should eq({})
 	end
 

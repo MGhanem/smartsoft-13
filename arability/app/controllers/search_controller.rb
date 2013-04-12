@@ -29,7 +29,7 @@ class SearchController < BackendController
     else
       categories_array = []
     end
-    @search_keyword = params['search']
+    @search_keyword = params["search"]
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
