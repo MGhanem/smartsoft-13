@@ -310,12 +310,12 @@ class Gamer < ActiveRecord::Base
     if (current_gamer.token.nil?)
       return nil
     end
-    @graph = Koala::Facebook::API.new(current_gamer.token)
+    @graph = Koala::Facebook::API.new(current_gamer.get_token)
     friends = @graph.get_connections("me", "friends")
     common = Array.new
     i = 0
     while i<friends.count
-      if Gamer.exists?(:uid => friends.at(i), :provider => "facebook")
+      if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
         common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
         common.push(current_gamer.id)
       end
