@@ -83,12 +83,12 @@ describe "Tests gamer functions whcih are related to facebook" do
     expect(has_token).to eq (true)
   end
 
-#  it "should return save a token with a different value the older one" do
-#    old_token = connected_gamer.token
-#    connected_gamer.update_access_token(auth)
-#    new_token = connected_gamer.token
-#    new_token.should_not eq (old_token)
-#  end
+  it "should return save a token with a different value the older one" do
+    old_token = connected_gamer.token
+    connected_gamer.update_access_token(auth)
+    new_token = connected_gamer.token
+    new_token.should_not eq (old_token)
+  end
 
   it "should delete the user's provider, uid and token" do
     connected_gamer.disconnect_from_facebook
