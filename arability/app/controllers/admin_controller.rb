@@ -32,7 +32,8 @@ class AdminController < ApplicationController
   # author:
   #     Karim ElNaggar
   # description:
-  #     a function that checks if the user is logged in and redirects him to /admin/index
+  #     a function that checks if the user is logged in and 
+  #     redirects him to /admin/index
   # params
   #     none
   # success: 
@@ -120,7 +121,8 @@ class AdminController < ApplicationController
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
-    success, trophy = Trophy.add_trophy_to_database(params[:name], params[:level], params[:score], params[:image])
+    success, trophy = Trophy.add_trophy_to_database(params[:name],
+                 params[:level], params[:score], params[:image])
     if success
       flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
       flash[:successtype] = "addtrophy"
@@ -132,7 +134,8 @@ class AdminController < ApplicationController
     if success
       redirect_to action: "index", anchor: "admin-list-trophies"
     else
-      redirect_to action: "index", anchor: "admin-add-trophy", fargs: {addtrophy: params}
+      redirect_to action: "index", anchor: "admin-add-trophy", 
+                  fargs: {addtrophy: params}
     end
   end
 
@@ -154,7 +157,8 @@ class AdminController < ApplicationController
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
-    success, prize = Prize.add_prize_to_database(params[:name], params[:level], params[:score], params[:image])
+    success, prize = Prize.add_prize_to_database(params[:name],
+               params[:level], params[:score], params[:image])
     if success
       flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
       flash[:successtype] = "addprize"
@@ -166,7 +170,8 @@ class AdminController < ApplicationController
     if success
       redirect_to action: "index", anchor: "admin-list-prizes"
     else
-      redirect_to action: "index", anchor: "admin-add-prize", fargs: {addprize: params}
+      redirect_to action: "index", anchor: "admin-add-prize", 
+                  fargs: {addprize: params}
     end
   end
 
@@ -252,7 +257,8 @@ class AdminController < ApplicationController
     if message == 0
       uploadCSV(array_of_arrays)
     end
-    redirect_to action: "index", anchor: "admin-import-csv-file", message: message
+    redirect_to action: "index", anchor: "admin-import-csv-file", 
+                message: message
   end
 
 end
