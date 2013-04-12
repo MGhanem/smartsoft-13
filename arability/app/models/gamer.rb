@@ -30,9 +30,7 @@ class Gamer < ActiveRecord::Base
       "username must be made up of english letters or digits"
     end
   end
-  validates :gender , :presence => true, :format => { :with => /\a^(male|female)\z/i }
 
-  validates :username, :presence => true, :length => { :minimum => 3 }
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => check }
   validates :country, :presence => true, :length => { :minimum => 2 }
@@ -73,7 +71,7 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  # :
+  # Description:
   #   Takes in a prize id and adds it the gamers prizes array
   # Author:
   #   Adam Ghanem
@@ -116,7 +114,6 @@ class Gamer < ActiveRecord::Base
     return self.prizes
   end
 
-
   # Description:
   #   returns a list of the gamers prizes
   # Author:
@@ -146,6 +143,7 @@ class Gamer < ActiveRecord::Base
   def get_won_trophies
     return self.trophies
   end
+  
 
   # Author:
   #   Kareem Ali
