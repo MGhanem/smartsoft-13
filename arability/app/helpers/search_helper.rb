@@ -46,7 +46,7 @@ module SearchHelper
       
       f.series(series)
       f.options[:title][:text] = "#{t(:synonyms_of)} #{name1}"
-      f.legend(:layout=> 'vertical',:style=> {left: 'auto', bottom: 'auto', right: '50px', top: '100px'}) 
+      f.legend(:layout=> 'vertical', style: {left: 'auto', bottom: 'auto', right: '50px', top: '100px'}) 
       f.plot_options(pie:{
         allowPointSelect: true, 
         cursor: "pointer" , 
