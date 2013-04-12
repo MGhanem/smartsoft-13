@@ -472,39 +472,36 @@ end
     end
   end
 # author:
-#      Khloud Khalid
+#   Khloud Khalid
 # description:
-#     method removes a given word from a project
+#   method removes a given word from a project
 # params:
-#     project_id, word_id
+#   project_id, word_id
 # success:
-#     word removed successfully
+#   word removed successfully
 # failure:
-#     keyword does not exist or is not in the project, developer trying to remove word is not owner 
-#     of the project nor is the project shared with him/her, not registered developer.
+<<<<<<< HEAD
+#   keyword does not exist or is not in the project, not registered developer.
   def remove_word
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
-        # check if owner of project or is shared with me too
-        @word_id = params[:word_id]
-        # @removed_word = PreferedSynonym.find_word_in_project(@project_id, @word_id)
-        @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-        @removed_word.each { |word| 
-          if word.project_id = @project_id
-              @remove = word
-          end }
-        if  @remove != nil
-          @remove.destroy
-          flash[:notice] = t(:word_removed_successfully)
-          redirect_to project_path(@project_id), :flash => flash
-          return
-        else
-          flash[:notice] = t(:word_does_not_exist)
-          redirect_to project_path(@project_id), :flash => flash
-          return
-        end
+      @word_id = params[:word_id]
+      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+      @removed_word.each do |word| 
+        if word.project_id = @project_id
+          @remove = word
+        end 
+      end
+      if  @remove != nil
+        @remove.destroy
+        flash[:success] = t(:word_removed_successfully)
+        redirect_to project_path(@project_id), flash: flash
+      else
+        flash[:notice] = t(:word_does_not_exist)
+        redirect_to project_path(@project_id), flash: flash
+      end
     else
-      flash[:notice] = t(:not_developer)
+      flash[:notice] = "You have to register as a developer before trying to remove a word from your project."
       render 'pages/home'
     end
   end
