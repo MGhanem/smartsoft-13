@@ -1,5 +1,6 @@
 module SearchHelper
 
+  
   # author:
   #   Mostafa Hassaan
   # description:
@@ -22,7 +23,7 @@ module SearchHelper
                 data: stats,
         }
       end
-      if I18n.locale == :ar
+      if I18n.locale ==:ar
         series = {
                type: 'pie',
                name: 'Browser share',
