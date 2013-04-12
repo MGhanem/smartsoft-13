@@ -1,6 +1,7 @@
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
   #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
+
 # author:
 #   Khloud Khalid
 # description:
@@ -81,6 +82,7 @@ class MySubscriptionController < ApplicationController
   #  all subscription models are listed
   # Failure:
   #  subscription models are not listed
+
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id) 

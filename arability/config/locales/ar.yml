@@ -134,8 +134,6 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
-
-
   views:
     project:
        flash_messages:
@@ -167,11 +165,32 @@ ar:
   remove_from_project: "إزالة من المشروع"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  no_words_in_project: "لا توجد كلمات في هذا المشروع."
 
   not_shared: "ةذا المشروع غير مشارك مع احد"
-
   not_developer: "يجب أن تشترك كمطور قبل أن تستطيع الإكمال."
   no_words: "لا يوجد كلمات لاستيرادها."
   no_project: "المشروع الذي تحاول استيراده غير موجود."
   file: "ملف"
   not_in_range: "ليس في الحدود المسموح بها"
+  already_registered_developer: "لقد انشأت حساب كمطور من قبل."
+  failed_developer_registration: "فشل إنشاء حساب المطور. تأكد من إدخال المعلومات الصحيحة. "
+  no_developer: "انشئ حساب مطور قبل أن تختار نظام الاشتراك."
+  subscription_model_already_chosen: "لقد اخترت نظام الاشتراك من قبل."
+  success_developer_registration: "تم إنشاء حسابك كمطور بنجاح."
+  choose_subscription_model: "إختر نظام الاشتراك."
+  subscription_model_does_not_exist: "نظام الاشتراك الذي اخترته ليس موجود."
+  register_as_developer: "أدخل بياناتك للاشتراك كمطور"
+  next: "التالي"
+  done: "إنتهاء"
+  first_name: "الاسم الاول"
+  last_name: "إسم العائلة"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
+  not_in_range: "ليس في الحدود المسموح بها"
+

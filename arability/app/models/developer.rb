@@ -1,7 +1,6 @@
 #encoding: UTF-8
 class Developer < ActiveRecord::Base
- has_many :keywords
- 
+  has_many :keywords
   belongs_to :gamer 
   has_one :my_subscription
   has_many :shared_projects
