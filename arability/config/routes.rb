@@ -7,9 +7,9 @@ Arability::Application.routes.draw do
     get "admin/index"
 
     get "admin/login"
-    
+
     get "admin/logout"
-  
+
     post "admin/wordadd"
 
     post "admin/login"
@@ -19,13 +19,13 @@ Arability::Application.routes.draw do
     post "admin/upload"
 
     post "admin/addword"
-    
+
     post "admin/addtrophy"
-    
+
     post "admin/addprize"
 
     get "admin/deletetrophy"
-    
+
     get "admin/deleteprize"
 
     match '/game' => 'games#game'
@@ -56,6 +56,12 @@ Arability::Application.routes.draw do
     post "admin/wordadd"
 
 
+
+    get "games/getprizes"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -110,7 +116,7 @@ Arability::Application.routes.draw do
   get "games/get_score_only"
   post "games/record_vote"
 
-  post "games/vote_errors"
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   post "games/record_synonym"
 
@@ -166,6 +172,8 @@ Arability::Application.routes.draw do
 
     post "games/record_synonym"
 
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

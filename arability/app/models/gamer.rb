@@ -8,23 +8,21 @@ class Gamer < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth, :gender,
                   :highest_score
 
-  validates :username, :presence => true, :length => { :minimum => 3 }
+  validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
+
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
-    :message => " can only start with a letter, 
-    and have no 2 successive \"_\"" }
+     }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
-  validates :country, :format => { :with => /\A[a-zA-Z]+\z/,
-    :message => "can't be anything except letters." }
 
-  validates :education_level, :format => { :with => /\A^(low|medium|high)\Z/i }
+  validates :education_level, :format => { :with => /\A^(School|University|Graduate)\Z/i }
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
@@ -67,11 +65,33 @@ class Gamer < ActiveRecord::Base
   def get_available_prizes
     return Prize.all - self.prizes
   end
-  
+
+  # Description:
+  #   returns a list of the trophies that the gamer won
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the trophies that the gamer has won
+  #   failure:
+  #     no failure
   def get_won_trophies
     return self.trophies
   end
 
+  # Description:
+  #   returns a list of the gamers prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer has won
+  #   failure:
+  #     no failure
   def get_available_trophies
     return Trophy.all - self.trophies
   end
@@ -83,6 +103,4 @@ class Gamer < ActiveRecord::Base
       return false
     end
   end
-
-
 end
