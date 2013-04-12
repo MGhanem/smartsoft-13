@@ -1,18 +1,10 @@
 Arability::Application.routes.draw do
-<<<<<<< HEAD
-
-=======
->>>>>>> 8641f5937dc4d3cc5795cc625f9051982c639c72
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
     get "admin/index"
-<<<<<<< HEAD
-=======
-
->>>>>>> 8641f5937dc4d3cc5795cc625f9051982c639c72
     get "admin/login"
 
     get "admin/logout"
@@ -126,10 +118,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/pick' => "my_subscription#pick"
     end
   end
-<<<<<<< HEAD
-=======
   
->>>>>>> 8641f5937dc4d3cc5795cc625f9051982c639c72
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
