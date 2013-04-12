@@ -21,7 +21,6 @@ class Synonym < ActiveRecord::Base
   # Failure:
   #   returns 1 when the synonym written by the gamer is blank
   #   returns 2 when the synonym is already existing
-  #   returns 3 when the synonym is not saved because it didn't pass the arabic regex validation
   def self.record_suggested_synonym(synonym_name, keyword_id, approved= false)
     if synonym_name.blank?
       return  1
@@ -39,7 +38,6 @@ class Synonym < ActiveRecord::Base
         end
     end
   end 
-
 
   class << self
     include StringHelper

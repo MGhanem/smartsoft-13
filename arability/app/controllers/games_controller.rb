@@ -9,11 +9,11 @@ class GamesController < ApplicationController
   # Description:
   # 	displayes the vote form for the gamer
   # params:
-  # 	word: takes keyword name for which the synonym choices whill be displayed
+  # 	word: takes keyword name for which the synonym choices will be displayed
   # success:
   # 	retrieve the approved synonym list limited to 4 only choosen randomly 
-  # 	if the approved synonyms for the keyword is more than 4, keyword object
-  #   and the keyword name  
+  # 	if the approved synonyms for the keyword is more than 4, keyword 
+  #   object and the keyword name
   # failure:
   # 	--------- 
   def vote
