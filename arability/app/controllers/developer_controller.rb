@@ -83,32 +83,31 @@ class DeveloperController < ApplicationController
     gamer = Gamer.find_by_email(params[:email])
     if(!gamer.present?)
       flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_doesnt_exist')
-      else
+    else
        developer = Developer.find_by_gamer_id(gamer.id)
         if developer == nil
          flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_for_a_gamer_not_a_developer')
         else
          developer2 = Developer.find_by_gamer_id(current_gamer.id)
-        if developer == developer2 
-          flash[:notice] = I18n.t('controller.my_subscription.flash_messages.you_cant_share_the_project_with_yourself')
-          redirect_to "/developers/projects/#{@project.id}/share"
-          return
-        end
-        if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
-          flash[:notice] = I18n.t('controller.my_subscription.flash_messages.already_shared')
-        else
-          developer.projects_shared << @project
-           if(developer.save)
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.project_has_been_successfully_shared')
-            redirect_to :action => "share",:controller => "projects", :id => params[:id]
+          if developer == developer2 
+            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.you_cant_share_the_project_with_yourself')
+            redirect_to "/developers/projects/#{@project.id}/share"
             return
-           else
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.cant_share_the_project')
-           end
+          end
+          if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
+            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.already_shared')
+          else
+            developer.projects_shared << @project
+            if(developer.save)
+              flash[:notice] = I18n.t('controller.my_subscription.flash_messages.project_has_been_successfully_shared')
+              redirect_to :action => "share",:controller => "projects", :id => params[:id]
+              return
+            else
+             flash[:notice] = I18n.t('controller.my_subscription.flash_messages.cant_share_the_project')
+            end
+          end
         end
-        end
-      end
-    end 
+    end
     redirect_to "/developers/projects/#{@project.id}/share"
-  end
+  end 
 end
