@@ -1,7 +1,7 @@
-<% if I18n.locale==:en %>
+<% if I18n.locale == :en %>
 
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
-<% else I18n.locale==:ar %>
+<% else I18n.locale == :ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
 <% end %>
 
@@ -131,21 +131,21 @@
       <div class="well" style="width:1100px; height:480px">
 
         <div class="Twitter" align="center">
-          <% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
-          <% if I18n.locale==:en %>
+          <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
+          <% if I18n.locale == :en %>
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
             already connected to Twitter!</h5>
           <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
-          <% else I18n.locale==:ar %>
+          <% else I18n.locale == :ar %>
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
           التواصل بالفعل موجود!</h5>
           <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
           <% end %>
           <% else %>
-          <% if I18n.locale==:en %>
+          <% if I18n.locale == :en %>
           <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
           <%= link_to ">> Connect to your Twitter account", "/auth/twitter" %>          
-          <% else I18n.locale==:ar %>
+          <% else I18n.locale == :ar %>
           <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
           <%= link_to ">> تواصل مع تويتر الخاص بك", "/auth/twitter" %>
           <% end %>
