@@ -25,12 +25,23 @@
 								<div class="control-group">
 									<%= label_tag t(:country), nil, :class => "control-label", :style => "width:80px;" %>
 									&nbsp;
-									<%= text_field_tag :country, @country, :class => "control" %>
+									<% if I18n.locale == :ar %>
+										<%= select_tag :country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],['الاردن','Jordan'],
+											['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],
+											['الكويت','Kuwait'],['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],
+											['البحرين','Bahrain'],['موريتانيا','Mauritania'],['الصومال','Somalia'],['السودان','Sudan'],
+											['تونس','Tunisia'],['اخري','others']]), :include_blank => true, :class => "control" %>
+                  <% elsif I18n.locale == :en %>
+	                  <%= select_tag :country, options_for_select(['Egypt', 'Lebanon', 'Jordan', 'Saudi Arabia', 'Libya', 
+	                  	'United Arab Emirates', 'Qatar', 'Kuwait', 'Iraq', 'Algeria', 'Morocco', 'Bahrain', 'Mauritania', 
+	                  	'Somalia', 'Sudan', 'Tunisia', 'others']), :include_blank => true, :class => "control" %>
+                  <% end %>
 								</div>
 								<div class="control-group">
 									<%= label_tag t(:gender), nil, :class => "control-label", :style => "width:80px;" %>
 									&nbsp;
-									<%= select_tag :gender, options_for_select([t(:male), t(:female)]), :include_blank => true,  :class => "control" %>
+									<%= select_tag :gender, options_for_select([[t(:male), 'male'], [t(:female), 'female']]), 
+										:include_blank => true,  :class => "control" %>
 								</div>	
 								<div class="control-group">
 									<%= label_tag t(:age_from), nil, :class => "control-label", :style => "width:80px;" %>
@@ -39,8 +50,20 @@
 									&nbsp;
 									<%= label_tag t(:age_to), nil, :style => "width:20px;" %>
 									&nbsp;
-									<%= number_field_tag :age_to, nil, :in => 10...101, :style => "width:70px;" %>
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
+									&nbsp;
+									<span style="opacity:0.9;font-size:10pt;"><i><%= t(:age_range) %></i></span>
 								</div>
+								<div class="control-group">
+									<%= label_tag t(:education), nil, :class => "control-label", :style => "width:80px;" %>
+									&nbsp;
+									<% if I18n.locale == :ar %>
+										<%= select_tag :education, options_for_select([['مدرسة','School'],['جامعة','University'],['خريج','Graduate']]), :include_blank => true,  :class => "control" %>
+                  <% elsif I18n.locale == :en %>
+	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),:include_blank => true,  
+	                  	:class => "control" %>
+                  <% end %>
+								</div>	
 							</div>
 						</div>
 				</div>

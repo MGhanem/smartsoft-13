@@ -29,6 +29,42 @@ describe Keyword do
     keyword.name.should eq("ينسب")
   end
 
+  it "should add two word keywords" do
+    success, keyword = Keyword.add_keyword_to_database("test testing")
+    success.should eq(true)
+    keyword.name.should eq("test testing")
+    success, keyword = Keyword.add_keyword_to_database("ينسب ينسب")
+    success.should eq(true)
+    keyword.name.should eq("ينسب ينسب")
+  end
+
+  it "should add two word keywords without spaces in between" do
+    success, keyword = Keyword.add_keyword_to_database("   test     testing   ")
+    success.should eq(true)
+    keyword.name.should eq("test testing")
+    success, keyword = Keyword.add_keyword_to_database("  ينسب     ينسب  ")
+    success.should eq(true)
+    keyword.name.should eq("ينسب ينسب")
+  end
+
+  it "should add keywords with categories" do
+    success, category = Category.add_category_to_database_if_not_exists("test")
+    success, keyword = Keyword.add_keyword_to_database("test",true,true, ["test"])
+    success.should eq(true)
+    category.keywords.include?(keyword).should eq(true)
+    success, keyword = Keyword.add_keyword_to_database("ينسب", true, false, ["test"])
+    success.should eq(true)
+    category.keywords.include?(keyword).should eq(true)
+  end
+  it "should add keywords approved and unapproved" do
+    success, keyword = Keyword.add_keyword_to_database("test", true)
+    success.should eq(true)
+    keyword.approved.should eq(true)
+    success, keyword = Keyword.add_keyword_to_database("ينسب", false)
+    success.should eq(true)
+    keyword.approved.should eq(false)
+  end
+
   it "should downcase keyword before adding to database" do
     success, keyword = Keyword.add_keyword_to_database("Dj")
     success.should eq(true)
@@ -95,7 +131,7 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-	it "should return one matching keyword for the passed param in arabic" do
+		it "should return one matching keyword for the passed param in arabic" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
 		Keyword.create(name: "click me")
@@ -198,10 +234,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms('saudi arabia')
+		synonyms, votes = keyword.retrieve_synonyms("saudi arabia")
 		synonyms.first.name.should eq("انقر")
 		votes.should eq({})
-		synonyms, votes = keyword.retrieve_synonyms('egypt')
+		synonyms, votes = keyword.retrieve_synonyms("egypt")
 		votes[synonym.id].should eq(1)
 	end
 
@@ -244,10 +280,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, 'female')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, "female")
 		synonyms.first.name.should eq("انقر")
 		votes[synonym.id].should eq(1)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, 'male')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, "male")
 		votes.should eq({})
 	end
 
@@ -264,10 +300,10 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, 'high')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, "high")
 		synonyms.first.name.should eq("انقر")
 		votes[synonym.id].should eq(1)
-		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, 'low')
+		synonyms, votes = keyword.retrieve_synonyms(nil, nil, nil, nil, "low")
 		votes.should eq({})
 	end
 
