@@ -37,7 +37,7 @@ class Keyword < ActiveRecord::Base
     filtered_data = filtered_data
       .filter_by_gender(gender) unless gender.blank?
     filtered_data = filtered_data
-      .filter_by_education(education.downcase) unless education.blank?
+      .filter_by_education(education) unless education.blank?
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
       .where(synonyms: { keyword_id: keyword_id, approved: true })
@@ -149,7 +149,7 @@ class Keyword < ActiveRecord::Base
         return Keyword.where(approved: false).all
 
       end
-
+  end
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -168,7 +168,7 @@ class Keyword < ActiveRecord::Base
   	#		failure:
   	#			returns an empty list if the search keyword had no matches or no 
     #     similar keywords were found
-    def get_similar_keywords(search_word, categories = [])
+    def self.get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
       search_word.downcase!
       search_word.strip!
@@ -185,7 +185,7 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	relevant_first_list
     end
-
+  class << self
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
