@@ -24,7 +24,6 @@
   function check_empty_words(){
     if(words.length == 0){
         if(win == true){
-          alert('yo win is true');
          getTrophies(level, score);
       }
       else{
@@ -171,10 +170,13 @@ function setButtons(){
   }
 
   function enableNav() {
-    nav_licked = false;
+    nav_locked = false;
   }
 
   function hallOfFame(){
+    if(nav_locked == true){
+      return;
+    }
     clear();
     <% if I18n.locale==:en %>
     $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
