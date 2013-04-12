@@ -16,8 +16,9 @@
         $("#zone").append($(button));
     <% end %>
 
-    game_score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> </h1>';
-    $("#zone").append($(game_score));
+    score = '<h1 class="award-title"><%= t(:scored) %> <span id="score"><%= @score %></span> <a target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h1> ';
+    $("#zone").append($(score));
+
     <% if @won_trophies.length != 0 %>
         success = '<h1 class="award-title"><%= t(:congrats_prizes) %></h1>';
         trophies = [];

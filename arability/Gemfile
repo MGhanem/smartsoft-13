@@ -70,11 +70,12 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
+gem "koala"
+
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'twitter'
 gem 'fb_graph'
-gem 'koala'
 
 gem "rspec-rails", :group => [:test, :development]
 group :test do
@@ -83,6 +84,5 @@ group :test do
   gem "guard-rspec"
 end
 
-gem 'omniauth-twitter'
 
 gem 'certified'

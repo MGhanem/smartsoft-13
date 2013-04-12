@@ -85,10 +85,8 @@ Arability::Application.routes.draw do
 
   
       post "keywords/create"
-end
 
 
-    scope "developers/" do
 
       match "/" => "backend#home", :as => "backend_home"
 
@@ -146,7 +144,7 @@ end
 
   end
   
-
+  match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
   get 'games/getnewwords'
   match '/game' => 'games#game'
   get "games/getprizes"

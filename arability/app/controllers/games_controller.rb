@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class GamesController < ApplicationController
   before_filter :authenticate_gamer!
 
@@ -119,6 +120,48 @@ class GamesController < ApplicationController
     @won_prizes.map { |wp| current_gamer.prizes << wp }
     respond_to do |format|
       format.js
+    end
+  end
+  
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As a gamer, I could post my score on my facebook timeline by pressing on
+  #   the facebook share score button.
+  # Parameters:
+  #   score: a variable that saves gamer's score recieved from view.
+  # Success:
+  #   Gamer presses the facebook share score button, and his score is shared on
+  #   facebook and confirmed by API.
+  # Failure: 
+  #   The user is not connected: S/He's redirected to the settings page
+  #   The user's token has expired: S/He will be redirected to the Facebook
+  #   reauthentication page
+  #   The user is trying to post more than once in a short period of time
+  #   (facebook doesn't allow this to discourage spamming) a flash notice
+  #   will appear explaining the situation
+  #   The user is not signed in: S/He'll be redirected to the sign in page
+  def post_score_facebook
+    if current_gamer != nil
+      if !current_gamer.is_connected_to_facebook 
+        redirect_to "/gamers/edit",
+        flash: {notice: t(:connect_your_account)}
+      else
+        begin
+          token = current_gamer.get_token
+          @graph = Koala::Facebook::API.new(token)
+          score = params[:score]
+          @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
+          render "games/share-facebook"
+        rescue Koala::Facebook::AuthenticationError
+          redirect_to "/gamers/auth/facebook"
+        rescue Koala::Facebook::ClientError
+          redirect_to "/game", flash: {notice: t(:error_fb)}
+        end
+      end
+    else
+      redirect_to "/gamers/sign_in",
+      flash: {notice: t(:sign_in_facebook)}
     end
   end
 
