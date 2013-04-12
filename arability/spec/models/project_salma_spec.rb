@@ -13,7 +13,7 @@ describe "Create_Project" do
         gamer.password = "1234567"
         gamer.save
         gamer
-}
+    }
 	let (:developer) {
 		developer = Developer.new
         developer.first_name = "Nourhan"
@@ -35,6 +35,5 @@ describe "Create_Project" do
             :formal => "formal", :description => "da da da", :categories => ["Cat1", "Cat2", "Cat3"},
              "Cat1, Cat2, Cat3")
         result.should be_instance_of(Project)
-
     end
 end

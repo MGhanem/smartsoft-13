@@ -129,12 +129,12 @@ class ProjectsController < BackendController
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
       redirect_to :action => "index"
       flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
-    else
+      else
       render :action => 'edit'
-    end
-  else
+      end
+    else
     developer_unauthorized
-  end
+    end
 end
 
  # author:Noha hesham

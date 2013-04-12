@@ -32,17 +32,17 @@ def self.createproject(params,developer_id)
   return project
 end
 
-  # Author:
-  #    Salma Farag
-  # Description:
-  #   A method that takes categories in the form of csv and saves them in an array
-  #   then loops on it and creates an a new category each time.
-  # Params:
-  #   Category names in the form of csv.
-  # Success:
-  #   Categories will be created.
-  # Failure:
-  #   None
+# Author:
+#    Salma Farag
+# Description:
+#   A method that takes categories in the form of csv and saves them in an array
+#   then loops on it and creates an a new category each time.
+# Params:
+#   Category names in the form of csv.
+# Success:
+#   Categories will be created.
+# Failure:
+#   None
 def self.createcategories(project,categories)
   array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
@@ -54,17 +54,16 @@ def self.createcategories(project,categories)
   return project
 end
 
-  # Author:
-  #   Salma Farag
-  # Description:
-  #   A method that takes an array of categories, maps their names into an array and joins
-  #   the array using commas.
-  # Params:
-  #   Array of categories.
-  # Success:
-  #   Returns a string of category names.
-  # Failure:
-  #   None
+# Author:
+#   Salma Farag
+# Description:
+#   A method that takes an array of categories, maps their names into an array and joins
+#   the array using commas.# Params:
+#   Array of categories.
+# Success:
+#   Returns a string of category names.
+# Failure:
+#   None
 def self.printarray(array)
   t = array.map {|item| item.name}
   t = t.join(", ")
