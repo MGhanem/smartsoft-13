@@ -25,10 +25,6 @@ class Developer < ActiveRecord::Base
   # failure:
   #     returns false if there was not keywords matching the keyword_id in 
   #       the database
-
- 
-
-
   def follow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)
