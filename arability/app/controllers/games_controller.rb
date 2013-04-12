@@ -63,12 +63,15 @@ class GamesController < ApplicationController
   def post
     if current_gamer != nil
       if !current_gamer.is_connected_to_facebook 
-        redirect_to "/gamers/edit", flash: {notice: t(:connect_your_account)}
+        redirect_to "/gamers/edit",
+        flash: {notice: t(:connect_your_account)}
       else
         begin
           token = current_gamer.get_token
           @graph = Koala::Facebook::API.new(token)
-          @graph.put_wall_post("Checkout the new Arability game @ www.arability.net\n" + Time.now.to_s)
+          @graph.put_wall_post(
+            "Checkout the new Arability game @ www.arability.net\n"
+            + Time.now.to_s)
           redirect_to "/game", flash: {success: t(:shared_on_fb)}
         rescue Koala::Facebook::AuthenticationError
           redirect_to "/gamers/auth/facebook"
@@ -77,7 +80,8 @@ class GamesController < ApplicationController
         end
       end
     else
-      redirect_to "/gamers/sign_in", flash: {notice: t(:sign_in_facebook)}
+      redirect_to "/gamers/sign_in",
+      flash: {notice: t(:sign_in_facebook)}
     end
   end
 
