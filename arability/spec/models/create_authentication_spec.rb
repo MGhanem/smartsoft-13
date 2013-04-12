@@ -15,7 +15,13 @@ describe "create authentication to Twitter for current_gamer" do
     current_gamer
   }
   it "should create a new record for Twitter authentication in database for current_gamer" do
-    auth = Hash[provider: "twitter", uid: "123", credentials: [token: "1234567"], credentials: [secret: "asdfghj"]]
+    auth =
+      {:provider => "twitter",
+       :uid      => "1234",
+       :info   => {:name       => "John Doe",
+                   :email      => "johndoe@email.com"},
+       :credentials => {"token" => "testtoken234tsdf",
+                        "secret" => "tokensecrettest"}}
     k1 = Authentication.exists?(gamer_id: current_gamer.id)
     expect(k1).to eq(false)
     record = Authentication.create_with_omniauth(auth, current_gamer)
