@@ -85,7 +85,7 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addword
+  def add_word
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
     success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
@@ -116,7 +116,7 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addtrophy
+  def add_trophy
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
@@ -150,7 +150,7 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def addprize
+  def add_prize
     params[:name] = params[:name].strip
     params[:level] = params[:level].strip
     params[:score] = params[:score].strip
@@ -180,7 +180,7 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def deletetrophy
+  def delete_trophy
     params[:id] = params[:id].strip
     status_trophy = Trophy.find_by_id(params[:id])
     if status_trophy.present?
@@ -205,7 +205,7 @@ class AdminController < ApplicationController
   #     refreshes the page and displays notification
   # failure: 
   #     refreshes the page with error displayed
-  def deleteprize
+  def delete_prize
     params[:id] = params[:id].strip
     status_prize = Prize.find_by_id(params[:id])
     if status_prize.present?

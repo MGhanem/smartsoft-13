@@ -11,21 +11,19 @@ Arability::Application.routes.draw do
 
     get "admin/logout"
   
-    post "admin/addword"
+    post "admin/add_word"
 
     post "admin/login"
 
     post "admin/upload"
 
-    post "admin/addword"
+    post "admin/add_trophy"
 
-    post "admin/addtrophy"
+    post "admin/add_prize"
 
-    post "admin/addprize"
+    get "admin/delete_trophy"
 
-    get "admin/deletetrophy"
-
-    get "admin/deleteprize"
+    get "admin/delete_prize"
 
     match '/game' => 'games#game'
 
