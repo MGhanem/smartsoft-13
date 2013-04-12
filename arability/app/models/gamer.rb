@@ -86,6 +86,21 @@ class Gamer < ActiveRecord::Base
   def get_won_prizes
     return self.prizes
   end
+  
+  # Description:
+  #   returns a list of the gamers not won prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer has won
+  #   failure:
+  #     no failure
+  def get_not_won_prizes
+    return Prize.all - self.prizes
+  end
 
   # Description:
   #   returns a list of the gamers prizes
@@ -105,6 +120,7 @@ class Gamer < ActiveRecord::Base
   def get_won_trophies
     return self.trophies
   end
+  
 
   def get_available_trophies
     return Trophy.all - self.trophies

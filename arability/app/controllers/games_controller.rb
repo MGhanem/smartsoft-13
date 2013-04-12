@@ -24,7 +24,7 @@ class GamesController < ApplicationController
   #   earned in another
   def showprizes
     @won_prizes = current_gamer.get_won_prizes
-    @not_won_prizes = current_gamer.get_available_prizes
+    @not_won_prizes = current_gamer.get_not_won_prizes
     respond_to do |format|
       format.js
     end
