@@ -361,18 +361,33 @@ end
     end
   end
 
-  
+  # author:
+  #   Mohamed tamer
+  # description:
+  #   add words and their synonym from the imported csv file to the project 
+  # Params:
+  #   words_ids: array of hashes of word id and their corresponding synonym id
+  #   id: current project id
+  # Success:
+  #   returns adds the word and synonym to project and redirects back to project
+  # Failure: 
+  #   if the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
     if id_words_project != nil
-      words_synonyms_array = [id_words_project].map {|x| x.split("|")}
-      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
-        flash[:error] = t(:java_script_disabled)
-      else
-        words_synonyms_array.each do |word_syn|
-          if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-
+      words_synonyms_array = id_words_project.map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
+        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+          flash[:error] = t(:java_script_disabled)
+          redirect_to action: "show", id: project_id
+          return
+        end
+      end
+      words_synonyms_array.each do |word_syn|
+        if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+          if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
+            MySubscription.decrement_word_search
           end
         end
       end
