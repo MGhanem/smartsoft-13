@@ -9,7 +9,7 @@ class Gamer < ActiveRecord::Base
                   :username, :country, :education_level, :date_of_birth
                   
 
-  validates :username, :presence => true, :length => { :minimum => 3 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, 
     :message => " can only start with a letter, 
