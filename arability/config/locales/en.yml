@@ -86,6 +86,11 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
+        please_choose: 'please choose your subscription model'
   already_registered_developer: "You are already registered as a developer. Don't you remember?"
   failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
   no_developer: "Please register as a developer before you choose your subscription model."
@@ -153,6 +158,9 @@ en:
   word_removed_successfully: "Word removed successfully."
   word_does_not_exist: "The word you're trying to remove does not exist."
   description_choose_keywords: "The red synonym will be imported to your project"
+  no_words_in_project: "Project has now words yet."
+  email2: "Email Address"
+  not_shared: "This project is not shared with anyone yet"
   not_developer: "You have to register as a developer before proceeding."
   no_words: "No words to export."
   no_project: "Project does not exist!"

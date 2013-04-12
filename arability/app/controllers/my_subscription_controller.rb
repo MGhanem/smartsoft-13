@@ -1,7 +1,6 @@
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
   #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
-  
 # author:
 #   Khloud Khalid
 # description:
@@ -82,6 +81,7 @@ class MySubscriptionController < ApplicationController
   #  all subscription models are listed
   # Failure:
   #  subscription models are not listed
+
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id) 
@@ -103,10 +103,10 @@ class MySubscriptionController < ApplicationController
     sub_id = params[:my_subscription]
     dev_id = @developer.id
     if MySubscription.choose(dev_id,sub_id)
-      flash[:notice] = "You have successfully chosen your subscription model"
-      redirect_to root_url
+      flash[:notice] = I18n.t('controller.subscription.messages_errors.you_have_successfully_chosen_your_model')
+      redirect_to projects_path
     else
-      flash[:notice] = "Please choose your subscription model"
+      flash[:notice] = I18n.t('controller.subscription.messages_errors.please_choose')
       render 'my_subscription/choose_sub'
     end
   end

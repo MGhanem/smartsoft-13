@@ -1,6 +1,6 @@
 class MySubscription < ActiveRecord::Base
   belongs_to :subscription_model
-  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_models_id
+  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, :presence => true
 
