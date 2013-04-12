@@ -2,12 +2,13 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-         # :omniauthable, :omniauth_providers => [:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :username, :country, :education_level, :date_of_birth
+                  :username, :country, :education_level, :date_of_birth,
+                  :provider, :gid, :gprovider, :gid
 
   has_many :services, :dependent => :destroy
 
@@ -30,4 +31,27 @@ class Gamer < ActiveRecord::Base
 
   has_many :synonyms, :through => :votes
   has_many :votes
+# author:
+#     Salma Farag
+# description:
+#     A  method that returns a gamer with an email equal to the email signed in on Google from
+#the access token.
+# params:
+#     The access token granted from Google and a signed in resources that is equal to nil.
+# success:
+#     Returns the gamer with the matching email.
+# failure:
+#     Creates a new gamer using the email and password
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    gamer = Gamer.where(:email => data["email"]).first
+
+    unless gamer
+         gamer = Gamer.create(
+              email: data["email"],
+              password: Devise.friendly_token[0,20]
+             )
+    end
+    gamer
+end
 end

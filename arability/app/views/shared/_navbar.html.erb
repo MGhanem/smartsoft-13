@@ -29,7 +29,9 @@
                 <%= f.check_box :remember_me, :style => "float: left; margin-right: 10px;" %>
                 <%= f.label :remember_me %>
                 <%= f.submit "Sign In", :style => "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
-              <% end %>
+                <% end %>
+                <p style="text-align:left"> Or </p>
+                <%= button_to t(:log_in_google), gamer_omniauth_authorize_path(:google_oauth2), :style => "clear: left; width: 100%; height: 32px; font-size: 13px", :class => "btn btn-success" %>
             </div>
           </li>
       <% else %>
