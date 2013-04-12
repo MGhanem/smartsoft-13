@@ -55,12 +55,12 @@ class DeveloperController < ApplicationController
   # failure:
   # project is not removed  
   def remove_developer_from_project
-      dev = Developer.find(params[:dev_id])
-      project = Project.find(params[:project_id])
-      project.developers_shared.delete(dev)
-      project.save
-      flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
-      redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
   # Author:
   #  Noha Hesham
@@ -99,7 +99,7 @@ class DeveloperController < ApplicationController
             redirect_to :action => "share",:controller => "projects", :id => params[:id]
             return
            else
-            flash[:notice] = "Failed to share project with developer"
+            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.cant_share_the_project')
            end
         end
         end

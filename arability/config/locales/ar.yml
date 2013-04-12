@@ -13,7 +13,6 @@ ar:
   date_of_birth: "تاريخ الميلاد"
   country: "الدولة"
   education_level: "المستوي التعليمي"
-  
   no_followed_words: "لا توجد كلمات متابعة."
   unfollow_keyword_alert: "لقد تم إلغاء متابعة هذه الكلمة:"
   follow_keyword_alert: "لقد تم متابعة هذه الكلمة:"
@@ -103,7 +102,6 @@ ar:
   error: "اخطاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
   success: "اسشرلايبتاش"
-
   errors:
     messages:
       not_saved:
@@ -140,10 +138,10 @@ ar:
          you_cant_share_the_project_with_yourself: 'لا يمكن مشاركة هذا المشروع مع نفسك'
          Email_for_a_gamer_not_a_developer: 'هذا البريد الالكتروني ليس لمطور'
          project_has_been_successfully_shared: 'لقد تم مشاركة هذا المشروع بنجاح '
-         already_shared:'تم مشاركة هذا المشروع سابقا'
+         already_shared: 'تم مشاركة هذا المشروع سابقا'
          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
          developer_unshared: 'مت عدم مشاركة المشروع'
-
+         cant_share_the_project: 'لا يمكن مشاركة المشروع'
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -165,12 +163,9 @@ ar:
   remove_from_project: "إزالة من المشروع"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
-
   not_shared: "ةذا المشروع غير مشارك مع احد"
-
   not_developer: "يجب أن تشترك كمطور قبل أن تستطيع الإكمال."
   no_words: "لا يوجد كلمات لاستيرادها."
   no_project: "المشروع الذي تحاول استيراده غير موجود."
   file: "ملف"
   not_in_range: "ليس في الحدود المسموح بها"
-
