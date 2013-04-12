@@ -18,18 +18,40 @@ module SearchHelper
     name1 = Keyword.find(keyword_id).name
     chart = LazyHighCharts::HighChart.new('pie') do |f|
       f.chart({:defaultSeriesType=>"pie" , :margin=> [50, 200, 60, 170]} )
-      series = {
+      if I18n.locale == :en
+        series = {
                :type=> 'pie',
                :name=> 'Browser share',
-               :data=>  stats
+               :data=>  stats,
+        }
+      end
+      if I18n.locale == :ar
+        series = {
+               :type=> 'pie',
+               :name=> 'Browser share',
+               :data=>  stats,
+               :dataLabels => {
+                    :align => 'center',
+                    :enabled => true,
+                    :x =>40
+                }
       }
+        tooltip = {
+                  :enabled => false
+        }
+        f.tooltip(tooltip)
+      end
+      
+      
+      
       f.series(series)
-      f.options[:title][:text] = "Synonyms of #{name1}"
+      f.options[:title][:text] = "#{t(:synonyms_of)} #{name1}"
       f.legend(:layout=> 'vertical',:style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '100px'}) 
       f.plot_options(:pie=>{
         :allowPointSelect=>true, 
         :cursor=>"pointer" , 
         :size =>'90%',
+        :align=>'right',
         :dataLabels=>{
           :enabled=>true,
           :color=>"black",
@@ -78,8 +100,6 @@ module SearchHelper
                    :name=> 'Browser share',
                    :borderWidth => 0.7,
                    :data=>  stats
-                  
-                   
           }
           f.series(series)
           f.options[:title][:text] = header

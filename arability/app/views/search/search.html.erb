@@ -26,15 +26,15 @@
 									<%= label_tag t(:country), nil, :class => "control-label", :style => "width:80px;" %>
 									&nbsp;
 									<% if I18n.locale == :ar %>
-										<%= select_tag :country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],['الاردن','Jordan'],
-											['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],
-											['الكويت','Kuwait'],['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],
-											['البحرين','Bahrain'],['موريتانيا','Mauritania'],['الصومال','Somalia'],['السودان','Sudan'],
-											['تونس','Tunisia'],['اخري','others']]), :include_blank => true, :class => "control" %>
+										<%= select_tag :country, options_for_select([["مصر","Egypt"],["لبنان","Lebanon"],["الاردن","Jordan"],
+											["السعودية","Saudi Arabia"],["ليبيا","Libya"],["الامارات","United Arab Emirates"],["قطر","Qatar"],
+											["الكويت","Kuwait"],["العراق","Iraq"],["الجزأئر","Algeria"],["المغرب","Morocco"],
+											["البحرين","Bahrain"],["موريتانيا","Mauritania"],["الصومال","Somalia"],["السودان","Sudan"],
+											["تونس","Tunisia"],["اخري","others"]]), :include_blank => true, :class => "control" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :country, options_for_select(['Egypt', 'Lebanon', 'Jordan', 'Saudi Arabia', 'Libya', 
-	                  	'United Arab Emirates', 'Qatar', 'Kuwait', 'Iraq', 'Algeria', 'Morocco', 'Bahrain', 'Mauritania', 
-	                  	'Somalia', 'Sudan', 'Tunisia', 'others']), :include_blank => true, :class => "control" %>
+	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", 
+	                  	"United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", "Bahrain", "Mauritania", 
+	                  	"Somalia", "Sudan", "Tunisia", "others"]), :include_blank => true, :class => "control" %>
                   <% end %>
 								</div>
 								<div class="control-group">
@@ -60,8 +60,8 @@
 									<% if I18n.locale == :ar %>
 										<%= select_tag :education, options_for_select([['مدرسة','School'],['جامعة','University'],['خريج','Graduate']]), :include_blank => true,  :class => "control" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),:include_blank => true,  
-	                  	:class => "control" %>
+	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),
+	                  :include_blank => true, :class => "control" %>
                   <% end %>
 								</div>	
 							</div>
@@ -85,7 +85,7 @@
 	<div class="accordion-group">
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
-				<span><%= t(:view_collectives)%><i><b><%= @search_keyword %></b></i></span>
+				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
 			</span>
 		</div>
 		<div id="collective" class="accordion-body collapse in">
@@ -103,18 +103,18 @@
 		</div>
 	</div>
 
-	<% @synonyms.each do |synonym|%>
+	<% @synonyms.each do |synonym| %>
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<div class="row">
 					<div class="span12">
 						<div class="accordion-toggle" style="padding-bottom:30px;">
-							<div id="synonyms<%=synonym.id%>" class="pull-left">
+							<div id="synonyms<%= synonym.id %>" class="pull-left">
 								<span class="span2">
 									<%= synonym.name %>
 								</span>
 								<span class="span2" style="color:#bbb;"><i>
-									<% if @votes[synonym.id] != nil%>
+									<% if @votes[synonym.id] != nil %>
 										<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
 									<% else %>
 										<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
@@ -122,8 +122,8 @@
 								</i></span>
 							</div>
 
-							<div id="buttons<%=synonym.id%>" class="pull-right">
-								<button id="bstats<%=synonym.id%>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
+							<div id="buttons<%= synonym.id %>" class="pull-right">
+								<button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
 									    <span><%=t(:view_stats)%></span>
      									<span style="display:none"><%=t(:hide_stats)%></span>
 		     							<script type="text/javascript">
@@ -132,22 +132,22 @@
 												}
 		                  </script>
 								</button>
-								<%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-									<%= content_tag(:span, t(:add_to_project))%>
+								<%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
+									<%= content_tag(:span, t(:add_to_project)) %>
 								<% end %>
 							</div>
 							<script type="text/javascript">
 								<% if I18n.locale == :ar %>
-									$('#synonyms<%=synonym.id%>').attr('class','pull-right');
-									$('#buttons<%=synonym.id%>').attr('class','pull-left');
+									$("#synonyms<%= synonym.id %>").attr("class", "pull-right");
+									$("#buttons<%= synonym.id %>").attr("class", "pull-left");
 								<% elsif I18n.locale == :en %>
-									$('#synonyms<%=synonym.id%>').attr('class','pull-left');
-									$('#buttons<%=synonym.id%>').attr('class','pull-right');
+									$("#synonyms<%= synonym.id %>").attr("class", "pull-left");
+									$("#buttons<%= synonym.id %>").attr("class", "pull-right");
 								<% end %>
 							</script>
 							<script>
-								$('#bstats<%=synonym.id%>').click(function() {
-								    $('span',this).toggle();
+								$("#bstats<%=synonym.id%>").click(function() {
+								    $("span",this).toggle();
 								});
 							</script>
 						</div>

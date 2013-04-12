@@ -24,12 +24,16 @@ class FollowController < BackendController
   def follow
     developer = Developer.where(:gamer_id => current_gamer.id).first
     keyword_ids = developer.keyword_ids
-    word = Keyword.find(params[:keyword_id]).name
-    if keyword_ids.include? params[:keyword_id].to_i
-      redirect_to :search_keywords, :flash => {:fail => "#{t(:follow_keyword_alert_fail)} #{word}"}
+    word = Keyword.where(:id => params[:keyword_id]).first
+    if word != nil
+      if keyword_ids.include? params[:keyword_id].to_i
+        redirect_to :search_keywords, :flash => {:fail => "#{t(:follow_keyword_alert_fail)} #{word.name}"}
+      else
+        developer.follow(params[:keyword_id])
+        redirect_to :search_keywords, :flash => {:success => "#{t(:follow_keyword_alert)} #{word.name}"}
+      end
     else
-      developer.follow(params[:keyword_id])
-      redirect_to :search_keywords, :flash => {:success => "#{t(:follow_keyword_alert)} #{word}"}
+       redirect_to :search_keywords, :flash => {:fail => "#{t(:keyword_not_found)}"}
     end
   end
 
@@ -50,10 +54,15 @@ class FollowController < BackendController
   # failure:
   #     returns false if the relation didn't already exsist in the database
   def unfollow
-    developer = Developer.where(:gamer_id => current_gamer.id).first
-    developer.unfollow(params[:keyword_id])
-    word = Keyword.find(params[:keyword_id]).name
-    redirect_to :list_followed_words, :flash => {:success => "#{t(:unfollow_keyword_alert)} #{word}"}
+    word = Keyword.where(:id => params[:keyword_id]).first
+    if word != nil
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      developer.unfollow(params[:keyword_id])
+      word = Keyword.find(params[:keyword_id]).name
+      redirect_to :list_followed_words, :flash => {:success => "#{t(:unfollow_keyword_alert)} #{word}"}
+    else
+      redirect_to :list_followed_words, :flash => {:fail => "#{t(:keyword_not_found)}"}
+    end
   end
   
 
