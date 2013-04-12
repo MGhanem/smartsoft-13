@@ -26,38 +26,32 @@ function update_errors(record_output){
 	$('#box_buttons').append('<div class="alert"></div>');
 	if(record_output == 1) {
 		<% if I18n.locale ==:en %>
-			$('.alert').append('<p style="font-size:20px; ">
-				you cannot insert a blank synonym</p>');
+			$('.alert').append('<p style="font-size:20px; ">you cannot insert a blank synonym</p>');
 		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">
-				يجب ان تكتب معني.</p>');
+			$('.alert').append('<p style="font-size:20px; ">يجب ان تكتب معني.</p>');
 		<% end %>
 	} 
 	if(record_output == 2){
 		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">
-				the synonym already exists for this word</p>');
+			$('.alert').append('<p style="font-size:20px; ">the synonym already exists for this word</p>');
 		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">
-				المعني موجود بالفعل.</p>');
+			$('.alert').append('<p style="font-size:20px; ">المعني موجود بالفعل.</p>');
 		<% end %>
 	}
 	if( record_output == 3){
 		<% if I18n.locale == :en %>
-			$('.alert').append('<p style="font-size:20px; ">
-				The synonym should be in arabic</p>');
+			$('.alert').append('<p style="font-size:20px; ">The synonym should be in arabic</p>');
 		<% else %>
-			$('.alert').append('<p style="font-size:20px; ">
-				يجب ان يكون المعني باللغة العربية</p>');
+			$('.alert').append('<p style="font-size:20px; ">يجب ان يكون المعني باللغة العربية</p>');
 		<% end %>
 	}
 }
 
 
 function suggest_synonym_to_word(keyword_id){
-	translation = document.getElementById('<% if I18n.locale == :en %>
-		suggest_synonym_textbox<% else %>
-		suggest_synonym_textbox_arabic<% end %>').value;
+	translation = document.getElementById('<% if I18n.locale == :en %>' + 
+		'suggest_synonym_textbox<% else %>' + 
+		'suggest_synonym_textbox_arabic<% end %>').value;
 	$.post("/games/record_synonym" ,{synonym_name: translation, 
 		keyword_id: keyword_id});
 }
@@ -69,21 +63,17 @@ vote_form.push('<% keyword = @keyword%>');
 vote_form.push('<% syn_list = @synonym_list %>');
 vote_form.push('<% if syn_list.size > 0 %>');
 vote_form.push('<% if I18n.locale == :ar %>');
-vote_form.push('<p id="text" class="text_arabic" > من فضلك اختر معني لكلمة:</p></br>
-	<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
+vote_form.push('<p id="text" class="text_arabic" > من فضلك اختر معني لكلمة:</p></br><p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
 vote_form.push('<% end %>');
 vote_form.push('<% if I18n.locale == :en %>');
-vote_form.push('<p id="text" class="text_english" > please choose a synonym for the word:</p></br>
-	<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
+vote_form.push('<p id="text" class="text_english" > please choose a synonym for the word:</p></br><p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
 vote_form.push('<% end %>');
 vote_form.push('<% end %>');
 vote_form.push('<% if syn_list.size == 0 %>');
 vote_form.push('<% if I18n.locale == :ar %>');
-vote_form.push('<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p></br>
-	<p style="font-weight:bold; text-align:center;">"<%= submitted_word %>"</p>');
+vote_form.push('<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p></br><p style="font-weight:bold; text-align:center;">"<%= submitted_word %>"</p>');
 vote_form.push('<% else %>');
-vote_form.push('<p id="text" class="text_english" > please enter a synonym for the word:</p>
-	</br><p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
+vote_form.push('<p id="text" class="text_english" > please enter a synonym for the word:</p></br><p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>');
 vote_form.push('<% end %>');
 vote_form.push('<% end %>');
 vote_form.push('<div class="btn-toolbar" id="synonym_buttons">');
@@ -91,8 +81,7 @@ vote_form.push('<% i=1 %>');
 vote_form.push('<%syn_list.each do |syn|%>');
 vote_form.push('<% if i%2==1 %><div class="btn-group" id="synonym_buttons_row"><% end%>');
 vote_form.push('<% if syn.approved %>');
-vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit" 
-	onclick="record_vote(<%= syn.id %>)"><%= syn.name %></button>');
+vote_form.push('<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn.id %>)"><%= syn.name %></button>');
 vote_form.push('<% end %>');
 vote_form.push('<% if syn.approved %>');
 vote_form.push('<% if i%2==0 %></div></br><% end %>');
@@ -102,24 +91,20 @@ vote_form.push('<% end %>');
 vote_form.push('<% if I18n.locale == :ar %>');
 vote_form.push('</br><div id="box_buttons">');
 vote_form.push('</br><input type="text" id="suggest_synonym_textbox_arabic" placeholder="ادخل معني" >');
-vote_form.push('<button class="btn btn-primary" type="submit" id="suggest_synonym_button_arabic"  
-	onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >سجل هذا المعني</button>');
+vote_form.push('<button class="btn btn-primary" type="submit" id="suggest_synonym_button_arabic"  onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >سجل هذا المعني</button>');
 vote_form.push('</div>');
 vote_form.push('<% else %>');
 vote_form.push('</br><div id="box_buttons">');
 vote_form.push('</br><input type="text" id="suggest_synonym_textbox" placeholder="enter a synonym" >');
-vote_form.push('<button class="btn btn-primary" type="submit" id="suggest_synonym_button_english"  
-	onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >save new synonym</button>');
+vote_form.push('<button class="btn btn-primary" type="submit" id="suggest_synonym_button_english"  onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >save new synonym</button>');
 vote_form.push('</div>');
 vote_form.push('<% end %>');
 vote_form.push('</div></br>');
 vote_form.push('<div style="float:left;" id="skip_button">');
 vote_form.push('<% if I18n.locale == :ar %>');
-vote_form.push('<button class="btn btn-primary" id="skip_button" type="submit" 
-	onclick="skip_keyword()" style="margin-right: 500px;">  تخطي هذه الكلمة >></button>');
+vote_form.push('<button class="btn btn-primary" id="skip_button" type="submit" onclick="skip_keyword()" style="margin-right: 500px;">  تخطي هذه الكلمة >></button>');
 vote_form.push('<% else %>');
-vote_form.push('<button class="btn btn-primary" id="skip_button" type="submit" 
-	onclick="skip_keyword()" style="margin-left: 430px;">  skip this word>></button>');
+vote_form.push('<button class="btn btn-primary" id="skip_button" type="submit" onclick="skip_keyword()" style="margin-left: 430px;">  skip this word>></button>');
 vote_form.push('<% end %>');
 vote_form.push('</div>');
 vote_form.push('</div>');
