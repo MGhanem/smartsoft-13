@@ -34,7 +34,7 @@ class GamesController < ApplicationController
         begin
           token = current_gamer.getToken
           @graph = Koala::Facebook::API.new(token)
-          @graph.put_wall_post("Checkout the new Arability game @ www.arability.net")
+          @graph.put_wall_post("Checkout the new Arability game @ www.arability.net\n" + Time.now.to_s)
           redirect_to "/game", flash: {success: t(:shared_on_fb)}
         rescue Koala::Facebook::AuthenticationError
           redirect_to "/gamers/auth/facebook"
@@ -60,7 +60,7 @@ class GamesController < ApplicationController
   #   None
   def disconnect_facebook
     current_gamer.disconnect_from_facebook
-    redirect_to "/gamers/edit", :flash => {alert: t(:logged_out_of_fb)}
+    redirect_to "/gamers/edit", flash: {alert: t(:logged_out_of_fb)}
   end
 
   def getprizes

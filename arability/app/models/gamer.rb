@@ -135,10 +135,10 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def connect_to_facebook(auth)
-    provider = auth.provider
-    uid = auth.uid
-    token = auth["credentials"]["token"]
-    save
+    self.provider = auth.provider
+    self.uid = auth.uid
+    self.token = auth["credentials"]["token"]
+    self.save
   end
 
   # Author:
@@ -152,10 +152,10 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def disconnect_from_facebook
-    provider = nil
-    uid = nil
-    token = nil
-    save
+    self.provider = nil
+    self.uid = nil
+    self.token = nil
+    self.save
   end
 
   # Author:
@@ -169,9 +169,9 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   None
   def update_access_token(auth)
-    uid = auth.uid
-    token = auth["credentials"]["token"]
-    save
+    self.uid = auth.uid
+    self.token = auth["credentials"]["token"]
+    self.save
   end
 
   # Author:

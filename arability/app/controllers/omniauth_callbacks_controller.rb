@@ -3,7 +3,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	# Author:
   #   Amr Abdelraouf
   # Description:
-  #   The omniauth call back method. Whena user 
+  #   The omniauth call back method. When a user 
   # Params:
   #   None
   # Success:
