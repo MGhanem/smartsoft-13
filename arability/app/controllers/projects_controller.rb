@@ -228,7 +228,7 @@ class ProjectsController < BackendController
       else
         words_synonyms_array.each do |word_syn|
           if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-
+            MySubscription.decrement_word_search()
           end
         end
       end
