@@ -1,24 +1,64 @@
 <h1>Projects</h1>
 <br />
-<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">مشاريعي</a></li>
+    <li><a href="#tab2" data-toggle="tab">مشاريع مشتركة معي</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p><a class="btn" href="/projects/new"><i class="icon-plus"></i>إضافة مشروع</a>
 <br />
-<% @projects.each do |project| %>
-  <div class="boxed">
-  Name:
+<br />
+<% @my_projects.each do |project| %>
+  <div class="well well-small">
+  <strong>اسم:  </strong><%= project.name %>
+  <br />
+  <strong>فئات: </strong>
+  <% size = project.categories.length %>
+  <% counter = 1 %>
+  <% project.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <br />
+  <strong>وصف:  </strong><%= project.description %>
+</div>
+<br />
+<% end %></p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>
+        <% @my_projects.each do |project| %>
+  <div class="well well-small">
+  <strong>اسم:</strong>
   <br />
   <%= project.name %>
   <br />
-  Categories:
+  <strong>فئات:</strong>
   <br />
+  <% size = project.categories.length %>
+  <% counter = 1 %>
   <% project.categories.each do |c| %>
-    <%= c.name %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
   <% end %>
   <br />
-  Description:
-  <br />	
+  <strong>وصف:</strong>
+  <br />  
   <%= project.description %>
-  <%= link_to 'Destroy', project, method: 
-    delete, data: { confirm: 'Are you sure?' } %>
 </div>
 <br />
 <% end %>
+      </p>
+    </div>
+  </div>
+</div>

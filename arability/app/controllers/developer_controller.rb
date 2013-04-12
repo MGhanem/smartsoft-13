@@ -33,10 +33,12 @@ class DeveloperController < BackendController
       flash[:notice] = "You are already registered as a developer. Don't you remember?"
       render 'pages/home'
     else
+
       @developer = Developer.new(params[:developer])
       @developer.gamer_id = current_gamer.id
       if @developer.save
-        render 'my_subscription/new'
+        MySubscription.choose(@developer.id,1)
+        redirect_to choose_sub_path
       else
         flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
         render :action => 'new'

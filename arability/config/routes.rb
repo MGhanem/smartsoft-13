@@ -1,27 +1,12 @@
 Arability::Application.routes.draw do
 
-  resources :projects
-  resources :developer
-
-  get "developer/index"
-  
-  get "admin/index"
-
-
   root :to => 'pages#home'
-
-
-  post "admin/login"
-  post "admin/wordadd"
-  
-  
 
   scope "(:locale)", :locale => /en|ar/ do
     #here only two languages are accepted: english and arabic
 
 
     get "admin/index"
-
     get "admin/login"
 
     get "admin/logout"
@@ -62,19 +47,9 @@ Arability::Application.routes.draw do
     devise_for :gamers do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
-
-
-  
-  post "keywords/create"
-
-  match '/developers/new' => "developer#new"
-  match '/developers/create' => "developer#create"
-  match '/my_subscriptions/new' => "my_subscription#new"
-  match '/my_subscriptions/create' => "my_subscription#create"
   
 
-
-    scope "developers/" do 
+    scope "developers" do 
       match "/" => "backend#home", :as => "backend_home"
 
 			get "projects/remove_developer_from_project"
@@ -82,7 +57,7 @@ Arability::Application.routes.draw do
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
 
-      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
 			resources :projects
 
@@ -99,18 +74,13 @@ Arability::Application.routes.draw do
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
-      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-
-      match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
 
-      post "keywords/create"
+			post "keywords/create"
 
       get "keywords/suggest_add"
 
-      match "keywords" => "keywords#viewall"
-
-      match 'search' => 'search#search'
+			match 'search' => 'search#search'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
