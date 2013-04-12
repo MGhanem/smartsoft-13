@@ -37,6 +37,7 @@ class ProjectsController < BackendController
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
+  def index  
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil

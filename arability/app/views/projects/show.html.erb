@@ -50,7 +50,7 @@
 				<col style="width:25%">
 				<col style="width:50%">
 				<% count=0 %>
-				<% while count<50 %>
+				<% while count<@words.size %>
 				<tr>
 					<td style="text-align:center"><%= @words[count].name %></td>
 					<td style="text-align:center"><%= @synonyms[count].name %></td>
