@@ -199,7 +199,7 @@ class Gamer < ActiveRecord::Base
   #   Return's the user's access token
   # Failure:
   #   None
-  def getToken
+  def get_token
     token
   end
 

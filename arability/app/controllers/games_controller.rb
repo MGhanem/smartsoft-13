@@ -32,7 +32,7 @@ class GamesController < ApplicationController
         redirect_to "/gamers/edit", flash: {notice: t(:connect_your_account)}
       else
         begin
-          token = current_gamer.getToken
+          token = current_gamer.get_token
           @graph = Koala::Facebook::API.new(token)
           @graph.put_wall_post("Checkout the new Arability game @ www.arability.net\n" + Time.now.to_s)
           redirect_to "/game", flash: {success: t(:shared_on_fb)}
