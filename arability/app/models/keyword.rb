@@ -149,8 +149,8 @@ class Keyword < ActiveRecord::Base
     #     similar keywords were found
     def get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
-      search_word.downcase! if is_english_string(search_word)
-      search_word = search_word.strip
+      search_word.downcase!
+      search_word.strip!
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
