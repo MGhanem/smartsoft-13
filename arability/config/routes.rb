@@ -86,6 +86,10 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
     end
 
   end
