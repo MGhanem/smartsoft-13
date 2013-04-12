@@ -36,6 +36,9 @@ class Authentication < ActiveRecord::Base
   def self.remove_conn(current_gamer)
     authentication = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
      "twitter")
+    if (authentication.nil?)
+      return
+    end
     authentication.destroy
   end
 
