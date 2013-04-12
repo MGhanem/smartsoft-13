@@ -128,6 +128,4 @@ describe Synonym do
   end
 
   end
-
-
 end

@@ -51,11 +51,13 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+      resources :projects
+      match "keywords/create" => "keywords#create"
+
 			get "projects/remove_developer_from_project"
   		match "projects/share/:id" => "projects#share"
   		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
   		get "projects/update"
-			resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -68,22 +70,19 @@ Arability::Application.routes.draw do
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
-      
+
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
-  resources :projects
-  match "keywords/create" => "keywords#create"
+      resources :projects
+      match "keywords/create" => "keywords#create", :as => :keywords_create
 
       match '/projects/add_word' => "projects#add_word"
-      get "keywords/new"
-
-      post "keywords/create"
-
-      get "keywords/suggest_add"
+      match "keywords/new" => "keywords#new", :as => :keywords_new
 
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
+      match 'search_keywords' => 'search#search_keywords'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
@@ -91,21 +90,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/create' => "my_subscription#create"
     end
   end
-  
-  get "games/getprizes"
 
-  post "games/record_vote"
-
-  post "games/vote_errors"
-
-  post "games/record_synonym"
-
-  match 'search' => 'search#search'
-
-  match '/projects/add_word' => "projects#add_word"
-
-  match 'search_keywords' => 'search#search_keywords'
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

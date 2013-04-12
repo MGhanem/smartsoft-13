@@ -18,7 +18,7 @@ class KeywordsController < BackendController
   def create
     redirect_url = params[:redirect]
     if redirect_url.blank?
-      redirect_url = keywords_new_path
+      redirect_url = search_path
     end
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
@@ -27,8 +27,8 @@ class KeywordsController < BackendController
       flash = { :success => "Keyword #{@keyword.name} has been created" }
       redirect_to redirect_url, :flash => flash
     else
-      flash = { :error => @keyword.errors.messages }
-      redirect_to redirect_url, :flash => flash
+      flash = { :error => @keyword.errors.messages[:name] }
+      redirect_to keywords_new_path, :flash => flash
     end
   end
 end

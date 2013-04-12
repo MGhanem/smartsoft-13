@@ -102,10 +102,5 @@ describe SearchHelper do
         chart.first[:title][:text].should match(I18n.t(:stats_education))
         chart.data.first[:data].should =~ (s.get_visual_stats_education)
       end
-  
-  
-
-
-
-
 end
+
