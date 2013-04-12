@@ -15,7 +15,6 @@
 
   function check_empty_words(){
     if(words.length == 0){
-    //$('.zone').append('<div style="position:center; background-color: yellow;">DONE VOTING</div>');
       if(win == true){
         $('.zone').append('<div><button class="btn btn-success" style="" type="submit"  onclick="nextLevel()">Go to next level</button></div>');
       }
@@ -29,13 +28,11 @@
   } 
 
   function have_to_sign_in(){
-    //alert(successfulWords);
     $.post("/games/vote_errors.js");
   }
 
   function display_error_sign_in(locale){
     $('.zone').empty();
-    //$('#workspace').remove();
     if(locale == "english"){
       $('.zone').append('<div class=\"vote_form\" style="font-size:20px; color:white; float:left; margin-left:30px;"><p>You have to be signed in to display vote form</p></div>');
     }
@@ -45,17 +42,12 @@
   }
 
   function request_vote_form(){
-    //alert("from vote form");
     $('.zone').empty();
-    //$('#workspace').remove();
     $('.zone').append('<div class=\"vote_form\"></div></br>');
     if(check_empty_words()){
-      //alert('empty');
       return;
     }
     else{
-      //$('#workspace').remove();
-      //$('.zone').append('<div class=\"vote_form\"></div></br>');
       var first_word = words.shift();
       $.post("/games/vote.js", { word: first_word});
     }
@@ -100,10 +92,10 @@
 function setButtons(){
     <% if I18n.locale==:ar %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
-    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">إعادة اللعبة</a>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
     <% else I18n.locale==:en %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
-    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="http://localhost:3000/game">Restart Game</a>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
     <% end %>
   }
 
@@ -167,9 +159,3 @@ function getPrizes(level, score) {
 
   </div>
 </div>
-
-<!-- <div id="workspace" style="position:relative; left: 10px; ">
-  <a onclick="have_to_sign_in()"  id="btn">start voting</a>
-<<<<<<< HEAD
-</div>
- -->

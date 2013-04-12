@@ -7,16 +7,16 @@ class GamesController < ApplicationController
   # Description:
   # 	displayes the vote form for the gamer
   # params:
-  # 	word: takes a keyword name for which the synonym choices whill be displayed
+  # 	word: takes keyword name for which the synonym choices will be displayed
   # success:
   # 	retrieve the approved synonym list limited to 4 only choosen randomly 
-  # 	if the approved synonyms for the keyword is more than 4, keyword object and the keyword name
-  #   
+  # 	if the approved synonyms for the keyword is more than 4, keyword 
+  #   object and the keyword name
   # failure:
   # 	--------- 
   def vote
   	@word = params[:word]
-  	@keyword = Keyword.where(:name => @word).first
+  	@keyword = Keyword.where(name: @word).first
   	@synonym_list = @keyword.retrieve_synonyms()[0]
   	list_length = @synonym_list.length
   	while list_length > 4 do
@@ -57,9 +57,10 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
-    @record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) 
-  	@already_existing_synonym = Synonym.where(:name => params[:synonym_name],
-      :keyword_id => params[:keyword_id]).first 
+    @record_output = current_gamer.suggest_synonym(params[:synonym_name], 
+      params[:keyword_id]) 
+  	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
+      keyword_id: params[:keyword_id]).first 
   end
   	
 end
