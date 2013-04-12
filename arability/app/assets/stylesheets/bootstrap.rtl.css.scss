@@ -35,9 +35,9 @@ audio:not([controls]) {
 }
 
 html {
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+  font-size: 120%;
+  -webkit-text-size-adjust: 120%;
+      -ms-text-size-adjust: 120%;
 }
 
 a:focus {
@@ -84,7 +84,7 @@ input,
 select,
 textarea {
   margin: 0;
-  font-size: 100%;
+  font-size: 120%;
   vertical-align: middle;
 }
 
@@ -161,8 +161,8 @@ body {
   margin: 0;
   direction:rtl;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 24px;
   color: #333333;
   background-color: #ffffff;
 }
@@ -636,33 +636,33 @@ h6 small {
 }
 
 h1 {
-  font-size: 36px;
-  line-height: 40px;
+  font-size: 38px;
+  line-height: 42px;
 }
 
 h2 {
-  font-size: 30px;
-  line-height: 40px;
+  font-size: 32px;
+  line-height: 42px;
 }
 
 h3 {
-  font-size: 24px;
-  line-height: 40px;
+  font-size: 26px;
+  line-height: 42px;
 }
 
 h4 {
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 h5 {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 h6 {
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 24px;
 }
 
 h1 small {
@@ -883,8 +883,8 @@ legend {
   width: 100%;
   padding: 0;
   margin-bottom: 20px;
-  font-size: 21px;
-  line-height: 40px;
+  font-size: 25px;
+  line-height: 45px;
   color: #333333;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
@@ -900,9 +900,9 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: normal;
-  line-height: 20px;
+  line-height: 26px;
 }
 
 input,
@@ -938,8 +938,8 @@ input[type="color"],
   height: 20px;
   padding: 4px 6px;
   margin-bottom: 9px;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 26px;
   color: #555555;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
