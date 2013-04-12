@@ -51,7 +51,7 @@ h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true)
 i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true)
 
 Gamer.delete_all
-def self.add_gamer(first, last, country, age, education)
+def self.add_gamer(first, last, gender, country, age, education)
   g = Gamer.new
   g.username = first+"_"+last
   g.email = first + "@"+last+".com"
@@ -63,11 +63,12 @@ def self.add_gamer(first, last, country, age, education)
   g
 end
 
-noha=add_gamer("noha", "mohamed", "Lebanon", 20, "high")
-mohamed=add_gamer("mohamed", "ashraf", "Egypt", 40, "medium")
-timo=add_gamer("timo", "fattouh", "Egypt", 30, "high")
-kholoud=add_gamer("khloud", "khalid", "Jordan", 10, "high")
-hassan=add_gamer("mosatafa", "hassan", "Jordan", 30, "high")
+noha=add_gamer("noha", "mohamed", "female", "Lebanon", 20, "School")
+mohamed=add_gamer("mohamed", "ashraf", "male", "Egypt", 40, "University")
+timo=add_gamer("timo", "fattouh", "male", "Egypt", 30, "Graduate")
+kholoud=add_gamer("khloud", "khalid", "female", "Jordan", 10, "School")
+hassan=add_gamer("mosatafa", "hassan", "male", "Jordan", 30, "Graduate")
+amr=add_gamer("amr", "raoof", "male", "Iraq", 30, "Graduate")
 
 Developer.delete_all
 timo_dev=Developer.create(first_name: "Timo", last_name: "Fattouh", gamer_id: timo.id)
@@ -81,14 +82,19 @@ Vote.record_vote(mohamed.id, a.id)
 Vote.record_vote(mohamed.id, d.id)
 Vote.record_vote(mohamed.id, h.id)
 Vote.record_vote(timo.id, b.id)
+Vote.record_vote(timo.id, h.id)
+Vote.record_vote(timo.id, d.id)
+Vote.record_vote(amr.id, c.id)
+Vote.record_vote(amr.id, h.id)
+Vote.record_vote(amr.id, f.id)
 
 hassan_dev.keywords << click
 hassan_dev.keywords << sign_in
 
 SubscriptionModel.delete_all
-free=SubscriptionModel.create(name: "Free")
-premium=SubscriptionModel.create(name: "Premium")
-deluxe=SubscriptionModel.create(name: "Deluxe")
+free=SubscriptionModel.create(name: "Free", limit_search: 20, limit_follow: 20, limit_project: 20)
+premium=SubscriptionModel.create(name: "Premium", limit_search: 200, limit_follow: 200, limit_project: 100)
+deluxe=SubscriptionModel.create(name: "Deluxe", limit_search: 300, limit_follow: 300, limit_project: 300)
 
 project = Project.new
 project.name = "Read"
