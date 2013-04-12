@@ -26,10 +26,8 @@ class Keyword < ActiveRecord::Base
   #   returns an empty list if the keyword doesn't exist or if no approved
   #   synonyms where found for the keyword  
   def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
-        gender = nil,education = nil)
-    if(!self.approved)
-      return [], {} 
-    end
+        gender = nil, education = nil)
+    return [], {} if !self.approved
     keyword_id = self.id
     filtered_data = Gamer
     filtered_data = filtered_data
@@ -42,16 +40,16 @@ class Keyword < ActiveRecord::Base
       .filter_by_education(education.downcase) unless education.blank?
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
-      .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
-    votes_count = filtered_data.count(:group => "synonyms.id")
+      .where(synonyms: { keyword_id: keyword_id, approved: true })
+    votes_count = filtered_data.count(group: "synonyms.id")
     synonym_list = []
-    filtered_data.each do |gamer|
-      synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
-    end
+    filtered_data.each { |gamer| synonym_list += gamer.synonyms
+      .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
-    synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+    synonyms_with_no_votes = self.synonyms
+      .where(synonyms: { approved: true }) - synonym_list
     synonym_list = synonym_list + synonyms_with_no_votes
     return synonym_list, votes_count
   end  
@@ -151,8 +149,8 @@ class Keyword < ActiveRecord::Base
     #     similar keywords were found
     def get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
-      search_word.downcase! if is_english_string(search_word)
-      search_word = search_word.strip
+      search_word.downcase!
+      search_word.strip!
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
