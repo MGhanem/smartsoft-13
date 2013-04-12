@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class ProjectsController < BackendController
+  include ApplicationHelper
   # GET /projects
   # GET /projects.json
   before_filter :authenticate_gamer!
