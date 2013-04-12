@@ -1,5 +1,4 @@
 Arability::Application.routes.draw do
-
   root :to => 'pages#home'
 
   scope "(:locale)", :locale => /en|ar/ do
@@ -13,9 +12,10 @@ Arability::Application.routes.draw do
 
     post "admin/wordadd"
 
+  
     post "admin/login"
 
-		get "admin/import_csv"
+    get "admin/import_csv"
 
     post "admin/upload"
 
@@ -35,7 +35,7 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
+    get 'games/getnewwords'
 
     get "games/getprizes"
 
@@ -48,16 +48,33 @@ Arability::Application.routes.draw do
        get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
-    scope "developers" do 
+    scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project", :via => :get
+      #get "projects/remove_developer_from_project"
+      
+      
+
+      #puts "developers/projects/share_project_with_developer"
+      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
+      
+      get "projects/update"
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
+      resources :projects
+      match "projects/:id/share" => "projects#share", :as => "share_project"
+
 			get "projects/remove_developer_from_project"
-  		match "projects/share/:id" => "projects#share"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  		get "projects/update"
+  		
       match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
       match '/projects/remove_word' => "projects#remove_word"
-			resources :projects
+
+      match '/projects/export_csv' => "projects#export_to_csv"
+
+
+      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -67,24 +84,37 @@ Arability::Application.routes.draw do
 
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
 
+
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  
+  post "keywords/create"
+
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
 
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
 
-			post "keywords/create"
+      post "keywords/create"
 
       get "keywords/suggest_add"
 
-			match 'search' => 'search#search'
+      match "keywords" => "keywords#viewall"
 
-      match '/developers/new' => "developer#new"
+      match 'search' => 'search#search'
+
+      match '/new' => "developer#new", :as => :developers_new
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
     end
   end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

@@ -1,0 +1,32 @@
+<div class="well" style="height:500px;">
+	<%= form_for @project, :url => "/developers/projects/share_project_with_developer" do |f| %>
+<%= hidden_field_tag "id", @project.id%>
+  <%= f.label "#{t(:email2)}"%>
+  <div class="form-search">
+  <%= text_field :email,"", :placeholder=>"Please enter an email"%>
+  <%= f.submit "#{t(:share)}", :class => "btn btn-success"%>
+</div>
+</br>
+<% if @project.developers_shared.size == 0 %>
+<span style="color:red;"> <%=t(:not_shared) %></span>
+<% else %>
+    <table class="table table-hover table-bordered" style="width:600px">
+    	<tr>
+    	<% @project.developers_shared.each do |dev|%>
+            <td>
+            <%= dev.name %>
+          </td>
+          <td>
+            <%= dev.email %>
+          </td>
+
+            <td>
+            <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=@project.id%>"><i class="icon-remove"></i></a>
+          </td>
+            <br />
+          <% end %>
+      </tr>
+      </table>
+<%end%>
+<%end%>
+</div>
