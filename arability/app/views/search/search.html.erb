@@ -100,8 +100,8 @@
                 <button class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>">
                   <span><%= t(:view_stats)%></span>
                 </button>
-                <%= button_tag(:type => "submit", :class => 'btn btn-mini',:style => "display:inline;") do %>
-                  <%= link_to t(:add_to_project), {action: "add_word",controller: "projects", :project_id => @project_id, :synonym_id => synonym.id, :keyword => @search_keyword}, {:style=>'color:#000000', :class => "css_class"}  %>
+                <%= button_tag(type: "submit", class: "btn btn-mini", style: "display:inline;") do %>
+                  <%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
                 <% end %>
               </div>
             </div>
