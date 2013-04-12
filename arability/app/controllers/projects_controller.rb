@@ -498,11 +498,11 @@ def add_word
       @project_id = params[:project_id]
       @word_id = params[:word_id]
       @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-      @removed_word.each { |word| 
+      @removed_word.each do |word| 
         if word.project_id = @project_id
           @remove = word
         end 
-      }
+      end
       if  @remove != nil
         @remove.destroy
         flash[:success] = t(:word_removed_successfully)
