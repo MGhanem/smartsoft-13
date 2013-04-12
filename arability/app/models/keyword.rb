@@ -57,8 +57,66 @@ class Keyword < ActiveRecord::Base
     end  
 
   class << self
-  require "string_helper"
-	include StringHelper
+    require "string_helper"
+    include StringHelper
+  end
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   adds a new keyword to the database or returns it if it exists
+  # params:
+  #   name: the actual keyword string
+  #   approved: is the created keyword is automatically approved
+  #   is_english: is the keyword string in English
+  #   categories: a list of categories to tag the keyword with
+  # success:
+  #   the first return is true and the second is the saved keyword
+  # failure:
+  #   the first return is false and the second is the unsaved keyword
+  def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
+    name.strip!
+    keyword = where(name: name).first_or_create
+    keyword.approved = approved
+    name.downcase! if is_english_string(name)
+    if is_english != nil
+      keyword.is_english = is_english
+    else
+      keyword.is_english = is_english_string(name)
+    end
+
+    if keyword.save
+      categories.each do |category_name|
+        success, category =
+          Category.add_category_to_database_if_not_exists(category_name)
+        if success
+          category.keywords << keyword
+        end
+      end
+      return true, keyword
+    else
+      return false, keyword
+    end
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   finds a keyword by name from the database
+  # params:
+  #   name: the search string
+  # success:
+  #   An instance of Keyword
+  # failure:
+  #   nil
+  def self.find_by_name(name)
+    name.strip!
+    name.downcase!
+    keyword = Keyword.where(name: name).first
+    return keyword
+  end
+
+
+  class << self
   # Author:
   #  Mirna Yacout
   # Description:
@@ -96,44 +154,6 @@ class Keyword < ActiveRecord::Base
       end
 
     # Author:
-    #   Mohamed Ashraf
-    # Description:
-    #   adds a new keyword to the database or returns it if it exists
-    # params:
-    #   name: the actual keyword string
-    #   approved: is the created keyword is automatically approved
-    #   is_english: is the keyword string in English
-    #   categories: a list of categories to tag the keyword with
-    # success:
-    #   the first return is true and the second is the saved keyword
-    # failure:
-    #   the first return is false and the second is the unsaved keyword
-    def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
-      name.strip!
-      keyword = where(name: name).first_or_create
-      keyword.approved = approved
-      name.downcase! if is_english_string(name)
-      if is_english != nil
-        keyword.is_english = is_english
-      else
-        keyword.is_english = is_english_string(name)
-      end
-
-      if keyword.save
-        categories.each do |category_name|
-          success, category =
-            Category.add_category_to_database_if_not_exists(category_name)
-          if success
-            category.keywords << keyword
-          end
-        end
-        return true, keyword
-      else
-        return false, keyword
-      end
-    end
-
-    # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
     #   gets words similar to a search keyword (in a certain category) and sorts
@@ -168,22 +188,6 @@ class Keyword < ActiveRecord::Base
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	return relevant_first_list
-    end
-
-    # Author:
-    #   Mohamed Ashraf
-    # Description:
-    #   finds a keyword by name from the database
-    # params:
-    #   name: the search string
-    # success:
-    #   An instance of Keyword
-    # failure:
-    #   nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
     end
 
     # Author: Mostafa Hassaan
