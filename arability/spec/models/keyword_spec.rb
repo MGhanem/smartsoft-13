@@ -165,7 +165,7 @@ describe Keyword do
 	it "should return an empty list if no synonyms were found without filters" do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", approved: true)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.should eq([])
 		votes.should eq({})
 	end
@@ -173,7 +173,7 @@ describe Keyword do
 	it "should return an empty list if synonyms are unapproved" do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.should eq([])
 		votes.should eq({})
 	end
@@ -181,7 +181,7 @@ describe Keyword do
 	it "should return an empty list if keyword is unapproved" do
 		keyword = Keyword.create(name: "click")
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.should eq([])
 		votes.should eq({})
 	end
@@ -198,7 +198,7 @@ describe Keyword do
 		gamer.save
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.first.name.should eq("انقر")
 		votes.should eq({})
 	end
@@ -216,7 +216,7 @@ describe Keyword do
 		keyword = Keyword.create(name: "click", approved: true)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.first.name.should eq("انقر")
 		votes[synonym.id].should eq(1)
 	end
@@ -321,7 +321,7 @@ describe Keyword do
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		synonym2 = Synonym.create(name: "دوس", keyword_id: keyword.id, approved: true)
 		Vote.record_vote(gamer.id, synonym.id)
-		synonyms, votes = keyword.retrieve_synonyms()
+		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.first.name.should eq("انقر")
 		synonyms.last.name.should eq("دوس")
 	end

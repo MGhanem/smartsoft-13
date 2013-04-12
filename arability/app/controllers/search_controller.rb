@@ -53,40 +53,32 @@ class SearchController < BackendController
 	#		failure:
 	#			returns an empty list if the search keyword has no synonyms
   def search
-    @search_keyword = params['search']
-    @country = params['country']
-    @age_from = params['age_from']
-    if(!@age_from.blank?)
-      @age_from = @age_from.to_i
-    end
-    @age_to = params['age_to']
-    if(!@age_to.blank?)
-      @age_to = @age_to.to_i
-    end
-    if(!@age_from.blank? && !@age_to.blank? && @age_from > @age_to)
+    @search_keyword = params["search"]
+    @country = params["country"]
+    @age_from = params["age_from"]
+    @age_from = @age_from.to_i if !@age_from.blank?
+    @age_to = params["age_to"]
+    @age_to = @age_to.to_i if !@age_to.blank?
+    if !@age_from.blank? && !@age_to.blank? && @age_from > @age_to
       temp = @age_from
       @age_from = @age_to
       @age_to = temp
     end
-    @gender = params['gender']
-    @education = params['education']
-    if(!@search_keyword.blank?)
+    @gender = params["gender"]
+    @education = params["education"]
+    if !@search_keyword.blank?
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
       @no_synonyms_found = false
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
-      if(!@search_keyword_model.blank?)
+      if !@search_keyword_model.blank?
         @synonyms, @votes =
           @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender, @education)
-          if(@synonyms.blank?)
-            @no_synonyms_found = true
-          end
+        @no_synonyms_found = true if @synonyms.blank?
         @total_votes = 0
-        @votes.each do |synonym_id, synonym_votes|
-          @total_votes += synonym_votes
-        end
+        @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
       else
-        redirect_to search_keywords_path(:search => @search_keyword)
+        redirect_to search_keywords_path(search: @search_keyword)
       end
     else
       redirect_to search_keywords_path

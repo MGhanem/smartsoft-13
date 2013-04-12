@@ -26,10 +26,8 @@ class Keyword < ActiveRecord::Base
   #   returns an empty list if the keyword doesn't exist or if no approved
   #   synonyms where found for the keyword  
   def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
-        gender = nil,education = nil)
-    if(!self.approved)
-      return [], {} 
-    end
+        gender = nil, education = nil)
+    return [], {} if !self.approved
     keyword_id = self.id
     filtered_data = Gamer
     filtered_data = filtered_data
@@ -42,23 +40,80 @@ class Keyword < ActiveRecord::Base
       .filter_by_education(education.downcase) unless education.blank?
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
-      .where(:synonyms=>{:keyword_id => keyword_id, :approved => true})
-    votes_count = filtered_data.count(:group => "synonyms.id")
+      .where(synonyms: { keyword_id: keyword_id, approved: true })
+    votes_count = filtered_data.count(group: "synonyms.id")
     synonym_list = []
-    filtered_data.each do |gamer|
-      synonym_list += gamer.synonyms.where(:keyword_id => keyword_id, :approved => true)
-    end
+    filtered_data.each { |gamer| synonym_list += gamer.synonyms
+      .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
-    synonyms_with_no_votes = self.synonyms.where(:synonyms => {:approved => true}) - synonym_list
+    synonyms_with_no_votes = self.synonyms
+      .where(synonyms: { approved: true }) - synonym_list
     synonym_list = synonym_list + synonyms_with_no_votes
     return synonym_list, votes_count
   end  
 
   class << self
-  require "string_helper"
-	include StringHelper
+    require "string_helper"
+    include StringHelper
+  end
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   adds a new keyword to the database or returns it if it exists
+  # params:
+  #   name: the actual keyword string
+  #   approved: is the created keyword is automatically approved
+  #   is_english: is the keyword string in English
+  #   categories: a list of categories to tag the keyword with
+  # success:
+  #   the first return is true and the second is the saved keyword
+  # failure:
+  #   the first return is false and the second is the unsaved keyword
+  def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
+    name.strip!
+    keyword = where(name: name).first_or_create
+    keyword.approved = approved
+    name.downcase! if is_english_string(name)
+    if is_english != nil
+      keyword.is_english = is_english
+    else
+      keyword.is_english = is_english_string(name)
+    end
+
+    if keyword.save
+      categories.each do |category_name|
+        success, category =
+          Category.add_category_to_database_if_not_exists(category_name)
+        if success
+          category.keywords << keyword
+        end
+      end
+      return true, keyword
+    else
+      return false, keyword
+    end
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   finds a keyword by name from the database
+  # params:
+  #   name: the search string
+  # success:
+  #   An instance of Keyword
+  # failure:
+  #   nil
+  def self.find_by_name(name)
+    name.strip!
+    name.downcase!
+    keyword = Keyword.where(name: name).first
+    return keyword
+  end
+
+  class << self
   # Author:
   #  Mirna Yacout
   # Description:
@@ -95,44 +150,8 @@ class Keyword < ActiveRecord::Base
 
       end
 
-    # adds a new keyword to the database or returns it if it exists
     # Author:
-    #   Mohamed Ashraf
-    # params:
-    #   name: the actual keyword string
-    #   approved: is the created keyword is automatically approved
-    #   is_english: is the keyword string in English
-    #   categories: a list of categories to tag the keyword with
-    # returns:
-    #   success: the first return is true and the second is the saved keyword
-    #   failure: the first return is false and the second is the unsaved keyword
-    def add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
-      name.strip!
-      name.downcase!
-      name = name.split(" ").join(" ")
-      keyword = where(name: name).first_or_create
-      keyword.approved = approved
-      name.downcase! if is_english_string(name)
-      if is_english != nil
-        keyword.is_english = is_english
-      else
-        keyword.is_english = is_english_string(name)
-      end
-
-      if keyword.save
-        categories.each do |category_name|
-          success, category =
-            Category.add_category_to_database_if_not_exists(category_name)
-          if success
-            category.keywords << keyword
-          end
-        end
-        return true, keyword
-      else
-        return false, keyword
-      end
-    end
-
+    #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
     #   gets words similar to a search keyword (in a certain category) and sorts 
     #   result by relevance
@@ -151,8 +170,8 @@ class Keyword < ActiveRecord::Base
     #     similar keywords were found
     def get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
-      search_word.downcase! if is_english_string(search_word)
-      search_word = search_word.strip
+      search_word.downcase!
+      search_word.strip!
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
@@ -165,18 +184,6 @@ class Keyword < ActiveRecord::Base
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	relevant_first_list
-    end
-
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
     end
 
     # Author: Mostafa Hassaan
@@ -207,20 +214,6 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
-    end
-
-
-    
   # author:
   #   Mostafa Hassaan
   # description:

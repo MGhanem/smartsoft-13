@@ -59,7 +59,7 @@ ar:
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
   votes: "صوت"
-  filter: "تصفية النتائج"
+  filter: "تصفية الاصوات"
   country: "البلد"
   age_from: "السن من"
   age_to: "الي"
@@ -127,4 +127,3 @@ ar:
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
-
