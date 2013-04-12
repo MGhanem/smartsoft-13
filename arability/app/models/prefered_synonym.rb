@@ -28,6 +28,7 @@ class PreferedSynonym < ActiveRecord::Base
         entry.keyword_id = keyword_id
         return entry.save
       end
+      return false
   	end
     
     # Author:
