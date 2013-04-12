@@ -1,4 +1,3 @@
-
 class FollowController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
@@ -52,7 +51,7 @@ class FollowController < BackendController
   #   to alert the developer that the relation has been remove
   # failure:
   #   returns false if the relation didn't already exsist in the database
-  def unfollow
+  def unfollow   
     word = Keyword.where(id: params[:keyword_id]).first
     if word != nil
       developer = Developer.where(gamer_id: current_gamer.id).first

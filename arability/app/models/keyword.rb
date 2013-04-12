@@ -150,6 +150,7 @@ class Keyword < ActiveRecord::Base
     return Keyword.where(approved: false).all
   end
 
+
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -185,7 +186,9 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	relevant_first_list
     end
+
   class << self
+
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.

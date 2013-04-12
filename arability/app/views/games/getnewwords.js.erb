@@ -1,0 +1,5 @@
+<% a = Vote.get_unvoted_keywords(current_gamer.id, params[:count].to_i, params[:lang].to_i) %>
+wordsArray = [];
+<% a.each do |k| %>
+	wordsArray.push("<%= k.name %>");
+<% end %>

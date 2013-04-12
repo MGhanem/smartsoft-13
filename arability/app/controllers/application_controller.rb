@@ -1,7 +1,65 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
-  require 'csv'
+
+
+  require "csv"
+
+  protect_from_forgery
+  before_filter :set_locale
+
+  def set_locale
+    if params[:locale].nil?
+      if session[:locale].nil?
+        I18n.locale = :ar
+      else
+        I18n.locale = session[:locale]
+      end
+    else
+      I18n.locale = params[:locale]
+      session[:locale] = params[:locale]
+    end
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Desciption:
+  #   This function sets the locale to the default locale of ar or the
+  #   whichever locale stored in the session. If a locale is chosen it is
+  #   automatically stored in the session.
+  # params:
+  #   locale: from the url if exists
+  # success:
+  #   --
+  # failure:
+  #   --
+  def set_locale
+    if params[:locale].nil?
+      if session[:locale].nil?
+        I18n.locale = :ar
+      else
+        I18n.locale = session[:locale]
+      end
+    else
+      I18n.locale = params[:locale]
+      session[:locale] = params[:locale]
+    end
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   It adds the current locale to the url if not specified
+  # params:
+  #   locale: from the url if exists
+  # success:
+  #   --
+  # failure:
+  #   --
+  def default_url_options(options={})
+    { :locale => I18n.locale }
+  end
+
 
   # author:
   #   Amr Abdelraouf
@@ -19,8 +77,8 @@ class ApplicationController < ActionController::Base
   def parseCSV(csvfile)
     begin
       if csvfile != nil
-        fileext = File.extname(csvfile.original_filename)
-        if fileext == ".csv"
+        file_ext = File.extname(csvfile.original_filename)
+        if file_ext == ".csv"
           content = File.read(csvfile.tempfile)
           arr_of_arrs = CSV.parse(content)
           return arr_of_arrs, 0
@@ -51,11 +109,9 @@ class ApplicationController < ActionController::Base
   #   row contains an invalid keyword and is ignored
   def uploadCSV(arr_of_arrs)
     arr_of_arrs.each do |row|
-      wasSaved, keywrd = Keyword.add_keyword_to_database(row[0])
-      if wasSaved
-        for index in 1..row.size
-          Synonym.recordsynonym(row[index], keywrd.id)
-        end
+      was_saved, keywrd = Keyword.add_keyword_to_database(row[0])
+      if was_saved
+        (1..row.size).each { |index| Synonym.recordsynonym(row[index], keywrd.id) }
       end
     end
   end
@@ -90,4 +146,5 @@ class ApplicationController < ActionController::Base
     { :locale => I18n.locale }
   end
 end
+
 

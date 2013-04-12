@@ -1,6 +1,6 @@
 module SearchHelper
 
-  
+
   # author:
   #   Mostafa Hassaan
   # description:
@@ -52,11 +52,12 @@ module SearchHelper
           color: "black",
           style: {
             font: "13px Trebuchet MS, Verdana, sans-serif"
-          }
         }
-      })
-    end
+      }
+    })
   end
+  end
+
 
   @@GENDER = 0
   @@COUNTRY = 1
@@ -129,4 +130,5 @@ module SearchHelper
   def getID(word)
     return Keyword.where(name: word).first.id
   end
+
 end
