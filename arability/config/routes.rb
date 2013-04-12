@@ -132,9 +132,7 @@ Arability::Application.routes.draw do
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
-
-  match 'search' => 'search#search'
-
+      
       match '/developers/new' => "developer#new"
 
       match '/developers/create' => "developer#create"
@@ -142,13 +140,17 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/new' => "my_subscription#new"
 
       match '/my_subscriptions/create' => "my_subscription#create"
+
+
     end
   end
-  
+  match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
+
   match '/tweet/tweet_score' => "tweet#tweet_score"
   get 'games/gettrophies'
   
   match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
+  
   get 'games/getnewwords'
 
   get "games/getprizes"
@@ -166,6 +168,7 @@ Arability::Application.routes.draw do
   match '/authentications/facebook_connect' => 'authentications#facebook_connect'
 
   match '/authentications/twitter' => 'authentications#twitter'
+
   match '/projects/add_word' => "projects#add_word"
 
   match '/game' => 'games#game'
@@ -177,7 +180,6 @@ Arability::Application.routes.draw do
 
     post "admin/upload"
 
-    
   
   get 'games/getnewwords'
 
@@ -187,6 +189,10 @@ Arability::Application.routes.draw do
   match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
   match '/auth/failure', :to => 'authentications#twitter'
  
+    match '/game' => 'games#game'
+    get "games/getprizes"
+    post "games/record_vote"
+
   get "authentications/twitter_hall_of_fame"
 
   get "/en/gamers" => redirect('/en/gamers/sign_up')
