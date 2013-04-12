@@ -3,7 +3,7 @@ class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name
   has_many :votes
-  
+
   def self.find_loacle
     if I18n.locale == :ar 
       "هذا المعنى ليس باللغة العربية"
@@ -11,10 +11,9 @@ class Synonym < ActiveRecord::Base
       "This synonym in not in arabic"
     end
   end
+
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => Synonym.find_loacle
-
-  class << self
 
   # Author:
   #  Mirna Yacout
@@ -56,7 +55,7 @@ class Synonym < ActiveRecord::Base
   #   returns false if word not saved to database due to incorrect expression
   #   of synonym name or an incorrect keyword id for
   #   an unavaialable keyword in database.
-  def record_synonym(synonym_name, keyword_id, approved = false)
+  def self.record_synonym(synonym_name, keyword_id, approved = false)
     if synonym_name.blank?
       return false
     elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
@@ -69,6 +68,5 @@ class Synonym < ActiveRecord::Base
     else
       return false
     end
-  end
   end
 end
