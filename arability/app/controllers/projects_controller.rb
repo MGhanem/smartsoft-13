@@ -1,6 +1,6 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
-   before_filter :authenticate_gamer!
+  before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, :only => [:show, :add_from_csv_keywords, :choose_keywords, :import_csv]
 
@@ -195,14 +195,17 @@ end
     id_words_project = params[:words_ids]
     project_id =  params[:id]
     if id_words_project != nil
-      words_synonyms_array = [id_words_project].map {|x| x.split("|")}
-      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
-        flash[:error] = t(:java_script_disabled)
-      else
-        words_synonyms_array.each do |word_syn|
-          if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-            MySubscription.decrement_word_search()
-          end
+      words_synonyms_array = id_words_project.map {|x| x.split("|")}
+      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
+        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+          flash[:error] = t(:java_script_disabled)
+          redirect_to action: "show", id: project_id
+          return
+        end
+      end
+      words_synonyms_array.each do |word_syn|
+        if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+          # MySubscription.decrement_word_search()
         end
       end
     end
@@ -294,7 +297,7 @@ end
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
-        if Developer.where(:gamer_id => current_gamer.id).first.respond_to?("my_subscription")
+        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
           @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i
         else
           @words_remaining = 150
@@ -451,7 +454,7 @@ def add_word
       render 'pages/home'
     end
   end
-  
+
   # author:
 #      Khloud Khalid
 # description:

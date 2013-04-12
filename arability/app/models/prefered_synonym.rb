@@ -20,8 +20,8 @@ class PreferedSynonym < ActiveRecord::Base
     # Failure:
     #   if the word isn't saved returns false
   	def add_keyword_and_synonym_to_project(synonym_id, keyword_id, project_id)
-      keyword = Keyword.find(keyword_id)
-      if keyword != nil and keyword.synonyms.where(:synonym_id => synonym_id) != nil
+      keyword = Keyword.where(id: keyword_id).first
+      if keyword != nil && keyword.synonyms.where(:synonym_id => synonym_id) != nil
         entry = PreferedSynonym.new
         entry.project_id = project_id
         entry.synonym_id = synonym_id

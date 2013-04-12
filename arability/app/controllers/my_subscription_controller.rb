@@ -1,6 +1,7 @@
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
   #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
+  
 # author:
 #   Khloud Khalid
 # description:
@@ -69,7 +70,6 @@ class MySubscriptionController < ApplicationController
       render 'pages/home'
     end  
   end
-
 
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
