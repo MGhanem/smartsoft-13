@@ -9,6 +9,7 @@ Arability::Application.routes.draw do
 
 
     get "admin/login"
+
     get "admin/logout"
 
     post "admin/wordadd"
@@ -83,6 +84,8 @@ Arability::Application.routes.draw do
 			resources :projects
 
 
+      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
+
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
       match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
@@ -119,6 +122,7 @@ Arability::Application.routes.draw do
       match '/my_subscriptions/create' => "my_subscription#create"
     end
   end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

@@ -1,14 +1,11 @@
-<style>
-.radio{
-    display:float;
-}
-</style>
-<div class = "container" >
+ <div class = "container well" >
+    <table width="275" border="0">
+        <tr>
+            <td>
     <%= form_for(@project) do |f| %>
     <% if @project.errors.any? %>
-    <div id="error_explanation">
-
-        <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+    <div id="error_explanation" class="req">
+        <h2><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
         <ul>
             <% @project.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -17,12 +14,14 @@
     </div>
     <% end %>
     <div class="field">
-        <%= t(:name)%>
-        <%= f.text_field :name, :placeholder=>t(:name) %>
+        <!-- <span class="req">* </span> -->
+        <%= f.label t(:name)%>
+        <%= f.text_field :name, :placeholder => t(:name) %>
     </div>
     <div class="field">
-        <%= t(:categories)%>
-        <%= text_field_tag("project[categories]", @categories,:placeholder=>t(:enter_as_csv)) %> 
+        <span class="req">* </span>
+        <%= f.label t(:categories)%>
+        <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %> 
     </div><br>
     <div class="radio">
         <%= t(:formal)%>
@@ -34,18 +33,25 @@
     </br>
     </div>
     <div class="field">
-        <div class="field"><%= t(:age)%></div>
+        <span class="req">* </span>
+        <%= t(:age)%>
+        <br>
         <%= t(:from)%>
-        <%= f.text_field :minAge %>
+        <%= f.text_field :minAge, :class => "input-small" %>
         <%= t(:to)%>
-        <%= f.text_field :maxAge %>
+        <%= f.text_field :maxAge, :class => "input-small" %>
   </div>
+  <br>
   <div>
     <%= t(:desc) %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, :size => "10x10" %>
 </div>
-<div class="actions">
-    <%= f.submit %>
+<div>
+    <%= f.submit t(:edit_project), :class => "btn btn-success" %>
+</div>
 </div>
 </div>
 <% end %>
+</td>
+</tr>
+</table>

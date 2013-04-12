@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :set_locale
   require 'csv'
 
   # author:
@@ -58,8 +59,6 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-
-  before_filter :set_locale
 
   # Desciption:
   #   This function sets the locale to the default locale of ar or the

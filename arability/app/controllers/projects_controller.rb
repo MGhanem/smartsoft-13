@@ -1,5 +1,8 @@
 class ProjectsController < BackendController 
   include ApplicationHelper
+   before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
+  before_filter :developer_can_see_this_project?, :only => [:show, :add_from_csv_keywords, :choose_keywords, :import_csv]
 
  # author:Noha hesham
  # Description:
@@ -33,8 +36,7 @@ class ProjectsController < BackendController
   # Success:
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
-  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamer
-  def index
+  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
     if current_gamer != nil 
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
@@ -66,10 +68,10 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
-      @categories = Project.printarray(@project.categories)
       respond_to do |format|
         if @project.save
-          format.html { redirect_to "/developers/projects", notice: 'Project was successfully created.' }
+          format.html { redirect_to "/developers/projects",
+            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
         else
           format.html { render action: "new" }
@@ -124,6 +126,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
+      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -155,6 +158,7 @@ class ProjectsController < BackendController
     developer_unauthorized
   end
 end
+
 
 
 def show

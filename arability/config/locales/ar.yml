@@ -45,7 +45,7 @@ ar:
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
   back: "عودة"
-  edit_project: "تعديل المشروع"
+  edit_project: "حفظ المشروع"
   import: "استيراد"
   export: "تصدير"
   add_words: "اضف كلمات"
@@ -53,6 +53,7 @@ ar:
   share: "مشاركة"
   delete: "مسح"
   word: "الكلمة"
+  developer_cant_see_project: "ليس بإمكانك الدخول على هذا المشروع"
   meaning: "المعنى"
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
@@ -109,6 +110,10 @@ ar:
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  error: "اخطاء"
+  prohibited_project_error: "اخطاء منعت عملية الحفظ"
+  success: "اسشرلايبتاش"
+  register_developer: "من فضلك سجل كمطور أولا"
 
   errors:
     messages:
@@ -134,6 +139,12 @@ ar:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
 
+
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -159,3 +170,4 @@ ar:
   no_words: "لا يوجد كلمات لاستيرادها."
   no_project: "المشروع الذي تحاول استيراده غير موجود."
   file: "ملف"
+  not_in_range: "ليس في الحدود المسموح بها"

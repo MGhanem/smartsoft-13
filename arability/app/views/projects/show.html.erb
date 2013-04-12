@@ -1,6 +1,5 @@
 <div class="container" border="1"> 
 	<h3><%= t(:project)%>: <%=@project.name %></h3><br>
-	
 		<div class="container well">
 			<div class="btn-toolbar" style="margin: 0;">
 				<div class="btn-group">
@@ -51,7 +50,7 @@
 				<col style="width:25%">
 				<col style="width:50%">
 				<% count=0 %>
-				<% while count<@words.count %>
+				<% while count<50 %>
 				<tr>
 					<td style="text-align:center"><%= @words[count].name %></td>
 					<td style="text-align:center"><%= @synonyms[count].name %></td>
