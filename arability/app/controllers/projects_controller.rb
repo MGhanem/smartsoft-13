@@ -6,7 +6,7 @@ class ProjectsController < BackendController
   # description:
   #    function shows all the projects that a certain developer owns and the projects shared with him
   # Params:
-  #    current_gamer: the current currently logged in, will be nil if there is no logged in gamer
+  #    current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
   # Success:
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
