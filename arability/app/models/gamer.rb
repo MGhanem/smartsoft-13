@@ -9,11 +9,13 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :gender,
-                  :username, :country, :education_level, :date_of_birth, :provider, :uid
+  attr_accessible :email, :password, :password_confirmation,
+                  :remember_me, :gender, :provider, :uid
+                  :username, :country, :education_level, :date_of_birth
 
 
   #author: kareem ali
