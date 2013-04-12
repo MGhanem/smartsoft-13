@@ -6,6 +6,7 @@ ar:
   english: "الإنجليزية"
   arabic: "العربية"
   email: "البريد الالكتروني"
+  email2: "البريد الالكتروني"
   password: "كلمة السر"
   password_confirmation: "تأكيد كلمة السر"
   username: "اسم المستخدم"
@@ -43,8 +44,9 @@ ar:
   to: "الى"
   desc: "عن"
   new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
   back: "عودة"
-  edit_project: "تعديل المشروع"
+  edit_project: "حفظ المشروع"
   import: "استيراد"
   export: "تصدير"
   add_words: "اضف كلمات"
@@ -55,6 +57,9 @@ ar:
   meaning: "المعنى"
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
+  view_collectives: "عرض الإحصائيات الجماعية للكلمة "
+  view_stats: "الإحصائيات"
+  add_to_project: "اضف لمشروعك"
   votes: "صوت"
   filter: "تصفية النتائج"
   country: "البلد"
@@ -70,6 +75,41 @@ ar:
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
   select subscription: "إختر"
+  choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
+  choose_keyword_remaining: "تبقى لك عدد"
+  choose_keywords_remaining2: "كلمة"
+  choose_keyword_table_title: "الكلمة"
+  choose_keyword_table_title2: "المعاني"
+  choose_keyword_table_span: "*جديدة*"
+  choose_keyword_submit: "اضف إلى المشروع"
+  import_csv_title: "استيراد ملف كلمات بصيغة CSV"
+  import_csv_choose_file: "اختيار الملف"
+  import_csv_change_file: "تغيير الملف"
+  import_csv_remove_file: "الغاء"
+  import_csv_submit: "تحميل الملف"
+  import_csv_list1: "لا يجب ان تحتوى الكلمات على ارقام"
+  import_csv_list2: "المعانى غير العربية لن يتم قبولها"
+  import_csv_list3: "يجب ان يكون الملف UTF-8 و بصيغة CSV"
+  java_script_disabled: "كن أكثر ذكاء من ذلك"
+  upload_file_error1: "انت لم تقم بإختيار ملف"
+  upload_file_error2: "هذا الملف ليس بتقنية UTF-8"
+  upload_file_error3: "يوجد خطأ بهذا الملف"
+  upload_file_error4: "هذا الملف ليس CSV"
+  upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+  projects_index_error1: "من فضلك سجل كمطور"
+  projects_index_error2: "من فضلك قم بالدخول"
+  projects_index_title: "مشاريع"
+  projects_index_tab1: "مشاريعي"
+  projects_index_tab2: "مشاريع مشتركة معي"
+  projects_index_add: " إضافة مشروع"
+  projects_index_name: "اسم: "
+  projects_index_categories: "فئات: "
+  projects_index_description: "وصف: "
+  projects_index_edit: " تعديل"
+  projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
+  error: "اخطاء"
+  prohibited_project_error: "اخطاء منعت عملية الحفظ"
+  success: "اسشرلايبتاش"
 
   errors:
     messages:
@@ -95,6 +135,12 @@ ar:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
 
+
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -107,3 +153,25 @@ ar:
      messages_errors:
         you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
         please_choose: 'من فضلك إختر نظامك'
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
+  follow_word: "تابع الكلمة"
+  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
+  add_word: "اضف الكلمة"
+  Add_words: "إضافة كلمات"
+  Synonym_changed_successfully: "تم تغيير المعنى بنجاح."
+  Failed_to_update_synonym: "فشل تحديث المعنى."
+  synonym_does_not_exist: "المعنى الذي اخترته غير موجود."
+  successfully_added_word_to_project: "تمت إضافة الكلمة بنجاح."
+  failed_to_add_word_to_project: "فشل إضافة الكلمة لمشروعك."
+  word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  remove_from_project: "إزالة من المشروع"
+  word_removed_successfully: "تم إزالة الكلمة بنجاح."
+  word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+
+  not_shared: "ةذا المشروع غير مشارك مع احد"
+
+  not_developer: "يجب أن تشترك كمطور قبل أن تستطيع الإكمال."
+  no_words: "لا يوجد كلمات لاستيرادها."
+  no_project: "المشروع الذي تحاول استيراده غير موجود."
+  file: "ملف"
+  not_in_range: "ليس في الحدود المسموح بها"

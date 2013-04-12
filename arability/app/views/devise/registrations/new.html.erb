@@ -1,12 +1,16 @@
 <em><h3 class="text-info">Sign up <%= resource_name.to_s.humanize %></h3></em>
-
 <div class="container well">
+
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <% if resource.errors.any? %>
     <div class="alert"><%= devise_error_messages! %></div>
   <% end %>
 
     <div class="container">
+        <table style="width:900pt">
+        <col style="width:75%">
+        <col style="width:25%">
+        <tr><td>
     <div><%= f.label :email, :class => "control-label" %>
     <%= f.email_field :email, :style => "margin-left: 10px;" %></div></br>
 
@@ -33,9 +37,13 @@
     <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div>
 
     <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
-
- </div>
-</div>
 <% end %>
+ </div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 
 <%= render "links" %>

@@ -1,23 +1,15 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
-  belongs_to :developer
-
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
-
-
-
-  # has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  # has_one :owner, :class_name => "Developer"
-
-
-  attr_accessible :name
+  belongs_to :developer
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
+  validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100, :message => "is not in range" }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
 # author:
@@ -32,12 +24,9 @@ class Project < ActiveRecord::Base
 #new categories and inserting them into the project categories array
 # failure:
 #     None
-
-
-def self.createproject(params,gamer_id)
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
-  developer = Developer.where(:gamer_id => gamer_id).first
-  project.owner_id = developer.gamer_id
+  project.owner_id = developer_id
   project = createcategories(project,params[:categories])
   return project
 end
@@ -80,6 +69,4 @@ def self.printarray(array)
   t = t.join(", ")
   return t
 end
-
 end
-

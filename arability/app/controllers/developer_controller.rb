@@ -1,5 +1,5 @@
-class DeveloperController < BackendController
-  before_filter :authenticate_gamer!
+class DeveloperController < ApplicationController
+ before_filter :authenticate_gamer!
 # author:
 #   Khloud Khalid
 # description:
@@ -10,14 +10,14 @@ class DeveloperController < BackendController
 #   view generated successfully
 # failure:
 #   gamer not signed in
-  def new
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = "You are already registered as a developer. Don't you remember?"
-      render 'pages/home'
-    else
-      @developer = Developer.new
-    end
+def new
+  if Developer.find_by_gamer_id(current_gamer.id) != nil
+    flash[:notice] = "You are already registered as a developer. Don't you remember?"
+    render 'pages/home'
+  else
+    @developer = Developer.new
   end
+end
 # author:
 #   Khloud Khalid
 # description:
@@ -28,22 +28,62 @@ class DeveloperController < BackendController
 #   developer created successfully
 # failure:
 #   invalid information, user already registered as developer
-  def create
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = "You are already registered as a developer. Don't you remember?"
-      render 'pages/home'
-    else
-
-      @developer = Developer.new(params[:developer])
-      @developer.gamer_id = current_gamer.id
-      if @developer.save
-        MySubscription.choose(@developer.id,1)
+def create
+  if Developer.find_by_gamer_id(current_gamer.id) != nil
+    flash[:notice] = "You are already registered as a developer. Don't you remember?"
+    render 'pages/home'
+  else
+    @developer = Developer.new(params[:developer])
+    @developer.gamer_id = current_gamer.id
+    if @developer.save
+      MySubscription.choose(@developer.id,1)
         redirect_to choose_sub_path
+    else
+      flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
+      render :action => 'new'
+    end
+  end
+end
+def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+    redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
+  end
+
+  def share_project_with_developer
+    @project = Project.find(params[:id])
+    gamer = Gamer.find_by_email(params[:email])
+    if(!gamer.present?)
+      flash[:notice] = "Email doesn't exist"
+    else
+      developer = Developer.find_by_gamer_id(gamer.id)
+      if developer == nil
+        flash[:notice] = "Email address is for gamer, not a developer"
       else
-        flash[:notice] = "Failed to complete registration: Please make sure you entered valid information."
-        render :action => 'new'
+        developer2 = Developer.find_by_gamer_id(current_gamer.id)
+        if developer == developer2
+          flash[:notice] = "You cant share the project with yourself"
+          redirect_to "/developers/projects/#{@project.id}/share"
+          return
+        end
+        if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
+          flash[:notice] = "Already shared"
+        else
+          developer.projects_shared << @project
+          if(developer.save)
+            flash[:notice] = "Project has been shared successfully with #{developer.name}"
+            redirect_to :action => "share",:controller => "projects", :id => params[:id]
+            return
+          else
+            flash[:notice] = "Failed to share project with developer"
+          end
+        end
       end
     end
+    redirect_to "/developers/projects/#{@project.id}/share"
   end
 end
 

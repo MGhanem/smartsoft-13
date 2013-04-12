@@ -1,61 +1,57 @@
-<div class = "container">
-  <style>
-  .radio{
-  display:float;
-}
-  </style>
-
-<%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
-
-      <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+ <div class = "container well" >
+    <table width="275" border="0">
+        <tr>
+            <td>
+    <%= form_for(@project) do |f| %>
+    <% if @project.errors.any? %>
+    <div id="error_explanation" class="req">
+        <h2><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
+        <ul>
+            <% @project.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+        </ul>
     </div>
-  <% end %>
-
-<!--   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <% end %>
+    <div class="field">
+        <!-- <span class="req">* </span> -->
+        <%= f.label t(:name)%>
+        <%= f.text_field :name, :placeholder => t(:name) %>
+    </div>
+    <div class="field">
+        <span class="req">* </span>
+        <%= f.label t(:categories)%>
+        <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %> 
+    </div><br>
+    <div class="radio">
+        <%= t(:formal)%>
+        <%= f.radio_button :formal, 'Formal'%> 
+        <br>
+        <%= t(:slang)%>
+        <%= f.radio_button :formal, 'Slang' %>
+        </br>
+    </br>
+    </div>
+    <div class="field">
+        <span class="req">* </span>
+        <%= t(:age)%>
+        <br>
+        <%= t(:from)%>
+        <%= f.text_field :minAge, :class => "input-small" %>
+        <%= t(:to)%>
+        <%= f.text_field :maxAge, :class => "input-small" %>
   </div>
- -->
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :categories %>
-    <%= f.text_field :categories %>
-  </div>
-  <div class="radio">
-   <%= f.radio_button :formal, 'Formal'%> 
-  <%= label :formal, 'Formal' %>
-  <%= f.radio_button :formal, 'Slang' %>
-  <%= label :slang, 'Slang' %>
   <br>
-  </div>
-  <div class="field">
-    <div class="field">Age Target</div>
-    <%= f.label "From" %>
-    <%= f.text_field :minAge %>
-    <%= f.label "To" %>
-    <%= f.text_field :maxAge %>
-  </div>
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-f
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <div>
+    <%= t(:desc) %>
+    <%= f.text_area :description, :size => "10x10" %>
+</div>
+<div>
+    <%= f.submit t(:edit_project), :class => "btn btn-success" %>
+</div>
+</div>
+</div>
 <% end %>
-
-
-
+</td>
+</tr>
+</table>
