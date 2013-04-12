@@ -1,5 +1,5 @@
 class DeveloperController < ApplicationController
- before_filter :authenticate_gamer!
+  before_filter :authenticate_gamer!
 # author:
 #   Khloud Khalid
 # description:
@@ -13,7 +13,7 @@ class DeveloperController < ApplicationController
   def new
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       flash[:notice] = t(:already_registered_developer)
-      render 'pages/home'
+      render "pages/home"
     else
       @developer = Developer.new
     end
@@ -31,7 +31,7 @@ class DeveloperController < ApplicationController
   def create
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       flash[:notice] = t(:already_registered_developer)
-      render 'pages/home'
+      render "pages/home"
     else
       @developer = Developer.new(params[:developer])
       @developer.gamer_id = current_gamer.id
@@ -39,10 +39,8 @@ class DeveloperController < ApplicationController
         redirect_to action: "choose_sub", controller: "my_subscription"
       else
         flash[:notice] = t(:failed_developer_registration)
-        render :action => 'new'
+        render action: "new"
       end
     end
   end
 end
-
-
