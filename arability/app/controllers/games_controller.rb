@@ -15,7 +15,7 @@ class GamesController < ApplicationController
   # 	--------- 
   def vote
   	name = params[:word]
-  	word = Keyword.where(:name => name).first
+  	word = Keyword.where(name: name).first
   	retrieved_synonym_list = word.retrieve_synonyms()[0]
   	list_length = retrieved_synonym_list.length
   	while list_length > 4 do
