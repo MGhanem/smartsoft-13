@@ -10,23 +10,20 @@ class GamesController < ApplicationController
   # 	word: takes a keyword name for which the synonym choices whill be displayed
   # success:
   # 	retrieve the approved synonym list limited to 4 only choosen randomly 
-  # 	if the approved synonyms for the keyword is more than 4
+  # 	if the approved synonyms for the keyword is more than 4, keyword object and the keyword name
+  #   
   # failure:
   # 	--------- 
   def vote
-  	name = params[:word]
-  	word = Keyword.where(:name => name).first
-  	retrieved_synonym_list = word.retrieve_synonyms()[0]
-  	list_length = retrieved_synonym_list.length
+  	@word = params[:word]
+  	@keyword = Keyword.where(:name => @word).first
+  	@synonym_list = @keyword.retrieve_synonyms()[0]
+  	list_length = @synonym_list.length
   	while list_length > 4 do
-        random_number = rand 0..list_length
-        retrieved_synonym_list.delete_at(random_number)
-        list_length = retrieved_synonym_list.length
+        random_number = rand 0..list_length - 1
+        @synonym_list.delete_at(random_number)
+        list_length = @synonym_list.length
     end
-    @word = name
-    @Keyword = word
-    @synonym_list = retrieved_synonym_list
-
   end
   
 
@@ -59,9 +56,10 @@ class GamesController < ApplicationController
   # 	returns 1 which means the the synonym_name is blank 
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
-  # def record_synonym
-  #   @record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) 
-  # 	@already_existing_synonym = Synonym.where(:name => params[:synonym_name],:keyword_id => params[:keyword_id]).first 
-  # end
+  def record_synonym
+    @record_output = current_gamer.suggest_synonym(params[:synonym_name], params[:keyword_id]) 
+  	@already_existing_synonym = Synonym.where(:name => params[:synonym_name],
+      :keyword_id => params[:keyword_id]).first 
+  end
   	
 end

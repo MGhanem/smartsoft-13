@@ -76,15 +76,17 @@ class Gamer < ActiveRecord::Base
     return self.trophies
   end
 
-
-  #This method is used to select a synonym 
-  #by a certain gamer
-  #Parameters:
-  #  synonym_id: the synonym ID that the gamer voted for
-  #Returns:
-  #  On success: returns true if selecting synonym is true, when 
-  #  Vote.record_vote returns true
-  #  On failure: returns false if no new vote was created 
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   invokes record_synonym method of the Vote class
+  # Params:
+  #   synonym_id: which is the synonym id of the synonym for which 
+  #               the gamer is voting.
+  # Success:
+  #   returns true when a vote is saved for the selected synonym
+  # Failure:
+  #   returns false when the vote is not saved
   def select_synonym(synonym_id)
     if Vote.record_vote(self.id,synonym_id)[0]
       return true
@@ -93,14 +95,17 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-      #This method is used to select a synonym 
-  #by a certain gamer
-  #Parameters:
-  #  synonym_id: the synonym ID that the gamer voted for
-  #Returns:
-  #  On success: returns true if selecting synonym is true, when 
-  #  Vote.record_vote returns true
-  #  On failure: returns false if no new vote was created 
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   invokes record_suggested_synonym method of the Synonym class
+  # Params:
+  #   synonym_name: which is the synonym name the gamer suggested in the  
+  #                 vote form.
+  # Success:
+  #   returns 0 returned by the invoked method meaning saved new synonym
+  # Failure:
+  #   returns 1,2,3 according to the invoked method failure scenario
   def suggest_synonym(synonym_name, keyword_id)
     return Synonym.record_suggested_synonym(synonym_name, keyword_id)
   end
