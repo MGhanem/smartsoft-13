@@ -7,6 +7,40 @@ class Synonym < ActiveRecord::Base
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => "ﺔﻴﺑﺮﻌﻟا ﺔﻐﻠﻟﺎﺑ ﺲﻴﻟ ﻰﻨﻌﻤﻟا اﺬﻫ"
 
+
+  # author:
+  #   kareem ali
+  # Description:
+  #   records a synonym for a specific keyword with approved = false by default
+  # Params:
+  #   synonym_name: the string name of the new synonym
+  #   keyword_id: the id of the keyword for which the synonym is suggested
+  #   approved: whether the syonnym is approved or not , by default is not approved 
+  # Success:
+  #   returns 0 when the synonym is saved
+  # Failure:
+  #   returns 1 when the synonym written by the gamer is blank
+  #   returns 2 when the synonym is already existing
+  #   returns 3 when the synonym is not saved because it didn't pass the arabic regex validation
+  def self.record_suggested_synonym(synonym_name, keyword_id, approved= false)
+    if synonym_name.blank?
+      return  1
+    elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
+      return  2
+    elsif Keyword.exists?(id: keyword_id)
+        new_synonym = Synonym.new
+        new_synonym.name = synonym_name
+        new_synonym.keyword_id = keyword_id
+        new_synonym.approved = approved
+        if new_synonym.save
+          return 0
+        else
+          return 3
+        end
+    end
+  end 
+
+
   class << self
     include StringHelper
     # author:
@@ -60,6 +94,7 @@ class Synonym < ActiveRecord::Base
           synonym.approved = true
           return synonym.save
         end
+        return false
       end
 
     # Author: 
@@ -89,31 +124,6 @@ class Synonym < ActiveRecord::Base
           .reverse!
         return synonym_list
       end
-
-  # author:
-  #   kareem ali
-  #  blanck => 1
-  #  synonyms exists => 2
-  #  synonym not saved in database => 3
-  #  synonym saved successfully => 0
-    def record_suggested_synonym(synonym_name, keyword_id, approved= false)
-      if synonym_name.blank?
-        return  1
-      elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
-        return  2
-      elsif Keyword.exists?(id: keyword_id)
-          new_synonym = Synonym.new
-          new_synonym.name = synonym_name
-          new_synonym.keyword_id = keyword_id
-          new_synonym.approved = approved
-          if new_synonym.save
-            return 0
-          else
-            return 3
-          end
-      else
-        return false
-      end
-    end 
+    
   end
 end

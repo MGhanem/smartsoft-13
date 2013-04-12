@@ -76,10 +76,19 @@
   font-size:25px;
 }
 
-#suggest_synonym_textbox{
-  text-align:right;
-  margin-left:20px;
-  font-size:21px;
+#suggest_synonym_textbox_arabic{
+  margin-right: 40px;
+}
+
+#suggest_synonym_button_arabic{
+  margin-right: 70px;
+  font-size: 21px;
+}
+
+
+#suggest_synonym_button_english{
+  margin-left: 70px;
+  font-size: 19px;
 }
 
 .zone {
@@ -193,15 +202,17 @@ margin-left: 80px;
 }
 
 #btn-restart{
-  width: 200px;
+  width: 160px;
   height: 29px;
-  margin-left: 30px;
+  margin-right: 40px;
+  line-height: 2;
 }
 
 #game-score{
   color: white;
   width: 220px;
   float: right;
+  text-align: left;
 }
 
 .award-title {
@@ -427,4 +438,40 @@ margin-left: 80px;
   width: 330px;
   margin-left:auto;
   margin-right: auto;
+}
+
+.text_english{
+  color: white;
+  font-size: 30px;
+}
+
+.text_arabic{
+  color:white;
+  font-size: 40px;
+  text-align: center;
+  
+}
+
+#keywordName{
+  font-weight:bold;
+  margin-right:100px;
+}
+
+#empty-db-msg{
+  width: 600px;
+  color: white;
+  margin-right: auto;
+  padding-top: 150px;
+  text-align: center;
+  font-family: h;
+  margin-left: auto;
+}
+
+#gameover-popup{
+  font-size: 2000%;
+  color: white;
+  position: absolute;
+  margin-top: 170px;
+  opacity: 1;
+  margin-right: 150px;
 }

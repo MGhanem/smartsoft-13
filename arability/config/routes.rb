@@ -25,7 +25,7 @@ Arability::Application.routes.draw do
  
     post "admin/login"
 
-		get "admin/import_csv"
+    get "admin/import_csv"
 
 
 
@@ -47,7 +47,7 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
+    get 'games/getnewwords'
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -57,15 +57,15 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
-			get "projects/remove_developer_from_project"
-  		match "projects/share/:id" => "projects#share"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  		get "projects/update"
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
       match '/my_subscriptions/pick' => "my_subscription#pick"
-			resources :projects
+      resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -92,7 +92,7 @@ end
 
       match "/" => "backend#home", :as => "backend_home"
 
-			get "projects/remove_developer_from_project"
+      get "projects/remove_developer_from_project"
 
       resources :projects
 
@@ -103,11 +103,11 @@ end
       match '/projects/add_word' => "projects#add_word"
       get "keywords/new"
 
-			get "projects/remove_developer_from_project"
-  		match "projects/share/:id" => "projects#share"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  		get "projects/update"
-			resources :projects
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
+      resources :projects
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 

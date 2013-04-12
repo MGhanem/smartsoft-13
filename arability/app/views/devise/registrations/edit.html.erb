@@ -13,7 +13,6 @@
   <div class="tab-content" style="width:1200px;">
     <div class="tab-pane active" id="tab1">
       <div class="well" style="width:1100px; height:480px">
-
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
   <% if resource.errors.any? %>
   <div class="alert"><%= devise_error_messages! %></div>
@@ -52,12 +51,6 @@
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
-
-  <div class="Twitter">
-    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
-    <%= link_to ">> Connect to your Twitter account", "/authentications/twitter" %>
-  </div>
-  <br>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
 
@@ -117,22 +110,22 @@
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
             <div><%= f.label t(:country), :class => "control-label" %>
-                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
-                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
+                    ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
+                    ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
+                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['اخري','others']]), {},
                 {:style => "margin-left: 10px;" }) %>
-                 </div></br>
+            </div></br>
+            <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']]),{}, :style => "margin-left: 10px;" ) %></div></br>
 
   <div><%= f.label t(:education_level), :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
-
-  <div class="Twitter">
-    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
-    <%= link_to ">> تواصل مع تويتر الخاص بك", "/authentications/twitter" %>
-  </div>
-  <br>
 
   <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
@@ -141,26 +134,51 @@
     </div>
     <div class="tab-pane" id="tab2">
       <div class="well" style="width:1100px; height:480px">
+
+        <div class="Facebook" style="width: 344px;margin-right: auto;margin-left: auto;">
         <% if !current_gamer.is_connected_to_facebook %>
-        <div class="amr" style="width: 344px;margin-right: auto;margin-left: auto;">
           <% if I18n.locale == :en %>
           <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
           <% else %>
           <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
           <% end %>
-          <span font='20' style="position:relative; padding:40px;top:40px"><%= t(:connect_to)%> <%= link_to t(:facebook), gamer_omniauth_authorize_path(:facebook) %></span>
-        </div>
+          <span font='20' style="position:relative; padding:40px;top:40px"><%= link_to t(:connect_to) + " " + t(:facebook), gamer_omniauth_authorize_path(:facebook) %></span>
         <% else %>
-        <div class="amr" style="width: 344px;margin-right: auto;margin-left: auto;">
           <% if I18n.locale == :en %>
           <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
           <% else %>
           <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
           <% end %>
-          <span font='20' style="position:relative; padding:40px;top:40px"><%= t(:disconnect_from)%> <%= link_to t(:facebook), "/games/disconnect_facebook" %></span>
+          <span font='20' style="position:relative; padding:40px;top:40px"> <%= link_to t(:disconnect_from) + " " + t(:facebook), "/games/disconnect_facebook" %></span>
+          <% end %>
         </div>
+        <br><br><br><br><br><br><br>
         <% end %>
-        <% end %>
+        <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
+          <% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
+          <% if I18n.locale==:en %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+            already connected to Twitter!</h5>
+          <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
+          <% else I18n.locale==:ar %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+          التواصل بالفعل موجود!</h5>
+          <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
+          <% end %>
+          <% else %>
+          <% if I18n.locale==:en %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
+          <span font='20' style="position:relative; padding:40px;">
+            <%= link_to "Connect to twitter", "/auth/twitter" %>
+          </span>        
+          <% else I18n.locale==:ar %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
+          <span font='20' style="position:relative; padding:40px;">
+            <%= link_to "تواصل مع تويتر", "/auth/twitter" %>
+          </span>
+          <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

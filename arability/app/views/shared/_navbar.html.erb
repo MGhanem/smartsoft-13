@@ -35,11 +35,11 @@
       <% else %>
         <li><%= link_to t(:backend), backend_home_path %></li>
         <% if I18n.locale==:en %>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
+        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <% else I18n.locale==:ar %>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>تعئيير البيانات</a></li>
+        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
         <% end %>
 
       <% end %>
