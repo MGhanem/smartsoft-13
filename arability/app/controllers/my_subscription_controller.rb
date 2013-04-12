@@ -71,22 +71,40 @@ class MySubscriptionController < ApplicationController
     end  
   end
 
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  gets all the subscription models available and finds the the current 
+  #  developer by the gamer id
+  # Params:
+  #  none
+  # success:
+  #  all subscription models are listed
+  # Failure:
+  #  subscription models are not listed
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
-    @developer = Developer.find_by_gamer_id(current_gamer.id)
-    # @developer = Developer.first#for testing
+    @developer = Developer.find_by_gamer_id(current_gamer.id) 
   end
+
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  allows the current developer to choose his subscription model 
+  #  and the limits are added to his my subscription
+  # success:
+  #  the developer can choose his subscription model successfully
+  # Failure:
+  #  payment issues
 
   def pick
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id)
-    # @developer = Developer.first#for testing
     sub_id = params[:my_subscription]
     dev_id = @developer.id
-  
     if MySubscription.choose(dev_id,sub_id)
       flash[:notice] = "You have successfully chosen your subscription model"
-        redirect_to root_url
+      redirect_to root_url
     else
       flash[:notice] = "Please choose your subscription model"
       render 'my_subscription/choose_sub'

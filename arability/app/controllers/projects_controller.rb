@@ -1,31 +1,10 @@
-class ProjectsController < BackendController 
-  include ApplicationHelper
-  before_filter :authenticate_gamer!
-  before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, :only => [:show, :add_from_csv_keywords, :choose_keywords, :import_csv]
-
- # author:Noha hesham
- # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the 
- #   project is successfully deleted 
- # failure:
- #   project is not deleted
-  def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
-    end
-  end
-
+# encoding: UTF-8
+class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
+  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
 
   # author: 
   #    Mohamed Tamer
@@ -44,7 +23,7 @@ class ProjectsController < BackendController
         @my_projects = Project.where(:owner_id => developer.id)
         @shared_projects = developer.projects_shared
       else
-        flash[:notice] = t(:projects_index_error1)
+        flash[:notice] = "من فضلك سجل كمطور"
         redirect_to developers_new_path
       end
     else
@@ -205,7 +184,7 @@ end
       end
       words_synonyms_array.each do |word_syn|
         if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-          # MySubscription.decrement_word_search()
+          MySubscription.decrement_word_search()
         end
       end
     end
@@ -339,7 +318,6 @@ end
       end
     end
   end
-  
   # Author:
   #   Mohamed Tamer
   # Description: 
@@ -353,6 +331,7 @@ end
   def import_csv
     current_project = Project.find(params[:id])
   end
+
 # author:
 #      Khloud Khalid
 # description:

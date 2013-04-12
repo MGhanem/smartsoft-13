@@ -10,9 +10,8 @@
 <table>
 		<tr>
 <% @all_subscription_models.each do |sm| %>
-	<%#= radio_button_tag "subs", sm.id, %>
 	<%if(@developer.my_subscription)
-		selected_sub_id = @developer.my_subscription.subscription_models_id
+		selected_sub_id = @developer.my_subscription.subscription_model_id
 	else
 		selected_sub_id = 1
 	end%>

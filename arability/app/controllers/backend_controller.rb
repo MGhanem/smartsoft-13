@@ -3,6 +3,7 @@ class BackendController < ApplicationController
   def home
     redirect_to projects_path
   end
+  
   def authenticate_developer!
     developer = Developer.where(:gamer_id => current_gamer.id).first
   	if developer == nil
