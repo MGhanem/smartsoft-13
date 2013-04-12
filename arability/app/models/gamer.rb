@@ -44,6 +44,19 @@ class Gamer < ActiveRecord::Base
     end
   end
 
+  # Description:
+  #   Takes in a prize id and adds it the gamers prizes array
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   prize_id
+  # returns:
+  #   success:
+  #     returns true validating that the gamer has received
+  #     this trophy_id
+  #   failure:
+  #     returns false validating that the gamer has either
+  #     failed to get rewarded this prize
   def receive_prize(prize_id)
     prize = Prize.find(prize_id)
     
@@ -59,10 +72,32 @@ class Gamer < ActiveRecord::Base
     end
   end
   
+  # Description:
+  #   returns a list of the gamers won prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer has won
+  #   failure:
+  #     no failure
   def get_won_prizes
     return self.prizes
   end
 
+  # Description:
+  #   returns a list of the gamers prizes
+  # Author:
+  #   Adam Ghanem
+  # @params:
+  #   none
+  # returns:
+  #   success:
+  #     an array of the prizes that the gamer can win
+  #   failure:
+  #     no failure
   def get_available_prizes
     return Prize.all - self.prizes
   end
