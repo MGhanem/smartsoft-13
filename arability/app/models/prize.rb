@@ -35,10 +35,13 @@ class Prize < ActiveRecord::Base
     #     no failure
     def self.get_new_prizes_for_gamer(gamer_id, score, level)
       prizes_for_score = []
-      prizes_gamer = Gamer.find(gamer_id).prizes
+      gamer = Gamer.find(gamer_id)
+      prizes_gamer = gamer.prizes
       prizes_of_level = Prize.where(:level => level)
       new_prizes = prizes_of_level - prizes_gamer
-      new_prizes.map { |nt| prizes_for_score << nt if nt.score <= score }
+      new_prizes.map { |np| prizes_for_score << np if np.score <= score }
+      prizes_for_score.map { |p| gamer.prizes << p }
+      gamer.save
       return prizes_for_score
     end
 

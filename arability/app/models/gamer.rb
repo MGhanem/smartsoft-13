@@ -88,14 +88,14 @@ class Gamer < ActiveRecord::Base
 
 
   # Description:
-  #   returns a list of prizes that the gamer can win
+  #   returns a list of the gamers prizes
   # Author:
   #   Adam Ghanem
   # @params:
   #   none
   # returns:
   #   success:
-  #     an array of the prizes that the gamer can win
+  #     an array of the prizes that the gamer has won
   #   failure:
   #     no failure
   def get_available_prizes
