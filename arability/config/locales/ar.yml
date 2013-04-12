@@ -19,6 +19,9 @@ ar:
   keyword_in_wrong_format: "!ﻳﺠﺐ اﻥ ﺗﺤﺘﻮﻱ اﻟﻜﻠﻤﺔ ﻋﻠﻲ اﻷﺣﺮﻑ اﻹﻧﺠﻠﻴﺰﻳﺔ ﺃﻭ اﻟﻌﺮﺑﻴﺔ ﻓﻘﻂ"
   keyword_suggest_add: "ﻻ ﺗﻮﺟﺪ اﻟﻜﻠﻤﻪ ﻓﻲ ﻗﺎﻋﺪﺓ ﺑﻴﺎﻧﺎﺕ ﻋﺮﺑﻴﻠﻴﺘﻲ؟ ﻫﻞ ﺗﻮﺩ اﻻﺿﺎﻓﻪ؟"
   click_here: "اﺿﻐﻂ ﻫﻨﺎ"
+  view_collectives: "عرض الإحصائيات الجماعية للكلمة "
+  view_stats: "الإحصائيات"
+  add_to_project: "اضف لمشروعك"
   no_followed_words: "لا توجد كلمات متابعة."
   unfollow_keyword_alert: "لقد تم إلغاء متابعة هذه الكلمة:"
   follow_keyword_alert: "لقد تم متابعة هذه الكلمة:"
@@ -56,11 +59,12 @@ ar:
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
   votes: "صوت"
-  filter: "تصفية النتائج"
+  filter: "تصفية الاصوات"
   country: "البلد"
   age_from: "السن من"
-  age_to: "السن الي"
+  age_to: "الي"
   gender: "النوع"
+  education: "التعليم"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
   no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
@@ -69,7 +73,7 @@ ar:
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-
+  register_developer: "من فضلك سجل كمطور أولا"
   errors:
     messages:
       not_saved:
@@ -93,6 +97,18 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+        keyword:
+          attributes:
+            name:
+              blank: "برجاء إدخال كلمة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه الكلمة موجودة بالفعل"
+        category:
+          attributes:
+            name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
 
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
@@ -101,3 +117,13 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  hide_stats: "اخفاء الإحصائيات"
+  female: "انثي"
+  male: "ذكر"
+  out_of: "من"
+  keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
+  enter_categories: "ﺎﻠﺘﺼﻔﻳﺓ ﺢﺴﺑ ﺎﻠﻔﺋﺎﺗ"
+  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
+  synonyms_of: "مرادفات كلمة"
+  age_range: "(من فضلك ادخل رقم من 10 الي 100)"
+  enter_keyword: "أدخل كلمة"
