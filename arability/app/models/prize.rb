@@ -45,7 +45,6 @@ class Prize < ActiveRecord::Base
                                     :content_type => /^image\/(png|gif|jpeg)/,
                                     message: "الصورة يجب ان تكون بصيغة png, gif او jpeg"
 
-  class << self
     
     # author:
     #     Karim ElNaggar
@@ -60,7 +59,7 @@ class Prize < ActiveRecord::Base
     #     returns true and the new prize if it is added to the database
     # failure: 
     #     returns false and the prize if it is not added to the database
-    def add_prize_to_database(name, level, score, image)
+    def self.add_prize_to_database(name, level, score, image)
       new_prize = Prize.new(name: name, level: level, score: score, image: image)
       if new_prize.save
         return true, new_prize
@@ -69,5 +68,4 @@ class Prize < ActiveRecord::Base
       end
     end
 
-  end
 end
