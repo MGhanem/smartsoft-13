@@ -207,11 +207,11 @@ class Gamer < ActiveRecord::Base
   # Author:
   #   Amr Abdelraouf
   # Description:
-  #   Return's the user's facebook access token
+  #   Returns the user's facebook access token
   # Params:
   #   None
   # Success:
-  #   Return's the user's access token
+  #   Returns the user's access token
   # Failure:
   #   None
   def get_token
