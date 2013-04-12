@@ -1,8 +1,8 @@
 class MySubscription < ActiveRecord::Base
   belongs_to :subscription_model
-  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_models_id
+  attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
-  validates :subscription_models_id, :presence => true
+  validates :subscription_model_id, :presence => true
 
   @@search=1
   @@add=2
