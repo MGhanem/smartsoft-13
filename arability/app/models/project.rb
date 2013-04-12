@@ -13,19 +13,18 @@ class Project < ActiveRecord::Base
   validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100 }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
   
-# author:
-#      Salma Farag
-# description:
-#      Takes the params of the project entered by the developer and creates a project compares
-#it to the already existing categories and returns the project
-# params:
-#     :project
-# success:
-#     Creates and returns a project after splitting the csv categories string and creating
-#new categories and inserting them into the project categories array
-# failure:
-#     None
-
+# Author:
+#   Salma Farag
+# Description:
+#   Takes the params of the project entered by the developer and creates a project compares
+#   it to the already existing categories and returns the project
+# Params:
+#   :project
+# Success:
+#   Creates and returns a project after splitting the csv categories string and creating
+#   new categories and inserting them into the project categories array
+# Failure:
+#   None
 def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
   project.owner_id = developer_id
@@ -33,17 +32,17 @@ def self.createproject(params,developer_id)
   return project
 end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that takes categories in the form of csv and saves them in an array
-  #then loops on it and creates an a new category each time.
-  # params:
-  #     Category names in the form of csv.
-  # success:
-  #     Categories will be created.
-  # failure:
-  #     none
+  # Author:
+  #    Salma Farag
+  # Description:
+  #   A method that takes categories in the form of csv and saves them in an array
+  #   then loops on it and creates an a new category each time.
+  # Params:
+  #   Category names in the form of csv.
+  # Success:
+  #   Categories will be created.
+  # Failure:
+  #   None
 def self.createcategories(project,categories)
   array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
@@ -55,17 +54,17 @@ def self.createcategories(project,categories)
   return project
 end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that takes an array of categories, maps their names into an array and joins
-  #the array using commas.
-  # params:
-  #     Array of categories.
-  # success:
-  #     Returns a string of category names.
-  # failure:
-  #     None
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   A method that takes an array of categories, maps their names into an array and joins
+  #   the array using commas.
+  # Params:
+  #   Array of categories.
+  # Success:
+  #   Returns a string of category names.
+  # Failure:
+  #   None
 def self.printarray(array)
   t = array.map {|item| item.name}
   t = t.join(", ")

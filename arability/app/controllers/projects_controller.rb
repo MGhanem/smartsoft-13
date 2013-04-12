@@ -31,19 +31,18 @@ class ProjectsController < BackendController
     end
   end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     After checking that the user is signed in, the method that calls method createproject
-  #that creates the project and redirects to the project page and prints
-  #an error if the data entered is invalid.
-  # params:
-  #     none
-  # success:
-  #     Creates a new project and views it in the index page
-  # failure:
-  #     Gives status errors
-
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After checking that the user is signed in, the method that calls method createproject
+  #   that creates the project and redirects to the project page and prints
+  #   an error if the data entered is invalid.
+  # Params:
+  #   None
+  # Success:
+  #   Creates a new project and views it in the index page
+  # Failure:
+  #   Gives status errors
   def create
     if developer_signed_in?
       @project = Project.createproject(params[:project],current_developer.id)
@@ -63,17 +62,17 @@ class ProjectsController < BackendController
    end
  end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that views the form that  instantiates an empty project object
-  # after checking that the user is signed in.
-  # params:
-  #     none
-  # success:
-  #     An empty project will be instantiated
-  # failure:
-  #     none
+  # Author:
+  #    Salma Farag
+  # Description:
+  #   A method that views the form that  instantiates an empty project object
+  #   after checking that the user is signed in.
+  # Params:
+  #   None
+  # Success:
+  #   An empty project will be instantiated
+  # Failure:
+  #   None
   def new
     if developer_signed_in?
       @project = Project.new
@@ -92,16 +91,16 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
   end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that specifies an already existing project by its ID
-  # params:
-  #     none
-  # success:
-  #     A form that contains the existing data of the project will open from the views.
-  # failure:
-  #     none
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   A method that specifies an already existing project by its ID
+  # Params:
+  #   None
+  # Success:
+  #   A form that contains the existing data of the project will open from the views.
+  # Failure:
+  #   None
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
@@ -111,17 +110,17 @@ class ProjectsController < BackendController
     end
   end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that checks if the fields of the form editting the project have been changed.
-  #If yes, the new values will replace the old ones otherwise nothing will happen.
-  # params:
-  #     none
-  # success:
-  #     An existing project will be updated.
-  # failure:
-  #     The old values will be kept.
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   A method that checks if the fields of the form editting the project have been changed.
+  #   If yes, the new values will replace the old ones otherwise nothing will happen.
+  # Params:
+  #   None
+  # Success:
+  #   An existing project will be updated.
+  # Failure:
+  #   The old values will be kept.
   def update
     if developer_signed_in?
       @project = Project.find(params[:id])
@@ -158,18 +157,18 @@ end
   end
 end
 
- # author:
-  #      Salma Farag
-  # description:
-  #     A method that finds the projects of the current developer and then checks for a certain project
-  #and finds the words and synonyms of this project then inserts each into an array then redirects to the
-  #projects index.
-  # params:
-  #     none
-  # success:
-  #     An project will be showed with its words and synonyms.
-  # failure:
-  #     None.
+  # Author:
+  #    Salma Farag
+  # Description:
+  #   A method that finds the projects of the current developer and then checks for a certain project
+  #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
+  #   projects index.
+  # Params:
+  #   None
+  # Success:
+  #   An project will be showed with its words and synonyms.
+  # Failure:
+  #   None.
 def show
   @projects = Project.where(:owner_id => current_developer.id)
   @project = Project.find(params[:id])

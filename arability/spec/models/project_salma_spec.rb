@@ -1,12 +1,7 @@
 #encoding: UTF-8
 require 'spec_helper'
 
-describe Create do
-	it "is invalid without a name"
-	it "is invalid without a min age"
-	it "is invalid without a max age"
-	it "is invalid without a min age"
-
+describe "Create_Project" do
 	let (:gamer) {
 		gamer = Gamer.new
         gamer.username = "Nourhan"
@@ -21,12 +16,25 @@ describe Create do
 }
 	let (:developer) {
 		developer = Developer.new
-        developer.firstname = "Nourhan"
-        developer.lastname = "Mohamed"
+        developer.first_name = "Nourhan"
+        developer.last_name = "Mohamed"
         developer.verified = "1"
         developer.gamer_id = gamer.id
         developer.save
         developer
     }
+    it "should return a new project after setting owner_id and calling createcategories" do
+    	result = Project.createproject({:name => "Project1", :minAge => "20", :maxAge => "40",
+            :formal => "formal", :description => "da da da", :categories => "Cat1, Cat2, Cat3"}, developer.id)
+        var = Project.exists?(result.id)
+        expect(var).to eq(true)
+    end
 
+    it "should return a new project after creating categories and setting owner_id" do
+        result = Project.createcategories({:name => "Project1", :minAge => "20", :maxAge => "40",
+            :formal => "formal", :description => "da da da", :categories => ["Cat1", "Cat2", "Cat3"},
+             "Cat1, Cat2, Cat3")
+        result.should be_instance_of(Project)
+
+    end
 end
