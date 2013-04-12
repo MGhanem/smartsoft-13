@@ -96,7 +96,6 @@
     if(cache == "") {
       cache = document.getElementById("zone").innerHTML;
     }
-    nav_locked = true;
     clear();
     $.get("/games/showprizes");
   }
@@ -108,7 +107,6 @@
     if(cache == "") {
       cache = document.getElementById("zone").innerHTML;
     }
-    nav_locked = true;
     clear();
     $.get("/games/showtrophies");
   }
