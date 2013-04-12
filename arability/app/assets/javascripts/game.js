@@ -531,6 +531,7 @@ function fadeSomething(x){
 					}
 				}
 				if(win == true){
+					enableNav();
 					buttonArray = [];
 					removeAblockCont();
 					gameOver = true;
@@ -692,6 +693,7 @@ function clearWord(){
 //   there is no next level, then the user will be promted that he has finished all the levels.
 
 function nextLevel(){
+	disableNav();
 	level++;
 	fallingTime = fallingTime - 15;
 	waitTime = waitTime - 70;
@@ -972,6 +974,7 @@ if(level == 6){
 //   none.
 
 function setLang(l){
+	disableNav();
 	$('.zone').empty();
 	$(".zone").slideUp(1000);
 	$(".zone").slideDown(1000);
@@ -1004,6 +1007,7 @@ function calculateScore(){
 
 function loseGame(t){
 	if(t > dimension - 1){
+		enableNav();
 		gameOver = true;
 		win = false;
 		buttonArray = [];
