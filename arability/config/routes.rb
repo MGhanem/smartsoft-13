@@ -70,11 +70,19 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
+<<<<<<< HEAD
       get "projects/remove_developer_from_project"
       match "projects/share/:id" => "projects#share"
       match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
       get "projects/update"
       resources :projects
+=======
+			get "projects/remove_developer_from_project"
+  		match "projects/share/:id" => "projects#share"
+  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+  		get "projects/update"
+			resources :projects
+>>>>>>> d7206fc2eeff7857635cf64e71f8d503fefcf787
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -105,8 +113,13 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
     end
   end
+<<<<<<< HEAD
 
     get "games/getprizes"
     get "games/showprizes"
@@ -170,6 +183,8 @@ Arability::Application.routes.draw do
     post "games/record_synonym"
 
 
+=======
+>>>>>>> d7206fc2eeff7857635cf64e71f8d503fefcf787
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
