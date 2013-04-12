@@ -82,3 +82,8 @@ gem 'omniauth-twitter'
 gem 'certified'
 
 gem 'koala'
+
+
+
+
+gem 'jasmine'

@@ -1037,3 +1037,140 @@ function loseGame(t){
 	}
 
 }
+// stops here
+ var words;
+  var cache = "";
+  var nav_locked = false;
+
+  function setWordsArray(){
+    for(var x=0; x < successfulWords.length;x++){
+      successfulWords[x]=successfulWords[x].toLowerCase();
+    }
+    words=successfulWords;
+  }
+
+  
+  function getScoreOnly(score) {
+    clear();
+    $.get("/games/get_score_only?score=" + score);
+  }
+  
+  function get_words(){
+    return words;
+  }
+
+  function check_empty_words(){
+    if(words.length == 0){
+        if(win == true){
+         getTrophies(level, score);
+      }
+      else{
+        getScoreOnly(score);
+      }
+      return true;
+    }else{
+      return false;
+    }
+  } 
+
+  function have_to_sign_in(){
+    //alert(successfulWords);
+    $.post("/games/vote_errors.js");
+  }
+
+  function display_error_sign_in(locale){
+    $('.zone').empty();
+    //$('#workspace').remove();
+    if(locale == "english"){
+      $('.zone').append('<div class=\"vote_form\" style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;">' +
+        '<p>You have to be signed in to display vote form</p></div>');
+    }
+    if(locale == "arabic"){
+      $('.zone').append('<div class=\"vote_form\"style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;" >' +
+        '<p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
+    }
+  }
+
+  function request_vote_form(){
+    //alert("from vote form");
+    $('.zone').empty();
+    //$('#workspace').remove();
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
+    if(check_empty_words()){
+      //alert('empty');
+      return;
+    }
+    else{
+      var first_word = words.shift();
+      $.post("/games/vote.js", { word: first_word});
+    }
+  }
+
+    function clear() {
+    $("#zone").empty();
+  }
+
+  function getTrophies(level, score) {
+    clear();
+    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
+    clear();
+    $.get("/games/showprizes");
+  }
+
+  function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    nav_locked = true;
+    clear();
+    $.get("/games/showtrophies");
+  }
+
+
+
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    var lists = $("[id*='navItems']");
+    lists.addClass("disabled");
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    var lists = $("[id*='navItems']");
+    lists.removeClass("disabled");
+    nav_locked = false;
+  }
