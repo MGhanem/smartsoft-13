@@ -19,8 +19,8 @@ class Authentication < ActiveRecord::Base
     create! do |authentication|
       authentication.provider = auth["provider"]
       authentication.gid = auth["uid"]
-      authentication.token = auth['credentials']['token']
-      authentication.token_secret = auth['credentials']['secret']
+      authentication.token = auth["credentials"]["token"]
+      authentication.token_secret = auth["credentials"]["secret"]
       authentication.gamer_id = current_gamer.id
     end
   end

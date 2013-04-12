@@ -16,16 +16,16 @@ describe "create authentication to Twitter for current_gamer" do
   }
   it "should create a new record for Twitter authentication in database for current_gamer" do
     auth =
-      {:provider => "twitter",
-       :uid      => "1234",
-       :info   => {:name       => "John Doe",
-                   :email      => "johndoe@email.com"},
-       :credentials => {"token" => "testtoken234tsdf",
+      {"provider" => "twitter",
+       "uid"      => "1234",
+       "info"   => {"name"       => "John Doe",
+                    "email"      => "johndoe@email.com"},
+       "credentials" => {"token" => "testtoken234tsdf",
                         "secret" => "tokensecrettest"}}
     k1 = Authentication.exists?(gamer_id: current_gamer.id)
     expect(k1).to eq(false)
     record = Authentication.create_with_omniauth(auth, current_gamer)
     k2 = Authentication.exists?(record.id)
-    expect(k1).to eq(true)
+    expect(k2).to eq(true)
   end
 end
