@@ -78,6 +78,7 @@ class Synonym < ActiveRecord::Base
     def find_by_name(synonym_name, keyword_id)
       word = Keyword.find(keyword_id)
       synonym = Synonym.where("name = ? AND keyword_id = ?", synonym_name, keyword_id).first
+    end
 
 
   def get_visual_stats_country(synonym_id)

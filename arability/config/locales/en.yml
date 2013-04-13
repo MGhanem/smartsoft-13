@@ -8,11 +8,8 @@ en:
   email: "Email"
   password: "Password"
   english: "English"
-<<<<<<< HEAD
   arabic: "Arabic"
-=======
   arabic: "العربية"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   search: "Search Keywords"
   search_here: "search keywords here"
   keyword_add_success: "Keyword added to our database successfully"
@@ -49,10 +46,6 @@ en:
   unfollow: "Unfollow"
   select subscription: "Select Subscription"
   backend: "Developers"
-<<<<<<< HEAD
-
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   project: "Project"
   my_projects: "My Projects"
   required: "The fields marked with * are required"
@@ -69,20 +62,16 @@ en:
   new_project: "New Project"
   back: "Back"
   edit_project: "Edit Project"
-<<<<<<< HEAD
   create_project: "Create Project"
   save_project: "Save Project"
   click_here: "Click here"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
   add_to_project: "Add to project"
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   votes: "votes"
   age_from: "Age from:"
   age_to: "Age to:"
   gender: "Gender"
-<<<<<<< HEAD
   error: "error"
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
@@ -92,9 +81,6 @@ en:
        flash_messages:
          project_was_successfully_created: 'Project was successfully created.'
          project_was_successfully_updated: 'Project was successfully updated.'
-
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   import: "Import"
   export: "Export"
   add_words: "Add words"
@@ -118,7 +104,6 @@ en:
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
   stats_no_votes: "Sorry! this synonym has no votes yet!"
-<<<<<<< HEAD
   controller:
    subscription:
      messages_errors:
@@ -222,7 +207,6 @@ en:
       developer:
         first_name: "First Name"
         last_name: "Last Name"
-=======
   connect_to: "Connect to"
   disconnect_from: "Disconnect from"
   facebook: "facebook"
@@ -299,4 +283,3 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453

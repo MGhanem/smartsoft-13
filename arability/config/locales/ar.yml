@@ -31,10 +31,7 @@ ar:
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
-<<<<<<< HEAD
   formality: "النوع"
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   formal: "رسمي"
   slang: "غير رسمي"
   age: "السن"
@@ -57,22 +54,16 @@ ar:
   meaning: "المعنى"
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
-<<<<<<< HEAD
   view_collectives: "عرض الإحصائيات الجماعية للكلمة "
   view_stats: "الإحصائيات"
   add_to_project: "اضف لمشروعك"
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   votes: "صوت"
   filter: "تصفية الاصوات"
   country: "البلد"
   age_from: "السن من"
   age_to: "الي"
   gender: "النوع"
-<<<<<<< HEAD
-=======
   education: "التعليم"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
   no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
@@ -154,7 +145,6 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-<<<<<<< HEAD
               before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
   views:
     project:
@@ -172,8 +162,6 @@ ar:
          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
          developer_unshared: 'مت عدم مشاركة المشروع'
          cant_share_the_project: 'لا يمكن مشاركة المشروع'
-=======
-              before_or_equal_to: "يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
         keyword:
           attributes:
             name:
@@ -186,7 +174,6 @@ ar:
               blank: "برجاء إدخال فئة"
               invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
               taken: "هذه فئة موجودة بالفعل"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -194,7 +181,6 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
-<<<<<<< HEAD
   controller:
    subscription:
      messages_errors:
@@ -242,7 +228,6 @@ ar:
         first_name: "الاسم الاول"
         last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
-=======
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
   facebook: "فيسبوك"
@@ -296,4 +281,6 @@ ar:
   trophies_not_won: "الانجازات التي يمكنك الحصول عليها"
   level: "المرحلة"
   score: "النقاط"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
+  search: "بحث"
+  search_here: "ابحث هنا"
+  keyword_added: "لقد تم تسجيل %{keyword} بنجاح"

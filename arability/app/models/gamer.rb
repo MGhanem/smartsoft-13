@@ -10,15 +10,15 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-  devise :database_authenticatable, :registerable,
+   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:google_oauth2],
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook],
+         :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :provider, :gid, :gprovider, :provider, :uid, :highest_score
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender
 
   has_many :services, :dependent => :destroy
 

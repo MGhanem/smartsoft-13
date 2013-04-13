@@ -11,7 +11,7 @@
           <button class="btn">
             <i class="icon-plus-sign">
             </i> 
-            <%= link_to t(:Add_words), {action: "search", controller: "search", project_id: @project.id}, {style:"color:#000000", class: "css_class"} %> 
+            <a href="/developers/search_keywords/?project_id=<%= @project.id %>" class="css_class" style="color:#000"><%= t(:Add_words)%></a>
             <span>
             </span>
           </button>

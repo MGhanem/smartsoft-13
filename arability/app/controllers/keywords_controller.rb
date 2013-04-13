@@ -24,7 +24,7 @@ class KeywordsController < BackendController
     is_english = params[:keyword][:is_english]
     success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
     if success
-      flash = { :success => "Keyword #{@keyword.name} has been created" }
+      flash = { :success => t(:keyword_added, keyword: @keyword.name) }
       redirect_to redirect_url, :flash => flash
     else
       flash = { :error => @keyword.errors.messages[:name] }

@@ -8,6 +8,35 @@ class MySubscription < ActiveRecord::Base
   @@add=2
   @@follow=3
 
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  it finds the chosen subscription model by the developer 
+  #  and sets the limits in the subscription model
+  #  to the developers my subscription
+  # success:
+  #  the limits are set in the my subscription of the developer
+  # failure:
+  #  the limits are not put in the my subscription of the developer
+  def self.choose(dev_id,sub_id)
+      submodel = SubscriptionModel.find(sub_id)
+      my_sub = MySubscription.where(:developer_id => dev_id).first
+      if(my_sub == nil)
+        my_sub = MySubscription.new
+      end
+      my_sub.developer_id = dev_id
+      my_sub.word_search=submodel.limit_search
+      my_sub.word_add=submodel.limit
+      my_sub.word_follow=submodel.limit_follow
+      my_sub.project=submodel.limit_project
+      my_sub.subscription_model_id = submodel.id
+      if my_sub.save
+        return true
+      else 
+        return false
+      end 
+    end
+
   class << self
     # author:Noha hesham
     # Description:
@@ -70,25 +99,7 @@ class MySubscription < ActiveRecord::Base
     #  the limits are set in the my subscription of the developer
     # failure:
     #  the limits are not put in the my subscription of the developer
-    def self.choose(dev_id,sub_id)
-      submodel = SubscriptionModel.find(sub_id)
-      my_sub = MySubscription.where(:developer_id => dev_id).first
-      if(my_sub == nil)
-        my_sub = MySubscription.new
-      end
-      my_sub.developer_id = dev_id
-      my_sub.word_search=submodel.limit_search
-      my_sub.word_add=submodel.limit
-      my_sub.word_follow=submodel.limit_follow
-      my_sub.project=submodel.limit_project
-      my_sub.subscription_model_id = submodel.id
-      if my_sub.save!
-        return true
-      else 
-        return false
-      end 
-    end
-
+    
     # Author:
     #  Noha Hesham
     # Description:

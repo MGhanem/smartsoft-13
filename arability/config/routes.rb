@@ -1,313 +1,94 @@
 Arability::Application.routes.draw do
-<<<<<<< HEAD
-  root :to => 'pages#home'  
-
-  scope "(:locale)", :locale => /en|ar/ do
-
-    #here only two languages are accepted: english and arabic
-=======
 
   root :to => 'pages#home'
-  
- # devise_for :gamers
-
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
-
-    # required for routing by the devise module(gem)
-    devise_for :gamers, :controllers => { :omniauth_callbacks => "gamers/omniauth_callbacks" } do
-       get 'gamers/sign_in', :to => 'devise/sessions#new', :as => :new_gamer_session
-       get 'gamers/sign_out', :to => 'devise/sessions#destroy', :as => :destroy_gamer_session
-    end
-
     get "admin/index"
-  get "admin/login"
-
-
-
-
     get "admin/login"
     get "admin/logout"
+    post "admin/wordadd"
+    get "admin/import_csv"
+    post "admin/upload"
+    post "admin/add_trophy"
+    post "admin/add_prize"
+    get "admin/delete_trophy"
+    get "admin/delete_prize"
 
     # required for routing by the devise module(gem)
     devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     devise_for :gamers
-    devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
-
-  
-<<<<<<< HEAD
-    post "admin/login"
-
-    get "admin/import_csv"
-=======
-    post "admin/wordadd"
- 
-    post "admin/login"
-
-    get "admin/import_csv"
-
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
-
-    post "admin/upload"
-
-  get "admin/logout"
-
-  post "admin/add_word"
-
-  post "admin/upload"
-
-  post "admin/add_trophy"
-
-  post "admin/add_prize"
-
-  get "admin/delete_trophy"
-  
-  get "admin/delete_prize"
-
-    #here only two languages are accepted: english and arabic
+    devise_for :gamers do 
+      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+    end
 
     match '/game' => 'games#game'
-
     post "games/vote" 
-
     post "games/record_vote"
-
     get 'games/getnewwords'
-
-<<<<<<< HEAD
     get "games/getprizes"
-
     post "games/vote_errors"
-
     post "games/record_synonym"
+    get 'games/gettrophies'
+    get 'games/getnewwords'
+    get "games/showprizes"
+    get "games/get_score_only"
+    post "games/record_synonym"
+    get "/games/halloffame"
 
-=======
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
-    # required for routing by the devise module(gem)
-    devise_for :gamers do
-       get '/gamers/sign_out' => 'devise/sessions#destroy'
-    end
+    match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
+    get "/games/disconnect_facebook"
+    match '/authentications/facebook_connect' => 'authentications#facebook_connect'
+    match '/authentications/twitter' => 'authentications#twitter'
+    get "authentications/twitter"
+    get "authentications/remove_twitter_connection"
+    match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
+    match '/tweet/tweet_score' => "tweet#tweet_score"
+    match '/auth/failure', :to => 'authentications#twitter'
+    get "authentications/twitter_hall_of_fame"
+    match "/post_score"=>'games#post', :as => "post_facebook"
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
-<<<<<<< HEAD
-      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project", :via => :get
-      #get "projects/remove_developer_from_project"
-      
-      
-
-      #puts "developers/projects/share_project_with_developer"
-      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
-      
-      get "projects/update"
-
-      match '/my_subscriptions/pick' => "my_subscription#pick"
-      match '/projects/:project_id/add_word' => "projects#add_word", :as => "projects_add_word"
-      match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
-      match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export"
-      resources :projects
-      match "projects/:id/share" => "projects#share", :as => "share_project"
-
-			get "projects/remove_developer_from_project"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-
-      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
-  		
-      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
-
-      match '/projects/:id/edit' => "projects#edit", :as => "edit_project"
-=======
       get "projects/remove_developer_from_project"
       match "projects/share/:id" => "projects#share"
       match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
       get "projects/update"
+      get "projects/remove_developer_from_project"
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+      match '/projects/add_word' => "projects#add_word"
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
       match '/my_subscriptions/pick' => "my_subscription#pick"
-      resources :projects
+      match '/my_subscriptions/new' => "my_subscription#new"
+      match '/my_subscriptions/create' => "my_subscription#create"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
-
       match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
-
       match "followed" => "follow#list_followed", :as => "list_followed_words"
 
-      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
-    end
-
-    get "games/getprizes"
-
-    post "games/vote_errors"
-
-    post "games/record_synonym"
-      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
-
-  
-      post "keywords/create"
-
-
-      match "/" => "backend#home", :as => "backend_home"
-
-      get "projects/remove_developer_from_project"
-      
-
-      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
-
-      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-
-      match '/projects/add_word' => "projects#add_word"
-      get "keywords/new"
-
-      get "projects/remove_developer_from_project"
-      match "projects/share/:id" => "projects#share"
-      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-      get "projects/update"
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
-
-      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
-
-      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
-
-      match "followed" => "follow#list_followed", :as => "list_followed_words"
-
-      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
-
-
-      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
-
-  
-  post "keywords/create"
-
-
-      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
-
-      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-
-<<<<<<< HEAD
-=======
-      match '/projects/add_word' => "projects#add_word"
-
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
-      get "keywords/new"
-
-      post "keywords/create"
-      resources :projects
       match "keywords/create" => "keywords#create", :as => :keywords_create
-
-      match '/projects/add_word' => "projects#add_word"
       match "keywords/new" => "keywords#new", :as => :keywords_new
-
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
 
-<<<<<<< HEAD
-      match '/new' => "developer#new", :as => :developers_new
-=======
       match 'search_keywords' => 'search#search_keywords'
 
       match '/developers/new' => "developer#new"
-
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
       match '/developers/create' => "developer#create"
-
-      match '/my_subscriptions/new' => "my_subscription#new"
-
-      match '/my_subscriptions/create' => "my_subscription#create"
-<<<<<<< HEAD
-      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
-      match '/my_subscriptions/pick' => "my_subscription#pick"
-=======
-
->>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
     end
-
-    
-  match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
-
-  match '/tweet/tweet_score' => "tweet#tweet_score"
-  get 'games/gettrophies'
-  
-  match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
-  
-  get 'games/getnewwords'
-
-  get "games/getprizes"
-
-  
-  
-  
-  get "games/getprizes"
-  get "games/showprizes"
-  get "games/get_score_only"
-  post "games/record_vote"
-
-      get "/en/gamers" => redirect('/en/gamers/sign_up')
-
-      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
-
-  post "games/record_synonym"
-
-    get "games/getprizes"
-    get "games/showprizes"
-
-    post "games/record_vote"
-
-    post "games/vote_errors"
-
-    post "games/record_synonym"
-
-  get "/games/disconnect_facebook"
-
-  match 'search' => 'search#search'
-
-  match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-
-  match '/authentications/twitter' => 'authentications#twitter'
-
-  match '/projects/add_word' => "projects#add_word"
-
-  match '/game' => 'games#game'
-
-  get 'games/gettrophies'
-  
-  get 'games/showprizes'
-  get 'games/showtrophies'
-
-
-  # The priority is based upon order of creation:
-    get "admin/import_csv"
-
-    post "admin/upload"
-
-  
-    get 'games/getnewwords'
-
-    match 'search' => 'search#search'
-  get "authentications/twitter"
-  get "authentications/remove_twitter_connection"
-  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
-  match '/auth/failure', :to => 'authentications#twitter'
- 
-    match '/game' => 'games#game'
-    get "games/getprizes"
-    post "games/record_vote"
-
-  get "authentications/twitter_hall_of_fame"
+  end
 
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
-
-    match "/post_score"=>'games#post', :as => "post_facebook"
-
-  get "/games/halloffame"
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
