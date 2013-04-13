@@ -1,61 +1,55 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-
-
-  belongs_to :developer
-
+  has_and_belongs_to_many :shared_with, :class_name => "Developer"
+  has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
-
+  belongs_to :developer
 
 
   # has_and_belongs_to_many :shared_with, :class_name => "Developer"
-  # has_one :owner, :class_name => "Developer"
 
 
   attr_accessible :name
-  belongs_to :developer
 
 
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :presence => true, :inclusion => { :in => 9..99, :message => "is not in range" }
-  validates :maxAge, :presence => true, :inclusion => { :in => 10..100, :message => "is not in range" }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
+  validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
+  validates :maxAge, :presence => true, :inclusion => { :in => 10..100 }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
-# author:
-#      Salma Farag
-# description:
-#      Takes the params of the project entered by the developer and creates a project compares
-#it to the already existing categories and returns the project
-# params:
-#     :project
-# success:
-#     Creates and returns a project after splitting the csv categories string and creating
-#new categories and inserting them into the project categories array
-# failure:
-#     None
-
-def self.createproject(params,gamer_id)
+# Author:
+#   Salma Farag
+# Description:
+#   Takes the params of the project entered by the developer and creates a project compares
+#   it to the already existing categories and returns the project
+# Params:
+#   :project
+# Success:
+#   Creates and returns a project after splitting the csv categories string and creating
+#   new categories and inserting them into the project categories array
+# Failure:
+#   None
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
-  developer = Developer.where(:gamer_id => gamer_id).first
-  project.owner_id = developer.gamer_id
+  project.owner_id = developer_id
   project = createcategories(project,params[:categories])
   return project
 end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that takes categories in the form of csv and saves them in an array
-  #then loops on it and creates an a new category each time.
-  # params:
-  #     Category names in the form of csv.
-  # success:
-  #     Categories will be created.
-  # failure:
-  #     none
+# Author:
+#    Salma Farag
+# Description:
+#   A method that takes categories in the form of csv and saves them in an array
+#   then loops on it and creates an a new category each time.
+# Params:
+#   Category names in the form of csv.
+# Success:
+#   Categories will be created.
+# Failure:
+#   None
 def self.createcategories(project,categories)
   array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
@@ -67,17 +61,16 @@ def self.createcategories(project,categories)
   return project
 end
 
-  # author:
-  #      Salma Farag
-  # description:
-  #     A method that takes an array of categories, maps their names into an array and joins
-  #the array using commas.
-  # params:
-  #     Array of categories.
-  # success:
-  #     Returns a string of category names.
-  # failure:
-  #     None
+# Author:
+#   Salma Farag
+# Description:
+#   A method that takes an array of categories, maps their names into an array and joins
+#   the array using commas.# Params:
+#   Array of categories.
+# Success:
+#   Returns a string of category names.
+# Failure:
+#   None
 def self.printarray(array)
   t = array.map {|item| item.name}
   t = t.join(", ")
@@ -85,4 +78,3 @@ def self.printarray(array)
 end
 
 end
-
