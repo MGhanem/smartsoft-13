@@ -1,12 +1,27 @@
-<em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
+<% if I18n.locale == :en %>
 
-<div class="container well">
+<em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
+<% else I18n.locale == :ar %>
+<em><h3 class="text-info">تغيير البيانات</h3></em>
+<% end %>
+
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:my_info)%></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t(:social_media)%></a></li>
+  </ul>
+  <div class="tab-content" style="width:1200px;">
+    <div class="tab-pane active" id="tab1">
+      <div class="well" style="width:1100px; height:480px">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
   <% if resource.errors.any? %>
   <div class="alert"><%= devise_error_messages! %></div>
   <% end %>
 
+  <% if I18n.locale==:en %>
+
   <div class="container">
+    <% if I18n.locale==:en %>
   <div class="control-group"><%= f.label :username, :class => "control-label" %>
   <%= f.text_field :username, :placeholder => "Username", :style => "margin-left: 10px;" %></div>
 
@@ -19,19 +34,152 @@
   <div class="control-group"><%= f.label :password_confirmation, :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "Confirm Password", :style => "margin-left: 10px;" %></div>
 
-  <div class="control-group"><%= f.label :age, :class => "control-label" %>
-  <%= f.text_field :age, :placeholder => "Age", :style => "margin-left: 10px;" %></div>
+  <div><%= f.label :date_of_birth, :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
+         <div><%= f.label :gender, :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>
 
-  <div class="control-group"><%= f.label :country, :class => "control-label" %>
-  <%= f.text_field :country, :placeholder => "Country", :style => "margin-left: 10px;" %></div>
+  <div><%= f.label :country, :class => "control-label" %>
+        <span style="margin-left: 10px;">
+            <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
+        </span>
+    </div><br>
 
   <div><%= f.label :education_level, :class => "control-label" %>
-    <%= f.select(:education_level, options_for_select(['','low','medium','high']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+    <%= f.select(:education_level, options_for_select(['','School','University','Graduate ']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
   <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
+
+  <% else I18n.locale==:ar %>
+    <div class="control-group"><%= f.label t(:username), :class => "control-label" %>
+  <%= f.text_field :username, :placeholder => "اسم المستخدم", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
+  <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(ضعها فارغة إذا لم تريد تغيرها)</i></div>
+
+  <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
+  <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
+
+  <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
+
+        <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select(['ذكر','انثي']),{}, :style => "margin-left: 10px;" ) %></div></br>
+
+  <div><%= f.label t(:country), :class => "control-label" %>
+                <%= f.select(:country, options_for_select(['مصر','لبنان','الاردن','السعودية','ليبيا','الامارات','قطر','الكويت',
+                    'العراق','الجزأئر','المغرب','البحرين','موريتانيا','الصومال','السودان']), {},
+                {:style => "margin-left: 10px;" }) %>
+            </div></br>
+
+  <div><%= f.label t(:education_level), :class => "control-label" %>
+            <%= f.select(:education_level, options_for_select(['','مدرسة','جامعة','خريج']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+
+  <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(نحتاج كلمة سرك الحالية لتأكيد التغيرات)</i></div>
+
+  <div><%= f.submit "تغيير", :class => "btn btn-success" %></div>
+  <% end %>
 </div>
+    <% else I18n.locale==:ar %>
+
+    <div class="container">
+  <div class="control-group"><%= f.label t(:username), :class => "control-label" %>
+  <%= f.text_field :username, :placeholder => "اسم المستخدم", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
+  <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
+
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
+  <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
+
+  <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+        :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
+
+            <div><%= f.label t(:country), :class => "control-label" %>
+                <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
+                    ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
+                    ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
+                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['اخري','others']]), {},
+                {:style => "margin-left: 10px;" }) %>
+            </div></br>
+            <div><%= f.label t(:gender), :class => "control-label" %>
+            <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']]),{}, :style => "margin-left: 10px;" ) %></div></br>
+
+  <div><%= f.label t(:education_level), :class => "control-label" %>
+            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
+
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+  <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
+
+  <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
 <% end %>
+    </div>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <div class="well" style="width:1100px; height:480px">
+
+        <div class="Facebook" style="width: 344px;margin-right: auto;margin-left: auto;">
+        <% if !current_gamer.is_connected_to_facebook %>
+          <% if I18n.locale == :en %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
+          <% else %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
+          <% end %>
+          <span font='20' style="position:relative; padding:40px;top:40px"><%= link_to t(:connect_to) + " " + t(:facebook), gamer_omniauth_authorize_path(:facebook) %></span>
+        <% else %>
+          <% if I18n.locale == :en %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:left">
+          <% else %>
+          <img src="/assets/facebook_logo.png" width="100px" height="100px" style="float:right">
+          <% end %>
+          <span font='20' style="position:relative; padding:40px;top:40px"> <%= link_to t(:disconnect_from) + " " + t(:facebook), "/games/disconnect_facebook" %></span>
+          <% end %>
+        </div>
+        <br><br><br><br><br><br><br>
+        <% end %>
+        <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
+          <% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
+          <% if I18n.locale==:en %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+            already connected to Twitter!</h5>
+          <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
+          <% else I18n.locale == :ar %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
+          التواصل بالفعل موجود!</h5>
+          <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
+          <% end %>
+          <% else %>
+          <% if I18n.locale==:en %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
+          <span font='20' style="position:relative; padding:40px;">
+            <%= link_to "Connect to twitter", "/auth/twitter" %>
+          </span>        
+          <% else I18n.locale==:ar %>
+          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
+          <span font='20' style="position:relative; padding:40px;">
+            <%= link_to "تواصل مع تويتر", "/auth/twitter" %>
+          </span>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

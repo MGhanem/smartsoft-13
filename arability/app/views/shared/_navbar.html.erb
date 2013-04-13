@@ -24,6 +24,7 @@
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
               <%= form_for("gamer", :url => gamer_session_path) do |f| %>
+<<<<<<< HEAD
                 <%= f.text_field :email, :style => "margin-bottom: 15px;", :placeholder => "Email", :size => "30" %>
                 <%= f.password_field :password, :style => "margin-bottom: 15px;", :placeholder => "Password", :size => "30" %>
                 <%= f.check_box :remember_me, :style => "float: left; margin-right: 10px;" %>
@@ -33,16 +34,23 @@
                 <p style="text-align:left"> Or </p>
                 <%= button_to t(:log_in_google), gamer_omniauth_authorize_path(:google_oauth2), :style => "clear: left; width: 100%; height: 32px; font-size: 13px", :class => "btn btn-success" %>
 
+=======
+                <%= f.text_field :email, :style => "margin-bottom: 15px;", :placeholder => t(:email), :size => "30" %>
+                <%= f.password_field :password, :style => "margin-bottom: 15px;", :placeholder => t(:password), :size => "30" %>
+                <%= f.submit t(:sign_in), :style => "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
+             <!--    <%= link_to "Sign In with Google", :style => "clear: left; width: 88%; height: 30px; font-size: 13px", :class => "btn btn-success" %> -->
+              <% end %>
+>>>>>>> dc5e1990bcc6c8c55d943348fd24f42ee3f0e453
             </div>
           </li>
       <% else %>
         <li><%= link_to t(:backend), backend_home_path %></li>
         <% if I18n.locale==:en %>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
+        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <% else I18n.locale==:ar %>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>تعئيير البيانات</a></li>
+        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
         <% end %>
       <% end %>
       </ul>

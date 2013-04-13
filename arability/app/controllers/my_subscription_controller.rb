@@ -84,7 +84,7 @@ class MySubscriptionController < ApplicationController
 
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
-    @developer = Developer.find_by_gamer_id(current_gamer.id) 
+    @developer = Developer.find_by_gamer_id(current_gamer.id)
   end
 
   # Author:

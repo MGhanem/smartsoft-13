@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class PreferedSynonym < ActiveRecord::Base
-  attr_accessible :keyword_id, :synonym_id, :keyword_id
+  attr_accessible :project_id, :synonym_id, :keyword_id
   belongs_to :project
   belongs_to :keyword
   belongs_to :synonym
@@ -42,6 +42,7 @@ class PreferedSynonym < ActiveRecord::Base
     #   returns true if the word exists
     # Failure:
     #   if the word doesn't exist returns false
+
     def find_word_in_project(project_id, keyword_id)
       keyword = PreferedSynonym.where("project_id = ? AND keyword_id = ?", project_id, keyword_id).first
       if keyword != nil

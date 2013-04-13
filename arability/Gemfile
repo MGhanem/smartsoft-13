@@ -6,8 +6,11 @@ gem 'rails', '3.2.12'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'jasmine'
+#gem 'omniauth'
 
 gem 'omniauth-google-oauth2'
+#gem "oa-openid"
 
 gem 'certified'
 # Gems required for automated documentation
@@ -28,6 +31,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
   gem 'tabulous', '1.3.0'
+
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -42,6 +46,7 @@ gem 'date_validator'
 
 #gem used to select countries
 gem 'country-select'
+
 
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby
@@ -65,9 +70,19 @@ gem 'country-select'
 # devise gem used for authentication
 gem 'devise','2.0'
 
+gem "koala"
+
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'twitter'
+gem 'fb_graph'
+
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
 end
+
+
+gem 'certified'

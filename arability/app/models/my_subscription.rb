@@ -45,10 +45,8 @@ class MySubscription < ActiveRecord::Base
           else
             return false
           end
-        end
-        
+        end        
       end
-  end 
 
     def get_word_search
       return @@search
@@ -61,6 +59,7 @@ class MySubscription < ActiveRecord::Base
     def get_word_follow
       return @@follow
     end
+   
     # Author:
     #  Noha Hesham
     # Description:
@@ -89,6 +88,7 @@ class MySubscription < ActiveRecord::Base
         return false
       end 
     end
+
     # Author:
     #  Noha Hesham
     # Description:
@@ -141,4 +141,5 @@ class MySubscription < ActiveRecord::Base
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count
    end
+end
 end
