@@ -1,33 +1,52 @@
 Arability::Application.routes.draw do
 
   root :to => 'pages#home'
+  
+ # devise_for :gamers
 
+
+  # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-    #here only two languages are accepted: english and arabic
+
 
     get "admin/index"
+  get "admin/login"
 
-    get "admin/login"
+
+
 
     get "admin/logout"
 
-    post "admin/wordadd"
+    # required for routing by the devise module(gem)
+    devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
+    devise_for :gamers do get '/gamers/sign_out' => 'devise/sessions#destroy' end
 
+  
+    post "admin/wordadd"
+ 
     post "admin/login"
 
-		get "admin/import_csv"
+    get "admin/import_csv"
+
 
     post "admin/upload"
 
-    post "admin/addword"
+  get "admin/logout"
 
-    post "admin/addtrophy"
+  post "admin/add_word"
 
-    post "admin/addprize"
+  post "admin/upload"
 
-    get "admin/deletetrophy"
+  post "admin/add_trophy"
 
-    get "admin/deleteprize"
+  post "admin/add_prize"
+
+  get "admin/delete_trophy"
+  
+  get "admin/delete_prize"
+
+    #here only two languages are accepted: english and arabic
 
     match '/game' => 'games#game'
 
@@ -35,13 +54,7 @@ Arability::Application.routes.draw do
 
     post "games/record_vote"
 
-		get 'games/getnewwords'
-
-    get "games/getprizes"
-
-    post "games/vote_errors"
-
-    post "games/record_synonym"
+    get 'games/getnewwords'
 
     # required for routing by the devise module(gem)
     devise_for :gamers do
@@ -51,11 +64,52 @@ Arability::Application.routes.draw do
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
 
-			get "projects/remove_developer_from_project"
-  		match "projects/share/:id" => "projects#share"
-  		match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
-  		get "projects/update"
-			resources :projects
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
+      resources :projects
+
+      match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub"
+      match '/my_subscriptions/pick' => "my_subscription#pick"
+      resources :projects
+
+      match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
+
+      match "unfollow/:keyword_id" => "follow#unfollow", :as => "unfollow_word"
+
+      match "followed" => "follow#list_followed", :as => "list_followed_words"
+
+      match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
+    end
+
+    get "games/getprizes"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
+      match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+  
+      post "keywords/create"
+
+
+      match "/" => "backend#home", :as => "backend_home"
+
+      get "projects/remove_developer_from_project"
+      
+
+      put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
+
+      match "/projects/upload" => "projects#upload", :as => :upload_csv_project
+
+      match '/projects/add_word' => "projects#add_word"
+      get "keywords/new"
+
+      get "projects/remove_developer_from_project"
+      match "projects/share/:id" => "projects#share"
+      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      get "projects/update"
 
       match "follow/:keyword_id" => "follow#follow", :as => "follow_word"
 
@@ -72,22 +126,114 @@ Arability::Application.routes.draw do
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
 
       match '/projects/add_word' => "projects#add_word"
+
       get "keywords/new"
 
       post "keywords/create"
+      resources :projects
+      match "keywords/create" => "keywords#create", :as => :keywords_create
 
-      get "keywords/suggest_add"
+      match '/projects/add_word' => "projects#add_word"
+      match "keywords/new" => "keywords#new", :as => :keywords_new
 
       match "keywords" => "keywords#viewall"
 
       match 'search' => 'search#search'
 
+      match 'search_keywords' => 'search#search_keywords'
+
       match '/developers/new' => "developer#new"
+
       match '/developers/create' => "developer#create"
+
       match '/my_subscriptions/new' => "my_subscription#new"
+
       match '/my_subscriptions/create' => "my_subscription#create"
+
     end
-  end
+
+    
+  match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
+
+  match '/tweet/tweet_score' => "tweet#tweet_score"
+  get 'games/gettrophies'
+  
+  match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
+  
+  get 'games/getnewwords'
+
+  get "games/getprizes"
+
+  
+  
+  
+  get "games/getprizes"
+  get "games/showprizes"
+  get "games/get_score_only"
+  post "games/record_vote"
+
+      get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+      get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+  post "games/record_synonym"
+
+    get "games/getprizes"
+    get "games/showprizes"
+
+    post "games/record_vote"
+
+    post "games/vote_errors"
+
+    post "games/record_synonym"
+
+  get "/games/disconnect_facebook"
+
+  match 'search' => 'search#search'
+
+  match '/authentications/facebook_connect' => 'authentications#facebook_connect'
+
+  match '/authentications/twitter' => 'authentications#twitter'
+
+  match '/projects/add_word' => "projects#add_word"
+
+  match '/game' => 'games#game'
+
+  get 'games/gettrophies'
+  
+  get 'games/showprizes'
+  get 'games/showtrophies'
+
+
+  # The priority is based upon order of creation:
+    get "admin/import_csv"
+
+    post "admin/upload"
+
+  
+    get 'games/getnewwords'
+
+    match 'search' => 'search#search'
+  get "authentications/twitter"
+  get "authentications/remove_twitter_connection"
+  match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+  match '/auth/failure', :to => 'authentications#twitter'
+ 
+    match '/game' => 'games#game'
+    get "games/getprizes"
+    post "games/record_vote"
+
+  get "authentications/twitter_hall_of_fame"
+
+  get "/en/gamers" => redirect('/en/gamers/sign_up')
+
+  get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+    match "/post_score"=>'games#post', :as => "post_facebook"
+
+  get "/games/halloffame"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
@@ -143,6 +289,4 @@ Arability::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-
-  match '*path', :to => 'application#routing_error'
 end

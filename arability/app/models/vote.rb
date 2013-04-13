@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
   belongs_to :synonym
   belongs_to :gamer
-  # attr_accessible :title, :body
+
   validate :validate_gamer_exists, :validate_synonym_exists, 
     :validate_voting_for_new_keyword
   validates :gamer_id, :uniqueness => { :scope => :synonym_id,
@@ -52,13 +52,14 @@ class Vote < ActiveRecord::Base
         K.id AND S.id IN (SELECT S1.id FROM synonyms S1 INNER JOIN votes V 
         ON S1.id = V.synonym_id INNER JOIN gamers G ON G.id = V.gamer_id 
         AND G.id = ?)) OR id NOT IN(SELECT K1.id FROM Keywords K1 INNER JOIN 
-        Synonyms S1 ON S1.keyword_id = K1.id)", gamer_id)                            
+        Synonyms S1 ON S1.keyword_id = K1.id)", gamer_id)
+      unvoted_approved_keywords = unvoted_keywords.where('approved = ?', true)                            
       if lang == @@ENG    
-        keywords_list = unvoted_keywords.where('is_english=?', true)
+        keywords_list = unvoted_approved_keywords.where('is_english=?', true)
       elsif lang == @@ARABIC
-        keywords_list = unvoted_keywords.where('is_english=?', false)
+        keywords_list = unvoted_approved_keywords.where('is_english=?', false)
       else
-        keywords_list = unvoted_keywords
+        keywords_list = unvoted_approved_keywords
       end
       return keywords_list.sample(count)    
     end
