@@ -55,6 +55,7 @@ def self.add_gamer(first, last, gender, country, age, education)
   g = Gamer.new
   g.username = first+"_"+last
   g.email = first + "@"+last+".com"
+  g.gender = gender
   g.password = first+"_"+last
   g.date_of_birth = age.years.ago
   g.country = country
