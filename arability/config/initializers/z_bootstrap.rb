@@ -54,8 +54,8 @@ Gamer.delete_all
 def self.add_gamer(first, last, gender, country, age, education)
   g = Gamer.new
   g.username = first+"_"+last
-  g.email = first + "@"+last+".com"
   g.gender = gender
+  g.email = first + "@"+last+".com"
   g.password = first+"_"+last
   g.date_of_birth = age.years.ago
   g.country = country
@@ -105,6 +105,9 @@ project.description = "This project is awesome"
 project.owner_id = timo_dev.id
 project.save
 
+PreferedSynonym.create(project_id: project.id, keyword_id: click.id, synonym_id: a.id)
+PreferedSynonym.create(project_id: project.id, keyword_id: sign_in.id, synonym_id: d.id)
+
 project1 = Project.new
 project1.name = "HSBC"
 project1.minAge = "30"
@@ -112,6 +115,10 @@ project.maxAge = "40"
 project1.description = "This project includes information about all the banks in egypt"
 project1.owner_id = timo_dev.id
 project1.save
+
+PreferedSynonym.create(project_id: project1.id, keyword_id: click.id, synonym_id: b.id)
+PreferedSynonym.create(project_id: project1.id, keyword_id: sign_in.id, synonym_id: e.id)
+PreferedSynonym.create(project_id: project1.id, keyword_id: download.id, synonym_id: h.id)
 
 project2 = Project.new
 project2.name = "Fun Integrated"
@@ -121,6 +128,9 @@ project2.description = "Our website is all about games and entertainment for bot
 project2.owner_id = noha_dev.id
 project2.save
 
+PreferedSynonym.create(project_id: project1.id, keyword_id: click.id, synonym_id: c.id)
+PreferedSynonym.create(project_id: project1.id, keyword_id: sign_in.id, synonym_id: e.id)
+PreferedSynonym.create(project_id: project1.id, keyword_id: download.id, synonym_id: i.id)
 
 Trophy.delete_all
 t1= Trophy.new(name: "أول كلمة", level: 1, score: 1, image_file_name: "big_89eaf3e487fe47e4fc467c23735e6c5332280449.jpg", image_content_type: "image/jpeg", image_file_size: 628755, image_updated_at: "2013-04-11 18:21:23")
