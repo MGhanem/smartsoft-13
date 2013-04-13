@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
-  require "csv"
+  require 'csv'
+
 
   # Author:
   #   Mohamed Ashraf
@@ -41,7 +42,6 @@ class ApplicationController < ActionController::Base
   def default_url_options(options={})
     { :locale => I18n.locale }
   end
-
 
   # author:
   #   Amr Abdelraouf
@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
 end
 
 
