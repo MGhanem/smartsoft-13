@@ -10,14 +10,17 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-  devise :database_authenticatable, :registerable,
+   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook],
+         :omniauth_providers => [:google_oauth2]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation,
-                  :remember_me, :gender, :provider, :uid, :highest_score,
-                  :username, :country, :education_level, :date_of_birth
+  attr_accessible :email, :password, :password_confirmation, :remember_me, 
+                  :username, :country, :education_level, :date_of_birth,
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender
+
+  has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
@@ -278,7 +281,29 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
-  has_many :services, :dependent => :destroy
+# author:
+#     Salma Farag
+# description:
+#     A  method that returns a gamer with an email equal to the email signed in on Google from
+#the access token.
+# params:
+#     The access token granted from Google and a signed in resources that is equal to nil.
+# success:
+#     Returns the gamer with the matching email.
+# failure:
+#     Creates a new gamer using the email and password
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    gamer = Gamer.where(:email => data["email"]).first
+
+    unless gamer
+         gamer = Gamer.create(
+              email: data["email"],
+              password: Devise.friendly_token[0,20]
+             )
+    end
+    gamer
+end
 
   class << self
 
@@ -316,6 +341,5 @@ end
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
-  
 end
 

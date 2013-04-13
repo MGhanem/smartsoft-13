@@ -5,6 +5,7 @@ class Synonym < ActiveRecord::Base
   has_many :votes
   has_many :gamers, :through => :vote
 
+
   def self.find_loacle
     if I18n.locale == :ar 
       "هذا المعنى ليس باللغة العربية"
@@ -15,6 +16,10 @@ class Synonym < ActiveRecord::Base
 
   validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
     :message => Synonym.find_loacle 
+
+  class << self
+    include StringHelper
+  end
 
   # author:
   #   kareem ali
@@ -48,8 +53,6 @@ class Synonym < ActiveRecord::Base
   end 
 
   class << self
-    include StringHelper
-
     # Author:
     #  Mirna Yacout
     # Description:
@@ -72,6 +75,15 @@ class Synonym < ActiveRecord::Base
         return false
       end
 
+    def find_by_name(synonym_name, keyword_id)
+      word = Keyword.find(keyword_id)
+      synonym = Synonym.where("name = ? AND keyword_id = ?", synonym_name, keyword_id).first
+    end
+
+
+  def get_visual_stats_country(synonym_id)
+        voters = Gamer.joins(:synonyms).where("synonym_id = ?", synonym_id)
+  end
     # Author: 
     #   Nourhan Mohamed
     # Description:

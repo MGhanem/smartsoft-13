@@ -15,6 +15,19 @@
 //= require bootstrap
 //= require highcharts
 //= require game
+
+
+// author:
+//   Mohamed Tamer
+// description:
+//   takes id of a form contaning checkboxes and the limit of checked boxes and limits the number of selected check boxes to the limit
+// params:
+//   checkgroup: id of checkboxes form
+//   limit: the limit os selected checkboxes  
+// success:
+//   doesn't allow more slected checkboxes than the limit  
+// failure:
+//   none
 function checkboxlimit(checkgroup, limit){
 	var checkgroup=checkgroup
 	var limit=limit

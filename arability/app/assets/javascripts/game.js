@@ -235,6 +235,7 @@ function dropAblockCont(clss, btn, randNum, counter){
 						suspense();
 					
 					blockId++;
+
 					if(loseGame(tower)){
 						return;
 					}
@@ -1035,5 +1036,4 @@ function loseGame(t){
 	else{
 		return false;
 	}
-
 }

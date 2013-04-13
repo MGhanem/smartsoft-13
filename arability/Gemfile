@@ -9,10 +9,10 @@ gem 'sqlite3'
 gem 'jasmine'
 #gem 'omniauth'
 
+gem 'omniauth-google-oauth2'
 #gem "oa-openid"
 
-# gem 'omniauth-google-oauth2'
-
+gem 'certified'
 # Gems required for automated documentation
 gem 'yard'
 gem 'redcarpet'
@@ -47,12 +47,6 @@ gem 'date_validator'
 #gem used to select countries
 gem 'country-select'
 
-gem "rspec-rails", :group => [:test, :development]
-group :test do
-  gem "factory_girl_rails"
-  gem "capybara"
-  gem "guard-rspec"
-end
 
 # group :nix do
 #   gem 'therubyracer', :platforms => :ruby

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   require 'csv'
 
+
   # Author:
   #   Mohamed Ashraf
   # Desciption:
@@ -90,35 +91,15 @@ class ApplicationController < ActionController::Base
   #   row contains an invalid keyword and is ignored
   def uploadCSV(arr_of_arrs)
     arr_of_arrs.each do |row|
-      was_saved, keywrd = Keyword.add_keyword_to_database(row[0])
-      if was_saved
-        (1..row.size).each { |index| Synonym.recordsynonym(row[index], keywrd.id) }
+      wasSaved, keywrd = Keyword.add_keyword_to_database(row[0])
+      if wasSaved
+        for index in 1..row.size
+          Synonym.record_synonym(row[index], keywrd.id)
+        end
       end
     end
   end
 
-  # Desciption:
-  #   This function sets the locale to the default locale of ar or the
-  #   whichever locale stored in the session. If a locale is chosen it is
-  #   automatically stored in the session.
-  # Author:
-  #   Mohamed Ashraf
-  # params:
-  #   locale: from the url if exists
-  # returns:
-  #   --
-  def set_locale
-    if params[:locale].nil?
-      if session[:locale].nil?
-        I18n.locale = :ar
-      else
-        I18n.locale = session[:locale]
-      end
-    else
-      I18n.locale = params[:locale]
-      session[:locale] = params[:locale]
-    end
-  end
 end
 
 
