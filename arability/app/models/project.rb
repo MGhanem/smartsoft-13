@@ -4,11 +4,6 @@ class Project < ActiveRecord::Base
   has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
-  belongs_to :developer
-
-
-  # has_and_belongs_to_many :shared_with, :class_name => "Developer"
-
 
   attr_accessible :name
 

@@ -15,7 +15,7 @@ class Prize < ActiveRecord::Base
   validates_attachment_size :image, :in => 0.megabytes..0.5.megabytes
   
   has_and_belongs_to_many :gamers
-  attr_accessible :name, :level, :score, :image
+  attr_accessible :name, :level, :score, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image
 
   validates_format_of :name, 
