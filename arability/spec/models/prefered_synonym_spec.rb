@@ -1,5 +1,5 @@
 #encoding: UTF-8
-require 'spec-helper'
+require 'spec_helper'
 describe "Prefered Synonym" do
   let(:gamer1){
 	  gamer = Gamer.new
