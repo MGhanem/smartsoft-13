@@ -66,6 +66,7 @@ end
 
 noha=add_gamer("noha", "mohamed", "female", "Lebanon", 20, "School")
 mohamed=add_gamer("mohamed", "ashraf", "male", "Egypt", 40, "University")
+smart=add_gamer("developer", "smartsoft", "male", "Egypt", 30, "University")
 timo=add_gamer("timo", "fattouh", "male", "Egypt", 30, "Graduate")
 kholoud=add_gamer("khloud", "khalid", "female", "Jordan", 10, "School")
 hassan=add_gamer("mosatafa", "hassan", "male", "Jordan", 30, "Graduate")
@@ -73,6 +74,7 @@ amr=add_gamer("amr", "raoof", "male", "Iraq", 30, "Graduate")
 
 Developer.delete_all
 timo_dev=Developer.create(first_name: "Timo", last_name: "Fattouh", gamer_id: timo.id)
+timo_dev=Developer.create(first_name: "Developer", last_name: "Smartsoft", gamer_id: smart.id)
 noha_dev=Developer.create(first_name: "Noha", last_name: "Mohamed", gamer_id: noha.id)
 hassan_dev=Developer.create(first_name: "Mostafa", last_name: "Hassan", gamer_id: hassan.id)
 
