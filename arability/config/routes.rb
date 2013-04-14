@@ -14,6 +14,10 @@ Arability::Application.routes.draw do
     post "admin/add_prize"
     get "admin/delete_trophy"
     get "admin/delete_prize"
+    match '/auth/google' => 'services#create'
+    match '/auth/google/login' => 'services#index' 
+    resources :services, :only => [:index, :create, :destroy]
+
 
     # required for routing by the devise module(gem)
     devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
