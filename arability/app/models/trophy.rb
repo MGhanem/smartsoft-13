@@ -1,31 +1,22 @@
 #encoding: UTF-8
 class Trophy < ActiveRecord::Base
   include Paperclip::Glue
-
-  validates :name, :presence => true, :length => { :in => 6..24 },
-    :uniqueness => true
-  validates_format_of :name, :with =>  /^([\u0621-\u0652 ])+$/
-  validates :level, :presence => true, :numericality => {
-    :greater_than_or_equal_to => 1, :less_than_or_equal_to => 100 }
-  validates :score, :presence => true, :numericality => {
-    :greater_than_or_equal_to => 1, :less_than_or_equal_to => 1000000 }
-  validates :image, :presence => true
-  validates_attachment_size :image, :in => 0.megabytes..0.5.megabytes
   
   has_and_belongs_to_many :gamers
   attr_accessible :name, :level, :score, :image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at
   has_attached_file :image
 
+  validates_presence_of :name, 
+                        message: "اسم الانجاز لا يمكن ان يكون فارغ"
+
   validates_format_of :name, 
                       :with => /^([\u0621-\u0652 ])+$/, 
                       :message => "اسم الانجاز يجب ان يكون بالعربية"
 
-  validates_length_of :name, 
-                      :maximum => 20,
-                      :message => "اسم الانجاز لا يمكن ان يزيد عن 20 حروف"
-
-  validates_presence_of :name, 
-                        message: "اسم الانجاز لا يمكن ان يكون فارغ"
+  validates_length_of :name,
+                      :minimum => 6, 
+                      :maximum => 24,
+                      :message => "اسم الانجاز يجب ان يكون بين 6 و 24 حرف"
 
   validates_presence_of :level, 
                         message: "المستوى لا يمكن ان يكون فارغ"
@@ -42,22 +33,22 @@ class Trophy < ActiveRecord::Base
   validates_numericality_of :level, 
                             only_integer: true, 
                             greater_than: 0, 
-                            less_than_or_equal_to: 5, 
-                            message: "المستوى يجب ان يكون بين 0 و 5"
+                            less_than_or_equal_to: 100, 
+                            message: "المستوى يجب ان يكون بين 1 و 100"
 
   validates_numericality_of :score, 
                             only_integer: true, 
                             greater_than: 0,
-                            less_than_or_equal_to: 10000,
-                            message: "مجموع النقاط يجب ان يكون بين 0 و 10000"
+                            less_than_or_equal_to: 1000000,
+                            message: "مجموع النقاط يجب ان يكون بين 1 و 1000000"
 
   validates_attachment_content_type :image, 
                                     :content_type => /^image\/(png|gif|jpeg)/,
                                     message: "الصورة يجب ان تكون بصيغة png, gif او jpeg"
 
-  attr_accessible :name, :level, :score, :image
-
-  has_attached_file :image
+  validates_attachment_size :image, 
+                            :in => 0.megabytes..1.megabytes,
+                            message: "يجب ان يكون حجم الصورة اقل من 1MB"
 
     # Description:
     #   returns a list of trophies that the gamer got awarded 
