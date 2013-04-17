@@ -156,7 +156,7 @@
         <% end %>
         <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
           <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
-          <% if I18n.locale==:en %>
+          <% if I18n.locale == :en %>
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
             already connected to Twitter!</h5>
           <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
@@ -166,12 +166,12 @@
           <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
           <% end %>
           <% else %>
-          <% if I18n.locale==:en %>
+          <% if I18n.locale == :en %>
           <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
           <span font='20' style="position:relative; padding:40px;">
             <%= link_to "Connect to twitter", "/auth/twitter" %>
           </span>        
-          <% else I18n.locale==:ar %>
+          <% else I18n.locale == :ar %>
           <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
           <span font='20' style="position:relative; padding:40px;">
             <%= link_to "تواصل مع تويتر", "/auth/twitter" %>
