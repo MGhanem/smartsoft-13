@@ -10,6 +10,7 @@
 				<% end %>
 			<% end %>
       <input name="categories" type="text" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
+      <input name="project_id" type="hidden" value="<%= @project_id %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
@@ -27,7 +28,7 @@
 			<% @similar_keywords.each do |c| %>
 				<div class="accordion-group" style="padding:10px;">
 					<div class="accordion-heading">
-						<%= link_to c.name, search_path(:search => c.name), :method => :post %>
+						<%= link_to c.name, search_path(:search => c.name, :project_id => @project_id), :method => :post %>
 					</div>
 				</div>
 			<% end %>

@@ -1,3 +1,4 @@
 class SubscriptionModel < ActiveRecord::Base
-  # attr_accessible :title, :body
+	has_many :my_subscriptions
+  attr_accessible :name, :limit_search, :limit_follow, :limit_project
 end
