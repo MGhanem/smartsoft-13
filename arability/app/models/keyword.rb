@@ -116,15 +116,15 @@ class Keyword < ActiveRecord::Base
   # Author:
   #  Mirna Yacout
   # Description:
-  #  This method is to record the aproval of the admin to a certain keyword in the database
+  #  This method is to record the disapproval of the admin to a certain keyword in the database
   # Parameters:
-  #  id: the id of the keyword to be approved
+  #  id: the id of the keyword to be disapproved
   # Success:
-  #  returns true on saving the approval correctly in the database
+  #  returns true on saving the disapproval correctly in the database
   # Failure:
   #  returns false if the keyword doesnot exist in the database
-  #  or if the approval failed to be saved in the database 
-  def self.diapprove_keyword(keyword_id)
+  #  or if the disapproval failed to be saved in the database 
+  def self.disapprove_keyword(keyword_id)
     if Keyword.exists?(id: keyword_id)
       keyword = Keyword.find(keyword_id)
       keyword.approved = false
