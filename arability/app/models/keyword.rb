@@ -113,7 +113,6 @@ class Keyword < ActiveRecord::Base
     return keyword
   end
 
-  class << self
   # Author:
   #  Mirna Yacout
   # Description:
@@ -125,14 +124,16 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #  returns false if the keyword doesnot exist in the database
   #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
-        keyword.approved = true
-        return keyword.save
-      end
-      return false
+  def self.diapprove_keyword(keyword_id)
+    if Keyword.exists?(id: keyword_id)
+      keyword = Keyword.find(keyword_id)
+      keyword.approved = false
+      return keyword.save
     end
+    return false
+  end
+  
+  class << self
 
     # author:
     #   Omar Hossam
