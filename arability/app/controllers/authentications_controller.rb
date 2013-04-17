@@ -4,20 +4,6 @@ class AuthenticationsController < ApplicationController
 	# Author:
     #  Mirna Yacout
     # Description:
-    #  checks if the current_gamer already has an Authentication record
-    # params
-    #  none
-    # Success:
-    #  displays the correct view depending on the availability of Twitter authentication record
-    #  in the Authentications table
-    # Failure:
-    #  none
-	def twitter
-	end
-
-	# Author:
-    #  Mirna Yacout
-    # Description:
     #  Twitter callback method which saves the parameters given by Twitter upon the approval of
     #  the current user for the connection
     # params
