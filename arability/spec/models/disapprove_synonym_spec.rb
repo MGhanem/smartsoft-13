@@ -6,7 +6,6 @@ describe "disapprove synonym in database" do
     keyword = Keyword.new
     keyword.name = "test"
     keyword.is_english = true
-    keyword.approved = true
     keyword.save
     keyword
   }

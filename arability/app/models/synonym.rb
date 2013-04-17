@@ -65,7 +65,7 @@ class Synonym < ActiveRecord::Base
   # Failure:
   #  returns false if the synonym doesnot exist in the database
   #  or if the disapproval failed to be saved in the database     
-	def disapprove_synonym(synonym_id)
+	def self.disapprove_synonym(synonym_id)
     if Synonym.exists?(id: synonym_id)
       synonym = Synonym.find(synonym_id)
       synonym.approved = false
