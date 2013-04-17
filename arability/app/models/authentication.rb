@@ -62,7 +62,7 @@ class Authentication < ActiveRecord::Base
     common = Array.new
     i = 0
     while i<followers.count
-      if Authentication.exists?(:gid => followers.at(i), :provider => "twitter")
+      if Authentication.exists?(gid: followers.at(i), provider: "twitter")
         common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
         common.push(current_gamer.id)
       end
