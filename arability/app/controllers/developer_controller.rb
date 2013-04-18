@@ -63,7 +63,7 @@ class DeveloperController < ApplicationController
     project = Project.find(params[:project_id])
     project.developers_shared.delete(dev)
     project.save
-    flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
     redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
   # Author:

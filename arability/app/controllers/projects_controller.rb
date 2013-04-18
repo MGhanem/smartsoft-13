@@ -204,19 +204,6 @@ def show
   end
 end  
   
-
-
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
-  
   # Author:
   #   Mohamed Tamer
   # Description:
