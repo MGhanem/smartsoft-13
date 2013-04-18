@@ -67,8 +67,8 @@ class Authentication < ActiveRecord::Base
         common.push(current_gamer.id)
       end
       i = i + 1
-      return common
     end
+    return common
   end
 
 end
