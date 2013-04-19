@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def error_render_method(exception)
     path = get_root
     redirect_to path, 
-      flash: {error: "Oops, this is embarassing. A problem has occured, however we have notified an administrator and are working to fix it"}
+      flash: {error: "Oops, this is embarassing. A problem has occured, however we have notified an administrator and are working to fix it "}
   end
   # author:
   #   Amr Abdelraouf

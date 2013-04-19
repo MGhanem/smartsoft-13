@@ -37,7 +37,7 @@ class DeveloperController < ApplicationController
       @developer = Developer.new(params[:developer])
       @developer.gamer_id = current_gamer.id
       if @developer.save
-        MySubscription.choose(@developer.id,1)
+        MySubscription.choose(@developer.id,SubscriptionModel.first.id)
         redirect_to choose_sub_path
       else
         flash[:notice] = t(:failed_developer_registration)
