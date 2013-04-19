@@ -2,18 +2,23 @@ Arability::Application.routes.draw do
 
   root :to => 'pages#home'
 
+  scope "/admin" do 
+    get "/login"
+    get "/logout"
+    get "/index"
+    get "/import_csv"
+    get "/delete_trophy"
+    get "/delete_prize"
+
+    post "/login"
+    post "/upload"
+    post "/add_word"
+    post "/add_trophy"
+    post "/add_prize"
+  end
+
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-    get "admin/index"
-    get "admin/login"
-    get "admin/logout"
-    post "admin/wordadd"
-    get "admin/import_csv"
-    post "admin/upload"
-    post "admin/add_trophy"
-    post "admin/add_prize"
-    get "admin/delete_trophy"
-    get "admin/delete_prize"
     match '/auth/google' => 'services#create'
     match '/auth/google/login' => 'services#index' 
     resources :services, :only => [:index, :create, :destroy]
