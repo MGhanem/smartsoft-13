@@ -1,3 +1,36 @@
-// Place all the styles related to the pages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+div.item {
+	height: 390px;
+	text-align: center;
+}
+
+div.item img {
+	margin: auto;
+}
+
+ol.carousel-indicators {
+	width: 50px;
+	position: absolute;
+	margin-left: 50%;
+	margin-right: 50%;
+}
+
+img.game-preview {
+	width: 450px;
+	height: 320px;
+}
+
+div.game-preview-container a {
+	text-decoration: none;
+	margin: 20%;
+	line-height: 30px;
+}
+
+div.game-preview-container div {
+	width: 50%;
+}
+
+div.game-preview-container {
+	
+	margin-top: 5%;
+	text-align: center;
+}
