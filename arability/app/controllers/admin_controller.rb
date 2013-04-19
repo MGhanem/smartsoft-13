@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class AdminController < ApplicationController
-
+  protect_from_forgery
   require 'csv'
 
   layout 'admin'

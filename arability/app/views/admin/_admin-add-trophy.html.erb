@@ -39,7 +39,7 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && (flash[:error][:image] || flash[:error][:image_content_type])? ' error' : ''%>">
+		<div class="control-group<%= flash[:error] && flash[:errortype] == 'addtrophy' && (flash[:error][:image] || flash[:error][:image_content_type] || flash[:error][:image_file_size])? ' error' : ''%>">
 			<label class="control-label">الصورة</label>
 			<div class="controls">
 				<div class="uploader-controls">
@@ -62,6 +62,11 @@
 				<% end %>
 				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:image_content_type] %>
 					<% flash[:error][:image_content_type].each do |er| %>
+						<span class="help-block"><%= er %></span>
+					<% end %>
+				<% end %>
+				<% if flash[:error] && flash[:errortype] == 'addtrophy' && flash[:error][:image_file_size] %>
+					<% flash[:error][:image_file_size].each do |er| %>
 						<span class="help-block"><%= er %></span>
 					<% end %>
 				<% end %>

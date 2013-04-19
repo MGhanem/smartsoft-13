@@ -3,7 +3,6 @@ class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
-  has_many :synonyms
   has_and_belongs_to_many :categories
   validates_presence_of :name 
   validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
@@ -150,6 +149,8 @@ class Keyword < ActiveRecord::Base
     return Keyword.where(approved: false).all
   end
 
+
+
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -185,7 +186,9 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	relevant_first_list
     end
+
   class << self
+
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -214,6 +217,19 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
+
   # author:
   #   Mostafa Hassaan
   # description:
@@ -234,7 +250,6 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-  end
 
   # author:
   #   Mostafa Hassaan
@@ -255,5 +270,6 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
+  end
   end
 end

@@ -1,0 +1,10 @@
+<% if gamer_signed_in? %>
+request_vote_form();
+<% else %>
+	<% if I18n.locale == :ar %>
+	display_error_sign_in("arabic");
+	<% end %>
+	<% if I18n.locale == :en %>
+	display_error_sign_in("english");
+	<% end %>
+<% end %>

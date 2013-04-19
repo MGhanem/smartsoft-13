@@ -3,25 +3,16 @@ ar:
   sign_up: "إنشاء حساب"
   sign_in: "تسجيل الدخول"
   sign_out: "تسجيل خروج"
-  english: "الإنجليزية"
+  english: "English"
   arabic: "العربية"
   email: "البريد الالكتروني"
+  email2: "البريد الالكتروني"
   password: "كلمة السر"
   password_confirmation: "تأكيد كلمة السر"
   username: "اسم المستخدم"
   date_of_birth: "تاريخ الميلاد"
   country: "الدولة"
   education_level: "المستوي التعليمي"
-  search: "اﻟﺒﺤﺚ"
-  search_here: "اﺑﺤﺚ اﻟﻜﻠﻤﺎﺕ ﻫﻨﺎ"
-  keyword_add_success: "ﺗﻤﺖ ﺇﺿﺎﻓﺔ اﻟﻜﻠﻤﺔ ﺑﻨﺠﺎﺡ"
-  keyword_pending: "اﻟﻜﻠﻤﺔ ﻓﻲ اﻧﺘﻈﺎﺭ اﻟﻤﻮاﻓﻘﺔ"
-  keyword_in_wrong_format: "!ﻳﺠﺐ اﻥ ﺗﺤﺘﻮﻱ اﻟﻜﻠﻤﺔ ﻋﻠﻲ اﻷﺣﺮﻑ اﻹﻧﺠﻠﻴﺰﻳﺔ ﺃﻭ اﻟﻌﺮﺑﻴﺔ ﻓﻘﻂ"
-  keyword_suggest_add: "ﻻ ﺗﻮﺟﺪ اﻟﻜﻠﻤﻪ ﻓﻲ ﻗﺎﻋﺪﺓ ﺑﻴﺎﻧﺎﺕ ﻋﺮﺑﻴﻠﻴﺘﻲ؟ ﻫﻞ ﺗﻮﺩ اﻻﺿﺎﻓﻪ؟"
-  click_here: "اﺿﻐﻂ ﻫﻨﺎ"
-  view_collectives: "عرض الإحصائيات الجماعية للكلمة "
-  view_stats: "الإحصائيات"
-  add_to_project: "اضف لمشروعك"
   no_followed_words: "لا توجد كلمات متابعة."
   unfollow_keyword_alert: "لقد تم إلغاء متابعة هذه الكلمة:"
   follow_keyword_alert: "لقد تم متابعة هذه الكلمة:"
@@ -36,18 +27,22 @@ ar:
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"
+  required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
+  formality: "النوع"
   formal: "رسمي"
   slang: "غير رسمي"
   age: "السن"
   from: "من"
   to: "الى"
-  desc: "عن"
+  desc: "الوصف"
   new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
   back: "عودة"
   edit_project: "تعديل المشروع"
+  save_project: "حفظ المشروع"
   import: "استيراد"
   export: "تصدير"
   add_words: "اضف كلمات"
@@ -55,9 +50,13 @@ ar:
   share: "مشاركة"
   delete: "مسح"
   word: "الكلمة"
+  developer_cant_see_project: "ليس بإمكانك الدخول على هذا المشروع"
   meaning: "المعنى"
   help: "مساعدة"
   enter_as_csv: "ادخل الكلمات منفصلة"
+  view_collectives: "عرض الإحصائيات الجماعية للكلمة "
+  view_stats: "الإحصائيات"
+  add_to_project: "اضف لمشروعك"
   votes: "صوت"
   filter: "تصفية الاصوات"
   country: "البلد"
@@ -73,6 +72,49 @@ ar:
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
+  select subscription: "إختر"
+  choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
+  choose_keyword_remaining: "تبقى لك عدد"
+  choose_keywords_remaining2: "كلمة"
+  choose_keyword_table_title: "الكلمة"
+  choose_keyword_table_title2: "المعاني"
+  choose_keyword_table_span: "*جديدة*"
+  choose_keyword_submit: "اضف إلى المشروع"
+  import_csv_title: "استيراد ملف كلمات بصيغة CSV"
+  import_csv_choose_file: "اختيار الملف"
+  import_csv_change_file: "تغيير الملف"
+  import_csv_remove_file: "الغاء"
+  import_csv_submit: "تحميل الملف"
+  import_csv_list1: "لا يجب ان تحتوى الكلمات على ارقام"
+  import_csv_list2: "المعانى غير العربية لن يتم قبولها"
+  import_csv_list3: "يجب ان يكون الملف UTF-8 و بصيغة CSV"
+  import_csv_list4: "بإمكانك ادخل أكثر من مرادف لكلمة لكن أول واحد سيتم استخدامه في مشروعك"
+  import_csv_list5: "بإمكانك تغيير المرادف لاحقا"
+  java_script_disabled: "كن أكثر ذكاء من ذلك"
+  upload_file_error1: "انت لم تقم بإختيار ملف"
+  upload_file_error2: "هذا الملف ليس بتقنية UTF-8"
+  upload_file_error3: "يوجد خطأ بهذا الملف"
+  upload_file_error4: "هذا الملف ليس CSV"
+  upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+  projects_index_error1: "من فضلك سجل كمطور"
+  projects_index_error2: "من فضلك قم بالدخول"
+  projects_index_title: "مشاريع"
+  projects_index_tab1: "مشاريعي"
+  projects_index_tab2: "مشاريع مشتركة معي"
+  projects_index_add: " إضافة مشروع"
+  projects_index_name: "اسم: "
+  projects_index_categories: "فئات: "
+  projects_index_description: "وصف: "
+  projects_index_edit: " تعديل"
+  projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
+  no_categories: "هذا المشروع ليس له فئات"
+  no_description: "هذا المشروع ليس له وصف"
+  description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
+  select subscription: "إختر"
+  error: "اخطاء"
+  cancel: "الغاء"
+  prohibited_project_error: "اخطاء منعت عملية الحفظ"
+  success: "اسشرلايبتاش"
   register_developer: "من فضلك سجل كمطور أولا"
   errors:
     messages:
@@ -91,12 +133,35 @@ ar:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
   activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
     errors:
       models:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: "يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+  views:
+    project:
+       flash_messages:
+         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+  controller:
+    my_subscription:
+        flash_messages:
+         you_cant_share_the_project_with_yourself: 'لا يمكن مشاركة هذا المشروع مع نفسك'
+         Email_for_a_gamer_not_a_developer: 'هذا البريد الالكتروني ليس لمطور'
+         project_has_been_successfully_shared: 'لقد تم مشاركة هذا المشروع بنجاح '
+         already_shared: 'تم مشاركة هذا المشروع سابقا'
+         Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
+         developer_unshared: 'مت عدم مشاركة المشروع'
+         cant_share_the_project: 'لا يمكن مشاركة المشروع'
         keyword:
           attributes:
             name:
@@ -116,13 +181,113 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
+  controller:
+   subscription:
+     messages_errors:
+        you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
+        please_choose: 'من فضلك إختر نظامك'
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
+  follow_word: "تابع الكلمة"
+  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
+  add_word: "اضف الكلمة"
+  Add_words: "إضافة كلمات"
+  Synonym_changed_successfully: "تم تغيير المعنى بنجاح."
+  Failed_to_update_synonym: "فشل تحديث المعنى."
+  synonym_does_not_exist: "المعنى الذي اخترته غير موجود."
+  successfully_added_word_to_project: "تمت إضافة الكلمة بنجاح."
+  failed_to_add_word_to_project: "فشل إضافة الكلمة لمشروعك."
+  word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  remove_from_project: "إزالة من المشروع"
+  word_removed_successfully: "تم إزالة الكلمة بنجاح."
+  word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
+  no_words_in_project: "لا توجد كلمات في هذا المشروع."
+  not_shared: "ةذا المشروع غير مشارك مع احد"
+  not_developer: "يجب أن تشترك كمطور قبل أن تستطيع الإكمال."
+  no_words: "لا يوجد كلمات لاستيرادها."
+  no_project: "المشروع الذي تحاول استيراده غير موجود."
+  file: "ملف"
+  not_in_range: "ليس في الحدود المسموح بها"
+  log_in_google: "ادخل بحساب جوجل"
+  already_registered_developer: "لقد انشأت حساب كمطور من قبل."
+  failed_developer_registration: "فشل إنشاء حساب المطور. تأكد من إدخال المعلومات الصحيحة. "
+  no_developer: "انشئ حساب مطور قبل أن تختار نظام الاشتراك."
+  subscription_model_already_chosen: "لقد اخترت نظام الاشتراك من قبل."
+  success_developer_registration: "تم إنشاء حسابك كمطور بنجاح."
+  choose_subscription_model: "إختر نظام الاشتراك."
+  subscription_model_does_not_exist: "نظام الاشتراك الذي اخترته ليس موجود."
+  register_as_developer: "أدخل بياناتك للاشتراك كمطور"
+  next: "التالي"
+  done: "إنتهاء"
+  first_name: "الاسم الاول"
+  last_name: "إسم العائلة"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
+  not_in_range: "ليس في الحدود المسموح بها"
+  connect_to: "تواصل مع"
+  disconnect_from: "افصل تواصلك مع"
+  facebook: "فيسبوك"
+  my_info: "معلوماتي"
+  social_media: "التواصل الاجتماعي"
+  logged_in_to_fb: "مبروك!! لقد تمت عملية التواصل بنجاح. تمتع بخاصياتك الجديدة."
+  logged_out_of_fb: "تم فصل الفيس بنجاح"
+  shared_on_fb: "مبروك فزت بجائزة الحلوى"
+  error_fb: "شكرا و لكن لا نريد ان نحتل التايملاين الخاص بك"
+  connect_your_account: "يبدو ان حسابك غير متصل بفيسبوك. اضغط على التواصل الاجتماعي و وصل."
+  sign_in_facebook: "يجب ان تسجل دخولك قبل المتابعة"
+  nil_prizes:  "حاولت طلب بيانات غير صالحة."
+  warning: "تحذير!"
+  won_prizes: "مبروك! لقد فزت الجوائز التالية!"
+  sign_in_first: "سجل دخولك أو إشترك لكي تربح جوائز أو لتحقيق إنجازات"
+  scored: "لقد سجلت النقاط التالية "
+  sign_in_first: "سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات"
+  earned_prizes: "الجوائز التي تم الحصول عليها"
+  available_prizes: "الجوائز التي بإمكانك الحصول عليه"
+  didnt_win_prizes: "لم تربح أي جوائز حت الآن"
+  won_all_prizes: "لقد ربحت كل الجوائز"
+  level: "المرحلة"
+  score: "النقاط"
+  must_sign_in: "سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات"
+  trophies_won: "الانجازات التي تم الحصول عليها"
+  trophies_not_won: "الانجازات التي يمكنك الحصول عليها"
+  level: "المرحلة"
+  score: "النقاط"
+  to_prizes: "إلى الجوائز"
+  to_voting: "إلى صفحة التصويت"
+  restart_game: "إعادة اللعبة"
+  scored: "لقد سجلت النقاط التالية "
+  to_prizes: "إلى الجوائز"
+  to_voting: "إلى صفحة التصويت"
+  to_next_level: "إلى المرحلة التالية"
+  restart_game: "إعادة اللعبة"
+  back_to_game: "الرجوع"
+  to_voting: "إلى صفحة التصويت "
   hide_stats: "اخفاء الإحصائيات"
   female: "انثي"
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
-  enter_categories: "ﺎﻠﺘﺼﻔﻳﺓ ﺢﺴﺑ ﺎﻠﻔﺋﺎﺗ"
+  enter_categories: "ابحث في التصنيفات"
   follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
+  must_sign_in: "سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات"
+  trophies_won: "الانجازات التي تم الحصول عليها"
+  trophies_not_won: "الانجازات التي يمكنك الحصول عليها"
+  level: "المرحلة"
+  score: "النقاط"
+  search: "بحث"
+  search_here: "ابحث هنا"
+  keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
