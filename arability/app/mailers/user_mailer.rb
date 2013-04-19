@@ -13,8 +13,8 @@ class UserMailer < ActionMailer::Base
   #   returns a Message object that you can call on deliver to send the email
   # failure:
   #   this method doesnt fail
-  def generic_email(mail_to,reason,message)
-    mail to: mail_to, subject: reason, body: message
+  def generic_email(mail_to, subject, message)
+    mail to: mail_to, subject: subject, body: message
   end
 
   

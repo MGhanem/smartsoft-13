@@ -14,8 +14,9 @@ describe UserMailer do
     gamer.save validate: false
     gamer
   }
-  let(:developer) {Developer.create!(first_name: "firstname",
-        last_name: "lastname", gamer_id: gamer.id)
+  let(:developer) {
+    Developer.create!(first_name: "firstname",
+                      last_name: "lastname", gamer_id: gamer.id)
   }
 
   it "sends follow notification" do
@@ -24,9 +25,9 @@ describe UserMailer do
     mail = UserMailer.follow_notification(developer, keyword, "message")
     mail.to.should eq([gamer.email])
     mail.subject.should match(keyword.name)
-    #mail.body.should match(developer.first_name)
-    #mail.body.should match(keyword.name)
-    #mail.body.should match(synonym.name)
+    mail.body.should match(developer.first_name)
+    mail.body.should match(keyword.name)
+    mail.body.should match(synonym.name)
   end
 
   it "sends invitation" do
