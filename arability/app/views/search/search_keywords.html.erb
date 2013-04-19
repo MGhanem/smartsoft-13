@@ -12,7 +12,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-      <input name="categories" type="text" class="categories-autocomplete" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
+      <input name="categories" type="text" class="categories-autocomplete" autocomplete="off" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
 
       <input name="project_id" type="hidden" value="<%= @project_id %>"/>
 		<% end %>
