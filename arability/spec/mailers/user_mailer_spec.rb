@@ -22,7 +22,7 @@ describe UserMailer do
   it "sends follow notification" do
     success, keyword = Keyword.add_keyword_to_database("test")
     synonym = Synonym.create(:name => "تبت")
-    mail = UserMailer.follow_notification(developer, keyword, "message")
+    mail = UserMailer.follow_notification(developer, keyword, synonym)
     mail.to.should eq([gamer.email])
     mail.subject.should match(keyword.name)
     mail.body.should match(developer.first_name)
