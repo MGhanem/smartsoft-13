@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # params:
   #   locale: from the url if exists
   # success:
-  #   --
+  #   sets the current locale for all views
   # failure:
   #   --
   def set_locale
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # params:
   #   locale: from the url if exists
   # success:
-  #   --
+  #   adds current locale to the urls if not specified
   # failure:
   #   --
   def default_url_options(options={})
