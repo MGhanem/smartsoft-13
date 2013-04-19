@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "categories" %>
+<% end %>
 <div class="row">
 	<div class="span12">
 		<%= form_tag(search_keywords_path, :method => "post", :class => "form-search") do %>
@@ -9,7 +12,7 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-      <input name="categories" type="text" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
+      <input name="categories" type="text" class="categories-autocomplete" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
