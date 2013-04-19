@@ -55,12 +55,11 @@ Arability::Application.routes.draw do
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
-
-      get "projects/remove_developer_from_project"
+      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      # get "projects/remove_developer_from_project"
       match "projects/:id/share" => "projects#share", :as => "share_project"
-      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
-      get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"

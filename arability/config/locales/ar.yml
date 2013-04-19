@@ -155,13 +155,13 @@ ar:
   controller:
     my_subscription:
         flash_messages:
-         you_cant_share_the_project_with_yourself: 'لا يمكن مشاركة هذا المشروع مع نفسك'
-         Email_for_a_gamer_not_a_developer: 'هذا البريد الالكتروني ليس لمطور'
-         project_has_been_successfully_shared: 'لقد تم مشاركة هذا المشروع بنجاح '
-         already_shared: 'تم مشاركة هذا المشروع سابقا'
-         Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
-         developer_unshared: 'مت عدم مشاركة المشروع'
-         cant_share_the_project: 'لا يمكن مشاركة المشروع'
+          you_cant_share_the_project_with_yourself: 'لا يمكن مشاركة هذا المشروع مع نفسك'
+          Email_for_a_gamer_not_a_developer: 'هذا البريد الالكتروني ليس لمطور'
+          project_has_been_successfully_shared: 'لقد تم مشاركة هذا المشروع بنجاح '
+          already_shared: 'تم مشاركة هذا المشروع سابقا'
+          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
+          developer_unshared: 'مت عدم مشاركة المشروع'
+          cant_share_the_project: 'لا يمكن مشاركة المشروع'
         keyword:
           attributes:
             name:
@@ -174,6 +174,10 @@ ar:
               blank: "برجاء إدخال فئة"
               invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
               taken: "هذه فئة موجودة بالفعل"
+    subscription:
+      messages_errors:
+        you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
+        please_choose: 'من فضلك إختر نظامك'
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -181,11 +185,7 @@ ar:
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
   stats_no_votes: "عذرا هذا المعني لم يحصل علي اي اصوات بعد!!"
-  controller:
-   subscription:
-     messages_errors:
-        you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
-        please_choose: 'من فضلك إختر نظامك'
+
   no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
