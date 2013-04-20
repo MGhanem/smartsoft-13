@@ -14,8 +14,8 @@ class Synonym < ActiveRecord::Base
     end
   end
 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => Synonym.find_loacle 
+  #validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
+  #  :message => Synonym.find_loacle 
 
   class << self
     include StringHelper
@@ -144,6 +144,21 @@ class Synonym < ActiveRecord::Base
       return new_synonym.save
     else
       return false
+    end
+  end
+
+  def self.record_synonym_full_output(synonym_name, keyword_id, approved = false)
+    new_synonym = Synonym.new
+    new_synonym.name = synonym_name
+    new_synonym.keyword_id = keyword_id    
+    if synonym_name.blank?
+      return false, new_synonym
+    elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
+      return false, new_synonym
+    elsif Keyword.exists?(id: keyword_id)
+      return new_synonym.save, new_synonym
+    else
+      return false, new_synonym
     end
   end
 
