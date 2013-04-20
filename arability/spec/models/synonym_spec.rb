@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 
-describe Synonym do 
+describe Synonym, nourhan: true  do 
 
     let(:k){
       k = Keyword.new
@@ -83,7 +83,6 @@ describe Synonym do
 
   describe "get_visual_stats_gender" do
   it "returns the genders of voters and correponding percenteges of voters belong to each gender" do
-    puts Vote.all
    s.get_visual_stats_gender.should =~ [[I18n.t(:male), 50], [I18n.t(:female), 50]]
   end
 
