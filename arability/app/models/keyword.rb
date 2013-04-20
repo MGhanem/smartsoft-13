@@ -149,7 +149,9 @@ class Keyword < ActiveRecord::Base
     return Keyword.where(approved: false).all
   end
 
-
+  def self.list_approved_keywords
+    Keyword.where(approved: true).all
+  end
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
