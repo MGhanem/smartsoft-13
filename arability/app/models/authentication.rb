@@ -20,6 +20,7 @@ class Authentication < ActiveRecord::Base
       authentication.token = auth["credentials"]["token"]
       authentication.token_secret = auth["credentials"]["secret"]
       authentication.gamer_id = current_gamer.id
+      authentication.email = auth["email"]
     end
   end
 
