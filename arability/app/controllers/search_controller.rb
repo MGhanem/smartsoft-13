@@ -58,11 +58,11 @@ class SearchController < BackendController
     search = params["search"]
     similar_keywords =
       Keyword.get_similar_keywords(search, [])
-    keyword_name = []
+    keyword_names = []
     similar_keywords.each do |keyword|
-      keyword_name.append(keyword.name)
+      keyword_names.append(keyword.name)
     end
-    render json: keyword_name
+    render json: keyword_names
   end
 
 	#Description:

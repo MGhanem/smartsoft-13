@@ -1,14 +1,14 @@
 <div class="row">
 	<div class="span12">
-		<%= form_tag(search_path, :method => "post", :class => "form-search form-horizontal", :style => "margin-bottom:0px;") do %>
+		<%= form_tag(search_path, method: "post", :class => "form-search form-horizontal", style: "margin-bottom:0px;") do %>
 			<input type="hidden" value="<%= @project_id %>" name="project_id">
-			<%= content_tag(:div, :class => 'input-append') do %>
+			<%= content_tag(:div, :class => "input-append") do %>
 				<% text_field_tag(:search, @search_keyword,
-													:placeholder => t(:search_here),
+													placeholder: t(:search_here),
 													:class => 'search-query autocomplete',
 													autocomplete: "off") + %>
-				<% button_tag(:type => "submit",:class => 'btn') do %>
-					<% content_tag(:i, nil,:class => "icon-search") %>
+				<% button_tag(type: "submit", :class => "btn") do %>
+					<% content_tag(:i, nil, :class => "icon-search") %>
 				<% end %>
 			<% end %>
 
@@ -18,7 +18,7 @@
 							<span id="filter_btn" class="icon-plus"></span>
 							<script type="text/javascript">
 								function toggle_me(){
-									$("#filter_btn").toggleClass('icon-minus');
+									$("#filter_btn").toggleClass("icon-minus");
 								}
 							</script>
 						</button>
@@ -26,45 +26,39 @@
 						<div id="filter" class="collapse"> 
 							<div style="padding:10px;">
 								<div class="control-group">
-									<%= label_tag t(:country), nil, :class => "control-label", :style => "width:80px;" %>
+									<%= label_tag t(:country), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
 									<% if I18n.locale == :ar %>
-										<%= select_tag :country, options_for_select([["مصر","Egypt"],["لبنان","Lebanon"],["الاردن","Jordan"],
-											["السعودية","Saudi Arabia"],["ليبيا","Libya"],["الامارات","United Arab Emirates"],["قطر","Qatar"],
-											["الكويت","Kuwait"],["العراق","Iraq"],["الجزأئر","Algeria"],["المغرب","Morocco"],
-											["البحرين","Bahrain"],["موريتانيا","Mauritania"],["الصومال","Somalia"],["السودان","Sudan"],
-											["تونس","Tunisia"],["اخري","others"]]), :include_blank => true, :class => "control" %>
+										<%= select_tag :country, options_for_select([["مصر", "Egypt"], ["لبنان", "Lebanon"], ["الاردن", "Jordan"],	["السعودية", "Saudi Arabia"], ["ليبيا", "Libya"], ["الامارات", "United Arab Emirates"], ["قطر", "Qatar"], ["الكويت", "Kuwait"], ["العراق", "Iraq"], ["الجزأئر", "Algeria"], ["المغرب", "Morocco"], ["البحرين", "Bahrain"], ["موريتانيا", "Mauritania"], ["الصومال", "Somalia"], ["السودان", "Sudan"],	["تونس", "Tunisia"], ["اخري", "others"]]), include_blank: true, :class => "control" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", 
-	                  	"United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", "Bahrain", "Mauritania", 
-	                  	"Somalia", "Sudan", "Tunisia", "others"]), :include_blank => true, :class => "control" %>
+	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", "Bahrain", "Mauritania", "Somalia", "Sudan", "Tunisia", "others"]), include_blank: true, :class => "control" %>
                   <% end %>
 								</div>
 								<div class="control-group">
-									<%= label_tag t(:gender), nil, :class => "control-label", :style => "width:80px;" %>
+									<%= label_tag t(:gender), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<%= select_tag :gender, options_for_select([[t(:male), 'male'], [t(:female), 'female']]), 
-										:include_blank => true,  :class => "control" %>
-								</div>	
-								<div class="control-group">
-									<%= label_tag t(:age_from), nil, :class => "control-label", :style => "width:80px;" %>
-									&nbsp;
-									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
-									&nbsp;
-									<%= label_tag t(:age_to), nil, :style => "width:20px;" %>
-									&nbsp;
-									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;" %>
-									&nbsp;
-									<span style="opacity:0.9;font-size:10pt;"><i><%= t(:age_range) %></i></span>
+									<%= select_tag :gender, options_for_select([[t(:male), "male"], [t(:female), "female"]]), 
+										include_blank: true, :class => "control" %>
 								</div>
 								<div class="control-group">
-									<%= label_tag t(:education), nil, :class => "control-label", :style => "width:80px;" %>
+									<%= label_tag t(:age_from), nil, :class => "control-label", style: "width:80px;" %>
+									&nbsp;
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", style: "width:70px;" %>
+									&nbsp;
+									<%= label_tag t(:age_to), nil, style: "width:20px;" %>
+									&nbsp;
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", style: "width:70px;" %>
+									&nbsp;
+									<span style="opacity:0.9; font-size:10pt;"><i><%= t(:age_range) %></i></span>
+								</div>
+								<div class="control-group">
+									<%= label_tag t(:education), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
 									<% if I18n.locale == :ar %>
-										<%= select_tag :education, options_for_select([['مدرسة','School'],['جامعة','University'],['خريج','Graduate']]), :include_blank => true,  :class => "control" %>
+										<%= select_tag :education, options_for_select([["مدرسة", "School"], ["جامعة", "University"],["خريج", "Graduate"]]), include_blank: true, :class => "control" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),
-	                  :include_blank => true, :class => "control" %>
+	                  <%= select_tag :education, options_for_select(["School", "University", "Graduate"]),
+	                  	include_blank: true, :class => "control" %>
                   <% end %>
 								</div>	
 							</div>
@@ -74,7 +68,6 @@
 		<% end %>
 	</div>
 </div>
-
 
 <% if @display_add %>
 	<div class="well">
@@ -222,12 +215,12 @@
 <% end %>
 
 <script type="text/javascript">
-	$('.autocomplete').typeahead({
+	$(".autocomplete").typeahead({
 		source: fetch_keywords,
 		items: 4
 	});
 	function fetch_keywords(keyword, callback){
-		$.post('<%= autocomplete_path %>', { search: keyword }, function(data, _, _){
+		$.post("<%= autocomplete_path %>", { search: keyword }, function(data, _, _){
 			callback(data);
 		})
 	}
