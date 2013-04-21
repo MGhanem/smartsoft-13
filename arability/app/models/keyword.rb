@@ -123,7 +123,7 @@ class Keyword < ActiveRecord::Base
   #  returns true on saving the disapproval correctly in the database
   # Failure:
   #  returns false if the keyword doesnot exist in the database
-  #  or if the disapproval failed to be saved in the database 
+  #     or if the disapproval failed to be saved in the database 
   def self.disapprove_keyword(keyword_id)
     if Keyword.exists?(id: keyword_id)
       keyword = Keyword.find(keyword_id)
