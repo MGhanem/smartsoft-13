@@ -39,12 +39,12 @@ class ProjectsController < BackendController
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
-  def index  
+  def index  #i changed the public variable
     if current_gamer != nil 
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @my_projects = Project.where(:owner_id => developer.id)
-        @shared_projects = developer.projects_shared
+      @developer = Developer.where(:gamer_id => current_gamer.id).first
+      if @developer != nil
+        @my_projects = Project.where(:owner_id => @developer.id)
+        @shared_projects = @developer.projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         redirect_to developers_new_path
@@ -521,5 +521,13 @@ end
       flash[:notice] = t(:not_developer)
       render "pages/home"
     end
+  end
+  def remove_project_from_developer
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    dev.projects_shared.delete(project)
+    dev.save
+    flash[:notice] =  I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    redirect_to :action => "index",:controller => "projects"
   end 
 end
