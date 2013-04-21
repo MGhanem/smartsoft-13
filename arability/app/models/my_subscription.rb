@@ -138,12 +138,6 @@ class MySubscription < ActiveRecord::Base
        subscription.save
      end
     end
-<<<<<<< HEAD
-
-  end
-end
-=======
->>>>>>> da4c7ba3c5c2fed019884467c6dd407f30794cf8
 
     # Author:
     #  Noha Hesham
