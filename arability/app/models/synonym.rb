@@ -144,7 +144,7 @@ class Synonym < ActiveRecord::Base
   #   of synonym name or an incorrect keyword id for
   #   an unavaialable keyword in database or a dupplicate synonym for the same
   #   keyword.
-  def self.record_synonym(synonym_name, keyword_id, approved = false)
+  def self.record_synonym(synonym_name, keyword_id, approved = true)
     new_synonym = Synonym.new
     new_synonym.name = synonym_name
     new_synonym.keyword_id = keyword_id
@@ -172,7 +172,7 @@ class Synonym < ActiveRecord::Base
   #   to database due to synonym name not being in arabic or an incorrect
   #   keyword id for an unavaialable keyword in database or a dupplicate synonym
   #   for the same keyword.
-  def self.record_synonym_full_output(synonym_name, keyword_id, approved = false)
+  def self.record_synonym_full_output(synonym_name, keyword_id, approved = true)
     new_synonym = Synonym.new
     new_synonym.name = synonym_name
     new_synonym.keyword_id = keyword_id
