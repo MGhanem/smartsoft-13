@@ -72,7 +72,10 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+      match '/developer/:id/destroy' => "projects#destroy"
+      get "projects/destroy"
       resources :projects
+
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
