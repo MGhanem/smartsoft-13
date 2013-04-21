@@ -74,7 +74,8 @@
           <% while count<@words.count %>
             <tr>
               <td style="text-align:center">
-                <%= @words[count].name %>
+                <% keyword = @words[count].name%>
+                <%= link_to @words[count].name , search_path(search: keyword) %>
               </td>
               <td style="text-align:center">
                 <%= @synonyms[count].name %>
