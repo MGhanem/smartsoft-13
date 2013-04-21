@@ -8,7 +8,7 @@ module StringHelper
   def is_english_string(text)
     text = text.strip
     text = text.split(" ").join("")
-    if text.match /^[a-zA-Z]+$/
+    if text.match /^[a-zA-Z ]+$/
       true
     else
       false
