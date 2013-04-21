@@ -5,7 +5,6 @@ class Synonym < ActiveRecord::Base
   has_many :votes
   has_many :gamers, :through => :vote
 
-
   def self.find_loacle
     if I18n.locale == :ar 
       "هذا المعنى ليس باللغة العربية"
@@ -14,8 +13,20 @@ class Synonym < ActiveRecord::Base
     end
   end
 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => Synonym.find_loacle 
+  def existing?
+    Keyword.exists?(id: keyword_id)
+  end
+
+  validates_format_of :name, with: /^([\u0621-\u0652 ])+$/,
+    message: Synonym.find_loacle 
+
+  validates_presence_of :name, message: "empty synonym name"
+
+  validates :existing?, inclusion: { :in => [true] },
+    message: "There is no such keyword id in database"
+
+  validates_uniqueness_of :name, scope: :keyword_id,
+    message: "This is a dupplicate synonym entery for the same keyword"
 
   class << self
     include StringHelper
@@ -131,20 +142,41 @@ class Synonym < ActiveRecord::Base
   # Failure: 
   #   returns false if word not saved to database due to incorrect expression
   #   of synonym name or an incorrect keyword id for
-  #   an unavaialable keyword in database.
-  def self.record_synonym(synonym_name, keyword_id, approved = false)
-    if synonym_name.blank?
-      return false
-    elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
-      return false
-    elsif Keyword.exists?(id: keyword_id)
-      new_synonym = Synonym.new
-      new_synonym.name = synonym_name
-      new_synonym.keyword_id = keyword_id
-      return new_synonym.save
-    else
-      return false
-    end
+  #   an unavaialable keyword in database or a dupplicate synonym for the same
+  #   keyword.
+  def self.record_synonym(synonym_name, keyword_id, approved = true)
+    new_synonym = Synonym.new
+    new_synonym.name = synonym_name
+    new_synonym.keyword_id = keyword_id
+    return new_synonym.save
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   This is the modified function of "record_synonym". Feature adds synonym to
+  #   database and returns a boolean result and the new synonym model
+  #   indicatiing success or failure of saving, and the synonym model to look
+  #   for reason of saving failure.
+  # Parameters:
+  #   synonym_name: string input parameter that represents the synonym name.
+  #   keyword_id: integer input parameter representing the keyword id
+  #     the synonym points to.
+  #   approved: an optional boolean input parameter with a default false
+  #     represents if an admin has approved a synonym on database or not.
+  # Success:
+  #   this method returns true and the new synonym model if
+  #     the vote has been recorded.
+  # Failure: 
+  #   returns false and uncompleted model for the new synonym if word not saved
+  #   to database due to synonym name not being in arabic or an incorrect
+  #   keyword id for an unavaialable keyword in database or a dupplicate synonym
+  #   for the same keyword.
+  def self.record_synonym_full_output(synonym_name, keyword_id, approved = true)
+    new_synonym = Synonym.new
+    new_synonym.name = synonym_name
+    new_synonym.keyword_id = keyword_id
+    return new_synonym.save , new_synonym
   end
 
   #Author: Nourhan Zakaria
