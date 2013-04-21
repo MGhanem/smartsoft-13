@@ -56,15 +56,14 @@ class Synonym < ActiveRecord::Base
   # Author:
   #   Mirna Yacout
   # Description:
-  #   This method is to record the disapproval of the admin to a certain synonym 
-  #   in the database
+  #   This method is to record the disapproval of the admin to a certain synonym in the database
   # Parameters:
   #   id: the id of the synonym to be disapproved
   # Success:
   #   returns true on saving the disapproval correctly in the database
   # Failure:
   #   returns false if the synonym doesnot exist in the database
-  #   or if the disapproval failed to be saved in the database     
+  #      or if the disapproval failed to be saved in the database     
 	def self.disapprove_synonym(synonym_id)
     if Synonym.exists?(id: synonym_id)
       synonym = Synonym.find(synonym_id)
