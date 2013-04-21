@@ -40,6 +40,17 @@ class SearchController < BackendController
     @categories = categories_array.join(", ")
   end
 
+  def keyword_autocomplete
+    search = params["search"]
+    similar_keywords =
+      Keyword.get_similar_keywords(search, [])
+    keyword_name = []
+    similar_keywords.each do |keyword|
+      keyword_name.append(keyword.name)
+    end
+    render json: keyword_name
+  end
+
 	#Description:
   #   search for synonyms for a particular keyword
   # Author:
