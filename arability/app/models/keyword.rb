@@ -134,6 +134,7 @@ class Keyword < ActiveRecord::Base
       return false
     end
   end
+
   # author:
   #   Omar Hossam
   # Description:
@@ -141,7 +142,7 @@ class Keyword < ActiveRecord::Base
   # Parameters:
   #   None.
   # Success: 
-  #   takes no arguments and returns to the admin a list containing the keywords.
+  #   takes no arguments and returns to the admin a list containing the keywords
   #   that are pending for approval in the database.
   # Failure:
   #   returns an empty list if no words are pending for approval.
@@ -149,8 +150,34 @@ class Keyword < ActiveRecord::Base
     return Keyword.where(approved: false).all
   end
 
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all approved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are approved in the database.
+  # Failure:
+  #   returns an empty list if no words are approved.
   def self.list_approved_keywords
     Keyword.where(approved: true).all
+  end
+
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all reported keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are reported by users in the database.
+  # Failure:
+  #   returns an empty list if no words are reported.
+  def self.list_reported_keywords
+    Keyword.where(reported: true).all
   end
 
     # Author:
