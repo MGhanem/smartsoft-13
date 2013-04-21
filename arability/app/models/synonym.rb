@@ -17,14 +17,16 @@ class Synonym < ActiveRecord::Base
     Keyword.exists?(id: keyword_id)
   end
 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ])+$/,
-    :message => Synonym.find_loacle 
+  validates_format_of :name, with: /^([\u0621-\u0652 ])+$/,
+    message: Synonym.find_loacle 
 
-  validates_presence_of :name
+  validates_presence_of :name, message: "empty synonym name"
 
-  validates :existing?, :inclusion => { :in => [true] }
+  validates :existing?, inclusion: { :in => [true] },
+    message: "There is no such keyword id in database"
 
-  validates_uniqueness_of :name, scope: :keyword_id 
+  validates_uniqueness_of :name, scope: :keyword_id,
+    message: "This is a dupplicate synonym entery for the same keyword"
 
   class << self
     include StringHelper
