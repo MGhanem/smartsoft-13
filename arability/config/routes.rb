@@ -19,14 +19,10 @@ Arability::Application.routes.draw do
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-    match '/auth/google' => 'services#create'
-    match '/auth/google/login' => 'services#index' 
-    resources :services, :only => [:index, :create, :destroy]
-
-
+    
     # required for routing by the devise module(gem)
-    devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-    devise_for :gamers
+    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    # devise_for :gamers
     devise_for :gamers do 
       get '/gamers/sign_out' => 'devise/sessions#destroy' 
     end
@@ -48,14 +44,11 @@ Arability::Application.routes.draw do
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-    match '/authentications/twitter' => 'authentications#twitter'
-    get "authentications/twitter"
     get "authentications/remove_twitter_connection"
-    match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
-    match '/auth/failure', :to => 'authentications#twitter'
-    get "authentications/twitter_hall_of_fame"
+    match '/auth/failure', :to => 'authentications#twitter_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
 
     scope "developers/" do 

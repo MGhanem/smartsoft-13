@@ -7,10 +7,6 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 gem 'jasmine'
-#gem 'omniauth'
-
-gem 'omniauth-google-oauth2'
-#gem "oa-openid"
 
 gem 'certified'
 # Gems required for automated documentation
