@@ -44,6 +44,8 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  follow: "Follow"
+  following: "Following"
   select subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
