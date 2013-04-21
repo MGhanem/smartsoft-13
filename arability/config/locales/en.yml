@@ -183,17 +183,7 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
-
-  activerecord:
-    attributes:
-      project:
-        name: 'Name'
-        minAge: 'The minimum age'
-        maxAge: 'The maximum age'
-        categories: "Categories"
-        description: "Description"
   log_in_google: "Sign In with Google"
-
   no_categories: "This project has no categories"
   no_description: "This project has no description"
   register_developer: "Please register as a developer first"
@@ -247,7 +237,7 @@ en:
   restart_game: "Restart Game"
   back_to_game: "Back"
   to_voting: "To Voting Page"
-  restart_game: "Restart Game" 
+  restart_game: "Restart Game"
   country: "Country:"
   age_from: "Age from:"
   age_to: "to:"
@@ -283,3 +273,11 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  activerecord:
+    attributes:
+      project:
+        name: "Name"
+        minAge: "The minimum age"
+        maxAge: "The maximum age"
+        categories: "Categories"
+        description: "Description"
