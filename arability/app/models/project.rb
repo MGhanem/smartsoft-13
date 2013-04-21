@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-  has_and_belongs_to_many :shared_with, :class_name => "Developer"
   has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"

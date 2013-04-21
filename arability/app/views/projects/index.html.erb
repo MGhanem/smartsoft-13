@@ -54,9 +54,9 @@
   <% end %>
   
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% end %>
   <br />
 
@@ -98,9 +98,9 @@
   <% end %>
 
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% end %>
   <br />
                 </div>
@@ -157,11 +157,6 @@
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
-  <% else %>
-    <a class="btn pull-right" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
-  <% end %>
   <br />
 </div>
     </td>
@@ -198,12 +193,6 @@
     <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
-  <% else %>
-    <a class="btn pull-right" href="/developers/developer/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% end %>
   <br />
 </div>

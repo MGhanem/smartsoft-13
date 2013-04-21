@@ -22,9 +22,10 @@ class ProjectsController < BackendController
  #   project is not deleted
   def destroy
     @project = Project.find(params[:id])
+
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to :action => "index",:controller => "projects"}
       format.json { head :no_content }
     end
   end

@@ -72,8 +72,8 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
-      match '/developer/:id/destroy' => "projects#destroy"
-      get "projects/destroy"
+      match '/projects/:id/destroy' => "projects#destroy"
+      put "projects/destroy"
       resources :projects
 
 
