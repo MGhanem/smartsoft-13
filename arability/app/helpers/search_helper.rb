@@ -1,6 +1,11 @@
 module SearchHelper
 
+  @@GENDER = 0
+  @@COUNTRY = 1
+  @@AGE = 2
+  @@EDUCATION = 3
 
+  
   # author:
   #   Mostafa Hassaan
   # description:
@@ -96,6 +101,7 @@ module SearchHelper
                    :name=> 'Browser share',
                    :borderWidth => 0.7,
                    :data=>  stats
+
           }
           f.series(series)
           f.options[:title][:text] = header
@@ -132,3 +138,4 @@ module SearchHelper
   end
 
 end
+

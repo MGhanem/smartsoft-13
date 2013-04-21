@@ -1,7 +1,2 @@
-<h1>Pages#home</h1>
+<%= render 'game-intro' %>
 
-<p>Find me in app/views/pages/home.html.erb</p>
-
-<% if gamer_signed_in? %>
-<h3><%= link_to t(:my_projects), :controller => "projects", :action => "index" %></h3>
-	<% end %>

@@ -3,7 +3,6 @@ class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
-  has_many :synonyms
   has_and_belongs_to_many :categories
   validates_presence_of :name 
   validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
@@ -114,26 +113,28 @@ class Keyword < ActiveRecord::Base
     return keyword
   end
 
-  class << self
   # Author:
-  #  Mirna Yacout
+  #   Mirna Yacout
   # Description:
-  #  This method is to record the aproval of the admin to a certain keyword in the database
+  #   This method is to record the disapproval of the admin to a certain keyword in the database
   # Parameters:
-  #  id: the id of the keyword to be approved
+  #   id: the id of the keyword to be disapproved
   # Success:
-  #  returns true on saving the approval correctly in the database
+  #   returns true on saving the disapproval correctly in the database
   # Failure:
-  #  returns false if the keyword doesnot exist in the database
-  #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
-        keyword.approved = true
-        return keyword.save
-      end
-      return false
+  #   returns false if the keyword doesnot exist in the database
+  #   or if the disapproval failed to be saved in the database 
+  def self.disapprove_keyword(keyword_id)
+    if Keyword.exists?(id: keyword_id)
+      keyword = Keyword.find(keyword_id)
+      keyword.approved = false
+      return keyword.save
     end
+    return false
+  end
+  
+  class << self
+
   end
   # author:
   #   Omar Hossam
@@ -149,6 +150,7 @@ class Keyword < ActiveRecord::Base
   def self.list_unapproved_keywords
     return Keyword.where(approved: false).all
   end
+
 
 
     # Author:
@@ -217,6 +219,19 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
+
   # author:
   #   Mostafa Hassaan
   # description:
@@ -237,7 +252,6 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-  end
 
   # author:
   #   Mostafa Hassaan
@@ -258,5 +272,6 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
+  end
   end
 end
