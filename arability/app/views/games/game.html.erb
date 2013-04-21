@@ -1,0 +1,288 @@
+<script type="text/javascript" charset="utf-8">
+
+  var words;
+  var cache = "";
+  var nav_locked = false;
+
+  function setWordsArray(){
+    for(var x=0; x < successfulWords.length;x++){
+      successfulWords[x]=successfulWords[x].toLowerCase();
+    }
+    words=successfulWords;
+  }
+
+  
+  function getScoreOnly(score) {
+    clear();
+    $.get("/games/get_score_only?score=" + score);
+  }
+  function clear() {
+    $("#zone").empty();
+  }
+
+  function get_words(){
+    return words;
+  }
+
+  function check_empty_words(){
+    if(words.length == 0){
+        if(win == true){
+         getTrophies(level, score);
+      }
+      else{
+        getScoreOnly(score);
+      }
+      return true;
+    }else{
+      return false;
+    }
+  } 
+
+  function have_to_sign_in(){
+    $.post("/games/vote_errors.js");
+  }
+
+  function display_error_sign_in(locale){
+    $('.zone').empty();
+    if(locale == "english"){
+      $('.zone').append('<div class=\"vote_form\" style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;">' +
+        '<p>You have to be signed in to display vote form</p></div>');
+    }
+    if(locale == "arabic"){
+      $('.zone').append('<div class=\"vote_form\"style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;" >' +
+        '<p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
+    }
+  }
+
+  function request_vote_form(){
+    $('.zone').empty();
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
+    if(check_empty_words()){
+      return;
+    }
+    else{
+      var first_word = words.shift();
+      $.post("/games/vote.js", { word: first_word});
+    }
+  }
+
+
+
+  function getTrophies(level, score) {
+    clear();
+    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getScore() {
+    return 123456;
+  }
+
+  function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }    
+    clear();
+    $.get("/games/showprizes");
+  }
+
+  function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    clear();
+    $.get("/games/showtrophies");
+  }
+  // function  setLevelTitle(){
+  //   <% if I18n.locale==:ar %>
+  //   levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
+  //   <% else I18n.locale==:en %>
+  //    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
+  //   <% end %>
+  //   return levelTitle; 
+  // }
+
+
+function setButtons(){
+    <% if I18n.locale==:ar %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
+    <% else I18n.locale==:en %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
+    <% end %>
+  }
+
+
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  function getScore() {
+    return 123456;
+  }
+
+
+  function setLevelPopUpTitle(){
+    <% if I18n.locale==:ar %>
+    levelPopUpTitle = 'مرحلة رقم';
+    <% else I18n.locale==:en %>
+    levelPopUpTitle = 'Level';
+    <% end %> 
+  }
+  // Author:
+  //   Omar Hossam.
+  // Description:
+  //   a twitter image is placed on page and links to twitter to tweet an
+  //   invitation to the website's link.
+  // Parameters:
+  //   None.
+  // Success:
+  //   Gamer presses on the image and goes to twitter page to tweet an
+  //   invitation to the website
+  // Failure:
+  //   None.
+  // Author:
+  //   Amr Abdel-raouf
+  // Description:
+  //   Displays the static html where a user can invite from facebook
+  // Params:
+  //   None
+  // Success:
+  //   The html is rendered and a button appears where on click it posts
+  //   an invitation on facebook
+  // Failure:
+  //   None
+  function inviteFriends(){
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    clear();
+    <%if I18n.locale == :ar %>
+    $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+    $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;right:190px;"></a>');
+     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;right:190px;"></a>')
+     <% else I18n.locale == :en %>
+     $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+     $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;left:190px;"></a>');
+     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;left:190px;"></a>')
+     <% end %>
+  }
+  
+  function setScoreTitle(){
+    <% if I18n.locale==:ar %>
+    document.getElementById('game-score').innerHTML = score + ' :نقاط'
+    <% else I18n.locale==:en %>
+    document.getElementById('game-score').innerHTML = 'Score: ' + score;
+    <% end %>
+  }
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    var lists = $("[id*='navItems']");
+    lists.addClass("disabled");
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    var lists = $("[id*='navItems']");
+    lists.removeClass("disabled");
+    nav_locked = false;
+  }
+
+  function hallOfFame(){
+    if(nav_locked == true){
+      return;
+    }
+    clear();
+    <% if I18n.locale==:en %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
+    <% else I18n.locale==:ar %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
+    <% end %>
+    $('#loading-server').fadeTo(0,0);
+    $('#loading-server').fadeTo(1000,1);
+    $('#loading-server').fadeTo(1000,0);
+    $.get("/games/halloffame");
+  }
+
+
+
+</script>
+
+
+
+
+<div class="game-zone">
+  <div class="game-nav">
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
+      الرتبة
+    </div>
+
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
+      جوائز
+  </div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
+      الإنجازات
+    </div>
+    <div class="nav-box btn btn-inverse" id="navItems">
+     بروفيل
+    </div>
+    <div class="nav-box btn btn-inverse" id="navItems">
+
+     إعدادات
+    </div>
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
+      دعوات
+    </div>
+
+  </div>
+
+  <% if I18n.locale==:ar %>
+  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+
+    <% else I18n.locale==:en %>
+    <div class="zone" id="zone">
+      <% end %> 
+    <div class="divaya">
+      <% if I18n.locale==:ar %>
+    <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
+    <div class="game-lang">
+      <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
+      <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
+      <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
+    </div>
+    <% else I18n.locale==:en %>
+    <h2 class="lang-header">Pick the language you want to play with</h2><br>
+    <div class="game-lang">
+      <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
+      <button class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button><br><br><br><br>
+      <button class="btn btn-warning both-btn" onclick="setLang(2)">Both</button>
+    </div>
+    <% end %>
+    </div>
+
+  </div>
+</div>

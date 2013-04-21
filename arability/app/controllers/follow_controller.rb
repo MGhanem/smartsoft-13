@@ -1,4 +1,3 @@
-
 class FollowController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
@@ -6,21 +5,21 @@ class FollowController < BackendController
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function creates relation between a develoepr and a keyword
+  #   function creates relation between a develoepr and a keyword
   # params:
-  #     keyword_id: id of the keyword to follow
-  #     gamer_id: id used to get the developer
+  #   keyword_id: id of the keyword to follow
+  #   gamer_id: id used to get the developer
   # success:
-  #     calls follow method in Developer model and with needed parameters 
-  #       to create the realtion between the developer and the keyword
-  #         , returning true.
-  #           Then it redirects to the search page again with a success flash 
-  #             to alert the developer that the relation has been created
+  #   calls follow method in Developer model and with needed parameters 
+  #   to create the realtion between the developer and the keyword,
+  #   returning true.
+  #   Then it redirects to the search page again with a success flash 
+  #   to alert the developer that the relation has been created
   # failure:
-  #     fails if the relation between the developer and the keyword already 
-  #       exists, returning false. Then it redirects the developer to the 
-  #         search page with a failure flash to alert the developer that the
-  #           relation failed.
+  #   fails if the relation between the developer and the keyword already 
+  #   exists, returning false. Then it redirects the developer to the 
+  #   search page with a failure flash to alert the developer that the
+  #   relation failed.
   def follow
     developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids = developer.keyword_ids
@@ -37,23 +36,22 @@ class FollowController < BackendController
     end
   end
 
-
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function removes relation between a develoepr and a keyword
+  #   function removes relation between a develoepr and a keyword
   # params:
-  #     keyword_id: id of the keyword to unfollow
-  #     gamer_id: id used to get the developer
+  #   keyword_id: id of the keyword to unfollow
+  #   gamer_id: id used to get the developer
   # success:
-  #     calls unfollow method in Developer model and with needed parameters 
-  #       to remove the realtion between the developer and the keyword
-  #         , returning true.
-  #           Then it redirects to the search page again with a success flash 
-  #             to alert the developer that the relation has been remove
+  #   calls unfollow method in Developer model and with needed parameters 
+  #   to remove the realtion between the developer and the keyword,
+  #   returning true.
+  #   Then it redirects to the search page again with a success flash 
+  #   to alert the developer that the relation has been remove
   # failure:
-  #     returns false if the relation didn't already exsist in the database
-  def unfollow
+  #   returns false if the relation didn't already exsist in the database
+  def unfollow   
     word = Keyword.where(id: params[:keyword_id]).first
     if word != nil
       developer = Developer.where(gamer_id: current_gamer.id).first
@@ -69,13 +67,13 @@ class FollowController < BackendController
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function returns a hash with all keywords followed by a developer
+  #   function returns a hash with all keywords followed by a developer
   # params:
-  #     gamer_id: id used to get the developer
+  #   gamer_id: id used to get the developer
   # success:
-  #     returns a hash containing all keywords followed by the given developer
+  #   returns a hash containing all keywords followed by the given developer
   # failure:
-  #     returns empty hash if the developer doesn't follow any keywords
+  #   returns empty hash if the developer doesn't follow any keywords
   def list_followed
     developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids_array = developer.keyword_ids

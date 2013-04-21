@@ -25,15 +25,18 @@
   border-color: #f3f3f3;
 }
 
-.nav-box {
-  float: right;
-  width: 130px;
-  background-color: rgba(243,243,243,0.4);
-  height:50px;
-  padding: 0;
+#navItems{
   font-size: 30px;
-  text-align: center;
-  padding-top: 20px;
+  line-height: 1.3;
+  border-radius: 50px;
+  color: white;
+}
+.nav-box {
+  width: 90px;
+  height: 40px;
+  margin-top: 15px;
+  font-size: 200%;
+  
   
 }
 .vote_form {
@@ -76,16 +79,29 @@
   font-size:25px;
 }
 
-#suggest_synonym_textbox{
-  text-align:right;
-  margin-left:20px;
-  font-size:21px;
+#suggest_synonym_textbox_arabic{
+  margin-right: 40px;
+}
+
+#suggest_synonym_button_arabic{
+  margin-right: 70px;
+  font-size: 21px;
+}
+
+
+#suggest_synonym_button_english{
+  margin-left: 70px;
+  font-size: 19px;
 }
 
 .zone {
   height: 530px;
   width: 100%;
   background-color: #155B84;
+  border-top-right-radius:6px;
+  border-top-left-radius:6px;
+  border-bottom-right-radius:6px;
+  border-bottom-left-radius:6px;
 }
 
 .table1 .btn{
@@ -107,27 +123,25 @@
 }
 
 .label1{
-      font-size:300%;
-      text-align: center;
-      height: 50px;
-      width:500px; 
-      margin-left:auto;
-      margin-right:auto;
-      color: #155B84;
-      broder: 1px solid black;
+      font-size:100%;
+      height: 50px; 
+      color: white;
       background-color: transparent;
-
+      overflow: hidden;
+      width: 190px;
+      line-height: 50px;
+      text-align: center;
     }
 
 .label-div{
-    background-color: transparent; 
-    width: 500px; 
+    background-color: #333333; 
+    width: 190px; 
     border-color: black; 
-    position: relative; 
     float: left; 
     height: 50px; 
-    margin-left: 10px; 
-    margin-bottom: 10px;
+    margin-left: -20px; 
+    border-radius: 30px;
+
 }
 
 
@@ -136,7 +150,7 @@
   float: left; 
   width: 550px; 
   border:2px solid black; 
-  width:500px; 
+  width:500px;
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
@@ -150,16 +164,15 @@
   border-color: black; 
   margin-top: 10px; 
   margin-right: 10px;
+  font-size: 15px;
 }
 
 .buttons-div{
-float:right;
+float:left;
+margin-top: 30px;
+margin-left: 80px;
 }
 
-#btn-next, #btn-clear{
-  color: white;
-  padding-left: 10px;
-}
 
 #btn-next{
   margin-left: 10px;
@@ -186,16 +199,25 @@ float:right;
 }
 
 #btn-clear{
-  float: left;
-  width: 110px;
+  color: white;
+  width: 200px;
+  height: 38px;
+  padding-left:30px;
+  margin-right: 50px;
 }
 
 #btn-restart{
-  width: 90px;
+  width: 160px;
+  height: 29px;
+  margin-right: 40px;
+  line-height: 2;
 }
 
-#score{
+#game-score{
   color: white;
+  width: 220px;
+  float: right;
+  text-align: left;
 }
 
 .award-title {
@@ -213,4 +235,246 @@ float:right;
   direction: rtl;
   text-align:right;
   background-color: rgba(200,200,200, 0.3);
+  color: white;
+}
+
+.award img {
+  margin-left: 24px;
+}
+
+.award-title {
+ padding: 20px;
+ direction:rtl;
+ text-align:right;
+ color: white;
+}
+
+.award {
+  font-size: 20px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(200,200,200, 0.3);
+}
+
+.award-desc-unlocked {
+  color:white;
+  font-size: 20px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(0,204,190, 0.3);
+  color:white;
+}
+
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
+
+
+.award-desc-locked {
+  color:white;
+  font-size: 30px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(200,204,190, 0.3);
+}
+
+.award-desc-unlocked img {
+  margin-left: 14px;
+}
+
+.award-desc-locked img {
+  margin-left: 14px;
+}
+
+
+.award-type {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
+  direction: rtl;
+  text-align: right;
+  font-size: 20px;
+  border-bottom: solid;
+  border-width: 1px;
+}
+
+.award-zone {
+  overflow-y: scroll;
+  height:100%;
+  text-align:right;
+}
+
+.award {
+  font-size: 20px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(200,200,200, 0.3); 
+}
+
+.award-desc-unlocked {
+   font-size: 20px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(0,204,190, 0.3);
+}
+
+.award-desc-locked {
+   font-size: 20px;
+  padding: 10px;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top: 10px;
+  direction: rtl;
+  text-align:right;
+  background-color: rgba(200,204,190, 0.3);
+}
+
+
+
+.award-type {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
+  direction: rtl;
+  text-align: right;
+  font-size: 20px;
+  border-bottom: solid;
+  border-width: 1px;
+}
+
+.award-zone {
+  overflow-y: scroll;
+  height:100%;
+}
+
+.table1 .btn{
+  width: 51px;
+  height: 35px;
+}
+
+.table1 td{
+  border-width: solid 1px silver;
+  width: 40px;
+  height: 40px;
+  min-height: 50px;
+  min-width: 50px;
+}
+
+.table1 tr{
+  min-width: 50px;
+  min-height: 50px;
+}
+
+
+
+
+.table1{
+  background-color: transparent; 
+  float: left; 
+  width: 550px; 
+  border:2px solid black; 
+  width:500px; 
+  height: 420px; 
+  margin-top: 10px; 
+  margin-left: 10px;
+}
+
+#list-div{
+  width:150px; 
+  height: 300px; 
+  float: right; 
+  background-color: transparent; 
+  border-color: black; 
+  margin-top: 10px; 
+  margin-right: 10px;
+}
+
+
+#btn-next{
+  margin-left: 10px;
+}
+
+.game-lang{
+  text-align: center;
+}
+
+.game-lang .btn{
+  width: 200px;
+  height: 75px;
+  font-size: 200%;
+  color: black; 
+}
+
+.lang-header{
+  text-align: center;
+  color:white;
+}
+
+.divaya{
+  padding-top: 20px;
+}
+
+
+
+#score {
+  color: white;
+  width: 330px;
+  margin-left:auto;
+  margin-right: auto;
+}
+
+.text_english{
+  color: white;
+  font-size: 30px;
+}
+
+.text_arabic{
+  color:white;
+  font-size: 40px;
+  text-align: center;
+  
+}
+
+#keywordName{
+  font-weight:bold;
+  margin-right:100px;
+}
+
+#empty-db-msg{
+  width: 600px;
+  color: white;
+  margin-right: auto;
+  padding-top: 150px;
+  text-align: center;
+  font-family: h;
+  margin-left: auto;
+}
+
+#gameover-popup{
+  font-size: 2000%;
+  color: white;
+  position: absolute;
+  margin-top: 170px;
+  opacity: 1;
+  margin-right: 150px;
 }

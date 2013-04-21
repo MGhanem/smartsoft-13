@@ -1,6 +1,62 @@
-<%= link_to "logout", :action => "logout" %>
-<%= link_to "import csv", action: "import_csv" %>
-
-<h1>Admin#index</h1>
-
-<%= render 'admin/wordadd' %>
+<div class="container admin">
+	<div class="row">
+		<div class="span3">
+			<div class="well nav-fixed">
+				<ul class="nav nav-list nav-stacked" id="admin-tabs">
+					<li class="active">
+						<a href="#admin-home" data-toggle="tab">الصفحة الرئيسية</a>
+					</li>
+					<li class="nav-header">إدارة الكلمات</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-word" data-toggle="tab">إضافة كلمة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV</a>
+					</li>
+					<li class="nav-header">إدارة الانجازات</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-trophy" data-toggle="tab">إضافة انجاز جديد</a>
+					</li>
+					<li>
+						<a href="#admin-list-trophies" data-toggle="tab">عرض الانجازات</a>
+					</li>
+					<li class="nav-header">إدارة الجوائز</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-list-prizes" data-toggle="tab">عرض الجوائز</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-home">
+					<%= render 'admin-home-page' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-add-word">
+					<%= render 'admin-add-word' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-import-csv-file">
+					<%= render 'admin-import-csv-file' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-add-trophy">
+					<%= render 'admin-add-trophy' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-list-trophies">
+					<%= render 'admin-list-trophies' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-add-prize">
+					<%= render 'admin-add-prize' %>
+				</div>
+				<div class="tab-pane well span7" id="admin-list-prizes">
+					<%= render 'admin-list-prizes' %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

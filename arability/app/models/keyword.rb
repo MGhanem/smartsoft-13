@@ -1,11 +1,11 @@
+#encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
-  has_many :synonyms
   has_and_belongs_to_many :categories
   validates_presence_of :name 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
+  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
 
   # Author: 
@@ -133,22 +133,23 @@ class Keyword < ActiveRecord::Base
       end
       return false
     end
+  end
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   feature takes no input and returns a list of all unapproved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords.
+  #   that are pending for approval in the database.
+  # Failure:
+  #   returns an empty list if no words are pending for approval.
+  def self.list_unapproved_keywords
+    return Keyword.where(approved: false).all
+  end
 
-    # author:
-    #   Omar Hossam
-    # description:
-    #   feature takes no input and returns a list of all unapproved keywords
-    # success: 
-    #   takes no arguments and returns to the admin a list containing the keywords 
-    #   that are pending for approval in the database
-    # failure:
-    #   returns an empty list if no words are pending for approval
 
-      def listunapprovedkeywords
-
-        return Keyword.where(approved: false).all
-
-      end
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
@@ -168,7 +169,7 @@ class Keyword < ActiveRecord::Base
   	#		failure:
   	#			returns an empty list if the search keyword had no matches or no 
     #     similar keywords were found
-    def get_similar_keywords(search_word, categories = [])
+    def self.get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
       search_word.downcase!
       search_word.strip!
@@ -185,6 +186,8 @@ class Keyword < ActiveRecord::Base
           keyword.name.downcase] }
     	relevant_first_list
     end
+
+  class << self
 
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
@@ -214,19 +217,32 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
+
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function created for high charts to get model information. 
-  #       It returns a hash with the name of each synonym and a the 
-  #         percentage of total votes
+  #   function created for high charts to get model information. 
+  #   It returns a hash with the name of each synonym and a the 
+  #   percentage of total votes
   # params:
-  #     keyword_id: id of the keyword needed
+  #   keyword_id: id of the keyword needed
   # success:
-  #     returns a hash contating each synonym name in a string with a 
-  #       percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
+  #   returns a hash contating each synonym name in a string with a 
+  #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
-  #     returns empty hash if the synonyms of the given keyword have no votes
+  #   returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(keyword_id: keyword_id)
         .joins(:votes).count(group: "synonym_id")
@@ -234,20 +250,19 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-  end
 
   # author:
   #   Mostafa Hassaan
   # description:
-  #    functioni is used to notify developers of new synonyms or 
-  #     updated keywords
+  #   functioni is used to notify developers of new synonyms or 
+  #   updated keywords
   # params:
-  #     synonym_id: the synonym that has been changed or added.
+  #   synonym_id: the synonym that has been changed or added.
   # success:
-  #     sends an email to all developers following the word that has 
-  #       the synonym
+  #   sends an email to all developers following the word that has 
+  #   the synonym
   # failure:
-  #     --
+  #   --
   def notify_developer(synonym_id)
       keyword = Keyword.find(self.id)
       synonym = Synonym.find(synonym_id)
@@ -255,5 +270,6 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
-    end
+  end
+  end
 end

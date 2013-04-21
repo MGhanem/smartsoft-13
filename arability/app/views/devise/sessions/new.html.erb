@@ -1,15 +1,12 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
-  <h2 class="form-signin-heading">Sign in</h2>
-  <%= f.text_field :email, :placeholder => "Email", :class => "input-block-level" %>
+  <h2 class="form-signin-heading"><%= t(:sign_in) %></h2>
+  <%= f.text_field :email, :placeholder => t(:email), :class => "input-block-level" %>
 
-  <%= f.password_field :password, :placeholder => "Password", :class => "input-block-level" %>
-
-  <% if devise_mapping.rememberable? -%>
-  <label class="checkbox"><%= f.check_box :remember_me %>Remember me?</label>
-  <% end -%>
-
-  <div><%= f.submit "Sign in", :class => "btn btn-large btn-primary pull-right", :style => "margin-top:-30px;" %></div>
-  
+  <%= f.password_field :password, :placeholder => t(:password), :class => "input-block-level" %>
+  <br /><br />
+  <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-right", :style => "margin-top:-7px; padding-top:4px; padding-bottom:4px;" %></div>
+   <%= link_to "Sign in with Google", gamer_omniauth_authorize_path(:google_oauth2) %>
 <% end %>
+
 
 

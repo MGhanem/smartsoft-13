@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class Category < ActiveRecord::Base
   attr_accessible :name
   has_and_belongs_to_many :keywords
@@ -25,10 +26,6 @@ class Category < ActiveRecord::Base
     name.strip!
     name.downcase! if is_english_string(name)
     category = Category.where(:name => name).first_or_create
-    if category.save
-      return true, category
-    else
-      return false, category
-    end
+    return category.save ? [true, category] : [false, category]
   end
 end

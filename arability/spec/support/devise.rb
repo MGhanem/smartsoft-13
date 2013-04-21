@@ -1,3 +1,3 @@
-RSpec.configure do |config|
+Rspec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
 end

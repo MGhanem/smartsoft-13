@@ -21,6 +21,7 @@ class SearchController < BackendController
   #     similar keywords were found
   def search_keywords
     @categories = params[:categories]
+    @project_id = params[:project_id]
     if @categories.present?
       categories_array = @categories.split(/,/)
       categories_array.map! { |x| x.strip }
@@ -54,6 +55,7 @@ class SearchController < BackendController
 	#			returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
+    @project_id = params[:project_id]
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
