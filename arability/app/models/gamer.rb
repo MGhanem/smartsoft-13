@@ -1,7 +1,7 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
 
-  has_one :authentication
+  has_many :authentications
   has_and_belongs_to_many :prizes
   has_and_belongs_to_many :trophies
 

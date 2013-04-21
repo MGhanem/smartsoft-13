@@ -4,20 +4,6 @@ class AuthenticationsController < ApplicationController
 	# Author:
     #  Mirna Yacout
     # Description:
-    #  checks if the current_gamer already has an Authentication record
-    # params
-    #  none
-    # Success:
-    #  displays the correct view depending on the availability of Twitter authentication record
-    #  in the Authentications table
-    # Failure:
-    #  none
-	def twitter
-	end
-
-	# Author:
-    #  Mirna Yacout
-    # Description:
     #  Twitter callback method which saves the parameters given by Twitter upon the approval of
     #  the current user for the connection
     # params
@@ -57,7 +43,7 @@ class AuthenticationsController < ApplicationController
 	  else I18n.locale == :ar
 	  	flash[:notice] = "تم إلغاء التواصل مع تويتر بنجاح!"
 	  end
-	  Authentication.remove_conn(current_gamer)
+	  Authentication.remove_conn(current_gamer, "twitter")
 	  redirect_to "/gamers/edit"
 	  return
 	end
@@ -77,9 +63,43 @@ class AuthenticationsController < ApplicationController
 	  if I18n.locale == :en
 	  	flash[:notice] = "Failed to connect to Twitter"
 	  else I18n.locale == :ar
-	  	flash[:notice] = "فشل التواصل مع تويتر بنجاح"
+	  	flash[:notice] = "فشل التواصل مع تويتر"
 	  end
 	  redirect_to root_url
 	end
+
+    def facebook_callback
+      if I18n.locale == :en
+        flash[:notice] = "Connected to Facebook successfully!"
+      else I18n.locale == :ar
+        flash[:notice] = "تم التواصل مع فيسبوك بنجاح!"
+      end
+      auth = request.env["omniauth.auth"]
+      authentication = Authentication.find_by_provider_and_gid(auth["provider"],
+       current_gamer.id) || Authentication.create_with_omniauth(auth,
+        current_gamer)
+      redirect_to "/gamers/edit"
+      return
+    end
+
+    def remove_facebook_connection
+      if I18n.locale == :en
+        flash[:notice] = "Connection to Facebook removed successfully!"
+      else I18n.locale == :ar
+        flash[:notice] = "تم إلغاء التواصل مع فيسبوك بنجاح!"
+      end
+      Authentication.remove_conn(current_gamer, "facebook")
+      redirect_to "/gamers/edit"
+      return
+    end
+
+    def facebook_failure
+      if I18n.locale == :en
+        flash[:notice] = "Failed to connect to Facebook"
+      else I18n.locale == :ar
+        flash[:notice] = "فشل التواصل مع فيسبوك"
+      end
+      redirect_to root_url
+    end
 
 end

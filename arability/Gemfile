@@ -7,11 +7,6 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 gem 'jasmine'
-#gem 'omniauth'
-
-#gem "oa-openid"
-
-# gem 'omniauth-google-oauth2'
 
 # Gems required for automated documentation
 gem 'yard'
@@ -78,6 +73,7 @@ group :test do
 end
 
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 
 gem 'certified'
 

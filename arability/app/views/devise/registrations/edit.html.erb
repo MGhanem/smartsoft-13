@@ -137,6 +137,28 @@
     <div class="tab-pane" id="tab2">
       <div class="well" style="width:1100px; height:480px">
 
+        <div class="Facebook" align="center">
+          <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook") %>
+          <% if I18n.locale == :en %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/facebook_logo.png" width="100" />
+            already connected to Facebook!</h5>
+          <%= link_to "Remove Connection", "/authentications/remove_facebook_connection" %>
+          <% else I18n.locale == :ar %>
+          <h5><img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="100" />
+          التواصل بالفعل موجود!</h5>
+          <%= link_to "إلغاء الاتصال مع فيسبوك", "/authentications/remove_facebook_connection" %>
+          <% end %>
+          <% else %>
+          <% if I18n.locale == :en %>
+          <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="100" />
+          <%= link_to ">> Connect to your Facebook account", "/auth/facebook" %>          
+          <% else I18n.locale == :ar %>
+          <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="100" />
+          <%= link_to ">> تواصل مع فيسبوك الخاص بك", "/auth/facebook" %>
+          <% end %>
+          <% end %>
+        </div>
+
         <div class="Twitter" align="center">
           <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
           <% if I18n.locale == :en %>
