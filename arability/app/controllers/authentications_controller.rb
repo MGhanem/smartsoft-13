@@ -2,17 +2,17 @@
 class AuthenticationsController < ApplicationController
 
 	# Author:
-    #  Mirna Yacout
+    #   Mirna Yacout
     # Description:
-    #  Twitter callback method which saves the parameters given by Twitter upon the approval of
-    #  the current user for the connection
+    #   Twitter callback method which saves the parameters given by Twitter upon the approval of
+    #   the current user for the connection
     # params
-    #     none
+    #   none
     # Success:
-    #  checks if a record is in the Authentications table: if avaialable returns and redirect
-    #  and if not creates a new record then redirect
+    #   checks if a record is in the Authentications table: if avaialable returns and redirect
+    #   and if not creates a new record then redirect
     # Failure:
-    #  none
+    #   none
 	def twitter_callback
 	  if I18n.locale == :en
 	  	flash[:notice] = "Connected to Twitter successfully!"
@@ -28,15 +28,15 @@ class AuthenticationsController < ApplicationController
 	end
 
 	# Author:
-    #  Mirna Yacout
+    #   Mirna Yacout
     # Description:
-    #  removes connection already in the table
+    #   removes connection already in the table
     # params
-    #     none
+    #   none
     # Success:
-    #  finds connection record, removes it correctly and redirect
+    #   finds connection record, removes it correctly and redirect
     # Failure:
-    #  doesnot find the record
+    #   doesnot find the record
 	def remove_twitter_connection
 	  if I18n.locale == :en
 	  	flash[:notice] = "Connection to Twitter removed successfully!"
@@ -49,23 +49,23 @@ class AuthenticationsController < ApplicationController
 	end
 
 	# Author:
-    #  Mirna Yacout
+    #   Mirna Yacout
     # Description:
-    #  Twitter callback with failure to connect to Twitter upon rejection or cancellation
-    #  by the current_gamer himself or connection failure
+    #   Twitter callback with failure to connect to Twitter upon rejection or cancellation
+    #   by the current_gamer himself or connection failure
     # params
-    #  none
+    #   none
     # Success:
-    #  redirect_to home page
+    #   redirect_to home page
     # Failure:
-    #  none
+    #   none
 	def twitter_failure
 	  if I18n.locale == :en
 	  	flash[:notice] = "Failed to connect to Twitter"
 	  else I18n.locale == :ar
-	  	flash[:notice] = "فشل التواصل مع تويتر بنجاح"
+	  	flash[:notice] = "فشل التواصل مع تويتر"
 	  end
-	  redirect_to root_url
+	  redirect_to "/gamers/edit"
 	end
 
 end
