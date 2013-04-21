@@ -5,9 +5,6 @@ class Project < ActiveRecord::Base
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
 
-  attr_accessible :name
-
-
   has_and_belongs_to_many :categories
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories

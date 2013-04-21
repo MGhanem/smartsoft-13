@@ -32,12 +32,12 @@ ar:
   category: "الفئة"
   categories: "الفئات"
   formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
   back: "عودة"
@@ -132,14 +132,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -290,4 +282,12 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"

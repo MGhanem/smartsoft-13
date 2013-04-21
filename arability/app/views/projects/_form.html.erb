@@ -12,14 +12,14 @@
         </div>
       <% end %>
     <div class="control-group">
-        <%= f.label :name, :class => "control-label" %>
+        <%= f.label t(:name), :class => "control-label" %>
         <div class="controls">
           <%= f.text_field :name, :placeholder => t(:name) %>
           <span class="req">* </span>
         </div>
     </div>
     <div class="control-group">
-      <%= f.label :categories, :class => "control-label" %>
+      <%= f.label t(:categories), :class => "control-label" %>
       <div class="controls">
         <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %>
         <span class="req">* </span>
@@ -31,11 +31,11 @@
       </label>
       <div class="controls">
           <label class="radio">
-              <%= f.radio_button :formal, 'Formal' %>
+            <%= f.radio_button :formal, true %>
             <%= t(:formal) %>
           </label>
           <label class="radio">
-            <%= f.radio_button :formal, 'Slang' %>
+            <%= f.radio_button :formal, false %>
             <%= t(:slang) %>
           </label>
       </div>
@@ -51,7 +51,7 @@
       </div>
   </div>
   <div class="control-group">
-      <%= f.label :description, :class => "control-label" %>
+      <%= f.label t(:desc), :class => "control-label" %>
       <div class="controls">
           <%= f.text_area :description, :size => "10x10" %>
       </div>
