@@ -2,6 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  username_or_email: "Username or email"
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"

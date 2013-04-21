@@ -1,6 +1,6 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
   <h2 class="form-signin-heading"><%= t(:sign_in) %></h2>
-  <%= f.text_field :email, :placeholder => t(:email), :class => "input-block-level" %>
+  <%= f.text_field :login, :placeholder => t(:username_or_email), :class => "input-block-level" %>
 
   <%= f.password_field :password, :placeholder => t(:password), :class => "input-block-level" %>
   <br /><br />
