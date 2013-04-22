@@ -26,6 +26,8 @@ ar:
   followed_words: "الكلمات المتابعة"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
+  follow: "تابع"
+  following: "متابع"
   backend: "المطورون"
   project: "مشروع"
   projects: "مشاريع"
