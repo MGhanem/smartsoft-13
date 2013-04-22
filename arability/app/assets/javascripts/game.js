@@ -814,29 +814,6 @@ function suspenseCont(col){
 }
 
 
-// function highestTowerId(){
-// 	var towerHeight;
-// 	var towerCol;
-// 	var heighestSoFar = 0;
-// 	for(var cols = 0; cols < dimension; cols++){
-// 		towerHeight = 0;
-// 		for(var rows = dimension - 1; rows > -1; rows--){
-// 			cellId = "col" + rows + "-" + cols;
-// 			if(document.getElementById(cellId).innerHTML != ''){
-// 				towerHeight++;
-// 			}
-// 			else{
-// 				break;
-// 			}
-// 		}
-// 		if(towerHeight > heighestSoFar){
-// 			heighestSoFar = towerHeight;
-// 			towerCol = cols;
-// 		}
-// 	}
-// 	return towerCol;
-// }
-
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -1038,6 +1015,19 @@ function continuePlaying(){
 		startGame();
 	}, 3500);
 }
+
+
+
+// author:
+//   Ali El Zoheiry
+// description:
+//   an abstraction of the nextLevel() method to be called from various stages
+// params:
+//   none
+// success:
+//   the gamer has finished the level and is redirected to the next level
+// failure:
+//   none
 
 function toNextLevel(){
 	disableNav();
