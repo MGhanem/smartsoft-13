@@ -4,10 +4,6 @@
   belongs_to :developer
   validates :subscription_model_id, :presence => true
 
-  @@search=1
-  @@add=2
-  @@follow=3
-
   # Author:
   #  Noha Hesham
   # Description:
@@ -18,17 +14,17 @@
   #  the limits are set in the my subscription of the developer
   # failure:
   #  the limits are not put in the my subscription of the developer
-  def self.choose(dev_id,sub_id)
+  def self.choose(dev_id, sub_id)
       submodel = SubscriptionModel.find(sub_id)
       my_sub = MySubscription.where(:developer_id => dev_id).first
       if(my_sub == nil)
         my_sub = MySubscription.new
       end
       my_sub.developer_id = dev_id
-      my_sub.word_search=submodel.limit_search
-      my_sub.word_add=submodel.limit
-      my_sub.word_follow=submodel.limit_follow
-      my_sub.project=submodel.limit_project
+      my_sub.word_search = submodel.limit_search
+      my_sub.word_add = submodel.limit
+      my_sub.word_follow = submodel.limit_follow
+      my_sub.project = submodel.limit_project
       my_sub.subscription_model_id = submodel.id
       if my_sub.save
         return true
@@ -74,7 +70,7 @@
     #  none 
    def count_follow
     @developer = Developer.find(self.developer_id)
-    @count_follow=@developer.Keywords.count
-   end
+    @count_follow=@developer.Keywords.count   
+  end
   end
 end
