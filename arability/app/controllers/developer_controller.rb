@@ -23,7 +23,6 @@ class DeveloperController < ApplicationController
       @developer.save
       MySubscription.choose(@developer.id, SubscriptionModel.first.id)
       redirect_to choose_sub_path
-      end
     end
   end
 
