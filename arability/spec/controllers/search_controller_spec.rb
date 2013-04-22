@@ -8,7 +8,7 @@ describe SearchController do
   describe "GET search" do
   include Devise::TestHelpers
     let(:c) do
-      success, category = Category.add_category_to_database_if_not_exists("test")
+      success, category = Category.add_category_to_database_if_not_exists("test", "سنبنتش")
       category
     end
 
@@ -42,8 +42,7 @@ describe SearchController do
       c.keywords << k
       a = create_logged_in_developer()
       sign_in(a.gamer)
-      get :search_keywords, :categories => "test", :search => "test"
-      assigns(:categories).should eq("test")
+      get :search_keywords, :categories => "سنبنتش", :search => "test"
       assigns(:similar_keywords).should =~ [k]
     end
 
