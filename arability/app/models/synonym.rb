@@ -15,19 +15,19 @@ class Synonym < ActiveRecord::Base
 
   def existing?
     if !Keyword.exists?(id: keyword_id)
-      errors.add(:keyword_id, "this keyword is not in our database")
+      errors.add(:keyword_id, "#{I18n.t(:omar_error1)}")
     end
   end
 
   validates_format_of :name, with: /^([\u0621-\u0652 ])+$/,
     message: Synonym.find_loacle 
 
-  validates_presence_of :name, message: "empty synonym name"
+  validates_presence_of :name, message: "#{I18n.t(:omar_error2)}"
 
   validate :existing?
 
   validates_uniqueness_of :name, scope: :keyword_id,
-    message: "This is a dupplicate synonym entery for the same keyword"
+    message: "#{I18n.t(:omar_error3)}"
 
   class << self
     include StringHelper
