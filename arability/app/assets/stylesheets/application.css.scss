@@ -44,5 +44,16 @@ div.d5pxdown {
 }
 
 div.d5pxup input {
-	width: 95px;
+	width: 92px;
+}
+
+#project_name {
+  padding: 10px;
+}
+
+#desc {
+  min-width:500px;
+  max-width:500px;
+  min-height:180px;
+  max-height:180px;
 }
