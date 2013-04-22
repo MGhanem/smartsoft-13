@@ -2,7 +2,7 @@
 class Category < ActiveRecord::Base
   attr_accessible :english_name, :arabic_name
   has_and_belongs_to_many :keywords
-  has__many :projects
+  has_many :projects
 
   validates_uniqueness_of :english_name
   validates_presence_of :english_name

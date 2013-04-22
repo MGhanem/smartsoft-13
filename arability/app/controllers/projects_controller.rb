@@ -70,9 +70,9 @@ class ProjectsController < BackendController
   #   Gives status errors
   def create
     if developer_signed_in?
-      @project = Project.new(params[:project])
-      @project.owner_id = developer_id
-      # @project = Project.createproject(params[:project],current_developer.id)
+      @project = Project.new(params[:project].except(:category))
+      @project.owner_id = current_developer.id
+      @project = Project.createproject(params[:project])
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
@@ -103,7 +103,7 @@ class ProjectsController < BackendController
   def new
     if developer_signed_in?
       @project = Project.new
-      @categories = @project.categories
+      @category = @project.category
       respond_to do |format|
         format.html
         format.json { render json: @project }
@@ -141,7 +141,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @categories = Project.printarray(@project.categories)
+      # @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -161,8 +161,8 @@ class ProjectsController < BackendController
   def update
     if developer_signed_in?
       @project = Project.find(params[:id])
-      # @project = Project.createcategories(@project, params[:project][:categories])
-      if @project.update_attributes(params[:project].except(:utf8, :_method,
+      @project = Project.createcategories(@project, params[:project][:category])
+      if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
         redirect_to :action => "index"
         flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')

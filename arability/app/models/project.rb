@@ -24,10 +24,9 @@ class Project < ActiveRecord::Base
 #   new categories and inserting them into the project categories array
 # Failure:
 #   None
-def self.createproject(params,developer_id)
-  project = Project.new(params.except(:developer))
-  project.owner_id = developer_id
-  # project = createcategories(project,params[:categories])
+def self.createproject(params)
+  project = Project.new(params.except(:developer,:category))
+  project = createcategories(project,params[:category])
   return project
 end
 
@@ -42,13 +41,13 @@ end
 #   Categories will be created.
 # Failure:
 #   None
-def self.createcategories(project,categories)
-  array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+def self.createcategories(project,cat_id)
+  array = cat_id.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
-  array.each do |m| m.capitalize!
-    catArray.push(Category.where(:name => m).first_or_create)
+  array.each do |m|
+    cat = Category.find(cat_id)
+    project.category = cat
   end
-  project.categories = catArray
   project.save
   return project
 end
