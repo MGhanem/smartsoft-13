@@ -6,11 +6,11 @@ class Category < ActiveRecord::Base
 
   validates_uniqueness_of :english_name
   validates_presence_of :english_name
-  validates_format_of :english_name, :with => /^([a-zA-Z ]+)$/
+  validates_format_of :english_name, with: /^([a-zA-Z ]+)$/
 
   validates_uniqueness_of :arabic_name
   validates_presence_of :arabic_name
-  validates_format_of :arabic_name, :with => /^([\u0621-\u0652 ]+)$/
+  validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/
 
   class << self
     include StringHelper
