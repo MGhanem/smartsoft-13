@@ -110,6 +110,15 @@ class MySubscriptionController < ApplicationController
       render 'my_subscription/choose_sub'
     end
   end
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  allows the current developer to change his subscription model 
+  #  and the limits are added to his my subscription
+  # success:
+  #  the developer can change his subscription model successfully
+  # Failure:
+  #  none
 
   def pick_edit
     @all_subscription_models = SubscriptionModel.all
