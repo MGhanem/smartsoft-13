@@ -34,6 +34,7 @@ describe UserMailer do
     mail = UserMailer.invite("test@test.com", developer)
     mail.to.should eq(["test@test.com"])
     mail.subject.should match("invite")
-    #mail.body.should match(developer.first_name)
+    # This view has not yet been implemented. once it has I will remove the comment
+    # mail.body.should match(developer.first_name)
   end
 end
