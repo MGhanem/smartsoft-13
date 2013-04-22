@@ -13,26 +13,24 @@ describe AuthenticationsController do
     current_gamer.date_of_birth = 1993-03-23
     current_gamer.email = "test@gmail.com"
     current_gamer.password = "1234567"
-    current_gamer.save
+    current_gamer.save validate: false
     current_gamer
   }
 	before do
-		current_gamer
-		login(current_gamer)
 		request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] 
 	end
 	it "should redirect to edit settings page" do
-		login(current_gamer)
+		login_gamer(current_gamer)
 		get :twitter_callback
 		response.should redirect_to "/gamers/edit"
 	end
 	it "should remove twitter connection" do
-		login(current_gamer)
+		login_gamer(current_gamer)
 		get :remove_twitter_connection
 		response.should redirect_to "/gamers/edit"
 	end
 	it "it should redirect to home page" do
-		login(current_gamer)
+		login_gamer(current_gamer)
 		get :twitter_failure
 		response.should redirect_to root_url
 	end
