@@ -46,7 +46,7 @@
     # Success:
     #    Permission is given if the developer didnt exceed the search ,add
     #    or follow limit
-    # Fail:
+    # Failure:
     #    None
       def get_permission_follow(dev_id)
         my_subscription = 
