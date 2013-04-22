@@ -1,5 +1,4 @@
 #encoding:utf-8
-#%s/:\([a-z_]\+\) =>/\1:/g
 namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
