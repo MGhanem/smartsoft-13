@@ -230,6 +230,18 @@ function setButtons(){
 
 
 
+  function generateGameOverPopUp(){
+    <% if I18n.locale == :en %>
+    gameOverFontSize = '150px';
+    return "Game Over";
+    <% else I18n.locale == :ar %>
+    gameOverFontSize = '300px';
+    return "النهاية";
+    <% end %>
+  }
+
+
+
 </script>
 
 
