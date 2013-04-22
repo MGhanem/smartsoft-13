@@ -5,10 +5,59 @@
 			<%= content_tag(:div, :class => "input-append") do %>
 				<% text_field_tag(:search, @search_keyword,
 													placeholder: t(:search_here),
-													:class => 'search-query autocomplete',
+													:class => "search-query autocomplete",
 													autocomplete: "off") + %>
 				<% button_tag(type: "submit", :class => "btn") do %>
 					<% content_tag(:i, nil, :class => "icon-search") %>
+				<% end %>
+			<% end %>
+
+			<script type="text/javascript">
+				function onhovering(button){
+					$button = $(button);
+    			if ($button.hasClass("btn-info")) {
+						$(".btnfollow").removeClass("btn-info");
+						$(".btnfollow").addClass("btn-danger");
+						$(".btnfollow").html("<%= t(:unfollow) %>");
+					}
+				}
+				function offhovering(button){
+					$button = $(button);
+					if ($button.hasClass("btn-danger")) {
+						$(".btnfollow").removeClass("btn-danger");
+						$(".btnfollow").addClass("btn-info");
+						$(".btnfollow").html("<%= t(:following) %>");
+					}
+				}
+				function clickfollow(button){
+					$button = $(button);
+					if ($button.hasClass("btn-default")) {
+						$.get("<%= follow_word_path @search_keyword_model.id %>");
+						$(".btnfollow").removeClass("btn-default");
+						$(".btnfollow").addClass("btn-info");
+						$(".btnfollow").html("<%= t(:following) %>");
+					} else {
+						$.get("<%= unfollow_word_path @search_keyword_model.id %>");
+						$(".btnfollow").removeClass("btn-info");
+						$(".btnfollow").removeClass("btn-danger");
+						$(".btnfollow").addClass("btn-default");
+						$(".btnfollow").html("<%= t(:follow) %>");
+					}	
+				}
+
+			</script>
+
+			<% if I18n.locale==:en %>
+				<% if !is_following(@search_keyword_model.id) %>
+					<span class="pull-right"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+				<% else %>
+					<span class="pull-right"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
+				<% end %>
+			<% else %>
+				<% if !is_following(@search_keyword_model.id) %>
+					<span class="pull-left"><a href="#" class="btn btnfollow btn-default" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+				<% else %>
+					<span class="pull-left"><a href="#" class="btn btnfollow btn-info" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
 				<% end %>
 			<% end %>
 
@@ -206,12 +255,6 @@
 			</div>
 		</div>
 	<% end %>
-	<div class="well">
-			<span>
-				<%= t(:follow_word_link) %>
-				<%= link_to t(:follow_word_end_of_search), follow_word_path(Keyword.where(:name => @search_keyword).first.id) %>
-			</span>
-	</div>
 <% end %>
 
 <script type="text/javascript">

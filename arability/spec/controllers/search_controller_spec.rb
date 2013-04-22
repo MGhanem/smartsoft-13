@@ -31,7 +31,6 @@ describe SearchController do
       gamer = Gamer.new
       gamer.username = "Nourhan"
       gamer.country = "Egypt"
-      gamer.education_level = "high"
       gamer.gender = "female"
       gamer.date_of_birth = "1993-03-23"
       gamer.email = "nour@gmail.com"
