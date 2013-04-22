@@ -36,7 +36,7 @@ module SearchHelper
                dataLabels: {
                     align: 'center',
                     enabled: true,
-                    x: 40
+                    x: 15
                 }
       }
         tooltip = {
