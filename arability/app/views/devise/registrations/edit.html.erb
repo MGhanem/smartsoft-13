@@ -183,10 +183,10 @@
       </div>
     </div>
     <div class="tab-pane" id="tab3">
-      <%
-      developer = Developer.find_by_gamer_id(current_gamer.id) 
-      %>
-      <%= form_for(:my_subscription, :url => my_subscriptions_pick_path ) do %>
+      <%if current_gamer != nil %>
+        <% developer = Developer.where(:gamer_id => current_gamer.id).first %>
+        <% if developer != nil %>
+       <%= form_for(:my_subscription, :url => my_subscriptions_pick_edit_path ) do %>
 <div style = "width:1000px; margin: 0 auto;">
 <table>
     <tr>
@@ -244,4 +244,14 @@
 <% end %>
     </div>
   </div>
+  </div>    
+     <% else %>
+        <span style="color: red"><strong><%=t(:developer_before_subscription)%></strong></span>
+      <%end %>
+    <%else%>
+      <% flash[:error] = t(:projects_index_error2) %>
+      <% redirect_to new_gamer_session_path %>    
+    <%end %>
 </div>
+
+     

@@ -292,3 +292,4 @@ ar:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
   choose_sub: 'إختر نظامك'           
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
