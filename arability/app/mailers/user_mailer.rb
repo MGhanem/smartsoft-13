@@ -1,13 +1,13 @@
 class UserMailer < ActionMailer::Base
   default from: "arability.smartsoft@gmail.com"
-  
+
   # Author:
   #   Mohamed Ashraf
   # Description:
   #   Sends a generic email to any address
   # params:
   #   mail_to: The receivers email address
-  #   reason: The subject of the message
+  #   subject: The subject of the message
   #   message: The actual message body
   # success:
   #   returns a Message object that you can call on deliver to send the email
@@ -17,7 +17,7 @@ class UserMailer < ActionMailer::Base
     mail to: mail_to, subject: subject, body: message
   end
 
-  
+
   # Author:
   #   Mohamed Ashraf
   # Description:
