@@ -36,4 +36,3 @@ module RequestHelpers
     sign_in u
   end
  end
- 

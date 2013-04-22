@@ -35,7 +35,7 @@
 						$(".btnfollow").removeClass("btn-default");
 						$(".btnfollow").addClass("btn-info");
 						$(".btnfollow").html("<%= t(:following) %>");
-					}else {
+					} else {
 						$.get("<%= unfollow_word_path @search_keyword_model.id %>");
 						$(".btnfollow").removeClass("btn-info");
 						$(".btnfollow").removeClass("btn-danger");
