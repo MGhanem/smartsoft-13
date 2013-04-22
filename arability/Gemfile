@@ -73,7 +73,10 @@ gem 'omniauth-facebook'
 gem 'twitter'
 gem 'fb_graph'
 
-gem "rspec-rails", :group => [:test, :development]
+group :test, :development do
+  gem "rspec-rails", "2.13.0"
+end
+
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
