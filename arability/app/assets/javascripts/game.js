@@ -26,6 +26,7 @@ var levelPopUpTitle;
 var booleanSuspense = new Array(dimension);
 var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
+var gameOverFontSize;
 
 
 // author:
@@ -989,9 +990,10 @@ function loseGame(t){
 		setTimeout(function(){$('tr').fadeIn('slow');
 		$('tr').empty();
 		}, 500);
+		generateGameOverPopUp();
 		$('.zone').append('<div id ="gameover-popup"' +
-		'style="font-size: 300px; color: white; position: absolute; margin-top: 120px;"><p style="text-align: center;">' + 
-		'النهاية</p></div>');
+		'style="font-size: ' + gameOverFontSize + '; color: white; position: absolute; margin-top: 120px;">' +
+		'<p style="text-align: center;">' + generateGameOverPopUp() + '</p></div>');
 		$('#gameover-popup').fadeTo(0,0);
 		$('#gameover-popup').fadeTo(1500,1);
 		$('#gameover-popup').fadeTo(1500,0);

@@ -97,7 +97,7 @@
 .zone {
   height: 530px;
   width: 100%;
-  background-color: #155B84;
+  background-color: #51687C;
   border-top-right-radius:6px;
   border-top-left-radius:6px;
   border-bottom-right-radius:6px;
@@ -110,7 +110,6 @@
 }
 
 .table1 td{
-  border-width: solid 1px silver;
   width: 40px;
   height: 40px;
   min-height: 50px;
@@ -145,12 +144,11 @@
 }
 
 
-.table1{
-  background-color: transparent; 
+.table1{ 
+  border: solid 1px black;
+  border-radius: 15px;
   float: left; 
-  width: 550px; 
-  border:2px solid black; 
-  width:500px;
+  width: 550px;  
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
@@ -215,7 +213,7 @@ margin-left: 80px;
 
 #game-score{
   color: white;
-  width: 220px;
+  width: 200px;
   float: right;
   text-align: left;
 }
@@ -372,13 +370,6 @@ margin-left: 80px;
   height: 35px;
 }
 
-.table1 td{
-  border-width: solid 1px silver;
-  width: 40px;
-  height: 40px;
-  min-height: 50px;
-  min-width: 50px;
-}
 
 .table1 tr{
   min-width: 50px;
@@ -386,18 +377,6 @@ margin-left: 80px;
 }
 
 
-
-
-.table1{
-  background-color: transparent; 
-  float: left; 
-  width: 550px; 
-  border:2px solid black; 
-  width:500px; 
-  height: 420px; 
-  margin-top: 10px; 
-  margin-left: 10px;
-}
 
 #list-div{
   width:150px; 
@@ -477,4 +456,10 @@ margin-left: 80px;
   margin-top: 170px;
   opacity: 1;
   margin-right: 150px;
+}
+
+.table1 button{
+  width: 53px;
+  height: 35px;
+  border-radius: 10px;
 }
