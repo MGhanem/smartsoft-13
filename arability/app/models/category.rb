@@ -21,16 +21,23 @@ class Category < ActiveRecord::Base
   # Description:
   #   adds a new category to the database or returns the category already in the database
   # params:
-  #   name: the actual category string
+  #   english_name: the english name of the category
+  #   arabic_name: the arabic name of the category
   # success:
   #   the first return is true and the second is the saved category
   # failure:
   #   the first return is false and the second is the unsaved category
-  def self.add_category_to_database_if_not_exists(name)
-    name.strip!
-    name.downcase! if is_english_string(name)
-    name = name.split(" ").join(" ")
-    category = Category.where(:name => name).first_or_create
+  def self.add_category_to_database_if_not_exists(english_name, arabic_name)
+    english_name.strip!
+    arabic_name.strip!
+
+    english_name.downcase!
+
+    english_name = english_name.split(" ").join(" ")
+    arabic_name = arabic_name.split(" ").join(" ")
+
+    category = Category.where(english_name: english_name, arabic_name: arabic_name).first_or_create
+
     return category.save ? [true, category] : [false, category]
   end
 
