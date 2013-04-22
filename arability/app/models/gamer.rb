@@ -43,14 +43,14 @@ class Gamer < ActiveRecord::Base
   # Description
   #   method that needs to be overwritten for devise so that
   #   we can find a Gamer by a given username OR email
-  # @params:
-  #   warden_conditions
-  # returns:
-  #   success:
-  #     returns the Gamer with the given conditions
-  #   failure:
-  #     returns nil for not being able to find any gamer
-  #     with the given conditions
+  # params:
+  #   gamer_conditions: a hash of the form
+  #   'username: "adam"', 'email: "a@email.com"'
+  # success:
+  #   returns the Gamer with the given conditions
+  # failure:
+  #   returns nil for not being able to find any gamer
+  #   with the given conditions
   def self.find_for_database_authentication(gamer_conditions)
     conditions = gamer_conditions.dup
     if login = conditions.delete(:login)
