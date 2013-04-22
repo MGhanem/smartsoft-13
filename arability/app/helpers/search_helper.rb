@@ -150,11 +150,7 @@ module SearchHelper
   def is_following(key_id)
     developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids = developer.keyword_ids
-    if keyword_ids.include? key_id.to_i
-      return true
-    else 
-      return false
-    end
+    keyword_ids.include? key_id.to_i
   end
 
 end
