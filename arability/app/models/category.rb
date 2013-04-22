@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class Category < ActiveRecord::Base
-  attr_accessible :english_name, :arabic_name
+  attr_accessible :english_name, :arabic_name, :name
   has_and_belongs_to_many :keywords
   has_many :projects
 

@@ -45,7 +45,7 @@ def self.createcategories(project,cat_id)
   array = cat_id.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
   array.each do |m|
-    cat = Category.find(cat_id)
+    cat = Category.find("1")
     project.category = cat
   end
   project.save
@@ -56,7 +56,8 @@ end
 #   Salma Farag
 # Description:
 #   A method that takes an array of categories, maps their names into an array and joins
-#   the array using commas.# Params:
+#   the array using commas.
+# Params:
 #   Array of categories.
 # Success:
 #   Returns a string of category names.
