@@ -18,7 +18,7 @@ describe MySubscriptionController do
 
 	it "should make devloper choose his subscription model" do
 		 developer = create_logged_in_developer()
-         sign_in(developer.gamer)
+         login_gamer(developer.gamer)
 		 get :pick, :my_subscription => submodel.id 
 		 model = gamer.developer.MySubscription.id
 		 expect(model).to eq (true)
