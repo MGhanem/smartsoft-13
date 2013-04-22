@@ -77,6 +77,11 @@ gem 'omniauth-facebook'
 gem 'twitter'
 gem 'fb_graph'
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
 gem "rspec-rails", :group => [:test, :development]
 group :test do
   gem "factory_girl_rails"
