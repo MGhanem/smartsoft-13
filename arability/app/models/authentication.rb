@@ -1,6 +1,6 @@
 class Authentication < ActiveRecord::Base
   belongs_to :gamer
-  attr_accessible :gid, :provider, :token, :token_secret
+  attr_accessible :gid, :provider, :token, :token_secret, :email
 
   # Author:
   #  Mirna Yacout

@@ -84,6 +84,7 @@ class AuthenticationsController < ApplicationController
 
     def facebook_callback
         auth = request.env["omniauth.auth"]
+        if 
     end
 
 end
