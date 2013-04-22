@@ -119,9 +119,11 @@ function setButtons(){
     <% if I18n.locale==:ar %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
+    continuePlayingBtn = "الاستمرار في اللعب"
     <% else I18n.locale==:en %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
+    continuePlayingBtn = "Continue Playing"
     <% end %>
   }
 
@@ -237,6 +239,14 @@ function setButtons(){
     <% else I18n.locale == :ar %>
     gameOverFontSize = '300px';
     return "النهاية";
+    <% end %>
+  }
+
+  function generateEmptyDbMsg(){
+    <% if I18n.locale == :ar %>
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
+    <% else I18n.locale == :en %>
+      return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
   }
 

@@ -27,6 +27,7 @@ var booleanSuspense = new Array(dimension);
 var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
+var continuePlayingBtn;
 
 
 // author:
@@ -50,12 +51,11 @@ function newGame(){
 }
 	else{
 		wasPrompted = true;
+		setButtons();
 		$('.zone').empty();
-		$('.zone').append('<h2 id ="empty-db-msg">' +
-			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
-			'You can continue playing the game without voting, although you will be seeing the same words you have voted on before</h2>' +
-			'<button class="btn btn-success" onclick="continuePlaying()">' +
-			'Continue Playing</button>');
+		$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="continuePlaying()">' +
+			continuePlayingBtn +'</button>');
 	}
 }
 // author:
@@ -535,9 +535,14 @@ function fadeSomething(x){
 						$(".zone").slideDown(1000);
 					}, 1000);	
 					setTimeout(function(){
-						setWordsArray();
-						enableNav();
-						have_to_sign_in();
+						if(wordsInDb == false){
+							getTrophies(level,score);
+						}
+						else{
+							setWordsArray();
+							enableNav();
+							have_to_sign_in();
+						}
 						return;
 					}, 1000);
 				}		
@@ -695,12 +700,11 @@ function nextLevel(){
 	else{
 		if(wasPrompted == false){
 			wasPrompted = true;
+			setButtons();
 			$('.zone').empty();
-			$('.zone').append('<h2 id ="empty-db-msg">' +
-				'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
-				'You can continue playing the game without voting, although you will be seeing the same words you have voted on before</h2>' +
-				'<button class="btn btn-success" onclick="toNextLevel()">' +
-				'Continue Playing</button>');
+			$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="toNextLevel()">' +
+			continuePlayingBtn +'</button>');
 		}
 		else{
 			toNextLevel();
@@ -999,8 +1003,13 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			enableNav();
-			have_to_sign_in();
+			if(wordsInDb == false){
+				getScoreOnly(score);
+			}
+			else{
+				enableNav();
+				have_to_sign_in();
+			}
 			return true;
 		}, 3000);
 	}
