@@ -70,7 +70,9 @@ class ProjectsController < BackendController
   #   Gives status errors
   def create
     if developer_signed_in?
-      @project = Project.createproject(params[:project],current_developer.id)
+      @project = Project.new(params[:project])
+      @project.owner_id = developer_id
+      # @project = Project.createproject(params[:project],current_developer.id)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
@@ -159,8 +161,8 @@ class ProjectsController < BackendController
   def update
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @project = Project.createcategories(@project, params[:project][:categories])
-      if @project.update_attributes(params[:project].except(:categories,:utf8, :_method,
+      # @project = Project.createcategories(@project, params[:project][:categories])
+      if @project.update_attributes(params[:project].except(:utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
         redirect_to :action => "index"
         flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')

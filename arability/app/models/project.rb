@@ -5,9 +5,9 @@ class Project < ActiveRecord::Base
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
 
-  has_and_belongs_to_many :categories
+  belongs_to :category
   has_many :keywords, :through => :prefered_synonym
-  attr_accessible :description, :formal, :maxAge, :minAge, :name, :categories
+  attr_accessible :description, :formal, :maxAge, :minAge, :name, :category
   validates :name, :presence => true,:length => { :maximum => 30 }
   validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100 }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
@@ -25,9 +25,9 @@ class Project < ActiveRecord::Base
 # Failure:
 #   None
 def self.createproject(params,developer_id)
-  project = Project.new(params.except(:categories,:developer))
+  project = Project.new(params.except(:developer))
   project.owner_id = developer_id
-  project = createcategories(project,params[:categories])
+  # project = createcategories(project,params[:categories])
   return project
 end
 

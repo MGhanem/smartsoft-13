@@ -12,7 +12,7 @@ module RequestHelpers
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "test@test.com"
     gamer.password = "testing"
-    gamer.save
+    gamer.save validate: false
     login(gamer)
     gamer
   end
