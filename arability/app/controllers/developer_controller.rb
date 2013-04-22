@@ -1,6 +1,7 @@
 class DeveloperController < ApplicationController
+  include ApplicationHelper
   before_filter :authenticate_gamer!
-  
+
 # author:
 #   Khloud Khalid
 # description:
@@ -13,11 +14,11 @@ class DeveloperController < ApplicationController
 # failure:
 #   gamer not signed in
   def new
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
+    if developer_signed_in?
       flash[:notice] = t(:already_registered_developer)
-      redirect_to backend_home_path
+      redirect_to projects_path
     else
-      @developer = Developer.new()
+      @developer = Developer.new
       @developer.gamer_id = current_gamer.id
       if @developer.save
         MySubscription.choose(@developer.id,SubscriptionModel.first.id)

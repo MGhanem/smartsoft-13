@@ -92,7 +92,7 @@ Arability::Application.routes.draw do
 
       match 'search_keywords' => 'search#search_keywords'
 
-      match '/developers/new' => "developer#new"
+      match 'new' => "developer#new"
       match '/developers/create' => "developer#create"
     end
   end
