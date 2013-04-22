@@ -2,7 +2,7 @@ class SearchController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
 
-  #Description:
+  # Description:
   #   search for keywords (in a particular category)
   # Author:
   #   Mohamed Ashraf, Nourhan Mohamed
@@ -40,12 +40,12 @@ class SearchController < BackendController
     @categories = categories_array.join(", ")
   end
 
-  #Description:
+  # Description:
   #   returns json of keyword names matching autocompletion
   # Author:
   #   Nourhan Mohamed
   # params:
-  #   search: a string representing the search keyword, from the params list
+  #   search_keyword: a string representing the search keyword, from the params list
   #     from a textbox in the search view
   # returns:
   #   success:
@@ -55,9 +55,9 @@ class SearchController < BackendController
   #     returns an empty list if what's currently typed in the search textbox
   #     had no matches
   def keyword_autocomplete
-    search = params["search"]
+    search_keyword = params["search"]
     similar_keywords =
-      Keyword.get_similar_keywords(search, [])
+      Keyword.get_similar_keywords(search_keyword, [])
     similar_keywords.map! { |keyword| keyword.name }
     render json: similar_keywords
   end
