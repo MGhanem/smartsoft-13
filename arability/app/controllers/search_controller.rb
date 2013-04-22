@@ -58,26 +58,23 @@ class SearchController < BackendController
     search = params["search"]
     similar_keywords =
       Keyword.get_similar_keywords(search, [])
-    keyword_names = []
-    similar_keywords.each do |keyword|
-      keyword_names.append(keyword.name)
-    end
-    render json: keyword_names
+    similar_keywords.map! { |keyword| keyword.name }
+    render json: similar_keywords
   end
 
-	#Description:
+  # Description:
   #   search for synonyms for a particular keyword
   # Author:
   #   Nourhan Mohamed
-	#	params:
-	#		search: a string representing the search keyword, from the params list
-	#     from a textbox in the search_keywords view
-	#	returns:
-	#		success: 
-	#			returns to the search view a list of synonyms for the keyword
-	#     sorted by relevance
-	#		failure:
-	#			returns an empty list if the search keyword has no synonyms
+  # params:
+  #   search: a string representing the search keyword, from the params list
+  #     from a textbox in the search_keywords view
+  # returns:
+  #   success: 
+  #     returns to the search view a list of synonyms for the keyword
+  #     sorted by relevance
+  #   failure:
+  #     returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
     @project_id = params[:project_id]
