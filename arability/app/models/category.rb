@@ -36,9 +36,10 @@ class Category < ActiveRecord::Base
     english_name = english_name.split(" ").join(" ")
     arabic_name = arabic_name.split(" ").join(" ")
 
-    category = Category.where(english_name: english_name, arabic_name: arabic_name).first_or_create
+    category = Category.where(english_name: english_name,
+      arabic_name: arabic_name).first_or_create
 
-    return category.save ? [true, category] : [false, category]
+    category.save ? [true, category] : [false, category]
   end
 
   # Author:
