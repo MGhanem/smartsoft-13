@@ -66,8 +66,8 @@ class SearchController < BackendController
   # Author:
   #   Nourhan Mohamed
   # params:
-  #   search: a string representing the search keyword, from the params list
-  #     from a textbox in the search_keywords view
+  #   search: a string representing the search keyword, from the params
+  #     list from a textbox in the search_keywords view
   # returns:
   #   success: 
   #     returns to the search view a list of synonyms for the keyword
