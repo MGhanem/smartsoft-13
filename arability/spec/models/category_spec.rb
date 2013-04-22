@@ -9,7 +9,8 @@ describe Category do
     success, category2 =
       Category.add_category_to_database_if_not_exists("test ", "بتتش")
     success.should eq(true)
-    category2.name.should eq("test")
+    category2.english_name.should eq("test")
+    category2.arabic_name.should eq("بتتش")
     category1.id.should eq(category2.id)
   end
 
