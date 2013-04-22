@@ -28,10 +28,12 @@ namespace :db do
     Keyword.create(name: "انجازات", approved: true, is_english: false)
 
     Category.delete_all
-    Category.create(english_name: "test", arabic_name: "إختبار")
+    test_category = Category.create(english_name: "test", arabic_name: "إختبار")
     Category.create(english_name: "Banking", arabic_name: "بنكية")
     Category.create(english_name: "Hospital", arabic_name: "مستشفى")
     Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+
+    test_category.keywords << click
 
     word = Keyword.new
     word.name = "play"
