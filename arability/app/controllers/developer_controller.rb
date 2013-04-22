@@ -1,51 +1,30 @@
 class DeveloperController < ApplicationController
   before_filter :authenticate_gamer!
+  
 # author:
 #   Khloud Khalid
 # description:
-#   generates view with form for registration as developer
+#   creates new developer for the current gamer with the subscription mmodel initially set to free trial then redirects 
+#   to the page where the user chooses his/her subscription model.
 # params:
 #   none
 # success:
-#   view generated successfully
+#   developer created successfully, redirects to choose subscription page
 # failure:
 #   gamer not signed in
   def new
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       flash[:notice] = t(:already_registered_developer)
-      render "pages/home"
-    else
-      @developer = Developer.new
-    end
-  end
-
-# author:
-#   Khloud Khalid
-# description:
-#   creates new developer using parameters from registration form and renders my_subscription#new
-# params:
-#   parameters passed from form(params[:developer]):first_name, last_name
-# success:
-#   developer created successfully, redirects to choose subscription page
-# failure:
-#   gamer not signed in, data entered is invalid
-  def create
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = t(:already_registered_developer)
       redirect_to backend_home_path
     else
-      @developer = Developer.new(params[:developer])
+      @developer = Developer.new()
       @developer.gamer_id = current_gamer.id
       if @developer.save
         MySubscription.choose(@developer.id,SubscriptionModel.first.id)
         redirect_to choose_sub_path
-      else
-        flash[:notice] = t(:failed_developer_registration)
-        render action: "new"
       end
     end
   end
-
 
   # Author:
   #  Noha Hesham
