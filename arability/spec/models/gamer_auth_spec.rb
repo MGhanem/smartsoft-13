@@ -37,4 +37,3 @@ describe "Allowing gamer to signin with username or email" do
     gamer.should eq(nil)
   end
 end
-
