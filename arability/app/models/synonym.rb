@@ -14,7 +14,9 @@ class Synonym < ActiveRecord::Base
   end
 
   def existing?
-    Keyword.exists?(id: keyword_id)
+    if !Keyword.exists?(id: keyword_id)
+      errors.add(:keyword_id, "this keyword is not in our database")
+    end
   end
 
   validates_format_of :name, with: /^([\u0621-\u0652 ])+$/,
@@ -22,8 +24,7 @@ class Synonym < ActiveRecord::Base
 
   validates_presence_of :name, message: "empty synonym name"
 
-  validates :existing?, inclusion: { :in => [true] },
-    message: "There is no such keyword id in database"
+  validate :existing?
 
   validates_uniqueness_of :name, scope: :keyword_id,
     message: "This is a dupplicate synonym entery for the same keyword"
