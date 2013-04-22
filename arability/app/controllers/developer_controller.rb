@@ -2,17 +2,17 @@ class DeveloperController < ApplicationController
   include ApplicationHelper
   before_filter :authenticate_gamer!
 
-# author:
-#   Khloud Khalid
-# description:
-#   creates new developer for the current gamer with the subscription mmodel initially set to free trial then redirects 
-#   to the page where the user chooses his/her subscription model.
-# params:
-#   none
-# success:
-#   developer created successfully, redirects to choose subscription page
-# failure:
-#   gamer not signed in
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   creates new developer for the current gamer with the subscription mmodel initially set to free trial then redirects 
+  #   to the page where the user chooses his/her subscription model.
+  # params:
+  #   none
+  # success:
+  #   developer created successfully, redirects to choose subscription page
+  # failure:
+  #   gamer not signed in
   def new
     if developer_signed_in?
       flash[:notice] = t(:already_registered_developer)
