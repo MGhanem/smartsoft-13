@@ -1,10 +1,8 @@
 <% if I18n.locale == :en %>
-
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
 <% else I18n.locale == :ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
 <% end %>
-
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:my_info)%></a></li>
@@ -196,7 +194,6 @@
   else
     selected_sub_id = 1
   end%>
-  
       <td width="300px">
   <div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
   <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br />
@@ -226,12 +223,10 @@
     <%=sm.limit_project%>
   </p>
     </div>
-            </td>
-        
+            </td>       
 <% end %>
 <tr>
     </table>
-
 <center>
 <% if I18n.locale==:en %>
 <%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px;   " %>
@@ -253,5 +248,3 @@
       <% redirect_to new_gamer_session_path %>    
     <%end %>
 </div>
-
-     

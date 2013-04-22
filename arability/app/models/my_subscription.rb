@@ -3,17 +3,16 @@
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, :presence => true
-
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
-  #  it finds the chosen subscription model by the developer 
-  #  and sets the limits in the subscription model
-  #  to the developers my subscription
-  # success:
-  #  the limits are set in the my subscription of the developer
-  # failure:
-  #  the limits are not put in the my subscription of the developer
+  #   It finds the chosen subscription model by the developer 
+  #   and sets the limits in the subscription model
+  #   to the developers my subscription
+  # Success:
+  #   The limits are set in the my subscription of the developer
+  # Failure:
+  #   The limits are not put in the my subscription of the developer
   def self.choose(dev_id, sub_id)
       submodel = SubscriptionModel.find(sub_id)
       my_sub = MySubscription.where(:developer_id => dev_id).first
@@ -34,21 +33,21 @@
     end
 
   class << self
-    # author:Noha hesham
+    # Author:
+    #    Noha hesham
     # Description:
-    #   takes the developer id and integer type and checks wether 
-    #   the developer's word search ,word add and word follow
-    #   limit has been reached ,if its not then it is greater than zero 
-    #   and permission is given by returning true else return false
-    #   and permission denied.
-    # params:
-    #   developer id and type
-    # success:
-    #   permission is given if the developer didnt exceed the search ,add
-    #   or follow limit
-    # fail:
-    #   none
-    
+    #    Takes the developer id and integer type and checks wether 
+    #    the developer's word search ,word add and word follow
+    #    limit has been reached ,if its not then it is greater than zero 
+    #    and permission is given by returning true else return false
+    #    and permission denied.
+    # Params:
+    #    Developer id and type
+    # Success:
+    #    Permission is given if the developer didnt exceed the search ,add
+    #    or follow limit
+    # Fail:
+    #    None
       def get_permission_follow(dev_id)
         my_subscription = 
          MySubscription.joins(:developer).where(:developer_id => dev_id).first
@@ -58,16 +57,15 @@
             return false
           end
         end        
- 
     # Author:
-    #  Noha Hesham
+    #   Noha Hesham
     # Description:
-    #  counts the number of the followed word by the
-    #  developer till now
+    #   Counts the number of the followed word by the
+    #   developer till now
     # Success:
-    #  gets the correct number of words counted
+    #   Gets the correct number of words counted
     # Failure:
-    #  none 
+    #   None 
    def count_follow
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count   

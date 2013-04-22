@@ -69,40 +69,36 @@ class MySubscriptionController < ApplicationController
       render 'pages/home'
     end  
   end
-
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
-  #  gets all the subscription models available and finds the the current 
-  #  developer by the gamer id
+  #   Gets all the subscription models available and finds the the current 
+  #   developer by the gamer id
   # Params:
-  #  none
-  # success:
-  #  all subscription models are listed
+  #   None
+  # Success:
+  #   All subscription models are listed
   # Failure:
-  #  subscription models are not listed
-
+  #   Subscription models are not listed
   def choose_sub
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id)
   end
-
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
-  #  allows the current developer to choose his subscription model 
-  #  and the limits are added to his my subscription
-  # success:
-  #  the developer can choose his subscription model successfully
+  #   Allows the current developer to choose his subscription model 
+  #   and the limits are added to his my subscription
+  # Success:
+  #   The developer can choose his subscription model successfully
   # Failure:
-  #  payment issues
-
+  #   Payment issues
   def pick
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id)
     sub_id = params[:my_subscription]
     dev_id = @developer.id
-    if MySubscription.choose(dev_id,sub_id)
+    if MySubscription.choose(dev_id, sub_id)
       flash[:notice] = I18n.t('controller.subscription.messages_errors.you_have_successfully_chosen_your_model')
       redirect_to projects_path
     else
@@ -111,21 +107,20 @@ class MySubscriptionController < ApplicationController
     end
   end
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
-  #  allows the current developer to change his subscription model 
-  #  and the limits are added to his my subscription
-  # success:
-  #  the developer can change his subscription model successfully
+  #   Allows the current developer to change his subscription model 
+  #   and the limits are added to his my subscription
+  # Success:
+  #   The developer can change his subscription model successfully
   # Failure:
-  #  none
-
+  #   None
   def pick_edit
     @all_subscription_models = SubscriptionModel.all
     @developer = Developer.find_by_gamer_id(current_gamer.id)
     sub_id = params[:my_subscription]
     dev_id = @developer.id
-    if MySubscription.choose(dev_id,sub_id)
+    if MySubscription.choose(dev_id, sub_id)
       flash[:notice] = I18n.t('controller.subscription.messages_errors.you_have_successfully_chosen_your_model')
       redirect_to '/gamers/edit'
     else
