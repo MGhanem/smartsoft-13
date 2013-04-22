@@ -40,20 +40,19 @@ class SearchController < BackendController
     @categories = categories_array.join(", ")
   end
 
-  # Description:
-  #   returns json of keyword names matching autocompletion
   # Author:
   #   Nourhan Mohamed
+  # Description:
+  #   returns json of keyword names matching autocompletion
   # params:
   #   search_keyword: a string representing the search keyword, from the params list
   #     from a textbox in the search view
-  # returns:
-  #   success:
-  #     returns a json list of keywords similar to what's currently typed
-  #     in the search textbox
-  #   failure:
-  #     returns an empty list if what's currently typed in the search textbox
-  #     had no matches
+  # success:
+  #   returns a json list of keywords similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
   def keyword_autocomplete
     search_keyword = params["search"]
     similar_keywords =
