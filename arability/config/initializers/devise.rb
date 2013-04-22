@@ -218,9 +218,9 @@ Devise.setup do |config|
   #config.omniauth :facebook, "155521981280754", "a4d4684f0554e3637085e72eaa132890",
   #{:scope => 'email, offline_access, publish_stream', :client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}}
 
-  require "omniauth-google-oauth2"
-  config.omniauth :google_oauth2, "572595320157.apps.googleusercontent.com", "Z3mU_zT6UtUhOqhNc-iQHqpk", 
-  {:client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}}
+  #require "omniauth-google-oauth2"
+  #config.omniauth :google_oauth2, "572595320157.apps.googleusercontent.com", "Z3mU_zT6UtUhOqhNc-iQHqpk", 
+  #{:client_options => {:ssl => {:ca_path => '/etc/ssl/certs'}}}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -82,4 +82,8 @@ class AuthenticationsController < ApplicationController
 	  redirect_to root_url
 	end
 
+    def facebook_callback
+        auth = request.env["omniauth.auth"]
+    end
+
 end

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  rescue_from Exception, :with => :error_render_method
+  #rescue_from Exception, :with => :error_render_method
   before_filter :set_locale
   require 'csv'
 

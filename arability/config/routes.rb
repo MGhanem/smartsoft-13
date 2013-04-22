@@ -25,7 +25,7 @@ Arability::Application.routes.draw do
 
 
     # required for routing by the devise module(gem)
-    devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    #devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     devise_for :gamers
     devise_for :gamers do 
       get '/gamers/sign_out' => 'devise/sessions#destroy' 
@@ -51,12 +51,13 @@ Arability::Application.routes.draw do
     match '/authentications/twitter' => 'authentications#twitter'
     get "authentications/twitter"
     get "authentications/remove_twitter_connection"
-    match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#twitter'
     get "authentications/twitter_hall_of_fame"
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match '/auth/facebook/callback' => 'authentications#facebook_callback'
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"

@@ -72,8 +72,6 @@ gem 'devise','2.0'
 
 gem "koala"
 
-gem 'omniauth'
-
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'twitter'
