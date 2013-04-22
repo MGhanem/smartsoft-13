@@ -28,14 +28,11 @@ module RequestHelpers
   end
 
   def login(gamer)
-    login_as gamer, :scope => :gamer
+    login_as gamer, scope: :gamer
   end
-
-
-
+  
   def login_gamer(u)
     @request.env["devise.mapping"] = Devise.mappings[:gamer]
     sign_in u
-  end
-end
-
+ end
+ 
