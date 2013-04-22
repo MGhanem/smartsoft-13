@@ -34,9 +34,8 @@ class Authentication < ActiveRecord::Base
   #   removes record for the current user in Authentication table
   # Failure:
   #   none
-  def self.remove_conn(current_gamer)
-    authentication = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
-     "twitter")
+  def self.remove_conn(current_gamer, provider)
+    authentication = Authentication.find_by_gamer_id_and_provider(current_gamer.id, provider)
     if (authentication.nil?)
       return
     end
