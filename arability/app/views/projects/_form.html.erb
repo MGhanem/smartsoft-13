@@ -1,3 +1,4 @@
+<%= link_to t(:back), {action: "index", controller: "projects"} %>
 <div class = "container well" >
     <p class="req"><%= t(:required) %></p>
     <%= form_for @project, :html => {:class => "form-horizontal"} do |f| %>

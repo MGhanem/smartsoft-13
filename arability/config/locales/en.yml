@@ -60,7 +60,7 @@ en:
   to: "To"
   desc: "Description"
   new_project: "New Project"
-  back: "Back"
+  back: "<< Back"
   edit_project: "Edit Project"
   create_project: "Create Project"
   save_project: "Save Project"
