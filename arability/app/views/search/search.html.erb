@@ -14,7 +14,7 @@
 			<script type="text/javascript">
 				function onhovering(button){
 					$button = $(button);
-    			if ($button.hasClass('btn-info')) {
+    			if ($button.hasClass("btn-info")) {
 						$(".btnfollow").removeClass("btn-info");
 						$(".btnfollow").addClass("btn-danger");
 						$(".btnfollow").html("<%= t(:unfollow) %>");
@@ -22,7 +22,7 @@
 				}
 				function offhovering(button){
 					$button = $(button);
-					if ($button.hasClass('btn-danger')) {
+					if ($button.hasClass("btn-danger")) {
 						$(".btnfollow").removeClass("btn-danger");
 						$(".btnfollow").addClass("btn-info");
 						$(".btnfollow").html("<%= t(:following) %>");
@@ -30,7 +30,7 @@
 				}
 				function clickfollow(button){
 					$button = $(button);
-					if ($button.hasClass('btn-default')) {
+					if ($button.hasClass("btn-default")) {
 						$.get("<%= follow_word_path @search_keyword_model.id %>");
 						$(".btnfollow").removeClass("btn-default");
 						$(".btnfollow").addClass("btn-info");

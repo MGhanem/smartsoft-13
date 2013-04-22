@@ -34,5 +34,6 @@ module RequestHelpers
   def login_gamer(u)
     @request.env["devise.mapping"] = Devise.mappings[:gamer]
     sign_in u
+  end
  end
  
