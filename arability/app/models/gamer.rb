@@ -62,7 +62,6 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-
   # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
   # Author:

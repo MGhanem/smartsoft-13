@@ -1,7 +1,7 @@
 require 'spec_helper'
 include Warden::Test::Helpers
 
-describe 'Allowing gamer to signin with username or email' do
+describe "Allowing gamer to signin with username or email" do
 
   let(:gamer_adam) {
     gamer_adam = Gamer.new
@@ -39,4 +39,3 @@ describe 'Allowing gamer to signin with username or email' do
     gamer.should eq(nil)
   end
 end
-
