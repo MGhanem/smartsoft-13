@@ -42,11 +42,7 @@
 <!-- YAMLI CODE START -->
 <script type="text/javascript" src="http://api.yamli.com/js/yamli_api.js"></script>
 <script type="text/javascript">
-  <% if I18n.locale==:en %>
-  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "en" , startMode: "onOrUserDefault" } ))
-  <% else I18n.locale==:ar %>
-  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "ar" , startMode: "onOrUserDefault" } ))
-  <% end %>
+  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "<%= I18n.locale %>" , startMode: "onOrUserDefault" } ))
   {
     Yamli.yamlify( "suggest_synonym_textbox", { settingsPlacement: "inside" } );
     Yamli.yamlify( "suggest_synonym_textbox_arabic", { settingsPlacement: "inside" } );
