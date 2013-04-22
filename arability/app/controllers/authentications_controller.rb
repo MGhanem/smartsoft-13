@@ -20,7 +20,7 @@ class AuthenticationsController < ApplicationController
 	  	flash[:notice] = "تم التواصل مع تويتر بنجاح!"
 	  end
 	  auth = request.env["omniauth.auth"]
-      authentication = Authentication.find_by_provider_and_gid(auth["provider"],
+      authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
        current_gamer.id) || Authentication.create_with_omniauth(auth,
         current_gamer)
       redirect_to "/gamers/edit"
