@@ -12,12 +12,11 @@ class Gamer < ActiveRecord::Base
 
    devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         #:omniauthable, omniauth_providers: [:facebook]
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender
+                  :highest_score, :gender
 
   has_many :services, :dependent => :destroy
 
@@ -185,85 +184,6 @@ class Gamer < ActiveRecord::Base
   #     no failure
   def get_available_trophies
     return Trophy.all - self.trophies
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Takes the values from the input authentication token and inserts it
-  # Params:
-  #   auth: an omniauth authentication hash coming form Facebook
-  # Success:
-  #   The values are saved into the database
-  # Failure:
-  #   None
-  def connect_to_facebook(auth)
-    self.provider = auth["provider"]
-    self.uid = auth["uid"]
-    self.token = auth["credentials"]["token"]
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Disconnects the user's facebook information
-  # Params:
-  #   None
-  # Success:
-  #   The user's facebook uid and token are deleted from the database 
-  # Failure:
-  #   None
-  def disconnect_from_facebook
-    self.provider = nil
-    self.uid = nil
-    self.token = nil
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Updates the user's token field
-  # Params:
-  #   auth: an omniauth authentication hash coming form Facebook
-  # Success:
-  #   The values are saved into the database
-  # Failure:
-  #   None
-  def update_access_token(auth)
-    self.uid = auth["uid"]
-    self.token = auth["credentials"]["token"]
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Checks whether the user is connected to Facebook
-  # Params:
-  #   None
-  # Success:
-  #   Boolean value is returned indicating whether or not the user
-  #   has a saved token
-  # Failure:
-  #   None
-  def is_connected_to_facebook
-    token != nil
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Returns the user's facebook access token
-  # Params:
-  #   None
-  # Success:
-  #   Returns the user's access token
-  # Failure:
-  #   None
-  def get_token
-    token
   end
 
   def won_prizes?(score, level)
