@@ -26,8 +26,8 @@ class Gamer < ActiveRecord::Base
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, :presence => true, :uniqueness => true,
-    :length => { :minimum => 3, :maximum => 20 }
+  validates :username, presence: true, uniqueness: true,
+    length: { minimum: 3, maximum: 20 }
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
 
@@ -38,11 +38,11 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
 
+  # Author:
+  #   Adam Ghanem
   # Description
   #   method that needs to be overwritten for devise so that
   #   we can find a Gamer by a given username OR email
-  # Author:
-  #   Adam Ghanem
   # @params:
   #   warden_conditions
   # returns:
@@ -54,7 +54,9 @@ class Gamer < ActiveRecord::Base
   def self.find_for_database_authentication(gamer_conditions)
     conditions = gamer_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(
+        ["lower(username) = :value OR lower(email) = :value",
+                               { value: login.downcase }]).first
     else
       where(conditions).first
     end
