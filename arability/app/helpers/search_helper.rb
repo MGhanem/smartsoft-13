@@ -1,5 +1,11 @@
 module SearchHelper
 
+  @@GENDER = 0
+  @@COUNTRY = 1
+  @@AGE = 2
+  @@EDUCATION = 3
+
+  
   # author:
   #   Mostafa Hassaan
   # description:
@@ -22,7 +28,7 @@ module SearchHelper
                 data: stats,
         }
       end
-      if I18n.locale == :ar
+      if I18n.locale ==:ar
         series = {
                type: 'pie',
                name: 'Browser share',
@@ -51,11 +57,12 @@ module SearchHelper
           color: "black",
           style: {
             font: "13px Trebuchet MS, Verdana, sans-serif"
-          }
         }
-      })
-    end
+      }
+    })
   end
+  end
+
 
   @@GENDER = 0
   @@COUNTRY = 1
@@ -94,6 +101,7 @@ module SearchHelper
                    :name=> 'Browser share',
                    :borderWidth => 0.7,
                    :data=>  stats
+
           }
           f.series(series)
           f.options[:title][:text] = header
@@ -128,4 +136,6 @@ module SearchHelper
   def getID(word)
     return Keyword.where(name: word).first.id
   end
+
 end
+

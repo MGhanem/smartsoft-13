@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  word_search: 1
+  word_follow: 1
+  word_add: 1
+  developer: 
+
+two:
+  word_search: 1
+  word_follow: 1
+  word_add: 1
+  developer: 
