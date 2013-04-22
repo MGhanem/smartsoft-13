@@ -21,7 +21,7 @@ class DeveloperController < ApplicationController
       @developer = Developer.new
       @developer.gamer_id = current_gamer.id
       if @developer.save
-        MySubscription.choose(@developer.id,SubscriptionModel.first.id)
+        MySubscription.choose(@developer.id, SubscriptionModel.first.id)
         redirect_to choose_sub_path
       end
     end
