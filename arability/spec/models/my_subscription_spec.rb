@@ -33,16 +33,4 @@ describe MySubscription do
 		result = MySubscription.choose(developer.id, submodel.id)
 		expect(result).to eq(true)
 
-	end
-
-  it "Word add can de decremented" do
-		result = my_sub.decrement_word_add
-		expect(result).to eq(true)
-	end
-
-  it "Word search can de decremented" do
-		result = my_sub.decrement_word_search
-		expect(result).to eq(true)
-	end
-
 end
