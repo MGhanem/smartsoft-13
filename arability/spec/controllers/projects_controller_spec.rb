@@ -75,3 +75,59 @@ describe "GET #create" do
     end
   end
 end
+
+describe "GET #edit" do
+  it "assigns the requested project to @project" do
+    project = Factory(:project)
+    get :edit, id: project
+    assigns(:project).should eq(project)
+  end
+end
+
+describe 'PUT update' do
+  before :each do
+    @project = Factory(:project, name: "Pro", minAge:"23", maxAge:"50")
+  end
+
+  context "valid attributes" do
+    it "located the requested @project" do
+      put :update, id: @project, project: Factory.attributes_for(:project)
+      assigns(:project).should eq(@project)
+    end
+
+    it "changes @project's attributes" do
+      put :update, id: @project,
+        project: Factory.attributes_for(:project, name: "Pro", minAge:"23", maxAge:"50")
+      @project.reload
+      @project.name.should eq("Pro")
+      @project.minAge.should eq("23")
+      @project.maxAge.should eq("50")
+    end
+
+    it "redirects to the project index" do
+      put :update, id: @project, project: Factory.attributes_for(:project)
+      response.should redirect_to projects_path
+    end
+  end
+
+  context "invalid attributes" do
+    it "locates the requested @project" do
+      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
+      assigns(:project).should eq(@project)
+    end
+
+    it "does not change @project's attributes" do
+      put :update, id: @project,
+        project: Factory.attributes_for(:project, name: "Pro", minAge: "23", maxAge:nil)
+      @project.reload
+      @project.name.should_not eq("Pro")
+      @project.minAge.should_not eq("23")
+      @project.minAge.should eq("50")
+    end
+
+    it "re-renders the edit method" do
+      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
+      response.should render_template :edit
+    end
+  end
+end
