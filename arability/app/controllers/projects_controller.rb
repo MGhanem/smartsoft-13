@@ -5,7 +5,7 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  # before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv]
 
 
 
@@ -197,6 +197,11 @@ def show
       syn = Synonym.find(word_synonym.synonym_id)
       @words.push(word)
       @synonyms.push(syn)
+    end
+    respond_to do |format|
+      format.html #do nothing.
+      format.json { render :json => format.html.to_json }
+      format.xml 
     end
   else
     redirect_to :action => "index"
@@ -483,43 +488,61 @@ end
 
   
   # author:
-#      Khloud Khalid
-# description:
-#   method exports words and synonyms of a given project to a .csv file
-# params:
-#   project_id
-# success:
-#   data exported successfully
-# failure:
-#   project does not exist, not registered developer.
+  #      Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .csv file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
   def export_to_csv 
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      @project_id = params[:project_id]
-      if Project.find_by_id(@project_id) != nil   
-        @exported_data = PreferedSynonym.where(project_id: @project_id).all
-        csv_string = CSV.generate do |csv|
-          if @exported_data != []
-            @exported_data.each do |word|
-              @keyword = Keyword.find_by_id(word.keyword_id).name
-              @synonym = Synonym.find_by_id(word.synonym_id).name
-              csv << [@keyword, @synonym]
-            end
-          else
-            flash[:notice] = t(:no_words)
-            redirect_to project_path(@project_id), flash: flash
-            return
+    @project_id = params[:project_id]
+    if Project.find_by_id(@project_id) != nil   
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      csv_string = CSV.generate do |csv|
+        if @exported_data != []
+          @exported_data.each do |word|
+            @keyword = Keyword.find_by_id(word.keyword_id).name
+            @synonym = Synonym.find_by_id(word.synonym_id).name
+            csv << [@keyword, @synonym]
           end
-        end         
-        send_data csv_string,
-        type: "text/csv; charset=iso-8859-1; header=present",
-        disposition: "attachment; filename=project_data.csv" 
-      else
-        flash[:notice] = t(:no_project)
-        render "pages/home"
-      end
+        else
+          flash[:notice] = t(:no_words)
+          redirect_to project_path(@project_id), flash: flash
+          return
+        end
+      end         
+      send_data csv_string,
+      type: "text/csv; charset=UTF-8; header=present",
+      disposition: "attachment; filename=project_data.csv" 
     else
-      flash[:notice] = t(:not_developer)
-      render "pages/home"
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+      return
     end
   end 
+
+  def generate_xml
+    @project_id = params[:project_id]
+    @projects = Project.where(:owner_id => current_developer.id)
+    @project = Project.find(params[:project_id])
+    render( :action => 'show', :format => 'xml' )
+  end
+
+  def export_to_xml
+    # @projects = Project.where(:owner_id => current_developer.id)
+    # @project = Project.find(params[:id])
+    @project_id = params[:project_id]
+    @exported_data = PreferedSynonym.where(project_id: @project_id).all
+    # respond_to do |format|
+    #   # format.html #do nothing.
+    #   # format.json { render :json => format.html.to_json }
+    #   format.xml 
+    # end
+    send_data generate_xml ,
+    :type => "text/xml; charset=UTF-8;", 
+    :disposition => "attachment; filename=project_data.xml"
+  end
 end
