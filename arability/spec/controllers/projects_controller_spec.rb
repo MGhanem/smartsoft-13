@@ -18,8 +18,8 @@ describe ProjectsController do
 
   let(:developer1){
   	developer = Developer.new
-  	developer.first_name = "Mohamed"
-  	developer.last_name = "Tamer"
+  	# developer.first_name = "Mohamed"
+  	# developer.last_name = "Tamer"
   	developer.gamer_id = gamer1.id
   	developer.save
   	developer
@@ -40,8 +40,38 @@ describe ProjectsController do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
+end
 
-  it "A developer can create a project" do
-    sign_in developer1.gamer
-    get
+describe "GET #new" do
+  it "initializes a new project" do
+    get :new
+  end
+end
+
+describe "GET #create" do
+  context "with valid attributes" do
+    it "assigns attributes to the new project" do
+      expect{
+        project :create
+      }
+   end
+
+    it "redirects to the project index" do
+      post :create, project: Factory.attributes_for(:project)
+      response.should redirect_to Project.index
+    end
+  end
+
+  context "with invalid attributes" do
+    it "does not save the new project" do
+      expect{
+        post :create, project: Factory.attributes_for(:invalid_project)
+      }.to_not change(Project,:count)
+    end
+
+    it "re-renders the new method" do
+      post :create, project: Factory.attributes_for(:invalid_project)
+      response.should render_template :new
+    end
+  end
 end
