@@ -1,0 +1,33 @@
+<div class="span3">
+	<div class="well nav-fixed">
+		<ul class="nav nav-list nav-stacked" id="admin-tabs">
+			<li <%= active == "dashboard"? "class=active" : "" %>>
+				<a href="">الصفحة الرئيسية</a>
+			</li>
+			<li class="nav-header">إدارة الكلمات</li>
+			<li class="divider"></li>
+			<li <%= active == "add-word"? "class=active" : "" %>>
+				<a href="/admin/add/word">إضافة كلمة جديدة</a>
+			</li>
+			<li <%= active == "import-csv"? "class=active" : "" %>>
+				<a href="/admin/import/csvfile">استيراد ملف كلمات بصيغة CSV</a>
+			</li>
+			<li class="nav-header">إدارة الانجازات</li>
+			<li class="divider"></li>
+			<li <%= active == "add-trophy"? "class=active" : "" %>>
+				<a href="/admin/add/trophy">إضافة انجاز جديد</a>
+			</li>
+			<li <%= active == "list-trophies"? "class=active" : "" %>>
+				<a href="/admin/list/trophies">عرض الانجازات</a>
+			</li>
+			<li class="nav-header">إدارة الجوائز</li>
+			<li class="divider"></li>
+			<li <%= active == "add-prize"? "class=active" : "" %>>
+				<a href="/admin/add/prize">إضافة جائزة جديدة</a>
+			</li>
+			<li <%= active == "list-prizes"? "class=active" : "" %>>
+				<a href="/admin/list/prizes">عرض الجوائز</a>
+			</li>
+		</ul>
+	</div>
+</div>

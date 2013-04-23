@@ -11,17 +11,13 @@ Arability::Application.routes.draw do
 
     match "" => "admin#index", :via => [:get]
 
-    match "/add/word" => "admin#add_word", :via => [:get]
-    match "/add/word/submit" => "admin#add_word", :via => [:post]
+    match "/add/word" => "admin#add_word", :via => [:get, :post]
 
-    match "/import/csvfile" => "admin#upload", :via => [:get]
-    match "/import/csvfile/submit" => "admin#upload", :via => [:post]
+    match "/import/csvfile" => "admin#upload", :via => [:get, :post]
 
-    match "/add/trophy" => "admin#add_trophy", :via => [:get]
-    match "/add/trophy/submit" => "admin#add_trophy", :via => [:post]
+    match "/add/trophy" => "admin#add_trophy", :via => [:get, :post]
 
-    match "/add/prize" => "admin#add_prize", :via => [:get]
-    match "/add/prize/submit" => "admin#add_prize", :via => [:post]
+    match "/add/prize" => "admin#add_prize", :via => [:get, :post]
 
 
     match "/list/trophies" => "admin#list_trophies", :via => [:get]

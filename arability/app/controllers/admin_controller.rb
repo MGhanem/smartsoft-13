@@ -117,12 +117,12 @@ class AdminController < ApplicationController
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
         flash[:successtype] = "addword"
         flash.keep
-        redirect_to action: "/add/word"
+        redirect_to "/admin/add/word"
       else
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        redirect_to action: "/add/word", fargs: params
+        redirect_to "/admin/add/word", fargs: params
       end
     else
       render "add-word"
@@ -164,9 +164,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to action: "/add/trophy"
+        redirect_to "/admin/add/trophy"
       else
-        redirect_to action: "/add/trophy", fargs: {addtrophy: params}
+        redirect_to "/admin/add/trophy", fargs: {addtrophy: params}
       end
     else
       render "add-trophy"
@@ -208,9 +208,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to action: "/admin/add/prize"
+        redirect_to "/admin/add/prize"
       else
-        redirect_to action: "/admin/add/prize", fargs: {addprize: params}
+        redirect_to "/admin/add/prize", fargs: {addprize: params}
       end
     else
       render "add-prize"
@@ -300,8 +300,9 @@ class AdminController < ApplicationController
       if message == 0
         uploadCSV(array_of_arrays)
       end
-      redirect_to action: "/import/csvfile", message: message
+      redirect_to "/admin/import/csvfile", message: message
     else
+      @message = params[:message]
       render "import-csv-file"
     end
   end
