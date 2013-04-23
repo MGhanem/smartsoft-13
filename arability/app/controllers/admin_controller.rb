@@ -53,6 +53,14 @@ class AdminController < ApplicationController
     @prizes_list = Prize.all
   end
 
+  def list_trophies
+    @message = params[:message]
+    @fargs = params[:fargs]
+    @trophies_list = Trophy.all
+    @prizes_list = Prize.all
+    render "list-trophies"
+  end
+
   # author:
   #     Karim ElNaggar
   # description:
