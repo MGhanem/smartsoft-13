@@ -1,4 +1,8 @@
 ar:
+  username_or_email: "إسم المستخدم أو البريد الالكتروني"
+  omar_error1: "هذه الكلمة ليست موجودة"
+  omar_error2: "هذا المعنى فارغ"
+  omar_error3: "هذا المعنى موجود بالفعل لهذه الكلمة"
   arability: "عربيليتي"
   sign_up: "إنشاء حساب"
   sign_in: "تسجيل الدخول"
@@ -23,6 +27,8 @@ ar:
   followed_words: "الكلمات المتابعة"
   words: "كلمات"
   unfollow: "إلغاء المتابعة"
+  follow: "تابع"
+  following: "متابع"
   backend: "المطورون"
   project: "مشروع"
   projects: "مشاريع"

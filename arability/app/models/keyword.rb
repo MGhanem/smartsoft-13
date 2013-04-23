@@ -113,27 +113,30 @@ class Keyword < ActiveRecord::Base
     return keyword
   end
 
-  class << self
   # Author:
-  #  Mirna Yacout
+  #   Mirna Yacout
   # Description:
-  #  This method is to record the aproval of the admin to a certain keyword in the database
+  #   This method is to record the disapproval of the admin to a certain keyword in the database
   # Parameters:
-  #  id: the id of the keyword to be approved
+  #   id: the id of the keyword to be disapproved
   # Success:
-  #  returns true on saving the approval correctly in the database
+  #   returns true on saving the disapproval correctly in the database
   # Failure:
-  #  returns false if the keyword doesnot exist in the database
-  #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
-        keyword.approved = true
-        return keyword.save
-      end
-      return false
+  #   returns false if the keyword doesnot exist in the database
+  #   or if the disapproval failed to be saved in the database 
+  def self.disapprove_keyword(keyword_id)
+    if Keyword.exists?(id: keyword_id)
+      keyword = Keyword.find(keyword_id)
+      keyword.approved = false
+      return keyword.save
     end
+    return false
   end
+  
+  class << self
+
+  end
+
   # author:
   #   Omar Hossam
   # Description:
@@ -141,7 +144,7 @@ class Keyword < ActiveRecord::Base
   # Parameters:
   #   None.
   # Success: 
-  #   takes no arguments and returns to the admin a list containing the keywords.
+  #   takes no arguments and returns to the admin a list containing the keywords
   #   that are pending for approval in the database.
   # Failure:
   #   returns an empty list if no words are pending for approval.
@@ -149,7 +152,35 @@ class Keyword < ActiveRecord::Base
     return Keyword.where(approved: false).all
   end
 
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all approved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are approved in the database.
+  # Failure:
+  #   returns an empty list if no words are approved.
+  def self.list_approved_keywords
+    Keyword.where(approved: true).all
+  end
 
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all reported keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are reported by users in the database.
+  # Failure:
+  #   returns an empty list if no words are reported.
+  def self.list_reported_keywords
+    Keyword.where(reported: true).all
+  end
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
