@@ -1,0 +1,25 @@
+<script type="text/javascript">
+  <% categories = Category.all.map { |c| c.get_name_by_locale } %>
+  var categories = <%= raw categories.to_s %>
+  $(function() {
+  $(".categories-autocomplete").tagsManager({
+    prefilled: <%= raw @categories %>,
+    delimeters: [44, 188, 13],
+    hiddenTagListName: "categories",
+    typeahead: true,
+    typeaheadAjaxSource: null,
+    typeaheadSource: null,
+    typeaheadDelegate: {
+      source: categories,
+    <% if I18n.locale == :ar %>
+      highlighter: function(item) {
+        return item
+      }
+    <% end %>
+    },
+  <% if I18n.locale == :ar %>
+    tagClass: "arabic"
+  <% end %>
+  })
+})
+</script>

@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "games", :media => "all" %>
   <%= stylesheet_link_tag "pages", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap-tagmanager" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "pages" %>
   <% if I18n.locale == :ar %>
@@ -18,6 +19,8 @@
   <% end %>
   <%= stylesheet_link_tag "bootstrap-fileupload.min", :media => "all"%>
   <%= javascript_include_tag "bootstrap-fileupload.min" %>
+  <%= javascript_include_tag "bootstrap-tagmanager" %>
+  <%= yield(:head) %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -42,11 +45,7 @@
 <!-- YAMLI CODE START -->
 <script type="text/javascript" src="http://api.yamli.com/js/yamli_api.js"></script>
 <script type="text/javascript">
-  <% if I18n.locale==:en %>
-  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "en" , startMode: "onOrUserDefault" } ))
-  <% else I18n.locale==:ar %>
-  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "ar" , startMode: "onOrUserDefault" } ))
-  <% end %>
+  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "<%= I18n.locale %>" , startMode: "onOrUserDefault" } ))
   {
     Yamli.yamlify( "suggest_synonym_textbox", { settingsPlacement: "inside" } );
     Yamli.yamlify( "suggest_synonym_textbox_arabic", { settingsPlacement: "inside" } );
