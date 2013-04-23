@@ -1,8 +1,9 @@
 <script type="text/javascript">
-  <% categories = Category.all.map { |c| c.get_name_by_locale} %>
+  <% categories = Category.all.map { |c| c.get_name_by_locale } %>
   var categories = <%= raw categories.to_s %>
   $(function() {
   $(".categories-autocomplete").tagsManager({
+    prefilled: <%= raw @categories %>,
     delimeters: [44, 188, 13],
     hiddenTagListName: "categories",
     typeahead: true,

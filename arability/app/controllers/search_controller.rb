@@ -38,7 +38,7 @@ class SearchController < BackendController
     end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array.join(",")
+    @categories = categories_array
   end
 
 	#Description:
