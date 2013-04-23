@@ -239,7 +239,7 @@ class AdminController < ApplicationController
       flash[:error] = "Trophy number #{params[:id]} is not found"
     end
     flash.keep
-    redirect_to action: "index", anchor: "admin-list-trophies"
+    redirect_to "/admin/list/trophies"
   end
 
   # author:
@@ -264,7 +264,7 @@ class AdminController < ApplicationController
       flash[:error] = "Prize number #{params[:id]} is not found"
     end
     flash.keep
-    redirect_to action: "index", anchor: "admin-list-prizes"
+    redirect_to "/admin/list/prizes"
   end
 
   # author:
