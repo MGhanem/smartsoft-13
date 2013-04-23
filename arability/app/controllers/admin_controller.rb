@@ -51,6 +51,7 @@ class AdminController < ApplicationController
     @fargs = params[:fargs]
     @trophies_list = Trophy.all
     @prizes_list = Prize.all
+    render "dashboard"
   end
 
   def list_trophies
@@ -59,6 +60,14 @@ class AdminController < ApplicationController
     @trophies_list = Trophy.all
     @prizes_list = Prize.all
     render "list-trophies"
+  end
+
+  def list_prizes
+    @message = params[:message]
+    @fargs = params[:fargs]
+    @trophies_list = Trophy.all
+    @prizes_list = Prize.all
+    render "list-prizes"
   end
 
   # author:
