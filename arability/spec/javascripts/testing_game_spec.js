@@ -1,7 +1,7 @@
 describe("newGame", function() {
   it("asserts the table exists", function() {
   	newGame();
-    expect($('<table class="table1" id="main-table"></table>')).toExist();
+    expect($('<table class="table1" id="main-table">')).toExist();
       });
 });
 
@@ -50,7 +50,7 @@ describe("wordLabel", function() {
   it("empty at creation", function() {
   	lang = 0
   	newGame();
-  	setTimeout(function(){ expect(document.getElementById('wordLabel').innerHTML.toBe('gsgsd'));}, 5);
+  	setTimeout(function(){ expect(document.getElementById('wordLabel').innerHTML.toBe(''));}, 5);
       });
 });
 
@@ -81,3 +81,24 @@ describe("Win", function() {
   expect(win).toBe(true);
   	});
 });
+
+
+describe("voted on everything", function() {
+  it("should prompt the user that he has finished all the words in the database and give him the option to continue", function() {
+    $.ajaxSetup({async: false});
+    getNewWords(0)
+      if(wordsInDb == true){
+      continuePlaying();
+      }
+      else{
+        wasPrompted = true;
+        setButtons();
+        $('.zone').empty();
+        $('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+          '<br><button class="btn btn-success" id="contPlayingBtn" onclick="continuePlaying()">' +
+          continuePlayingBtn +'</button>');
+      }
+     expect($('<button class="btn btn-success" id="contPlayingBtn" onclick="continuePlaying()">Continue Playing</button>')).toExist();
+    });
+});
+
