@@ -183,9 +183,7 @@ class ApplicationController < ActionController::Base
   #   redirects to sign up as guest
   def authenticate_guest!
     if current_gamer == nil
-      if guest_gamer != nil
-        redirect_to guest_sign_up_path 
-      end
+      redirect_to guest_sign_up_path
     end
   end
 end
