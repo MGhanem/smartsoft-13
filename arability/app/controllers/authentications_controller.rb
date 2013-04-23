@@ -73,8 +73,8 @@ class AuthenticationsController < ApplicationController
 	  redirect_to root_url
 	end
 
-    def twitter_signin
+  def twitter_signin
       
-    end
+  end
 
 end

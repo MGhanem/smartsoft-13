@@ -55,7 +55,7 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#twitter'
-    get "authentications/twitter_signin"
+    get "/authentications/twitter_signin"
     match "/post_score"=>'games#post', :as => "post_facebook"
 
     scope "developers/" do 
