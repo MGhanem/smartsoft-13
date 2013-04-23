@@ -101,6 +101,8 @@ Arability::Application.routes.draw do
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
+  get "games/showprofile"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:

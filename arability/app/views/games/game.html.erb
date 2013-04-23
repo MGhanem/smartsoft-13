@@ -228,6 +228,11 @@ function setButtons(){
     $.get("/games/halloffame");
   }
 
+  function showProfile(){
+    clear();
+    $.get('/games/showprofile');
+  }
+
 
 
 </script>
@@ -247,7 +252,7 @@ function setButtons(){
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
       الإنجازات
     </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()">
      بروفيل
     </div>
     <div class="nav-box btn btn-inverse" id="navItems">

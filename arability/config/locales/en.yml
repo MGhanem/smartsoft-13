@@ -283,3 +283,10 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  you_vote: "You" 
+  vote_action: "voted for"
+  chosen_action: "as the best translation for"
+  vote_log: "Your Votes History"
+  no_you: "You" 
+  no_vote_log: "didn't vote for any translation yet!!"
+

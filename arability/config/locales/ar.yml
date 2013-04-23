@@ -290,4 +290,10 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'  
+  you_vote: ""
+  vote_action: "لقد اخترت"
+  chosen_action: "كانسب بديل لكلمة"
+  vote_log: "ذاكرة اختيارتك" 
+  no_you: "انت"
+  no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"

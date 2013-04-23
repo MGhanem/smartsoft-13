@@ -1,0 +1,80 @@
+<div class = "main-div">
+<% if I18n.locale == :ar %> 
+<h1 class ="heading"><%= t(:vote_log)%></h1>
+<% else %>
+<h3 class ="heading"><%= t(:vote_log)%></h3>
+<% end %>
+<table class="table table-bordered table-striped styling-center-table">
+  <% if !@vote_log.blank? %>
+    <% @vote_log.each do |vote| %>
+    <% if I18n.locale == :ar %>
+      <tr>
+        <td></td>
+        <td class = "arabic"> <b class = "coloring"><%= t(:you_vote) %></b> <%= t(:vote_action) %> <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
+        <td></td>
+      </tr>
+    <% else %>
+       <tr>
+        <td></td>
+        <td> <b class = "coloring"> <%= t(:you_vote) %>  </b> <%= t(:vote_action) %>  <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
+        <td></td>
+      </tr>
+    <% end %>
+    <% end %>
+  <% else %>
+    <% if I18n.locale == :ar %>
+      <tr>
+        <td></td>
+        <td class = "arabic"> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
+        <td></td>
+      </tr>
+      <% else %>
+      <tr>
+       <td></td>
+        <td> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
+       <td></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+</div>
+
+<style>
+
+.main-div {
+  text-align: center;
+  overflow-y: scroll;
+  height: 520px;
+  overflow-x: hidden;
+}
+
+.heading {
+  color:white;
+}
+
+.styling-center-table{
+  margin: 0 auto !important;
+  float: none !important;
+  font-size: 20px;
+  border: none;
+}
+
+.arabic {
+  font-size: 25px;
+}
+
+.coloring {
+  color: #51a351;
+  font-weight: bold;
+}
+
+.table td{
+  background-color: #FFFFFF;
+  border-width: 0px;
+}
+
+.table {
+   width: 740px;
+}
+
+</style>
