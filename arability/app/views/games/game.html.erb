@@ -140,9 +140,9 @@ function setButtons(){
 
 
   function setLevelPopUpTitle(){
-    <% if I18n.locale==:ar %>
+    <% if I18n.locale == :ar %>
     levelPopUpTitle = 'مرحلة رقم';
-    <% else I18n.locale==:en %>
+    <% else %>
     levelPopUpTitle = 'Level';
     <% end %> 
   }
@@ -191,7 +191,7 @@ function setButtons(){
   function setScoreTitle(){
     <% if I18n.locale==:ar %>
     document.getElementById('game-score').innerHTML = score + ' :نقاط'
-    <% else I18n.locale==:en %>
+    <% else %>
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
   }
@@ -285,7 +285,7 @@ function setButtons(){
   <% if I18n.locale == :ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
 
-    <% else I18n.locale == :en %>
+    <% else %>
     <div class="zone" id="zone">
       <% end %> 
     <div class="divaya">
@@ -296,7 +296,7 @@ function setButtons(){
       <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
       <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
     </div>
-    <% else I18n.locale == :en %>
+    <% else %>
     <h2 class="lang-header">Pick the language you want to play with</h2><br>
     <div class="game-lang">
       <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
