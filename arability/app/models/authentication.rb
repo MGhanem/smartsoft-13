@@ -13,13 +13,13 @@ class Authentication < ActiveRecord::Base
   #   creates new record in Authentication table
   # Failure:
   #   none
-  def self.create_with_omniauth(auth, current_gamer)
+  def self.create_with_omniauth(provider, gid, token, token_secret, email, current_gamer)
     create! do |authentication|
-      authentication.provider = auth["provider"]
-      authentication.gid = auth["uid"]
-      authentication.token = auth["credentials"]["token"]
-      authentication.token_secret = auth["credentials"]["secret"]
-      authentication.email = auth["info"]["email"]
+      authentication.provider = provider
+      authentication.gid = gid
+      authentication.token = token
+      authentication.token_secret = token_secret
+      authentication.email = email
       authentication.gamer_id = current_gamer.id
     end
   end

@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class AuthenticationsController < ApplicationController
 
-	# Author:
+  # Author:
   #   Mirna Yacout
   # Description:
   #   Twitter callback method which saves the parameters given by Twitter upon the approval of
@@ -21,12 +21,13 @@ class AuthenticationsController < ApplicationController
 	  end
 	  auth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
-     current_gamer.id) || Authentication.create_with_omniauth(auth, current_gamer)
+     current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
+     auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer)
     redirect_to "/gamers/edit"
     return
 	end
 
-	# Author:
+  # Author:
   #   Mirna Yacout
   # Description:
   #   removes connection already in the table
@@ -47,7 +48,7 @@ class AuthenticationsController < ApplicationController
 	  return
 	end
 
-	# Author:
+  # Author:
   #   Mirna Yacout
   # Description:
   #   Twitter callback with failure to connect to Twitter upon rejection or cancellation
