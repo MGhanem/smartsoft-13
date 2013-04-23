@@ -154,24 +154,28 @@ class AdminController < ApplicationController
   # failure: 
   #     refreshes the page with error displayed
   def add_prize
-    params[:name] = params[:name].strip
-    params[:level] = params[:level].strip
-    params[:score] = params[:score].strip
-    success, prize = Prize.add_prize_to_database(params[:name],
-               params[:level], params[:score], params[:image])
-    if success
-      flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
-      flash[:successtype] = "addprize"
+    if request.post? 
+      params[:name] = params[:name].strip
+      params[:level] = params[:level].strip
+      params[:score] = params[:score].strip
+      success, prize = Prize.add_prize_to_database(params[:name],
+                 params[:level], params[:score], params[:image])
+      if success
+        flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
+        flash[:successtype] = "addprize"
+      else
+        flash[:error] = prize.errors.messages
+        flash[:errortype] = "addprize"
+      end
+      flash.keep
+      if success
+        redirect_to action: "index", anchor: "admin-list-prizes"
+      else
+        redirect_to action: "index", anchor: "admin-add-prize", 
+                    fargs: {addprize: params}
+      end
     else
-      flash[:error] = prize.errors.messages
-      flash[:errortype] = "addprize"
-    end
-    flash.keep
-    if success
-      redirect_to action: "index", anchor: "admin-list-prizes"
-    else
-      redirect_to action: "index", anchor: "admin-add-prize", 
-                  fargs: {addprize: params}
+      render "add-prize"
     end
   end
 
