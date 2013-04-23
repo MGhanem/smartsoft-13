@@ -27,23 +27,47 @@ var booleanSuspense = new Array(dimension);
 var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
+var firstClick = true;
 
 
 $(function(){
-	$('body').hide();
 	$('.eng-btn').popover();
-	setTimeout(function(){ $('.eng-btn').popover('show');}, 1000);
+	setTimeout(function(){ $('.eng-btn').popover('show');}, 1500);
 	$('.ar-btn').popover();
-	setTimeout(function(){ $('.ar-btn').popover('show');}, 1500);
+	setTimeout(function(){ $('.ar-btn').popover('show');}, 2000);
 	$('.both-btn').popover();
-	setTimeout(function(){ $('.both-btn').popover('show');}, 2000);
-})
+	setTimeout(function(){ $('.both-btn').popover('show');}, 2500);
+});
 
 function destroy(id){
 	id = id.replace('-po', '');
 	$('#' + id).popover('destroy');
 }
 
+function wordsListToolTip(){
+	$('#wordsList').popover();
+	setTimeout(function(){ $('#wordsList').popover('show');}, 100);
+	
+}
+
+function tableToolTip(){
+	$('#button7-0').popover();
+	setTimeout(function(){ $('#button7-0').popover('show');}, 100);
+}
+
+function wordLablelToolTip(){
+	$('#wordLabel').popover();
+	setTimeout(function(){ $('#wordLabel').popover('show');}, 100);
+}
+
+function callNextToolTip(id){
+	destroy(id);
+	wordLablelToolTip();
+}
+function callNextToolTip2(id){
+	destroy(id);
+	tableToolTip();
+}
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -122,7 +146,10 @@ function initializeGame(){
 					trHtml.push(y);
 					trHtml.push('-');
 					trHtml.push(x);
-					trHtml.push('">');
+					trHtml.push('"');
+					trHtml.push(' data-trigger="manual" data-html="true" data-content = "<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other. Try Clicking a Button Now</p> <button ');
+					trHtml.push(" onclick='destroy(this.id)' class='btn btn-primary' id='button7-0-po' style='width: 100px;'>");
+					trHtml.push('Got it</button>" data-title="<h4>Forming Words</h4>" data-placement="top">');
 					letter = generateLetter();
 					trHtml.push(letter);
 					trHtml.push('</button></td>');
@@ -163,6 +190,7 @@ function initializeList(){
 	}
 	lsHtml = lsHtml.join('');
 	list.append($(lsHtml));
+	wordsListToolTip();
 }
 
 // author:
@@ -426,6 +454,12 @@ function callMethods(id){
 	formWord(id);
 	generateWord();
 	removeAblock();
+	if(firstClick == true){
+		firstClick = false;
+		$('#' + id).attr("data-content", "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed<p> <button class='btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='" + id + "-po' onclick='destroy(this.id)'>Got it</button>")
+		$('#' + id).popover();
+		setTimeout(function(){ $('#' + id).popover('show');}, 100);
+	}
 }
 
 // author:
@@ -1030,8 +1064,12 @@ function continuePlaying(){
 	setButtons();
 	setLevelPopUpTitle();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
-	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
+	'<div id="list-div" class="well"><ol data-html="true" data-content="<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button' + 
+	" onclick='callNextToolTip(this.id)' class='btn btn-primary' id='wordsList-po'>" +
+	'Got it</button>" data-title="<h4>Words List</h4>" id="wordsList"></ol>' + 
+	'<div class="label-div"><label data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
+	" onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>" +
+	'Got it</button>" data-title="<h4>Letters Label</h4>" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
