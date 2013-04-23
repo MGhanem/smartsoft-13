@@ -20,8 +20,7 @@ class Project < ActiveRecord::Base
 # Params:
 #   :project
 # Success:
-#   Creates and returns a project after splitting the csv categories string and creating
-#   new categories and inserting them into the project categories array
+#   Creates and returns a project after calling method createcategories
 # Failure:
 #   None
 def self.createproject(params)
@@ -33,40 +32,23 @@ end
 # Author:
 #    Salma Farag
 # Description:
-#   A method that takes categories in the form of csv and saves them in an array
-#   then loops on it and creates an a new category each time.
+#   A method that takes category in the form of a string and saves them in an array
+#   then finds the category with the id = cat_id
 # Params:
-#   Category names in the form of csv.
+#   A project and its category id.
 # Success:
-#   Categories will be created.
+#   Sets the category of the project to an existing one by finiding the equivalent id.
 # Failure:
 #   None
 def self.createcategories(project,cat_id)
   array = cat_id.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
   catArray = []
   array.each do |m|
-    cat = Category.find("1")
+    cat = Category.find(cat_id)
     project.category = cat
   end
   project.save
   return project
-end
-
-# Author:
-#   Salma Farag
-# Description:
-#   A method that takes an array of categories, maps their names into an array and joins
-#   the array using commas.
-# Params:
-#   Array of categories.
-# Success:
-#   Returns a string of category names.
-# Failure:
-#   None
-def self.printarray(array)
-  t = array.map {|item| item.name}
-  t = t.join(", ")
-  return t
 end
 
 end

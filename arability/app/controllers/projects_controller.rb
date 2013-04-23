@@ -4,8 +4,8 @@ class ProjectsController < BackendController
   # GET /projects
   # GET /projects.json
   before_filter :authenticate_gamer!
-  # before_filter :authenticate_developer!
-  # before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  before_filter :authenticate_developer!
+  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
 
 
 
@@ -40,20 +40,19 @@ class ProjectsController < BackendController
   # Failure:
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
   def index
-    @my_projects = Project.all
-        # @shared_projects = developer.projects_shared
-    # if current_gamer != nil
-    #   developer = Developer.where(:gamer_id => current_gamer.id).first
-    #   if developer != nil
-
-    #   else
-    #     flash[:notice] = "من فضلك سجل كمطور"
-    #     redirect_to developers_new_path
-    #   end
-    # else
-    #   flash[:error] = t(:projects_index_error2)
-    #   redirect_to new_gamer_session_path
-    # end
+    if current_gamer != nil
+      developer = Developer.where(:gamer_id => current_gamer.id).first
+      if developer != nil
+        @my_projects = Project.where(:owner_id => developer.id)
+        @shared_projects = developer.projects_shared
+      else
+        flash[:notice] = "من فضلك سجل كمطور"
+        redirect_to developers_new_path
+      end
+    else
+      flash[:error] = t(:projects_index_error2)
+      redirect_to new_gamer_session_path
+    end
   end
 
 
@@ -102,17 +101,17 @@ class ProjectsController < BackendController
   # Failure:
   #   None
   def new
-    # if developer_signed_in?
+    if developer_signed_in?
       @project = Project.new
       @category = @project.category
       respond_to do |format|
         format.html
         format.json { render json: @project }
       end
-    # else
-    #   developer_unauthorized
-    #   render 'pages/home'
-    # end
+    else
+      developer_unauthorized
+      render 'pages/home'
+    end
   end
 
   # Author:

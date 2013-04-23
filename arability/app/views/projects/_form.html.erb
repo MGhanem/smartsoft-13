@@ -22,7 +22,11 @@
     <div class="control-group">
       <%= f.label t(:categories), :class => "control-label" %>
       <div class="controls">
-        <%= f.collection_select(:category, Category.all, :id, :english_name, {:prompt => true}, {:id =>"cat"}) %>
+        <% if I18n.locale == :en %>
+          <%= f.collection_select(:category, Category.all, :id, :english_name, {:prompt => true}, {:id =>"cat"}) %>
+        <% elsif I18n.locale == :ar %>
+          <%= f.collection_select(:category, Category.all, :id, :arabic_name, {:prompt => true}, {:id =>"cat"}) %>
+        <% end %>
         <span class="req">* </span>
     </div>
   </div>
