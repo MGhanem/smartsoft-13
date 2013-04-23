@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
+  before_filter :authenticate_guest!, :only => [:game]
   before_filter :authenticate_gamer!
 
   def game

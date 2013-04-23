@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  rescue_from Exception, :with => :error_render_method
   before_filter :set_locale
   require 'csv'
 
@@ -120,28 +119,28 @@ class ApplicationController < ActionController::Base
   end
 
   # if user is logged in, return current_user, else return guest_user
-  def current_or_guest_user
-    if current_user
-      if session[:guest_user_id]
+  def current_or_guest_gamer
+    if current_gamer
+      if session[:guest_gamer_id]
         logging_in
-        guest_user.destroy
-        session[:guest_user_id] = nil
+        guest_gamer.destroy
+        session[:guest_gamer_id] = nil
       end
-      current_user
+      current_gamer
     else
-      guest_user
+      guest_gamer
     end
   end
 
   # find guest_user object associated with the current session,
   # creating one as needed
-  def guest_user
+  def guest_gamer
     # Cache the value the first time it's gotten.
-    @cached_guest_user ||= User.find(session[:guest_user_id] ||= create_guest_user.id)
+    @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id] ||= create_guest_gamer.id)
 
-  rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
-     session[:guest_user_id] = nil
-     guest_user
+  rescue ActiveRecord::RecordNotFound # if session[:guest_gamer_id] invalid
+     session[:guest_gamer_id] = nil
+     guest_gamer
   end
 
   private
@@ -157,13 +156,38 @@ class ApplicationController < ActionController::Base
     # end
   end
 
-  def create_guest_user
-    u = User.create(:name => "guest", :email => "guest_#{Time.now.to_i}#{rand(99)}@example.com")
-    u.save!(:validate => false)
-    session[:guest_user_id] = u.id
-    u
-  end  
+  def create_guest_gamer
+    # u = Gamer.new(:username => "guest", :email => "guest_#{Time.now.to_i}#{rand(99)}@example.com", :password => "123456")
+    gamer = Gamer.new
+    gamer.username = "Nourhan"
+    gamer.country = "Egypt"
+    gamer.education_level = "high"
+    gamer.gender = "female"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "guest_#{Time.now.to_i}#{rand(99)}@example.com"
+    gamer.password = "1234567"
+    gamer.save!(:validate => false)
+    session[:guest_gamer_id] = gamer.id
+    gamer
+  end
 
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   checks if gamer is signed in or not
+  # Params:
+  #   current_gamer: the current signed in gamer
+  # Success: 
+  #   continues as normal 
+  # Failure:
+  #   redirects to sign up as guest
+  def authenticate_guest!
+    if current_gamer == nil
+      if guest_gamer != nil
+        redirect_to guest_sign_up_path 
+      end
+    end
+  end
 end
 
 

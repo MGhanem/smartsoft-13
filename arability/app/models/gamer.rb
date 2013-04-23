@@ -22,18 +22,18 @@ class Gamer < ActiveRecord::Base
 
   has_many :services, :dependent => :destroy
 
-  validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
+  # validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+  # validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
 
-  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
+  # validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
 
-  validates :country, :presence => true, :length => { :minimum => 2 }
+  # validates :country, :presence => true, :length => { :minimum => 2 }
 
-  validates :education_level, :format => { :with => /\A^(School|University|Graduate)\Z/i }
+  # validates :education_level, :format => { :with => /\A^(School|University|Graduate)\Z/i }
   
-  validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
-    :before_or_equal_to => 10.years.ago }
+  # validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
+    # :before_or_equal_to => 10.years.ago }
 
   
  # Description:
