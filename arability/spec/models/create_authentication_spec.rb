@@ -25,7 +25,7 @@ describe "create authentication to Twitter for current_gamer" do
     k1 = Authentication.exists?(gamer_id: current_gamer.id)
     expect(k1).to eq(false)
     record = Authentication.create_with_omniauth(auth["provider"],
-    auth["uid"], auth["credentials"]["token"], auth["credentials"]["secret"], nil, current_gamer)
+    auth["uid"], auth["credentials"]["token"], auth["credentials"]["secret"], nil, current_gamer.id)
     k2 = Authentication.exists?(record.id)
     expect(k2).to eq(true)
   end

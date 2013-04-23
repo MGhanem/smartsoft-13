@@ -7,7 +7,7 @@ class AuthenticationsController < ApplicationController
   #   Twitter callback method which saves the parameters given by Twitter upon the approval of
   #   the current user for the connection
   # params
-  #   none
+  #   the hash received from Twitter API including all his Twitter information
   # Success:
   #   checks if a record is in the Authentications table: if avaialable returns and redirect
   #   and if not creates a new record then redirect
@@ -22,7 +22,7 @@ class AuthenticationsController < ApplicationController
 	  auth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
      current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
-     auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer)
+     auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer.id)
     redirect_to "/gamers/edit"
     return
 	end
@@ -43,7 +43,7 @@ class AuthenticationsController < ApplicationController
 	  else I18n.locale == :ar
 	  	flash[:notice] = "تم إلغاء التواصل مع تويتر بنجاح!"
 	  end
-	  Authentication.remove_conn(current_gamer, "twitter")
+	  Authentication.remove_conn(current_gamer.id, "twitter")
 	  redirect_to "/gamers/edit"
 	  return
 	end
