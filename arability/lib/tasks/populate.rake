@@ -1,7 +1,7 @@
 #encoding:utf-8
 namespace :db do
   desc "Insert random data into the database"
-  task :populate => :environment do
+  task populate: :environment do
     Keyword.delete_all
     success, click=Keyword.add_keyword_to_database("click", true)
     success, sign_in=Keyword.add_keyword_to_database("sign in", true)
@@ -9,23 +9,31 @@ namespace :db do
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
-    Keyword.create(:name => "share", :approved => true, :is_english => true)
-    Keyword.create(:name => "post", :approved => true, :is_english => true)
-    Keyword.create(:name => "poke", :approved => true, :is_english => true)
-    Keyword.create(:name => "subscribe", :approved => true, :is_english => true)
-    Keyword.create(:name => "broadcast", :approved => true, :is_english => true)
-    Keyword.create(:name => "compile", :approved => true, :is_english => true)
-    Keyword.create(:name => "like", :approved => true, :is_english => true)
-    Keyword.create(:name => "find", :approved => true, :is_english => true)
-    Keyword.create(:name => "search", :approved => true, :is_english => true)
-    Keyword.create(:name => "hide", :approved => true, :is_english => true)
-    Keyword.create(:name => "أنشر", :approved => true, :is_english => false)
-    Keyword.create(:name => "دوس", :approved => true, :is_english => false)
-    Keyword.create(:name => "يعجبني", :approved => true, :is_english => false)
-    Keyword.create(:name => "عربية", :approved => true, :is_english => false)
-    Keyword.create(:name => "مرحلة", :approved => true, :is_english => false)
-    Keyword.create(:name => "إعدادات", :approved => true, :is_english => false)
-    Keyword.create(:name => "انجازات", :approved => true, :is_english => false)
+    Keyword.create(name: "share", approved: true, is_english: true)
+    Keyword.create(name: "post", approved: true, is_english: true)
+    Keyword.create(name: "poke", approved: true, is_english: true)
+    Keyword.create(name: "subscribe", approved: true, is_english: true)
+    Keyword.create(name: "broadcast", approved: true, is_english: true)
+    Keyword.create(name: "compile", approved: true, is_english: true)
+    Keyword.create(name: "like", approved: true, is_english: true)
+    Keyword.create(name: "find", approved: true, is_english: true)
+    Keyword.create(name: "search", approved: true, is_english: true)
+    Keyword.create(name: "hide", approved: true, is_english: true)
+    Keyword.create(name: "أنشر", approved: true, is_english: false)
+    Keyword.create(name: "دوس", approved: true, is_english: false)
+    Keyword.create(name: "يعجبني", approved: true, is_english: false)
+    Keyword.create(name: "عربية", approved: true, is_english: false)
+    Keyword.create(name: "مرحلة", approved: true, is_english: false)
+    Keyword.create(name: "إعدادات", approved: true, is_english: false)
+    Keyword.create(name: "انجازات", approved: true, is_english: false)
+
+    Category.delete_all
+    test_category = Category.create(english_name: "test", arabic_name: "إختبار")
+    Category.create(english_name: "Banking", arabic_name: "بنكية")
+    Category.create(english_name: "Hospital", arabic_name: "مستشفى")
+    Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+
+    test_category.keywords << click
 
     word = Keyword.new
     word.name = "play"
