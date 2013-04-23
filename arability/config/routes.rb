@@ -19,7 +19,7 @@ Arability::Application.routes.draw do
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-    
+
     # required for routing by the devise module(gem)
     # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     # devise_for :gamers
