@@ -11,6 +11,8 @@ Arability::Application.routes.draw do
     get "/delete_prize"
 
     match "/add/prize" => "admin#add_prize", :via => [:get]
+    match "/add/trophy" => "admin#add_trophy", :via => [:get]
+
 
     post "/login"
     post "/upload"

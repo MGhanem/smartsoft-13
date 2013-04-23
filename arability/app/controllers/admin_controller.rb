@@ -118,24 +118,28 @@ class AdminController < ApplicationController
   # failure: 
   #     refreshes the page with error displayed
   def add_trophy
-    params[:name] = params[:name].strip
-    params[:level] = params[:level].strip
-    params[:score] = params[:score].strip
-    success, trophy = Trophy.add_trophy_to_database(params[:name],
-                 params[:level], params[:score], params[:image])
-    if success
-      flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
-      flash[:successtype] = "addtrophy"
+    if request.post?
+      params[:name] = params[:name].strip
+      params[:level] = params[:level].strip
+      params[:score] = params[:score].strip
+      success, trophy = Trophy.add_trophy_to_database(params[:name],
+                   params[:level], params[:score], params[:image])
+      if success
+        flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
+        flash[:successtype] = "addtrophy"
+      else
+        flash[:error] = trophy.errors.messages
+        flash[:errortype] = "addtrophy"
+      end
+      flash.keep
+      if success
+        redirect_to action: "index", anchor: "admin-list-trophies"
+      else
+        redirect_to action: "index", anchor: "admin-add-trophy", 
+                    fargs: {addtrophy: params}
+      end
     else
-      flash[:error] = trophy.errors.messages
-      flash[:errortype] = "addtrophy"
-    end
-    flash.keep
-    if success
-      redirect_to action: "index", anchor: "admin-list-trophies"
-    else
-      redirect_to action: "index", anchor: "admin-add-trophy", 
-                  fargs: {addtrophy: params}
+      render "add-trophy"
     end
   end
 
