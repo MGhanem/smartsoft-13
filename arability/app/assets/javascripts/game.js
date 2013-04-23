@@ -516,7 +516,9 @@ function fadeSomething(x){
 				var originalLi = document.getElementById(lsId).innerHTML;
 				document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
 				calculateScore();
-				successfulWords.push(wordsArray[x]);
+				if(wordsInDb == true){
+					successfulWords.push(wordsArray[x]);
+				}
 				wordExistsInArray[x] = false;
 				calculatePossible();
 				win = true;
