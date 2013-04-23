@@ -30,8 +30,13 @@ var gameOverFontSize;
 
 
 $(function(){
+	$('body').hide();
 	$('.eng-btn').popover();
-	setTimeout(function(){ $('.eng-btn').popover('show');}, 0);
+	setTimeout(function(){ $('.eng-btn').popover('show');}, 1000);
+	$('.ar-btn').popover();
+	setTimeout(function(){ $('.ar-btn').popover('show');}, 1500);
+	$('.both-btn').popover();
+	setTimeout(function(){ $('.both-btn').popover('show');}, 2000);
 })
 
 function destroy(id){
