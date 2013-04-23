@@ -297,3 +297,4 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  twitter_signin: "تسجيل دخول بتويتر"

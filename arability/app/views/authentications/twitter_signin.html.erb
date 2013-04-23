@@ -1,0 +1,35 @@
+<div align="center">
+	<form class="form-horizontal">
+    <div class="control-group">
+    	<% if I18n.locale == :ar %>
+    	<div class="controls">
+        <input type="text" id="inputEmail" placeholder="البريد الالكتروني">
+      </div>
+    	<% else %>
+      <div class="controls">
+        <input type="text" id="inputEmail" placeholder="Email">
+      </div>
+      <% end %>
+    </div>
+    <div class="control-group">
+    	<% if I18n.locale == :ar %>
+      <div class="controls">
+        <input type="password" id="inputPassword" placeholder="كلمة السر">
+      </div>
+    	<% else %>
+      <div class="controls">
+        <input type="password" id="inputPassword" placeholder="Password">
+      </div>
+    	<% end %>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+      	<% if I18n.locale == :ar %>
+      	<button type="submit" class="btn">إذهب إلى تويتر</button>
+      	<% else %>
+      	<button type="submit" class="btn">Go to Twitter</button>
+      	<% end %>
+      </div>
+    </div>
+  </form>
+</div>

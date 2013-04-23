@@ -4,20 +4,6 @@ class AuthenticationsController < ApplicationController
 	# Author:
     #  Mirna Yacout
     # Description:
-    #  checks if the current_gamer already has an Authentication record
-    # params
-    #  none
-    # Success:
-    #  displays the correct view depending on the availability of Twitter authentication record
-    #  in the Authentications table
-    # Failure:
-    #  none
-	def twitter
-	end
-
-	# Author:
-    #  Mirna Yacout
-    # Description:
     #  Twitter callback method which saves the parameters given by Twitter upon the approval of
     #  the current user for the connection
     # params
@@ -28,17 +14,22 @@ class AuthenticationsController < ApplicationController
     # Failure:
     #  none
 	def twitter_callback
-	  if I18n.locale == :en
-	  	flash[:notice] = "Connected to Twitter successfully!"
-	  else I18n.locale == :ar
-	  	flash[:notice] = "تم التواصل مع تويتر بنجاح!"
-	  end
-	  auth = request.env["omniauth.auth"]
-      authentication = Authentication.find_by_provider_and_gid(auth["provider"],
-       current_gamer.id) || Authentication.create_with_omniauth(auth,
-        current_gamer)
-      redirect_to "/gamers/edit"
-      return
+      if gamer_signed_in?
+        if I18n.locale == :en
+          flash[:notice] = "Connected to Twitter successfully!"
+        else I18n.locale == :ar
+          flash[:notice] = "تم التواصل مع تويتر بنجاح!"
+        end
+        auth = request.env["omniauth.auth"]
+        authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
+         current_gamer.id) || Authentication.create_with_omniauth(auth, current_gamer)
+         redirect_to "/gamers/edit"
+        return
+      else
+        # raise Exception, request.env["omniauth.auth"]
+        flash[:notice] = "sa7 kda"
+        redirect_to root_url
+      end
 	end
 
 	# Author:
@@ -57,7 +48,7 @@ class AuthenticationsController < ApplicationController
 	  else I18n.locale == :ar
 	  	flash[:notice] = "تم إلغاء التواصل مع تويتر بنجاح!"
 	  end
-	  Authentication.remove_conn(current_gamer)
+	  Authentication.remove_conn(current_gamer, "twitter")
 	  redirect_to "/gamers/edit"
 	  return
 	end
@@ -81,5 +72,8 @@ class AuthenticationsController < ApplicationController
 	  end
 	  redirect_to root_url
 	end
+
+    def twitter_signin
+    end
 
 end
