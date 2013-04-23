@@ -81,6 +81,22 @@ describe Keyword do
     end
   end
 
+  describe "Find keyword by name", mohamed: true do
+
+    let(:k) do
+      success, keyword = Keyword.add_keyword_to_database("test")
+      keyword
+    end
+
+    before :each do
+      k
+    end
+
+    it "Should find a keyword after downcasing and striping" do
+      Keyword.find_by_name("Test ").id.should eq(k.id)
+    end
+  end
+
 	it "should return an empty list for an empty search keyword" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
