@@ -1,6 +1,9 @@
 $(".autocomplete").typeahead({
   source: fetch_keywords,
-  items: 4
+  items: 4,
+  highlighter: function(item) {
+    return item
+  }
 });
 function fetch_keywords(keyword, callback){
   $.post("<%= autocomplete_path %>", { search: keyword }, function(data, _, _){
