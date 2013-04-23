@@ -305,6 +305,7 @@ def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     gamer
 end
 
+
   class << self
 
   # Author:
@@ -335,6 +336,26 @@ end
     end
   end
 end
+
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Parameters:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Returns: 
+  #   On Success: returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  #   On Failure: returns 0 and empty list
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id=?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    # how to map voted synonyms into an array of numbers?!!
+    voted_synonyms = voted_synonyms.map{|syn| syn.synonym_id}
+    vote_log = Synonym.where("id in(?)", voted_synonyms).select("keyword_id, id")
+    #return vote_log.map{|id, keyword_id| [id, keyword_id]}
+    return count, vote_log.map{|s| [Keyword.where("id=?", s.keyword_id).first.name, Synonym.where("id=?", s.id).first.name]}
+  end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
