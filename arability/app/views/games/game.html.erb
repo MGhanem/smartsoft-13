@@ -289,9 +289,13 @@ function setButtons(){
     <% else I18n.locale==:en %>
     <h2 class="lang-header">Pick the language you want to play with</h2><br>
     <div class="game-lang">
-      <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
+
+      <button data-content="<h5>this is a popover</h5> <button class='btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>got it</button>" data-placement="left" data-title="check it out" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
+
       <button class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button><br><br><br><br>
+
       <button class="btn btn-warning both-btn" onclick="setLang(2)">Both</button>
+
     </div>
     <% end %>
     </div>

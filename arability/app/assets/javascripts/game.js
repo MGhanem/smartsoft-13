@@ -29,6 +29,16 @@ var wasPrompted = false;
 var gameOverFontSize;
 
 
+$(function(){
+	$('.eng-btn').popover();
+	setTimeout(function(){ $('.eng-btn').popover('show');}, 0);
+})
+
+function destroy(id){
+	id = id.replace('-po', '');
+	$('#' + id).popover('destroy');
+}
+
 // author:
 //   Ali El Zoheiry.
 // description:
