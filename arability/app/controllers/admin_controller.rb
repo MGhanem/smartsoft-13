@@ -105,6 +105,11 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def add_word
     if request.post?
+      @message = params[:message]
+      @fargs = params[:fargs]
+      @trophies_list = Trophy.all
+      @prizes_list = Prize.all
+
       name = params[:keyword][:name]
       is_english = params[:keyword][:is_english]
       success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
@@ -112,12 +117,12 @@ class AdminController < ApplicationController
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
         flash[:successtype] = "addword"
         flash.keep
-        redirect_to action: "index", anchor: "admin-add-word"
+        redirect_to action: "/add/word"
       else
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        redirect_to action: "index", anchor: "admin-add-word", fargs: params
+        redirect_to action: "/add/word", fargs: params
       end
     else
       render "add-word"
@@ -140,6 +145,11 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def add_trophy
     if request.post?
+      @message = params[:message]
+      @fargs = params[:fargs]
+      @trophies_list = Trophy.all
+      @prizes_list = Prize.all
+
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
@@ -154,10 +164,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to action: "index", anchor: "admin-list-trophies"
+        redirect_to action: "/add/trophy"
       else
-        redirect_to action: "index", anchor: "admin-add-trophy", 
-                    fargs: {addtrophy: params}
+        redirect_to action: "/add/trophy", fargs: {addtrophy: params}
       end
     else
       render "add-trophy"
@@ -179,7 +188,12 @@ class AdminController < ApplicationController
   # failure: 
   #     refreshes the page with error displayed
   def add_prize
-    if request.post? 
+    if request.post?
+      @message = params[:message]
+      @fargs = params[:fargs]
+      @trophies_list = Trophy.all
+      @prizes_list = Prize.all
+
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
@@ -194,10 +208,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to action: "index", anchor: "admin-list-prizes"
+        redirect_to action: "/admin/add/prize"
       else
-        redirect_to action: "index", anchor: "admin-add-prize", 
-                    fargs: {addprize: params}
+        redirect_to action: "/admin/add/prize", fargs: {addprize: params}
       end
     else
       render "add-prize"
@@ -287,8 +300,7 @@ class AdminController < ApplicationController
       if message == 0
         uploadCSV(array_of_arrays)
       end
-      redirect_to action: "index", anchor: "admin-import-csv-file", 
-                  message: message
+      redirect_to action: "/import/csvfile", message: message
     else
       render "import-csv-file"
     end
