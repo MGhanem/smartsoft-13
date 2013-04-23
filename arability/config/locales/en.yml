@@ -2,6 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  username_or_email: "Username or email"
+  omar_error1: "This keyword is not found"
+  omar_error2: "This synonym is empty"
+  omar_error3: "This is a dupplicate synonym for the same keyword"
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"
@@ -44,6 +48,8 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  follow: "Follow"
+  following: "Following"
   select subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
@@ -289,4 +295,4 @@ en:
   vote_log: "Your Votes History"
   no_you: "You" 
   no_vote_log: "didn't vote for any translation yet!!"
-
+  keyword_added: "keyword added successfully"

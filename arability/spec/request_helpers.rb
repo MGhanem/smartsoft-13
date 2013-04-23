@@ -12,7 +12,7 @@ module RequestHelpers
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "test@test.com"
     gamer.password = "testing"
-    gamer.save
+    gamer.save validate: false
     login(gamer)
     gamer
   end
@@ -20,14 +20,17 @@ module RequestHelpers
   def create_logged_in_developer
     gamer = create_logged_in_user
     dev = Developer.new
-    dev.first_name = "test"
-    dev.last_name = "test"
     dev.gamer_id = gamer.id
     dev.save
     dev
   end
 
   def login(gamer)
-    login_as gamer, :scope => :gamer
+    login_as gamer, scope: :gamer
   end
-end
+  
+  def login_gamer(u)
+    @request.env["devise.mapping"] = Devise.mappings[:gamer]
+    sign_in u
+  end
+ end
