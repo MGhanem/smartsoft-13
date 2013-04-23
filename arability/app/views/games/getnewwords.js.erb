@@ -1,5 +1,16 @@
 <% a = Vote.get_unvoted_keywords(current_gamer.id, params[:count].to_i, params[:lang].to_i) %>
+
+
+<% if a.count == 0 %>
+	wordsInDb = false;
+	<% a = Vote.get_unvoted_keywords(-1, params[:count].to_i, params[:lang].to_i) %>
+<% else %>
+	wordsInDb = true;
+<% end %>
+	
+
 wordsArray = [];
+wordExistsInArray = [];
 <% a.each do |k| %>
 	wordsArray.push("<%= k.name %>");
 <% end %>
