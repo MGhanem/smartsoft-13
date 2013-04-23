@@ -292,3 +292,4 @@ en:
   keyword_added: "keyword added successfully"
   twitter_signin: "Sign in with Twitter"
   go_to_twitter: "Go to Twitter"
+  twitter_signin_success: "Signed in successfully via Twitter"

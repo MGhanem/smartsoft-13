@@ -19,10 +19,6 @@ Arability::Application.routes.draw do
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
-    match '/auth/google' => 'services#create'
-    match '/auth/google/login' => 'services#index' 
-    resources :services, :only => [:index, :create, :destroy]
-
 
     # required for routing by the devise module(gem)
     # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
@@ -54,8 +50,7 @@ Arability::Application.routes.draw do
     match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
-    match '/auth/failure', :to => 'authentications#twitter'
-    get "/authentications/twitter_signin"
+    match '/auth/failure', :to => 'authentications#twitter_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
 
     scope "developers/" do 

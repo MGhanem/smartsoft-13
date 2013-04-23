@@ -14,22 +14,27 @@ class AuthenticationsController < ApplicationController
     # Failure:
     #  none
 	def twitter_callback
-      if gamer_signed_in?
-        if I18n.locale == :en
-          flash[:notice] = "Connected to Twitter successfully!"
-        else I18n.locale == :ar
-          flash[:notice] = "تم التواصل مع تويتر بنجاح!"
-        end
-        auth = request.env["omniauth.auth"]
-        authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
-         current_gamer.id) || Authentication.create_with_omniauth(auth, current_gamer)
-         redirect_to "/gamers/edit"
-        return
-      else
-        # raise Exception, request.env["omniauth.auth"]
-        flash[:notice] = "sa7 kda"
-        redirect_to root_url
+    auth = request.env["omniauth.auth"]
+    if gamer_signed_in?
+      if I18n.locale == :en
+        flash[:notice] = "Connected to Twitter successfully!"
+      else I18n.locale == :ar
+        flash[:notice] = "تم التواصل مع تويتر بنجاح!"
       end
+      authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
+       current_gamer.id) || Authentication.create_with_omniauth(auth, current_gamer)
+       redirect_to "/gamers/edit"
+      return
+    else
+      authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["uid"])
+      if authentication
+        flash[:notice] = I18n.t(:twitter_signin_success)
+        gamer = Gamer.find(authentication.gamer_id)
+        sign_in_and_redirect(:gamer, gamer)
+      else
+        render "/authentications/twitter_signin"
+      end
+    end
 	end
 
 	# Author:
@@ -74,7 +79,7 @@ class AuthenticationsController < ApplicationController
 	end
 
   def twitter_signin
-      
+    auth = request.env["omniauth.auth"]
   end
 
 end
