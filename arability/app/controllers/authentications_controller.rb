@@ -14,11 +14,7 @@ class AuthenticationsController < ApplicationController
   # Failure:
   #   none
 	def twitter_callback
-	  if I18n.locale == :en
-	    flash[:notice] = "Connected to Twitter successfully!"
-	  else I18n.locale == :ar
-	    flash[:notice] = "تم التواصل مع تويتر بنجاح!"
-	  end
+	  flash[:notice] = I18n.t(:add_twitter_connection)
 	  auth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
      current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
@@ -38,11 +34,7 @@ class AuthenticationsController < ApplicationController
   # Failure:
   #   doesnot find the record
 	def remove_twitter_connection
-	  if I18n.locale == :en
-	  	flash[:notice] = "Connection to Twitter removed successfully!"
-	  else I18n.locale == :ar
-	  	flash[:notice] = "تم إلغاء التواصل مع تويتر بنجاح!"
-	  end
+    flash[:notice] = I18n.t(:remove_twitter_connection)
 	  Authentication.remove_conn(current_gamer.id, "twitter")
 	  redirect_to "/gamers/edit"
 	  return
@@ -60,11 +52,7 @@ class AuthenticationsController < ApplicationController
   # Failure:
   #   none
 	def twitter_failure
-	  if I18n.locale == :en
-	  	flash[:notice] = "Failed to connect to Twitter"
-	  else I18n.locale == :ar
-	  	flash[:notice] = "فشل التواصل مع تويتر"
-	  end
+    flash[:notice] = I18n.t(:twitter_connection_failure)
 	  redirect_to root_url
 	end
 
