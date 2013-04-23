@@ -74,6 +74,7 @@ class AuthenticationsController < ApplicationController
 	end
 
     def twitter_signin
+      
     end
 
 end
