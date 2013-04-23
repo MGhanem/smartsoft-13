@@ -20,7 +20,7 @@ describe ProjectsController do
   	developer = Developer.new
   	developer.first_name = "Mohamed"
   	developer.last_name = "Tamer"
-  	developer.gamer_id = gamer1.id 
+  	developer.gamer_id = gamer1.id
   	developer.save
   	developer
   }
@@ -32,7 +32,7 @@ describe ProjectsController do
     project.maxAge = 25
     project.owner_id = developer1.id
     project.save
-    project   
+    project
   }
 
   it "a developer can open the link of import of one of his projects" do
@@ -40,4 +40,8 @@ describe ProjectsController do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
+
+  it "A developer can create a project" do
+    sign_in developer1.gamer
+    get
 end

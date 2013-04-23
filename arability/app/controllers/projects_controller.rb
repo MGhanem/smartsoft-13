@@ -103,7 +103,6 @@ class ProjectsController < BackendController
   def new
     if developer_signed_in?
       @project = Project.new
-      @category = @project.category
       respond_to do |format|
         format.html
         format.json { render json: @project }

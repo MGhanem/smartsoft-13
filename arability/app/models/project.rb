@@ -15,12 +15,12 @@ class Project < ActiveRecord::Base
 # Author:
 #   Salma Farag
 # Description:
-#   Takes the params of the project entered by the developer and creates a project compares
-#   it to the already existing categories and returns the project
+#   Takes the params of the project entered by the developer, creates a project then calls
+#   the method createcategories and returns a  project.
 # Params:
-#   :project
+#   Parameters of a project.
 # Success:
-#   Creates and returns a project after calling method createcategories
+#   Creates and returns a project after calling method createcategories.
 # Failure:
 #   None
 def self.createproject(params)
@@ -32,22 +32,24 @@ end
 # Author:
 #    Salma Farag
 # Description:
-#   A method that takes category in the form of a string and saves them in an array
-#   then finds the category with the id = cat_id
+#   A method that takes a category in the form of a string and saves it in an array
+#   then finds the category with the id equal to the given id.
 # Params:
 #   A project and its category id.
 # Success:
-#   Sets the category of the project to an existing one by finiding the equivalent id.
+#   Sets the category of the project to an existing one by finding the equivalent id.
 # Failure:
 #   None
 def self.createcategories(project,cat_id)
-  array = cat_id.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  catArray = []
-  array.each do |m|
-    cat = Category.find(cat_id)
-    project.category = cat
+  if cat_id != ""
+    catArray = []
+    catArray.push(cat_id)
+    catArray.each do |m|
+      cat = Category.find(cat_id)
+      project.category = cat
+    end
+    project.save
   end
-  project.save
   return project
 end
 

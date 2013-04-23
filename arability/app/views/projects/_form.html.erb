@@ -27,7 +27,6 @@
         <% elsif I18n.locale == :ar %>
           <%= f.collection_select(:category, Category.all, :id, :arabic_name, {:prompt => true}, {:id =>"cat"}) %>
         <% end %>
-        <span class="req">* </span>
     </div>
   </div>
   <div class="control-group">
