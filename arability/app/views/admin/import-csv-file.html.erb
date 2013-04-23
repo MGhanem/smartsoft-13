@@ -1,0 +1,114 @@
+<div class="container admin">
+	<div class="row">
+		<div class="span3">
+			<div class="well nav-fixed">
+				<ul class="nav nav-list nav-stacked" id="admin-tabs">
+					<li>
+						<a href="#admin-home" data-toggle="tab">الصفحة الرئيسية</a>
+					</li>
+					<li class="nav-header">إدارة الكلمات</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-word" data-toggle="tab">إضافة كلمة جديدة</a>
+					</li>
+					<li class="active">
+						<a href="#admin-import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV</a>
+					</li>
+					<li class="nav-header">إدارة الانجازات</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-trophy" data-toggle="tab">إضافة انجاز جديد</a>
+					</li>
+					<li>
+						<a href="#admin-list-trophies" data-toggle="tab">عرض الانجازات</a>
+					</li>
+					<li class="nav-header">إدارة الجوائز</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-list-prizes" data-toggle="tab">عرض الجوائز</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-import-csv-file">
+					<form class="form-horizontal" action="/admin/upload" enctype="multipart/form-data" method="POST">
+						<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+						<legend>
+						  <a>
+						    استيراد ملف كلمات بصيغة CSV
+						  </a>
+						</legend>
+
+						<% if @message == "0" %>
+							<div class="alert alert-success">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		تم التحميل بنجاح
+						    	</div>
+						  	</div>
+						<% end %>
+
+						<% if @message == "1" %>
+							<div class="alert alert-error">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		لم تقم باختيار ملف
+						    	</div>
+						  	</div>
+						<% end %>
+
+						<% if @message && @message != "0" && @message != "1" %>
+							<div class="alert alert-error">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		الملف يجب ان يكون UTF-8 و بصيغة CSV
+						    	</div>
+						  	</div>
+						<% end %>
+						<br>
+						<br>
+
+						<div class="control-group">
+							<label class="control-label">
+								اختيار الملف
+							</label>
+							<div class="fileupload fileupload-new controls" data-provides="fileupload">
+							  <div class="input-append">
+							    <div class="uneditable-input span3">
+							    	<i class="icon-file fileupload-exists"></i> 
+							    	<span class="fileupload-preview"></span>
+							    </div>
+							    	<span class="btn-file btn">
+							    		<span class="fileupload-new">اختيار </span>
+							    		<span class="fileupload-exists">تغيير</span>
+							    		<input type="file" name="csvfile" id="csvfile">
+							    	</span>
+							    	<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">الغاء</a>
+							  </div>
+							</div>
+						</div>
+
+						<br>
+						<ol>
+							<li>لا يجب ان تحتوى الكلمات على ارقام</li>
+							<li>المعانى غير العربية لن يتم قبولها</li>
+							<li>يجب ان يكون الملف UTF-8 و بصيغة CSV</li>
+						</ol>
+						<br>
+
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-primary btn-large pull-left">تحميل الملف</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -87,19 +87,23 @@ class AdminController < ApplicationController
   # failure: 
   #     refreshes the page with error displayed
   def add_word
-    name = params[:keyword][:name]
-    is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
-    if success
-      flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
-      flash[:successtype] = "addword"
-      flash.keep
-      redirect_to action: "index", anchor: "admin-add-word"
+    if request.post?
+      name = params[:keyword][:name]
+      is_english = params[:keyword][:is_english]
+      success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
+      if success
+        flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
+        flash[:successtype] = "addword"
+        flash.keep
+        redirect_to action: "index", anchor: "admin-add-word"
+      else
+        flash[:error] = @keyword.errors.messages
+        flash[:errortype] = "addword"
+        flash.keep
+        redirect_to action: "index", anchor: "admin-add-word", fargs: params
+      end
     else
-      flash[:error] = @keyword.errors.messages
-      flash[:errortype] = "addword"
-      flash.keep
-      redirect_to action: "index", anchor: "admin-add-word", fargs: params
+      render "add-word"
     end
   end
 
@@ -261,12 +265,16 @@ class AdminController < ApplicationController
   # failure:
   #   none
   def upload
-    array_of_arrays, message = parseCSV(params[:csvfile])
-    if message == 0
-      uploadCSV(array_of_arrays)
+    if request.post?
+      array_of_arrays, message = parseCSV(params[:csvfile])
+      if message == 0
+        uploadCSV(array_of_arrays)
+      end
+      redirect_to action: "index", anchor: "admin-import-csv-file", 
+                  message: message
+    else
+      render "import-csv-file"
     end
-    redirect_to action: "index", anchor: "admin-import-csv-file", 
-                message: message
   end
 
 end

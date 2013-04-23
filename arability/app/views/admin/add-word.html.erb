@@ -1,0 +1,71 @@
+<div class="container admin">
+	<div class="row">
+		<div class="span3">
+			<div class="well nav-fixed">
+				<ul class="nav nav-list nav-stacked" id="admin-tabs">
+					<li>
+						<a href="#admin-home" data-toggle="tab">الصفحة الرئيسية</a>
+					</li>
+					<li class="nav-header">إدارة الكلمات</li>
+					<li class="divider"></li>
+					<li class="active">
+						<a href="#admin-add-word" data-toggle="tab">إضافة كلمة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-import-csv-file" data-toggle="tab">استيراد ملف كلمات بصيغة CSV</a>
+					</li>
+					<li class="nav-header">إدارة الانجازات</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-trophy" data-toggle="tab">إضافة انجاز جديد</a>
+					</li>
+					<li>
+						<a href="#admin-list-trophies" data-toggle="tab">عرض الانجازات</a>
+					</li>
+					<li class="nav-header">إدارة الجوائز</li>
+					<li class="divider"></li>
+					<li>
+						<a href="#admin-add-prize" data-toggle="tab">إضافة جائزة جديدة</a>
+					</li>
+					<li>
+						<a href="#admin-list-prizes" data-toggle="tab">عرض الجوائز</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-add-word">
+					<form class="form-horizontal" action="/admin/add_word" method="post">
+						<fieldset>
+							<legend>
+								<a>
+									إضافة كلمة جديدة
+								</a>
+							</legend>
+							<% if flash[:successtype] && flash[:successtype] == "addword" && flash[:success] %>
+								<div class="alert alert-success">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		<%= flash[:success] %>
+						    	</div>
+						  	</div>
+							<% end %>
+							<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+							<div class="control-group<%= flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name]? ' error' : ''%>">
+								<label class="control-label" for="inputkeyword">الكلمة</label>
+								<div class="controls">
+									<input type="text" id="inputkeyword" name="keyword[name]" placeholder="الكلمة" value="<%=@fargs && @fargs[:keyword]? @fargs[:keyword][:name] : ''%>" class="span4">
+									<button type="submit" class="btn btn-primary pull-left">إضافة الكلمة</button>
+									<% if flash[:error] && flash[:errortype] == 'addword' && flash[:error][:name] %>
+											<span class="help-block">يجب ادخال كلمة باللغة العربية او الانجليزية</span>
+									<% end %>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
