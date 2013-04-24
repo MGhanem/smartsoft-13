@@ -52,9 +52,9 @@
       </div>
       <br>
       <table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">
-        <col style="width:25%">
-        <col style="width:25%">
-        <col style="width:10%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:15%">
         <% if @words.count == 0 %>
           <div class="well">
               <span>
@@ -78,7 +78,7 @@
                 <%= link_to @words[count].name , search_path(search: keyword) %>
               </td>
               <td style="text-align:center">
-                <%= @synonyms[count].name %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {:selected => @synonyms[count].id}, {:class=>'input', :name=>'normalSelect', :id=>'synonym_select', :style=>'width:50%'}) %>
               </td>
               <td style="text-align:center" >
                 <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
@@ -87,6 +87,62 @@
             </tr>
           <% end %>
         <% end %>
+            <tr style="text-align:center" >
+              <td style="text-align:center">
+                <% if I18n.locale == :en %>
+                <div class="input-append" >
+                  <input type="text"  class="search-query" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" placeholder="search here") ></input>
+                  <input type="button" class="btn" id="search_btn" style="border-radius: 0px 15px 15px 0px;" onclick="load_synonyms()"></input>
+                </div>
+                <% elsif I18n.locale == :ar %>
+                 <div class="input-append" >
+                  <input type="text"  class="search-query" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" placeholder="ابحث هنا") ></input>
+                  <input type="button" class="btn" id="search_btn" style="border-radius: 15px 0px 0px 15px;" onclick="load_synonyms()"></input>
+                </div>
+                <% end %>
+              </td> 
+              <td style="text-align:center" >
+                <%= collection_select(:synonym_name , :text, [], :id, :name, {:prompt => "enter a word first" }, {:class=>'input_synonym', :name=>'select_menu', :id=>'selected_synonym', :disabled => true, :style=>'width:70%'}) %>
+              </td> 
+              <td style="text-align:center">
+                <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
+             </td>
+            </tr>
       </table>
     </div>
-  </form>
+  </form>  
+  <p id="hoppa_text"></p>   
+<script type="text/javascript" charset="utf-8">
+$(".input").change(function(){
+  var new_synonym_id = $(this).val();
+  //alert(new_synonym_id);
+    $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
+    // $.ajax({
+    //   type: "POST",
+    //   url: "/developers/projects/"+"<%= @project.id %>"+"/change_synonym",
+    //   data: {synonym_id: new_synonym_id,project_id: "<%= @project.id %>" }
+    // });
+});
+
+
+
+function add_keyword_with_synonym(){
+  var keyword_name = $("#selected_keyword").val();
+  var synonym_id = $("#selected_synonym option:selected").val();
+  //alert("<%= @project.id %>");
+  //alert(synonym_id);
+  if(keyword_name != "" && synonym_id != ""){
+    //$.post("/developers/projects/quick_add", { keyword:keyword_name, synonym_id: synonym_id,
+      //project_id: "<%= @project.id %>" });
+      $.ajax({
+        type: "POST",
+        url: "/developers/projects/"+"<%= @project.id %>"+"/quick_add",
+        data: {synonym_id: synonym_id, keyword:keyword_name ,project_id: "<%= @project.id %>" }
+      });   
+    }
+}
+function load_synonyms(){
+  var keyword = $("#selected_keyword").val();
+  $.post("/developers/projects/load_synonyms",{word:keyword, project_id: "<%= @project.id %>"} );
+}
+</script>
