@@ -44,10 +44,8 @@ Arability::Application.routes.draw do
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-    match '/authentications/twitter' => 'authentications#twitter'
-    get "authentications/twitter"
     get "authentications/remove_twitter_connection"
-    match '/auth/:twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#twitter_failure'

@@ -20,8 +20,6 @@ module RequestHelpers
   def create_logged_in_developer
     gamer = create_logged_in_user
     dev = Developer.new
-    dev.first_name = "test"
-    dev.last_name = "test"
     dev.gamer_id = gamer.id
     dev.save
     dev
