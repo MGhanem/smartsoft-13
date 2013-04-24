@@ -1,5 +1,7 @@
 require "spec_helper"
+require "request_helpers"
 include Warden::Test::Helpers
+include RequestHelpers
 
 describe ProjectsController do
   include Devise::TestHelpers
@@ -44,6 +46,8 @@ end
 
 describe "GET #new" do
   it "initializes a new project" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
     get :new
   end
 end
@@ -57,7 +61,8 @@ describe "GET #create" do
    end
 
     it "redirects to the project index" do
-      post :create, project: Factory.attributes_for(:project)
+      project
+      post :create, project: project
       response.should redirect_to Project.index
     end
   end
@@ -65,7 +70,8 @@ describe "GET #create" do
   context "with invalid attributes" do
     it "does not save the new project" do
       expect{
-        post :create, project: Factory.attributes_for(:invalid_project)
+        project
+        post :create, project: project
       }.to_not change(Project,:count)
     end
 
@@ -78,7 +84,7 @@ end
 
 describe "GET #edit" do
   it "assigns the requested project to @project" do
-    project = Factory(:project)
+    project
     get :edit, id: project
     assigns(:project).should eq(project)
   end
@@ -91,7 +97,8 @@ describe 'PUT update' do
 
   context "valid attributes" do
     it "located the requested @project" do
-      put :update, id: @project, project: Factory.attributes_for(:project)
+      project
+      put :update, id: @project, project: project
       assigns(:project).should eq(@project)
     end
 
@@ -105,7 +112,8 @@ describe 'PUT update' do
     end
 
     it "redirects to the project index" do
-      put :update, id: @project, project: Factory.attributes_for(:project)
+      project
+      put :update, id: @project, project: project
       response.should redirect_to projects_path
     end
   end
