@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
   # to hand off from guest_user to current_user.
   def logging_in(id)
     guest_votes = Vote.where(gamer_id: guest_gamer.id)
-      guest_votexs.each do |vote|
+      guest_votes.each do |vote|
       vote.gamer_id = id
       vote.save!
     end
@@ -143,10 +143,10 @@ class ApplicationController < ActionController::Base
   def create_gamer(email, password, username)
     gamer = Gamer.new
     gamer.username = username
-    gamer.country = guest_gamer.ountry
-    gamer.education_level = guest_gamer.ducation
+    gamer.country = guest_gamer.country
+    gamer.education_level = guest_gamer.education_level
     gamer.gender = guest_gamer.gender
-    gamer.date_of_birth = guest_gamer.dob
+    gamer.date_of_birth = guest_gamer.date_of_birth
     gamer.email = email
     gamer.password = password
     if gamer.save

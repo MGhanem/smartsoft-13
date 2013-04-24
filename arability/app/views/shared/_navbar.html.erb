@@ -18,7 +18,13 @@
         <% end %>
       <% if !gamer_signed_in? %>
           <li class="divider-vertical"></li>
-          <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
+          <li>
+            <% if guest_gamer != nil %>
+              <a href="<%=guest_continue_sign_up_path%>"><%= t :sign_up %></a>
+            <% else %>
+              <a href="/gamers/sign_up"><%= t :sign_up %></a>
+            <% end %>
+          </li>
           <li class="divider-vertical"></li>
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
