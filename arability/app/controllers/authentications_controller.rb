@@ -29,7 +29,7 @@ class AuthenticationsController < ApplicationController
         gamer = Gamer.find(authentication.gamer_id)
         sign_in_and_redirect(:gamer, gamer)
       else
-        render "/social_registerations/social_sign_in"
+        render root_url
       end
     end
 	end
