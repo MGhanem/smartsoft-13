@@ -44,15 +44,13 @@ describe Report do
   end
 
   it "should not save a report from a gamer without a reported word" do
-    r = Report.new
-    r.gamer = gamer
-    r.save.should eq(false)
+    success, report = Report.create_report(gamer, nil)
+    success.should eq(false)
   end
 
   it "should not save a report without a gamer" do
-    r = Report.new
-    r.reported_word = keyword
-    r.save.should eq(false)
+    success, report = Report.create_report(nil, keyword)
+    success.should eq(false)
   end
 
   it "should not save duplicate records" do
