@@ -1,6 +1,6 @@
 #encoding: UTF-8
 class Developer < ActiveRecord::Base
-  belongs_to :gamer
+  belongs_to :gamer 
   has_one :my_subscription
 
 
@@ -13,6 +13,7 @@ class Developer < ActiveRecord::Base
 
 
   has_many :own_projects, class_name: "Project"
+  has_and_belongs_to_many :shared_with_projects, class_name: "Project"
   attr_accessible :verified, :gamer_id
   validates :gamer_id, presence: true, uniqueness: true
 
@@ -28,14 +29,14 @@ class Developer < ActiveRecord::Base
   # success:
   #   returns true on saving the relation between the developer and the keyword
   # failure:
-  #   returns false if there was not keywords matching the keyword_id in
+  #   returns false if there was not keywords matching the keyword_id in 
   #   the database
   def follow(keyword_id)
       developer = Developer.find(self.id)
       keyword = Keyword.find(keyword_id)
       developer.keywords << keyword
   end
-
+  
   # author:
   #   Mostafa Hassaan
   # description:
@@ -45,7 +46,7 @@ class Developer < ActiveRecord::Base
   # success:
   #   returns true on removing the relation between the developer and the keyword
   # failure:
-  #   returns false if there was no keywords matching the keyword_id in
+  #   returns false if there was no keywords matching the keyword_id in 
   #   the database
   def unfollow(keyword_id)
       developer = Developer.find(self.id)
