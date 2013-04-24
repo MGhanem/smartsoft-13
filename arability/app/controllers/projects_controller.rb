@@ -5,7 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv, :export_to_xml, :export_to_json]
+  # before_filter :developer_can_see_this_project?, 
+  # only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv, :export_to_xml, :export_to_json]
 
 
 
@@ -538,7 +539,8 @@ end
         @exported_data.each do |word|
           @keyword = Keyword.find_by_id(word.keyword_id).name
           @synonym = Synonym.find_by_id(word.synonym_id).name
-          xml_string << " <word>" + @keyword + "</word>  <translation>" + @synonym + "</translation>"
+          xml_string << " <word>" + @keyword + 
+          "</word>  <translation>" + @synonym + "</translation>"
         end
         xml_string << " </project_data>"
       else
@@ -547,12 +549,11 @@ end
         return
       end
       send_data xml_string ,
-      :type => "text/xml; charset=UTF-8;", 
-      :disposition => "attachment; filename=project_data.xml"
+      type: "text/xml; charset=UTF-8;", 
+      disposition: "attachment; filename=project_data.xml"
     else
       flash[:notice] = t(:no_project)
       redirect_to projects_path, flash: flash
-      return
     end
   end
 
@@ -575,7 +576,8 @@ end
         @exported_data.each do |word|
           @keyword = Keyword.find_by_id(word.keyword_id).name
           @synonym = Synonym.find_by_id(word.synonym_id).name
-          json_string << "\"word\": \"" + @keyword + "\", \"translation\": \"" + @synonym + "\""
+          json_string << "\"word\": \"" +
+          @keyword + "\", \"translation\": \"" + @synonym + "\""
         end
         json_string << "   }"
       else
@@ -584,8 +586,8 @@ end
         return
       end
       send_data json_string ,
-      :type => "text/json; charset=UTF-8;", 
-      :disposition => "attachment; filename=project_data.json"
+      type: "text/json; charset=UTF-8;", 
+      disposition: "attachment; filename=project_data.json"
     else
       flash[:notice] = t(:no_project)
       redirect_to projects_path, flash: flash
