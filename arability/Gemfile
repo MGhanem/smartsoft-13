@@ -35,6 +35,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "select2-rails"
+
 gem 'jquery-rails'
 gem 'execjs'
 
