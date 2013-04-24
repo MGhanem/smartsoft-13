@@ -20,18 +20,11 @@ class SearchController < BackendController
   #     returns an empty list if the search keyword had no matches or no
   #     similar keywords were found
   def search_keywords
-    @categories = params[:categories]
+    @categories_by_locale = Category.all.map { |c| [c.id, c.get_name_by_locale] }
+    @category_ids = params[:category_ids] || []
     @project_id = params[:project_id]
-    if @categories.present?
-      categories_array = @categories.split(/,/)
-      categories_array.map! { |x| x.strip }
-      categories_array.map! { |x| x.downcase }
-      categories_array.reject! { |x| x.blank? }
-      categories_array.uniq!
-    else
-      categories_array = []
-    end
     @search_keyword = params["search"]
+    categories_array = Category.where(id: @category_ids) || []
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
@@ -48,11 +41,10 @@ class SearchController < BackendController
 	#	params:
 	#		search: a string representing the search keyword, from the params list
 	#     from a textbox in the search_keywords view
-	#	returns:
-	#		success: 
-	#			returns to the search view a list of synonyms for the keyword
-	#     sorted by relevance
-	#		failure:
+	#	success: 
+	#		returns to the search view a list of synonyms for the keyword
+	#   sorted by relevance
+	#	failure:
 	#			returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
@@ -80,6 +72,8 @@ class SearchController < BackendController
         @no_synonyms_found = true if @synonyms.blank?
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+        @categories = @search_keyword_model.categories.map { |c| c.get_name_by_locale }
+        @category_ids = @search_keyword_model.categories.map { |c| c.id }
       else
         redirect_to search_keywords_path(search: @search_keyword)
       end

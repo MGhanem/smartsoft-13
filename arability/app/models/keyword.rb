@@ -203,16 +203,15 @@ class Keyword < ActiveRecord::Base
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
-      category_name = I18n.locale == :en ? :english_name : :arabic_name
       if categories != []
-        keyword_list = 
+        keyword_list =
           keyword_list.joins(:categories)
-            .where("categories.#{category_name}" => categories)
+            .where("categories.id" => categories.map{ |c| c.id })
       end
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
-    	relevant_first_list.uniq!
+    	relevant_first_list.uniq
     end
 
   class << self

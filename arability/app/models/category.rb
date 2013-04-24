@@ -68,13 +68,13 @@ class Category < ActiveRecord::Base
   # failure:
   #   --
   def self.split_and_sanitize(string)
-    strings = string.split!(",")
+    strings = string.split(",")
     strings.map! { |s| s.strip }
     strings.map! { |s| s.split(" ").join(" ") }
     strings.map! { |s| s.downcase }
     strings.reject! { |s| s.blank? }
     strings.reject! { |s| s.match /[^a-zA-Z \u0621-\u0652]/ }
-    strings.uniq!
+    strings.uniq
   end
 
 end
