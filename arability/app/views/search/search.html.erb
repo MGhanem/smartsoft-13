@@ -10,7 +10,10 @@
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-
+    <div style="margin-top:5px">
+      <%= t :category_tags %>:
+      <a href="#" onclick="submit_category_form();return false;"><%= @categories.join(", ") %></a>
+    </div>
 			<div class="row" style="padding:10px;">
 				<div class="span12">
 						<button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
@@ -65,7 +68,7 @@
 	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),
 	                  :include_blank => true, :class => "control" %>
                   <% end %>
-								</div>	
+								</div>
 							</div>
 						</div>
 				</div>
@@ -74,6 +77,18 @@
 	</div>
 </div>
 
+
+<%= form_tag(keywords_new_path, :method => "post", :id => "category_form") do %>
+  <input type="hidden" name="name" value="<%= @search_keyword %>"/>
+  <input type="hidden" name="override_categories" value="true"/>
+  <input type="hidden" name="category_ids" value="<%= @category_ids.join(",") %>"/>
+<% end %>
+<script>
+  function submit_category_form() {
+    $("#category_form").submit();
+    return false;
+  }
+</script>
 
 <% if @display_add %>
 	<div class="well">

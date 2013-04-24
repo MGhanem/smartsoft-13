@@ -69,13 +69,11 @@ ar:
   education: "التعليم"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
   follow_word_link: "إذا لم تعجبك هذه المرادفات أو تريد متابعة هذه الكلمة"
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-  select subscription: "إختر"
   choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
   choose_keyword_remaining: "تبقى لك عدد"
   choose_keywords_remaining2: "كلمة"
@@ -136,19 +134,45 @@ ar:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
   activerecord:
+    models:
+      developer: "مطور"
     attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
       project:
         name: 'الاسم'
         minAge: 'السن'
         maxAge: 'السن'
         categories: "الفئات"
         description: "الوصف"
+      keyword:
+        name: "الكلمة"
+      category:
+        english_name: "الاسم الانجليزي"
+        arabic_name: "الاسم العربي"
     errors:
       models:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+        keyword:
+          attributes:
+            name:
+              blank: "برجاء إدخال كلمة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه الكلمة موجودة بالفعل"
+        category:
+          attributes:
+            english_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
+            arabic_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
   views:
     project:
        flash_messages:
@@ -165,19 +189,7 @@ ar:
          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
          developer_unshared: 'مت عدم مشاركة المشروع'
          cant_share_the_project: 'لا يمكن مشاركة المشروع'
-        keyword:
-          attributes:
-            name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
-        category:
-          attributes:
-            name:
-              blank: "برجاء إدخال فئة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه فئة موجودة بالفعل"
-  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
+  keyword_not_found: "عفوا! لم نجد أي كلمات في هذه التصنيفات."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
   stats_country: "احصائيات البلاد"
@@ -189,9 +201,8 @@ ar:
      messages_errors:
         you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
         please_choose: 'من فضلك إختر نظامك'
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
-  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   Add_words: "إضافة كلمات"
   Synonym_changed_successfully: "تم تغيير المعنى بنجاح."
@@ -223,13 +234,6 @@ ar:
   done: "إنتهاء"
   first_name: "الاسم الاول"
   last_name: "إسم العائلة"
-  activerecord:
-    models:
-      developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
@@ -287,10 +291,7 @@ ar:
   search: "بحث"
   search_here: "ابحث هنا"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  tag_using_categories: "إختر التصنيفات المناسبة"
+  keyword_exists: "هذه الكلمة موجودة بالفعل"
+  keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
+  category_tags: "التصنيفات"

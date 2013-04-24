@@ -11,14 +11,13 @@ en:
   email: "Email"
   password: "Password"
   english: "English"
-  arabic: "Arabic"
   arabic: "العربية"
   search: "Search Keywords"
   search_here: "search keywords here"
   keyword_add_success: "Keyword added to our database successfully"
   keyword_pending: "Sorry, Keyword pending for approval"
   keyword_in_wrong_format: "Keyword should only contain either Arabic or English characters!"
-  keyword_suggest_add: "Keyword doesn't exist in our database. Would you like to add it?"
+  keyword_suggest_add: "Keyword doesn't exist using these filters. Would you like to add it?"
   click_here: "Click here"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
@@ -30,9 +29,7 @@ en:
   age_to: "to:"
   gender: "Gender:"
   education: "Education:"
-  no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
-  follow_word: "Follow word"
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
+  keyword_not_found: "Sorry! We couldn't find keywords matching the search keyword using these category filters. "
   add_word: "Add Keyword"
   female: "female"
   male: "male"
@@ -72,8 +69,6 @@ en:
   view_stats: "View Stats"
   add_to_project: "Add to project"
   votes: "votes"
-  age_from: "Age from:"
-  age_to: "Age to:"
   gender: "Gender"
   error: "error"
   cancel: "Cancel"
@@ -99,8 +94,6 @@ en:
   no_votes_for_word: "No votes exsist for this word"
   no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
   follow_word: "Follow word"
-  no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
   add_word: "Add Keyword"
   stats_gender: "Gender Statistics"
   stats_country: "Country Statistics"
@@ -122,9 +115,6 @@ en:
   register_as_developer: "Developer Registration"
   next: "Next"
   done: "Done!"
-  no_synonyms_found: "Sorry! We couldn't find synonyms matching the search keyword in our database. "
-  follow_word: "Follow word"
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
   add_word: "Add Keyword"
   Add_words: "Add words"
   Synonym_changed_successfully: "Synonym changes successfully."
@@ -186,30 +176,13 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
-
-  activerecord:
-    attributes:
-      project:
-        name: 'Name'
-        minAge: 'The minimum age'
-        maxAge: 'The maximum age'
-        categories: "Categories"
-        description: "Description"
   log_in_google: "Sign In with Google"
-
   no_categories: "This project has no categories"
   no_description: "This project has no description"
   register_developer: "Please register as a developer first"
   developer_cant_see_project: "You are not allowed to view this project"
   first_name: "First Name"
   last_name: "Last Name"
-  activerecord:
-    models:
-      developer: "Developer"
-    attributes:
-      developer:
-        first_name: "First Name"
-        last_name: "Last Name"
   connect_to: "Connect to"
   disconnect_from: "Disconnect from"
   facebook: "facebook"
@@ -252,8 +225,6 @@ en:
   to_voting: "To Voting Page"
   restart_game: "Restart Game" 
   country: "Country:"
-  age_from: "Age from:"
-  age_to: "to:"
   gender: "Gender:"
   female: "female"
   male: "male"
@@ -266,14 +237,26 @@ en:
   follow_words_info: "Follow a word to recieve an email with every update. Updates include a new Synonym addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Synonyms of"
   activerecord:
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"
+      project:
+        name: 'Name'
+        minAge: 'The minimum age'
+        maxAge: 'The maximum age'
+        categories: "Categories"
+        description: "Description"
+    models:
+      developer: "Developer"
     errors:
       models:
         keyword:
           attributes:
             name:
-              blank: "keyword cant be empty"
-              invalid: "The keyword can only consist of only english and arabic characters"
-              taken: "This keyword already exists in the database"
+              blank: "word cant be empty"
+              invalid: "The word can only consist of only english and arabic characters"
+              taken: "This word already exists in the database"
         category:
           attributes:
             name:
@@ -286,3 +269,7 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  tag_using_categories: "Choose the best categories"
+  keyword_exists: "This keyword already exists in the database"
+  keyword_added_to_categories: "The word %{keyword} has been tagged with %{categories}"
+  category_tags: "Categories"
