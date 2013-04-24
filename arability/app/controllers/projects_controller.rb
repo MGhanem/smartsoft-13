@@ -75,7 +75,7 @@ class ProjectsController < BackendController
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
-            flash: {:success => I18n.t('views.project.flash_messages.project_was_successfully_created') }}
+            flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
           @project.save
         else

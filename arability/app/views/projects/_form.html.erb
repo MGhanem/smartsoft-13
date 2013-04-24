@@ -23,9 +23,9 @@
       <%= f.label t(:categories), class: "control-label" %>
       <div class="controls">
         <% if params[:action] == "new" %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, {prompt: true}, {id:"cat"}) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true }, { id:"cat" }) %>
         <% elsif params[:action] == "edit" %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, {prompt: @select_value, selected: @project.category_id.to_i}, {id:"cat"}) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i }, { id:"cat" }) %>
         <% end %>
     </div>
   </div>
