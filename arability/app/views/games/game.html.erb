@@ -264,9 +264,15 @@ function setButtons(){
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
       الإنجازات
     </div>
+    <% if I18n.locale == :ar %> 
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()">
-     بروفيل
+     الأصوات
     </div>
+    <% else %>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()">
+     Votes
+    </div>
+    <% end %>
     <div class="nav-box btn btn-inverse" id="navItems">
 
      إعدادات
