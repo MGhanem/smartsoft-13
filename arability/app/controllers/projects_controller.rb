@@ -91,7 +91,7 @@ class ProjectsController < BackendController
   end
 
   # Author:
-  #    Salma Farag
+  #   Salma Farag
   # Description:
   #   A method that views the form that checks if the developer is signed in and has not exceeded the
   #   max number of projects allowedinstantiates an empty project object
