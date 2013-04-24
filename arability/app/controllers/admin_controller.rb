@@ -7,44 +7,8 @@ class AdminController < ApplicationController
 
   include AdminHelper
 
-  before_filter :require_login
-  skip_before_filter :require_login, only: [:login, :logout]
-
-  before_filter :check_login, only: [:login]
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     a filter that makes sure the user is logged in
-  # params
-  #     none
-  # success: 
-  #     if the user is not logged in redirect to login
-  # failure: 
-  #     none
-  def require_login
-    unless logged_in?
-      flash[:error] = "يجب تسجيل الدخول"
-      redirect_to action: "login"
-    end
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     a function that checks if the user is logged in and 
-  #     redirects him to /admin/index
-  # params
-  #     none
-  # success: 
-  #     redirect to index if the user is logged in
-  # failure: 
-  #     none
-  def check_login
-    if logged_in?
-      redirect_to action: "index"
-    end
-  end
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_admin!
 
   def index
     @message = params[:message]
@@ -68,29 +32,6 @@ class AdminController < ApplicationController
     @trophies_list = Trophy.all
     @prizes_list = Prize.all
     render "list-prizes"
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     login action for admin
-  # params
-  #     username: the username for the admin
-  #     password: the password for the admin
-  # success: 
-  #     redirects to admin/index
-  # failure: 
-  #     refreshes the page with error displayed
-  def login
-    if request.post?
-      if params[:username] == "admin" && params[:password] == "admin"
-        create_session
-        redirect_to action: "index"
-      else
-        flash[:error] = "اسم المستخدم او كلمة السر غير صحيحة"
-        @username = params[:username]
-      end
-    end
   end
   
   # author:
@@ -265,21 +206,6 @@ class AdminController < ApplicationController
     end
     flash.keep
     redirect_to "/admin/list/prizes"
-  end
-
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     admin logout action
-  # params
-  #     none
-  # success: 
-  #     redirects the user to /admin/login page
-  # failure: 
-  #     none
-  def logout
-    destroy_session
-    redirect_to action: "login"
   end
 
   # author:
