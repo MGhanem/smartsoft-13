@@ -44,14 +44,15 @@ end
 #   Categories will be created.
 # Failure:
 #   None
-def self.createcategories(project,categories)
-  array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  catArray = []
-  array.each do |m| m.capitalize!
-    catArray.push(Category.where(:name => m).first_or_create)
+def self.createcategories(project,cat_id)
+  if cat_id != " "
+    catArray = []
+    catArray.push(cat_id)
+    catArray.each do |m|
+      project.category = Category.find(cat_id)
   end
-  project.categories = catArray
   project.save
+end
   return project
 end
 
