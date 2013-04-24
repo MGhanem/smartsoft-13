@@ -308,7 +308,8 @@ class GamesController < ApplicationController
   # Success: 
   #   renders a js view of the gamer vote log showing either
   #   their votes histroy or no votes if he/she didn't vote yet
-  # Failure: --
+  # Failure: 
+  #   --
   def showprofile
     @count, @vote_log = current_gamer.get_votes
     respond_to do |format|
