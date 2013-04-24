@@ -11,25 +11,15 @@ class AdminController < ApplicationController
   before_filter :authenticate_admin!
 
   def index
-    @message = params[:message]
-    @fargs = params[:fargs]
-    @trophies_list = Trophy.all
-    @prizes_list = Prize.all
     render "dashboard"
   end
 
   def list_trophies
-    @message = params[:message]
-    @fargs = params[:fargs]
     @trophies_list = Trophy.all
-    @prizes_list = Prize.all
     render "list-trophies"
   end
 
   def list_prizes
-    @message = params[:message]
-    @fargs = params[:fargs]
-    @trophies_list = Trophy.all
     @prizes_list = Prize.all
     render "list-prizes"
   end
@@ -46,11 +36,6 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def add_word
     if request.post?
-      @message = params[:message]
-      @fargs = params[:fargs]
-      @trophies_list = Trophy.all
-      @prizes_list = Prize.all
-
       name = params[:keyword][:name]
       is_english = params[:keyword][:is_english]
       success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
@@ -86,11 +71,6 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def add_trophy
     if request.post?
-      @message = params[:message]
-      @fargs = params[:fargs]
-      @trophies_list = Trophy.all
-      @prizes_list = Prize.all
-
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
@@ -130,11 +110,6 @@ class AdminController < ApplicationController
   #     refreshes the page with error displayed
   def add_prize
     if request.post?
-      @message = params[:message]
-      @fargs = params[:fargs]
-      @trophies_list = Trophy.all
-      @prizes_list = Prize.all
-
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
