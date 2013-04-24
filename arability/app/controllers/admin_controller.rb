@@ -38,6 +38,7 @@ class AdminController < ApplicationController
     if request.post?
       name = params[:keyword][:name]
       is_english = params[:keyword][:is_english]
+      @fargs = {keyword: params}
       success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
       if success
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
@@ -48,7 +49,7 @@ class AdminController < ApplicationController
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        render "add-word"
+        redirect_to "/admin/add/word", fargs: @fargs
       end
     else
       render "add-word"
@@ -74,6 +75,7 @@ class AdminController < ApplicationController
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
+      @fargs = {addtrophy: params}
       success, trophy = Trophy.add_trophy_to_database(params[:name],
                    params[:level], params[:score], params[:image])
       if success
@@ -113,6 +115,7 @@ class AdminController < ApplicationController
       params[:name] = params[:name].strip
       params[:level] = params[:level].strip
       params[:score] = params[:score].strip
+      @fargs = {addprize: params}
       success, prize = Prize.add_prize_to_database(params[:name],
                  params[:level], params[:score], params[:image])
       if success
