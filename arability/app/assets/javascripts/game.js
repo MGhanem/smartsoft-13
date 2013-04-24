@@ -32,12 +32,12 @@ var firstClick = true;
 
 $(function(){
 	$('.eng-btn').popover();
-	setTimeout(function(){ $('.eng-btn').popover('show');}, 1500);
-	setTimeout(function(){ $('.popover').expose();}, 1550);
-	$('.ar-btn').popover();
-	setTimeout(function(){ $('.ar-btn').popover('show');}, 2000);
-	$('.both-btn').popover();
-	setTimeout(function(){ $('.both-btn').popover('show');}, 2500);
+	setTimeout(function(){ $('.eng-btn').popover('show');}, 500);
+	setTimeout(function(){ $('.popover').expose();}, 500);
+	// $('.ar-btn').popover();
+	// setTimeout(function(){ $('.ar-btn').popover('show');}, 2000);
+	// $('.both-btn').popover();
+	// setTimeout(function(){ $('.both-btn').popover('show');}, 2500);
 });
 
 function destroy(id){
