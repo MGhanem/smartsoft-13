@@ -41,9 +41,15 @@
             </span>
           </button>
           <ul class="dropdown-menu">
-            <%= link_to t(:file) + ".csv", action: "export_to_csv", controller: "projects", project_id: @project.id %>
-            <%= link_to t(:file) + ".xml", action: "export_to_xml", controller: "projects", project_id: @project.id %>
-            <%= link_to t(:file) + ".json", action: "export_to_json", controller: "projects", project_id: @project.id %>
+            <li>
+              <%= link_to t(:file) + ".csv", action: "export_to_csv", controller: "projects", project_id: @project.id %>
+            </li>
+            <li>
+              <%= link_to t(:file) + ".xml", action: "export_to_xml", controller: "projects", project_id: @project.id %>
+            </li>
+            <li>
+              <%= link_to t(:file) + ".json", action: "export_to_json", controller: "projects", project_id: @project.id %>
+            </li>
           </ul>
         </div>
         <div class="btn-group">

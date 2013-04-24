@@ -481,10 +481,8 @@ end
     end
   end
 
-
-  
   # author:
-  #      Khloud Khalid
+  #   Khloud Khalid
   # description:
   #   method exports words and synonyms of a given project to a .csv file
   # params:
@@ -521,7 +519,7 @@ end
   end 
 
   # author:
-  #      Khloud Khalid
+  #   Khloud Khalid
   # description:
   #   method exports words and synonyms of a given project to a .xml file
   # params:
@@ -558,7 +556,7 @@ end
   end
 
   # author:
-  #      Khloud Khalid
+  #   Khloud Khalid
   # description:
   #   method exports words and synonyms of a given project to a .json file
   # params:
@@ -577,7 +575,7 @@ end
           @keyword = Keyword.find_by_id(word.keyword_id).name
           @synonym = Synonym.find_by_id(word.synonym_id).name
           json_string << "\"word\": \"" +
-          @keyword + "\", \"translation\": \"" + @synonym + "\""
+          @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
         end
         json_string << "   }"
       else
