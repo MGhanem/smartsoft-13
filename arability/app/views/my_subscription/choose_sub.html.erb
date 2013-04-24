@@ -28,7 +28,7 @@
 		<% if I18n.locale==:en %>
 		<h5>The maximun number for the word follow is:</h5>
 		<% else I18n.locale==:ar %>
-		<h5>الحد الأقصى لمتابعة الكلمات في مشروعك هي:</h5>
+		<h5>الحد الأقصى لمتابعة الكلمات هي:</h5>
 		<% end %>
 		<%=sm.limit_follow%><%= t(:per_month)%><br/>
 		<% if I18n.locale==:en %>
@@ -42,7 +42,7 @@
 		<% else I18n.locale==:ar %>
 		<h5>الحد الأقصى لانشاء المشاريع هي:</h5>
 		<% end %>
-		<%=sm.limit_project%><%= t(:per_month)%>
+		<%=sm.limit_project%>
 	</p>
     </div>
             </td>
