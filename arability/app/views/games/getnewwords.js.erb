@@ -5,6 +5,7 @@
 	<% a = Vote.get_unvoted_keywords(-1, params[:count].to_i, params[:lang].to_i) %>
 <% else %>
 	wordsInDb = true;
+	wasPrompted = false;
 <% end %>
 	
 
