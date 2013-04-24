@@ -78,6 +78,7 @@ class ProjectsController < BackendController
           format.html { redirect_to "/developers/projects",
             notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
+          @project.save
         else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -92,20 +93,27 @@ class ProjectsController < BackendController
   # Author:
   #    Salma Farag
   # Description:
-  #   A method that views the form that  instantiates an empty project object
+  #   A method that views the form that checks if the developer is signed in and has not exceeded the
+  #   max number of projects allowedinstantiates an empty project object
   #   after checking that the user is signed in.
   # Params:
   #   None
   # Success:
   #   An empty project will be instantiated
   # Failure:
-  #   None
+  #   If not signed in he will be redirected to the sign in page.
+  #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
     if developer_signed_in?
-      @project = Project.new
-      respond_to do |format|
-        format.html
-        format.json { render json: @project }
+      if developer.my_subscription.get_projects
+        @project = Project.new
+        respond_to do |format|
+          format.html
+          format.json { render json: @project }
+        end
+      else
+        format.html { redirect_to "/my_subscriptions/choose_sub",
+        notice: I18n.t('exceeded_project_limit: ') }
       end
     else
       developer_unauthorized
