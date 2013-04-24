@@ -38,17 +38,21 @@ describe SearchController do
       gamer.save validate: false
     end
 
+    before :each do
+      k
+      k2
+    end
+
     it "should get only keywords in category", mohamed: true do
       c.keywords << k
       a = create_logged_in_developer
       sign_in(a.gamer)
-      get :search_keywords, :categories => "سنبنتش", :search => "test"
+      get :search_keywords, :category_ids => [c.id], :search => "test"
       assigns(:similar_keywords).should =~ [k]
     end
 
     it "should get all keywords if no category specified", mohamed: true do
       c.keywords << k
-      k2
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :search_keywords, :search => "test"
