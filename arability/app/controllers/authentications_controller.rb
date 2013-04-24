@@ -29,7 +29,7 @@ class AuthenticationsController < ApplicationController
         gamer = Gamer.find(authentication.gamer_id)
         sign_in_and_redirect(:gamer, gamer)
       else
-        render "/authentications/twitter_signin"
+        render "/social_registerations/social_sign_in"
       end
     end
 	end
@@ -66,9 +66,5 @@ class AuthenticationsController < ApplicationController
     flash[:notice] = I18n.t(:twitter_connection_failure)
 	  redirect_to root_url
 	end
-
-  def twitter_signin
-    auth = request.env["omniauth.auth"]
-  end
 
 end
