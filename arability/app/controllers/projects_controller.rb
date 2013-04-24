@@ -188,18 +188,18 @@ def show
   end
 end
 
- # author:
- #   Noha hesham
+ # Author:
+ #    Noha hesham
  # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the
- #   project is successfully deleted
- # failure:
- #   project is not deleted
+ #    Finds the project by its id then destroys it
+ # Params:
+ #    None
+ # Success:
+ #    A pop up appears and makes sure the user wants to
+ #    delete the project by choosing ok the
+ #    project is successfully deleted
+ # Failure:
+ #    Project is not deleted
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
