@@ -63,5 +63,23 @@ describe SearchController do
       get :search_keywords, search: "test"
       assigns(:similar_keywords).should =~ [k, k2]
     end
+
+    it "should return json containing report successfully sent" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      get :send_report, gamer: d.gamer, keyword: k
+      json_response = JSON(response.body)
+      json_response.first.should eq(true)
+    end
+
+    it "should return json containing report failed to be saved" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      get :send_report, gamer: d.gamer, keyword: nil
+      json_response = JSON(response.body)
+      json_response.first.should eq(false)
+    end
   end
 end
