@@ -261,4 +261,37 @@ class AdminController < ApplicationController
                 message: message
   end
 
+  def add_category
+    if request.post?
+      english_name = params[:name2]
+      arabic_name = params[:name1]
+      success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
+      if success
+        flash[:success] = "لقد تم ادخال كلمة #{@category.english_name}
+          /#{@category.arabic_name} بنجاح"
+        flash.keep
+        redirect_to action: 'add_category'
+      else
+        flash[:error] = @category.errors.messages
+        flash.keep
+        redirect_to action: 'add_category'
+      end
+    else
+      render 'admin/add_category'
+    end
+  end
+
+  def all_category
+    @categories = Category.all
+  end
+
+  def delete_category
+    cid = params[:cid]
+    cat = Category.find(cid)
+    cat.delete
+    flash[:success] = "لقد تم مسح الفئة بنجاح"
+    flash.keep
+    redirect_to action: 'all_category'
+  end
+
 end

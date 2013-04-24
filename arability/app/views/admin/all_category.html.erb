@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <% if flash[:success] %>
+            <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div>
+                <%= flash[:success] %>
+            </div>
+        </div>
+        <% end %>
+    <tr>
+    <th>#</th>
+    <th>إسم الفئة بالإنجليزية</th>
+    <th>إسم الفئة بالعربية</th>
+    <th>مسح</th>
+  </tr>
+  <% @categories.each do |cat| %>
+    <tr>
+    	<th><%= cat.id %></th>
+    	<th><%= cat.english_name %></th>
+    	<th><%= cat.arabic_name %></th>
+    	<th><a class="btn btn-mini" href="/admin/delete_category/?cid=<%= cat.id %>"><i class="icon-trash"></i></a></th>
+  </tr>
+<% end %>
+
+ </table>

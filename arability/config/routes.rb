@@ -15,6 +15,10 @@ Arability::Application.routes.draw do
     post "/add_word"
     post "/add_trophy"
     post "/add_prize"
+
+    match '/add_category' => 'admin#add_category'
+    match '/all_category' => 'admin#all_category'
+    match "/delete_category"=>'admin#delete_category', :as => "delete_category"
   end
 
   # Only two languages are accepted: Arabic and English
