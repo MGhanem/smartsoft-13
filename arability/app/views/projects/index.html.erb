@@ -28,7 +28,7 @@
               <% if project1.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-                  <%= project1.category.name %>,
+                  <%= project1.category.get_name_by_locale %>,
               <% end %>
 
               <br />
@@ -58,7 +58,7 @@
               <% if project2.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-                  <%= project2.category.name %>,
+                  <%= project2.category.get_name_by_locale %>,
               <% end %>
 
               <br />
