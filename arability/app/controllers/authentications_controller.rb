@@ -56,6 +56,28 @@ class AuthenticationsController < ApplicationController
 	  redirect_to root_url
 	end
 
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Call back method envoked when facebook sends the hash back to
+  #   Arability. This method is quite a handful. If the hash is empty
+  #   an error message is displayed. If the gamer is already signed in it
+  #   indicates that the user wants to connect his account rather than sign
+  #   in. If so an Authentication is connected which links his account to
+  #   Facebook. If he is not signed in we check whether there is an
+  #   authentication linking this facebook hash to a local account.
+  #   If yes we sign in that account. If not we check whether there
+  #   is a gamer account with the same email. If yes we sign in that gamer
+  #   and create an authentication linking this hash to that gamer account
+  #   if not we redirect to a filled in sign up page
+  # Params:
+  #   Hash returned by facebook API
+  # Success:
+  #   Signed in or redirected to a filled in sign up page
+  # Failure:
+  #   Hash is empty (API error) or the account is logged in AND already
+  #   connected to facebook. In both cases the user is redirected to the
+  #   home page and an error message is displayed.
   def facebook_callback
     hash = request.env["omniauth.auth"]
     if hash
