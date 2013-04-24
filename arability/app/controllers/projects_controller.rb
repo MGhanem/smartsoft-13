@@ -412,12 +412,13 @@ end
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+          #kk@edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+          @edited_word = PreferedSynonym.where(project_id:@project_id, keyword_id:@word_id).first
           #hena ho
           #raise Exception , @edited_word.inspect
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
-            #@edited_word.synonym_id = @synonym_id
+            @edited_word.synonym_id = @synonym_id
             #raise Exception , params
             if @edited_word.save
               flash[:success] = t(:Synonym_changed_successfully)
