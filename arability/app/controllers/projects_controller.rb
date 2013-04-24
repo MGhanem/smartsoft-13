@@ -75,7 +75,7 @@ class ProjectsController < BackendController
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
-            :flash => {:success => I18n.t('views.project.flash_messages.project_was_successfully_created') }}
+            flash: {:success => I18n.t('views.project.flash_messages.project_was_successfully_created') }}
           format.json { render json: @project, status: :created, location: @project }
           @project.save
         else
@@ -170,10 +170,10 @@ class ProjectsController < BackendController
       @project = Project.createcategories(@project, params[:project][:category])
       if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
         :authenticity_token, :commit, :action, :controller, :locale, :id))
-        redirect_to :action => "index"
+        redirect_to action: "index"
         flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
       else
-        render :action => 'edit'
+        render action: 'edit'
       end
     else
       developer_unauthorized
@@ -194,12 +194,12 @@ class ProjectsController < BackendController
   # Failure:
   #   None.
 def show
-  @projects = Project.where(:owner_id => current_developer.id)
+  @projects = Project.where(owner_id: current_developer.id)
   @project = Project.find(params[:id])
   if @projects.include?(@project)
     @words = []
     @synonyms = []
-    @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
+    @words_synonyms = PreferedSynonym.where(project_id: params[:id])
     @words_synonyms.each do |word_synonym|
       word = Keyword.find(word_synonym.keyword_id)
       syn = Synonym.find(word_synonym.synonym_id)
@@ -207,7 +207,7 @@ def show
       @synonyms.push(syn)
     end
   else
-    redirect_to :action => "index"
+    redirect_to action: "index"
     developer_unauthorized
   end
 end
