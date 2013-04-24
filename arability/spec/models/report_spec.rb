@@ -32,13 +32,13 @@ describe Report do
   }
 
   it "should save a report from a gamer to a keyword" do
-    success, report = Report.new_report(gamer, keyword)
+    success, report = Report.create_report(gamer, keyword)
     report.reported_word_type.should eq("Keyword")
     success.should eq(true)
   end
 
   it "should save a report from a gamer to a synonym" do
-    success, report = Report.new_report(gamer, synonym)
+    success, report = Report.create_report(gamer, synonym)
     report.reported_word_type.should eq("Synonym")
     success.should eq(true)
   end
@@ -56,9 +56,9 @@ describe Report do
   end
 
   it "should not save duplicate records" do
-    success, report = Report.new_report(gamer, keyword)
+    success, report = Report.create_report(gamer, keyword)
     success.should eq(true)
-    success, report = Report.new_report(gamer, keyword)
+    success, report = Report.create_report(gamer, keyword)
     success.should eq(false)
     report.errors.messages.should eq({:gamer_id=>["You reported this word before"]})
   end

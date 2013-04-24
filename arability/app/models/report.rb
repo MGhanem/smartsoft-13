@@ -7,7 +7,20 @@ class Report < ActiveRecord::Base
   validates :gamer_id, :uniqueness => { :scope => :reported_word_id,
     :message => "You reported this word before" }
 
-  def self.new_report(gamer, word)
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   
+  # params:
+  #   search_keyword: a string representing the search keyword, from the params list
+  #     from a textbox in the search view
+  # success:
+  #   returns a json list of keywords similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def self.create_report(gamer, word)
     report = Report.new
     report.reported_word = word
     report.gamer = gamer
