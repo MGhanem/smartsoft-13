@@ -5,7 +5,7 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  # before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv]
+  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv, :export_to_xml, :export_to_json]
 
 
 
@@ -197,11 +197,6 @@ def show
       syn = Synonym.find(word_synonym.synonym_id)
       @words.push(word)
       @synonyms.push(syn)
-    end
-    respond_to do |format|
-      format.html #do nothing.
-      format.json { render :json => format.html.to_json }
-      format.xml 
     end
   else
     redirect_to :action => "index"
@@ -524,25 +519,77 @@ end
     end
   end 
 
-  def generate_xml
+  # author:
+  #      Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .xml file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_xml
     @project_id = params[:project_id]
-    @projects = Project.where(:owner_id => current_developer.id)
-    @project = Project.find(params[:project_id])
-    render( :action => 'show', :format => 'xml' )
+    if Project.find_by_id(@project_id) != nil  
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      xml_string = "<project_data> "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find_by_id(word.keyword_id).name
+          @synonym = Synonym.find_by_id(word.synonym_id).name
+          xml_string << " <word>" + @keyword + "</word>  <translation>" + @synonym + "</translation>"
+        end
+        xml_string << " </project_data>"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data xml_string ,
+      :type => "text/xml; charset=UTF-8;", 
+      :disposition => "attachment; filename=project_data.xml"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+      return
+    end
   end
 
-  def export_to_xml
-    # @projects = Project.where(:owner_id => current_developer.id)
-    # @project = Project.find(params[:id])
+  # author:
+  #      Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .json file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_json
     @project_id = params[:project_id]
-    @exported_data = PreferedSynonym.where(project_id: @project_id).all
-    # respond_to do |format|
-    #   # format.html #do nothing.
-    #   # format.json { render :json => format.html.to_json }
-    #   format.xml 
-    # end
-    send_data generate_xml ,
-    :type => "text/xml; charset=UTF-8;", 
-    :disposition => "attachment; filename=project_data.xml"
+    if Project.find_by_id(@project_id) != nil  
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      json_string = "{   "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find_by_id(word.keyword_id).name
+          @synonym = Synonym.find_by_id(word.synonym_id).name
+          json_string << "\"word\": \"" + @keyword + "\", \"translation\": \"" + @synonym + "\""
+        end
+        json_string << "   }"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data json_string ,
+      :type => "text/json; charset=UTF-8;", 
+      :disposition => "attachment; filename=project_data.json"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+      return
+    end
   end
 end
