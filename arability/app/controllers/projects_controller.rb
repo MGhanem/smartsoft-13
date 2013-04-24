@@ -54,8 +54,6 @@ class ProjectsController < BackendController
       redirect_to new_gamer_session_path      
     end
   end
-
-
   # Author:
   #   Salma Farag
   # Description:
@@ -203,20 +201,6 @@ def show
     developer_unauthorized
   end
 end  
-  
-
-
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
-  
   # Author:
   #   Mohamed Tamer
   # Description:
@@ -522,12 +506,23 @@ end
       render "pages/home"
     end
   end
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   Finds the developer by its id and the project
+  #   and removes the developer form the developers_shared
+  #   array, removing the project from the developers
+  #   shared projects
+  # success:
+  #   Project is removed from shared projects
+  # Failure:
+  # project is not removed 
   def remove_project_from_developer
     dev = Developer.find(params[:dev_id])
     project = Project.find(params[:project_id])
     dev.projects_shared.delete(project)
     dev.save
-    flash[:notice] =  I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    flash[:notice] = t(:project_removed)
     redirect_to :action => "index",:controller => "projects"
   end 
 end

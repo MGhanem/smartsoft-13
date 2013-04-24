@@ -145,9 +145,9 @@
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i></a>
+    <a class="btn pull-left" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i></a>
+    <a class="btn pull-right" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
   <% end %>
   <br />
 </div>
@@ -187,9 +187,9 @@
     <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i></a>
+    <a class="btn pull-left" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i></a>
+    <a class="btn pull-right" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
   <% end %>
   <br />
 </div>
