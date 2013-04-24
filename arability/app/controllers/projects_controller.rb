@@ -7,8 +7,6 @@ class ProjectsController < BackendController
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
 
-
-
  # author:Noha hesham
  # Description:
  #   finds the project by its id then destroys it
@@ -404,16 +402,23 @@ end
 # failure:
 #   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist.
   def add_word
+    #raise Exception , "dsjafhd"
     if Developer.find_by_gamer_id(current_gamer.id) != nil 
       @project_id = params[:project_id]
+      #raise Exception, params[:synonym_id]
+      #raise Exception , params
       @word_id = Keyword.find_by_name(params[:keyword]).id
+      #raise Exception , params[:keyword]
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
           @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+          #hena ho
+          #raise Exception , @edited_word.inspect
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
-            @edited_word.synonym_id = @synonym_id
+            #@edited_word.synonym_id = @synonym_id
+            #raise Exception , params
             if @edited_word.save
               flash[:success] = t(:Synonym_changed_successfully)
               redirect_to project_path(@project_id), flash: flash
@@ -448,6 +453,42 @@ end
     end
   end
 
+  def change_synonym
+    @project_id = params[:project_id].to_i
+    @synonym_id = params[:synonym_id].to_i
+    #raise Exception, @synonym_id
+    keyword_object = Synonym.find(@synonym_id).keyword
+    @keyword = keyword_object.name
+    #@keyword = params[:keyword]
+    #add_word and return
+    redirect_to projects_add_word_path(project_id: @project_id, 
+      synonym_id: @synonym_id, keyword: @keyword )
+  end
+
+  def quick_add
+    @project_id = params[:project_id].to_i
+    @synonym_id = params[:synonym_id].to_i
+    #raise Exception, @synonym_id
+    #@synonym_id = 8
+    #raise Exception , @project_id
+    #keyword_object = Synonym.find(@synonym_id).keyword
+    @keyword = params[:keyword]
+    add_word and return
+    #redirect_to projects_add_word_path(project_id: @project_id, 
+     # synonym_id: @synonym_id, keyword: @keyword )
+  end
+
+  def load_synonyms
+    project_id = params[:project_id].to_i
+    @project = Project.find(project_id)
+    synonym_id = params[:project_id].to_i
+    keyword = params[:word]
+    keyword_object = Keyword.find_by_name(keyword)
+    @keyword_synonyms = []
+    if keyword_object
+      @keyword_synonyms = Synonym.where(keyword_id: keyword_object.id)
+    end
+  end 
   
 # author:
 #   Khloud Khalid
