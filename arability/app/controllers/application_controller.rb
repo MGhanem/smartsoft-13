@@ -127,8 +127,20 @@ class ApplicationController < ActionController::Base
     # end
   end
 
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   creates a guest with the given data
+  # Params:
+  #   education: the education level of a the guest
+  #   country: the country of the guest
+  #   gender: the gender of the guest
+  #   dob: the date of birth
+  # Success: 
+  #   returns the created guest and true
+  # Failure:
+  #   returns the gamer instance that wasn't created and false
   def create_guest_gamer(education, country, gender, dob)
-    # u = Gamer.new(:username => "guest", :email => "guest_#{Time.now.to_i}#{rand(99)}@example.com", :password => "123456")
     gamer = Gamer.new
     gamer.username = "Guest_#{Time.now.to_i}#{rand(99)}"
     gamer.country = country
@@ -148,9 +160,10 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   checks if gamer is signed in or not
+  #   checks if there is a gamer signed in or not
   # Params:
-  #   current_gamer: the current signed in gamer
+  #   gamer_session: the session of a signed up regular user
+  #   session[:guest_gamer_id]: the session of the guest gamer
   # Success: 
   #   continues as normal 
   # Failure:

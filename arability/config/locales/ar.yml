@@ -290,7 +290,10 @@ ar:
   search: "بحث"
   search_here: "ابحث هنا"
   guest_sign_up_title: "ادخل هذه الأربع معلومات البسيطة عنك كي تسطيع أن تلعب"
-  
+  guest_error1: "يجب ملئ خانة المستوى التعليمي "
+  guest_error2: "يجب ملئ خانة البلد"
+  guest_error3: "يجب ملئ خانة النوع"
+  guest_error4: "يجب ملئ خانة تاريخ الميلاد"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
   activerecord:
     errors:

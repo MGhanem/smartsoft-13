@@ -1,8 +1,29 @@
 class GuestController < ApplicationController
+  
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   renders guest sign up form and any errors
+  # Params:
+  #   errors: errors resulting from trying to save
+  # Success: 
+  #   renders form
+  # Failure:
+  #   none
   def sign_up
   	@errors = params[:errors]
   end
 
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   tries to creat a guest gamer with the given data
+  # Params:
+  #   gamer: a resource containing the data entered from the form
+  # Success: 
+  #   creates guest gamer and redirects to gamer
+  # Failure:
+  #   redirects to sign up form with the errors
   def signing_up
   	year = params[:gamer]["date_of_birth(1i)"]
   	month = params[:gamer]["date_of_birth(2i)"]
@@ -18,16 +39,16 @@ class GuestController < ApplicationController
   	gender = params[:gamer]["gender"]
   	errors = []
   	if education.size == 0
-  		errors << "Education can't be blank"
+  		errors << "#{guest_error1}"
   	end
   	if country.size == 0
-  		errors << "Country can't be blank"
+  		errors << "#{guest_error2}"
   	end
   	if gender.size == 0
-  		errors << "Gender can't be blank"
+  		errors << "#{guest_error3}"
   	end
   	if year.size == 0 || month.size == 0 || day.size == 0 
-  		errors << "Date Of Birth can't be blank"
+  		errors << "#{guest_error4}"
   	end
   	if errors.size == 0
        gamer, flag = create_guest_gamer(education, country, gender, dob)
