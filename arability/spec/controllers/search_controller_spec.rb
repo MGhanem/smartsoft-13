@@ -8,7 +8,7 @@ describe SearchController do
   describe "GET search" do
   include Devise::TestHelpers
     let(:c) do
-      success, category = Category.add_category_to_database_if_not_exists("test", "سنبنتش")
+      success, category = Category.add_category("test", "سنبنتش")
       category
     end
 

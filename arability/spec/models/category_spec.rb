@@ -86,33 +86,4 @@ describe Category do
     end
   end
 
-  describe "Category.get_category_by_name", mohamed: true do
-    let(:c1) {
-      success, category = Category.add_category("test", "بتتش")
-      category
-    }
-
-    before :each do
-      c1
-    end
-
-    it "Should find the category by name acording to locale" do
-      I18n.locale = :ar
-      c = Category.find_by_name_and_locale("بتتش")
-      c.id.should eq(c1.id)
-      I18n.locale = :en
-      c = Category.find_by_name_and_locale("test")
-      c.id.should eq(c1.id)
-    end
-
-    it "Should not find the category by name if using different locale" do
-      I18n.locale = :en
-      c = Category.find_by_name_and_locale("بتتش")
-      c.should eq(nil)
-      I18n.locale = :ar
-      c = Category.find_by_name_and_locale("test")
-      c.should eq(nil)
-    end
-
-  end
 end
