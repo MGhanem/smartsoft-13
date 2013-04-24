@@ -1,6 +1,6 @@
 class Authentication < ActiveRecord::Base
   belongs_to :gamer
-  attr_accessible :gid, :provider, :token, :token_secret, :email
+  attr_accessible :gid, :provider, :token, :token_secret, :email, :gamer_id
 
   # Author:
   #  Mirna Yacout
@@ -68,6 +68,22 @@ class Authentication < ActiveRecord::Base
       end
       i = i + 1
       return common
+    end
+  end
+
+  def self.create_with_omniauth_amr(gamer_id, provider, gid, email = nil, token = nil, token_secret = nil)
+    authentication = Authentication.new(
+      provider: provider,
+      gid: gid,
+      token: token,
+      token_secret: token_secret,
+      email: email,
+      gamer_id: gamer_id
+      )
+    if authentication.save
+      return authentication, true
+    else
+      return nil, false
     end
   end
 

@@ -1,0 +1,87 @@
+<% if I18n.locale == :ar %>
+<em><h3 class="text-info"> انشاء حساب جديد للاعب</h3></em>
+<% else %>
+<em><h3 class="text-info">Sign up with an existing account</h3></em>
+<% end %>
+<div class="container well">
+<%= form_for(resource, :as => resource_name, :url => "/social_registrations/social_sign_in") do |f| %> 
+    <% if @errors and @errors.length > 0 %>
+        <div class="alert">
+            <div id="error_explanation">
+                <h2><%= @errors.length %> errors prohibited this gamer from being saved:</h2>
+                <ul>
+                    <% @errors.each do |error| %>
+                    <li><%= error %></li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    <% end %>
+
+    <div class="container">
+
+        <div><%= f.label t(:email), :class => "control-label" %>
+        <%= f.email_field :email, :style => "margin-left: 10px;", :value => @email  %></div></br>
+
+        <div><%= f.label t(:username), :class => "control-label" %>
+        <%= f.text_field :username, :style => "margin-left: 10px;", :value => @username  %></div></br>
+
+        <div><%= f.label t(:gender), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+            <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']], {:selected => @gender}),{}, :style => "margin-left: 10px;" ) %></div></br>  
+        <% else %>
+            <%= f.select(:gender,options_for_select(['male','female'],{:selected => @gender}),{}, :style => "margin-left: 10px;") %></div></br> 
+        <% end %> 
+
+        <span style="color:red;"><b><i>*Please fill the rest of the fields</i></b></span><br><br>
+
+        <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+        <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+            :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div></br> 
+
+        <div><%= f.label t(:country), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+                <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
+                    ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
+                    ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
+                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['اخري','others']]), {},
+                {:style => "margin-left: 10px;" }) %>
+            </div></br>
+        <% else %>
+            <span style="margin-left: 10px;">
+                <%= f.country_select :country, [ "Egypt", "Lebanon", "Jordan" ]%>
+            </span></div></br>
+        <% end %>
+
+
+        <div><%= f.label t(:education_level), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            ['خريج','Graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div>
+        <% else %>
+            <%= f.select(:education_level, options_for_select(['','School','University','Graduate']), {}, { :style => "margin-left: 10px;" }) %></br></div>
+        <% end %>
+
+        <%= f.hidden_field :gid, :value => @gid %>
+
+        <%= f.hidden_field :provider, :value => @provider %>
+
+        <%= f.hidden_field :token, :value => @token %>
+
+        <%= f.hidden_field :token_secret, :value => @token_secret %>
+
+        <%= f.hidden_field :social_email, :value => @email %>
+
+        <% if I18n.locale == :ar %>
+            <div><%= f.submit "سجل الحساب", :class => "btn btn-success" %></div>
+        <% else %>
+            <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
+        <% end %>
+
+    </div>
+        
+
+    </div>
+
+    <% end %>

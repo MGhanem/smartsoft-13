@@ -82,9 +82,68 @@ class AuthenticationsController < ApplicationController
 	  redirect_to root_url
 	end
 
-    def facebook_callback
-        auth = request.env["omniauth.auth"]
-        if 
+  def facebook_callback
+    hash = request.env["omniauth.auth"]
+    if hash
+      email = hash["info"]["email"]
+      username = hash["info"]["nickname"]
+      gender = hash["extra"]["raw_info"]["gender"]
+      provider = hash["provider"]
+      gid = hash["uid"]
+      token = hash["credentials"]["token"]
+      auth = Authentication.find_by_provider_and_gid(provider, gid)
+      if !gamer_signed_in?
+        if auth
+          flash[:success] = "Signed in successfully via facebook"
+          sign_in_and_redirect(:gamer, auth.gamer)
+        else
+          gamer = Gamer.find_by_email(email)
+          if gamer
+            # do not forget to change the function back when mirna changes her function
+            Authentication.create_with_omniauth_amr(gamer.id,
+              provider, gid, email, token, nil)
+            flash[:success] = "Signed in successfully via facebook"
+            sign_in_and_redirect(:gamer, gamer)
+          else
+            session["devise.token"] = token
+            session["devise.gid"] = gid
+            session["devise.token_secret"] = nil
+            redirect_to controller: "social_registrations",
+            action: "new_social", email: email, username: username,
+            gender: gender, provider: provider
+          end
+        end
+      else
+        if !auth
+          # do not forget to change the function back when mirna changes her function
+          Authentication.create_with_omniauth_amr(current_gamer.id,
+            provider, gid, email, token, nil)
+          redirect_to "/gamers/edit",
+          flash: {success: "Your account is now connected to Facebook"}
+        else
+          redirect_to "/", flash: {notice: "You're signed in and your
+            account is already connected to facebook"}
+        end
+      end
+    else
+      redirect_to "/", flash: {error: "Oops an error 
+        has occured while communicating with Facebook. Please try again"}
     end
+  end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description
+  #   Function called by facebook when an error occurs
+  # Params:
+  #   none
+  # Sucsess:
+  #   Redirected to home page and error message is displayed
+  # Failure:
+  #   None
+  def facebook_failure
+    redirect_to "/", flash: {error: "Oops an error 
+      has occured while communicating with Facebook. Please try again"}
+  end
 
 end

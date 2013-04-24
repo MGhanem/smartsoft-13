@@ -28,7 +28,9 @@ Arability::Application.routes.draw do
     #devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     devise_for :gamers
     devise_for :gamers do 
-      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+      get '/gamers/sign_out' => 'devise/sessions#destroy'
+      match "/social_registrations/new_social" => "social_registrations#new_social"
+      post "/social_registrations/social_sign_in"
     end
 
     match '/game' => 'games#game'
@@ -58,6 +60,7 @@ Arability::Application.routes.draw do
     get "authentications/twitter_hall_of_fame"
     match "/post_score"=>'games#post', :as => "post_facebook"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
+    match "auth/facebook/failure" => "authentications#facebook_failure"
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"

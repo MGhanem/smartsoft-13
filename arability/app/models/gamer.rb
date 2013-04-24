@@ -34,7 +34,7 @@ class Gamer < ActiveRecord::Base
     :before_or_equal_to => 10.years.ago }
 
   
- # Description:
+  # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
   # Author:
   #   Adam Ghanem
@@ -200,60 +200,67 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
-# author:
-#     Salma Farag
-# description:
-#     A  method that returns a gamer with an email equal to the email signed in on Google from
-#the access token.
-# params:
-#     The access token granted from Google and a signed in resources that is equal to nil.
-# success:
-#     Returns the gamer with the matching email.
-# failure:
-#     Creates a new gamer using the email and password
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    gamer = Gamer.where(:email => data["email"]).first
-
-    unless gamer
-         gamer = Gamer.create(
-              email: data["email"],
-              password: Devise.friendly_token[0,20]
-             )
-    end
-    gamer
-end
-
   class << self
-
-  # Author:
-  #  Mirna Yacout
-  # Description:
-  #  This method is to retrieve the list of common arability friends and Facebook friends
-  # Parameters:
-  #  current_gamer: the record in Gamer table for the current user
-  # Success:
-  #  returns the list of common followers
-  # Failure:
-  #  returns nil if no gamer token is found
-  def get_common_facebook_friends(current_gamer)
-    if (current_gamer.token.nil?)
-      return nil
-    end
-    @graph = Koala::Facebook::API.new(current_gamer.get_token)
-    friends = @graph.get_connections("me", "friends")
-    common = Array.new
-    i = 0
-    while i<friends.count
-      if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
-        common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
-        common.push(current_gamer.id)
+    # Author:
+    #  Mirna Yacout
+    # Description:
+    #  This method is to retrieve the list of common arability friends and Facebook friends
+    # Parameters:
+    #  current_gamer: the record in Gamer table for the current user
+    # Success:
+    #  returns the list of common followers
+    # Failure:
+    #  returns nil if no gamer token is found
+    def get_common_facebook_friends(current_gamer)
+      if (current_gamer.token.nil?)
+        return nil
       end
-      i = i + 1
-      return common
+      @graph = Koala::Facebook::API.new(current_gamer.get_token)
+      friends = @graph.get_connections("me", "friends")
+      common = Array.new
+      i = 0
+      while i<friends.count
+        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
+          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+          common.push(current_gamer.id)
+        end
+        i = i + 1
+        return common
+      end
     end
   end
-end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Creates a new gamer without the need of an input password
+  # Params:
+  #   email: user email
+  #   username: user username
+  #   gender: user gender
+  #   d_o_b: user date of birth
+  #   country: user country
+  #   ed_level: user educational level
+  # Sucess:
+  #   New gamer is created with said attributes, returns the gamer and true
+  # Failure:
+  #   Gamer not saved because of validations, returns nil and false
+  def self.create_with_social_account(
+    email, username, gender, d_o_b, country, ed_level)
+    gamer = Gamer.new(
+      email: email,
+      username: username,
+      password: Devise.friendly_token[0,20],
+      gender: gender,
+      date_of_birth: d_o_b,
+      country: country,
+      education_level: ed_level)
+    if gamer.save
+      return gamer, true
+    else
+      return gamer, false
+    end
+  end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
