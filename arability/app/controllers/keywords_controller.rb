@@ -17,12 +17,17 @@ class KeywordsController < BackendController
   #   failure: refreshes the page with error displayed
   def create
     redirect_url = params[:redirect]
+    categories = params[:categories_entered]
+
+    categories = Category.sanitize(categories)
+    categories = categories.map { |name| Category.get_category_by_name(name) }
+
     if redirect_url.blank?
       redirect_url = search_path
     end
     name = params[:keyword][:name]
     is_english = params[:keyword][:is_english]
-    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english)
+    success, @keyword = Keyword.add_keyword_to_database(name, false, is_english, categories)
     if success
       flash = { :success => t(:keyword_added, keyword: @keyword.name) }
       redirect_to redirect_url, :flash => flash

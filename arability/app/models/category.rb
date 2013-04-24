@@ -27,7 +27,7 @@ class Category < ActiveRecord::Base
   #   the first return is true and the second is the saved category
   # failure:
   #   the first return is false and the second is the unsaved category
-  def self.add_category_to_database_if_not_exists(english_name, arabic_name)
+  def self.add_category(english_name, arabic_name)
     english_name.strip!
     arabic_name.strip!
 

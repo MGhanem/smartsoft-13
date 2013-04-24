@@ -52,12 +52,13 @@ class Keyword < ActiveRecord::Base
       .where(synonyms: { approved: true }) - synonym_list
     synonym_list = synonym_list + synonyms_with_no_votes
     return synonym_list, votes_count
-  end  
+  end
 
   class << self
     require "string_helper"
     include StringHelper
   end
+
   # Author:
   #   Mohamed Ashraf
   # Description:
@@ -73,16 +74,16 @@ class Keyword < ActiveRecord::Base
   #   the first return is false and the second is the unsaved keyword
   def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
     name.strip!
+    name.downcase!
+    name = name.split(" ").join(" ")
+
     keyword = where(name: name).first_or_create
     keyword.approved = approved
-    name.downcase! if is_english_string(name)
     keyword.is_english = is_english != nil ? is_english : is_english_string(name)
 
     if keyword.save
-      categories.each do |category_name|
-        success, category =
-          Category.add_category_to_database_if_not_exists(category_name)
-        category.keywords << keyword if success
+      categories.each do |category|
+        category.keywords << keyword
       end
       return true, keyword
     else
@@ -103,6 +104,7 @@ class Keyword < ActiveRecord::Base
   def self.find_by_name(name)
     name.strip!
     name.downcase!
+    name = name.split(" ").join(" ")
     keyword = Keyword.where(name: name).first
     return keyword
   end
@@ -241,19 +243,6 @@ class Keyword < ActiveRecord::Base
     #   on failure: Empty array
     def words_with_unapproved_synonyms
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
-    end
-
-
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
     end
 
   # author:
