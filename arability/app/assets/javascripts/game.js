@@ -32,18 +32,44 @@ var firstClick = true;
 
 $(function(){
 	$('.eng-btn').popover();
+	setTimeout(function(){
+		$('#exposedEngBtnDiv').expose();
+		$('#exposeMask').css('background-color', 'black');
+	}, 500);
 	setTimeout(function(){ $('.eng-btn').popover('show');}, 500);
-	setTimeout(function(){ $('.popover').expose();}, 500);
-	// $('.ar-btn').popover();
-	// setTimeout(function(){ $('.ar-btn').popover('show');}, 2000);
-	// $('.both-btn').popover();
-	// setTimeout(function(){ $('.both-btn').popover('show');}, 2500);
 });
+
+function arBtnPopOver(){
+	$('.ar-btn').popover();
+	setTimeout(function(){
+		$('#exposedArBtnDiv').expose();
+		$('#exposeMask').css('background-color', 'black');
+	}, 500);
+	setTimeout(function(){ $('.ar-btn').popover('show');}, 500);
+}
+
+function bothBtnPopOver(){
+	$('.both-btn').popover();
+	setTimeout(function(){
+		$('#exposedBothBtnDiv').expose();
+		$('#exposeMask').css('background-color', 'black');
+	}, 500);
+	setTimeout(function(){ $('.both-btn').popover('show');}, 500);
+}
 
 function destroy(id){
 	id = id.replace('-po', '');
 	$('#' + id).popover('destroy');
 	$.mask.close();
+	if(id == "eng-btn"){
+		arBtnPopOver();
+	}
+	else if(id == "ar-btn"){
+		bothBtnPopOver();
+	}
+	else{
+		return;
+	}
 }
 
 function wordsListToolTip(){
