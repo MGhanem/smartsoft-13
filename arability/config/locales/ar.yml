@@ -37,7 +37,7 @@ ar:
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
-  formality: "النوع"
+  formality: "اللغة"
   formal: "فصحى"
   slang: "عامية"
   age: "الفئة العمرية"
@@ -149,8 +149,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:

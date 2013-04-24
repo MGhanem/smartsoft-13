@@ -75,7 +75,7 @@ class ProjectsController < BackendController
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
-            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
+            :flash => {:success => I18n.t('views.project.flash_messages.project_was_successfully_created') }}
           format.json { render json: @project, status: :created, location: @project }
           @project.save
         else
@@ -169,9 +169,9 @@ class ProjectsController < BackendController
       @project = Project.find(params[:id])
       @project = Project.createcategories(@project, params[:project][:category])
       if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
-        :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
+        :authenticity_token, :commit, :action, :controller, :locale, :id))
         redirect_to :action => "index"
-        flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
+        flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
       else
         render :action => 'edit'
       end
