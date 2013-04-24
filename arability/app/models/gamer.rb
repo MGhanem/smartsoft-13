@@ -373,7 +373,7 @@ end
   #   returns the count of votes by this gamer
   #   and a list of lists of given keywords and corresponding chosen synonym
   # Failure: 
-  #   returns 0 and empty list
+  #   returns 0 and empty list if gamer has no votes
   def get_votes
     voted_synonyms = Vote.where("gamer_id=?", self.id).select("synonym_id")
     count = voted_synonyms.count
