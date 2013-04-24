@@ -82,6 +82,7 @@ en:
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
   not_in_range: "is not in range"
+  exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
   views:
     project:
        flash_messages:

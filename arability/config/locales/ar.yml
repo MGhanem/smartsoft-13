@@ -117,6 +117,7 @@ ar:
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
