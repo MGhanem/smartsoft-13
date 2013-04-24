@@ -105,7 +105,7 @@ class ProjectsController < BackendController
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
     if developer_signed_in?
-      if developer.my_subscription.get_projects
+      if current_developer.my_subscription.get_projects
         @project = Project.new
         respond_to do |format|
           format.html
