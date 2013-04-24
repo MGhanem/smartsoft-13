@@ -1,8 +1,8 @@
 #encoding: UTF-8
 class Category < ActiveRecord::Base
   attr_accessible :english_name, :arabic_name
-  has_and_belongs_to_many :keywords
-  has_and_belongs_to_many :projects
+  has_and_belongs_to_many :keywords, uniq: true
+  has_and_belongs_to_many :projects, uniq: true
 
   validates_uniqueness_of :english_name
   validates_presence_of :english_name
@@ -54,6 +54,27 @@ class Category < ActiveRecord::Base
   #   --
   def get_name_by_locale
     I18n.locale == :en ? english_name : arabic_name
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   split a comma separated list of strings and removes strings that donot
+  #   pass validations
+  # params:
+  #   string: The string you want split
+  # success:
+  #   returns a list of strings that pass validations
+  # failure:
+  #   --
+  def self.split_and_sanitize(string)
+    strings = string.split!(",")
+    strings.map! { |s| s.strip }
+    strings.map! { |s| s.split(" ").join(" ") }
+    strings.map! { |s| s.downcase }
+    strings.reject! { |s| s.blank? }
+    strings.reject! { |s| s.match /[^a-zA-Z \u0621-\u0652]/ }
+    strings.uniq!
   end
 
 end

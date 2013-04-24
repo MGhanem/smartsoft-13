@@ -2,8 +2,8 @@
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id
-  has_many :votes
-  has_many :gamers, :through => :vote
+  has_many :votes, uniq: true
+  has_many :gamers, :through => :vote, uniq: true
 
   def self.find_loacle
     if I18n.locale == :ar 

@@ -1,11 +1,11 @@
 #encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
-  has_and_belongs_to_many :developers
+  has_and_belongs_to_many :developers, uniq: true
   attr_accessible :approved, :is_english, :name
-  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :categories, uniq: true
   validates_presence_of :name 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
+  validates_format_of :name, with: /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
 
   # Author: 
@@ -128,7 +128,7 @@ class Keyword < ActiveRecord::Base
     end
     return false
   end
-  
+
   class << self
 
   end
@@ -212,7 +212,7 @@ class Keyword < ActiveRecord::Base
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
-    	relevant_first_list
+    	relevant_first_list.uniq!
     end
 
   class << self
