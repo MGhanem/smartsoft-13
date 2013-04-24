@@ -122,7 +122,7 @@ class AdminController < ApplicationController
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        redirect_to "/admin/add/word", fargs: params
+        render "add-word"
       end
     else
       render "add-word"
@@ -164,9 +164,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to "/admin/add/trophy"
+        redirect_to "/admin/list/trophies"
       else
-        redirect_to "/admin/add/trophy", fargs: {addtrophy: params}
+        render "add-trophy"
       end
     else
       render "add-trophy"
@@ -208,9 +208,9 @@ class AdminController < ApplicationController
       end
       flash.keep
       if success
-        redirect_to "/admin/add/prize"
+        redirect_to "/admin/list/prizes"
       else
-        redirect_to "/admin/add/prize", fargs: {addprize: params}
+        render "add-prize"
       end
     else
       render "add-prize"
@@ -296,13 +296,12 @@ class AdminController < ApplicationController
   #   none
   def upload
     if request.post?
-      array_of_arrays, message = parseCSV(params[:csvfile])
-      if message == 0
+      array_of_arrays, @message = parseCSV(params[:csvfile])
+      if @message == 0
         uploadCSV(array_of_arrays)
       end
-      redirect_to "/admin/import/csvfile", message: message
+      render "import-csv-file"
     else
-      @message = params[:message]
       render "import-csv-file"
     end
   end
