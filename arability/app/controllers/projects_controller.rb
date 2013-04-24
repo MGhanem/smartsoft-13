@@ -148,7 +148,6 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
-      # @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end

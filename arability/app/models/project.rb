@@ -45,8 +45,7 @@ def self.createcategories(project,cat_id)
     catArray = []
     catArray.push(cat_id)
     catArray.each do |m|
-      cat = Category.find(cat_id)
-      project.category = cat
+      project.category = Category.find(cat_id)
     end
     project.save
   end
