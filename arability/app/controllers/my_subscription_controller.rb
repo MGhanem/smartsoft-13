@@ -121,7 +121,7 @@ class MySubscriptionController < ApplicationController
     sub_id = params[:my_subscription]
     dev_id = @developer.id
     if MySubscription.choose(dev_id, sub_id)
-      flash[:success] = I18n.t('controller.subscription.messages_errors.you_have_successfully_chosen_your_model')
+      flash[:success] = t(:sub_changed) 
       redirect_to '/gamers/edit'
     else
       flash[:notice] = I18n.t('controller.subscription.messages_errors.please_choose')
