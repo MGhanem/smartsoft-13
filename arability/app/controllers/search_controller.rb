@@ -41,6 +41,28 @@ class SearchController < BackendController
     @categories = categories_array
   end
 
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   submits a report to each of the words chosen in the report form by the
+  #   current user
+  # params:
+  #   reported_words: an array of keywords/synonyms to be reported
+  # success:
+  #   returns submits a report with the chosen keywords/synonyms
+  # failure:
+  #   --
+  def send_report
+    reported_words = params["reported_words"]
+    reported_words = reported_words.to_a
+    reported_words.each do |word|
+      word = word.split(" ")
+      word_model = Keyword.find(word[0].to_i) if word[1] == "Keyword"
+      word_model = Synonym.find(word[0].to_i) if word[1] == "Synonym"
+      @success, _ = Report.create_report(current_gamer, word_model)
+    end
+  end
+
 	#Description:
   #   search for synonyms for a particular keyword
   # Author:
