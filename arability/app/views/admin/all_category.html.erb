@@ -13,12 +13,12 @@
     <th>إسم الفئة بالعربية</th>
     <th>مسح</th>
   </tr>
-  <% @categories.each do |cat| %>
+  <% @categories.each do |category| %>
     <tr>
-    	<th><%= cat.id %></th>
-    	<th><%= cat.english_name %></th>
-    	<th><%= cat.arabic_name %></th>
-    	<th><a class="btn btn-mini" href="/admin/delete_category/?cid=<%= cat.id %>"><i class="icon-trash"></i></a></th>
+    	<th><%= category.id %></th>
+    	<th><%= category.english_name %></th>
+    	<th><%= category.arabic_name %></th>
+    	<th><a class="btn btn-mini" href="/admin/delete_category/?category_id=<%= category.id %>"><i class="icon-trash"></i></a></th>
   </tr>
 <% end %>
 

@@ -261,10 +261,24 @@ class AdminController < ApplicationController
                 message: message
   end
 
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could add a new category by giving the new category an
+  #   arabic and english name of the category
+  # Parameters:
+  #   english_name: the category's english name
+  #   arabic_name: the category's arabic name
+  # Success:
+  #   Category is added to database, and a flash is viewed indicating succes of
+  #   add
+  # Failure: 
+  #   Category is not saved due to any error in input data, and a flash is
+  #   viewed indicating the error
   def add_category
     if request.post?
-      english_name = params[:name2]
-      arabic_name = params[:name1]
+      english_name = params[:english_name]
+      arabic_name = params[:arabic_name]
       success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
       if success
         flash[:success] = "لقد تم ادخال كلمة #{@category.english_name}
@@ -281,14 +295,36 @@ class AdminController < ApplicationController
     end
   end
 
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could view all categories in database
+  # Parameters:
+  #   None
+  # Success:
+  #   All categories in database are viewed
+  # Failure: 
+  #   No categories are in database, so nothing is viewed
   def all_category
     @categories = Category.all
   end
 
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could delete any category from database by choosing it from
+  #   the view table and clicking the trash icon
+  # Parameters:
+  #   category_id: id of category to be deleted
+  # Success:
+  #   Category is deleted from database and categpries view appears without the
+  #   deleted category, and a flash appears indicating the success of deletion
+  # Failure: 
+  #   None
   def delete_category
-    cid = params[:cid]
-    cat = Category.find(cid)
-    cat.delete
+    category_id = params[:category_id]
+    category = Category.find(category_id)
+    category.delete
     flash[:success] = "لقد تم مسح الفئة بنجاح"
     flash.keep
     redirect_to action: 'all_category'
