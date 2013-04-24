@@ -1,9 +1,5 @@
 
-<% if I18n.locale==:en %>
-<h2>Register as developer Step2: choose your subscription model</h2>
-<% else I18n.locale==:ar %>
-<h2>تسجيل الدخول المطور: المرحلة رقم 2 ، إختر نموذج الاشتراك</h2>
-<% end %>
+<h2><%= t(:choose_subscription_model) %></h2>
 
 <%= form_for(:my_subscription, :url => { :controller => "my_subscription",:action => "pick" }) do |f| %>
 <div style = "width:1000px; margin: 0 auto;">
