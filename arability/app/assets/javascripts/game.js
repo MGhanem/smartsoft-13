@@ -33,6 +33,7 @@ var firstClick = true;
 $(function(){
 	$('.eng-btn').popover();
 	setTimeout(function(){ $('.eng-btn').popover('show');}, 1500);
+	setTimeout(function(){ $('.popover').expose();}, 1550);
 	$('.ar-btn').popover();
 	setTimeout(function(){ $('.ar-btn').popover('show');}, 2000);
 	$('.both-btn').popover();
@@ -42,6 +43,7 @@ $(function(){
 function destroy(id){
 	id = id.replace('-po', '');
 	$('#' + id).popover('destroy');
+	$.mask.close();
 }
 
 function wordsListToolTip(){
