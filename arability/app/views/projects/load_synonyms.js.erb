@@ -1,0 +1,23 @@
+var synonym_names = [];
+var synonym_ids = [];
+
+<% @keyword_synonyms.each do |synonym| %>
+	synonym_names.push("<%= synonym.name %>");
+	synonym_ids.push("<%= synonym.id %>");
+<% end %>
+update_synonym_list(synonym_names, synonym_ids);
+
+function update_synonym_list(synonym_names, synonym_ids){
+	if(synonym_names.length == 0){
+		document.getElementById("selected_synonym").disabled=true;
+	}
+	else {
+		$("#selected_synonym").html("");
+		document.getElementById("selected_synonym").disabled=false;
+		for(var i = 0; i < synonym_names.length; i++){
+			$("#selected_synonym").append("<option value='"+ parseInt(synonym_ids[i]) +
+				"'>"+ synonym_names[i]+"</option>");
+		}
+		$("#selected_synonym option:first").attr('selected','selected');
+    }
+}
