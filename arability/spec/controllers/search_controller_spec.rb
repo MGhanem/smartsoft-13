@@ -27,6 +27,22 @@ describe SearchController do
       keyword
     end
 
+    let(:s) do
+      s = Synonym.new
+      s.name = "click"
+      s.approved = true
+      s.save validate: false
+      s
+    end
+
+    let(:s2) do
+      s = Synonym.new
+      s.name = "click"
+      s.approved = true
+      s.save validate: false
+      s
+    end
+
     let(:gamer) do
       gamer = Gamer.new
       gamer.username = "Nourhan"
@@ -64,22 +80,29 @@ describe SearchController do
       assigns(:similar_keywords).should =~ [k, k2]
     end
 
-    it "should return json containing report successfully sent" do
+    it "should send report on a keyword successfully" do
       d = create_logged_in_developer
       sign_in(d.gamer)
       k
-      get :send_report, gamer: d.gamer, keyword: k
-      json_response = JSON(response.body)
-      json_response.first.should eq(true)
+      get :send_report, reported_words: ["#{k.id} Keyword"]
+      assigns(:success).should be(true)
     end
 
-    it "should return json containing report failed to be saved" do
+    it "should send report on a synonym successfully" do
       d = create_logged_in_developer
       sign_in(d.gamer)
-      k
-      get :send_report, gamer: d.gamer, keyword: nil
-      json_response = JSON(response.body)
-      json_response.first.should eq(false)
+      s
+      get :send_report, reported_words: ["#{s.id} Synonym"]
+      assigns(:success).should be(true)
+    end
+
+    it "should send report on both keywords and synonyms successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      s2
+      k2
+      get :send_report, reported_words: ["#{s2.id} Synonym", "#{k2.id} Keyword"]
+      assigns(:success).should eq(true)
     end
   end
 end
