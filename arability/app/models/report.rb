@@ -4,7 +4,7 @@ class Report < ActiveRecord::Base
   belongs_to :gamer
   validates_presence_of :gamer
   validates_presence_of :reported_word
-  validates :gamer_id, uniqueness: { scope: :reported_word_id,
+  validates :gamer_id, uniqueness: { scope: [:reported_word_id, :reported_word_type] ,
     message: "You reported this word before" }
 
   # Author:
