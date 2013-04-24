@@ -10,15 +10,45 @@ class AdminController < ApplicationController
   before_filter :authenticate_gamer!
   before_filter :authenticate_admin!
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action display the admin dashboard
+  # params
+  #    none
+  # success: 
+  #     refreshes the page and displays the dashboard
+  # failure: 
+  #     none
   def index
     render "dashboard"
   end
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action lists the trophies and links to remove trophies
+  # params
+  #    none
+  # success: 
+  #     refreshes the page and displays trophies
+  # failure: 
+  #     none
   def list_trophies
     @trophies_list = Trophy.all
     render "list-trophies"
   end
 
+  # author:
+  #     Karim ElNaggar
+  # description:
+  #     this action lists the prizes and links to remove trophies
+  # params
+  #    none
+  # success: 
+  #     refreshes the page and displays prizes
+  # failure: 
+  #     none
   def list_prizes
     @prizes_list = Prize.all
     render "list-prizes"
@@ -38,7 +68,6 @@ class AdminController < ApplicationController
     if request.post?
       name = params[:keyword][:name]
       is_english = params[:keyword][:is_english]
-      @fargs = {keyword: params}
       success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
       if success
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
@@ -49,9 +78,10 @@ class AdminController < ApplicationController
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        redirect_to "/admin/add/word", fargs: @fargs
+        redirect_to "/admin/add/word", fargs: params
       end
     else
+      @fargs = params[:fargs]
       render "add-word"
     end
   end
@@ -66,9 +96,9 @@ class AdminController < ApplicationController
   #     level: the level required to earn the trophy
   #     score: the score required to earn the trophy
   #     image: the photo thumbnail which would be displayed
-  # success: 
+  # success:
   #     refreshes the page and displays notification
-  # failure: 
+  # failure:
   #     refreshes the page with error displayed
   def add_trophy
     if request.post?
