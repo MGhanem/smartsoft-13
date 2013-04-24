@@ -29,28 +29,28 @@ describe AuthenticationsController do
 	before do
 		request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] 
 	end
-	it "should redirect to edit settings page" do
+	it "should redirect to edit settings page if connecting to Twitter" do
 		login_gamer(current_gamer)
 		get :twitter_callback
 		response.should redirect_to "/gamers/edit"
 	end
-	it "should remove twitter connection" do
+	it "should remove twitter connection and redirect back to edit settings page" do
 		login_gamer(current_gamer)
 		get :remove_twitter_connection
 		response.should redirect_to "/gamers/edit"
 	end
-	it "should redirect to home page" do
+	it "should redirect to home page upon failing to authorize the user" do
 		login_gamer(current_gamer)
 		get :twitter_failure
 		response.should redirect_to root_url
 	end
-	it "should check if gamer exists in database through an authentication connection" do
+	it "should sign in a gamer through his Twitter connection if available and redirect to home page" do
 		authentication
 		get :twitter_callback
-		expect(response.code).to eq("302")
+		response.should redirect_to root_url
 	end
-	it "should redirect to sign_up page if no authentication found" do
+	it "should redirect to sign up page if no authentication found" do
 		get :twitter_callback
-		response.should render root_url
+		expect(response).to render_template("twitter_signin")
 	end
 end
