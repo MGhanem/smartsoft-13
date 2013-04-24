@@ -15,10 +15,10 @@ class Project < ActiveRecord::Base
 # Author:
 #   Salma Farag
 # Description:
-#   Takes the params of the project entered by the developer, creates a project then calls
-#   the method createcategories and returns a  project.
+#   Takes the params of the project entered by the developer, sets the developer_id to the current
+#   one then creates a project then calls the method createcategories and returns a  project.
 # Params:
-#   Parameters of a project.
+#   Parameters of a project and the current developer is.
 # Success:
 #   Creates and returns a project after calling method createcategories.
 # Failure:

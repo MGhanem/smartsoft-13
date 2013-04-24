@@ -155,8 +155,9 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   A method that checks if the fields of the form editting the project have been changed.
+  #   A method that checks if the fields of the form editing the project have been changed.
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
+  #   Then calls method createcategories that changes the category.
   # Params:
   #   None
   # Success:
