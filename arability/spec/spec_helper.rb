@@ -18,6 +18,11 @@ RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+  OmniAuth.config.test_mode = true 
+  OmniAuth.config.add_mock(:twitter, { 
+    :user_info => {:name => "Joe Smith", :nickname => 'joesmith'}, :uid => '123456790',
+    :credentials => {:token => "testtoken234tsdf", :secret => "tokensecrettest"}
+    })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
