@@ -46,10 +46,15 @@ class SearchController < BackendController
 	#	params:
 	#		search: a string representing the search keyword, from the params list
 	#     from a textbox in the search_keywords view
+  #   country: a string representing country filter, maybe nil
+  #   age_from: a string representing age lower bound filter, maybe nil
+  #   age_to: a string representing age upper bound filter, maybe nil
+  #   education: a string representing education level filter, maybe nil
+  #   gender: a string representing gender filter, maybe nil
 	#	returns:
 	#		success: 
 	#			returns to the search view a list of synonyms for the keyword
-	#     sorted by relevance
+	#     sorted by vote count (according to optional filters)
 	#		failure:
 	#			returns an empty list if the search keyword has no synonyms
   def search
