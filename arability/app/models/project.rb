@@ -23,14 +23,15 @@ class Project < ActiveRecord::Base
 #   Creates and returns a project after calling method createcategories.
 # Failure:
 #   None
-def self.createproject(params)
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:developer,:category))
+  project.owner_id = developer_id
   project = createcategories(project,params[:category])
   return project
 end
 
 # Author:
-#    Salma Farag
+#   Salma Farag
 # Description:
 #   A method that takes a category in the form of a string and saves it in an array
 #   then finds the category with the id equal to the given id.

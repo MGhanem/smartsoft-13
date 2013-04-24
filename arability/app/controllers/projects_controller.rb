@@ -71,8 +71,7 @@ class ProjectsController < BackendController
   def create
     if developer_signed_in?
       @project = Project.new(params[:project].except(:category))
-      @project.owner_id = current_developer.id
-      @project = Project.createproject(params[:project])
+      @project = Project.createproject(params[:project],current_developer.id)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
