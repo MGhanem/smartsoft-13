@@ -2,7 +2,7 @@
   <a>
     <%= t(:projects_index_title)%>
   </a>
-</legend> 
+</legend>
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
@@ -25,25 +25,17 @@
               <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
               <br />
               <strong><%= t(:projects_index_categories)%></strong>
-              <% size = project1.categories.length %>
-              <% if size == 0 %>
+              <% if project1.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-              <% counter = 1 %>
-              <% project1.categories.each do |c| %>
-                <% if counter < size %>
-                  <%= c.name %>,
-                  <% counter = counter + 1 %>
-                <% else %>
-                  <%= c.name %>
-                <% end %>
+                  <%= project1.category.get_name_by_locale %>,
               <% end %>
-              <% end %>
+
               <br />
               <strong><%= t(:projects_index_description)%></strong>
-              <% if project1.description.size == 0 %>
+              <% if project1.description!= nil %>
               <%= t(:no_description) %>
-              <% else %>  
+              <% else %>
               <%= project1.description %>
               <% end %>
   <br />
@@ -62,25 +54,18 @@
                   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
-                  <% size = project2.categories.length %>
-                  <% if size == 0 %>
+                  <strong><%= t(:projects_index_categories)%></strong>
+              <% if project2.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-                  <% counter = 1 %>
-                  <% project2.categories.each do |c| %>
-                    <% if counter < size %>
-                      <%= c.name %>,
-                      <% counter = counter + 1 %>
-                    <% else %>
-                      <%= c.name %>
-                    <% end %>
-                  <% end %>
-                  <% end %>
-                  <br />
+                  <%= project2.category.get_name_by_locale %>,
+              <% end %>
+
+              <br />
                   <strong><%= t(:projects_index_description)%></strong>
                   <% if project2.description.size == 0 %>
               <%= t(:no_description) %>
-              <% else %>  
+              <% else %>
               <%= project2.description %>
               <% end %>
   <br />
@@ -116,21 +101,7 @@
       <div class="well well-small" style="padding-bottom: 20px;">
         <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
         <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project1.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project1.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
+
   <br />
   <strong><%= t(:projects_index_description)%></strong>
   <% if project1.description.size == 0 %>
@@ -158,21 +129,7 @@
       <div class="well well-small" style="padding-bottom: 20px;">
   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
   <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project2.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project2.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
+  
   <br />
   <strong><%= t(:projects_index_description)%></strong>
   <% if project2.description.size == 0 %>

@@ -66,7 +66,7 @@ en:
   to: "To"
   desc: "Description"
   new_project: "New Project"
-  back: "Back"
+  back: "<< Back"
   edit_project: "Edit Project"
   create_project: "Create Project"
   save_project: "Save Project"
@@ -82,6 +82,7 @@ en:
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
   not_in_range: "is not in range"
+  exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
   views:
     project:
        flash_messages:
@@ -189,17 +190,7 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
-
-  activerecord:
-    attributes:
-      project:
-        name: 'Name'
-        minAge: 'The minimum age'
-        maxAge: 'The maximum age'
-        categories: "Categories"
-        description: "Description"
   log_in_google: "Sign In with Google"
-
   no_categories: "This project has no categories"
   no_description: "This project has no description"
   register_developer: "Please register as a developer first"
@@ -253,7 +244,7 @@ en:
   restart_game: "Restart Game"
   back_to_game: "Back"
   to_voting: "To Voting Page"
-  restart_game: "Restart Game" 
+  restart_game: "Restart Game"
   country: "Country:"
   age_from: "Age from:"
   age_to: "to:"
@@ -291,4 +282,11 @@ en:
   back_to_game: "Back"
   project_removed: "Project removed"  
   keyword_added: "keyword added successfully"
-
+  activerecord:
+    attributes:
+      project:
+        name: "Name"
+        minAge: "The minimum age"
+        maxAge: "The maximum age"
+        categories: "Categories"
+        description: "Description"

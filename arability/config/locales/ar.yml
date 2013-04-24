@@ -38,15 +38,15 @@ ar:
   category: "الفئة"
   categories: "الفئات"
   formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< عودة"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -117,6 +117,7 @@ ar:
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -138,14 +139,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -298,4 +291,11 @@ ar:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
   project_removed: "تم مسح المشروع المشترك"            
-
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
