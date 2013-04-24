@@ -12,3 +12,6 @@ In order to use the app you need to first run:
     rake db:migrate
     rake db:populate
     rails s
+
+The command for converting the => to the : code convention in vim is
+    %s/:\([a-z_]\+\) =>/\1:/g

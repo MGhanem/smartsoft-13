@@ -1,12 +1,59 @@
-<% if I18n.locale == :ar %>
-<em><h3 class="text-info"></h3></em>
-<% else %>
-<em><h3 class="text-info">Enter this data to be able to continue</h3></em>
-<% end %>
+<em><h3 class="text-info"><%=  t(:guest_sign_up_title) %></h3></em>
 <div class="container well">
-<%= form_for(resource, :as => resource_name, :url => guest_signing_up_path) do |f| %>
-    <% if resource.errors.any? %>
-        <div class="alert"><%= devise_error_messages! %></div>
+<%= form_for(resource, :url => guest_signing_up_path) do |f| %>
+    <% if @errors != nil %>
+      <%if @errors.is_a?(Hash)%>
+        <ul>
+          <div class="alert">
+            <% @errors.each do |error| %>
+              <li>
+                <% if error[0] == "date_of_birth" %>
+                  <% if I18n.locale == :en %>
+                    Date of birth
+                  <%else%>
+                    تاريخ الميلاد
+                  <%end%>
+                <% end %>
+                <% if error[0] == "education_level" %>
+                  <% if I18n.locale == :en %>
+                    Education level
+                  <%else%>
+                    المستوي التعليمي
+                  <%end%>
+                <% end %>
+                <% if error[0] == "gender" %>
+                  <% if I18n.locale == :en %>
+                    Gender
+                  <%else%>
+                    النوع
+                  <%end%>
+                <% end %>
+                <% if error[0] == "country" %>
+                  <% if I18n.locale == :en %>
+                    Country
+                  <%else%>
+                    البلد
+                  <%end%>
+                <% end %>
+                <% error.delete_at(0) %>
+                <% error.each do |e|%>
+                  <%e.each do |printable|%>
+                    <%=printable%>
+                  <% end %>
+                <%end%>
+              </li>
+            <%end%>
+          </div>
+        </ul>
+      <%else%>
+        <ul>
+          <div class="alert">
+            <% @errors.each do |error| %>
+              <li><%=error%></li>
+            <%end%>
+          </div>
+        </ul>
+      <%end%>
     <% end %>
 
     <div class="container">

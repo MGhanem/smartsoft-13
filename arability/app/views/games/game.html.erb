@@ -1,5 +1,5 @@
 <script type="text/javascript" charset="utf-8">
-
+  alert("<%= current_or_guest_gamer.id %>");
   var words;
   var cache = "";
   var nav_locked = false;
@@ -226,6 +226,18 @@ function setButtons(){
     $('#loading-server').fadeTo(1000,1);
     $('#loading-server').fadeTo(1000,0);
     $.get("/games/halloffame");
+  }
+
+
+
+  function generateGameOverPopUp(){
+    <% if I18n.locale == :en %>
+    gameOverFontSize = '150px';
+    return "Game Over";
+    <% else I18n.locale == :ar %>
+    gameOverFontSize = '300px';
+    return "النهاية";
+    <% end %>
   }
 
 
