@@ -5,54 +5,54 @@ describe Vote, vote_test: true do
     
   let(:k){
     k = Keyword.new
-    k.name ="trialKeywordA"
-    k.is_english = "true"
-    k.approved = "true"
+    k.name = "trialKeywordA"
+    k.is_english = true
+    k.approved = true
     k.save
     k
   }
 
   let(:kTwo){
     k = Keyword.new
-    k.name ="trialKeywordb"
-    k.is_english = "true"
-    k.approved = "true"
+    k.name = "trialKeywordb"
+    k.is_english = true
+    k.approved = true
     k.save
     k
   }
 
   let(:kThree){
     k = Keyword.new
-    k.name ="trialKeywordC"
-    k.is_english = "true"
-    k.approved = "false"
+    k.name = "trialKeywordC"
+    k.is_english = true
+    k.approved = false
     k.save
     k
   }
 
   let(:kFour){
     k = Keyword.new
-    k.name ="trialKeywordD"
-    k.is_english = "false"
-    k.approved = "true"
+    k.name = "trialKeywordD"
+    k.is_english = false
+    k.approved = true
     k.save
     k
   }
 
   let(:kFive){
     k = Keyword.new
-    k.name ="trialKeywordE"
-    k.is_english = "false"
-    k.approved = "true"
+    k.name = "trialKeywordE"
+    k.is_english = false
+    k.approved = true
     k.save
     k
   }
 
   let(:s){
     s = Synonym.new
-    s.name =  "الثاني"
-    s.keyword_id =  k.id
-    s.approved = "true"
+    s.name = "الثاني"
+    s.keyword_id = k.id
+    s.approved = true
     s.save
     s
 
@@ -60,9 +60,9 @@ describe Vote, vote_test: true do
 
   let(:sTwo){
     s = Synonym.new
-    s.name =  "الثاني"
-    s.keyword_id =  k.id
-    s.approved = "true"
+    s.name = "الثاني"
+    s.keyword_id = k.id
+    s.approved = true
     s.save
     s
 
@@ -70,9 +70,9 @@ describe Vote, vote_test: true do
 
   let(:sThree){
     s = Synonym.new
-    s.name =  "الثالث"
-    s.keyword_id =  k.id
-    s.approved = "true"
+    s.name = "الثالث"
+    s.keyword_id = k.id
+    s.approved = true
     s.save
     s
 
@@ -104,7 +104,6 @@ describe Vote, vote_test: true do
     gTwo
   }
 
-
   let(:v){
     v = Vote.new
     v.synonym_id = s.id
@@ -113,25 +112,24 @@ describe Vote, vote_test: true do
     v
   }
 
-
   before (:each) do
-  k
-  kTwo
-  kThree
-  kFour
-  kFive
-  s
-  sTwo
-  sThree
-  g
-  gTwo
-  v
+    k
+    kTwo
+    kThree
+    kFour
+    kFive
+    s
+    sTwo
+    sThree
+    g
+    gTwo
+    v
   end
 
   describe "record_vote" do
     it "record vote given to a certain synonym it saves it and returns true
-    if this gamer didn't vote for this synonym before otherwise it doesn't 
-    save and return false" do
+      if this gamer didn't vote for this synonym before otherwise it doesn't 
+      save and return false" do
       success, vote_instance = Vote.record_vote(gTwo.id, sTwo.id)
       success.should eq(true)
       checkagain, vote_again = Vote.record_vote(gTwo.id, sTwo.id)
@@ -139,7 +137,7 @@ describe Vote, vote_test: true do
     end
 
     it "doesn't allow gamer to vote for synonym that belongs to Keyword 
-    that he/she voted for one of its synonyms before" do
+      that he/she voted for one of its synonyms before" do
       success, vote_instance = Vote.record_vote(g.id, sTwo.id)
       success.should eq(false)
       success_again, vote_instance_again = Vote.record_vote(g.id, sThree.id)
@@ -150,13 +148,13 @@ describe Vote, vote_test: true do
       success, vote_instance = Vote.record_vote(100000000, sTwo.id)
       success.should eq(false)
       vote_instance.errors.messages.should 
-      eq({:gamer_id=>["this gamer_id doesn't exist"]})
+        eq( {gamer_id: ["this gamer_id doesn't exist"]} )
     end
     it "never record a vote for a non existing synonym" do
       success, vote_instance = Vote.record_vote(g.id, 1000000000)
       success.should eq(false)
       vote_instance.errors.messages.should 
-      eq({:synonym_id=>["this synonym_id doesn't exist"]})
+        eq( {synonym_id: ["this synonym_id doesn't exist"]} )
     end
   end
 
@@ -184,7 +182,7 @@ describe Vote, vote_test: true do
 
   describe "get_unvoted_keywords" do
     it "get list of unvoted approved keywords of the specified size for 
-    certain user" do
+      certain user" do
       keywords_list_gamer_one = Vote.get_unvoted_keywords(g.id, 0, 2)
       keywords_list_gamer_one.should =~ []
       keywords_list_gamer_one_a = Vote.get_unvoted_keywords(g.id, 1, 2)
@@ -198,7 +196,7 @@ describe Vote, vote_test: true do
     end
 
     it "never returns a word this gamer voted on before and never return non 
-    approved keyword" do
+      approved keyword" do
       keywords_list = Vote.get_unvoted_keywords(g.id, 2, 2)
       keywords_list.should_not include(k)
       keywords_list.should include || (kTwo) || (kFour) || (kFive)
@@ -215,14 +213,14 @@ describe Vote, vote_test: true do
 
     it "return the unvoted keywords with the specified language" do
       Vote.record_vote(gTwo.id,s.id)
-      keywords_list_english = Vote.get_unvoted_keywords(gTwo.id,5,0)
+      keywords_list_english = Vote.get_unvoted_keywords(gTwo.id, 5, 0)
       keywords_list_english.should_not include(kFour)
       keywords_list_english.should_not include(kFive)
       keywords_list_english.should_not include(k)
       keywords_list_english.should_not include(kThree)
       keywords_list_english.should include(kTwo)
       keywords_list_english.length.should eq(1)
-      keywords_list_arabic = Vote.get_unvoted_keywords(gTwo.id,5,1)
+      keywords_list_arabic = Vote.get_unvoted_keywords(gTwo.id, 5, 1)
       keywords_list_arabic.should include(kFour)
       keywords_list_arabic.should include(kFive)
       keywords_list_arabic.should_not include(k)
