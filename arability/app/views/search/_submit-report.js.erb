@@ -1,0 +1,24 @@
+function modalToggle(){
+  $("#report_modal").modal("toggle");
+}
+function setChecked(chkbox){
+  $chkbox = $(chkbox)
+  if($chkbox.attr("is_checked") == "true")
+    $chkbox.attr("is_checked", false);
+  else
+    $chkbox.attr("is_checked", true);
+}
+function report_submission(){
+  $reported_keywords = $("#report_modal").find("[is_checked=true]");
+  if($reported_keywords.length == 0)
+    return;
+  words = new Array();
+  $.each($reported_keywords, function(index, element){
+    words.push($(element).attr('value'));
+  });
+  $.post("<%= send_report_path %>", { reported_words: words });
+  $.each($("input#chkbox"), function(index, element){
+    $(element).attr('checked',false);
+    $(element).attr('is_checked', false);
+  });
+}
