@@ -367,12 +367,12 @@ end
   #   Nourhan Zakaria
   # Description:
   #   This method get all votes given by a given gamer
-  # Parameters:
+  # Params:
   #   gamer_id: The ID of the gamer to get his/her votes
-  # Returns: 
-  #   On Success: returns the count of votes by this gamer
+  # Success: 
+  #   returns the count of votes by this gamer
   #   and a list of lists of given keywords and corresponding chosen synonym
-  #   On Failure: returns 0 and empty list
+  # Failure: returns 0 and empty list
   def get_votes
     voted_synonyms = Vote.where("gamer_id=?", self.id).select("synonym_id")
     count = voted_synonyms.count

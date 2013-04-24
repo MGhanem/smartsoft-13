@@ -303,12 +303,12 @@ class GamesController < ApplicationController
   # Description:
   #   This method calls get_vote on the current gamer to get
   #   all votes given by a given gamer
-  # Parameters:
-  #   it just needs the current gamer
-  # Returns: 
-  #   On Success: renders a js view of the gamer vote log showing either
+  # Params:
+  #   it just needs the current gamer 
+  # Success: 
+  #   renders a js view of the gamer vote log showing either
   #   their votes histroy or no votes if he/she didn't vote yet
-  #   On Failure: --
+  # Failure: --
   def showprofile
     @count, @vote_log = current_gamer.get_votes
     respond_to do |format|
