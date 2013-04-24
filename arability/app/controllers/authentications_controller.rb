@@ -68,7 +68,7 @@ class AuthenticationsController < ApplicationController
       auth = Authentication.find_by_provider_and_gid(provider, gid)
       if !gamer_signed_in?
         if auth
-          flash[:success] = "Signed in successfully via facebook"
+          flash[:success] = t(:signed_in_fb)
           sign_in_and_redirect(:gamer, auth.gamer)
         else
           gamer = Gamer.find_by_email(email)
@@ -76,7 +76,7 @@ class AuthenticationsController < ApplicationController
             # do not forget to change the function back when mirna changes her function
             Authentication.create_with_omniauth_amr(gamer.id,
               provider, gid, email, token, nil)
-            flash[:success] = "Signed in successfully via facebook"
+            flash[:success] = t(:signed_in_fb)
             sign_in_and_redirect(:gamer, gamer)
           else
             session["devise.token"] = token
@@ -93,15 +93,13 @@ class AuthenticationsController < ApplicationController
           Authentication.create_with_omniauth_amr(current_gamer.id,
             provider, gid, email, token, nil)
           redirect_to "/gamers/edit",
-          flash: {success: "Your account is now connected to Facebook"}
+          flash: {success: t(:logged_in_to_fb)}
         else
-          redirect_to "/", flash: {notice: "You're signed in and your
-            account is already connected to facebook"}
+          redirect_to "/", flash: {notice: t(:already_connected)}
         end
       end
     else
-      redirect_to "/", flash: {error: "Oops an error 
-        has occured while communicating with Facebook. Please try again"}
+      redirect_to "/", flash: {error: t(:oops_error_fb)}
     end
   end
 
@@ -116,8 +114,7 @@ class AuthenticationsController < ApplicationController
   # Failure:
   #   None
   def facebook_failure
-    redirect_to "/", flash: {error: "Oops an error 
-      has occured while communicating with Facebook. Please try again"}
+    redirect_to "/", flash: {error: t(:oops_error_fb)}
   end
 
 end

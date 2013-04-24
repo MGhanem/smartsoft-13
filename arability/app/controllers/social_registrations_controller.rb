@@ -80,7 +80,7 @@ class SocialRegistrationsController < Devise::RegistrationsController
       # do not forget to change method when you pull master
       Authentication.create_with_omniauth_amr(
         gamer.id, provider, gid, social_email, token, token_secret)
-      flash[:success] = "Signed in succesfully via " + provider
+      flash[:success] = t(:signed_in_exst)
       sign_in_and_redirect(:gamer, gamer)
     else
       session["devise.token"] = token

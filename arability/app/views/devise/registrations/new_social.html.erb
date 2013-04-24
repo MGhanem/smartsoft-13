@@ -33,7 +33,7 @@
             <%= f.select(:gender,options_for_select(['male','female'],{:selected => @gender}),{}, :style => "margin-left: 10px;") %></div></br> 
         <% end %> 
 
-        <span style="color:red;"><b><i>*Please fill the rest of the fields</i></b></span><br><br>
+        <span style="color:red;"><b><i>*<%= t(:fill_in_next) %></i></b></span><br><br>
 
         <div><%= f.label t(:date_of_birth), :class => "control-label" %>
         <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
