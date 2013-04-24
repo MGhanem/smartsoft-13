@@ -14,16 +14,12 @@ class ApplicationController < ActionController::Base
   # params:
   #   locale: from the url if exists
   # success:
-  #   --
+  #   sets the current locale for all views
   # failure:
   #   --
   def set_locale
     if params[:locale].nil?
-      if session[:locale].nil?
-        I18n.locale = :ar
-      else
-        I18n.locale = session[:locale]
-      end
+      I18n.locale = session[:locale].nil? ? :ar : session[:locale]
     else
       I18n.locale = params[:locale]
       session[:locale] = params[:locale]
@@ -37,11 +33,11 @@ class ApplicationController < ActionController::Base
   # params:
   #   locale: from the url if exists
   # success:
-  #   --
+  #   adds current locale to the urls if not specified
   # failure:
   #   --
   def default_url_options(options={})
-    { :locale => I18n.locale }
+    { locale: I18n.locale }
   end
 
   def get_root
