@@ -16,7 +16,18 @@ describe AuthenticationsController do
     current_gamer.save validate: false
     current_gamer
   }
+  let(:authentication){
+  	authentication = Authentication.new
+  	authentication.gamer_id = current_gamer.id
+    authentication.provider = "twitter"
+    authentication.gid = "123456790"
+    authentication.token = "1234567"
+    authentication.token_secret = "asdfghj"
+    authentication.save
+    authentication
+  }
 	before do
+		authentication
 		request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] 
 	end
 	it "should redirect to edit settings page" do
@@ -33,5 +44,12 @@ describe AuthenticationsController do
 		login_gamer(current_gamer)
 		get :twitter_failure
 		response.should redirect_to root_url
+	end
+	it "it should check if gamer exists in database through an authentication connection" do
+		before = gamer_signed_in?
+		expect(before).to eq(false)
+		get :twitter_callback
+		after = gamer_signed_in?
+		expect(after).to eq(true)
 	end
 end
