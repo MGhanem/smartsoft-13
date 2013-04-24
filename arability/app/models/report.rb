@@ -10,16 +10,14 @@ class Report < ActiveRecord::Base
   # Author:
   #   Nourhan Mohamed
   # Description:
-  #   
+  #   creates a new report for either a keyword or a synonym
   # params:
-  #   search_keyword: a string representing the search keyword, from the params list
-  #     from a textbox in the search view
+  #   gamer: the gamer who requested the report
+  #   word: the reported synonym or keyword
   # success:
-  #   returns a json list of keywords similar to what's currently typed
-  #   in the search textbox
+  #   returns true and an instance of the created report upon success
   # failure:
-  #   returns an empty list if what's currently typed in the search textbox
-  #   had no matches
+  #   returns false and a non saved instance of the report
   def self.create_report(gamer, word)
     report = Report.new
     report.reported_word = word
