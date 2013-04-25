@@ -120,6 +120,12 @@
     items: 8,
     highlighter: function(item) {
       return item
+    },
+    updater: function(item){
+      if(item.charAt(item.length-1) == ">"){
+       item = item.substring(0,item.indexOf("<"));
+       return item
+     }
     }
   });
   function fetch_keywords(keyword, callback){
