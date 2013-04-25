@@ -18,8 +18,6 @@ describe ProjectsController do
 
   let(:developer1){
   	developer = Developer.new
-  	developer.first_name = "Mohamed"
-  	developer.last_name = "Tamer"
   	developer.gamer_id = gamer1.id 
   	developer.save
   	developer
@@ -39,5 +37,12 @@ describe ProjectsController do
     sign_in developer1.gamer
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
+  end
+
+    it "should delete a project" do
+    sign_in gamer1
+    put :destroy, :id => project.id
+    #response.should be_success
+    response.code.should eq("302")
   end
 end
