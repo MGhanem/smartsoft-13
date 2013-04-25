@@ -57,7 +57,6 @@ en:
   required: "The fields marked with * are required"
   name: "Name"
   category: "Category"
-  categories: "Categories"
   formality: "Language"
   formal: "Formal"
   slang: "Slang"
@@ -81,7 +80,6 @@ en:
   error: "error"
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
-  not_in_range: "is not in range"
   exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
   views:
     project:
@@ -259,6 +257,13 @@ en:
   age_range: "(Kindly enter a value between 10 and 100)"
   follow_words_info: "Follow a word to recieve an email with every update. Updates include a new Synonym addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Synonyms of"
+  activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              not_in_range: "is not in range"
   activerecord:
     errors:
       models:

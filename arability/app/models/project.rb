@@ -4,12 +4,11 @@ class Project < ActiveRecord::Base
   has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
-
   belongs_to :category
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :category
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :presence => true, :inclusion => { :in => 9..99 }
+  validates :minAge, :presence => true, :inclusion => { :in => 9..99 }, :numericality => { :only_integer => true }
   validates :maxAge, :presence => true, :inclusion => { :in => 10..100 }, :numericality => { :only_integer => true,:greater_than_or_equal_to => :minAge}
 
 # Author:
@@ -18,7 +17,7 @@ class Project < ActiveRecord::Base
 #   Takes the params of the project entered by the developer, sets the developer_id to the current
 #   one then creates a project then calls the method createcategories and returns a  project.
 # Params:
-#   Parameters of a project and the current developer is.
+#   Parameters of a project that were retreived from the form and the current developer id.
 # Success:
 #   Creates and returns a project after calling method createcategories.
 # Failure:

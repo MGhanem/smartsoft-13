@@ -36,7 +36,6 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
-  categories: "الفئات"
   formality: "اللغة"
   formal: "فصحى"
   slang: "عامية"
@@ -225,7 +224,6 @@ ar:
       developer:
         first_name: "الاسم الاول"
         last_name: "إسم العائلة"
-  not_in_range: "ليس في الحدود المسموح بها"
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
   facebook: "فيسبوك"
@@ -289,6 +287,10 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+        project:
+          attributes:
+            minAge:
+              not_in_range: "ليس في الحدود المسموح بها"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
   twitter_connection_failure: "فشل التواصل مع تويتر"
@@ -299,7 +301,7 @@ ar:
     attributes:
       project:
         name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
         categories: "الفئات"
         description: "الوصف"
