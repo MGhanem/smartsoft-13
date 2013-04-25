@@ -477,11 +477,15 @@ end
   
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
-    project_categories = Project.find(params[:project_id].to_i).categories
+    project_categories = Project.find(params[:project_id]).categories
+    project_categories = project_categories.map {|cat| cat.get_name_by_locale}
     similar_keywords = Keyword.get_similar_keywords(keyword, project_categories)
-    @match_category_no = similar_keywords.count 
-    similar_keywords = similar_keywords.concat(Keyword.get_similar_keywords(keyword,[])) 
+    similar_keywords = similar_keywords.uniq
+    match_category_no = similar_keywords.count 
+    similar_keywords = similar_keywords.concat(Keyword.get_similar_keywords(keyword,[]))
+    similar_keywords = similar_keywords.uniq 
     similar_keywords.map! { |keyword| keyword.name }
+    similar_keywords.push(match_category_no)
     render json: similar_keywords
   end 
 

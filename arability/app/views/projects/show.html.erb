@@ -130,10 +130,11 @@
   });
   function fetch_keywords(keyword, callback){
     $.post("autocomplete_keyword", { keyword_search: keyword, project_id: <%= @project.id %> }, function(data){
-      var length = parseInt("<%= @match_category_no %>")
-      //alert(Object.keys(data).length);
+      length = data[Object.keys(data).length-1];
       for(var i = 0; i < Object.keys(data).length; i++){
-        data[i] = data[i]+"   *".fontcolor("red") 
+        if(i >= length){
+         data[i] = data[i]+"   *".fontcolor("red") 
+        }
       }
       callback(data);
     })
