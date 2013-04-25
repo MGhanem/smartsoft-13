@@ -92,4 +92,28 @@ class SocialRegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def update
+    if current_gamer.is_local
+      raise Exception, "if"
+      super
+    else
+      raise Exception, "else"
+      if params[resource_name][:password].blank? 
+        params[resource_name].delete(:password) 
+        params[resource_name].delete(:password_confirmation) if params[
+          resource_name][:password_confirmation].blank? 
+      else
+        params[resource_name][:is_local] = true
+      end
+      if resource.update_attributes(params[resource_name])
+        set_flash_message :notice, :updated
+        sign_in resource_name, resource
+        redirect_to after_update_path_for(resource)
+      else
+        clean_up_passwords(resource)
+        render_with_scope :edit
+      end
+    end
+  end
+
 end

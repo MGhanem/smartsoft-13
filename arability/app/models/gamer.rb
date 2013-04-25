@@ -17,7 +17,7 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login
+                  :highest_score, :gender, :login, :is_local
 
 
   has_many :services, :dependent => :destroy
@@ -281,13 +281,29 @@ class Gamer < ActiveRecord::Base
       gender: gender,
       date_of_birth: d_o_b,
       country: country,
-      education_level: ed_level)
+      education_level: ed_level,
+      is_local: false)
     if gamer.save
       return gamer, true
     else
       return gamer, false
     end
   end
+
+# Author:
+#   Amr Abdelraouf
+# Description
+#   Returns whether this account has been created locally
+#   or by a social media account
+# Params:
+#   None
+# Success:
+#   Returns boolean whether or no is local
+# Failure:
+#   None
+def is_local_account
+  is_local
+end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
