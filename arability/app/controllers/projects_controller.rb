@@ -505,6 +505,7 @@ end
         else
           flash[:notice] = t(:no_words)
           redirect_to project_path(@project_id), flash: flash
+          return
         end
       end         
       send_data csv_string,
@@ -542,6 +543,7 @@ end
       else
         flash[:notice] = t(:no_words)
         redirect_to project_path(@project_id), flash: flash
+        return
       end
       send_data xml_string ,
       type: "text/xml; charset=UTF-8;", 
@@ -578,6 +580,7 @@ end
       else
         flash[:notice] = t(:no_words)
         redirect_to project_path(@project_id), flash: flash
+        return
       end
       send_data json_string ,
       type: "text/json; charset=UTF-8;", 
