@@ -293,7 +293,7 @@ ar:
               not_in_range: "ليس في الحدود المسموح بها"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
-  twitter_connection_failure: "فشل التواصل مع تويتر"
+  connection_failure: "فشل التواصل!"
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
