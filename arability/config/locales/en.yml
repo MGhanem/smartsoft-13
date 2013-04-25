@@ -301,3 +301,4 @@ en:
   words_in_page: "Words that you can report within this page:"
   close: "Close"
   submit: "Submit Report"
+  report_sent_success: "Report submitted successfully"
