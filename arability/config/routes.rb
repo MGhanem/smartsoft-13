@@ -26,7 +26,6 @@ Arability::Application.routes.draw do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
       post "/social_registrations/social_sign_in"
-      post "/gamers" => "social_registrations#update"
     end
 
     match '/game' => 'games#game'

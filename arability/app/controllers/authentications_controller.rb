@@ -91,8 +91,6 @@ class AuthenticationsController < ApplicationController
       if !gamer_signed_in?
         if auth
           flash[:success] = t(:signed_in_fb)
-          g = Gamer.find_by_id(auth.gamer_id)
-          raise Exception, g.inspect
           sign_in_and_redirect(:gamer, auth.gamer)
         else
           gamer = Gamer.find_by_email(email)
