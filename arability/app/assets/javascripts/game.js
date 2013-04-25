@@ -28,13 +28,28 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-
+var tutorialFlag = true;
+var currentClss;
+var currentNewClss;
+var currentBtn;
+var currentRandNum;
+var currentNewCounter;
+var tutorialClick = true;
+var secondTutorialClick = false;
+var tutorialButtonId;
+var newDrop = false;
+var lockLangButtons = true;
+var tutorialFlagwas = tutorialFlag;
 
 $(function(){
+	if(tutorialFlag == false){
+		lockLangButtons = false;
+		return;
+	}
 	$('.eng-btn').popover();
 	setTimeout(function(){
-		$('#exposedEngBtnDiv').expose();
-		$('#exposeMask').css('background-color', 'black');
+		$('#exposedEngBtnDiv').expose({closeOnClick: false,
+		closeOnEsc: false, color: 'black'});
 	}, 500);
 	setTimeout(function(){ $('.eng-btn').popover('show');}, 500);
 });
@@ -43,18 +58,16 @@ function arBtnPopOver(){
 	$('.ar-btn').popover();
 	setTimeout(function(){
 		$('#exposedArBtnDiv').expose();
-		$('#exposeMask').css('background-color', 'black');
-	}, 500);
-	setTimeout(function(){ $('.ar-btn').popover('show');}, 500);
+	}, 200);
+	setTimeout(function(){ $('.ar-btn').popover('show');}, 200);
 }
 
 function bothBtnPopOver(){
 	$('.both-btn').popover();
 	setTimeout(function(){
 		$('#exposedBothBtnDiv').expose();
-		$('#exposeMask').css('background-color', 'black');
-	}, 500);
-	setTimeout(function(){ $('.both-btn').popover('show');}, 500);
+	}, 200);
+	setTimeout(function(){ $('.both-btn').popover('show');}, 200);
 }
 
 function destroy(id){
@@ -67,25 +80,35 @@ function destroy(id){
 	else if(id == "ar-btn"){
 		bothBtnPopOver();
 	}
-	else{
-		return;
+	else if (id == "both-btn"){
+		lockLangButtons = false;
 	}
 }
 
 function wordsListToolTip(){
 	$('#wordsList').popover();
-	setTimeout(function(){ $('#wordsList').popover('show');}, 100);
+	setTimeout(function(){
+		$('#list-div').expose();
+	}, 100);
+	setTimeout(function(){ $('#wordsList').popover('show');}, 200);
 	
 }
 
 function tableToolTip(){
-	$('#button7-0').popover();
-	setTimeout(function(){ $('#button7-0').popover('show');}, 100);
+	$('#button7-5').popover();
+	setTimeout(function(){ $('#button7-5').popover('show');}, 300);
+	setTimeout(function(){
+		$('.popover').expose();
+	}, 320);
+	
 }
 
 function wordLablelToolTip(){
 	$('#wordLabel').popover();
-	setTimeout(function(){ $('#wordLabel').popover('show');}, 100);
+	setTimeout(function(){
+		$('.label-div').expose();
+	}, 300);
+	setTimeout(function(){ $('#wordLabel').popover('show');}, 400);
 }
 
 function callNextToolTip(id){
@@ -96,6 +119,12 @@ function callNextToolTip2(id){
 	destroy(id);
 	tableToolTip();
 }
+
+function destroyAndStart(id){
+	destroy(id);
+	endTutorial();
+}
+
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -175,9 +204,9 @@ function initializeGame(){
 					trHtml.push('-');
 					trHtml.push(x);
 					trHtml.push('"');
-					trHtml.push(' data-trigger="manual" data-html="true" data-content = "<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other. Try Clicking a Button Now</p> <button ');
-					trHtml.push(" onclick='destroy(this.id)' class='btn btn-primary' id='button7-0-po' style='width: 100px;'>");
-					trHtml.push('Got it</button>" data-title="<h4>Forming Words</h4>" data-placement="top">');
+					trHtml.push(' data-trigger="manual" data-html="true" data-content = "<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now</p> <button ');
+					trHtml.push(" onclick='destroy(this.id)' class='tutBtn btn btn-primary' id='button7-5-po'>");
+					trHtml.push('Okay</button>" data-title="<h4>Forming Words</h4>" data-placement="top">');
 					letter = generateLetter();
 					trHtml.push(letter);
 					trHtml.push('</button></td>');
@@ -218,7 +247,9 @@ function initializeList(){
 	}
 	lsHtml = lsHtml.join('');
 	list.append($(lsHtml));
-	wordsListToolTip();
+	if(tutorialFlag == true){
+		wordsListToolTip();
+	}
 }
 
 // author:
@@ -234,6 +265,10 @@ function initializeList(){
 //   the game is over.
 
 function dropAblock(){
+	if(tutorialFlag == true){
+		newDrop = true;
+		return;
+	}
 	if( gameOver == true ){
 		return;
 	}
@@ -244,6 +279,27 @@ function dropAblock(){
 
 	var btn = document.getElementById(clss).innerHTML = newButton;
 	dropAblockCont(clss, btn, randNum, 0);
+}
+
+function startTutorial(){
+	tutorialFlag = true;
+}
+
+function endTutorial(){
+	tutorialFlag = false;
+	tutorialFlagwas = true;
+	if(newDrop == true){
+		newDrop = false;
+		dropAblock();
+	}
+	if(document.getElementById(currentNewClss).innerHTML == ''){
+		document.getElementById(currentClss).innerHTML = '';
+		document.getElementById(currentNewClss).innerHTML = currentBtn;
+		dropAblockCont(currentNewClss, currentBtn, currentRandNum, currentNewCounter);
+	}
+	else{
+		blockLanded();
+	}
 }
 
 // author:
@@ -269,49 +325,54 @@ function dropAblockCont(clss, btn, randNum, counter){
 	var newCounter = counter + 1;
 	var newClss = 'col' + newCounter  + '-' + randNum;
 
-		pullingBlocks = setTimeout(function(){
-			if(newCounter == dimension){
-				buttons = table.find('button');
-				var tower = highestTower();
-				calculatePossible();
-				
-					suspense();
-				
-				blockId++;
-				if(loseGame(tower)){
-					return;
-				}
-					droppingBlocks = setTimeout(function() {  
-                	  dropAblock() } , waitTime);
-				
+	pullingBlocks = setTimeout(function(){
+		if(newCounter == dimension){
+			if(tutorialFlag == false){
+				blockLanded();
 			}
 			else{
-
+				return;
+			}
+		}
+		else{
+			if(tutorialFlag == false){
 				if(document.getElementById(newClss).innerHTML == ''){
 					document.getElementById(clss).innerHTML = '';
 					document.getElementById(newClss).innerHTML = btn;
 					dropAblockCont(newClss, btn, randNum, newCounter);
 				}
-
 				else{
-					buttons = table.find('buttonson');
-					var tower = highestTower();
-					calculatePossible();
-					
-						suspense();
-					
-					blockId++;
-
-					if(loseGame(tower)){
+					if(tutorialFlag == false){
+						blockLanded(); 
+					}
+					else{
 						return;
 					}
-					
-					droppingBlocks = setTimeout(function() {
-						dropAblock() 
-					}, waitTime);// <-------- set the new block arrive time, here
 				}
 			}
-		}, fallingTime);// <------set the drop fall time here
+			else{
+				currentClss = clss;
+				currentNewClss = newClss;
+				currentBtn = btn;
+				currentRandNum = randNum;
+				currentNewCounter = newCounter;
+			}
+		}
+	}, fallingTime);// <------set the drop fall time here
+}
+
+function blockLanded(){
+	buttons = table.find('button');
+	var tower = highestTower();
+	calculatePossible();
+	suspense();
+	blockId++;
+	if(loseGame(tower)){
+		return;
+	}
+	droppingBlocks = setTimeout(function() {
+		dropAblock();
+	} , waitTime);
 }
 
 // author:
@@ -326,7 +387,6 @@ function dropAblockCont(clss, btn, randNum, counter){
 //   after each block lands this method is called and the possibilites are checked and the css is added.
 // failure:
 //   none.
-
 function calculatePossible(){
 	var allLetters = '';
 	var l = table.find('button');
@@ -476,6 +536,20 @@ function generateWord(){
 //   the game is over, on click nothing will happen.
 
 function callMethods(id){
+	if(tutorialFlag == true && tutorialClick == false && secondTutorialClick == false){
+		return;
+	}
+	else if(secondTutorialClick == true && tutorialFlag == true){
+		if(id != tutorialButtonId){
+			return;
+		}
+		else{
+			formWord(id);
+			generateWord();
+			secondTutorialClick = false;
+			return;
+		}
+	}
 	if(gameOver == true){
 		return;
 	}
@@ -483,10 +557,24 @@ function callMethods(id){
 	generateWord();
 	removeAblock();
 	if(firstClick == true){
+		tutorialClick = false;
 		firstClick = false;
-		$('#' + id).attr("data-content", "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed<p> <button class='btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='" + id + "-po' onclick='destroy(this.id)'>Got it</button>")
+		secondTutorialClick = true;
+		destroy('button7-5-po');
+		$("#button7-5").removeAttr('data-content');
+		$('#' + id).attr("data-content", "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button<p> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>Start Playing</button>")
 		$('#' + id).popover();
-		setTimeout(function(){ $('#' + id).popover('show');}, 100);
+		var newId = id.replace('button','');
+		var tdId = 'col' + newId;
+		if(tutorialFlag == true){
+			setTimeout(function(){
+				$('#' + tdId).expose();
+			}, 200);
+			setTimeout(function(){
+				$('#' + id).popover('show');
+				tutorialButtonId = id;
+			}, 300);
+		}
 	}
 }
 
@@ -1023,6 +1111,9 @@ if(level == 6){
 //   none.
 
 function setLang(l){
+	if(lockLangButtons == true){
+		return;
+	}
 	disableNav();
 	$('.zone').empty();
 	$(".zone").slideUp(1000);
@@ -1092,10 +1183,10 @@ function continuePlaying(){
 	setButtons();
 	setLevelPopUpTitle();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well"><ol data-html="true" data-content="<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button' + 
-	" onclick='callNextToolTip(this.id)' class='btn btn-primary' id='wordsList-po'>" +
+	'<div id="list-div" class="well"><ol data-html="true" data-trigger="manual" data-content="<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button' + 
+	" onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>" +
 	'Got it</button>" data-title="<h4>Words List</h4>" id="wordsList"></ol>' + 
-	'<div class="label-div"><label data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
+	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
 	" onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>" +
 	'Got it</button>" data-title="<h4>Letters Label</h4>" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
