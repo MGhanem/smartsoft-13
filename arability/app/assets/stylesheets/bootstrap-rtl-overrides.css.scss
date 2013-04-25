@@ -219,3 +219,29 @@ background-position: -96px -96px;
 .icon-filter                  { background-position: -408px -144px; }
 .icon-briefcase               { background-position: -432px -144px; }
 .icon-fullscreen              { background-position: -456px -144px; }
+
+.navbar {
+font: 13px/27px Arial,sans-serif;
+font-weight: bold;
+line-height: 20px;
+}
+.navbar .brand{
+font: 13px/27px Arial,sans-serif;
+font-weight: bold;
+line-height: 20px;
+padding: 4px  10px;
+color: #bbb;
+
+}
+
+.navbar .nav > li > a {
+float: right;
+padding: 4px  18px;
+color: #bbb;
+
+}
+
+
+.navbar-inner {
+  min-height: 30px;
+}

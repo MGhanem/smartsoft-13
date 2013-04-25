@@ -31,7 +31,8 @@
    display: none;
   }
 </style>
-
+<%= yield(:home_content) %>
+<div id="testing">
 <div role="main" id="main">
   <div class="container">
     <div class="content">
@@ -39,6 +40,7 @@
       <%= content_for?(:main_content) ? yield(:main_content) : yield %>
     </div>
   </div>
+</div>
 </div>
 
 <%= render 'shared/navbardropdownjs' %>

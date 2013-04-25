@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-static-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -9,6 +9,7 @@
 
       <a class="brand" href="/"><%= t(:arability) %></a>
 
+
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
@@ -17,9 +18,9 @@
           <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
         <% end %>
       <% if !gamer_signed_in? %>
-          <li class="divider-vertical"></li>
+          <li></li>
           <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
-          <li class="divider-vertical"></li>
+          <li></li>
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
@@ -35,11 +36,11 @@
       <% else %>
         <li><%= link_to t(:backend), backend_home_path %></li>
         <% if I18n.locale==:en %>
-        <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
+        <li><a href="/gamers/edit">Settings</a></li>
+        <li><a href="/gamers/sign_out">Sign out</a></li>
         <% else I18n.locale==:ar %>
-        <li><a href="/gamers/edit"><i class="icon-wrench"></i>تغيير البيانات</a></li>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
+        <li><a href="/gamers/edit">تغيير البيانات</a></li>
+        <li><a href="/gamers/sign_out">تسجيل خروج</a></li>
         <% end %>
       <% end %>
       </ul>
