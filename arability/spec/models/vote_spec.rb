@@ -148,13 +148,13 @@ describe Vote, vote_test: true do
       success, vote_instance = Vote.record_vote(100000000, sTwo.id)
       success.should eq(false)
       vote_instance.errors.messages.should 
-        eq( {gamer_id: ["this gamer_id doesn't exist"]} )
+        eq({ gamer_id: ["this gamer_id doesn't exist"] })
     end
     it "never record a vote for a non existing synonym" do
       success, vote_instance = Vote.record_vote(g.id, 1000000000)
       success.should eq(false)
       vote_instance.errors.messages.should 
-        eq( {synonym_id: ["this synonym_id doesn't exist"]} )
+        eq({ synonym_id: ["this synonym_id doesn't exist"] })
     end
   end
 
@@ -171,7 +171,6 @@ describe Vote, vote_test: true do
       lang.should eq(1)
     end
   end
-
 
   describe "get_lang_both" do
     it "returns 2" do

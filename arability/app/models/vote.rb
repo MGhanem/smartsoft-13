@@ -56,9 +56,9 @@ class Vote < ActiveRecord::Base
       Synonyms S1 ON S1.keyword_id = K1.id)", gamer_id)
     unvoted_approved_keywords = unvoted_keywords.where("approved = ?", true)                            
     if lang == @@ENG    
-      keywords_list = unvoted_approved_keywords.where("is_english=?", true)
+      keywords_list = unvoted_approved_keywords.where("is_english = ?", true)
     elsif lang == @@ARABIC
-      keywords_list = unvoted_approved_keywords.where("is_english=?", false)
+      keywords_list = unvoted_approved_keywords.where("is_english = ?", false)
     else
       keywords_list = unvoted_approved_keywords
     end
@@ -160,7 +160,7 @@ class Vote < ActiveRecord::Base
   #   if this or any other validation method the vote will not be saved and 
   #   message will be returned stating the error
   def validate_voting_for_new_keyword
-    chosen_synonym = Synonym.where("id=?", synonym_id)
+    chosen_synonym = Synonym.where("id = ?", synonym_id)
     k_id_of_chosen_synonym = chosen_synonym.first.keyword_id if 
       !chosen_synonym.blank?
     check = Keyword.where("id NOT IN( 
@@ -168,11 +168,10 @@ class Vote < ActiveRecord::Base
       S.keyword_id = K.id AND S.id IN(SELECT S1.id FROM synonyms S1 
       INNER JOIN votes V ON S1.id = V.synonym_id INNER JOIN 
       gamers G ON G.id = V.gamer_id AND G.id = ?)) AND id = ?",
-    gamer_id, k_id_of_chosen_synonym).exists?
+      gamer_id, k_id_of_chosen_synonym).exists?
     errors.add(:keyword_id, 
       "this gamer voted for this keyword before") if !check  
   end
-
 end
 
   
