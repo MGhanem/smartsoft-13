@@ -71,29 +71,32 @@ describe ProjectsController, type: :controller do
     response.should redirect_to project_path(p.id)
   end
 
-  it "redirects to project path after calling export_to_json if project empty" do
+  it "redirectsto project path after calling export_to_json if project empty" do
     p = create_project
     get :export_to_json, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "downloads a .csv file after calling export_to_csv with valid project id that has words" do
+  it "responds with ok code after calling export_to_csv with valid project" do
     p = create_project
-    ps = PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    ps = 
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_csv, project_id: p.id
     response.code.should eq("200")
   end
 
-  it "downloads a .xml file after calling export_to_xml with valid project id that has words" do
+  it "responds with ok code after calling export_to_xml with valid project" do
     p = create_project
-    ps = PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    ps = 
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_xml, project_id: p.id
     response.code.should eq("200")
   end
 
-  it "downloads a .json file after calling export_to_xml with valid project id that has words" do
+  it "responds with ok code after calling export_to_json with valid project" do
     p = create_project
-    ps = PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    ps = 
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
