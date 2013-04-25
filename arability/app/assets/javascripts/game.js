@@ -292,13 +292,15 @@ function endTutorial(){
 		newDrop = false;
 		dropAblock();
 	}
-	if(document.getElementById(currentNewClss).innerHTML == ''){
-		document.getElementById(currentClss).innerHTML = '';
-		document.getElementById(currentNewClss).innerHTML = currentBtn;
-		dropAblockCont(currentNewClss, currentBtn, currentRandNum, currentNewCounter);
-	}
 	else{
-		blockLanded();
+		if(document.getElementById(currentNewClss).innerHTML == ''){
+			document.getElementById(currentClss).innerHTML = '';
+			document.getElementById(currentNewClss).innerHTML = currentBtn;
+			dropAblockCont(currentNewClss, currentBtn, currentRandNum, currentNewCounter);
+		}
+		else{
+			blockLanded();
+		}
 	}
 }
 
@@ -536,9 +538,9 @@ function generateWord(){
 //   the game is over, on click nothing will happen.
 
 function callMethods(id){
-	if(tutorialFlag == true && id == 'button7-5'){
-		return;
-	}
+	// if(tutorialFlag == true && id == 'button7-5'){
+	// 	return;
+	// }
 	if(tutorialFlag == true && tutorialClick == false && secondTutorialClick == false){
 		return;
 	}
