@@ -107,6 +107,9 @@ Arability::Application.routes.draw do
 
   match "/developers/projects/load_synonyms" => "projects#load_synonyms"
 
+  match "/en/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+
+  match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

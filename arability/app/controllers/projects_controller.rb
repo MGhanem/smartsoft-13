@@ -491,6 +491,14 @@ end
     end
   end 
   
+  def project_keyword_autocomplete
+    keyword = params[:keyword_search]
+    similar_keywords = Keyword.get_similar_keywords(keyword, [])
+    similar_keywords.map! { |keyword| keyword.name }
+    render json: similar_keywords
+  end 
+
+
 # author:
 #   Khloud Khalid
 # description:
