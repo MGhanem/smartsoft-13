@@ -17,7 +17,8 @@ class Project < ActiveRecord::Base
 #   Takes the params of the project entered by the developer, sets the developer_id to the current
 #   one then creates a project then calls the method createcategories and returns a  project.
 # Params:
-#   Parameters of a project that were retreived from the form and the current developer id.
+#   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+#   and and the current developer id.
 # Success:
 #   Creates and returns a project after calling method createcategories.
 # Failure:
@@ -35,7 +36,8 @@ end
 #   A method that takes a category in the form of a string and saves it in an array
 #   then finds the category with the id equal to the given id.
 # Params:
-#   A project and its category id.
+#   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+#   and its category id.
 # Success:
 #   Sets the category of the project to an existing one by finding the equivalent id.
 # Failure:

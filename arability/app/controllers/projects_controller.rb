@@ -63,7 +63,7 @@ class ProjectsController < BackendController
   #   that creates the project and redirects to the project page and prints
   #   an error if the data entered is invalid.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name
   # Success:
   #   Creates a new project and views it in the index page
   # Failure:
@@ -139,7 +139,7 @@ class ProjectsController < BackendController
   # Description:
   #   A method that specifies an already existing project by its ID
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
   # Success:
   #   A form that contains the existing data of the project will open from the views.
   # Failure:
@@ -159,7 +159,8 @@ class ProjectsController < BackendController
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
   #   Then calls method createcategories that changes the category.
   # Params:
-  #   Parameters of the project to be updated and its category
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   and its category
   # Success:
   #   An existing project will be updated.
   # Failure:
@@ -188,7 +189,7 @@ class ProjectsController < BackendController
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
   #   projects index.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
   # Success:
   #   An project will be showed with its words and synonyms.
   # Failure:
