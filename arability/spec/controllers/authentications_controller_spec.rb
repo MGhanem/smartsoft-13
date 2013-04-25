@@ -31,7 +31,7 @@ describe AuthenticationsController do
 	end
 	it "it should redirect to home page" do
 		login_gamer(current_gamer)
-		get :twitter_failure
+		get :callback_failure
 		response.should redirect_to root_url
 	end
 end

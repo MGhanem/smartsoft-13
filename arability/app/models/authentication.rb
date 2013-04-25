@@ -18,13 +18,18 @@ class Authentication < ActiveRecord::Base
   # Failure:
   #   none
   def self.create_with_omniauth(provider, gid, token, token_secret, email, current_gamer_id)
-    create! do |authentication|
-      authentication.provider = provider
-      authentication.gid = gid
-      authentication.token = token
-      authentication.token_secret = token_secret
-      authentication.email = email
-      authentication.gamer_id = current_gamer_id
+    authentication = Authentication.new(
+      provider: provider,
+      gid: gid,
+      token: token,
+      token_secret: token_secret,
+      email: email,
+      gamer_id: current_gamer_id
+      )
+    if authentication.save
+      return authentication, true
+    else
+      return nil, false
     end
   end
 
