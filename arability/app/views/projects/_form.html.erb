@@ -25,7 +25,11 @@
         <% if params[:action] == "new" %>
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true }, { id:"cat" }) %>
         <% else %>
+        <% if @project.category_id != nil %>
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i }, { id:"cat" }) %>
+        <% else %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true, selected: @project.category_id.to_i }, { id:"cat" }) %>
+          <% end %>
         <% end %>
     </div>
   </div>
