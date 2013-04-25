@@ -117,13 +117,18 @@
   });
   $(".autocomplete").typeahead({
     source: fetch_keywords,
-    items: 4,
+    items: 8,
     highlighter: function(item) {
       return item
     }
   });
   function fetch_keywords(keyword, callback){
-    $.post("autocomplete_keyword", { keyword_search: keyword }, function(data){
+    $.post("autocomplete_keyword", { keyword_search: keyword, project_id: <%= @project.id %> }, function(data){
+      var length = parseInt("<%= @match_category_no %>")
+      //alert(Object.keys(data).length);
+      for(var i = 0; i < Object.keys(data).length; i++){
+        data[i] = data[i]+"   *".fontcolor("red") 
+      }
       callback(data);
     })
   }
