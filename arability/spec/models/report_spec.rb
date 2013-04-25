@@ -58,6 +58,7 @@ describe Report do
     success.should eq(true)
     success, report = Report.create_report(gamer, keyword)
     success.should eq(false)
-    report.errors.messages.should eq({ gamer_id: ["You reported this word before"] })
+    report.errors.messages.should 
+      eq({ gamer_id: ["You reported this word before"] })
   end
 end
