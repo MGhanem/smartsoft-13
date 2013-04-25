@@ -4,22 +4,29 @@ class AuthenticationsController < ApplicationController
   # Author:
   #   Mirna Yacout
   # Description:
-  #   Twitter callback method which saves the parameters given by Twitter upon the approval of
-  #   the current user for the connection
+  #   Twitter callback method which creates new authentication for signed in gamer connecting
+  #   to his Twitter account or signs in a guest with his Twitter account
   # params
   #   the hash received from Twitter API including all his Twitter information
   # Success:
-  #   checks if a record is in the Authentications table: if avaialable returns and redirect
-  #   and if not creates a new record then redirect
+  #   if gamer is signed in then create a new Authentication (unless it already exists) and
+  #   redirects to edit settings page,
+  #   else a guest signing in using his Twitter account: if Authentication exists sign in gamer
+  #   connected to Authentication and redirect to home page
+  #   if not rediect to complete sign up page to fill missing information
   # Failure:
   #   none
 	def twitter_callback
 	  auth = request.env["omniauth.auth"]
     if gamer_signed_in?
-      flash[:notice] = I18n.t(:add_twitter_connection)
-      authentication = Authentication.find_by_provider_and_gamer_id(auth["provider"],
-       current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
-       auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer.id)
+      authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["uid"])
+      if authentication.nil?
+        flash[:notice] = I18n.t(:add_twitter_connection)
+        Authentication.create_with_omniauth(auth["provider"], auth["uid"],
+         auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer.id)
+      else
+        flash[:error] = I18n.t(:connected_before)
+      end
       redirect_to "/gamers/edit"
       return
     else

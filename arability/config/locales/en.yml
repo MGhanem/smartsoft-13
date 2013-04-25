@@ -299,3 +299,4 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  connected_before: "This Twitter account is already connected to another Arability account"
