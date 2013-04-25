@@ -295,7 +295,7 @@ en:
   twitter_signin_success: "Signed in successfully via Twitter"
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_twitter_connection: "Connection to Twitter removed successfully!"
-  twitter_connection_failure: "Failed to connect to Twitter"
+  connection_failure: "Failed to connect!"
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"

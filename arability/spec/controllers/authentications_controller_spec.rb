@@ -41,7 +41,7 @@ describe AuthenticationsController do
 	end
 	it "should redirect to home page upon failing to authorize the user" do
 		login_gamer(current_gamer)
-		get :twitter_failure
+		get :callback_failure
 		response.should redirect_to root_url
 	end
 	it "should sign in a gamer through his Twitter connection if available and redirect to home page" do
