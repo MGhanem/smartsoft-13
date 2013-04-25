@@ -93,7 +93,7 @@ class ProjectsController < BackendController
   #   Salma Farag
   # Description:
   #   A method that views the form that checks if the developer is signed in and has not exceeded the
-  #   max number of projects allowedinstantiates an empty project object
+  #   max number of projects allowed and instantiates an empty project
   #   after checking that the user is signed in.
   # Params:
   #   None
@@ -159,7 +159,7 @@ class ProjectsController < BackendController
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
   #   Then calls method createcategories that changes the category.
   # Params:
-  #   None
+  #   Parameters of the project to be updated and its category
   # Success:
   #   An existing project will be updated.
   # Failure:
