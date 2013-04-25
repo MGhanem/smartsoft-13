@@ -57,8 +57,8 @@ class SearchController < BackendController
     reported_words = reported_words.to_a
     reported_words.each do |word|
       word = word.split(" ")
-      word_model = Keyword.find(word[0].to_i) if word[1] == "Keyword"
-      word_model = Synonym.find(word[0].to_i) if word[1] == "Synonym"
+      word_model = word[1] == "Keyword" ? 
+        Keyword.find(word[0].to_i) : Synonym.find(word[0].to_i)
       @success, _ = Report.create_report(current_gamer, word_model)
     end
   end
