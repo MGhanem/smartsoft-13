@@ -91,12 +91,12 @@
               <td style="text-align:center">
                 <% if I18n.locale == :en %>
                 <div class="input-append" >
-                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" autocomplete="off" placeholder="search here") ></input>
+                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 0px 15px 15px 0px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
                 </div>
                 <% elsif I18n.locale == :ar %>
                  <div class="input-append" >
-                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" autocomplete="off" placeholder="ابحث هنا") ></input>
+                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 15px 0px 0px 15px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
                 </div>
                 <% end %>
@@ -128,6 +128,7 @@
     })
   }
   $(".input").change(function(){
+    alert("hoppa");
     var new_synonym_id = $(this).val();
       $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
   });
