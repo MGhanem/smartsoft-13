@@ -5,7 +5,7 @@ include RequestHelpers
 include Warden::Test::Helpers
 include Devise::TestHelpers
 
-describe ProjectsController, :type => :controller do
+describe ProjectsController, type: :controller do
 
   let(:gamer1){
 	  gamer = Gamer.new
