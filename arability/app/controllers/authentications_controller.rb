@@ -91,13 +91,14 @@ class AuthenticationsController < ApplicationController
       if !gamer_signed_in?
         if auth
           flash[:success] = t(:signed_in_fb)
+          g = Gamer.find_by_id(auth.gamer_id)
+          raise Exception, g.inspect
           sign_in_and_redirect(:gamer, auth.gamer)
         else
           gamer = Gamer.find_by_email(email)
           if gamer
-            # do not forget to change the function back when mirna changes her function
-            Authentication.create_with_omniauth_amr(gamer.id,
-              provider, gid, email, token, nil)
+            Authentication.create_with_omniauth(provider,gid,
+              token, nil, email, gamer.id)
             flash[:success] = t(:signed_in_fb)
             sign_in_and_redirect(:gamer, gamer)
           else
@@ -111,9 +112,8 @@ class AuthenticationsController < ApplicationController
         end
       else
         if !auth
-          # do not forget to change the function back when mirna changes her function
-          Authentication.create_with_omniauth_amr(current_gamer.id,
-            provider, gid, email, token, nil)
+          Authentication.create_with_omniauth(provider,gid,
+            token, nil, email, gamer.id)
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
@@ -123,20 +123,6 @@ class AuthenticationsController < ApplicationController
     else
       redirect_to "/", flash: {error: t(:oops_error_fb)}
     end
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description
-  #   Function called by facebook when an error occurs
-  # Params:
-  #   none
-  # Sucsess:
-  #   Redirected to home page and error message is displayed
-  # Failure:
-  #   None
-  def facebook_failure
-    redirect_to "/", flash: {error: t(:oops_error_fb)}
   end
 
 end

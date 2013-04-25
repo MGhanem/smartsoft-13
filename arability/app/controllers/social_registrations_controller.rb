@@ -77,9 +77,8 @@ class SocialRegistrationsController < Devise::RegistrationsController
     gamer, is_saved = Gamer.create_with_social_account(
       email, username, gender, d_o_b, country, ed_level)
     if is_saved
-      # do not forget to change method when you pull master
-      Authentication.create_with_omniauth_amr(
-        gamer.id, provider, gid, social_email, token, token_secret)
+      Authentication.create_with_omniauth(
+        provider, gid, token, token_secret, social_email, gamer.id)
       flash[:success] = t(:signed_in_exst)
       sign_in_and_redirect(:gamer, gamer)
     else
