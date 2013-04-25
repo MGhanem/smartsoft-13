@@ -317,7 +317,7 @@ class AdminController < ApplicationController
   # Parameters:
   #   category_id: id of category to be deleted
   # Success:
-  #   Category is deleted from database and categpries view appears without the
+  #   Category is deleted from database and categories' view appears without the
   #   deleted category, and a flash appears indicating the success of deletion
   # Failure: 
   #   None
