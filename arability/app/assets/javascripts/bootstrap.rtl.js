@@ -1682,11 +1682,14 @@
   , show: function () {
       var pos = $.extend({}, this.$element.offset(), {
         height: this.$element[0].offsetHeight
+      }, {
+        right: $(window).width() -
+            (this.$element.offset().left + this.$element.outerWidth())
       })
 
       this.$menu.css({
         top: pos.top + pos.height
-      , right: pos.left - this.$element.outerWidth()
+      , right: pos.right
       })
 
       this.$menu.show()
@@ -1798,13 +1801,22 @@
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this))
 
-      if ($.browser.webkit || $.browser.msie) {
+      if (this.eventSupported('keydown')) {
         this.$element.on('keydown', $.proxy(this.keydown, this))
       }
 
       this.$menu
         .on('click', $.proxy(this.click, this))
         .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
+    }
+
+  , eventSupported: function(eventName) {
+      var isSupported = eventName in this.$element
+      if (!isSupported) {
+        this.$element.setAttribute(eventName, 'return;')
+        isSupported = typeof this.$element[eventName] === 'function'
+      }
+      return isSupported
     }
 
   , move: function (e) {

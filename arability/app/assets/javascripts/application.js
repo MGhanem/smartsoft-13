@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require highcharts
 //= require game
+//= require gameRelated
 
 
 // author:
