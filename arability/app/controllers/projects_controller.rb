@@ -408,8 +408,7 @@ end
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          #kk@edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
-          @edited_word = PreferedSynonym.where(project_id:@project_id, keyword_id:@word_id).first
+          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
@@ -447,22 +446,127 @@ end
     end
   end
 
+
+  # author:
+  #   Kareem Ali
+  # description:
+  #   method adds a keyword and a synonym to an existing project and if word already 
+  #   exists in the project updates its synonym and if the adds the categories of 
+  #   the project to the keyword's categories if not present.
+  # params:
+  #   project_id, word_id, synonym_id
+  # success:
+  #   keyword and synonym are added to project and/or synonym of word updated 
+  # failure:
+  #   object not valid (no project or word id), word already exists in project, 
+  #   keyword or synonym does not exist.
+  def add_word_inside_project
+    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+      @project_id = params[:project_id]
+      @word_id = Keyword.find_by_name(params[:keyword]).id
+      if Keyword.find_by_id(@word_id) != nil
+        @synonym_id = params[:synonym_id]
+        if PreferedSynonym.find_word_in_project(@project_id, @word_id)
+          @edited_word = PreferedSynonym.where(project_id:@project_id, 
+            keyword_id:@word_id).first
+          @synonym_id = params[:synonym_id]
+          if Synonym.find_by_id(@synonym_id) != nil
+            @edited_word.synonym_id = @synonym_id
+            if @edited_word.save
+              flash[:success] = t(:Synonym_changed_successfully)
+              redirect_to project_path(@project_id), flash: flash
+              return
+            else
+              flash[:notice] = t(:Failed_to_update_synonym)
+              redirect_to project_path(@project_id), flash: flash
+              return
+            end
+          else
+            flash[:notice] = t(:synonym_does_not_exist)
+            redirect_to project_path(@project_id), flash: flash
+            return
+          end
+        else
+          @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
+            @synonym_id, @word_id, @project_id)
+          if @added_word
+            project_categories = Project.find(@project_id).categories
+            new_keyword = Keyword.find(@word_id)
+            for category in project_categories do
+              if not new_keyword.categories.include?(category) 
+                new_keyword.categories.push(category)
+                new_keyword.save
+              end
+            end
+            flash[:success] = t(:successfully_added_word_to_project)              
+            redirect_to project_path(@project_id), flash: flash
+            return
+          else
+            flash[:notice] = t(:failed_to_add_word_to_project)
+            redirect_to project_path(@project_id), flash: flash
+            return
+          end
+        end
+      else
+        flash[:notice] = t(:word_does_not_exist)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+    end
+  end
+
+
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Updates the prefered synonym to a specific keyword inside the project 
+  # params:
+  #   project_id, word_id, synonym_id
+  # success:
+  #   redirects to the add_word_inside_project method inside the controller 
+  #   to update the synonym
+  # failure:
+  #   will redirect to the add_word_inside_project to handle the incorrect object
   def change_synonym
     @project_id = params[:project_id].to_i
     @synonym_id = params[:synonym_id].to_i
     keyword_object = Synonym.find(@synonym_id).keyword
     @keyword = keyword_object.name
-    redirect_to projects_add_word_path(project_id: @project_id, 
+    redirect_to add_word_inside_project_path(project_id: @project_id, 
       synonym_id: @synonym_id, keyword: @keyword )
   end
 
+  # author:
+  #   Kareem Ali
+  # description:
+  #   quickly add a keyword and the choosen synonym to a project inside the 
+  #   project view
+  # params:
+  #   project_id, word_id, synonym_id
+  # success:
+  #   redirects to the add_word_inside_project method inside the controller 
+  #   to add the keyword and prefered synonym
+  # failure:
+  #   will redirect to the add_word_inside_project to handle the incorrect object
   def quick_add
     @project_id = params[:project_id].to_i
     @synonym_id = params[:synonym_id].to_i
     @keyword = params[:keyword]
-    add_word and return
+    add_word_inside_project and return
   end
 
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Used to load the synonyms in the dropdown menu next to the keyword 
+  #   inside the project to change the synonym
+  # params:
+  #   project_id, word
+  # success:
+  #   renders the javascript of loading synonyms to update the 
+  #   dropdown menu next to the keyowrd
+  # failure:
+  #   no Failure
   def load_synonyms
     project_id = params[:project_id].to_i
     @project = Project.find(project_id)
@@ -474,15 +578,31 @@ end
       @keyword_synonyms = Synonym.where(keyword_id: keyword_object.id)
     end
   end 
-  
+
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Used for autocomplete textbox in the project view to autocomplete 
+  #   the words given by the user
+  # params:
+  #   keyword_search: for which the user writes in the textbox , project_id
+  # success:
+  #   returns an array of the similar words which are sorted according 
+  #   to the categories of the keywords, keywords with has one or more 
+  #   of project categories comes first and make sure that 
+  #   duplicates are removed.
+  # failure:
+  #   no keyword match the entered character(s), will return empty array  
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
     project_categories = Project.find(params[:project_id]).categories
     project_categories = project_categories.map {|cat| cat.get_name_by_locale}
-    similar_keywords = Keyword.get_similar_keywords(keyword, project_categories)
+    similar_keywords = Keyword.get_similar_keywords(
+      keyword, project_categories)
     similar_keywords = similar_keywords.uniq
     match_category_no = similar_keywords.count 
-    similar_keywords = similar_keywords.concat(Keyword.get_similar_keywords(keyword,[]))
+    similar_keywords = similar_keywords.concat(
+      Keyword.get_similar_keywords(keyword,[]))
     similar_keywords = similar_keywords.uniq 
     similar_keywords.map! { |keyword| keyword.name }
     similar_keywords.push(match_category_no)
