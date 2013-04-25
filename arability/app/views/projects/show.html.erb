@@ -128,7 +128,6 @@
     })
   }
   $(".input").change(function(){
-    alert("hoppa");
     var new_synonym_id = $(this).val();
       $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
   });
