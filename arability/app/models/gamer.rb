@@ -1,7 +1,7 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
 
-  has_one :authentication
+  has_many :authentications
   has_and_belongs_to_many :prizes
   has_and_belongs_to_many :trophies
   has_many :votes
@@ -11,20 +11,21 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook],
-         :omniauth_providers => [:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable
 
+  attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+  validates :username, presence: true, uniqueness: true,
+    length: { minimum: 3, maximum: 20 }
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
 
@@ -35,8 +36,31 @@ class Gamer < ActiveRecord::Base
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
 
-  
- # Description:
+  # Author:
+  #   Adam Ghanem
+  # Description
+  #   method that needs to be overwritten for devise so that
+  #   we can find a Gamer by a given username OR email
+  # params:
+  #   gamer_conditions: a hash of the form
+  #   'username: "adam"', 'email: "a@email.com"'
+  # success:
+  #   returns the Gamer with the given conditions
+  # failure:
+  #   returns nil for not being able to find any gamer
+  #   with the given conditions
+  def self.find_for_database_authentication(gamer_conditions)
+    conditions = gamer_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(
+        ["lower(username) = :value OR lower(email) = :value",
+                               { value: login.downcase }]).first
+    else
+      where(conditions).first
+    end
+  end
+
+  # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
   # Author:
   #   Adam Ghanem
