@@ -5,8 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  # before_filter :developer_can_see_this_project?, 
-  # only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :export_to_csv, :export_to_xml, :export_to_json]
+  before_filter :developer_can_see_this_project?, 
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
 
 
 
@@ -493,19 +493,18 @@ end
   #   project does not exist, not registered developer, no words in project.
   def export_to_csv 
     @project_id = params[:project_id]
-    if Project.find_by_id(@project_id) != nil   
+    if Project.find(@project_id) != nil   
       @exported_data = PreferedSynonym.where(project_id: @project_id).all
       csv_string = CSV.generate do |csv|
         if @exported_data != []
           @exported_data.each do |word|
-            @keyword = Keyword.find_by_id(word.keyword_id).name
-            @synonym = Synonym.find_by_id(word.synonym_id).name
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
             csv << [@keyword, @synonym]
           end
         else
           flash[:notice] = t(:no_words)
           redirect_to project_path(@project_id), flash: flash
-          return
         end
       end         
       send_data csv_string,
@@ -514,7 +513,6 @@ end
     else
       flash[:notice] = t(:no_project)
       redirect_to projects_path, flash: flash
-      return
     end
   end 
 
@@ -530,13 +528,13 @@ end
   #   project does not exist, not registered developer, no words in project.
   def export_to_xml
     @project_id = params[:project_id]
-    if Project.find_by_id(@project_id) != nil  
+    if Project.find(@project_id) != nil  
       @exported_data = PreferedSynonym.where(project_id: @project_id).all
       xml_string = "<project_data> "
       if @exported_data != []
         @exported_data.each do |word|
-          @keyword = Keyword.find_by_id(word.keyword_id).name
-          @synonym = Synonym.find_by_id(word.synonym_id).name
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
           xml_string << " <word>" + @keyword + 
           "</word>  <translation>" + @synonym + "</translation>"
         end
@@ -544,7 +542,6 @@ end
       else
         flash[:notice] = t(:no_words)
         redirect_to project_path(@project_id), flash: flash
-        return
       end
       send_data xml_string ,
       type: "text/xml; charset=UTF-8;", 
@@ -567,13 +564,13 @@ end
   #   project does not exist, not registered developer, no words in project.
   def export_to_json
     @project_id = params[:project_id]
-    if Project.find_by_id(@project_id) != nil  
+    if Project.find(@project_id) != nil  
       @exported_data = PreferedSynonym.where(project_id: @project_id).all
       json_string = "{   "
       if @exported_data != []
         @exported_data.each do |word|
-          @keyword = Keyword.find_by_id(word.keyword_id).name
-          @synonym = Synonym.find_by_id(word.synonym_id).name
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
           json_string << "\"word\": \"" +
           @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
         end
@@ -581,7 +578,6 @@ end
       else
         flash[:notice] = t(:no_words)
         redirect_to project_path(@project_id), flash: flash
-        return
       end
       send_data json_string ,
       type: "text/json; charset=UTF-8;", 
@@ -589,7 +585,6 @@ end
     else
       flash[:notice] = t(:no_project)
       redirect_to projects_path, flash: flash
-      return
     end
   end
 end
