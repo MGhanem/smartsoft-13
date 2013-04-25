@@ -59,19 +59,19 @@ describe ProjectsController, type: :controller do
 
   #khloud's tests
 
-  it "redirects to project path after calling export_to_csv if project has no words" do
+  it "redirects to project path after calling export_to_csv if project empty" do
     p = create_project
     get :export_to_csv, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "redirects to project path after calling export_to_xml if project has no words" do
+  it "redirects to project path after calling export_to_xml if project empty" do
     p = create_project
     get :export_to_xml, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "redirects to project path after calling export_to_json if project has no words" do
+  it "redirects to project path after calling export_to_json if project empty" do
     p = create_project
     get :export_to_json, project_id: p.id
     response.should redirect_to project_path(p.id)
