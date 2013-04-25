@@ -6,9 +6,6 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
-
-
-
  # author:Noha hesham
  # Description:
  #   finds the project by its id then destroys it
@@ -481,46 +478,113 @@ end
     end
   end
 
-
-  
   # author:
-#      Khloud Khalid
-# description:
-#   method exports words and synonyms of a given project to a .csv file
-# params:
-#   project_id
-# success:
-#   data exported successfully
-# failure:
-#   project does not exist, not registered developer.
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .csv file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
   def export_to_csv 
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      @project_id = params[:project_id]
-      if Project.find_by_id(@project_id) != nil   
-        @exported_data = PreferedSynonym.where(project_id: @project_id).all
-        csv_string = CSV.generate do |csv|
-          if @exported_data != []
-            @exported_data.each do |word|
-              @keyword = Keyword.find_by_id(word.keyword_id).name
-              @synonym = Synonym.find_by_id(word.synonym_id).name
-              csv << [@keyword, @synonym]
-            end
-          else
-            flash[:notice] = t(:no_words)
-            redirect_to project_path(@project_id), flash: flash
-            return
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil   
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      csv_string = CSV.generate do |csv|
+        if @exported_data != []
+          @exported_data.each do |word|
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            csv << [@keyword, @synonym]
           end
-        end         
-        send_data csv_string,
-        type: "text/csv; charset=iso-8859-1; header=present",
-        disposition: "attachment; filename=project_data.csv" 
-      else
-        flash[:notice] = t(:no_project)
-        render "pages/home"
-      end
+        else
+          flash[:notice] = t(:no_words)
+          redirect_to project_path(@project_id), flash: flash
+          return
+        end
+      end         
+      send_data csv_string,
+      type: "text/csv; charset=UTF-8; header=present",
+      disposition: "attachment; filename=project_data.csv" 
     else
-      flash[:notice] = t(:not_developer)
-      render "pages/home"
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
     end
   end 
+
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .xml file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_xml
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil  
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      xml_string = "<project_data> "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
+          xml_string << " <word>" + @keyword + 
+          "</word>  <translation>" + @synonym + "</translation>"
+        end
+        xml_string << " </project_data>"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data xml_string ,
+      type: "text/xml; charset=UTF-8;", 
+      disposition: "attachment; filename=project_data.xml"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+    end
+  end
+
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .json file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_json
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil  
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      json_string = "{   "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
+          json_string << "\"word\": \"" +
+          @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
+        end
+        json_string << "   }"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data json_string ,
+      type: "text/json; charset=UTF-8;", 
+      disposition: "attachment; filename=project_data.json"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+    end
+  end
 end
