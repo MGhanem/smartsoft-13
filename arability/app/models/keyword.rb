@@ -4,7 +4,7 @@ class Keyword < ActiveRecord::Base
   has_and_belongs_to_many :developers, uniq: true
   attr_accessible :approved, :is_english, :name
   has_and_belongs_to_many :categories, uniq: true
-  validates_presence_of :name 
+  validates_presence_of :name
   validates_format_of :name, with: /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
 
@@ -85,9 +85,9 @@ class Keyword < ActiveRecord::Base
       categories.each do |category|
         category.keywords << keyword
       end
-      return true, keyword
+      [true, keyword]
     else
-      return false, keyword
+      [false, keyword]
     end
   end
 
@@ -105,8 +105,7 @@ class Keyword < ActiveRecord::Base
     name.strip!
     name.downcase!
     name = name.split(" ").join(" ")
-    keyword = Keyword.where(name: name).first
-    return keyword
+    Keyword.where(name: name).first
   end
 
   # Author:
@@ -127,10 +126,6 @@ class Keyword < ActiveRecord::Base
       return keyword.save
     end
     return false
-  end
-
-  class << self
-
   end
 
   # author:

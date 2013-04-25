@@ -128,7 +128,7 @@
 </div>
 
 
-<%= form_tag(keywords_new_path, :method => "post", :id => "category_form") do %>
+<%= form_tag keywords_new_path, method: "post", id: "category_form" do %>
   <input type="hidden" name="name" value="<%= @search_keyword %>"/>
   <input type="hidden" name="override_categories" value="true"/>
   <input type="hidden" name="category_ids" value="<%= @category_ids.join(",") %>"/>

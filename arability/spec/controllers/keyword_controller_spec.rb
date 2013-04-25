@@ -45,14 +45,14 @@ describe KeywordsController do
     it "should create a new keyword" do
       d = create_logged_in_developer
       sign_in d.gamer
-      post :create, category_ids: [c.id], keyword: {name: "test"}
+      post :create, category_ids: [c.id], keyword: { name: "test" }
       assigns(:keyword).categories.include?(c).should eq(true)
     end
 
     it "should not create a new keyword if not passes validation" do
       d = create_logged_in_developer
       sign_in d.gamer
-      post :create, category_ids: [c.id], keyword: {name: "test2"}
+      post :create, category_ids: [c.id], keyword: { name: "test2" }
       assigns(:keyword).valid?.should eq(false)
     end
 
@@ -60,7 +60,7 @@ describe KeywordsController do
       d = create_logged_in_developer
       sign_in d.gamer
       k
-      post :create, category_ids: [c.id], keyword: {name: "test"}
+      post :create, category_ids: [c.id], keyword: { name: "test" }
       assigns(:keyword).categories.include?(c).should eq(true)
     end
 
@@ -68,7 +68,7 @@ describe KeywordsController do
       d = create_logged_in_developer
       sign_in d.gamer
       k
-      post :create, keyword: {name: "test"}
+      post :create, keyword: { name: "test" }
       flash[:error].present?.should eq(true)
     end
 
@@ -76,7 +76,8 @@ describe KeywordsController do
       d = create_logged_in_developer
       sign_in d.gamer
       k.categories = [c]
-      post :create, category_ids: [c2.id], keyword: {name: "test"}, override_categories: "true"
+      post :create, category_ids: [c2.id],
+        keyword: { name: "test" }, override_categories: "true"
       assigns(:keyword).categories.include?(c).should eq(false)
       assigns(:keyword).categories.include?(c2).should eq(true)
     end
@@ -85,7 +86,7 @@ describe KeywordsController do
       d = create_logged_in_developer
       sign_in d.gamer
       k.categories = [c]
-      post :create, category_ids: [c2.id], keyword: {name: "test"}
+      post :create, category_ids: [c2.id], keyword: { name: "test" }
       assigns(:keyword).categories.include?(c).should eq(true)
       assigns(:keyword).categories.include?(c2).should eq(true)
     end

@@ -72,7 +72,10 @@ class SearchController < BackendController
         @no_synonyms_found = true if @synonyms.blank?
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
-        @categories = @search_keyword_model.categories.map { |c| c.get_name_by_locale }
+
+        @categories =
+          @search_keyword_model.categories.map { |c| c.get_name_by_locale }
+
         @category_ids = @search_keyword_model.categories.map { |c| c.id }
       else
         redirect_to search_keywords_path(search: @search_keyword)

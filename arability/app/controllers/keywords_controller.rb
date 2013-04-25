@@ -1,4 +1,6 @@
 class KeywordsController < BackendController
+  before_filter :authenticate_gamer!
+  before_filter :authenticate_developer!
 
   # Author:
   #   Mohamed Ashraf
@@ -66,7 +68,8 @@ class KeywordsController < BackendController
       end
         redirect_to search_path(search: @keyword.name), flash: flash
     else
-      success, @keyword = Keyword.add_keyword_to_database(name, false, is_english, categories)
+      success, @keyword =
+        Keyword.add_keyword_to_database(name, false, is_english, categories)
       if success
         flash[:success] = t(:keyword_added, keyword: @keyword.name)
         redirect_to search_path(search: @keyword.name), flash: flash

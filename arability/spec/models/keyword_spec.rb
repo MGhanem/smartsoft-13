@@ -49,11 +49,15 @@ describe Keyword do
     end
 
     it "should add keywords with categories" do
-      success, category = Category.add_category("test", "تشتبت")
-      success, keyword = Keyword.add_keyword_to_database("test", true, true, [category])
+      success, category =
+        Category.add_category("test", "تشتبت")
+      success, keyword =
+        Keyword.add_keyword_to_database("test", true, true, [category])
       success.should eq(true)
       category.keywords.include?(keyword).should eq(true)
-      success, keyword = Keyword.add_keyword_to_database("ينسب", true, false, [category])
+
+      success, keyword =
+        Keyword.add_keyword_to_database("ينسب", true, false, [category])
       success.should eq(true)
       category.keywords.include?(keyword).should eq(true)
     end
