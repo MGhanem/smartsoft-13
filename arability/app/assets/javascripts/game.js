@@ -96,10 +96,10 @@ function wordsListToolTip(){
 
 function tableToolTip(){
 	$('#button7-5').popover();
-	setTimeout(function(){ $('#button7-5').popover('show');}, 300);
 	setTimeout(function(){
-		$('.popover').expose();
-	}, 320);
+		$('#main-table').expose();
+	}, 300);
+	setTimeout(function(){ $('#button7-5').popover('show');}, 320);
 	
 }
 
@@ -536,6 +536,9 @@ function generateWord(){
 //   the game is over, on click nothing will happen.
 
 function callMethods(id){
+	if(tutorialFlag == true && id == 'button7-5'){
+		return;
+	}
 	if(tutorialFlag == true && tutorialClick == false && secondTutorialClick == false){
 		return;
 	}
