@@ -7,32 +7,25 @@
           <div class="alert">
             <% @errors.each do |error| %>
               <li>
-                <% if error[0] == "date_of_birth" %>
+                <% if error[0] == "username" %>
                   <% if I18n.locale == :en %>
-                    Date of birth
+                    User name
                   <%else%>
-                    تاريخ الميلاد
+                    اسم المستخدم
                   <%end%>
                 <% end %>
-                <% if error[0] == "education_level" %>
+                <% if error[0] == "password" %>
                   <% if I18n.locale == :en %>
-                    Education level
+                    Password
                   <%else%>
-                    المستوي التعليمي
+                    كلمة السر
                   <%end%>
                 <% end %>
-                <% if error[0] == "gender" %>
+                <% if error[0] == "email" %>
                   <% if I18n.locale == :en %>
-                    Gender
+                    Email
                   <%else%>
-                    النوع
-                  <%end%>
-                <% end %>
-                <% if error[0] == "country" %>
-                  <% if I18n.locale == :en %>
-                    Country
-                  <%else%>
-                    البلد
+                    البريد الإلكتروني
                   <%end%>
                 <% end %>
                 <% error.delete_at(0) %>
