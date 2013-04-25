@@ -17,8 +17,6 @@ describe "NewMySubscription" do
 
   let(:developer){
     developer = Developer.new
-    developer.first_name = "test"
-    developer.last_name = "test"
     developer.verified = true
     developer.gamer_id = gamer.id
     developer.save
