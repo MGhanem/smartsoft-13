@@ -17,14 +17,7 @@
           </button>
         </div>
          <div class="btn-group">
-           <%= link_to t(:recommended_words) + ".csv", action: "view_recommended_words", controller: "projects", project_id: @project.id, class: "btn" %>
-          <button class="btn">
-            <i class="icon-thumbs-up">
-            </i>
-            <a href="/" style="color:#000"><%= t(:recommended_words)%></a>
-            <span>
-            </span>
-          </button>
+            <button href="<%= view_recommended_words_path(:project_id) %>" class = "btn icon-thumbs-up"><%= t(:recommended_words)%></button>
         </div>
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">

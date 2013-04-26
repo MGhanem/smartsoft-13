@@ -2,7 +2,7 @@ Arability::Application.routes.draw do
 
   root :to => 'pages#home'
 
-  scope "/admin" do 
+  scope "/admin" do
     get "/login"
     get "/logout"
     get "/index"
@@ -23,12 +23,12 @@ Arability::Application.routes.draw do
     # required for routing by the devise module(gem)
     # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
     # devise_for :gamers
-    devise_for :gamers do 
-      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+    devise_for :gamers do
+      get '/gamers/sign_out' => 'devise/sessions#destroy'
     end
 
     match '/game' => 'games#game'
-    post "games/vote" 
+    post "games/vote"
     post "games/record_vote"
     get 'games/getnewwords'
     get "games/getprizes"
@@ -45,13 +45,13 @@ Arability::Application.routes.draw do
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
     get "authentications/remove_twitter_connection"
-    match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/auth/twitter/callback', :to => 'authentications#twitter_callback'
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
 
-    scope "developers/" do 
+    scope "developers/" do
       match "/" => "backend#home", :as => "backend_home"
 
       get "projects/remove_developer_from_project"
@@ -68,6 +68,7 @@ Arability::Application.routes.draw do
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
+      match "/projects/:project_id/view_recommended_words" => "projects#view_recommended_words", :as => :view_recommended_words
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
