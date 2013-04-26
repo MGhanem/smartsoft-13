@@ -42,7 +42,7 @@ class DeveloperController < ApplicationController
     project = Project.find(params[:project_id])
     project.developers_shared.delete(dev)
     project.save
-    flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    flash[:notice] = t(:dev_unshare)
     redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
   # Author:
@@ -61,24 +61,24 @@ class DeveloperController < ApplicationController
     @project = Project.find(params[:id])
     gamer = Gamer.find_by_email(params[:email])
     if(!gamer.present?)
-      flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_doesnt_exist')
+      flash[:notice] = t(:Email_dont)
     else
        developer = Developer.find_by_gamer_id(gamer.id)
         if developer == nil
-         flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_for_a_gamer_not_a_developer')
+         flash[:notice] = t(:Email_for_a_gamer)
         else
          developer2 = Developer.find_by_gamer_id(current_gamer.id)
           if developer == developer2 
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.you_cant_share_the_project_with_yourself')
+            flash[:notice] = t(:you_cant_share_with_yourself)
             redirect_to "/developers/projects/#{@project.id}/share"
             return
           end
           if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.already_shared')
+            flash[:notice] = t(:already_shared_project)
           else
             developer.projects_shared << @project
             if(developer.save)
-              flash[:notice] = I18n.t('controller.my_subscription.flash_messages.project_has_been_successfully_shared')
+              flash[:notice] = t(:project_successfully_shared)
               redirect_to :action => "share",:controller => "projects", :id => params[:id]
               return
             else

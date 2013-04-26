@@ -131,34 +131,25 @@
     </div>
     </div>
     <div class="tab-pane" id="tab2">
-        <br><br><br><br><br><br><br>
-        <% end %>
+      <div class="well" style="width:1100px; height:480px">
+
+        <div class="Facebook" style="width: 344px;margin-right: auto;margin-left: auto;">
+        </div>
         <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
-          <% if Authentication.exists?(:gamer_id => current_gamer.id, :provider => "twitter") %>
-          <% if I18n.locale==:en %>
-          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
-            already connected to Twitter!</h5>
-          <%= link_to "Remove Connection", "/authentications/remove_twitter_connection" %>
-          <% else I18n.locale == :ar %>
-          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" />
-          التواصل بالفعل موجود!</h5>
-          <%= link_to "إلغاء الاتصال مع تويتر", "/authentications/remove_twitter_connection" %>
-          <% end %>
+          <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
+          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" /><%=
+            t(:already_connected) %></h5>
+          <%= link_to t(:remove_connection), "/authentications/remove_twitter_connection" %>
           <% else %>
-          <% if I18n.locale==:en %>
           <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
           <span font='20' style="position:relative; padding:40px;">
-            <%= link_to "Connect to twitter", "/auth/twitter" %>
-          </span>        
-          <% else I18n.locale==:ar %>
-          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
-          <span font='20' style="position:relative; padding:40px;">
-            <%= link_to "تواصل مع تويتر", "/auth/twitter" %>
+            <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
           </span>
-          <% end %>
           <% end %>
         </div>
       </div>
     </div>
+<% end %>
+
   </div>
 </div>
