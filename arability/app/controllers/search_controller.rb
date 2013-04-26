@@ -10,8 +10,8 @@ class SearchController < BackendController
   #   search: a string representing the search keyword, from the params list
   #     from a textbox in the search view
   #   categories: [optional] a string by which the categories can be filtered
-  #   is_successful: [optional] a boolean that is passed and set to true if the
-  #     controller is accessed due to a redirect from the keyword controller
+  #   project_id: an int indicating a redirection from a specific project
+  #     the same id as the int value
   # returns:
   #   success: 
   #     returns to the search view a list of keywords (in a certain category)
@@ -53,6 +53,8 @@ class SearchController < BackendController
   #   age_to: a string representing age upper bound filter, maybe nil
   #   education: a string representing education level filter, maybe nil
   #   gender: a string representing gender filter, maybe nil
+  #   project_id: an int indicating a redirection from a specific project
+  #     the same id as the int value
 	#	returns:
 	#		success: 
 	#			returns to the search view a list of synonyms for the keyword
