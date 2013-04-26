@@ -1,0 +1,37 @@
+<p>You could translate your website on the fly using our api.
+To find out how you can see out <a href="<%= api_help_path %>">help pages</a></p>
+<fieldset>
+  <legend>Generate an api key</legend>
+
+  <%= form_for @api_key, :url => { :action => "create" },
+    :html => {:class => "form-horizontal"} do |f| %>
+
+    <div class="control-group">
+      <label class="control-label" for="website">Website:</label>
+      <div class="controls">
+        <input type="text" name="website" id="website" placeholder="www.example.com"/>
+        <small>(the website you will use our api on)</small>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="website">Project:</label>
+      <div class="controls">
+        <%= f.collection_select :project_id, @projects, :id, :name, prompt: true %>
+        <small>(optional project to tie to this api key)</small>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit :class => "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</fieldset>
+
+<% if @api_keys %>
+  <h4>Your Api keys:</h4>
+<% end %>
+
+

@@ -1,0 +1,17 @@
+<script>
+  $.getJSON("<%= translate_path format: :json %>", {
+    api_key: "test",
+    keywords: [
+      { word : "click",
+        overrides :
+        {
+          country: "Egypt",
+          age_from: 19
+        }
+      }
+    ]
+  }, get_data)
+  function get_data(data) {
+    console.log(data)
+  }
+</script>
