@@ -274,4 +274,19 @@ class Synonym < ActiveRecord::Base
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
     return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
   end 
+
+  def self.filter_voters_gender(voters, gender)
+    filtered = voters.select{|v| v.gender == gender}
+    filtered 
+  end
+
+  def self.filter_voters_country(voters, country)
+    filtered = voters.select{|v| v.country == country}
+    filtered 
+  end
+
+  def self.filter_voters_education(voters, education)
+    filtered = voters.select{|v| v.education_level == education}
+    filtered 
+  end
 end
