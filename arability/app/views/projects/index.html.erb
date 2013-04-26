@@ -54,9 +54,9 @@
   <% end %>
   
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-left" class="btn-danger" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/destroy"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+    <a class="btn pull-right" class="btn-danger" href="/developers/projects/<%= project1.id %>/destroy"></i><%= t(:projects_index_delete)%></a>
   <% end %>
   <br />
 

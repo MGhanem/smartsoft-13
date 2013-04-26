@@ -29,7 +29,7 @@ class Project < ActiveRecord::Base
 def self.createproject(params,developer_id)
   project = Project.new(params.except(:categories,:developer))
   project.owner_id = developer_id
-  project = createcategories(project,params[:categories])
+  # project = createcategories(project,params[:categories])
   return project
 end
 
