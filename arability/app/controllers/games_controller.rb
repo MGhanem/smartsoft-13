@@ -117,7 +117,6 @@ class GamesController < ApplicationController
     @score = params[:score].to_i
     @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, 
                                                  @score, @level)
-    @won_prizes.map { |wp| current_gamer.prizes << wp }
     respond_to do |format|
       format.js
     end
