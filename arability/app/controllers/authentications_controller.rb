@@ -18,8 +18,8 @@ class AuthenticationsController < ApplicationController
   #   none
 	def twitter_callback
 	  auth = request.env["omniauth.auth"]
+    authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["uid"])
     if gamer_signed_in?
-      authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["uid"])
       if authentication.nil?
         flash[:notice] = I18n.t(:add_twitter_connection)
         Authentication.create_with_omniauth(auth["provider"], auth["uid"],
@@ -30,7 +30,6 @@ class AuthenticationsController < ApplicationController
       redirect_to "/gamers/edit"
       return
     else
-      authentication = Authentication.find_by_provider_and_gid(auth["provider"], auth["uid"])
       if authentication
         flash[:notice] = I18n.t(:twitter_signin_success)
         gamer = Gamer.find(authentication.gamer_id)
