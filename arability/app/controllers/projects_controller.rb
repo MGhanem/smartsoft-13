@@ -468,8 +468,8 @@ end
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.where(project_id: @project_id, 
-            keyword_id: @word_id).first
+          @edited_word = PreferedSynonym.where(project_id:@project_id, 
+            keyword_id:@word_id).first
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
@@ -493,9 +493,9 @@ end
           if @added_word
             project_categories = Project.find(@project_id).categories
             new_keyword = Keyword.find(@word_id)
-            project_categories.each do |category|
+            for category in project_categories do
               if not new_keyword.categories.include?(category) 
-                new_keyword.categories << category
+                new_keyword.categories.push(category)
                 new_keyword.save
               end
             end
@@ -571,13 +571,13 @@ end
   def load_synonyms
     project_id = params[:project_id].to_i
     @project = Project.find(project_id)
-    synonym_id = params[:project_id].to_i
     keyword = params[:word]
     keyword_object = Keyword.find_by_name(keyword)
     @keyword_synonyms = []
     if keyword_object
       @keyword_synonyms = Synonym.where(keyword_id: keyword_object.id)
     end
+    render "load_synonyms.js.erb"
   end 
 
   # author:
@@ -597,18 +597,19 @@ end
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
     project_categories = Project.find(params[:project_id]).categories
-    project_categories = project_categories.map {|category| category.get_name_by_locale}
+    project_categories = project_categories.map {|cat| cat.get_name_by_locale}
     similar_keywords = Keyword.get_similar_keywords(
       keyword, project_categories)
     similar_keywords = similar_keywords.uniq
-    match_category_count = similar_keywords.count 
+    match_category_no = similar_keywords.count 
     similar_keywords = similar_keywords.concat(
       Keyword.get_similar_keywords(keyword,[]))
     similar_keywords = similar_keywords.uniq 
     similar_keywords.map! { |keyword| keyword.name }
-    similar_keywords << match_category_count
+    similar_keywords.push(match_category_no)
     render json: similar_keywords
   end 
+
 
 # author:
 #   Khloud Khalid
