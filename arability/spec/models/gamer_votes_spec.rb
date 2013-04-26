@@ -124,13 +124,13 @@ describe Gamer, vote_log_test: true do
         Vote.record_vote(gTwo.id, sFour.id)
         count, vote_log_list = gTwo.get_votes
         count.should eq(2)
-        vote_log_list =~ [["trialKeywordA", "الثاني"],["trialKeywordb", "الرابع"]]
+        vote_log_list.should =~ [["trialKeywordA", "الثاني"],["trialKeywordb", "الرابع"]]
       end
 
       it "returns 0 and empty list when the gamer never voted on any synonym before" do
         count, vote_log_list = gTwo.get_votes
         count.should eq(0)
-        vote_log_list =~ []
+        vote_log_list.should =~ []
       end
   end
 end
