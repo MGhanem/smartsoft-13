@@ -229,11 +229,12 @@ function setButtons(){
   }
 
   function showProfile(){
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    } 
     clear();
     $.get('/games/showprofile');
   }
-
-
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
@@ -244,8 +245,6 @@ function setButtons(){
     return "النهاية";
     <% end %>
   }
-
-
 
 </script>
 
@@ -264,15 +263,9 @@ function setButtons(){
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
       الإنجازات
     </div>
-    <% if I18n.locale == :ar %> 
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()">
-     الأصوات
+      <%= t(:vote_log_button) %>
     </div>
-    <% else %>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()">
-     Votes
-    </div>
-    <% end %>
     <div class="nav-box btn btn-inverse" id="navItems">
 
      إعدادات
