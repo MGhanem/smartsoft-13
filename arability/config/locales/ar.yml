@@ -36,17 +36,16 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
-  categories: "الفئات"
-  formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  formality: "اللغة"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< عودة"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -120,6 +119,7 @@ ar:
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -141,14 +141,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -159,8 +151,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -236,7 +227,6 @@ ar:
       developer:
         first_name: "الاسم الاول"
         last_name: "إسم العائلة"
-  not_in_range: "ليس في الحدود المسموح بها"
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
   facebook: "فيسبوك"
@@ -300,3 +290,21 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+        project:
+          attributes:
+            minAge:
+              not_in_range: "ليس في الحدود المسموح بها"
+  add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
+  remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
+  connection_failure: "فشل التواصل!"
+  already_connected: "التواصل بالفعل موجود!"
+  remove_connection: "إلغاء الاتصال مع تويتر"
+  connect_to_twitter: "تواصل مع تويتر"
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"

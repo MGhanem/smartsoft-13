@@ -1,7 +1,7 @@
 #encoding:utf-8
 class Gamer < ActiveRecord::Base
 
-  has_one :authentication
+  has_many :authentications
   has_and_belongs_to_many :prizes
   has_and_belongs_to_many :trophies
   has_many :votes
@@ -11,9 +11,7 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook],
-         :omniauth_providers => [:google_oauth2]
+         :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model

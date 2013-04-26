@@ -5,7 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, :only => [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  before_filter :developer_can_see_this_project?,
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
 
 
 
@@ -63,19 +64,21 @@ class ProjectsController < BackendController
   #   that creates the project and redirects to the project page and prints
   #   an error if the data entered is invalid.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name
   # Success:
   #   Creates a new project and views it in the index page
   # Failure:
   #   Gives status errors
   def create
     if developer_signed_in?
+      @project = Project.new(params[:project].except(:category))
       @project = Project.createproject(params[:project],current_developer.id)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
-            notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
+            flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
+          @project.save
         else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -88,24 +91,30 @@ class ProjectsController < BackendController
   end
 
   # Author:
-  #    Salma Farag
+  #   Salma Farag
   # Description:
-  #   A method that views the form that  instantiates an empty project object
+  #   A method that views the form that checks if the developer is signed in and has not exceeded the
+  #   max number of projects allowed and instantiates an empty project
   #   after checking that the user is signed in.
   # Params:
   #   None
   # Success:
   #   An empty project will be instantiated
   # Failure:
-  #   None
+  #   If not signed in he will be redirected to the sign in page.
+  #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
     if developer_signed_in?
-      @project = Project.new
-      @categories = @project.categories
-      respond_to do |format|
-        format.html
-        format.json { render json: @project }
-      end
+      # if current_developer.my_subscription.get_projects
+        @project = Project.new
+        respond_to do |format|
+          format.html
+          format.json { render json: @project }
+        end
+      # else
+      #   format.html { redirect_to "/my_subscriptions/choose_sub",
+      #   notice: I18n.t('exceeded_project_limit: ') }
+      # end
     else
       developer_unauthorized
       render 'pages/home'
@@ -131,7 +140,7 @@ class ProjectsController < BackendController
   # Description:
   #   A method that specifies an already existing project by its ID
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
   # Success:
   #   A form that contains the existing data of the project will open from the views.
   # Failure:
@@ -139,7 +148,6 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -148,10 +156,12 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   A method that checks if the fields of the form editting the project have been changed.
+  #   A method that checks if the fields of the form editing the project have been changed.
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
+  #   Then calls method createcategories that changes the category.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   and its category
   # Success:
   #   An existing project will be updated.
   # Failure:
@@ -159,13 +169,13 @@ class ProjectsController < BackendController
   def update
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @project = Project.createcategories(@project, params[:project][:categories])
-      if @project.update_attributes(params[:project].except(:categories,:utf8, :_method,
-        :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
-        redirect_to :action => "index"
-        flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
+      @project = Project.createcategories(@project, params[:project][:category])
+      if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
+        :authenticity_token, :commit, :action, :controller, :locale, :id))
+        redirect_to action: "index"
+        flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
       else
-        render :action => 'edit'
+        render action: 'edit'
       end
     else
       developer_unauthorized
@@ -180,29 +190,29 @@ class ProjectsController < BackendController
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
   #   projects index.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
   # Success:
   #   An project will be showed with its words and synonyms.
   # Failure:
   #   None.
-def show
-  @projects = Project.where(:owner_id => current_developer.id)
-  @project = Project.find(params[:id])
-  if @projects.include?(@project)
-    @words = []
-    @synonyms = []
-    @words_synonyms = PreferedSynonym.where(:project_id => params[:id])
-    @words_synonyms.each do |word_synonym|
-      word = Keyword.find(word_synonym.keyword_id)
-      syn = Synonym.find(word_synonym.synonym_id)
-      @words.push(word)
-      @synonyms.push(syn)
+  def show
+    @projects = Project.where(owner_id: current_developer.id)
+    @project = Project.find(params[:id])
+    if @projects.include?(@project)
+      @words = []
+      @synonyms = []
+      @words_synonyms = PreferedSynonym.where(project_id: params[:id])
+      @words_synonyms.each do |word_synonym|
+        word = Keyword.find(word_synonym.keyword_id)
+        syn = Synonym.find(word_synonym.synonym_id)
+        @words.push(word)
+        @synonyms.push(syn)
+      end
+    else
+      redirect_to action: "index"
+      developer_unauthorized
     end
-  else
-    redirect_to :action => "index"
-    developer_unauthorized
   end
-end
 
 
   # Author:
@@ -223,7 +233,14 @@ end
         @project = Project.find(params[:id])
         karray = []
         Keyword.each do |k|
-
+          sarray = []
+          k.categories.each do |c|
+            if c.id == @project.category_id
+              karray.push(k)
+              sarray.push([k,k.synonyms])
+              break
+            end
+          end
         end
       end
     else
@@ -505,46 +522,114 @@ end
     end
   end
 
-
-
   # author:
-#      Khloud Khalid
-# description:
-#   method exports words and synonyms of a given project to a .csv file
-# params:
-#   project_id
-# success:
-#   data exported successfully
-# failure:
-#   project does not exist, not registered developer.
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .csv file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
   def export_to_csv
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      @project_id = params[:project_id]
-      if Project.find_by_id(@project_id) != nil
-        @exported_data = PreferedSynonym.where(project_id: @project_id).all
-        csv_string = CSV.generate do |csv|
-          if @exported_data != []
-            @exported_data.each do |word|
-              @keyword = Keyword.find_by_id(word.keyword_id).name
-              @synonym = Synonym.find_by_id(word.synonym_id).name
-              csv << [@keyword, @synonym]
-            end
-          else
-            flash[:notice] = t(:no_words)
-            redirect_to project_path(@project_id), flash: flash
-            return
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      csv_string = CSV.generate do |csv|
+        if @exported_data != []
+          @exported_data.each do |word|
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            csv << [@keyword, @synonym]
           end
+        else
+          flash[:notice] = t(:no_words)
+          redirect_to project_path(@project_id), flash: flash
+          return
         end
-        send_data csv_string,
-        type: "text/csv; charset=iso-8859-1; header=present",
-        disposition: "attachment; filename=project_data.csv"
-      else
-        flash[:notice] = t(:no_project)
-        render "pages/home"
       end
+      send_data csv_string,
+      type: "text/csv; charset=UTF-8; header=present",
+      disposition: "attachment; filename=project_data.csv"
     else
-      flash[:notice] = t(:not_developer)
-      render "pages/home"
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
     end
   end
+
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .xml file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_xml
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      xml_string = "<project_data> "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
+          xml_string << " <word>" + @keyword +
+          "</word>  <translation>" + @synonym + "</translation>"
+        end
+        xml_string << " </project_data>"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data xml_string ,
+      type: "text/xml; charset=UTF-8;",
+      disposition: "attachment; filename=project_data.xml"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+    end
+  end
+
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   method exports words and synonyms of a given project to a .json file
+  # params:
+  #   project_id
+  # success:
+  #   data exported successfully
+  # failure:
+  #   project does not exist, not registered developer, no words in project.
+  def export_to_json
+    @project_id = params[:project_id]
+    if Project.find(@project_id) != nil
+      @exported_data = PreferedSynonym.where(project_id: @project_id).all
+      json_string = "{   "
+      if @exported_data != []
+        @exported_data.each do |word|
+          @keyword = Keyword.find(word.keyword_id).name
+          @synonym = Synonym.find(word.synonym_id).name
+          json_string << "\"word\": \"" +
+          @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
+        end
+        json_string << "   }"
+      else
+        flash[:notice] = t(:no_words)
+        redirect_to project_path(@project_id), flash: flash
+        return
+      end
+      send_data json_string ,
+      type: "text/json; charset=UTF-8;",
+      disposition: "attachment; filename=project_data.json"
+    else
+      flash[:notice] = t(:no_project)
+      redirect_to projects_path, flash: flash
+    end
+  end
+
 end
