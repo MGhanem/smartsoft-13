@@ -1,11 +1,11 @@
+#encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
   has_and_belongs_to_many :developers
   attr_accessible :approved, :is_english, :name
-  has_many :synonyms
   has_and_belongs_to_many :categories
   validates_presence_of :name 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-z ]+)$/
+  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
 
   # Author: 
@@ -113,43 +113,75 @@ class Keyword < ActiveRecord::Base
     return keyword
   end
 
-  class << self
   # Author:
-  #  Mirna Yacout
+  #   Mirna Yacout
   # Description:
-  #  This method is to record the aproval of the admin to a certain keyword in the database
+  #   This method is to record the disapproval of the admin to a certain keyword in the database
   # Parameters:
-  #  id: the id of the keyword to be approved
+  #   id: the id of the keyword to be disapproved
   # Success:
-  #  returns true on saving the approval correctly in the database
+  #   returns true on saving the disapproval correctly in the database
   # Failure:
-  #  returns false if the keyword doesnot exist in the database
-  #  or if the approval failed to be saved in the database 
-    def approve_keyword(keyword_id)
-      if Keyword.exists?(id: keyword_id)
-        keyword = Keyword.find(keyword_id)
-        keyword.approved = true
-        return keyword.save
-      end
-      return false
+  #   returns false if the keyword doesnot exist in the database
+  #   or if the disapproval failed to be saved in the database 
+  def self.disapprove_keyword(keyword_id)
+    if Keyword.exists?(id: keyword_id)
+      keyword = Keyword.find(keyword_id)
+      keyword.approved = false
+      return keyword.save
     end
-
-    # author:
-    #   Omar Hossam
-    # description:
-    #   feature takes no input and returns a list of all unapproved keywords
-    # success: 
-    #   takes no arguments and returns to the admin a list containing the keywords 
-    #   that are pending for approval in the database
-    # failure:
-    #   returns an empty list if no words are pending for approval
-
-      def listunapprovedkeywords
-
-        return Keyword.where(approved: false).all
-
-      end
+    return false
   end
+  
+  class << self
+
+  end
+
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   feature takes no input and returns a list of all unapproved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are pending for approval in the database.
+  # Failure:
+  #   returns an empty list if no words are pending for approval.
+  def self.list_unapproved_keywords
+    return Keyword.where(approved: false).all
+  end
+
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all approved keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are approved in the database.
+  # Failure:
+  #   returns an empty list if no words are approved.
+  def self.list_approved_keywords
+    Keyword.where(approved: true).all
+  end
+
+  # author:
+  #   Omar Hossam
+  # Description:
+  #   function takes no input and returns a list of all reported keywords.
+  # Parameters:
+  #   None.
+  # Success: 
+  #   takes no arguments and returns to the admin a list containing the keywords
+  #   that are reported by users in the database.
+  # Failure:
+  #   returns an empty list if no words are reported.
+  def self.list_reported_keywords
+    Keyword.where(reported: true).all
+  end
+
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
   	#Description:
@@ -175,17 +207,20 @@ class Keyword < ActiveRecord::Base
       search_word = search_word.split(" ").join(" ")
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
+      category_name = I18n.locale == :en ? :english_name : :arabic_name
       if categories != []
         keyword_list = 
           keyword_list.joins(:categories)
-            .where("categories.name" => categories)
+            .where("categories.#{category_name}" => categories)
       end
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
     	relevant_first_list
     end
+
   class << self
+
     # Author: Mostafa Hassaan
     # Description: Method gets the synonym of a certain word with the highest
     #               number of votes.
@@ -214,19 +249,32 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
+
+    # finds a keyword by name from the database
+    # @author Mohamed Ashraf
+    # @params name [string] the search string
+    # ==returns
+    #   success: An instance of Keyword
+    #   failure: nil
+    def find_by_name(name)
+      name.strip!
+      keyword = Keyword.where(name: name).first
+      return keyword
+    end
+
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function created for high charts to get model information. 
-  #       It returns a hash with the name of each synonym and a the 
-  #         percentage of total votes
+  #   function created for high charts to get model information. 
+  #   It returns a hash with the name of each synonym and a the 
+  #   percentage of total votes
   # params:
-  #     keyword_id: id of the keyword needed
+  #   keyword_id: id of the keyword needed
   # success:
-  #     returns a hash contating each synonym name in a string with a 
-  #       percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
+  #   returns a hash contating each synonym name in a string with a 
+  #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
-  #     returns empty hash if the synonyms of the given keyword have no votes
+  #   returns empty hash if the synonyms of the given keyword have no votes
     def get_keyword_synonym_visual(keyword_id)
       votes = Synonym.where(keyword_id: keyword_id)
         .joins(:votes).count(group: "synonym_id")
@@ -234,20 +282,19 @@ class Keyword < ActiveRecord::Base
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-  end
 
   # author:
   #   Mostafa Hassaan
   # description:
-  #    functioni is used to notify developers of new synonyms or 
-  #     updated keywords
+  #   functioni is used to notify developers of new synonyms or 
+  #   updated keywords
   # params:
-  #     synonym_id: the synonym that has been changed or added.
+  #   synonym_id: the synonym that has been changed or added.
   # success:
-  #     sends an email to all developers following the word that has 
-  #       the synonym
+  #   sends an email to all developers following the word that has 
+  #   the synonym
   # failure:
-  #     --
+  #   --
   def notify_developer(synonym_id)
       keyword = Keyword.find(self.id)
       synonym = Synonym.find(synonym_id)
@@ -255,5 +302,6 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
-    end
+  end
+  end
 end

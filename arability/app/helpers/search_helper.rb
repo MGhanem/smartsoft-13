@@ -1,18 +1,21 @@
 module SearchHelper
 
-
+  @@GENDER = 0
+  @@COUNTRY = 1
+  @@AGE = 2
+  @@EDUCATION = 3
 
   
   # author:
   #   Mostafa Hassaan
   # description:
-  #     function creates the highcharts pie chart
+  #   function creates the highcharts pie chart
   # params:
-  #    keyword_id: id of the keyword needed
+  #   keyword_id: id of the keyword needed
   # success:
-  #     creates the pie chart in view
+  #   creates the pie chart in view
   # failure:
-  #     fails to show a chart if synonyms have no votes
+  #   fails to show a chart if synonyms have no votes
   def chart_keyword_synonym(keyword_id)
     stats = Keyword.get_keyword_synonym_visual(keyword_id)
     name1 = Keyword.find(keyword_id).name
@@ -25,7 +28,7 @@ module SearchHelper
                 data: stats,
         }
       end
-      if I18n.locale == :ar
+      if I18n.locale ==:ar
         series = {
                type: 'pie',
                name: 'Browser share',
@@ -41,9 +44,6 @@ module SearchHelper
         }
         f.tooltip(tooltip)
       end
-      
-      
-      
       f.series(series)
       f.options[:title][:text] = "#{t(:synonyms_of)} #{name1}"
       f.legend(:layout=> 'vertical', style: {left: 'auto', bottom: 'auto', right: '50px', top: '100px'}) 
@@ -57,11 +57,12 @@ module SearchHelper
           color: "black",
           style: {
             font: "13px Trebuchet MS, Verdana, sans-serif"
-          }
         }
-      })
-    end
+      }
+    })
   end
+  end
+
 
   @@GENDER = 0
   @@COUNTRY = 1
@@ -100,6 +101,7 @@ module SearchHelper
                    :name=> 'Browser share',
                    :borderWidth => 0.7,
                    :data=>  stats
+
           }
           f.series(series)
           f.options[:title][:text] = header
@@ -120,4 +122,36 @@ module SearchHelper
           })
     end
   end
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   functions gets id of a given keyword
+  # params:
+  #   word: string of the keyword name needed
+  # success:
+  #   returns integer of the keyword id
+  # failure:
+  #   --
+  def getID(word)
+    return Keyword.where(name: word).first.id
+  end
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   funtion checks whether a developer is following a word or not.
+  # params:
+  #   key_id: id for the keyword to check
+  # success:
+  #   returns true if following
+  # failure:
+  #   returns false if not following
+  def is_following(key_id)
+    developer = Developer.where(gamer_id: current_gamer.id).first
+    keyword_ids = developer.keyword_ids
+    keyword_ids.include? key_id.to_i
+  end
+
 end
+

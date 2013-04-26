@@ -5,11 +5,13 @@
 	  		<% text_field_tag(:search, @search_keyword,
 	  											:placeholder => t(:search_here),
 	  											:class => "search-query") + %>
-				<% button_tag(:type => "submit",:class => "btn", :id => "search_button") do %>
+				<% button_tag(:type => "submit", :class => "btn", :id => "search_button") do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-      <input name="categories" type="text" placeholder="<%= t :enter_categories %>" value="<%= @categories %>"/>
+      <input name="categories_input" type="text" id="categories" class="categories-autocomplete" autocomplete="off" placeholder="<%= t :enter_categories %>" value=""/>
+
+      <input name="project_id" type="hidden" value="<%= @project_id %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
@@ -27,10 +29,11 @@
 			<% @similar_keywords.each do |c| %>
 				<div class="accordion-group" style="padding:10px;">
 					<div class="accordion-heading">
-						<%= link_to c.name, search_path(:search => c.name), :method => :post %>
+						<%= link_to c.name, search_path(:search => c.name, :project_id => @project_id), :method => :post %>
 					</div>
 				</div>
 			<% end %>
 		<% end %>
 	</div>
 </div>
+<%= render "categories-autocomplete" %>

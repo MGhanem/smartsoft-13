@@ -6,12 +6,8 @@ module StringHelper
   #   success: returns true if the string is in english
   #   failure: returns false if the string contains non english letters
   def is_english_string(text)
-    text = text.strip
+    text.strip!
     text = text.split(" ").join("")
-    if text.match /^[a-zA-Z]+$/
-      true
-    else
-      false
-    end
+    text.match(/^[a-zA-Z ]+$/) ? true : false
   end
 end

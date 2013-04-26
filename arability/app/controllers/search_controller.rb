@@ -21,9 +21,11 @@ class SearchController < BackendController
   #     similar keywords were found
   def search_keywords
     @categories = params[:categories]
+    @project_id = params[:project_id]
     if @categories.present?
       categories_array = @categories.split(/,/)
       categories_array.map! { |x| x.strip }
+      categories_array.map! { |x| x.downcase }
       categories_array.reject! { |x| x.blank? }
       categories_array.uniq!
     else
@@ -36,7 +38,7 @@ class SearchController < BackendController
     end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array.join(", ")
+    @categories = categories_array
   end
 
 	#Description:
@@ -59,6 +61,7 @@ class SearchController < BackendController
 	#			returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
+    @project_id = params[:project_id]
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
