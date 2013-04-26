@@ -299,3 +299,5 @@ en:
   you_have_score: "Congratulations! you have scored"
   share_your_score: "Share your score!"
   you_have_won_these_trophies: "You have won these trophies too!"
+  game_over: "GAME OVER"
+  lose_score: "You have scored"

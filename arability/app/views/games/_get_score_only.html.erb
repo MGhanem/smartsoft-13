@@ -1,0 +1,11 @@
+<div class="award-zone" >
+  <div class="won">
+    <% if I18n.locale == :en %>
+      <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" href="/game"><%= t(:restart_game) %></a>
+    <% else %>
+      <a class="pull-left btn btn-success" style="padding: 5px; margin-left:28px; margin-top: 28px;" href="/game"><%= t(:restart_game) %></a>
+    <% end %>
+    <h3 class="title-head"><%= t(:game_over) %><br><br>You have scored<br><br> <%= @score %></h3>
+  </div>
+</div>
+
