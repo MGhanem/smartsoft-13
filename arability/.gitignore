@@ -19,3 +19,8 @@ schema.rb
 
 # Ignore the Gemfile.lock because it is diffrent for everyone
 /*.lock
+
+#Ignore testing files
+.rspec
+Guardfile
+coverage/*

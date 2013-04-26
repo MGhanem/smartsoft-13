@@ -6,7 +6,7 @@ module ApplicationHelper
 
   # Checks if current signed in gamer has a developer account
   # author:
-  #   Adam Ghanem
+  #   Adam Ghanem, Salma Farag
   # params:
   #   none
   # returns:
@@ -27,4 +27,8 @@ module ApplicationHelper
     Developer.find_by_gamer_id(current_gamer.id)
   end
 
+  def developer_unauthorized
+    flash.now[:error] = "You are not authorized to view this page" 
+  end
 end
+

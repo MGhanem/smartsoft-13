@@ -1,22 +1,196 @@
-<h1>Projects</h1>
-<br />
-<a class="btn" href="/projects/new"><i class="icon-plus"></i> New Project</a>
-<br />
-<% @projects.each do |project| %>
-  <div class="boxed">
-  Name:
+<legend>
+  <a>
+    <%= t(:projects_index_title)%>
+  </a>
+</legend> 
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
+    <li><a id="projects_shared" href="#tab2" data-toggle="tab"><%= t(:projects_index_tab2)%></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a>
+      <br />
+      <br />
+      <%counter_bigloop = 0%>
+      <%size_bigloop = @my_projects.size%>
+      <table>
+      <% while counter_bigloop < size_bigloop %>
+        <%project1 = @my_projects[counter_bigloop]%>
+        <%project2 = @my_projects[counter_bigloop + 1]%>
+        <tr>
+          <td class="span5">
+            <div class="well well-small" style="padding-bottom: 20px;">
+              <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+              <br />
+              <strong><%= t(:projects_index_categories)%></strong>
+              <% size = project1.categories.length %>
+              <% if size == 0 %>
+              <%= t(:no_categories) %>
+              <% else %>
+              <% counter = 1 %>
+              <% project1.categories.each do |c| %>
+                <% if counter < size %>
+                  <%= c.name %>,
+                  <% counter = counter + 1 %>
+                <% else %>
+                  <%= c.name %>
+                <% end %>
+              <% end %>
+              <% end %>
+              <br />
+              <strong><%= t(:projects_index_description)%></strong>
+              <% if project1.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project1.description %>
+              <% end %>
   <br />
-  <%= project.name %>
-  <br />
-  Categories:
-  <br />
-  <% project.categories.each do |c| %>
-    <%= c.name %>
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <br />
-  Description:
-  <br />	
-  <%= project.description %>
+            </div>
+          </td>
+          <td style="width:40px;"></td>
+            <%if project2 != nil%>
+              <td class="span5">
+                <div class="well well-small" style="padding-bottom: 20px;">
+                  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+                  <br />
+                  <strong><%= t(:projects_index_categories)%></strong>
+                  <% size = project2.categories.length %>
+                  <% if size == 0 %>
+              <%= t(:no_categories) %>
+              <% else %>
+                  <% counter = 1 %>
+                  <% project2.categories.each do |c| %>
+                    <% if counter < size %>
+                      <%= c.name %>,
+                      <% counter = counter + 1 %>
+                    <% else %>
+                      <%= c.name %>
+                    <% end %>
+                  <% end %>
+                  <% end %>
+                  <br />
+                  <strong><%= t(:projects_index_description)%></strong>
+                  <% if project2.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project2.description %>
+              <% end %>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
+                </div>
+              </td>
+            <%end%>
+          </tr>
+          <% counter_bigloop = counter_bigloop +2 %>
+        <% end %>
+      </table>
+    </p>
+
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>
+        <%if @shared_projects.size == 0%>
+          <span style="color:red;"><%= t(:projects_index_no_shared_projects)%></span>
+        <%else%>
+          <%counter_bigloop = 0%>
+<%size_bigloop = @shared_projects.size%>
+<table>
+<% while counter_bigloop < size_bigloop %>
+<%project1 = @shared_projects[counter_bigloop]%>
+<%project2 = @shared_projects[counter_bigloop + 1]%>
+  <tr>
+    <td class="span5">
+      <div class="well well-small" style="padding-bottom: 20px;">
+        <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+        <br />
+  <strong><%= t(:projects_index_categories)%></strong>
+  <% size = project1.categories.length %>
+  <% if size == 0 %>
+  <%= t(:no_categories) %>
+  <% else %>
+  <% counter = 1 %>
+  <% project1.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <% end %>
+  <br />
+  <strong><%= t(:projects_index_description)%></strong>
+  <% if project1.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project1.description %>
+              <% end %>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
 </div>
-<br />
+    </td>
+    <td style="width:40px;"></td>
+    <%if project2 != nil%>
+      <td class="span5">
+      <div class="well well-small" style="padding-bottom: 20px;">
+  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+  <br />
+  <strong><%= t(:projects_index_categories)%></strong>
+  <% size = project2.categories.length %>
+  <% if size == 0 %>
+  <%= t(:no_categories) %>
+  <% else %>
+  <% counter = 1 %>
+  <% project2.categories.each do |c| %>
+    <% if counter < size %>
+      <%= c.name %>,
+      <% counter = counter + 1 %>
+    <% else %>
+      <%= c.name %>
+    <% end %>
+  <% end %>
+  <% end %>
+  <br />
+  <strong><%= t(:projects_index_description)%></strong>
+  <% if project2.description.size == 0 %>
+              <%= t(:no_description) %>
+              <% else %>  
+              <%= project2.description %>
+              <% end %>
+  <br />
+  <% if I18n.locale == :ar %>
+    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% else %>
+    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+  <% end %>
+  <br />
+</div>
+    </td>
+    <%end%>
+  </tr>
+  <% counter_bigloop = counter_bigloop +2 %>
 <% end %>
+</table>
+        <%end%>
+      </p>
+    </div>
+  </div>
+</div>

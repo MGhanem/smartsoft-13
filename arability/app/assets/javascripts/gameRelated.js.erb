@@ -1,0 +1,208 @@
+ var words;
+  var cache = "";
+  var nav_locked = false;
+
+  function setWordsArray(){
+    for(var x=0; x < successfulWords.length;x++){
+      successfulWords[x]=successfulWords[x].toLowerCase();
+    }
+    words=successfulWords;
+  }
+
+  
+  function getScoreOnly(score) {
+    clear();
+    $.get("/games/get_score_only?score=" + score);
+  }
+  function clear() {
+    $("#zone").empty();
+  }
+
+  function get_words(){
+    return words;
+  }
+
+  function check_empty_words(){
+    if(words.length == 0){
+        if(win == true){
+         getTrophies(level, score);
+      }
+      else{
+        getScoreOnly(score);
+      }
+      return true;
+    }else{
+      return false;
+    }
+  } 
+
+  function have_to_sign_in(){
+    $.post("/games/vote_errors.js");
+  }
+
+  function display_error_sign_in(locale){
+    $('.zone').empty();
+    if(locale == "english"){
+      $('.zone').append('<div class=\"vote_form\" style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;">' +
+        '<p>You have to be signed in to display vote form</p></div>');
+    }
+    if(locale == "arabic"){
+      $('.zone').append('<div class=\"vote_form\"style="font-size:20px;' + 
+        'color:white; float:left; margin-left:30px;" >' +
+        '<p>يجب ان يكون قد تم تسجيل دخولك</p></div>');
+    }
+  }
+
+  function request_vote_form(){
+    $('.zone').empty();
+    $('.zone').append('<div class=\"vote_form\"></div></br>');
+    if(check_empty_words()){
+      return;
+    }
+    else{
+      var first_word = words.shift();
+      $.post("/games/vote.js", { word: first_word});
+    }
+  }
+
+
+
+  function getTrophies(level, score) {
+    clear();
+    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+  function getScore() {
+    return 123456;
+  }
+
+  function showPrizes() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }    
+    clear();
+    $.get("/games/showprizes");
+  }
+
+  function showTrophies() {
+    if(nav_locked) {
+      return;
+    }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }
+    clear();
+    $.get("/games/showtrophies");
+  }
+  // function  setLevelTitle(){
+  //   <% if I18n.locale==:ar %>
+  //   levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
+  //   <% else I18n.locale==:en %>
+  //    levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>Level " + level +"</span>";
+  //   <% end %>
+  //   return levelTitle; 
+  // }
+
+
+function setButtons(){
+    <% if I18n.locale==:ar %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
+    continuePlayingBtn = "الاستمرار في اللعب"
+    <% else I18n.locale==:en %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
+    gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
+    continuePlayingBtn = "Continue Playing"
+    <% end %>
+  }
+
+
+  function getPrizes(level, score) {
+    clear();
+    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    $.get(request_string);
+  }
+
+  function getScore() {
+    return 123456;
+  }
+
+
+  function setLevelPopUpTitle(){
+    <% if I18n.locale==:ar %>
+    levelPopUpTitle = 'مرحلة رقم';
+    <% else I18n.locale==:en %>
+    levelPopUpTitle = 'Level';
+    <% end %> 
+  }
+ 
+  function setScoreTitle(){
+    <% if I18n.locale==:ar %>
+    document.getElementById('game-score').innerHTML = score + ' :نقاط'
+    <% else I18n.locale==:en %>
+    document.getElementById('game-score').innerHTML = 'Score: ' + score;
+    <% end %>
+  }
+  
+  function backToGame() {
+    document.getElementById("zone").innerHTML = cache;
+    cache = "";
+    nav_locked = false;
+  }
+
+  function disableNav() {
+    var lists = $("[id*='navItems']");
+    lists.addClass("disabled");
+    nav_locked = true;
+  }
+
+  function enableNav() {
+    var lists = $("[id*='navItems']");
+    lists.removeClass("disabled");
+    nav_locked = false;
+  }
+
+  function hallOfFame(){
+    if(nav_locked == true){
+      return;
+    }
+    clear();
+    <% if I18n.locale==:en %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
+    <% else I18n.locale==:ar %>
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
+    <% end %>
+    $('#loading-server').fadeTo(0,0);
+    $('#loading-server').fadeTo(1000,1);
+    $('#loading-server').fadeTo(1000,0);
+    $.get("/games/halloffame");
+  }
+
+
+
+  function generateGameOverPopUp(){
+    <% if I18n.locale == :en %>
+    gameOverFontSize = '150px';
+    return "Game Over";
+    <% else I18n.locale == :ar %>
+    gameOverFontSize = '300px';
+    return "النهاية";
+    <% end %>
+  }
+
+  function generateEmptyDbMsg(){
+    <% if I18n.locale == :ar %>
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
+    <% else I18n.locale == :en %>
+      return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
+    <% end %>
+  }
