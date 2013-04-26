@@ -265,4 +265,7 @@ class AdminController < ApplicationController
     @models = SubscriptionModel.all
   end
 
+  def edit_subscription_model
+    @model = SubscriptionModel.find(params[:model_id])
+  end
 end

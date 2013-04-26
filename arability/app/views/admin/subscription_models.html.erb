@@ -14,7 +14,7 @@
       <th><%= model.limit_search %></th>
       <th><%= model.limit_follow %></th>
       <th><%= model.limit_project %></th>
-    	<th><a class="btn btn-mini" href="#"><i class="icon-edit"></i></a></th>
+    	<th><a class="btn btn-mini" href="/admin/edit_subscription_model/?model_id=<%= model.id %>"><i class="icon-edit"></i></a></th>
     </tr>
   <% end %>
 </table>
