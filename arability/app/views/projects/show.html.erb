@@ -98,22 +98,22 @@
             <tr style="text-align:center" >
               <td style="text-align:center">
                 <% if I18n.locale == :en %>
-                <div class="input-append" >
+                <div class="input-append" style="margin-top:10px;" >
                   <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 0px 15px 15px 0px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
                 </div>
                 <% else %>
-                 <div class="input-append" >
+                 <div class="input-append" style="margin-top:10px;" >
                   <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 15px 0px 0px 15px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
                 </div>
                 <% end %>
               </td> 
               <td style="text-align:center" >
-                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%'}) %>
+                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%; margin-top:10px;'}) %>
               </td> 
               <td style="text-align:center">
-                <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
+                <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center; margin-top:10px;" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
              </td>
             </tr>
       </table>
