@@ -67,7 +67,10 @@ function arBtnPopOver(){
 	setTimeout(function(){
 		$('#exposedArBtnDiv').expose();
 	}, 200);
-	setTimeout(function(){ $('.ar-btn').popover('show');}, 200);
+	setTimeout(function(){
+		$('.ar-btn').popover('show');
+		$('.popover').css('z-index', '9999999');
+	}, 200);
 }
 
 function bothBtnPopOver(){
@@ -77,7 +80,10 @@ function bothBtnPopOver(){
 	setTimeout(function(){
 		$('#exposedBothBtnDiv').expose();
 	}, 200);
-	setTimeout(function(){ $('.both-btn').popover('show');}, 200);
+	setTimeout(function(){
+		$('.both-btn').popover('show');
+		$('.popover').css('z-index', '9999999');
+	}, 200);
 }
 
 function destroy(id){
@@ -100,7 +106,10 @@ function wordsListToolTip(){
 	setTimeout(function(){
 		$('#list-div').expose();
 	}, 100);
-	setTimeout(function(){ $('#wordsList').popover('show');}, 200);
+	setTimeout(function(){
+		$('#wordsList').popover('show');
+		$('.popover').css('z-index', '9999999');
+	}, 200);
 	
 }
 
@@ -115,7 +124,10 @@ function tableToolTip(){
 	setTimeout(function(){
 		$('#main-table').expose();
 	}, 300);
-	setTimeout(function(){ $('#button7-5').popover('show');}, 320);
+	setTimeout(function(){
+		$('#button7-5').popover('show');
+		$('.popover').css('z-index', '9999999');
+	}, 320);
 	
 }
 
@@ -124,7 +136,10 @@ function wordLablelToolTip(){
 	setTimeout(function(){
 		$('.label-div').expose();
 	}, 300);
-	setTimeout(function(){ $('#wordLabel').popover('show');}, 400);
+	setTimeout(function(){
+		$('#wordLabel').popover('show')
+		$('.popover').css('z-index', '9999999');
+	}, 400);
 }
 
 function callNextToolTip(id){
@@ -620,6 +635,7 @@ function callMethods(id){
 			}, 200);
 			setTimeout(function(){
 				$('#' + id).popover('show');
+				$('.popover').css('z-index', '9999999');
 				tutorialButtonId = id;
 			}, 300);
 		}
@@ -1244,7 +1260,7 @@ function continuePlaying(){
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well"><ol data-html="true" data-trigger="manual" data-content="<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button' + 
 	" onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>" +
-	'Got it</button>" data-title="<h4>Words List</h4>" id="wordsList"></ol>' + 
+	'Got it</button>" data-placement="left" data-title="<h4>Words List</h4>" id="wordsList"></ol>' + 
 	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
 	" onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>" +
 	'Got it</button>" data-title="<h4>Letters Label</h4>" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+

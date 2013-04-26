@@ -180,6 +180,7 @@ margin-left: 80px;
 
 .game-lang{
   text-align: center;
+  line-height: 19px;
 }
 
 .game-lang .btn{
@@ -481,11 +482,12 @@ margin-left: 80px;
 }
 
 #list-div .popover{
-  width: 220px;
+  max-width: none;
+  width: 348px;
 }
 
 #list-div .popover button{
-  margin-left: 30px;
+  margin-left: 86px;
 }
 
 .label-div .popover button{
@@ -493,7 +495,13 @@ margin-left: 80px;
   width: 100px;
 }
 
-
+td .popover{
+  top: -230px;
+  left: -162.5px;
+  display: block;
+  max-width: none;
+  width: 378px;
+}
 
 td .popover button{
   margin-left: 120px;
