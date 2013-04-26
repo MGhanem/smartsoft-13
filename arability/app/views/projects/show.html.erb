@@ -83,10 +83,10 @@
             <tr>
               <td style="text-align:center">
                 <% keyword = @words[count].name%>
-                <%= link_to keyword, search_path(search:keyword, :project_id => @project.id), :method => :post %>
+                <%= link_to keyword, search_path(search: keyword, project_id: @project.id), :method => :post %>
               </td>
               <td style="text-align:center">
-                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {:selected => @synonyms[count].id}, {:class=>'input', :name=>'normalSelect', :id=>'synonym_select', :style=>'width:50%'}) %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'input', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
               </td>
               <td style="text-align:center" >
                 <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
@@ -102,7 +102,7 @@
                   <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 0px 15px 15px 0px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
                 </div>
-                <% elsif I18n.locale == :ar %>
+                <% else %>
                  <div class="input-append" >
                   <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
                   <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 15px 0px 0px 15px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
@@ -110,7 +110,7 @@
                 <% end %>
               </td> 
               <td style="text-align:center" >
-                <%= collection_select(:synonym_name , :text, [], :id, :name, {:prompt => t(:enter_word_first) }, {:class=>'input_synonym', :name=>'select_menu', :id=>'selected_synonym', :disabled => true, :style=>'width:70%'}) %>
+                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style: 'width:70%'}) %>
               </td> 
               <td style="text-align:center">
                 <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
@@ -141,6 +141,7 @@
   function fetch_keywords(keyword, callback){
     $.post("autocomplete_keyword", { keyword_search: keyword, project_id: <%= @project.id %> }, function(data){
       length = data[Object.keys(data).length-1];
+      data = data.slice(0,-1); 
       for(var i = 0; i < Object.keys(data).length; i++){
         if(i >= length){
          data[i] = data[i]+"   *".fontcolor("red") ;

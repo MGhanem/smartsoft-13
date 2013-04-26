@@ -32,10 +32,10 @@
               <% counter = 1 %>
               <% project1.categories.each do |c| %>
                 <% if counter < size %>
-                  <%= c.english_name %>,
+                  <%= c.get_name_by_locale %>,
                   <% counter = counter + 1 %>
                 <% else %>
-                  <%= c.english_name %>
+                  <%= c.get_name_by_locale %>
                 <% end %>
               <% end %>
               <% end %>
