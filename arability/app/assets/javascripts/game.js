@@ -40,6 +40,7 @@ var tutorialButtonId;
 var newDrop = false;
 var lockLangButtons = true;
 var tutorialFlagWas = tutorialFlag;
+var continuePlayingBtn;
 
 $(function(){
 	if(tutorialFlag == false){
@@ -131,6 +132,7 @@ function destroyAndStart(id){
 	endTutorial();
 }
 
+
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -152,12 +154,11 @@ function newGame(){
 }
 	else{
 		wasPrompted = true;
+		setButtons();
 		$('.zone').empty();
-		$('.zone').append('<h2 id ="empty-db-msg">' +
-			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
-			'You can continue playing the game without voting, although you will be seeing the same words you have voted on before</h2>' +
-			'<button class="btn btn-success" onclick="continuePlaying()">' +
-			'Continue Playing</button>');
+		$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="continuePlaying()">' +
+			continuePlayingBtn +'</button>');
 	}
 }
 // author:
@@ -697,7 +698,9 @@ function fadeSomething(x){
 				var originalLi = document.getElementById(lsId).innerHTML;
 				document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
 				calculateScore();
-				successfulWords.push(wordsArray[x]);
+				if(wordsInDb == true){
+					successfulWords.push(wordsArray[x]);
+				}
 				wordExistsInArray[x] = false;
 				calculatePossible();
 				win = true;
@@ -715,9 +718,14 @@ function fadeSomething(x){
 						$(".zone").slideDown(1000);
 					}, 1000);	
 					setTimeout(function(){
-						setWordsArray();
-						enableNav();
-						have_to_sign_in();
+						if(wordsInDb == false){
+							getTrophies(level,score);
+						}
+						else{
+							setWordsArray();
+							enableNav();
+							have_to_sign_in();
+						}
 						return;
 					}, 1000);
 				}		
@@ -875,12 +883,11 @@ function nextLevel(){
 	else{
 		if(wasPrompted == false){
 			wasPrompted = true;
+			setButtons();
 			$('.zone').empty();
-			$('.zone').append('<h2 id ="empty-db-msg">' +
-				'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
-				'You can continue playing the game without voting, although you will be seeing the same words you have voted on before</h2>' +
-				'<button class="btn btn-success" onclick="toNextLevel()">' +
-				'Continue Playing</button>');
+			$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="toNextLevel()">' +
+			continuePlayingBtn +'</button>');
 		}
 		else{
 			toNextLevel();
@@ -1010,29 +1017,6 @@ function suspenseCont(col){
 		}, 500);
 }
 
-
-// function highestTowerId(){
-// 	var towerHeight;
-// 	var towerCol;
-// 	var heighestSoFar = 0;
-// 	for(var cols = 0; cols < dimension; cols++){
-// 		towerHeight = 0;
-// 		for(var rows = dimension - 1; rows > -1; rows--){
-// 			cellId = "col" + rows + "-" + cols;
-// 			if(document.getElementById(cellId).innerHTML != ''){
-// 				towerHeight++;
-// 			}
-// 			else{
-// 				break;
-// 			}
-// 		}
-// 		if(towerHeight > heighestSoFar){
-// 			heighestSoFar = towerHeight;
-// 			towerCol = cols;
-// 		}
-// 	}
-// 	return towerCol;
-// }
 
 // author:
 //   Ali El Zoheiry.
@@ -1203,8 +1187,13 @@ function loseGame(t){
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			enableNav();
-			have_to_sign_in();
+			if(wordsInDb == false){
+				getScoreOnly(score);
+			}
+			else{
+				enableNav();
+				have_to_sign_in();
+			}
 			return true;
 		}, 3000);
 	}
@@ -1237,6 +1226,19 @@ function continuePlaying(){
 		startGame();
 	}, 3500);
 }
+
+
+
+// author:
+//   Ali El Zoheiry
+// description:
+//   an abstraction of the nextLevel() method to be called from various stages
+// params:
+//   none
+// success:
+//   the gamer has finished the level and is redirected to the next level
+// failure:
+//   none
 
 function toNextLevel(){
 	disableNav();
@@ -1274,3 +1276,5 @@ function toNextLevel(){
 		startGame();
 	}, 3500);
 }
+
+

@@ -1,7 +1,4 @@
-<%= javascript_include_tag "jquery.tools.min" %>
-<script type="text/javascript" charset="utf-8">
-
-  var words;
+ var words;
   var cache = "";
   var nav_locked = false;
 
@@ -117,11 +114,11 @@
 
 
 function setButtons(){
-    <% if I18n.locale == :ar %>
+    <% if I18n.locale==:ar %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
     continuePlayingBtn = "الاستمرار في اللعب"
-    <% else %>
+    <% else I18n.locale==:en %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
     continuePlayingBtn = "Continue Playing"
@@ -141,58 +138,17 @@ function setButtons(){
 
 
   function setLevelPopUpTitle(){
-    <% if I18n.locale == :ar %>
+    <% if I18n.locale==:ar %>
     levelPopUpTitle = 'مرحلة رقم';
-    <% else %>
+    <% else I18n.locale==:en %>
     levelPopUpTitle = 'Level';
     <% end %> 
   }
-  // Author:
-  //   Omar Hossam.
-  // Description:
-  //   a twitter image is placed on page and links to twitter to tweet an
-  //   invitation to the website's link.
-  // Parameters:
-  //   None.
-  // Success:
-  //   Gamer presses on the image and goes to twitter page to tweet an
-  //   invitation to the website
-  // Failure:
-  //   None.
-  // Author:
-  //   Amr Abdel-raouf
-  // Description:
-  //   Displays the static html where a user can invite from facebook
-  // Params:
-  //   None
-  // Success:
-  //   The html is rendered and a button appears where on click it posts
-  //   an invitation on facebook
-  // Failure:
-  //   None
-  function inviteFriends(){
-    if(nav_locked) {
-      return;
-    }
-    if(cache == "") {
-      cache = document.getElementById("zone").innerHTML;
-    }
-    clear();
-    <%if I18n.locale == :ar %>
-    $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-    $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;right:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;right:190px;"></a>')
-     <% else I18n.locale == :en %>
-     $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-     $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;left:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;left:190px;"></a>')
-     <% end %>
-  }
-  
+ 
   function setScoreTitle(){
     <% if I18n.locale==:ar %>
     document.getElementById('game-score').innerHTML = score + ' :نقاط'
-    <% else %>
+    <% else I18n.locale==:en %>
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
   }
@@ -237,7 +193,7 @@ function setButtons(){
     <% if I18n.locale == :en %>
     gameOverFontSize = '150px';
     return "Game Over";
-    <% else %>
+    <% else I18n.locale == :ar %>
     gameOverFontSize = '300px';
     return "النهاية";
     <% end %>
@@ -246,70 +202,7 @@ function setButtons(){
   function generateEmptyDbMsg(){
     <% if I18n.locale == :ar %>
       return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
-    <% else %>
+    <% else I18n.locale == :en %>
       return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
   }
-
-
-
-</script>
-
-
-
-
-<div class="game-zone">
-  <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
-      الرتبة
-    </div>
-
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
-      جوائز
-  </div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
-      الإنجازات
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-     بروفيل
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-
-     إعدادات
-    </div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
-      دعوات
-    </div>
-
-  </div>
-
-  <% if I18n.locale == :ar %>
-  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-
-    <% else %>
-    <div class="zone" id="zone">
-      <% end %> 
-    <div class="divaya">
-      <% if I18n.locale == :ar %>
-    <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
-    <div class="game-lang">
-      <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
-      <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
-      <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
-    </div>
-    <% else %>
-    <h2 class="lang-header">Pick the language you want to play with</h2><br>
-    <div class="game-lang">
-
-      <div id="exposedEngBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only english words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>English Button</h4>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">English</button></div><br><br><br><br>
-
-      <div id="exposedArBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only arabic words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="right" data-title="<h4>Arabic Button</h4>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button></div><br><br><br><br>
-
-      <div id="exposedBothBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on both arabic and english words during game play<p> <button class=' tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>Both Button</h4>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)">Both</button></div>
-
-    </div>
-    <% end %>
-    </div>
-
-  </div>
-</div>
