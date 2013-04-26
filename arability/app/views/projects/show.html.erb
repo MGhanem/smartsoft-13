@@ -110,7 +110,7 @@
                 <% end %>
               </td> 
               <td style="text-align:center" >
-                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style: 'width:70%'}) %>
+                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%'}) %>
               </td> 
               <td style="text-align:center">
                 <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
@@ -134,8 +134,8 @@
       document.getElementById('illustration').innerHTML = '</br>';
       if(item.charAt(item.length-1) == ">"){
        item = item.substring(0,item.indexOf("<"));
-       return item
      }
+     return item
     }
   });
   function fetch_keywords(keyword, callback){
