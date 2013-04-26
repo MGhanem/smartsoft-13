@@ -2,6 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  username_or_email: "Username or email"
+  omar_error1: "This keyword is not found"
+  omar_error2: "This synonym is empty"
+  omar_error3: "This is a dupplicate synonym for the same keyword"
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"
@@ -44,6 +48,8 @@ en:
   followed_words: "Followed Words"
   words: "Words"
   unfollow: "Unfollow"
+  follow: "Follow"
+  following: "Following"
   select subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
@@ -303,3 +309,10 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  keyword_added: "keyword added successfully"
+  add_twitter_connection: "Connected to Twitter successfully!"
+  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  connection_failure: "Failed to connect!"
+  already_connected: "already connected to Twitter!"
+  remove_connection: "Remove Connection"
+  connect_to_twitter: "Connect to Twitter"

@@ -203,5 +203,21 @@ module SearchHelper
     return Keyword.where(name: word).first.id
   end
 
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   funtion checks whether a developer is following a word or not.
+  # params:
+  #   key_id: id for the keyword to check
+  # success:
+  #   returns true if following
+  # failure:
+  #   returns false if not following
+  def is_following(key_id)
+    developer = Developer.where(gamer_id: current_gamer.id).first
+    keyword_ids = developer.keyword_ids
+    keyword_ids.include? key_id.to_i
+  end
+
 end
 

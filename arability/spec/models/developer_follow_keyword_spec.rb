@@ -6,12 +6,11 @@ describe "DeveloperFollowsKeyword" do
     gamer = Gamer.new
     gamer.username = "Mostafa"
     gamer.country = "Egypt"
-    gamer.education_level = "high"
     gamer.gender = "male"
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mer92@gmail.com"
     gamer.password = "1234567"
-    gamer.save
+    gamer.save validate: false
     gamer
   }
 
