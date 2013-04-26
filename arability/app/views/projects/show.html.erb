@@ -99,13 +99,11 @@
               <td style="text-align:center">
                 <% if I18n.locale == :en %>
                 <div class="input-append" style="margin-top:10px;" >
-                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 15px 0px 0px 15px;" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
-                  <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 0px 15px 15px 0px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
+                  <input type="text"  class="search-query autocomplete" name="keyword_search" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
                 </div>
                 <% else %>
                  <div class="input-append" style="margin-top:10px;" >
-                  <input type="text"  class="search-query autocomplete" name="keyword_search" style ="border-radius: 0px 15px 15px 0px;" id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
-                  <button type="button" class="btn" id="search_btn" type="submit" style="border-radius: 15px 0px 0px 15px;" onclick="load_synonyms()"><i class="icon-search"></i></button>
+                  <input type="text"  class="search-query autocomplete" name="keyword_search"  id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
                 </div>
                 <% end %>
               </td> 
