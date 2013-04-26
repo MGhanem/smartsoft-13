@@ -306,5 +306,5 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
-  sub_changed: "لقد غيرت نظامك إلى %{SubscriptionModel.name} "
+  sub_changed: "لقد غيرت نظامك "
 

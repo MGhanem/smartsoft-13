@@ -171,25 +171,25 @@
   <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
    <%= sm.name %><br />
     <% if I18n.locale==:en %>
-    <h5>The maximum number of word searches is:</h5>
+    <h5>The number of words you can search for is:</h5>
     <% else I18n.locale==:ar %>
     <h5>الحد الأقصى للبحث عن الكلمات في مشروعك هي:</h5>
     <% end %>
     <%=sm.limit_search%><%= t(:per_month)%><br />
     <% if I18n.locale==:en %>
-    <h5>The maximun number for the word follow is:</h5>
+    <h5>The number of words you can follow is:</h5>
     <% else I18n.locale==:ar %>
     <h5>الحد الأقصى لمتابعة الكلمات هي:</h5>
     <% end %>
     <%=sm.limit_follow%><%= t(:per_month)%><br/>
     <% if I18n.locale==:en %>
-    <h5>The maximum number of words per project is:</h5>
+    <h5>The number of words you can add to you project is:</h5>
     <% else I18n.locale==:ar %>
     <h5>الحد الأقصى لاضافة الكلمات إلى مشروعك هي:</h5>
     <% end %>
     <%=sm.limit%><%= t(:per_month)%><br />
     <% if I18n.locale==:en %>
-    <h5>The maximum number of projects you can create is:</h5>
+    <h5>The number of projects you can create is:</h5>
     <% else I18n.locale==:ar %>
     <h5>عدد المشاريع:</h5>
     <% end %>
