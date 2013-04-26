@@ -268,7 +268,6 @@ function initializeList(){
 //   the block and the letter are generated successfuly and placed in the correct place.
 // failure:
 //   the game is over.
-
 function dropAblock(){
 	if(tutorialFlag == true){
 		newDrop = true;
@@ -286,7 +285,7 @@ function dropAblock(){
 	dropAblockCont(clss, btn, randNum, 0);
 }
 
-function startTutorial(){
+function pause(){
 	tutorialFlag = true;
 }
 
@@ -307,6 +306,30 @@ function endTutorial(){
 			blockLanded();
 		}
 	}
+}
+
+
+function unPause(){
+	tutorialFlag = false;
+	if(newDrop == true){
+		newDrop = false;
+		dropAblock();
+	}
+	else{
+		if(document.getElementById(currentNewClss).innerHTML == ''){
+			document.getElementById(currentClss).innerHTML = '';
+			document.getElementById(currentNewClss).innerHTML = currentBtn;
+			dropAblockCont(currentNewClss, currentBtn, currentRandNum, currentNewCounter);
+		}
+		else{
+			blockLanded();
+		}
+	}
+}
+
+function destroyAndUnpause(id){
+	destroy(id);
+	unPause();
 }
 
 // author:
@@ -951,22 +974,24 @@ function suspense(){
 		}
 	}
 	if(enter == true){
-		if(tutorialFlagWas = true){
+		if(tutorialFlagWas == true){
 			tutorialFlagWas = false;
 			tutorialFlag = true;
 			$('#' + id).popover({
 				html: true,
 				trigger: 'manual',
-				content: "<p>Uh Oh! Looks like you are about to lose, better hurry up</p><button onclick='destroyAndStart(this.id)' class='tutBtn btn btn-primary' id='" + id + "-po'>Continue</button>",
+				content: "<p>Uh Oh! Looks like you are about to lose, better hurry up</p><button onclick='destroyAndUnpause(this.id)' class='tutBtn btn btn-primary' id='" + id + "-po'>Continue</button>",
 				title: '<h4>Flashing Tower</h4>',
-				placement: 'top',
-				container: $('.row2')
+				placement: 'left'
 			});
+			setTimeout(function(){ 
+				$('#' + id).popover('show');
+			}, 100);
 			setTimeout(function(){
 				$('.row2').expose({closeOnClick: false,
 				closeOnEsc: false, color: 'black', opacity: 0});
+				$('.popover').css('z-index', '9999999')
 			}, 100);
-			setTimeout(function(){  $('#' + id).popover('show');}, 120);
 		}
 		suspenseCont(x);
 		booleanSuspense[x] = true;
