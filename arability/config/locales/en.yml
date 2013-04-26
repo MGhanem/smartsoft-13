@@ -296,3 +296,6 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  you_have_score: "Congratulations! you have scored"
+  share_your_score: "Share your score!"
+  you_have_won_these_trophies: "You have won these trophies too!"

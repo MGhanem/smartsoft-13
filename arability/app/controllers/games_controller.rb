@@ -180,12 +180,12 @@ class GamesController < ApplicationController
   def gettrophies
     @level = params[:level].to_i
     @score = params[:score].to_i
-    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, 
+    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @won_prizes = current_gamer.won_prizes?(@score, @level)
-    @won_trophies.map { |nt| current_gamer.trophies << nt }
+    @bool_won_prizes = Prize.new_prizes_for_gamer?(current_gamer.id,
+                                                   @score, @level)
     if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+      current_gamer.update_attributes!(highest_score: @score)
     end
     respond_to do |format|
       format.js

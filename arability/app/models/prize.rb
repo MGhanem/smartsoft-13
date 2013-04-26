@@ -69,12 +69,35 @@ class Prize < ActiveRecord::Base
     prizes_for_score = []
     gamer = Gamer.find(gamer_id)
     prizes_gamer = gamer.prizes
-    prizes_of_level = Prize.where(:level => level)
+    prizes_of_level = Prize.where(level: level)
     new_prizes = prizes_of_level - prizes_gamer
     new_prizes.map { |np| prizes_for_score << np if np.score <= score }
     prizes_for_score.map { |p| gamer.prizes << p }
     gamer.save
     return prizes_for_score
+  end
+
+  # author:
+  #   Adam Ghanem
+  # description:
+  #   checks if the gamer with the given id can get any
+  #   prizes for the given score or level
+  # params:
+  #   gamer_id: id of a gamer instance
+  #   level: the level of the prize
+  #   score: the score of the prize
+  # success:
+  #   returns true and there are any prizes with the given params
+  # failure:
+  #   none
+  def self.new_prizes_for_gamer?(gamer_id, score, level)
+    prizes_for_score = []
+    gamer = Gamer.find(gamer_id)
+    prizes_gamer = gamer.prizes
+    prizes_of_level = Prize.where(:level => level)
+    new_prizes = prizes_of_level - prizes_gamer
+    new_prizes.map { |np| prizes_for_score << np if np.score <= score }
+    return prizes_for_score.size > 0
   end
 
   # author:

@@ -1,0 +1,43 @@
+<script type="text/javascript" charset="utf-8">
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+<div class="award-zone" >
+  <div class="won">
+    <% if I18n.locale == :en %>
+      <% if @bool_won_prizes %>
+        <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" onclick="getPrizes(<%= @level %>, <%= @score %>)"><%= t(:to_prizes) %></a>
+      <% else %>
+        <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" onclick="nextLevel()"><%= t(:to_next_level) %></a>
+      <% end %>
+    <% else %>
+     <% if @bool_won_prizes %>
+        <a class="pull-left btn btn-success" style="padding: 5px; margin-leftt: 28px; margin-top: 28px;" onclick="getPrizes(<%= @level %>, <%= @score %>)"><%= t(:to_prizes) %></a>
+      <% else %>
+        <a class="pull-left btn btn-success" style="padding: 5px; margin-left:28px; margin-top: 28px;" onclick="nextLevel()"><%= t(:to_next_level) %></a>
+      <% end %>
+    <% end %>
+    <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a><br><a style="margin-left: -24px" target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h3>
+  </div>
+  <% if @won_trophies.size > 0 %>
+  <div class="won">
+    <h3 class="title-head" style="border-top: none;"><%= t(:you_have_won_these_trophies) %></h3>
+     <% @won_trophies.each do |trophy| %>
+          <div class="award-new">
+            <div class="award-image">
+              <center>
+                <img src="<%= trophy.image %>" width="60" height="60"/>
+              </center>
+            </div>
+            <div class="award-new-name">
+              <%= trophy.name %>
+            </div>
+            <div class="award-new-req">
+              <%= t(:level) %> <%= troph.level %>
+            </div>
+            <div class="award-new-req">
+              <%= t(:score) %> <%= trophy.score %>
+            </div>
+          </div>
+      <% end %>
+  <% end %>
+</div>

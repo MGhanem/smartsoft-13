@@ -303,3 +303,6 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
+  you_have_score: "مبروك! لقد سجلت النقاط التالية"
+  share_your_score: "شارك على الشبكات الاجتماعية!"
+  you_have_won_these_trophies: "لقد حققت الانجازات التالية!"
