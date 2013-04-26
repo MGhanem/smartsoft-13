@@ -298,3 +298,4 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  confirm: " Are you sure you want to delete the project?"
