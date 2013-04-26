@@ -28,7 +28,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-var tutorialFlag = false;
+var tutorialFlag = true;
 var currentClss;
 var currentNewClss;
 var currentBtn;
@@ -47,16 +47,23 @@ $(function(){
 		lockLangButtons = false;
 		return;
 	}
-	$('.eng-btn').popover();
+	$('.eng-btn').popover({
+		container: $('#exposedEngBtnDiv')
+	});
 	setTimeout(function(){
 		$('#exposedEngBtnDiv').expose({closeOnClick: false,
 		closeOnEsc: false, color: 'black'});
 	}, 500);
-	setTimeout(function(){ $('.eng-btn').popover('show');}, 500);
+	setTimeout(function(){
+		$('.eng-btn').popover('show');
+		$('.popover').css('z-index', '9999999');
+	}, 500);
 });
 
 function arBtnPopOver(){
-	$('.ar-btn').popover();
+	$('.ar-btn').popover({
+		container: $('#exposedArBtnDiv')
+	});
 	setTimeout(function(){
 		$('#exposedArBtnDiv').expose();
 	}, 200);
@@ -64,7 +71,9 @@ function arBtnPopOver(){
 }
 
 function bothBtnPopOver(){
-	$('.both-btn').popover();
+	$('.both-btn').popover({
+		container: $('#exposedBothBtnDiv')
+	});
 	setTimeout(function(){
 		$('#exposedBothBtnDiv').expose();
 	}, 200);
