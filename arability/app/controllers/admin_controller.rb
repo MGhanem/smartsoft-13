@@ -261,4 +261,8 @@ class AdminController < ApplicationController
                 message: message
   end
 
+  def subscription_models
+    @models = SubscriptionModel.all
+  end
+
 end

@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <tr>
+    <th>#</th>
+    <th>الإسم</th>
+    <th>الحد الأقصى للبحث</th>
+    <th>الحد الأقصى للمتابعة</th>
+    <th>الحد الأقصى للمشاريع</th>
+    <th>تعديل</th>
+  </tr>
+  <% @models.each do |model| %>
+    <tr>
+    	<th><%= model.id %></th>
+    	<th><%= model.name %></th>
+      <th><%= model.limit_search %></th>
+      <th><%= model.limit_follow %></th>
+      <th><%= model.limit_project %></th>
+    	<th><a class="btn btn-mini" href="#"><i class="icon-edit"></i></a></th>
+    </tr>
+  <% end %>
+</table>

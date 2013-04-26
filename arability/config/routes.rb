@@ -15,6 +15,8 @@ Arability::Application.routes.draw do
     post "/add_word"
     post "/add_trophy"
     post "/add_prize"
+
+    match '/subscription_models' => 'admin#subscription_models'
   end
 
   # Only two languages are accepted: Arabic and English
