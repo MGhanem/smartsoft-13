@@ -111,7 +111,8 @@
                 <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%; margin-top:10px;'}) %>
               </td> 
               <td style="text-align:center">
-                <input class="btn btn-primary" type="submit" style="font-size:15px; text-align:center; margin-top:10px;" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>"></input>
+                <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center; margin-top:10px;" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>" disabled=
+                "true"></input>
              </td>
             </tr>
       </table>
@@ -146,7 +147,7 @@
         }
       }
       <% if I18n.locale == :en %>
-        document.getElementById('illustration').innerHTML = 'Keywords with <font color="red">   *   </font> are not in your project categories.';
+        document.getElementById('illustration').innerHTML = 'Keywords with <font color="red">   *   </font> are not in your project categories';
       <% else %>
         document.getElementById('illustration').innerHTML = 'الكلمات المصحوبة ب<font color="red">   *   </font>ليس في فئات مشروعك.';
       <% end %>
