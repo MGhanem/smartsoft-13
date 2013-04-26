@@ -190,7 +190,7 @@ def show
 end
 
  # Author:
- #    Noha hesham
+ #    Noha Hesham
  # Description:
  #    Finds the project by its id then destroys it
  # Params:
@@ -548,8 +548,8 @@ end
   #   Noha Hesham
   # Description:
   #   Finds the developer by its id and the project
-  #   and removes the developer form the developers_shared
-  #   array, removing the project from the developers
+  #   and removes the developer fromm the developers_shared
+  #   array, removing the project from the developer's
   #   shared projects
   # Success:
   #   Project is removed from shared projects
