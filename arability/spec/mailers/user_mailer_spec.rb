@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe UserMailer do
+describe UserMailer, mohamed: true do
   it "sends generic email" do
     mail = UserMailer.generic_email("to", "subject", "message")
     mail.to.should eq(["to"])
@@ -10,13 +10,12 @@ describe UserMailer do
   end
 
   let(:gamer) {
-    gamer = Gamer.new(email: "test@test.com")
+    gamer = Gamer.new(email: "test@test.com", username: "test")
     gamer.save validate: false
     gamer
   }
   let(:developer) {
-    Developer.create!(first_name: "firstname",
-                      last_name: "lastname", gamer_id: gamer.id)
+    Developer.create!(gamer_id: gamer.id)
   }
 
   it "sends follow notification" do
@@ -25,7 +24,6 @@ describe UserMailer do
     mail = UserMailer.follow_notification(developer, keyword, synonym)
     mail.to.should eq([gamer.email])
     mail.subject.should match(keyword.name)
-    mail.body.should match(developer.first_name)
     mail.body.should match(keyword.name)
     mail.body.should match(synonym.name)
   end
