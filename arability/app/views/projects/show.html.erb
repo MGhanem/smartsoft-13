@@ -1,6 +1,6 @@
   <h3>
     <%= t(:project) %>
-    : 
+    :
     <%= @project.name %>
   </h3>
   <br>
@@ -10,8 +10,17 @@
         <div class="btn-group">
           <button class="btn">
             <i class="icon-plus-sign">
-            </i> 
+            </i>
             <a href="/developers/search_keywords/?project_id=<%= @project.id %>" class="css_class" style="color:#000"><%= t(:Add_words)%></a>
+            <span>
+            </span>
+          </button>
+        </div>
+         <div class="btn-group">
+          <button class="btn">
+            <i class="icon-thumbs-up">
+            </i>
+            <a href="/" style="color:#000"><%= t(:recommended_words)%></a>
             <span>
             </span>
           </button>
@@ -19,8 +28,8 @@
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">
             <i class="icon-file">
-            </i> 
-            <%= t(:import) %> 
+            </i>
+            <%= t(:import) %>
             <span class="caret">
             </span>
           </button>
@@ -35,8 +44,8 @@
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">
             <i class="icon-briefcase">
-            </i> 
-            <%= t(:export) %> 
+            </i>
+            <%= t(:export) %>
             <span class="caret">
             </span>
           </button>
@@ -45,13 +54,11 @@
           </ul>
         </div>
         <div class="btn-group">
-
         <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
       </div>
-        
       </div>
       <br>
-      <table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">
+      <table class="table table-hover table-bordered table-condensed" style="width:800px;background-color:white">
         <col style="width:25%">
         <col style="width:25%">
         <col style="width:10%">

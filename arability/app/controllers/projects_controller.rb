@@ -16,8 +16,8 @@ class ProjectsController < BackendController
  #   none
  # success:
  #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the 
- #   project is successfully deleted 
+ #   delete the project by choosing ok the
+ #   project is successfully deleted
  # failure:
  #   project is not deleted
   def destroy
@@ -28,8 +28,8 @@ class ProjectsController < BackendController
       format.json { head :no_content }
     end
   end
-    
-  # author: 
+
+  # author:
   #    Mohamed Tamer
   # description:
   #    function shows all the projects that a certain developer owns and the projects shared with him
@@ -39,8 +39,8 @@ class ProjectsController < BackendController
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
-  def index  
-    if current_gamer != nil 
+  def index
+    if current_gamer != nil
       developer = Developer.where(:gamer_id => current_gamer.id).first
       if developer != nil
         @my_projects = Project.where(:owner_id => developer.id)
@@ -51,7 +51,7 @@ class ProjectsController < BackendController
       end
     else
       flash[:error] = t(:projects_index_error2)
-      redirect_to new_gamer_session_path      
+      redirect_to new_gamer_session_path
     end
   end
 
@@ -119,7 +119,7 @@ class ProjectsController < BackendController
   # Params:
   #  none
   # success:
-  #  project is found 
+  #  project is found
   # failure:
   #  none
   def share
@@ -202,9 +202,34 @@ def show
     redirect_to :action => "index"
     developer_unauthorized
   end
-end  
-  
+end
 
+
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After checking that the user is signed in, the method that calls method createproject
+  #   that creates the project and redirects to the project page and prints
+  #   an error if the data entered is invalid.
+  # Params:
+  #   None
+  # Success:
+  #   Creates a new project and views it in the index page
+  # Failure:
+  #   Gives status errors
+  def view_recommended_words
+    if developer_signed_in?
+      if current_developer.my_subscription.subscription_model_id != 1
+        @project = Project.find(params[:id])
+        karray = []
+        Keyword.each do |k|
+
+        end
+      end
+    else
+      developer_unauthorized
+    end
+  end
 
 
   def remove_developer_from_project
@@ -216,12 +241,12 @@ end
    redirect_to "/projects"
   end
 
-  
+
   # Author:
   #   Mohamed Tamer
   # Description:
   #   calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
-  #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
+  #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number
   #   of synonyms and the synonyms accepted for each word
   # Params:
   #   csvfile: the csv file the user imported
@@ -347,13 +372,13 @@ end
   # author:
   #   Mohamed tamer
   # description:
-  #   add words and their synonym from the imported csv file to the project 
+  #   add words and their synonym from the imported csv file to the project
   # Params:
   #   words_ids: array of hashes of word id and their corresponding synonym id
   #   id: current project id
   # Success:
   #   returns adds the word and synonym to project and redirects back to project
-  # Failure: 
+  # Failure:
   #   if the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
@@ -377,10 +402,10 @@ end
     end
     redirect_to action: "show", id: project_id
   end
-  
+
   # Author:
   #   Mohamed Tamer
-  # Description: 
+  # Description:
   #   finds the project and renders the view
   # Params:
   #   id: the project id
@@ -400,17 +425,17 @@ end
 # params:
 #   project_id, word_id, synonym_id
 # success:
-#   keyword and synonym are added to project or synonym of word updated 
+#   keyword and synonym are added to project or synonym of word updated
 # failure:
 #   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist.
   def add_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
       @word_id = Keyword.find_by_name(params[:keyword]).id
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id)
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
@@ -431,7 +456,7 @@ end
         else
           @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
           if @added_word
-            flash[:success] = t(:successfully_added_word_to_project)              
+            flash[:success] = t(:successfully_added_word_to_project)
             redirect_to project_path(@project_id), flash: flash
             return
           else
@@ -448,7 +473,7 @@ end
     end
   end
 
-  
+
 # author:
 #   Khloud Khalid
 # description:
@@ -460,14 +485,14 @@ end
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
   def remove_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
       @word_id = params[:word_id]
       @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-      @removed_word.each do |word| 
+      @removed_word.each do |word|
         if word.project_id = @project_id
           @remove = word
-        end 
+        end
       end
       if  @remove != nil
         @remove.destroy
@@ -481,7 +506,7 @@ end
   end
 
 
-  
+
   # author:
 #      Khloud Khalid
 # description:
@@ -492,10 +517,10 @@ end
 #   data exported successfully
 # failure:
 #   project does not exist, not registered developer.
-  def export_to_csv 
+  def export_to_csv
     if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
-      if Project.find_by_id(@project_id) != nil   
+      if Project.find_by_id(@project_id) != nil
         @exported_data = PreferedSynonym.where(project_id: @project_id).all
         csv_string = CSV.generate do |csv|
           if @exported_data != []
@@ -509,10 +534,10 @@ end
             redirect_to project_path(@project_id), flash: flash
             return
           end
-        end         
+        end
         send_data csv_string,
         type: "text/csv; charset=iso-8859-1; header=present",
-        disposition: "attachment; filename=project_data.csv" 
+        disposition: "attachment; filename=project_data.csv"
       else
         flash[:notice] = t(:no_project)
         render "pages/home"
@@ -521,5 +546,5 @@ end
       flash[:notice] = t(:not_developer)
       render "pages/home"
     end
-  end 
+  end
 end

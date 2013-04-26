@@ -53,6 +53,9 @@ ar:
   export: "تصدير"
   add_words: "اضف كلمات"
   recommended_words: "الكلمات المرشحة"
+  recommended_for_project: "الكلمات المرشحة لمشروعك"
+  select_words: "اختر الكلمات التي تريد اضافتها في المشروع"
+  no_recommended_words: "عذرا,لا توجد كلمات مرشحة لهذا المشروع"
   share: "مشاركة"
   delete: "مسح"
   word: "الكلمة"
@@ -296,4 +299,4 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
