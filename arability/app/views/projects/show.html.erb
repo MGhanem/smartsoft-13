@@ -162,7 +162,8 @@
   function add_keyword_with_synonym(){
     var keyword_name = $("#selected_keyword").val();
     var synonym_id = $("#selected_synonym option:selected").val();
-    if(keyword_name != "" && synonym_id != undefined){
+    alert(synonym_id);
+    if(keyword_name != "" && synonym_id != undefined && synonym_id !="0"){
         $.ajax({
           type: "POST",
           url: "/developers/projects/"+"<%= @project.id %>"+"/quick_add",
