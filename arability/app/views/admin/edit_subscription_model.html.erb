@@ -1,26 +1,34 @@
 <div class = "container well" >
-    <%= form_for @model, :html => {:class => "form-horizontal"} do |f| %>
-
+    <%= form_for (@model) do |f| %>
+          <% if @model.errors.any? %>
+        <div id="error_explanation" class="req">
+           <ul>
+               <% @model.errors.full_messages.each do |msg| %>
+                 <li><%= msg %></li>
+              <% end %>
+           </ul>
+        </div>
+      <% end %>
     <div class="control-group">
-        <%= f.label :name, :class => "control-label" %>
+        <%= f.label :الإسم, :class => "control-label" %>
         <div class="controls">
           <%= f.text_field :name, :placeholder => "الإسم" %>
         </div>
     </div>
     <div class="control-group">
-        <%= f.label :limit_search, :class => "control-label" %>
+        <%= f.label :الحد_الأقصى_للبحث, :class => "control-label" %>
         <div class="controls">
-          <%= f.text_field :limit_search :placeholder => "الحد الأقصى للبحث" %>
+          <%= f.text_field :limit_search, :placeholder => "الحد الأقصى للبحث" %>
         </div>
     </div>
     <div class="control-group">
-        <%= f.label :limit_follow, :class => "control-label" %>
+        <%= f.label :الحد_الأقصى_للمتابعة, :class => "control-label" %>
         <div class="controls">
           <%= f.text_field :limit_follow, :placeholder => "الحد الأقصى للمتابعة" %>
         </div>
     </div>  
     <div class="control-group">
-        <%= f.label :limit_project, :class => "control-label" %>
+        <%= f.label :الحد_الأقصى_للمشاريع, :class => "control-label" %>
         <div class="controls">
           <%= f.text_field :limit_project, :placeholder => "الحد الأقصى للمشاريع" %>
         </div>
@@ -29,6 +37,6 @@
       <div class="controls">
           <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
       </div>
-  </div>
+    </div>
   <% end %>
   </div>

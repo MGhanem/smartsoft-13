@@ -261,11 +261,12 @@ class AdminController < ApplicationController
                 message: message
   end
 
-  def subscription_models
+  def subscription_model
     @models = SubscriptionModel.all
   end
 
   def edit_subscription_model
-    @model = SubscriptionModel.find(params[:model_id])
+    model_id = params[:model_id]
+    @model = SubscriptionModel.find(model_id)
   end
 end

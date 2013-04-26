@@ -16,8 +16,9 @@ Arability::Application.routes.draw do
     post "/add_trophy"
     post "/add_prize"
 
-    match '/subscription_models' => 'admin#subscription_models'
-    match "/admin/edit_subscription_model"=>'admin#edit_subscription_model', :as => "edit_subscription_model"
+    match '/subscription_model' => 'admin#subscription_model'
+    match "/:model_id/edit_subscription_model"=>'admin#edit_subscription_model', :as => "edit_subscription_model"
+    resources :subscription_models
   end
 
   # Only two languages are accepted: Arabic and English
