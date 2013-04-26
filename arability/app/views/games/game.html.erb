@@ -251,6 +251,12 @@ function setButtons(){
     <% end %>
   }
 
+  function generateBtnPopoverContent(lang){
+    if(lang == 'eng'){
+
+    }
+  }
+
 
 
 </script>
@@ -290,29 +296,16 @@ function setButtons(){
     <div class="zone" id="zone">
       <% end %> 
     <div class="divaya">
-      <% if I18n.locale == :ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
     <div class="game-lang">
       
-      <div id="exposedEngBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only english words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>English Button</h4>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button></div><br><br><br><br>
+      <div id="exposedEngBtnDiv"><button data-trigger="manual" data-content="<%= t(:english_popover_content) %>" data-placement="left" data-title="<%= t(:english_popover_title) %>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)"><%= t(:english_button) %></button></div><br><br><br><br>
 
-      <div id="exposedArBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only arabic words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="right" data-title="<h4>Arabic Button</h4>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button></div><br><br><br><br>
+      <div id="exposedArBtnDiv"><button data-trigger="manual" data-content="<%= t(:arabic_popover_content) %>" data-placement="right" data-title="<%= t(:arabic_popover_title) %>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)"><%= t(:arabic_button) %></button></div><br><br><br><br>
 
-      <div id="exposedBothBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on both arabic and english words during game play<p> <button class=' tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>Both Button</h4>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button></div>
+      <div id="exposedBothBtnDiv"><button data-trigger="manual" data-content="<%= t(:both_popover_content) %>" data-placement="left" data-title="<%= t(:both_popover_title) %>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)"><%= t(:both_button) %></button></div>
     </div>
-    <% else %>
-    <h2 class="lang-header">Pick the language you want to play with</h2><br>
-    <div class="game-lang">
-
-      <div id="exposedEngBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only english words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>English Button</h4>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">English</button></div><br><br><br><br>
-
-      <div id="exposedArBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on, only arabic words during game play<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="right" data-title="<h4>Arabic Button</h4>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button></div><br><br><br><br>
-
-      <div id="exposedBothBtnDiv"><button data-trigger="manual" data-content="<p>This button allows you to form, and vote on both arabic and english words during game play<p> <button class=' tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>Got it</button>" data-placement="left" data-title="<h4>Both Button</h4>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)">Both</button></div>
-
     </div>
-    <% end %>
-    </div>
-
+  </div>
   </div>
 </div>
