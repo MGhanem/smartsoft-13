@@ -72,7 +72,7 @@ class Keyword < ActiveRecord::Base
   #   the first return is true and the second is the saved keyword
   # failure:
   #   the first return is false and the second is the unsaved keyword
-  def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
+  def self.add_keyword_to_database(name, approved = true, is_english = nil, categories = [])
     name.strip!
     name.downcase!
     name = name.split(" ").join(" ")

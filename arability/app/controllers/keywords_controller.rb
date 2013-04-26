@@ -69,7 +69,7 @@ class KeywordsController < BackendController
         redirect_to search_path(search: @keyword.name), flash: flash
     else
       success, @keyword =
-        Keyword.add_keyword_to_database(name, false, is_english, categories)
+        Keyword.add_keyword_to_database(name, true, is_english, categories)
       if success
         flash[:success] = t(:keyword_added, keyword: @keyword.name)
         redirect_to search_path(search: @keyword.name), flash: flash
