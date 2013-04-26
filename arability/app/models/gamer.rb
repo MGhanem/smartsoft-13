@@ -24,8 +24,8 @@ class Gamer < ActiveRecord::Base
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
 

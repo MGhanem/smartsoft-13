@@ -30,5 +30,26 @@ module ApplicationHelper
   def developer_unauthorized
     flash.now[:error] = "You are not authorized to view this page" 
   end
+
+  # find guest_user object associated with the current session,
+  # creating one as needed
+  def guest_gamer
+    # Cache the value the first time it's gotten.
+    @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id])
+
+  rescue ActiveRecord::RecordNotFound # if session[:guest_gamer_id] invalid
+     session[:guest_gamer_id] = nil
+     guest_gamer
+  end
+  
+  # if user is logged in, return current_user, else return guest_user
+  def current_or_guest_gamer
+    if current_gamer
+      current_gamer
+    else
+      guest_gamer
+    end
+  end
+
 end
 

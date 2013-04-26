@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include ApplicationHelper
   before_filter :set_locale
   require 'csv'
 
@@ -114,6 +115,95 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
+
+  # called (once) when the user logs in, insert any code your application needs
+  # to hand off from guest_user to current_user.
+  def logging_in(id)
+    guest_votes = Vote.where(gamer_id: guest_gamer.id)
+      guest_votes.each do |vote|
+      vote.gamer_id = id
+      vote.save!
+    end
+  end
+
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   creates a guest with the given data
+  # Params:
+  #   education: the education level of a the guest
+  #   country: the country of the guest
+  #   gender: the gender of the guest
+  #   dob: the date of birth
+  # Success: 
+  #   returns the created guest and true
+  # Failure:
+  #   returns the gamer instance that wasn't created and false
+  def create_gamer(email, password, username)
+    gamer = Gamer.new
+    gamer.username = username
+    gamer.country = guest_gamer.country
+    gamer.education_level = guest_gamer.education_level
+    gamer.gender = guest_gamer.gender
+    gamer.date_of_birth = guest_gamer.date_of_birth
+    gamer.email = email
+    gamer.password = password
+    if gamer.save
+      logging_in(gamer.id)
+      session[:guest_gamer_id] = nil
+      return gamer, true
+    else
+      return gamer, false
+    end
+  end
+
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   creates a guest with the given data
+  # Params:
+  #   education: the education level of a the guest
+  #   country: the country of the guest
+  #   gender: the gender of the guest
+  #   dob: the date of birth
+  # Success: 
+  #   returns the created guest and true
+  # Failure:
+  #   returns the gamer instance that wasn't created and false
+  def create_guest_gamer(education, country, gender, dob)
+    gamer = Gamer.new
+    gamer.username = "Guest_#{Time.now.to_i}#{rand(99)}"
+    gamer.country = country
+    gamer.education_level = education
+    gamer.gender = gender
+    gamer.date_of_birth = dob
+    gamer.email = "guest_#{Time.now.to_i}#{rand(99)}@example.com"
+    gamer.password = "1234567"
+    if gamer.save
+      session[:guest_gamer_id] = gamer.id
+      return gamer, true
+    else
+      return gamer, false
+    end
+  end
+
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   checks if there is a gamer signed in or not
+  # Params:
+  #   gamer_session: the session of a signed up regular user
+  #   session[:guest_gamer_id]: the session of the guest gamer
+  # Success: 
+  #   continues as normal 
+  # Failure:
+  #   redirects to sign up as guest
+  def authenticate_gamer_or_guest!
+    if gamer_session == nil && session[:guest_gamer_id] == nil
+      redirect_to guest_sign_up_path
+    end
+  end
 end
 
 

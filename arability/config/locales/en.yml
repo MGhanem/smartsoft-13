@@ -296,3 +296,8 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  guest_sign_up_title: "Enter these four simple data about you that will help our cause greatly"
+  guest_error1: "Education can't be blank"
+  guest_error2: "Country can't be blank"
+  guest_error3: "Gender can't be blank"
+  guest_error4: "Date Of Birth can't be blank"

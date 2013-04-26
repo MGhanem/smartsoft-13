@@ -50,6 +50,10 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match "guest/sign_up" => "guest#sign_up", as: "guest_sign_up"
+    post "guest/signing_up" => "guest#signing_up", :as => "guest_signing_up"
+    match "guest/continue_sign_up" => "guest#continue_sign_up", as: "guest_continue_sign_up"
+    post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
