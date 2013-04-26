@@ -49,6 +49,19 @@ describe Synonym, nourhan: true  do
       gTwo
     }
 
+    let(:gThree){
+      gTwo = Gamer.new
+      gTwo.username = "trialGThree"
+      gTwo.country = "Egypt"
+      gTwo.education_level = "University"
+      gTwo.date_of_birth = "Sun, 09 Apr 1975"
+      gTwo.gender = "male"
+      gTwo.email = "trialC@example.com"
+      gTwo.password = "123456"
+      gTwo.save(validate: false)
+      gTwo
+    }
+
     let(:v){
       v = Vote.new
       v.synonym_id = s.id
@@ -76,6 +89,7 @@ describe Synonym, nourhan: true  do
     }
 
   before (:each) do
+    gThree
     v
     vTwo
   end
@@ -125,6 +139,84 @@ describe Synonym, nourhan: true  do
   it "returns an empty list when the synonym has no votes" do
   unvoted_synonym.get_visual_stats_education.should =~ []
   end
+
+  end
+
+  describe "filter_voters_gender" do
+
+    it "returns the voters that have the gender specified" do
+      filtered_voters = Synonym.filter_voters_gender([g, gTwo], "female")
+      filtered_voters.should include(gTwo)
+      filtered_voters.should_not include(g)
+    end
+
+    it "returns the voters that have the gender specified" do
+      filtered_voters = Synonym.filter_voters_gender([g, gTwo], "male")
+      filtered_voters.should include(g)
+      filtered_voters.should_not include(gTwo)
+    end
+
+    it "returns empty list if non of the voters satisfies the condition" do
+      voters = [g, gTwo]
+      filtered_voters = Synonym.filter_voters_gender(voters, "trial")
+      filtered_voters.should =~ []
+      filtered_voters.should_not include(gTwo)
+      filtered_voters.should_not include(g)
+    end
+
+  end
+
+  describe "filter_voters_country" do
+
+    it "returns the voters that belongs to the country specified first trial" do
+      filtered_voters = Synonym.filter_voters_country([g, gTwo, gThree], "Egypt")
+      filtered_voters.should include(g)
+      filtered_voters.should include(gThree)
+      filtered_voters.should_not include(gTwo)
+    end
+
+    it "returns the voters that belongs to the country specified second trial" do
+      filtered_voters = Synonym.filter_voters_country([g, gTwo, gThree], "Lebanon")
+      filtered_voters.should include(gTwo)
+      filtered_voters.should_not include(g)
+      filtered_voters.should_not include(gThree)
+    end
+
+    it "returns empty list if non of the voters satisfies the condition" do
+      voters = [g, gTwo]
+      filtered_voters = Synonym.filter_voters_country(voters, "trial")
+      filtered_voters.should =~ []
+      filtered_voters.should_not include(gTwo)
+      filtered_voters.should_not include(g)
+      filtered_voters.should_not include(gThree)
+    end
+
+  end
+
+  describe "filter_voters_education" do
+
+    it "returns the voters that have the education level specified first trial" do
+      filtered_voters = Synonym.filter_voters_education([g, gTwo, gThree], "University")
+      filtered_voters.should include(g)
+      filtered_voters.should include(gThree)
+      filtered_voters.should_not include(gTwo)
+    end
+
+    it "returns the voters that have the education level specified second trial" do
+      filtered_voters = Synonym.filter_voters_education([g, gTwo, gThree], "Graduate")
+      filtered_voters.should include(gTwo)
+      filtered_voters.should_not include(g)
+      filtered_voters.should_not include(gThree)
+    end
+
+    it "returns empty list if non of the voters satisfies the condition" do
+      voters = [g, gTwo]
+      filtered_voters = Synonym.filter_voters_education(voters, "trial")
+      filtered_voters.should =~ []
+      filtered_voters.should_not include(gTwo)
+      filtered_voters.should_not include(g)
+      filtered_voters.should_not include(gThree)
+    end
 
   end
 end
