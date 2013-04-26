@@ -23,7 +23,7 @@ class ProjectsController < BackendController
     respond_to do |format|
       format.html { redirect_to :action => "index",:controller => "projects"}
       format.json { head :no_content }
-      flash[:notice] = t(:project_delete)
+      flash[:success] = t(:project_delete)
     end
   end
     
