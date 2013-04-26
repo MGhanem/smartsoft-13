@@ -110,10 +110,10 @@
 }
 
 .table1 td:not(.tutBtn){
-  width: 40px;
   height: 40px;
   min-height: 50px;
-  min-width: 50px;
+  width: 50px;
+  min-width: 53px;
 }
 
 .table1 tr:not(.tutBtn){
@@ -145,13 +145,15 @@
 
 
 .table1{ 
-  border: solid 1px black;
+  border-bottom: solid 1px black;
   border-radius: 15px;
   float: left; 
   width: 550px;  
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
+  max-width: 550px;
+  min-width: 550px;
 }
 
 #list-div{
@@ -490,12 +492,7 @@ margin-left: 80px;
   width: 100px;
 }
 
-td .popover{
-  top: 195px;
-  left: 335.5px;
-  width: 400px;
-  max-width: 400px;
-}
+
 
 td .popover button{
   margin-left: 120px;

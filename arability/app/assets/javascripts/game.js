@@ -28,7 +28,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-var tutorialFlag = true;
+var tutorialFlag = false;
 var currentClss;
 var currentNewClss;
 var currentBtn;
@@ -39,7 +39,7 @@ var secondTutorialClick = false;
 var tutorialButtonId;
 var newDrop = false;
 var lockLangButtons = true;
-var tutorialFlagwas = tutorialFlag;
+var tutorialFlagWas = tutorialFlag;
 
 $(function(){
 	if(tutorialFlag == false){
@@ -95,7 +95,13 @@ function wordsListToolTip(){
 }
 
 function tableToolTip(){
-	$('#button7-5').popover();
+	$('#button7-5').popover({
+		html: true,
+		trigger: 'manual',
+		content: '<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now</p>' + "<button onclick='destroy(this.id)' class='tutBtn btn btn-primary' id='button7-5-po'>" + 'Okay</button>',
+		title: '<h4>Forming Words</h4>',
+		placement: 'top'
+	});
 	setTimeout(function(){
 		$('#main-table').expose();
 	}, 300);
@@ -203,10 +209,7 @@ function initializeGame(){
 					trHtml.push(y);
 					trHtml.push('-');
 					trHtml.push(x);
-					trHtml.push('"');
-					trHtml.push(' data-trigger="manual" data-html="true" data-content = "<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now</p> <button ');
-					trHtml.push(" onclick='destroy(this.id)' class='tutBtn btn btn-primary' id='button7-5-po'>");
-					trHtml.push('Okay</button>" data-title="<h4>Forming Words</h4>" data-placement="top">');
+					trHtml.push('">');
 					letter = generateLetter();
 					trHtml.push(letter);
 					trHtml.push('</button></td>');
@@ -225,6 +228,7 @@ function initializeGame(){
 	trHtml = trHtml.join('');
 	table.append($(trHtml));
 }
+
 
 // author:
 //   Ali El Zoheiry.
@@ -287,7 +291,7 @@ function startTutorial(){
 
 function endTutorial(){
 	tutorialFlag = false;
-	tutorialFlagwas = true;
+	tutorialFlagWas = true;
 	if(newDrop == true){
 		newDrop = false;
 		dropAblock();
@@ -538,9 +542,9 @@ function generateWord(){
 //   the game is over, on click nothing will happen.
 
 function callMethods(id){
-	// if(tutorialFlag == true && id == 'button7-5'){
-	// 	return;
-	// }
+	if(id == 'btn' + blockId){
+		return;
+	}
 	if(tutorialFlag == true && tutorialClick == false && secondTutorialClick == false){
 		return;
 	}
@@ -568,7 +572,13 @@ function callMethods(id){
 		destroy('button7-5-po');
 		$("#button7-5").removeAttr('data-content');
 		$('#' + id).attr("data-content", "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button<p> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>Start Playing</button>")
-		$('#' + id).popover();
+		$('#' + id).popover({
+			html: true,
+			trigger: 'manual',
+			content: "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button<p> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>Start Playing</button>",
+			title: '<h4>Clicking a letter</h4>',
+			placement: 'top'
+		});
 		var newId = id.replace('button','');
 		var tdId = 'col' + newId;
 		if(tutorialFlag == true){
@@ -925,13 +935,34 @@ function highestTower(){
 
 
 function suspense(){
+	var enter = false;
 	for(x = 0; x < dimension; x++){
 		var id = 'col2-' + x;
 		if(document.getElementById(id).innerHTML != '' && booleanSuspense[x] != true){
-			suspenseCont(x);
-			booleanSuspense[x] = true;
-		
+			enter = true;
+			break;
 		}
+	}
+	if(enter == true){
+		if(tutorialFlagWas = true){
+			tutorialFlagWas = false;
+			tutorialFlag = true;
+			$('#' + id).popover({
+				html: true,
+				trigger: 'manual',
+				content: "<p>Uh Oh! Looks like you are about to lose, better hurry up</p><button onclick='destroyAndStart(this.id)' class='tutBtn btn btn-primary' id='" + id + "-po'>Continue</button>",
+				title: '<h4>Flashing Tower</h4>',
+				placement: 'top',
+				container: $('.row2')
+			});
+			setTimeout(function(){
+				$('.row2').expose({closeOnClick: false,
+				closeOnEsc: false, color: 'black', opacity: 0});
+			}, 100);
+			setTimeout(function(){  $('#' + id).popover('show');}, 120);
+		}
+		suspenseCont(x);
+		booleanSuspense[x] = true;
 	}
 }
 
