@@ -26,9 +26,9 @@
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true }, { id:"cat" }) %>
         <% else %>
         <% if @project.category_id != nil %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i }, { id:"cat" }) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i,:include_blank => t(:please_select) }, { id:"cat" } ) %>
         <% else %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true, selected: @project.category_id.to_i }, { id:"cat" }) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true, selected: @project.category_id.to_i }, { id:"cat" } ) %>
           <% end %>
         <% end %>
     </div>
@@ -55,7 +55,6 @@
       <div class="controls d5pxup">
           <%= f.text_field :minAge, class: "input-small", placeholder:  t(:from), id: "project_name"%>
           <%= f.text_field :maxAge, class: "input-small", placeholder:  t(:to), id: "project_name" %>
-          <span class="req">* </span>
       </div>
   </div>
   <div class="control-group">

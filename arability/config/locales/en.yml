@@ -57,6 +57,7 @@ en:
   required: "The fields marked with * are required"
   name: "Name"
   category: "Category"
+  please_select: "Please select"
   formality: "Language"
   formal: "Formal"
   slang: "Slang"
@@ -260,13 +261,6 @@ en:
   activerecord:
     errors:
       models:
-        project:
-          attributes:
-            minAge:
-              not_in_range: "is not in range"
-  activerecord:
-    errors:
-      models:
         keyword:
           attributes:
             name:
@@ -293,6 +287,15 @@ en:
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
   activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
+              less_than_minAge: "can not be less than the minimum age"
     attributes:
       project:
         name: "Name"

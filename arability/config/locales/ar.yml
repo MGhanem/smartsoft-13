@@ -36,6 +36,7 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
+  please_select: "الرجاء الاختيار"
   formality: "اللغة"
   formal: "فصحى"
   slang: "عامية"
@@ -287,10 +288,6 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-        project:
-          attributes:
-            minAge:
-              not_in_range: "ليس في الحدود المسموح بها"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -298,6 +295,15 @@ ar:
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
   activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
     attributes:
       project:
         name: 'الاسم'
