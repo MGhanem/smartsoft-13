@@ -1,6 +1,5 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-
   var words;
   var cache = "";
   var nav_locked = false;
@@ -251,13 +250,12 @@ function setButtons(){
     <% end %>
   }
 
-  function generateBtnPopoverContent(lang){
-    if(lang == 'eng'){
-
-    }
+  function setPopoverAttributes(){
+    wordsListPopoverContent = "<%= t(:words_list_popover_content) %>";
+    wordsListPopoverTitle = "<%= t(:words_list_popover_title) %>";
+    // wordLabelPopoverContent = "<%= t(:word_label_popover_content) %>";
+    // wordLablePopoverTitle = "<%= t(:word_label_popover_title) %>";
   }
-
-
 
 </script>
 

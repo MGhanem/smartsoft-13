@@ -304,3 +304,5 @@ en:
   arabic_popover_title: "<h4>Arabic Button</h4>"
   both_popover_content: "<p>This button allows you to form and vote on, Both English and Arabic words during game play</p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>Got it</button>"
   both_popover_title: "<h4>Both Button</h4>"
+  words_list_popover_content: "<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>Next</button>"
+  wordsListPopoverTitle: "<h4>Words List</h4>"

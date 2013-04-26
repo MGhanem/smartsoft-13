@@ -311,4 +311,5 @@ ar:
   arabic_popover_title: "<h4>الزر العربي</h4>"
   both_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
   both_popover_title: "<h4>زر كلاهما</h4>"
-
+  words_list_popover_content: "<p>هذه القائمة تحتوي على الكلمات التي يجب أن تكونها، والكلمات يمكن أن يكون لها لون من إثنان، إما البرتقالي وهذا يعني أنك يمكن تشكل هذه الكلمة، إما الأسود وهذا يعني أنك لم يمكنك أن تكون هذه الكلمة<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>التالي</button>"
+  words_list_popover_title: "<h4>قائمة الكلمات</h4>"

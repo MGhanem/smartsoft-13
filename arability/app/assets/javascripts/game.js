@@ -41,6 +41,10 @@ var newDrop = false;
 var lockLangButtons = true;
 var tutorialFlagWas = tutorialFlag;
 var continuePlayingBtn;
+var wordsListPopoverContent;
+var wordsListPopoverTitle;
+var wordLabelPopoverContent;
+var wordLablePopoverTitle;
 
 $(function(){
 	if(tutorialFlag == false){
@@ -1256,11 +1260,11 @@ function loseGame(t){
 function continuePlaying(){
 	$('.zone').empty();
 	setButtons();
+	setPopoverAttributes();
 	setLevelPopUpTitle();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well"><ol data-html="true" data-trigger="manual" data-content="<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it cant be formed yet, or orange indicating that it can be formed<p> <button' + 
-	" onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>" +
-	'Got it</button>" data-placement="left" data-title="<h4>Words List</h4>" id="wordsList"></ol>' + 
+	'<div id="list-div" class="well"><ol data-html="true" data-trigger="manual" data-content="' + wordsListPopoverContent +  
+	'" data-placement="left" data-title="' + wordsListPopoverTitle +  '" id="wordsList"></ol>' + 
 	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
 	" onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>" +
 	'Got it</button>" data-title="<h4>Letters Label</h4>" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
