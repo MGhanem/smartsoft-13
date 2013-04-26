@@ -1,44 +1,22 @@
 <div class = "main-div">
-<% if I18n.locale == :ar %> 
-<h1 class ="heading"><%= t(:vote_log)%>
-<a class="btn btn-success pull-left" onclick="backToGame()">الرجوع</a>
-</h1>
-<% else %>
-<h3 class ="heading"><%= t(:vote_log)%>
-<a class="btn btn-success pull-left" onclick="backToGame()">Back</a>
+<h3 id="header-vl" class ="heading"><%= t(:vote_log)%>
+<a class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_log)%></a>
 </h3>
-<% end %>
 <table class="table table-bordered table-striped styling-center-table">
   <% if !@vote_log.blank? %>
     <% @vote_log.each do |vote| %>
-    <% if I18n.locale == :ar %>
-      <tr>
+     <tr>
         <td></td>
-        <td class = "arabic"> <b class = "coloring"><%= t(:you_vote) %></b> <%= t(:vote_action) %> <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
-        <td></td>
-      </tr>
-    <% else %>
-       <tr>
-        <td></td>
-        <td> <b class = "coloring"> <%= t(:you_vote) %>  </b> <%= t(:vote_action) %>  <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
+        <td id = "table-row-vl"> <b class = "coloring"><%= t(:you_vote) %></b> <%= t(:vote_action) %> <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
         <td></td>
       </tr>
-    <% end %>
     <% end %>
   <% else %>
-    <% if I18n.locale == :ar %>
-      <tr>
-        <td></td>
-        <td class = "arabic"> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
-        <td></td>
-      </tr>
-      <% else %>
-      <tr>
-       <td></td>
-        <td> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
-       <td></td>
-      </tr>
-    <% end %>
+    <tr>
+      <td></td>
+      <td id = "table-row-vl"> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
+      <td></td>
+    </tr>
   <% end %>
 </table>
 </div>
@@ -54,6 +32,8 @@
 
 .heading {
   color:white;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .styling-center-table{
@@ -63,7 +43,7 @@
   border: none;
 }
 
-.arabic {
+.arabic-table-vl {
   font-size: 25px;
 }
 
@@ -81,4 +61,19 @@
    width: 740px;
 }
 
+.arabic-head-vl {
+  font-size:38px;
+}
+
 </style>
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+<% if I18n.locale == :ar %>
+$("#header-vl").addClass("arabic-head-vl");
+$("#table-row-vl").addClass("arabic-table-vl");
+<% end %>
+})
+
+</script>
