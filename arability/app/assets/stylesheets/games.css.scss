@@ -487,11 +487,9 @@ margin-left: 80px;
 }
 
 #list-div .popover button{
-  margin-left: 86px;
 }
 
 .label-div .popover button{
-  margin-left: 40px;
   width: 100px;
 }
 
@@ -504,10 +502,16 @@ td .popover{
 }
 
 td .popover button{
-  margin-left: 120px;
 }
 
-.game-lang .popover button{
-  margin-left: 40px;
+
+.popover p {
+  text-align: center;
+}
+.popover h4{
+  text-align: center;
 }
 
+.popover-content{
+  text-align: center;
+}

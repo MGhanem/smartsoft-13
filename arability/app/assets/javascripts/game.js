@@ -28,7 +28,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-var tutorialFlag = true;
+var tutorialFlag;
 var currentClss;
 var currentNewClss;
 var currentBtn;
@@ -39,12 +39,17 @@ var secondTutorialClick = false;
 var tutorialButtonId;
 var newDrop = false;
 var lockLangButtons = true;
-var tutorialFlagWas = tutorialFlag;
+var tutorialFlagWas;
 var continuePlayingBtn;
 var wordsListPopoverContent;
 var wordsListPopoverTitle;
 var wordLabelPopoverContent;
-var wordLablePopoverTitle;
+var wordLabelPopoverTitle;
+var tablePopoverContent;
+var tablePopoverTitle;
+var clickedButtonPopoverContent;
+var clickedButtonPopoverTitle;
+var clickedButtonPopoverButton;
 
 $(function(){
 	if(tutorialFlag == false){
@@ -70,11 +75,11 @@ function arBtnPopOver(){
 	});
 	setTimeout(function(){
 		$('#exposedArBtnDiv').expose();
-	}, 200);
+	}, 300);
 	setTimeout(function(){
 		$('.ar-btn').popover('show');
 		$('.popover').css('z-index', '9999999');
-	}, 200);
+	}, 300);
 }
 
 function bothBtnPopOver(){
@@ -83,14 +88,15 @@ function bothBtnPopOver(){
 	});
 	setTimeout(function(){
 		$('#exposedBothBtnDiv').expose();
-	}, 200);
+	}, 300);
 	setTimeout(function(){
 		$('.both-btn').popover('show');
 		$('.popover').css('z-index', '9999999');
-	}, 200);
+	}, 300);
 }
 
 function destroy(id){
+	$('#btn-clear').css('z-index', '0');
 	id = id.replace('-po', '');
 	$('#' + id).popover('destroy');
 	$.mask.close();
@@ -118,11 +124,12 @@ function wordsListToolTip(){
 }
 
 function tableToolTip(){
+	setPopoverAttributes();
 	$('#button7-5').popover({
 		html: true,
 		trigger: 'manual',
-		content: '<p> To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now</p>' + "<button onclick='destroy(this.id)' class='tutBtn btn btn-primary' id='button7-5-po'>" + 'Okay</button>',
-		title: '<h4>Forming Words</h4>',
+		content: "<p>" + tablePopoverContent + "</p>" ,
+		title: "<h4>" + tablePopoverTitle + "</h4>",
 		placement: 'top'
 	});
 	setTimeout(function(){
@@ -622,15 +629,15 @@ function callMethods(id){
 		firstClick = false;
 		secondTutorialClick = true;
 		destroy('button7-5-po');
-		$("#button7-5").removeAttr('data-content');
-		$('#' + id).attr("data-content", "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button<p> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>Start Playing</button>")
 		$('#' + id).popover({
 			html: true,
 			trigger: 'manual',
-			content: "<p>As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button<p> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>Start Playing</button>",
-			title: '<h4>Clicking a letter</h4>',
+			content: "<p>" + clickedButtonPopoverContent + "<p><br> <button class='tutBtn btn btn-primary' id='" + id + "-po' onclick='destroyAndStart(this.id)'>" + clickedButtonPopoverButton + "</button>",
+			title: '<h4>' + clickedButtonPopoverTitle + '</h4>',
 			placement: 'top'
 		});
+		$('#btn-clear').css('z-index', '99999999');
+		$('#btn-clear').css('position', 'relative');
 		var newId = id.replace('button','');
 		var tdId = 'col' + newId;
 		if(tutorialFlag == true){
@@ -1018,7 +1025,7 @@ function suspense(){
 			}, 100);
 			setTimeout(function(){
 				$('.row2').expose({closeOnClick: false,
-				closeOnEsc: false, color: 'black', opacity: 0});
+				closeOnEsc: false, color: 'black', opacity: 0.8});
 				$('.popover').css('z-index', '9999999')
 			}, 100);
 		}
@@ -1265,9 +1272,8 @@ function continuePlaying(){
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well"><ol data-html="true" data-trigger="manual" data-content="' + wordsListPopoverContent +  
 	'" data-placement="left" data-title="' + wordsListPopoverTitle +  '" id="wordsList"></ol>' + 
-	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="<p>This Label Contains the letters that are clicked<p> <button' +
-	" onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>" +
-	'Got it</button>" data-title="<h4>Letters Label</h4>" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
+	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="' + wordLabelPopoverContent +
+	'" data-title="' + wordLabelPopoverTitle + '" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
