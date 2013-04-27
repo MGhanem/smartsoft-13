@@ -55,7 +55,7 @@ Arability::Application.routes.draw do
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
-      match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get
+      match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove_project
       match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       
