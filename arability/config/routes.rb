@@ -31,7 +31,7 @@ Arability::Application.routes.draw do
     post "games/vote" 
     post "games/record_vote"
     get 'games/getnewwords'
-    get "games/getprizes"
+    get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
     get 'games/gettrophies'

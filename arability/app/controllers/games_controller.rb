@@ -112,7 +112,7 @@ class GamesController < ApplicationController
   # returns:
   #   success: lists out the prizes the gamer wins in a js erb view
   #   failure: the action is not even called
-  def getprizes
+  def get_prizes
     @level = params[:level].to_i
     @score = params[:score].to_i
     @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, 

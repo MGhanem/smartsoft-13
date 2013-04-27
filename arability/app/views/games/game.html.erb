@@ -77,7 +77,7 @@
   }
   function getPrizes(level, score) {
     clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    request_string = "/games/get_prizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
   function getScore() {
@@ -130,7 +130,7 @@ function setButtons(){
 
   function getPrizes(level, score) {
     clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    request_string = "/games/get_prizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
 
