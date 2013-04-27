@@ -1,73 +1,71 @@
 #encoding: UTF-8
 class AdminController < ApplicationController
   protect_from_forgery
-  require 'csv'
-
   layout 'admin'
-
+  require 'csv'
   include AdminHelper
 
   before_filter :authenticate_gamer!
   before_filter :authenticate_admin!
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     this action display the admin dashboard
-  # params
-  #    none
-  # success: 
-  #     refreshes the page and displays the dashboard
-  # failure: 
-  #     none
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action display the admin dashboard
+  # Params
+  #   none
+  # Success: 
+  #   refreshes the page and displays the dashboard
+  # Failure: 
+  #   none
   def index
     render "dashboard"
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     this action lists the trophies and links to remove trophies
-  # params
-  #    none
-  # success: 
-  #     refreshes the page and displays trophies
-  # failure: 
-  #     none
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the trophies and links to remove trophies
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays trophies
+  # Failure: 
+  #   none
   def list_trophies
     @trophies_list = Trophy.all
     render "list-trophies"
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     this action lists the prizes and links to remove trophies
-  # params
-  #    none
-  # success: 
-  #     refreshes the page and displays prizes
-  # failure: 
-  #     none
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the prizes and links to remove trophies
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays prizes
+  # Failure: 
+  #   none
   def list_prizes
     @prizes_list = Prize.all
     render "list-prizes"
   end
   
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     wordadd action for keywords by admin
-  # params
-  #     name: the name of the new keyword
-  # success: 
-  #     refreshes the page and displays notification
-  # failure: 
-  #     refreshes the page with error displayed
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   wordadd action for keywords by admin
+  # Params
+  #   name: the name of the new keyword
+  # Success: 
+  #   refreshes the page and displays notification
+  # Failure: 
+  #   refreshes the page with error displayed
   def add_word
     if request.post?
-      name = params[:keyword][:name]
-      is_english = params[:keyword][:is_english]
+      name = Params[:keyword][:name]
+      is_english = Params[:keyword][:is_english]
       success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
       if success
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
@@ -78,36 +76,36 @@ class AdminController < ApplicationController
         flash[:error] = @keyword.errors.messages
         flash[:errortype] = "addword"
         flash.keep
-        redirect_to "/admin/add/word", fargs: params
+        redirect_to "/admin/add/word", fargs: Params
       end
     else
-      @fargs = params[:fargs]
+      @fargs = Params[:fargs]
       render "add-word"
     end
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     this action takes a trophy as input and creates one and stores it in
-  #     the database and redirects the user to index
-  # params
-  #     name: name of the trophy
-  #     level: the level required to earn the trophy
-  #     score: the score required to earn the trophy
-  #     image: the photo thumbnail which would be displayed
-  # success:
-  #     refreshes the page and displays notification
-  # failure:
-  #     refreshes the page with error displayed
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action takes a trophy as input and creates one and stores it in
+  #   the database and redirects the user to index
+  # Params
+  #   name: name of the trophy
+  #   level: the level required to earn the trophy
+  #   score: the score required to earn the trophy
+  #   image: the photo thumbnail which would be displayed
+  # Success:
+  #   refreshes the page and displays notification
+  # Failure:
+  #   refreshes the page with error displayed
   def add_trophy
     if request.post?
-      params[:name] = params[:name].strip
-      params[:level] = params[:level].strip
-      params[:score] = params[:score].strip
-      @fargs = {addtrophy: params}
-      success, trophy = Trophy.add_trophy_to_database(params[:name],
-                   params[:level], params[:score], params[:image])
+      Params[:name] = Params[:name].strip
+      Params[:level] = Params[:level].strip
+      Params[:score] = Params[:score].strip
+      @fargs = {addtrophy: Params}
+      success, trophy = Trophy.add_trophy_to_database(Params[:name],
+                   Params[:level], Params[:score], Params[:image])
       if success
         flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
         flash[:successtype] = "addtrophy"
@@ -126,28 +124,28 @@ class AdminController < ApplicationController
     end
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     this action takes a prize as input and creates one and stores it in
-  #     the database and redirects the user to index
-  # params
-  #     name: name of the prize
-  #     level: the level required to earn the prize
-  #     score: the score required to earn the prize
-  #     image: the photo thumbnail which would be displayed
-  # success: 
-  #     refreshes the page and displays notification
-  # failure: 
-  #     refreshes the page with error displayed
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action takes a prize as input and creates one and stores it in
+  #   the database and redirects the user to index
+  # Params
+  #   name: name of the prize
+  #   level: the level required to earn the prize
+  #   score: the score required to earn the prize
+  #   image: the photo thumbnail which would be displayed
+  # Success: 
+  #   refreshes the page and displays notification
+  # Failure: 
+  #   refreshes the page with error displayed
   def add_prize
     if request.post?
-      params[:name] = params[:name].strip
-      params[:level] = params[:level].strip
-      params[:score] = params[:score].strip
-      @fargs = {addprize: params}
-      success, prize = Prize.add_prize_to_database(params[:name],
-                 params[:level], params[:score], params[:image])
+      Params[:name] = Params[:name].strip
+      Params[:level] = Params[:level].strip
+      Params[:score] = Params[:score].strip
+      @fargs = {addprize: Params}
+      success, prize = Prize.add_prize_to_database(Params[:name],
+                 Params[:level], Params[:score], Params[:image])
       if success
         flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
         flash[:successtype] = "addprize"
@@ -166,71 +164,71 @@ class AdminController < ApplicationController
     end
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     delete a trophy selected by id
-  # params
-  #     id the id of the trophy
-  # success: 
-  #     refreshes the page and displays notification
-  # failure: 
-  #     refreshes the page with error displayed
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   delete a trophy selected by id
+  # Params
+  #   id the id of the trophy
+  # Success: 
+  #   refreshes the page and displays notification
+  # Failure: 
+  #   refreshes the page with error displayed
   def delete_trophy
-    params[:id] = params[:id].strip
-    status_trophy = Trophy.find_by_id(params[:id])
+    Params[:id] = Params[:id].strip
+    status_trophy = Trophy.find_by_id(Params[:id])
     if status_trophy.present?
       name = status_trophy.name
       status_trophy.delete
       flash[:success] = "تم مسح مدالية #{name} بنجاح"
       flash[:successtype] = "deletetrophy"
     else
-      flash[:error] = "Trophy number #{params[:id]} is not found"
+      flash[:error] = "Trophy number #{Params[:id]} is not found"
     end
     flash.keep
     redirect_to "/admin/list/trophies"
   end
 
-  # author:
-  #     Karim ElNaggar
-  # description:
-  #     delete a prize selected by id
-  # params
-  #     id the id of the prize
-  # success: 
-  #     refreshes the page and displays notification
-  # failure: 
-  #     refreshes the page with error displayed
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   delete a prize selected by id
+  # Params
+  #   id the id of the prize
+  # Success: 
+  #   refreshes the page and displays notification
+  # Failure: 
+  #   refreshes the page with error displayed
   def delete_prize
-    params[:id] = params[:id].strip
-    status_prize = Prize.find_by_id(params[:id])
+    Params[:id] = Params[:id].strip
+    status_prize = Prize.find_by_id(Params[:id])
     if status_prize.present?
       name = status_prize.name
       status_prize.delete
       flash[:success] = "تم مسح جائزة #{name} بنجاح"
       flash[:successtype] = "deleteprize"
     else
-      flash[:error] = "Prize number #{params[:id]} is not found"
+      flash[:error] = "Prize number #{Params[:id]} is not found"
     end
     flash.keep
     redirect_to "/admin/list/prizes"
   end
 
-  # author:
+  # Author:
   #   Amr Abdelraouf
-  # description:
+  # Description:
   #   method calls parseCSV to return an array of arrays
   #   if the message is zero (file is valid and ready for insertion)
   #   uploadCSV is called and the words are inserted
-  # params:
+  # Params:
   #   POST csvfile
-  # success:
+  # Success:
   #   redirected to import_csv and status message is displayed
-  # failure:
+  # Failure:
   #   none
   def upload
     if request.post?
-      array_of_arrays, @message = parseCSV(params[:csvfile])
+      array_of_arrays, @message = parseCSV(Params[:csvfile])
       if @message == 0
         uploadCSV(array_of_arrays)
       end
