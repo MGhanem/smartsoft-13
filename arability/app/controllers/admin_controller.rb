@@ -279,8 +279,8 @@ class AdminController < ApplicationController
     if request.post?
       english_name = params[:english_name]
       arabic_name = params[:arabic_name]
-      success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
-      if success
+      @success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
+      if @success
         flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
           /#{@category.arabic_name} بنجاح"
         flash.keep
