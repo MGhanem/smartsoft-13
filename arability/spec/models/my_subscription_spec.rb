@@ -1,10 +1,9 @@
+#encoding: UTF-8
 require 'spec_helper'
 
 describe MySubscription do
   let(:developer){
 		developer=Developer.new
-    developer.first_name="Nourhan"
-    developer.last_name="Hassan"
     developer.verified = true
     developer.gamer_id= 1
     developer.save
@@ -32,5 +31,10 @@ describe MySubscription do
 	it "developer can choose subscription model" do
 		result = MySubscription.choose(developer.id, submodel.id)
 		expect(result).to eq(true)
+  end
 
+  it "follow permission is given" do 
+    result = MySubscription.get_permission_follow(developer.id)
+    expect(result).to eq(true)
+  end
 end
