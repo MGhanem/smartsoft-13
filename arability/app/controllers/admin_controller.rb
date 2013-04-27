@@ -266,7 +266,12 @@ class AdminController < ApplicationController
   end
 
   def edit_subscription_model
-    model_id = params[:model_id]
+    model_id = params[:model_id].to_i
     @model = SubscriptionModel.find(model_id)
+  end
+  
+  def update_subscription_model
+    as
+    redirect_to "/"
   end
 end

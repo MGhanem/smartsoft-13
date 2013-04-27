@@ -18,6 +18,7 @@ Arability::Application.routes.draw do
 
     match '/subscription_model' => 'admin#subscription_model'
     match "/:model_id/edit_subscription_model"=>'admin#edit_subscription_model', :as => "edit_subscription_model"
+    put "/:model_id/update_subscription_model" => 'admin#update_subscription_model', :as => "update_model"
     resources :subscription_models
   end
 

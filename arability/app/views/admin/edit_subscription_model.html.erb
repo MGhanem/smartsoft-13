@@ -1,5 +1,5 @@
 <div class = "container well" >
-    <%= form_for (@model) do |f| %>
+    <%= form_for (@model),:url => update_model_path(@model) do |f| %>
           <% if @model.errors.any? %>
         <div id="error_explanation" class="req">
            <ul>
