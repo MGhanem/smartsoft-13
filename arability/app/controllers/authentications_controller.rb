@@ -111,7 +111,7 @@ class AuthenticationsController < ApplicationController
       else
         if !auth
           Authentication.create_with_omniauth(provider,gid,
-            token, nil, email, gamer.id)
+            token, nil, email, current_gamer.id)
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
@@ -127,7 +127,7 @@ class AuthenticationsController < ApplicationController
   #   Amr Abdelraouf
   def remove_facebook_connection
     Authentication.remove_conn(current_gamer.id, "facebook")
-    flash[:notice] = I18n.t(:remove_facebook_connection)
+    flash[:notice] = I18n.t(:remove_fb_connection)
     redirect_to "/gamers/edit"
   end
 
