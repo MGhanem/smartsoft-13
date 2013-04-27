@@ -313,3 +313,4 @@ en:
   guest_error8: "Password confirmation can't be empty"
   guest_error9: "Password and password confirmation do not match"
   become_member: "Become a member"
+  you_have_prizes: "You have won the following prizes!"
