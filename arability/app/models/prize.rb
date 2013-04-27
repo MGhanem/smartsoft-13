@@ -91,6 +91,15 @@ class Prize < ActiveRecord::Base
   # failure: 
   #     returns false and the prize if it is not added to the database
   def self.add_prize_to_database(name, level, score, image)
+    if name
+      name.strip!
+    end
+    if level
+      level.strip!
+    end
+    if score
+      score.strip!
+    end
     new_prize = Prize.new(name: name, level: level, score: score, image: image)
     if new_prize.save
       return true, new_prize

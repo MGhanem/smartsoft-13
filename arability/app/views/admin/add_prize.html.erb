@@ -12,40 +12,40 @@
 								</a>
 							</legend>
 							<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
-							<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:name]? ' error' : ''%>">
+							<div class="control-group<%= flash[:error] && flash[:error][:name]? ' error' : ''%>">
 								<label class="control-label" for="inputprizeName">إسم الجائزة</label>
 								<div class="controls">
-									<input type="text" id="inputprizeName" placeholder="إسم الجائزة" name="name" value="<%= @fargs && @fargs[:addprize]? @fargs[:addprize][:name] : ''%>" class="span4">
-									<% if flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:name] %>
+									<input type="text" id="inputprizeName" placeholder="إسم الجائزة" name="name" value="<%= @name %>" class="span4">
+									<% if flash[:error] && flash[:error][:name] %>
 										<% flash[:error][:name].each do |er| %>
 											<span class="help-block"><%= er %></span>
 										<% end %>
 									<% end %>
 								</div>
 							</div>
-							<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:level]? ' error' : ''%>">
+							<div class="control-group<%= flash[:error] && flash[:error][:level]? ' error' : ''%>">
 								<label class="control-label" for="inputprizeScore">المستوى</label>
 								<div class="controls">
-									<input type="text" id="inputprizeScore" placeholder="المستوى المطلوب للحصول على الجائزة" name="level" value="<%= @fargs && @fargs[:addprize]? @fargs[:addprize][:level] : ''%>" class="span4">
-									<% if flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:level] %>
+									<input type="text" id="inputprizeScore" placeholder="المستوى المطلوب للحصول على الجائزة" name="level" value="<%= @level %>" class="span4">
+									<% if flash[:error] && flash[:error][:level] %>
 										<% flash[:error][:level].each do |er| %>
 											<span class="help-block"><%= er %></span>
 										<% end %>
 									<% end %>
 								</div>
 							</div>
-							<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:score]? ' error' : ''%>">
+							<div class="control-group<%= flash[:error] && flash[:error][:score]? ' error' : ''%>">
 								<label class="control-label" for="inputprizeRank">مجموع النقاط</label>
 								<div class="controls">
-									<input type="text" id="inputprizeRank" placeholder="مجموع النقاط المطلوب للحصول على الجائزة" name="score" value="<%= @fargs && @fargs[:addprize]? @fargs[:addprize][:score] : ''%>" class="span4">
-									<% if flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:score] %>
+									<input type="text" id="inputprizeRank" placeholder="مجموع النقاط المطلوب للحصول على الجائزة" name="score" value="<%= @score %>" class="span4">
+									<% if flash[:error] && flash[:error][:score] %>
 										<% flash[:error][:score].each do |er| %>
 											<span class="help-block"><%= er %></span>
 										<% end %>
 									<% end %>
 								</div>
 							</div>
-							<div class="control-group<%= flash[:error] && flash[:errortype] == 'addprize' && (flash[:error][:image] || flash[:error][:image_content_type] || flash[:error][:image_file_size])? ' error' : ''%>">
+							<div class="control-group<%= flash[:error] && (flash[:error][:image] || flash[:error][:image_content_type] || flash[:error][:image_file_size])? ' error' : ''%>">
 								<label class="control-label">الصورة</label>
 								<div class="controls">
 									<div class="uploader-controls">
@@ -61,12 +61,12 @@
 										</div>
 									</div>
 									<br>
-									<% if flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:image] %>
+									<% if flash[:error] && flash[:error][:image] %>
 										<% flash[:error][:image].each do |er| %>
 											<span class="help-block"><%= er %></span>
 										<% end %>
 									<% end %>
-									<% if flash[:error] && flash[:errortype] == 'addprize' && flash[:error][:image_file_size] %>
+									<% if flash[:error] && flash[:error][:image_file_size] %>
 										<% flash[:error][:image_file_size].each do |er| %>
 											<span class="help-block"><%= er %></span>
 										<% end %>

@@ -34,7 +34,6 @@ class AdminController < ApplicationController
   #   none
   def list_trophies
     @trophies_list = Trophy.all
-    render "list-trophies"
   end
 
   # Author:
@@ -49,7 +48,6 @@ class AdminController < ApplicationController
   #   none
   def list_prizes
     @prizes_list = Prize.all
-    render "list-prizes"
   end
   
   # Author:
@@ -64,23 +62,14 @@ class AdminController < ApplicationController
   #   refreshes the page with error displayed
   def add_word
     if request.post?
-      name = Params[:keyword][:name]
-      is_english = Params[:keyword][:is_english]
-      success, @keyword = Keyword.add_keyword_to_database(name, true, is_english)
+      @name = params[:keyword][:name]
+      success, @keyword = Keyword.add_keyword_to_database(@name, true)
       if success
         flash[:success] = "لقد تم ادخال كلمة #{@keyword.name} بنجاح"
-        flash[:successtype] = "addword"
-        flash.keep
         redirect_to "/admin/add/word"
       else
-        flash[:error] = @keyword.errors.messages
-        flash[:errortype] = "addword"
-        flash.keep
-        redirect_to "/admin/add/word", fargs: Params
+        flash[:error] = @keyword.errors.messages  
       end
-    else
-      @fargs = Params[:fargs]
-      render "add-word"
     end
   end
 
@@ -100,27 +89,17 @@ class AdminController < ApplicationController
   #   refreshes the page with error displayed
   def add_trophy
     if request.post?
-      Params[:name] = Params[:name].strip
-      Params[:level] = Params[:level].strip
-      Params[:score] = Params[:score].strip
-      @fargs = {addtrophy: Params}
-      success, trophy = Trophy.add_trophy_to_database(Params[:name],
-                   Params[:level], Params[:score], Params[:image])
+      @name = params[:name]
+      @level = params[:level]
+      @score = params[:score]
+      success, trophy = Trophy.add_trophy_to_database(@name,
+                   @level, @score, params[:image])
       if success
         flash[:success] = "تم ادخال الانجاز #{trophy.name} بنجاح"
-        flash[:successtype] = "addtrophy"
-      else
-        flash[:error] = trophy.errors.messages
-        flash[:errortype] = "addtrophy"
-      end
-      flash.keep
-      if success
         redirect_to "/admin/list/trophies"
       else
-        render "add-trophy"
+        flash[:error] = trophy.errors.messages
       end
-    else
-      render "add-trophy"
     end
   end
 
@@ -140,27 +119,17 @@ class AdminController < ApplicationController
   #   refreshes the page with error displayed
   def add_prize
     if request.post?
-      Params[:name] = Params[:name].strip
-      Params[:level] = Params[:level].strip
-      Params[:score] = Params[:score].strip
-      @fargs = {addprize: Params}
-      success, prize = Prize.add_prize_to_database(Params[:name],
-                 Params[:level], Params[:score], Params[:image])
+      @name = params[:name]
+      @level = params[:level]
+      @score = params[:score]
+      success, prize = Prize.add_prize_to_database(@name,
+                 @level, @score, params[:image])
       if success
         flash[:success] = "تم ادخال جائزة #{prize.name} بنجاح"
-        flash[:successtype] = "addprize"
-      else
-        flash[:error] = prize.errors.messages
-        flash[:errortype] = "addprize"
-      end
-      flash.keep
-      if success
         redirect_to "/admin/list/prizes"
       else
-        render "add-prize"
+        flash[:error] = prize.errors.messages
       end
-    else
-      render "add-prize"
     end
   end
 
@@ -175,15 +144,14 @@ class AdminController < ApplicationController
   # Failure: 
   #   refreshes the page with error displayed
   def delete_trophy
-    Params[:id] = Params[:id].strip
-    status_trophy = Trophy.find_by_id(Params[:id])
+    params[:id] = params[:id].strip
+    status_trophy = Trophy.find_by_id(params[:id])
     if status_trophy.present?
       name = status_trophy.name
       status_trophy.delete
       flash[:success] = "تم مسح مدالية #{name} بنجاح"
-      flash[:successtype] = "deletetrophy"
     else
-      flash[:error] = "Trophy number #{Params[:id]} is not found"
+      flash[:error] = "Trophy number #{params[:id]} is not found"
     end
     flash.keep
     redirect_to "/admin/list/trophies"
@@ -200,15 +168,14 @@ class AdminController < ApplicationController
   # Failure: 
   #   refreshes the page with error displayed
   def delete_prize
-    Params[:id] = Params[:id].strip
-    status_prize = Prize.find_by_id(Params[:id])
+    params[:id] = params[:id].strip
+    status_prize = Prize.find_by_id(params[:id])
     if status_prize.present?
       name = status_prize.name
       status_prize.delete
       flash[:success] = "تم مسح جائزة #{name} بنجاح"
-      flash[:successtype] = "deleteprize"
     else
-      flash[:error] = "Prize number #{Params[:id]} is not found"
+      flash[:error] = "Prize number #{params[:id]} is not found"
     end
     flash.keep
     redirect_to "/admin/list/prizes"
@@ -228,13 +195,10 @@ class AdminController < ApplicationController
   #   none
   def upload
     if request.post?
-      array_of_arrays, @message = parseCSV(Params[:csvfile])
+      array_of_arrays, @message = parseCSV(params[:csvfile])
       if @message == 0
         uploadCSV(array_of_arrays)
       end
-      render "import-csv-file"
-    else
-      render "import-csv-file"
     end
   end
 
