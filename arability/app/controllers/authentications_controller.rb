@@ -115,7 +115,7 @@ class AuthenticationsController < ApplicationController
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
-          redirect_to "/", flash: {notice: t(:already_connected)}
+          redirect_to "/", flash: {notice: t(:already_connected_fb)}
         end
       end
     else
@@ -125,6 +125,7 @@ class AuthenticationsController < ApplicationController
 
   # Author:
   #   Amr Abdelraouf
+  # TMP method
   def remove_facebook_connection
     Authentication.remove_conn(current_gamer.id, "facebook")
     flash[:notice] = I18n.t(:remove_fb_connection)
