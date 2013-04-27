@@ -167,18 +167,14 @@ class ProjectsController < BackendController
   # Failure:
   #   The old values will be kept.
   def update
-    if developer_signed_in?
-      @project = Project.find(params[:id])
-      @project = Project.createcategories(@project, params[:project][:category])
-      if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
-        :authenticity_token, :commit, :action, :controller, :locale, :id))
-        redirect_to action: "index"
-        flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
-      else
-        render action: 'edit'
-      end
+    @project = Project.find(params[:id])
+    @project = Project.createcategories(@project, params[:project][:category])
+    if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
+      :authenticity_token, :commit, :action, :controller, :locale, :id))
+      redirect_to action: "index"
+      flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
     else
-      developer_unauthorized
+      render action: 'edit'
     end
   end
 
