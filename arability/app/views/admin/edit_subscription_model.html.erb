@@ -1,42 +1,42 @@
 <div class = "container well" >
-    <%= form_for (@model),:url => update_model_path(@model) do |f| %>
-          <% if @model.errors.any? %>
-        <div id="error_explanation" class="req">
-           <ul>
-               <% @model.errors.full_messages.each do |msg| %>
-                 <li><%= msg %></li>
-              <% end %>
-           </ul>
-        </div>
-      <% end %>
+  <%= form_for (@model),:url => update_model_path(@model) do |f| %>
+    <% if @errors != nil %>
+      <div id="error_explanation" class="req">
+        <ul>
+          <% @errors.each do |msg| %>
+            <li><%= msg[1][0] %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="control-group">
-        <%= f.label :الإسم, :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :name, :placeholder => "الإسم" %>
-        </div>
+      <%= f.label :الإسم, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :placeholder => "الإسم" %>
+      </div>
     </div>
     <div class="control-group">
-        <%= f.label :الحد_الأقصى_للبحث, :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :limit_search, :placeholder => "الحد الأقصى للبحث" %>
-        </div>
+      <%= f.label :الحد_الأقصى_للبحث, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :limit_search, :placeholder => "الحد الأقصى للبحث" %>
+      </div>
     </div>
     <div class="control-group">
-        <%= f.label :الحد_الأقصى_للمتابعة, :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :limit_follow, :placeholder => "الحد الأقصى للمتابعة" %>
-        </div>
+      <%= f.label :الحد_الأقصى_للمتابعة, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :limit_follow, :placeholder => "الحد الأقصى للمتابعة" %>
+      </div>
     </div>  
     <div class="control-group">
-        <%= f.label :الحد_الأقصى_للمشاريع, :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :limit_project, :placeholder => "الحد الأقصى للمشاريع" %>
-        </div>
+      <%= f.label :الحد_الأقصى_للمشاريع, :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :limit_project, :placeholder => "الحد الأقصى للمشاريع" %>
+      </div>
     </div>
     <div class="control-group">
       <div class="controls">
-          <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
+        <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
       </div>
     </div>
   <% end %>
-  </div>
+</div>
