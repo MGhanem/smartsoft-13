@@ -58,16 +58,34 @@
       </div>
   </div>
   <div class="control-group">
+    <%= f.label t(:country), :class => "control-label", id: "project_name" %>
+    <% if params[:action] == "new" %>
+      <%= f.select(:country, options_for_select([t(:egypt),t(:lebanon),
+      t(:jordan),t(:saudi_arabia),t(:libya),t(:united_arab_emirates),t(:qatar),t(:kuwait),t(:iraq),t(:algeria),t(:morocco),t(:bahrain),t(:mauritania),t(:somalia),t(:sudan),t(:tunisia),t(:others)]), {}, { id:"cat" }) %>
+     <% else %>
+      <%= f.select(:country, ([t(:egypt),t(:lebanon),
+      t(:jordan),t(:saudi_arabia),t(:libya),t(:united_arab_emirates),t(:qatar),t(:kuwait),t(:iraq),t(:algeria),t(:morocco),t(:bahrain),t(:mauritania),t(:somalia),t(:sudan),t(:tunisia),t(:others)]),  { prompt: @select_value, selected: @project.country}, { id:"cat" }) %>
+    <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label t(:education_level), :class => "control-label", id: "project_name"%>
+    <% if params[:action] == "new" %>
+      <%= f.select(:education_level, options_for_select(['',t(:school),t(:university),t(:graduate)]), {}, { id:"cat" }) %>
+    <% else %>
+      <%= f.select(:education_level, options_for_select(['',t(:school),t(:university),t(:graduate)]),  { prompt: @select_value, selected: @project.education_level}, { id:"cat" }) %>
+    <% end %>
+  </div>
+  <div class="control-group">
       <%= f.label t(:desc), class: "control-label" %>
       <div class="controls">
           <%= f.text_area :description, id: "desc" %>
       </div>
   </div>
   <div class="control-group">
-      <div class="controls">
-          <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-          <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
-      </div>
+    <div class="controls">
+      <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+    </div>
   </div>
-    <% end %>
-     </div>
+<% end %>
+</div>
