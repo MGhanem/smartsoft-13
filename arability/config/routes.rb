@@ -52,6 +52,7 @@ Arability::Application.routes.draw do
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
+    get "authentications/remove_facebook_connection" # tmp route remove later
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
