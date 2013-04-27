@@ -53,6 +53,12 @@ var clickedButtonPopoverButton;
 var flashingTowerPopoverContent;
 var flashingTowerPopoverTitle;
 var flashingTowerPopoverButton;
+var modalHeader;
+var modalBody;
+var modalYesButton;
+var modalNoButton;
+
+
 $(function(){
 	if(tutorialFlag == false){
 		lockLangButtons = false;
@@ -770,24 +776,15 @@ function fadeSomething(x){
 					}
 				}
 				if(win == true){
-					buttonArray = [];
-					removeAblockCont();
-					gameOver = true;
-					$(".zone").slideUp(1000);
-					setTimeout(function(){
-						$(".zone").slideDown(1000);
-					}, 1000);	
-					setTimeout(function(){
-						if(wordsInDb == false){
-							getTrophies(level,score);
-						}
-						else{
-							setWordsArray();
-							enableNav();
-							have_to_sign_in();
-						}
-						return;
-					}, 1000);
+					if(tutorialFlagWas == true){
+						pause();
+						setModalTranslations();
+						$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn btn-primary" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
+						$('.modal').modal('show');
+					}
+					else{
+						winTheGame();
+					}
 				}		
 				else{
 					buttonArray = [];
@@ -1342,4 +1339,42 @@ function toNextLevel(){
 	}, 3500);
 }
 
+function winTheGame(){
+	buttonArray = [];
+	removeAblockCont();
+	gameOver = true;
+	$(".zone").slideUp(1000);
+	setTimeout(function(){
+		$(".zone").slideDown(1000);
+	}, 1000);	
+	setTimeout(function(){
+		if(wordsInDb == false){
+			getTrophies(level,score);
+		}
+		else{
+			setWordsArray();
+			enableNav();
+			have_to_sign_in();
+		}
+		return;
+	}, 1000);
+}
 
+function modalButtonClicked(answer){
+	$('.modal').modal('hide');
+	if(answer == true){
+		tutorialFlag = false;
+		winTheGame();
+	}
+	else{
+		if(answer == false){
+			tutorialFlag = false;
+			disableTutorial();
+			winTheGame();
+		}
+	}
+}
+
+function disableTutorial(){
+	$.get("games/disableTutorial");
+}

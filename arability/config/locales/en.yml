@@ -317,5 +317,8 @@ en:
   flashing_tower_popover_content: "Uh Oh! Looks like you are about to lose, better hurry up"
   flashing_tower_popover_title: "Flashing Tower"
   flashing_tower_popover_button: "Continue"
-
+  modal_header: "Congratulations"
+  modal_body: "You have finished the first Level. Would you like to see this Tutorial again the next time you play the game?"
+  modal_yes_button: "Yes"
+  modal_no_button: "No"
 

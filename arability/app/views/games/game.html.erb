@@ -1,8 +1,6 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-  $.get("games/disableTutorial");
   tutorialFlag = <%= current_gamer.show_tutorial %>;
-  alert(tutorialFlag);
   var words;
   var cache = "";
   var nav_locked = false;
@@ -266,6 +264,13 @@ function setButtons(){
     flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>"
     flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>"
     flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>"
+  }
+
+  function setModalTranslations(){
+    modalHeader = "<%= t(:modal_header) %>";
+    modalBody = "<%= t(:modal_body) %>";
+    modalYesButton = "<%= t(:modal_yes_button) %>";
+    modalNoButton = "<%= t(:modal_no_button) %>";
   }
 
 </script>

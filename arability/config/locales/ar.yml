@@ -324,3 +324,7 @@ ar:
   flashing_tower_popover_content: "إنتبه أنت تقترب من القمة. أسرع"
   flashing_tower_popover_title: "إقترب من القمة"
   flashing_tower_popover_button: "أكمل"
+  modal_header: "مبروك"
+  modal_body: "لقد أكملت أول مرحلة. هل تريد أن ترى هذه الخطوات التعلمية مرة أخرى في المرة القادمة؟"
+  modal_yes_button: "أجل"
+  modal_no_button: "لا"
