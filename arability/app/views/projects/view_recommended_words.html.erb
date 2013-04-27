@@ -1,0 +1,43 @@
+<Legend class="container"><%= t(:recommended_for_project)%></Legend>
+<%= javascript_include_tag "application.js" %>
+<br>
+<% if @karray.size == 0 %>
+  <div class="well">
+    <span>
+      <%= t(:no_recommended_words) %>
+    </span>
+  </div>
+<% else %>
+<p style="color:blue"><%= t(:select_words) %><p>
+  <table class="table table-bordered table-hover table-condensed" style="width:600px;background-color:white">
+    <col style="width:10%">
+    <col style="width:45%">
+    <col style="width:45%">
+    <%= form_tag view_recommended_words_path do |f| %>
+      <% for keyword in @karray %>
+      <tr>
+        <td style="text-align:center; vertical-align: middle">
+          <%= check_box_tag "keyword_ids[]", keyword.id %>
+        </td>
+        <td style="text-align:center; vertical-align: middle">
+          <%= keyword.name %>
+        </td>
+        <td style="text-align:center; vertical-align: middle">
+           <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name, { prompt: true }, { id:"key", disabled: true, 'data-id' => keyword.id}) %>
+        </td>
+        <script>
+          $('input[type=checkbox]').click(function() {
+              var $this = $(this);
+              if ($this.is(':checked')) {
+                  $("select[data-id=" + $this.val() + "]").removeAttr("disabled");
+              } else {
+                  $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
+              }
+          });
+        </script>
+      </tr>
+  <% end %>
+  </table>
+  <% end %>
+  <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:add_to_project) %></button>
+<% end %>

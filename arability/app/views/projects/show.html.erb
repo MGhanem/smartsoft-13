@@ -16,8 +16,8 @@
             </span>
           </button>
         </div>
-         <div class="btn-group">
-            <button href="<%= view_recommended_words_path(:project_id) %>" class = "btn icon-thumbs-up"><%= t(:recommended_words)%></button>
+        <div class="btn-group">
+          <a class="btn" href="<%= view_recommended_words_path(@project.id) %>"><i class="icon-thumbs-up"></i> <%= t(:recommended_words) %></a>
         </div>
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">
@@ -56,8 +56,8 @@
           </ul>
         </div>
         <div class="btn-group">
-        <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
-      </div>
+          <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
+        </div>
       </div>
       <br>
       <table class="table table-hover table-bordered table-condensed" style="width:800px;background-color:white">
@@ -65,35 +65,35 @@
         <col style="width:25%">
         <col style="width:10%">
         <% if @words.count == 0 %>
-          <div class="well">
-              <span>
-                <%= t(:no_words_in_project) %>
-              </span>
-          </div>
+        <div class="well">
+          <span>
+            <%= t(:no_words_in_project) %>
+          </span>
+        </div>
         <% else %>
-          <th style="text-align:center">
-            <%= t(:word) %>
-          </th>
-          <th style="text-align:center">
-            <%= t(:meaning) %>
-          </th>
-          <th style="text-align:center">
-          </th>
-          <% count=0 %>
-          <% while count<@words.count %>
-            <tr>
-              <td style="text-align:center">
-                <%= @words[count].name %>
-              </td>
-              <td style="text-align:center">
-                <%= @synonyms[count].name %>
-              </td>
-              <td style="text-align:center" >
-                <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
-              </td>
-              <% count = count + 1 %>
-            </tr>
-          <% end %>
+        <th style="text-align:center">
+          <%= t(:word) %>
+        </th>
+        <th style="text-align:center">
+          <%= t(:meaning) %>
+        </th>
+        <th style="text-align:center">
+        </th>
+        <% count=0 %>
+        <% while count<@words.count %>
+        <tr>
+          <td style="text-align:center">
+            <%= @words[count].name %>
+          </td>
+          <td style="text-align:center">
+            <%= @synonyms[count].name %>
+          </td>
+          <td style="text-align:center" >
+            <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
+          </td>
+          <% count = count + 1 %>
+        </tr>
+        <% end %>
         <% end %>
       </table>
     </div>

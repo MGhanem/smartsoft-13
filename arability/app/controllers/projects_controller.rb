@@ -228,24 +228,11 @@ class ProjectsController < BackendController
   # Failure:
   #   Gives status errors
   def view_recommended_words
-    if developer_signed_in?
-      if current_developer.my_subscription.subscription_model_id != 1
-        @project = Project.find(params[:id])
-        karray = []
-        Keyword.each do |k|
-          sarray = []
-          k.categories.each do |c|
-            if c.id == @project.category_id
-              karray.push(k)
-              sarray.push([k,k.synonyms])
-              break
-            end
-          end
-        end
-      end
-    else
-      developer_unauthorized
-    end
+      # if current_developer.my_subscription.subscription_model_id != 1
+        @project = Project.find(params[:project_id])
+        @karray = Project.filterkeywords(@project.category_id)
+        @selected = []
+      # end
   end
 
 

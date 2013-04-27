@@ -54,4 +54,19 @@ def self.createcategories(project,cat_id)
   return project
 end
 
+def self.filterkeywords(cat_id)
+  karray = []
+  Keyword.all.each do |k|
+    k.categories.each do |c|
+      if c.id == cat_id
+        if k.synonyms != []
+          karray.push(k)
+          break
+        end
+      end
+    end
+  end
+  return karray
+end
+
 end
