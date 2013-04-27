@@ -291,6 +291,18 @@ ar:
   score: "النقاط"
   search: "بحث"
   search_here: "ابحث هنا"
+  guest_sign_up_title: "ادخل هذه الأربع معلومات البسيطة عنك كي تسطيع أن تلعب"
+  guest_continue_sign_up_title: "انشاء حساب عربيليتي جديد"
+  guest_error1: "يجب ملئ خانة المستوى التعليمي "
+  guest_error2: "يجب ملئ خانة البلد"
+  guest_error3: "يجب ملئ خانة النوع"
+  guest_error4: "يجب ملئ خانة تاريخ الميلاد"
+  guest_error5: "يجب ملئ خانة اسم المستخدم"
+  guest_error6: "يجب ملئ خانة البريد الإلكتروني"
+  guest_error7: "يجب ملئ خانة كلمة السر"
+  guest_error8: "يجب ملئ خانة تأكيد كلمة السر"
+  guest_error9: "كلمات المرور غير متطابقة"
+  become_member: "اشترك الآن"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
   activerecord:
     errors:

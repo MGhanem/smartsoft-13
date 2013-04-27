@@ -1,0 +1,75 @@
+<em><h3 class="text-info"><%=  t(:guest_continue_sign_up_title) %></h3></em>
+<div class="container well">
+<%= form_for(resource, :url => guest_continue_signing_up_path) do |f| %>
+    <% if @errors != nil %>
+      <%if @errors.is_a?(Hash)%>
+        <ul>
+          <div class="alert">
+            <% @errors.each do |error| %>
+              <li>
+                <% if error[0] == "username" %>
+                  <% if I18n.locale == :en %>
+                    User name
+                  <%else%>
+                    اسم المستخدم
+                  <%end%>
+                <% end %>
+                <% if error[0] == "password" %>
+                  <% if I18n.locale == :en %>
+                    Password
+                  <%else%>
+                    كلمة السر
+                  <%end%>
+                <% end %>
+                <% if error[0] == "email" %>
+                  <% if I18n.locale == :en %>
+                    Email
+                  <%else%>
+                    البريد الإلكتروني
+                  <%end%>
+                <% end %>
+                <% error.delete_at(0) %>
+                <% error.each do |e|%>
+                  <%e.each do |printable|%>
+                    <%=printable%>
+                  <% end %>
+                <%end%>
+              </li>
+            <%end%>
+          </div>
+        </ul>
+      <%else%>
+        <ul>
+          <div class="alert">
+            <% @errors.each do |error| %>
+              <li><%=error%></li>
+            <%end%>
+          </div>
+        </ul>
+      <%end%>
+    <% end %>
+
+    <div class="container">
+
+
+        <div><%= f.label t(:email), :class => "control-label" %>
+        <%= f.email_field :email, :style => "margin-left: 10px;" %></div></br>
+
+        <div><%= f.label t(:password), :class => "control-label" %>
+        <%= f.password_field :password, :style => "margin-left: 10px;" %></div></br>
+
+        <div><%= f.label t(:password_confirmation), :class => "control-label" %>
+        <%= f.password_field :password_confirmation, :style => "margin-left: 10px;" %></div></br>
+
+        <div><%= f.label t(:username), :class => "control-label" %>
+        <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
+
+
+        <% if I18n.locale == :ar %>
+            <div><%= f.submit "سجل الحساب", :class => "btn btn-success" %></div>
+        <% else %>
+            <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
+        <% end %>
+    </div>
+    </div>
+    <% end %>

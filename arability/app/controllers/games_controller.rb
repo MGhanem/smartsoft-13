@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
-  before_filter :authenticate_gamer!
+  before_filter :authenticate_gamer_or_guest!
+  # before_filter :authenticate_gamer!
 
   def game
   end
@@ -293,7 +294,7 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
-    @record_output = current_gamer.suggest_synonym(params[:synonym_name], 
+    @record_output = current_or_guest_gamer.suggest_synonym(params[:synonym_name], 
       params[:keyword_id]) 
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 

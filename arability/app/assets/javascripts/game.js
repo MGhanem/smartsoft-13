@@ -57,6 +57,8 @@ var modalHeader;
 var modalBody;
 var modalYesButton;
 var modalNoButton;
+var isGuest;
+
 
 
 $(function(){
@@ -175,6 +177,7 @@ function destroyAndStart(id){
 	endTutorial();
 }
 
+var isGuest;
 
 // author:
 //   Ali El Zoheiry.
