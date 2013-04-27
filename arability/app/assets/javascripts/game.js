@@ -779,7 +779,10 @@ function fadeSomething(x){
 					if(tutorialFlagWas == true){
 						pause();
 						setModalTranslations();
-						$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn btn-primary" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
+						$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
+						$('.modal').on('hidden', function () {
+							winTheGame();
+						})
 						$('.modal').modal('show');
 					}
 					else{
@@ -1361,16 +1364,15 @@ function winTheGame(){
 }
 
 function modalButtonClicked(answer){
-	$('.modal').modal('hide');
 	if(answer == true){
 		tutorialFlag = false;
-		winTheGame();
+		$('.modal').modal('hide');
 	}
 	else{
 		if(answer == false){
 			tutorialFlag = false;
 			disableTutorial();
-			winTheGame();
+			$('.modal').modal('hide');
 		}
 	}
 }
