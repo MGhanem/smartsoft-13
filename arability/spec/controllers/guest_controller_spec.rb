@@ -5,52 +5,34 @@ include RequestHelpers
 include Warden::Test::Helpers
 
 describe GuestController do
-  describe "GET search" do
-  include Devise::TestHelpers
-    
-    let(:k2) do
-      success, keyword = Keyword.add_keyword_to_database("testing", true)
-      keyword
-    end
-
-    let(:k3) do
-      success, keyword = Keyword.add_keyword_to_database("ktest", false)
-      keyword
-    end
-
-    it "not signed-in user should get redirected to a fill form page before playing " do
-      get "/game"
-      response.should redirect_to(guest_fill_form_path)
-    end
+  describe "POST #signing_up" do
 
     it "should be able to fill in the required details before playing" do
-      get "/game"
-      fill_in 'education', :with => 'Graduate'
-      fill_in 'gender', :with => 'male'
-      fill_in 'dob', :with => '1993-03-23'
-      fill_in 'country', :with => 'Egypt'
-      click_button "Submit"
-      response.should redirect_to("/game")
+      expect{
+        post :signing_up, gamer: {education_level: 'Graduate', gender: 'male', "date_of_birth(1i)" => '1993', "date_of_birth(2i)" => '12', "date_of_birth(3i)" => '28', country: 'Egypt'}
+      }.to change(Gamer,:count).by(1)
     end
 
     it "should reenter his data if he entered something wrong" do
-      get "/game"
-      fill_in 'education', :with => 'Graduate'
-      fill_in 'gender', :with => 'male'
-      fill_in 'dob', :with => '2013-03-23'
-      fill_in 'country', :with => 'Egypt'
-      click_button "Submit"
-      response.should redirect_to(guest_fill_form_path)
+      expect{
+        post :signing_up, gamer: {education_level: 'Graduate', gender: 'male', "date_of_birth(1i)" => '2013', "date_of_birth(2i)" => '12', "date_of_birth(3i)" => '28', country: 'Egypt'}
+      }.to_not change(Gamer,:count)
     end
+  end
 
+  describe "POST #continue_signing_up" do
     it "should be able to continue with his signup afterwards" do
-      fill_in 'e-mail', :with => 'mohamed.aboul-azm@student.guc.edu.eg'
-      fill_in 'password', :with => '123456'
-      fill_in 'cPassword', :with => '123456'
-      fill_in 'username', :with => 'fattouh92'
-      click_button "Submit"
-      response.should redirect_to("/game")
+      post :signing_up, gamer: {education_level: 'Graduate', gender: 'male', "date_of_birth(1i)" => '1993', "date_of_birth(2i)" => '12', "date_of_birth(3i)" => '28', country: 'Egypt'}
+      expect{
+        post :continue_signing_up, gamer: {email: 'fattouh92@gmail.cdom', password: '123456', password_confirmation: '123456', username: 'fattouh92'}
+      }.to change(Gamer,:count).by(1)
     end
 
+    it "should his data when entering wrong data while continuing with his signup afterwards" do
+      post :signing_up, gamer: {education_level: 'Graduate', gender: 'male', "date_of_birth(1i)" => '1993', "date_of_birth(2i)" => '12', "date_of_birth(3i)" => '28', country: 'Egypt'}
+      expect{
+        post :continue_signing_up, gamer: {email: 'fattouh92@gmail.cdom', password: '123456', password_confirmation: '1', username:'fattouh92'}
+      }.to_not change(Gamer,:count)
+    end
   end
 end

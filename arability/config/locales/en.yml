@@ -292,7 +292,7 @@ en:
   keyword_added: "keyword added successfully"
   guest_sign_up_title: "Enter these four simple data about you to be able to play"
   guest_continue_sign_up_title: "Create a new Arability account"
-  guest_error1: "Education can't be empty"
+  guest_error1: "Education level can't be empty"
   guest_error2: "Country can't be empty"
   guest_error3: "Gender can't be empty"
   guest_error4: "Date Of Birth can't be empty"

@@ -40,10 +40,10 @@ class GuestController < ApplicationController
   # Failure:
   #   redirects to sign up form with the errors
   def continue_signing_up
-    email = params[:gamer]["email"]
-    password = params[:gamer]["password"]
-    password_confirmation = params[:gamer]["password_confirmation"]
-    username = params[:gamer]["username"]
+    email = params[:gamer][:email]
+    password = params[:gamer][:password]
+    password_confirmation = params[:gamer][:password_confirmation]
+    username = params[:gamer][:username]
     errors = []
     if username.size == 0
       errors << "#{t(:guest_error5)}"

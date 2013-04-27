@@ -1,5 +1,26 @@
 <em><h4 class="text-info"><%=  t(:guest_sign_up_title) %></h4></em>
-<div class="container well">
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well">
+        <strong>Thanks for choosing Arability!</strong>
+        <br />
+        To enjoy the full Arability experience <%= link_to "click here",  new_gamer_registration_path%>
+        <br />
+        Why become a full member not just a guest:
+        <br />
+        <ul>
+          <li>All it takes is just an email and password</li>
+          <li>Earn prizes and trophies</li>
+          <li>Compete with your friends</li>
+          <li>Share your score on facebook and twitter</li>
+          <li>Invite your friends</li>
+          <li>Enjoy a free trial of Arability developers</li>
+        </ul>
+      </div>
+    </div>
+    <div class="span9">
+      <div class="well">
 <%= form_for(resource, :url => guest_signing_up_path) do |f| %>
     <% if @errors != nil %>
       <%if @errors.is_a?(Hash)%>
@@ -101,5 +122,8 @@
             <div><%= f.submit "Continue", :class => "btn btn-success" %></div>
         <% end %>
     </div>
+  <% end %>
+</div>
+    </div>
   </div>
-<% end %>
+</div>
