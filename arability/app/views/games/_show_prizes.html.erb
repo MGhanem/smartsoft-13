@@ -6,7 +6,7 @@
       <a class="pull-left btn btn-success" style="padding: 5px; margin-left: 28px; margin-top: 28px;" onclick="backToGame()">رجوع </a>
     <% end %>
     <h3 class="title-head"><%= t(:won_prizes_title) %></h3>
-    <% if @won_prizes.size == 0 %>
+    <% if @won_prizes.blank? %>
     <div class="none">
       <%= t(:no_prizes) %>
     </div>
@@ -34,7 +34,7 @@
 
   <div class="not-won">
     <h3 class="title-head"><%= t(:not_won_prizes_title) %></h3>
-    <% if @not_won_prizes.size == 0 %>
+    <% if @not_won_prizes.blank? %>
     <div class="none">
       <%= t(:all_prizes) %>
     </div>
