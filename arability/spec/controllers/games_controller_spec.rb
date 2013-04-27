@@ -231,19 +231,19 @@ describe GamesController, :type => :controller do
   describe "GET get_trophies" do
     it "should have no won trophies and no won prizes" do
       sign_in(gamer_adam)
-      get :gettrophies, level: -1, score: -1
+      get :get_trophies, level: -1, score: -1
       assigns(:won_trophies).should =~ []
     end
 
     it "give all trophies to gamer" do
       sign_in(gamer_adam)
-      get :gettrophies, level: 3, score: 2500
+      get :get_trophies, level: 3, score: 2500
       assigns(:won_trophies).should =~ [trophy6, trophy7]
     end
 
     it "gamer should also be rewarded some prizes" do
       sign_in(gamer_adam)
-      get :gettrophies, level: 3, score: 2500
+      get :get_trophies, level: 3, score: 2500
       assigns(:bool_won_prizes).should eq(true)
     end
   end

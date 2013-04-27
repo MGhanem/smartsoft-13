@@ -177,7 +177,7 @@ class GamesController < ApplicationController
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
   #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
-  def gettrophies
+  def get_trophies
     @level = params[:level].to_i
     @score = params[:score].to_i
     @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
