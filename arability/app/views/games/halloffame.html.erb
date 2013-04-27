@@ -4,44 +4,41 @@
   {
     if(clicked_id == 1)
     {
-      document.getElementById('all').style.visibility = 'visible';
-      document.getElementById('facebook').style.visibility = 'hidden';
-      document.getElementById('twitter').style.visibility = 'hidden';
+      
     }
     else
     {
       if(clicked_id == 2)
       {
-        document.getElementById('all').style.visibility = 'hidden';
-        document.getElementById('facebook').style.visibility = 'visible';
-        document.getElementById('twitter').style.visibility = 'hidden';
+        
       }
       else
       {
-        document.getElementById('all').style.visibility = 'hidden';
-        document.getElementById('facebook').style.visibility = 'hidden';
-        document.getElementById('twitter').style.visibility = 'visible';
+        
       }
     }
   }
 
 </script>
 
-<div class="btn-group" data-toggle="buttons-radio">
-  <h2>Hall of Fame</h2>
-  <button id = "1" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">ALL</button>
-  <button id = "2" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">Your Facebook Friends</button>
-  <button id = "3" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">Your Twitter Friends</button>
+<div id="main" class="btn-group" data-toggle="buttons-radio">
+  <h2><%= t(:hall_of_fame) %></h2>
+  <button id = "1" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">
+    <%= t(:your_rank) %></button>
+  <button id = "2" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">
+    <%= t(:your_facebook_friends) %></button>
+  <button id = "3" type="button" class="btn btn-primary" data-toggle="button" onclick="display(this.id)">
+    <%= t(:your_twitter_friends) %></button>
 </div>
 
 <div id="all">
   <table class="table">
     <thead align="center">
       <tr>
-        <td>Rank</td>
-        <td>name</td>
-        <td>Score</td>
-        <td>Trophies</td>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
@@ -55,7 +52,7 @@
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
         <td>
           <% if @Trophies.nil? %>
-          <p>No Trophies</p>
+          <p><%= t(:no_trophies) %></p>
           <% else %>
           <%= @Trophies.trophy_id %>
           <% end %>
@@ -67,20 +64,20 @@
   </table>
 </div>
 
-<div id = "twitter" style = "width:600px; margin:0 auto; visibility:hidden" align="center">
+<div id = "twitter">
   <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" />
-  <p>Your Twitter Followers</p>
+  <p><%= t(:your_twitter_friends) %></p>
   <% common = Authentication.get_common_twitter_followers(current_gamer) %>
   <% if common.nil? %>
-  <p>You are not connected to Twitter</p>
+  <p><%= t(:not_connected_to_twitter) %></p>
   <% else %>
   <table class="table">
     <thead align="center">
       <tr>
-        <td>Rank</td>
-        <td>name</td>
-        <td>Score</td>
-        <td>Trophies</td>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
@@ -94,7 +91,7 @@
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
         <td>
           <% if @Trophies.nil? %>
-          <p>No Trophies</p>
+          <p><%= t(:no_trophies) %></p>
           <% else %>
           <%= @Trophies.trophy_id %>
           <% end %>
@@ -107,21 +104,21 @@
   </table>
 </div>
 
-<div id = "facebook" style = "width:600px; margin:0 auto; visibility:hidden" align="center">
+<div id = "facebook">
   <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" />
   <br>
-  <p>Your Facebook Friends</p>
+  <p><%= t(:your_facebook_friends) %></p>
   <% common = Authentication.get_common_facebook_friends(current_gamer) %>
   <% if common.nil? %>
-  <p>You are not connected to Facebook</p>
+  <p><%= t(:not_connected_to_facebook) %></p>
   <% else %>
   <table class="table">
     <thead align="center">
       <tr>
-        <td>Rank</td>
-        <td>name</td>
-        <td>Score</td>
-        <td>Trophies</td>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
@@ -135,7 +132,7 @@
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
         <td>
           <% if @Trophies.nil? %>
-          <label>No Trophies</label>
+          <p><%= t(:no_trophies) %></p>
           <% else %>
           <%= @Trophies.trophy_id %>
           <% end %>
