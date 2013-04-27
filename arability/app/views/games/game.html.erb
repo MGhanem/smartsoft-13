@@ -36,7 +36,7 @@
     }else{
       return false;
     }
-  } 
+  }
 
   function have_to_sign_in(){
     $.post("/games/vote_errors.js");
@@ -68,8 +68,6 @@
     }
   }
 
-
-
   function getTrophies(level, score) {
     clear();
     request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
@@ -92,7 +90,7 @@
       cache = document.getElementById("zone").innerHTML;
     }    
     clear();
-    $.get("/games/showprizes");
+    $.get("/games/show_prizes");
   }
 
   function showTrophies() {
@@ -125,13 +123,6 @@ function setButtons(){
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
     continuePlayingBtn = "Continue Playing"
     <% end %>
-  }
-
-
-  function getPrizes(level, score) {
-    clear();
-    request_string = "/games/get_prizes/?level=" + level + "&score=" + score;
-    $.get(request_string);
   }
 
   function getScore() {

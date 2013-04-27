@@ -185,13 +185,13 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:won_prizes).should =~ gamer_adam.get_won_prizes
     end
 
     it "Adam hasn't won any prize" do
       sign_in(gamer_adam)
-      get :showprizes
+      get :show_prizes
       assigns(:won_prizes).should =~ []
     end
 
@@ -199,7 +199,7 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:not_won_prizes).should =~ gamer_adam.get_available_prizes
     end
   end
