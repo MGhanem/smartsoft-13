@@ -305,3 +305,4 @@ en:
   already_connected_fb: "You're signed in and your account is already connected to facebook"
   errors_prohibited: "errors prohibited you from being saved"
   sign_up_e_acc: "Sign up with an existing account"
+  continue_reg_fb: "Facebook provided us with some information about you. Please fill in the rest to continue your registration"

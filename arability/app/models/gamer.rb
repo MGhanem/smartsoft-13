@@ -27,7 +27,7 @@ class Gamer < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true,
     length: { minimum: 3, maximum: 20 }
 
-  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
+  validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 

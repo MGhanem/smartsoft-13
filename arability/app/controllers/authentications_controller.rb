@@ -103,6 +103,7 @@ class AuthenticationsController < ApplicationController
             session["devise.token"] = token
             session["devise.gid"] = gid
             session["devise.token_secret"] = nil
+            flash[:notice] = t(:continue_reg_fb)
             redirect_to controller: "social_registrations",
             action: "new_social", email: email, username: username,
             gender: gender, provider: provider
