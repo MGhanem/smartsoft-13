@@ -8,7 +8,7 @@ function setChecked(chkbox){
   else
     $chkbox.attr("is_checked", true);
 }
-function report_submission(callback){
+function report_submission(){
   $reported_keywords = $("#report_modal").find("[is_checked=true]");
   if($reported_keywords.length == 0)
     return;
@@ -17,12 +17,14 @@ function report_submission(callback){
     words.push($(element).attr("value"));
   });
   $.post("<%= send_report_path %>", { reported_words: words }, function(data){
-    callback(data);
+    showFlash();
   });
   $.each($("input#chkbox"), function(index, element){
     $(element).attr("checked", false);
     $(element).attr("is_checked", false);
   });
+}
+function showFlash(){
   $("#report_success").css("display", "block");
   $("#report_success").css("margin-bottom", "2px");
   $("#report_success").css("padding-top", "6px");
