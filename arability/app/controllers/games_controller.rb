@@ -249,7 +249,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned trophies in a list and the trophies that haven't been 
   #   earned in another
-  def showtrophies
+  def show_trophies
     @won_trophies = current_gamer.get_won_trophies
     @not_won_trophies = current_gamer.get_available_trophies
     respond_to do |format|

@@ -209,13 +209,13 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
        gamer_adam.save validate: false
-       get :showtrophies
+       get :show_trophies
        assigns(:won_trophies).should =~ gamer_adam.get_won_trophies
     end
 
     it "Adam hasn't won any trophy" do
       sign_in(gamer_adam)
-      get :showtrophies
+      get :show_trophies
       assigns(:won_trophies).should =~ []
     end
 
@@ -223,7 +223,7 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
        gamer_adam.save validate: false
-       get :showtrophies
+       get :show_trophies
        assigns(:not_won_trophies).should =~ gamer_adam.get_available_trophies
     end
   end
