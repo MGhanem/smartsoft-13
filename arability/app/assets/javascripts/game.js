@@ -58,7 +58,18 @@ var modalBody;
 var modalYesButton;
 var modalNoButton;
 
-
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   on page load, if the tutorial flag is true, the language buttons are locked
+ //   and the popovers are displayed
+ // params:
+ //   none
+ // success:
+ //   the popovers are displayed successfuly or the tutorial falg is false,
+ //   and the popovers are not displayed
+ // failure:
+ //   none
 $(function(){
 	if(tutorialFlag == false){
 		lockLangButtons = false;
@@ -103,6 +114,16 @@ function bothBtnPopOver(){
 	}, 300);
 }
 
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   takes the given id and destroys its corresponding popover
+ // params:
+ //   id
+ // success:
+ //   the popover is destroyed successfuly
+ // failure:
+ //   the id is invalid  
 function destroy(id){
 	$('#btn-clear').css('z-index', '0');
 	id = id.replace('-po', '');
@@ -119,6 +140,16 @@ function destroy(id){
 	}
 }
 
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   displays the popover of the wordsList
+ // params:
+ //   none
+ // success:
+ //   the popover is displayed successfuly
+ // failure:
+ //   none
 function wordsListToolTip(){
 	$('#wordsList').popover();
 	setTimeout(function(){
@@ -131,6 +162,16 @@ function wordsListToolTip(){
 	
 }
 
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   displays the popover of the table
+ // params:
+ //   none
+ // success:
+ //   the popover is displayed successfuly
+ // failure:
+ //   none
 function tableToolTip(){
 	setPopoverAttributes();
 	$('#button7-5').popover({
@@ -150,6 +191,17 @@ function tableToolTip(){
 	
 }
 
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   displays the popover of the wordLabel
+ // params:
+ //   none
+ // success:
+ //   the popover is displayed successfuly
+ // failure:
+ //   none
 function wordLablelToolTip(){
 	$('#wordLabel').popover();
 	setTimeout(function(){
@@ -161,15 +213,50 @@ function wordLablelToolTip(){
 	}, 400);
 }
 
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   destroys the popover with the corresponding id(previous popover)
+ //   and calls the next popover to be displayed
+ // params:
+ //   id: is the id of the previous popover
+ // success:
+ //   the popover is destroyed and the 2nd one is displayed(label popover)
+ // failure:
+ //   invalid id, nothing will get destroyed
 function callNextToolTip(id){
 	destroy(id);
 	wordLablelToolTip();
 }
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   destroys the popover with the corresponding id(previous popover)
+ //   and calls the next popover to be displayed
+ // params:
+ //   id: is the id of the previous popover
+ // success:
+ //   the popover is destroyed and the 2nd one is displayed(table Popover)
+ // failure:
+ //   invalid id, nothing will get destroyed
 function callNextToolTip2(id){
 	destroy(id);
 	tableToolTip();
 }
 
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   called when the last popover button is clicked, destroys the 
+ //   popover and ends the tutorial, thus starting the game
+ // params:
+ //   id: of the last Popover
+ // success:
+ //   the popover is destroyed and the game starts
+ // failure:
+ //   invalid id
 function destroyAndStart(id){
 	destroy(id);
 	endTutorial();
@@ -327,10 +414,33 @@ function dropAblock(){
 	dropAblockCont(clss, btn, randNum, 0);
 }
 
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   pauses the game, by stopping any blocks from falling
+ //   or any button from being clicked
+ // params:
+ //   none
+ // success:
+ //   the game is paused successfuly
+ // failure:
+ //   none
 function pause(){
 	tutorialFlag = true;
 }
 
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   unpauses the game and decides whether to drop a new block or
+ //   continue pulling an old block based on the state of the game
+ // params:
+ //   none
+ // success:
+ //   the tutorial is stopped successfuly and the game starts
+ // failure:
+ //   tutorial wasent started
 function endTutorial(){
 	tutorialFlag = false;
 	tutorialFlagWas = true;
@@ -350,7 +460,16 @@ function endTutorial(){
 	}
 }
 
-
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   does the same as endTutorial() without setting the tutorialflagwas to true
+ // params:
+ //   none
+ // success:
+ //   game is unpaused and started successfuly
+ // failure:
+ //   game was not paused
 function unPause(){
 	tutorialFlag = false;
 	if(newDrop == true){
@@ -369,6 +488,18 @@ function unPause(){
 	}
 }
 
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   destroys the popover with the corresponding id(previous popover)
+ //   and unpauses the game
+ // params:
+ //   id: is the id of the previous popover
+ // success:
+ //   the popover is destroyed and the game starts
+ // failure:
+ //   invalid id
 function destroyAndUnpause(id){
 	destroy(id);
 	unPause();
@@ -433,6 +564,18 @@ function dropAblockCont(clss, btn, randNum, counter){
 	}, fallingTime);// <------set the drop fall time here
 }
 
+
+ // author:
+ //   Ali El Zoheiry
+ // description:
+ //   checks if the game is over or not, if notcalls dropAblock to create
+ //   a new block and start dropping it
+ // params:
+ //   none
+ // success:
+ //   either the game stops, or a new block is dropped
+ // failure:
+ //   none
 function blockLanded(){
 	buttons = table.find('button');
 	var tower = highestTower();
@@ -510,17 +653,6 @@ function calculatePossible(){
 		}
 }
 
-// function stopingPoint(){
-// 	var clss;
-// 	var stop = false;
-// 	for(var i = 0; i < dimension; i++){
-// 		clss = 'col0-' + i;
-// 		if(document.getElementById(clss).innerHTML != ''){
-// 			stop = true;
-// 		}
-// 	}
-// 	return stop;
-// }
 
 // author:
 //   Ali El Zoheiry.
@@ -534,7 +666,6 @@ function calculatePossible(){
 // failure:
 //   the gamer clicked the same button twice and that button was not at the end of the array, then nothing will happen
 //   or the game is over.
-
 function formWord(id){
 	if(buttonArray.length > 0){
 		for(var i = 0; i < buttonArray.length; i++){
@@ -606,7 +737,6 @@ function generateWord(){
 //   the button is clicked and the methods are called successfuly.
 // failure:
 //   the game is over, on click nothing will happen.
-
 function callMethods(id){
 	if(id == 'btn' + blockId){
 		return;
@@ -670,7 +800,6 @@ function callMethods(id){
 //   the id is valid and has an upper row, it will be returned.
 // failure:
 //   the id is not valid or has no upper row, then nothing will happen.
-
 function calculateUpperRow(id){
 	var upperRow = '';
 	for(var i = 3; i < id.length; i++){
