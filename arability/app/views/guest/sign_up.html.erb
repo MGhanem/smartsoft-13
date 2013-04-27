@@ -1,4 +1,4 @@
-<em><h3 class="text-info"><%=  t(:guest_sign_up_title) %></h3></em>
+<em><h4 class="text-info"><%=  t(:guest_sign_up_title) %></h4></em>
 <div class="container well">
 <%= form_for(resource, :url => guest_signing_up_path) do |f| %>
     <% if @errors != nil %>
@@ -101,5 +101,5 @@
             <div><%= f.submit "Continue", :class => "btn btn-success" %></div>
         <% end %>
     </div>
-    </div>
-    <% end %>
+  </div>
+<% end %>

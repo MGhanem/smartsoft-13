@@ -117,8 +117,17 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # called (once) when the user logs in, insert any code your application needs
-  # to hand off from guest_user to current_user.
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   handles what should happen when a guest becomes a user
+  # Params:
+  #   id: id of the user
+  #   guest_gamer: the guest gamer
+  # Success: 
+  #   changes ids of the votes where the id was of the guest_gamer to the id from the parameters
+  # Failure:
+  #   none
   def logging_in(id)
     guest_votes = Vote.where(gamer_id: guest_gamer.id)
       guest_votes.each do |vote|
@@ -130,14 +139,13 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   creates a guest with the given data
+  #   creates a gamer with the given data
   # Params:
-  #   education: the education level of a the guest
-  #   country: the country of the guest
-  #   gender: the gender of the guest
-  #   dob: the date of birth
+  #   email: the email of a the gamer
+  #   password: the password of the gamer
+  #   username: the username of the gamer
   # Success: 
-  #   returns the created guest and true
+  #   returns the created gamer and true
   # Failure:
   #   returns the gamer instance that wasn't created and false
   def create_gamer(email, password, username)
@@ -205,5 +213,3 @@ class ApplicationController < ActionController::Base
     end
   end
 end
-
-

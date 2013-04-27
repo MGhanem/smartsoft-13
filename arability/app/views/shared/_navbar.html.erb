@@ -19,10 +19,10 @@
       <% if !gamer_signed_in? %>
           <li class="divider-vertical"></li>
           <li>
-            <% if guest_gamer != nil %>
-              <a href="<%=guest_continue_sign_up_path%>"><%= t :sign_up %></a>
-            <% else %>
+            <% if session[:guest_gamer_id] == nil %>
               <a href="/gamers/sign_up"><%= t :sign_up %></a>
+            <% else %>
+              <a href="<%=guest_continue_sign_up_path%>"><%= t :become_member %>
             <% end %>
           </li>
           <li class="divider-vertical"></li>

@@ -28,6 +28,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var continuePlayingBtn;
+var isGuest;
 
 // author:
 //   Ali El Zoheiry.
@@ -537,7 +538,12 @@ function fadeSomething(x){
 					}, 1000);	
 					setTimeout(function(){
 						if(wordsInDb == false){
-							getTrophies(level,score);
+							if(isGuest == true){
+								nextLevel();
+							}
+							else{	
+								getTrophies(level,score);
+							}
 						}
 						else{
 							setWordsArray();

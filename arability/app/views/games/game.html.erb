@@ -1,8 +1,13 @@
 <script type="text/javascript" charset="utf-8">
-  alert("<%= current_or_guest_gamer.id %>");
   var words;
   var cache = "";
   var nav_locked = false;
+
+  <% if current_gamer == nil %>
+  isGuest = true;
+  <% else %>
+  isGuest = false;
+  <% end %>
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -26,9 +31,14 @@
 
   function check_empty_words(){
     if(words.length == 0){
-        if(win == true){
+      if(win == true){
+        if(isGuest == true){
+          nextLevel();
+        }
+        else{
          getTrophies(level, score);
-      }
+        }
+     }
       else{
         getScoreOnly(score);
       }
