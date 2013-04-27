@@ -28,7 +28,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-var tutorialFlag;
+var tutorialFlag = true;
 var currentClss;
 var currentNewClss;
 var currentBtn;
