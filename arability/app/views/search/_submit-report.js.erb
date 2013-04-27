@@ -23,10 +23,15 @@ function report_submission(callback){
     $(element).attr("checked", false);
     $(element).attr("is_checked", false);
   });
-  $("#report_success").attr("style", "display:block; margin-bottom:2px;")
+  $("#report_success").css("display", "block");
+  $("#report_success").css("margin-bottom", "2px");
+  $("#report_success").css("padding-top", "6px");
+  $("#report_success").css("padding-bottom", "6px");
+  $("#report_success").css("padding-right", "12px");
+  $("#report_success").css("padding-left", "12px");
   $("#report_success").css("position", "fixed");
   $("#report_success").css("top", "50px");
   $("#report_success").css("left", "42%");
   $("#report_success").css("right", "42%");
-  $("#report_success").fadeOut(4000);
+  $("#report_success").fadeOut(5000);
 }
