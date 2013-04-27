@@ -1,3 +1,4 @@
+$.ajaxSetup({async: false});
 var dimension = 10;
 var table;
 var cells;
@@ -38,7 +39,7 @@ var secondTutorialClick = false;
 var tutorialButtonId;
 var newDrop = false;
 var lockLangButtons = true;
-var tutorialFlagWas;
+var tutorialFlagWas = false;
 var continuePlayingBtn;
 var wordsListPopoverContent;
 var wordsListPopoverTitle;
@@ -183,7 +184,6 @@ function destroyAndStart(id){
 //   there are no words in the database and the gamer is prompted that he has no words.
 
 function newGame(){
-	$.ajaxSetup({async: false});
 	getNewWords(1);
 	if(wordsInDb == true){
 	continuePlaying();

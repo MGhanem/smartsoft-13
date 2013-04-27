@@ -1,7 +1,8 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-   
+  $.get("games/disableTutorial");
   tutorialFlag = <%= current_gamer.show_tutorial %>;
+  alert(tutorialFlag);
   var words;
   var cache = "";
   var nav_locked = false;

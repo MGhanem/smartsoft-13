@@ -298,4 +298,20 @@ class GamesController < ApplicationController
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
   end
+
+  # Author:
+  #   Ali El Zoheiry
+  # Description:
+  #   updates the value of the show_tutorial column to false
+  # params:
+  #   none
+  # success:
+  #   the value of the column is successfuly changed to false
+  # failure:
+  #   none
+  def disableTutorial
+    current_gamer.update_attributes!(:show_tutorial => false)
+  end
 end
+
+
