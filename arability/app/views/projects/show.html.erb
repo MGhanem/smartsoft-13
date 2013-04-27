@@ -60,9 +60,9 @@
       </div>
       <br>
       <table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">
-        <col style="width:25%">
-        <col style="width:25%">
-        <col style="width:10%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:15%">
         <% if @words.count == 0 %>
           <div class="well">
               <span>
@@ -82,10 +82,11 @@
           <% while count<@words.count %>
             <tr>
               <td style="text-align:center">
-                <%= @words[count].name %>
+                <% keyword = @words[count].name%>
+                <%= link_to keyword, search_path(search: keyword, project_id: @project.id), :method => :post %>
               </td>
               <td style="text-align:center">
-                <%= @synonyms[count].name %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'input', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
               </td>
               <td style="text-align:center" >
                 <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
@@ -94,6 +95,82 @@
             </tr>
           <% end %>
         <% end %>
+            <tr style="text-align:center" >
+              <td style="text-align:center">
+                <% if I18n.locale == :en %>
+                <div class="input-append" style="margin-top:10px;" >
+                  <input type="text"  class="search-query autocomplete" name="keyword_search" id ="selected_keyword" autocomplete="off" placeholder="search keyword here") ></input>
+                </div>
+                <% else %>
+                 <div class="input-append" style="margin-top:10px;" >
+                  <input type="text"  class="search-query autocomplete" name="keyword_search"  id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
+                </div>
+                <% end %>
+              </td> 
+              <td style="text-align:center" >
+                <%= collection_select(:synonym_name , :text, [], :id, :name, {prompt: t(:enter_word_first) }, {:class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%; margin-top:10px;'}) %>
+              </td> 
+              <td style="text-align:center">
+                <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center; margin-top:10px;" onclick="add_keyword_with_synonym()" value="<%= t(:add_to_project) %>" disabled=
+                "true"></input>
+             </td>
+            </tr>
       </table>
+      <p id="illustration"></br></p>
     </div>
-  </form>
+  </form> 
+<script type="text/javascript" charset="utf-8">
+  $("#selected_keyword").change(function (){
+    load_synonyms();
+  });
+  $(".autocomplete").typeahead({
+    source: fetch_keywords,
+    items: 10,
+    highlighter: function(item) {
+      return item
+    },
+    updater: function(item){
+      document.getElementById('illustration').innerHTML = '</br>';
+      if(item.charAt(item.length-1) == ">"){
+       item = item.substring(0,item.indexOf("<"));
+     }
+     return item
+    }
+  });
+  function fetch_keywords(keyword, callback){
+    $.post("autocomplete_keyword", { keyword_search: keyword, project_id: <%= @project.id %> }, function(data){
+      length = data[Object.keys(data).length-1];
+      data = data.slice(0,-1); 
+      for(var i = 0; i < Object.keys(data).length; i++){
+        if(i >= length){
+         data[i] = data[i]+"   *".fontcolor("red") ;
+        }
+      }
+      <% if I18n.locale == :en %>
+        document.getElementById('illustration').innerHTML = 'Keywords with <font color="red">   *   </font> are not in your project categories';
+      <% else %>
+        document.getElementById('illustration').innerHTML = 'الكلمات المصحوبة ب<font color="red">   *   </font>ليس في فئات مشروعك.';
+      <% end %>
+      callback(data);
+    })
+  }
+  $(".input").change(function(){
+    var new_synonym_id = $(this).val();
+      $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
+  });
+  function add_keyword_with_synonym(){
+    var keyword_name = $("#selected_keyword").val();
+    var synonym_id = $("#selected_synonym option:selected").val();
+    if(keyword_name != "" && synonym_id != undefined && synonym_id !="0"){
+        $.ajax({
+          type: "POST",
+          url: "/developers/projects/"+"<%= @project.id %>"+"/quick_add",
+          data: {synonym_id: synonym_id, keyword:keyword_name ,project_id: "<%= @project.id %>" }
+        });   
+      }
+  }
+  function load_synonyms(){
+    var keyword = $("#selected_keyword").val();
+    $.post("/developers/projects/load_synonyms",{word:keyword, project_id: "<%= @project.id %>"} );
+  }
+</script>

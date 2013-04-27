@@ -289,6 +289,7 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  enter_word_first: "enter a word first"
   keyword_added: "keyword added successfully"
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_twitter_connection: "Connection to Twitter removed successfully!"

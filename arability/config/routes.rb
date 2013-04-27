@@ -96,6 +96,18 @@ Arability::Application.routes.draw do
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
+  match "/developers/projects/:project_id/change_synonym" => "projects#change_synonym", :as => "change_synonym"
+
+  match "/developers/projects/:project_id/quick_add" => "projects#quick_add", :as => "quick_add"
+
+  match "/developers/projects/load_synonyms" => "projects#load_synonyms"
+
+  match "/en/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+
+  match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+ 
+  match "/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
