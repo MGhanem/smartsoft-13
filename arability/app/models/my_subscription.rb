@@ -79,11 +79,23 @@ class MySubscription < ActiveRecord::Base
   end
 
   def self.get_projects
-    developer = Developer.find_by_gamer_id(current_gamer.id).id
+    dev = Developer.find_by_gamer_id(current_gamer.id).id
     my_subscription = 
       MySubscription.joins(:developer).where(:developer_id => dev_id).first
-      project = Project.find_by_developer_id(developer.id)
+      project = Project.where(:developer_id => owner_id)
       if project.count < my_subscription.project
+        return true
+      else
+        return false
+  end
+
+  def self.add_max_word(word_id)
+    dev = Developer.find_by_gamer_id(current_gamer.id).id
+    my_subscription = 
+      MySubscription.joins(:developer).where(:developer_id => dev_id).first
+      project = Project.where(:developer_id => owner_id)
+      add=PreferedSynonym.where(:project_id => project_id )
+      if add.count < my_subscription.limit
         return true
       else
         return false
