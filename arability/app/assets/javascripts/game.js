@@ -3,7 +3,6 @@ var table;
 var cells;
 var buttonArray = new Array();
 var wordsArray = [];
-var pauseFlag = true;
 var gameOver = false;
 var level = 1;
 var droppingBlocks;
@@ -28,7 +27,7 @@ var suspenseTimerArray = new Array(dimension);
 var wasPrompted = false;
 var gameOverFontSize;
 var firstClick = true;
-var tutorialFlag = true;
+var tutorialFlag;
 var currentClss;
 var currentNewClss;
 var currentBtn;
@@ -50,7 +49,9 @@ var tablePopoverTitle;
 var clickedButtonPopoverContent;
 var clickedButtonPopoverTitle;
 var clickedButtonPopoverButton;
-
+var flashingTowerPopoverContent;
+var flashingTowerPopoverTitle;
+var flashingTowerPopoverButton;
 $(function(){
 	if(tutorialFlag == false){
 		lockLangButtons = false;
@@ -1013,11 +1014,12 @@ function suspense(){
 		if(tutorialFlagWas == true){
 			tutorialFlagWas = false;
 			tutorialFlag = true;
+			setPopoverAttributes();
 			$('#' + id).popover({
 				html: true,
 				trigger: 'manual',
-				content: "<p>Uh Oh! Looks like you are about to lose, better hurry up</p><button onclick='destroyAndUnpause(this.id)' class='tutBtn btn btn-primary' id='" + id + "-po'>Continue</button>",
-				title: '<h4>Flashing Tower</h4>',
+				content: "<p>" + flashingTowerPopoverContent + "</p><button onclick='destroyAndUnpause(this.id)' class='tutBtn btn btn-primary' id='" + id + "-po'>" + flashingTowerPopoverButton + "</button>",
+				title: '<h4>' + flashingTowerPopoverTitle + '</h4>',
 				placement: 'left'
 			});
 			setTimeout(function(){ 
@@ -1026,7 +1028,10 @@ function suspense(){
 			setTimeout(function(){
 				$('.row2').expose({closeOnClick: false,
 				closeOnEsc: false, color: 'black', opacity: 0.8});
-				$('.popover').css('z-index', '9999999')
+				$('.popover').css('z-index', '9999999');
+				var suffix = "-" + x;
+				$("td[id*=" + suffix + "]").css('position', 'relative');
+				$("td[id*=" + suffix + "]").css('z-index', '99999999');
 			}, 100);
 		}
 		suspenseCont(x);

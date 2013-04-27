@@ -1,5 +1,7 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
+   
+  tutorialFlag = <%= current_gamer.show_tutorial %>;
   var words;
   var cache = "";
   var nav_locked = false;
@@ -260,6 +262,9 @@ function setButtons(){
     clickedButtonPopoverContent = "<%= t(:clicked_button_popover_content) %>";
     clickedButtonPopoverTitle = "<%= t(:clicked_button_popover_title) %>";
     clickedButtonPopoverButton = "<%= t(:clicked_button_popover_button) %>";
+    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>"
+    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>"
+    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>"
   }
 
 </script>

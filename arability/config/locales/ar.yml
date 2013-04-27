@@ -321,3 +321,6 @@ ar:
   clicked_button_popover_content: "كما ترون الأن الزر لونه برتقالي، و هذا يعني إنه إذا قمت بضغطه مرة أخرى، سيتم حذفه من الكلمة. لاحظ أن الزر الأخير فقط هو الذي يمكن حذفه، وإذا كنت تريد حذف الكلمة كلها يمكنك الضغط على زر حذف الكلمة "
   clicked_button_popover_title: "ضغط على حرف"
   clicked_button_popover_button: "إبدأ اللعب"
+  flashing_tower_popover_content: "إنتبه أنت تقترب من القمة. أسرع"
+  flashing_tower_popover_title: "إقترب من القمة"
+  flashing_tower_popover_button: "أكمل"

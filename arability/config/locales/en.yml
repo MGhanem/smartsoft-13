@@ -314,5 +314,8 @@ en:
   clicked_button_popover_content: "As you can see the button is now orange, meaning that if you click it again, it will be unclicked. Note that only the last button clicked can be removed. If you want to remove more than one letter, you can click on the 'Clear Word' button"
   clicked_button_popover_title: "Clicking a letter"
   clicked_button_popover_button: "Start Playing"
+  flashing_tower_popover_content: "Uh Oh! Looks like you are about to lose, better hurry up"
+  flashing_tower_popover_title: "Flashing Tower"
+  flashing_tower_popover_button: "Continue"
 
 
