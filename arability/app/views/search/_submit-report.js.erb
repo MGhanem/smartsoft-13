@@ -23,6 +23,10 @@ function report_submission(callback){
     $(element).attr("checked", false);
     $(element).attr("is_checked", false);
   });
-  $(".alert-success").attr("style", "display:block;margin-bottom:2px;")
-  $(".alert-success").fadeOut(3000);
+  $("#report_success").attr("style", "display:block; margin-bottom:2px;")
+  $("#report_success").css("position", "fixed");
+  $("#report_success").css("top", "50px");
+  $("#report_success").css("left", "42%");
+  $("#report_success").css("right", "42%");
+  $("#report_success").fadeOut(4000);
 }

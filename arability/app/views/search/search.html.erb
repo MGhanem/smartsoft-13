@@ -264,9 +264,9 @@
 <% end %>
 
 <% if !@search_keyword.blank? %>
-	<span class="alert alert-success" style="margin-bottom: 2px;display:none;">
+	<div class="alert alert-success" id="report_success" style="margin-bottom: 2px; display:none;">
 		<span><%= t(:report_sent_success) %></span>
-	</span>
+	</div>
 	<a href="#report_modal" role="button" class="btn" onClick="modalToggle()" id="LaunchDemo"><%= t(:report) %></a>
 
 	<div id="report_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
