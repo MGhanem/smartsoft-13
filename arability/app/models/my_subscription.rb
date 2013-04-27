@@ -3,11 +3,6 @@ class MySubscription < ActiveRecord::Base
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, :presence => true
-
-  @@search=1
-  @@add=2
-  @@follow=3
-
   # Author:
   #  Noha Hesham
   # Description:
@@ -52,7 +47,6 @@ class MySubscription < ActiveRecord::Base
     #   or follow limit
     # fail:
     #   none
-    
       def get_permission_follow(dev_id)
         my_subscription = 
          MySubscription.joins(:developer).where(:developer_id => dev_id).first
@@ -62,22 +56,29 @@ class MySubscription < ActiveRecord::Base
             return false
           end
         end        
- 
-    # Author:
-    #  Noha Hesham
-    # Description:
-    #  counts the number of the followed word by the
-    #  developer till now
-    # Success:
-    #  gets the correct number of words counted
-    # Failure:
-    #  none 
+  # Author:
+  #  Noha Hesham
+  # Description:
+  #  counts the number of the followed word by the
+  #  developer till now
+  # Success:
+  #  gets the correct number of words counted
+  # Failure:
+  #  none 
    def count_follow
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count   
   end
   end
-
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   It compares the created projects with the developer's project
+  #   limit and returns true if the developer didnt pass the limit
+  # Success:
+  #   Gives permission
+  # Failure:
+  #   None 
   def self.get_projects
     dev = Developer.find_by_gamer_id(current_gamer.id).id
     my_subscription = 
@@ -88,8 +89,16 @@ class MySubscription < ActiveRecord::Base
       else
         return false
   end
-
-  def self.add_max_word(word_id)
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   It compares the words added by the developer to the add
+  #   limit and returns true if the developer didnt pass the limit
+  # Success:
+  #   Gives permission to add words
+  # Failure:
+  #   None 
+  def self.add_max_word
     dev = Developer.find_by_gamer_id(current_gamer.id).id
     my_subscription = 
       MySubscription.joins(:developer).where(:developer_id => dev_id).first
@@ -100,7 +109,16 @@ class MySubscription < ActiveRecord::Base
       else
         return false
   end
-
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   It takes the word id and checks if the developer has searched for it before
+  #   if no it checks if the developer has passed the search limit and 
+  #   gives permission accordingly
+  # Success:
+  #   Gives permission to search
+  # Failure:
+  #   None 
   def self.get_max_words(word_id)
     dev_id = Developer.find_by_gamer_id(current_gamer.id).id
     my_subscription = 
