@@ -25,7 +25,9 @@ var wordsInDb = true;
 var levelPopUpTitle;
 var booleanSuspense = new Array(dimension);
 var suspenseTimerArray = new Array(dimension);
-
+var wasPrompted = false;
+var gameOverFontSize;
+var continuePlayingBtn;
 
 // author:
 //   Ali El Zoheiry.
@@ -44,24 +46,16 @@ function newGame(){
 	$.ajaxSetup({async: false});
 	getNewWords(1);
 	if(wordsInDb == true){
-	$('.zone').empty();
-	setButtons();
-	setLevelPopUpTitle();
-	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
-	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
-	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
-	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
-	$('#level-popup').fadeTo(0,0);
-	$('#level-popup').fadeTo(1500,1);
-	$('#level-popup').fadeTo(1500,0);
-	setTimeout(function(){
-		$('#level-popup').remove();
-		setScoreTitle();
-		startGame();
-	}, 3500);
+	continuePlaying();
 }
+	else{
+		wasPrompted = true;
+		setButtons();
+		$('.zone').empty();
+		$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="continuePlaying()">' +
+			continuePlayingBtn +'</button>');
+	}
 }
 // author:
 //   Ali El Zoheiry.
@@ -522,7 +516,9 @@ function fadeSomething(x){
 				var originalLi = document.getElementById(lsId).innerHTML;
 				document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
 				calculateScore();
-				successfulWords.push(wordsArray[x]);
+				if(wordsInDb == true){
+					successfulWords.push(wordsArray[x]);
+				}
 				wordExistsInArray[x] = false;
 				calculatePossible();
 				win = true;
@@ -537,15 +533,19 @@ function fadeSomething(x){
 					gameOver = true;
 					$(".zone").slideUp(1000);
 					setTimeout(function(){
-						getPrizes(10,10)
 						$(".zone").slideDown(1000);
 					}, 1000);	
 					setTimeout(function(){
-						setWordsArray();
-						enableNav();
-						have_to_sign_in();
+						if(wordsInDb == false){
+							getTrophies(level,score);
+						}
+						else{
+							setWordsArray();
+							enableNav();
+							have_to_sign_in();
+						}
 						return;
-					}, 2000);
+					}, 1000);
 				}		
 				else{
 					buttonArray = [];
@@ -694,40 +694,23 @@ function clearWord(){
 //   there is no next level, then the user will be promted that he has finished all the levels.
 
 function nextLevel(){
-	disableNav();
-	level++;
-	fallingTime = fallingTime - 15;
-	waitTime = waitTime - 70;
-	$('.zone').empty();
-	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
-	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
-	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
-	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
-	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
-	$('#level-popup').fadeTo(0,0);
-	$('#level-popup').fadeTo(1500,1);
-	$('#level-popup').fadeTo(1500,0);
-	setTimeout(function(){
-		$('#level-popup').remove();
-		$('#main-table').empty();
-		$('#wordsList').empty();
-		$('#level').empty();
-		setScoreTitle();
-		buttonArray = [];
-		bigTower = '';
-		gameOver = false;
-		successfulWords = [];
-		clearTimeout(pullingBlocks);
-		clearTimeout(droppingBlocks);
-		for(var x = 0; x < booleanSuspense.length; x++){
-			if(booleanSuspense[x] == true){
-				clearTimeout(suspenseTimerArray[x]);
-				booleanSuspense[x] = false;
-			}
+	getNewWords(1);
+	if(wordsInDb == true){
+		toNextLevel();
+	}
+	else{
+		if(wasPrompted == false){
+			wasPrompted = true;
+			setButtons();
+			$('.zone').empty();
+			$('.zone').append('<h2 id ="empty-db-msg">' + generateEmptyDbMsg() +
+			'<br><button class="btn btn-success" id="contPlayingBtn" onclick="toNextLevel()">' +
+			continuePlayingBtn +'</button>');
 		}
-		startGame();
-	}, 3500);
+		else{
+			toNextLevel();
+		}
+	}
 	
 }
 
@@ -832,29 +815,6 @@ function suspenseCont(col){
 }
 
 
-// function highestTowerId(){
-// 	var towerHeight;
-// 	var towerCol;
-// 	var heighestSoFar = 0;
-// 	for(var cols = 0; cols < dimension; cols++){
-// 		towerHeight = 0;
-// 		for(var rows = dimension - 1; rows > -1; rows--){
-// 			cellId = "col" + rows + "-" + cols;
-// 			if(document.getElementById(cellId).innerHTML != ''){
-// 				towerHeight++;
-// 			}
-// 			else{
-// 				break;
-// 			}
-// 		}
-// 		if(towerHeight > heighestSoFar){
-// 			heighestSoFar = towerHeight;
-// 			towerCol = cols;
-// 		}
-// 	}
-// 	return towerCol;
-// }
-
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -868,13 +828,6 @@ function suspenseCont(col){
 
 function getNewWords(num){
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
-	if(wordsArray.length == 0){
-		wordsInDb = false;
-		$('.zone').empty();
-		$('.zone').append('<h2 id ="empty-db-msg">' +
-			'Congratulations you have voted on every word in our database, we are very thankful for your contribution, ' +
-			'and we hope that you enjoyed our game</h2>');
-	}
 }
 
 
@@ -1019,16 +972,22 @@ function loseGame(t){
 		setTimeout(function(){$('tr').fadeIn('slow');
 		$('tr').empty();
 		}, 500);
+		generateGameOverPopUp();
 		$('.zone').append('<div id ="gameover-popup"' +
-		'style="font-size: 300px; color: white; position: absolute; margin-top: 120px;"><p style="text-align: center;">' + 
-		'النهاية</p></div>');
+		'style="font-size: ' + gameOverFontSize + '; color: white; position: absolute; margin-top: 120px;">' +
+		'<p style="text-align: center;">' + generateGameOverPopUp() + '</p></div>');
 		$('#gameover-popup').fadeTo(0,0);
 		$('#gameover-popup').fadeTo(1500,1);
 		$('#gameover-popup').fadeTo(1500,0);
 		setWordsArray();
 		setTimeout(function(){
-			enableNav();
-			have_to_sign_in();
+			if(wordsInDb == false){
+				getScoreOnly(score);
+			}
+			else{
+				enableNav();
+				have_to_sign_in();
+			}
 			return true;
 		}, 3000);
 	}
@@ -1037,3 +996,75 @@ function loseGame(t){
 		return false;
 	}
 }
+
+function continuePlaying(){
+	$('.zone').empty();
+	setButtons();
+	setLevelPopUpTitle();
+	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
+	'<div id="list-div" class="well" style=""><ol id="wordsList"></ol>' + 
+	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>'+
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
+	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
+	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	$('#level-popup').fadeTo(0,0);
+	$('#level-popup').fadeTo(1500,1);
+	$('#level-popup').fadeTo(1500,0);
+	setTimeout(function(){
+		$('#level-popup').remove();
+		setScoreTitle();
+		startGame();
+	}, 3500);
+}
+
+
+
+// author:
+//   Ali El Zoheiry
+// description:
+//   an abstraction of the nextLevel() method to be called from various stages
+// params:
+//   none
+// success:
+//   the gamer has finished the level and is redirected to the next level
+// failure:
+//   none
+
+function toNextLevel(){
+	disableNav();
+	level++;
+	fallingTime = fallingTime - 15;
+	waitTime = waitTime - 70;
+	$('.zone').empty();
+	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
+	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
+	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
+	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
+	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	$('#level-popup').fadeTo(0,0);
+	$('#level-popup').fadeTo(1500,1);
+	$('#level-popup').fadeTo(1500,0);
+	setTimeout(function(){
+		$('#level-popup').remove();
+		$('#main-table').empty();
+		$('#wordsList').empty();
+		$('#level').empty();
+		setScoreTitle();
+		buttonArray = [];
+		bigTower = '';
+		gameOver = false;
+		successfulWords = [];
+		clearTimeout(pullingBlocks);
+		clearTimeout(droppingBlocks);
+		for(var x = 0; x < booleanSuspense.length; x++){
+			if(booleanSuspense[x] == true){
+				clearTimeout(suspenseTimerArray[x]);
+				booleanSuspense[x] = false;
+			}
+		}
+		startGame();
+	}, 3500);
+}
+
+
