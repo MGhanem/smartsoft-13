@@ -55,7 +55,7 @@ class Authentication < ActiveRecord::Base
   # Author:
   #  Mirna Yacout
   # Description:
-  #  This method is to retrieve the list of common arability friends and Twitter followers
+  #  This method is to retrieve the list of common arability friends and Twitter following
   # Parameters:
   #  current_gamer: the record in Gamer table for the current user
   # Success:
@@ -67,17 +67,46 @@ class Authentication < ActiveRecord::Base
     if (auth.nil?)
       return nil
     end
-    result = JSON.parse(open("https://api.twitter.com/1/followers/ids.json?user_id=#{auth.gid}").read)
+    result = JSON.parse(open("https://api.twitter.com/1/friends/ids.json?user_id=#{auth.gid}").read)
     followers = Array.new(result["ids"])
     common = Array.new
     i = 0
     while i<followers.count
       if Authentication.exists?(gid: followers.at(i), provider: "twitter")
         common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
-        common.push(current_gamer.id)
       end
       i = i + 1
     end
+    common.push(current_gamer.id)
+    return common
+  end
+
+  # Author:
+  #  Mirna Yacout
+  # Description:
+  #  This method is to retrieve the list of common arability friends and Facebook friends
+  # Parameters:
+  #  current_gamer: the record in Gamer table for the current user
+  # Success:
+  #  returns the list of common followers
+  # Failure:
+  #  returns nil if no gamer token is found
+  def self.get_common_facebook_friends(current_gamer)
+    auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "facebook")
+    if (auth.nil?)
+      return nil
+    end
+    @graph = Koala::Facebook::API.new(current_gamer.get_token)
+    friends = @graph.get_connections("me", "friends")
+    common = Array.new
+    i = 0
+    while i<friends.count
+      if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
+        common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+      end
+      i = i + 1
+    end
+    common.push(current_gamer.id)
     return common
   end
 

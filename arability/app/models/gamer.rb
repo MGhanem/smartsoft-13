@@ -329,37 +329,6 @@ def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     gamer
 end
 
-  class << self
-
-  # Author:
-  #  Mirna Yacout
-  # Description:
-  #  This method is to retrieve the list of common arability friends and Facebook friends
-  # Parameters:
-  #  current_gamer: the record in Gamer table for the current user
-  # Success:
-  #  returns the list of common followers
-  # Failure:
-  #  returns nil if no gamer token is found
-  def get_common_facebook_friends(current_gamer)
-    if (current_gamer.token.nil?)
-      return nil
-    end
-    @graph = Koala::Facebook::API.new(current_gamer.get_token)
-    friends = @graph.get_connections("me", "friends")
-    common = Array.new
-    i = 0
-    while i<friends.count
-      if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
-        common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
-        common.push(current_gamer.id)
-      end
-      i = i + 1
-      return common
-    end
-  end
-end
-
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
