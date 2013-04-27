@@ -322,7 +322,7 @@ ar:
   clicked_button_popover_title: "ضغط على حرف"
   clicked_button_popover_button: "إبدأ اللعب"
   flashing_tower_popover_content: "إنتبه أنت تقترب من القمة. أسرع"
-  flashing_tower_popover_title: "إقترب من القمة"
+  flashing_tower_popover_title: "إقتراب من القمة"
   flashing_tower_popover_button: "أكمل"
   modal_header: "مبروك"
   modal_body: "لقد أكملت أول مرحلة. هل تريد أن ترى هذه الخطوات التعلمية مرة أخرى في المرة القادمة؟"
