@@ -291,7 +291,7 @@ en:
   back_to_game: "Back"
   keyword_added: "keyword added successfully"
   add_twitter_connection: "Connected to Twitter successfully!"
-  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  remove_social_connection: "Connection removed successfully!"
   connection_failure: "Failed to connect!"
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
