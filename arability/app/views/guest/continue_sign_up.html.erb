@@ -55,15 +55,14 @@
         <div><%= f.label t(:email), :class => "control-label" %>
         <%= f.email_field :email, :style => "margin-left: 10px;" %></div></br>
 
+        <div><%= f.label t(:username), :class => "control-label" %>
+        <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
+
         <div><%= f.label t(:password), :class => "control-label" %>
         <%= f.password_field :password, :style => "margin-left: 10px;" %></div></br>
 
         <div><%= f.label t(:password_confirmation), :class => "control-label" %>
         <%= f.password_field :password_confirmation, :style => "margin-left: 10px;" %></div></br>
-
-        <div><%= f.label t(:username), :class => "control-label" %>
-        <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
-
 
         <% if I18n.locale == :ar %>
             <div><%= f.submit "سجل الحساب", :class => "btn btn-success" %></div>
