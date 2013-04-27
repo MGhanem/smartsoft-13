@@ -66,7 +66,7 @@ Arability::Application.routes.draw do
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-      match '/projects/:id/destroy' => "projects#destroy"
+      match '/projects/:id/destroy' => "projects#destroy", :as => :delete
       put "projects/destroy"
 
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
