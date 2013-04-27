@@ -306,7 +306,7 @@ describe Keyword do
 		synonyms.last.name.should eq("دوس")
 	end
 
-  it "should filter synonym results upon formal/slang optional parameter" do
+  it "should filter synonym results upon formal/slang optional parameter", nourhan: true do
     gamer
     k
     synonym = Synonym.create(name: "انقر", keyword_id: k.id, is_formal: false)
@@ -315,9 +315,11 @@ describe Keyword do
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, true)
     synonyms.first.name.should eq("دوس")
     synonyms.length.should eq(1)
+    votes.should eq({})
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, false)
     synonyms.first.name.should eq("انقر")
     synonyms.length.should eq(1)
+    votes.should eq({1=>1})
   end
 
 end
