@@ -20,13 +20,14 @@ class Keyword < ActiveRecord::Base
   #   age_to: [optional] filter by age - upper limit
   #   gender: [optional] filter by gender
   #   education: [optional] filter by education level
+  #   is_formal: [optional] filter synonyms by being formal or slang
   # Success:
   #   returns a list of synonyms for the passed keyword
   # Failure:
   #   returns an empty list if the keyword doesn't exist or if no approved
   #   synonyms where found for the keyword  
   def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
-        gender = nil, education = nil)
+        gender = nil, education = nil, is_formal = nil)
     return [], {} if !self.approved
     keyword_id = self.id
     filtered_data = Gamer
@@ -46,12 +47,22 @@ class Keyword < ActiveRecord::Base
     filtered_data.each { |gamer| synonym_list += gamer.synonyms
       .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
+    rejected_synonyms = []
+    if is_formal != nil
+      accepted_synonyms = synonym_list
+        .reject { |synonym| synonym.is_formal != is_formal }
+      rejected_synonyms = synonym_list - accepted_synonyms
+      synonym_list = accepted_synonyms
+      rejected_synonyms.each { |synonym| votes_count.slice!{ :"#{synonym.id}" } }
+    end
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
     synonyms_with_no_votes = self.synonyms
       .where(synonyms: { approved: true }) - synonym_list
+    synonyms_with_no_votes
+      .reject! { |synonym| synonym.is_formal != is_formal } unless is_formal == nil
     synonym_list = synonym_list + synonyms_with_no_votes
-    return synonym_list, votes_count
+    [synonym_list, votes_count]
   end  
 
   class << self
