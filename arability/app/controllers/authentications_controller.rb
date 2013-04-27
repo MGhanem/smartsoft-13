@@ -43,7 +43,7 @@ class AuthenticationsController < ApplicationController
   # Author:
   #   Mirna Yacout
   # Description:
-  #   Twitter callback with failure to connect to Twitter upon rejection or cancellation
+  #   Callback with failure to connect to Provider upon rejection or cancellation
   #   by the current_gamer himself or connection failure
   # params
   #   none
@@ -51,8 +51,8 @@ class AuthenticationsController < ApplicationController
   #   redirect_to home page
   # Failure:
   #   none
-	def twitter_failure
-    flash[:notice] = I18n.t(:twitter_connection_failure)
+	def callback_failure
+    flash[:error] = I18n.t(:connection_failure)
 	  redirect_to root_url
 	end
 
