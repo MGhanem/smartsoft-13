@@ -54,9 +54,9 @@
 				<% end %>
 			<% else %>
 				<% if !is_following(@search_keyword_model.id) %>
-					<span class="pull-left"><a href="#" class="btn btnfollow btn-default" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+					<span class="pull-left"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
 				<% else %>
-					<span class="pull-left"><a href="#" class="btn btnfollow btn-info" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
+					<span class="pull-left"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
 				<% end %>
 			<% end %>
 
