@@ -34,4 +34,15 @@ module RequestHelpers
     sign_in u
   end
 
-end
+  def create_project
+    d = create_logged_in_developer()
+    sign_in(d.gamer)
+    project = Project.new
+    project.name = "banking"
+    project.minAge = 19
+    project.maxAge = 25
+    project.owner_id = d.id
+    project.save
+    project
+  end
+ end
