@@ -4,14 +4,22 @@ Arability::Application.routes.draw do
 
   scope "/admin" do 
     match "" => "admin#index", :via => [:get]
-    match "/add/word" => "admin#add_word", :via => [:get, :post]
-    match "/import/csvfile" => "admin#upload", :via => [:get, :post]
-    match "/add/trophy" => "admin#add_trophy", :via => [:get, :post]
-    match "/add/prize" => "admin#add_prize", :via => [:get, :post]
-    match "/delete/trophy" => "admin#delete_trophy", :via => [:get]
-    match "/delete/prize" => "admin#delete_prize", :via => [:get]
-    match "/list/trophies" => "admin#list_trophies", :via => [:get]
-    match "/list/prizes" => "admin#list_prizes", :via => [:get]
+    scope "/add" do
+      match "/word" => "admin#add_word", :via => [:get, :post]
+      match "/trophy" => "admin#add_trophy", :via => [:get, :post]
+      match "/prize" => "admin#add_prize", :via => [:get, :post]
+    end
+    scope "/list" do
+      match "/trophies" => "admin#list_trophies", :via => [:get]
+      match "/prizes" => "admin#list_prizes", :via => [:get]
+    end
+    scope "/delete" do
+      match "/trophy" => "admin#delete_trophy", :via => [:get]
+      match "/prize" => "admin#delete_prize", :via => [:get]
+    end
+    scope "/import" do
+      match "/csvfile" => "admin#upload", :via => [:get, :post]
+    end
   end
 
   # Only two languages are accepted: Arabic and English
