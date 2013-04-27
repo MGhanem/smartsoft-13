@@ -309,3 +309,5 @@ ar:
   delete: "مسح"
   close_delete: "الغاء"
   submit_delete: "مسح"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+
