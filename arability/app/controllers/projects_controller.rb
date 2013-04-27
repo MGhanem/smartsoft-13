@@ -560,7 +560,7 @@ end
     project = Project.find(params[:project_id])
     dev.projects_shared.delete(project)
     dev.save
-    flash[:notice] = t(:project_removed)
+    flash[:success] = t(:project_removed)
     redirect_to :action => "index",:controller => "projects"
   end 
   # author:

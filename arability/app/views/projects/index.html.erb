@@ -115,21 +115,21 @@
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-   <a style="margin-left : 6px;" href="#remove_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+   <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-  <a style="margin-right : 6px;" href="#remove_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
   <% end %>
-    <div id="remove_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 id="modal_label"><%= t(:delete) %></h3>
+      <h3 id="modal_label"><%= t(:delete_share) %></h3>
       </div>
       <div class="modal-body">
-        <h4><%= t(:confirm)%></h4>
+        <h4><%= t(:confirm_share)%></h4>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
-        <%= link_to t(:submit_delete), "/developers/projects/remove_project_from_developer/#{developer.id}&#{project1.id}",:class => "btn btn-danger" %>
+        <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger" %>
       </div>
     </div>
   <br />
@@ -155,10 +155,23 @@
     <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
+   <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/remove_project_from_developer?dev_id=<%=@developer.id %>&project_id=<%= project1.id %>"><i class="icon-remove"></i><%= t(:delete)%></a>
+  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
   <% end %>
+    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="modal_label"><%= t(:delete_share) %></h3>
+      </div>
+      <div class="modal-body">
+        <h4><%= t(:confirm_share)%></h4>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger" %>
+      </div>
+    </div>
   <br />
 </div>
     </td>
@@ -172,3 +185,6 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+<%= render "remove.js" %>
+</script>

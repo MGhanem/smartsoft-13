@@ -311,3 +311,8 @@ ar:
   already_shared_project: "تم مشاركة هذا المشروع سابقا"
   project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
   dev_unshare: "تم عدم المشاركة"
+  projects_index_delete: " مسح"
+  delete_share: "مسح"
+  confirm_share: "هل أنت متأكد من مسح المشروع المشترك ؟"
+  submit_remove: "مسح"
+  close_share: "إلغاء"
