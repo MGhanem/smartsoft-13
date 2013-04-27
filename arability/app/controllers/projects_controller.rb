@@ -218,21 +218,19 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is signed in, the method that calls method createproject
-  #   that creates the project and redirects to the project page and prints
-  #   an error if the data entered is invalid.
+  #   After checking that the user is not a free trial, the method finds the project by its
+  #   id and then calls the method filterkeywords in Project tha filters the relevant keywords.
   # Params:
-  #   None
+  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
   # Success:
-  #   Creates a new project and views it in the index page
+  #   Getting an array of categories relevant to the project
   # Failure:
-  #   Gives status errors
+  #   None
   def view_recommended_words
-      # if current_developer.my_subscription.subscription_model_id != 1
-        @project = Project.find(params[:project_id])
-        @karray = Project.filterkeywords(@project.category_id)
-        @selected = []
-      # end
+    # if current_developer.my_subscription.subscription_model_id != 1
+      @project = Project.find(params[:project_id])
+      @karray = Project.filterkeywords(@project.category_id)
+    # end
   end
 
 

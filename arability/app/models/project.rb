@@ -54,6 +54,18 @@ def self.createcategories(project,cat_id)
   return project
 end
 
+# Author:
+#   Salma Farag
+# Description:
+#   A method that takes a category id of a project as a parameter and searches the database
+#   for keywords that have the same category, then adds them to an array of keywords. A keyword
+#   is dsregarded if it does not have any synonyms.
+# Params:
+#   The category id of the project.
+# Success:
+#   Returns an array of relevant keywords.
+# Failure:
+#   None
 def self.filterkeywords(cat_id)
   karray = []
   Keyword.all.each do |k|
