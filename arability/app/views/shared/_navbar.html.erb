@@ -33,8 +33,6 @@
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
                 <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
-                  <%= button_to t(:log_in_google), gamer_omniauth_authorize_path(:google_oauth2), :style => "clear: left; width: 100%; height: 32px; font-size: 13px", :class => "btn btn-success" %>
-             <!--    <%= link_to "Sign In with Google", :style => "clear: left; width: 88%; height: 30px; font-size: 13px", :class => "btn btn-success" %> -->
               <% end %>
             </div>
           </li>
