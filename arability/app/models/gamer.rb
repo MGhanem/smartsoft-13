@@ -298,7 +298,7 @@ class Gamer < ActiveRecord::Base
 # Params:
 #   None
 # Success:
-#   Returns boolean whether or no is local
+#   Returns boolean whether or not is local
 # Failure:
 #   None
 def is_local_account

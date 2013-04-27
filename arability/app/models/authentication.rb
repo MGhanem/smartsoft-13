@@ -81,20 +81,4 @@ class Authentication < ActiveRecord::Base
     return common
   end
 
-  def self.create_with_omniauth_amr(gamer_id, provider, gid, email = nil, token = nil, token_secret = nil)
-    authentication = Authentication.new(
-      provider: provider,
-      gid: gid,
-      token: token,
-      token_secret: token_secret,
-      email: email,
-      gamer_id: gamer_id
-      )
-    if authentication.save
-      return authentication, true
-    else
-      return nil, false
-    end
-  end
-
 end

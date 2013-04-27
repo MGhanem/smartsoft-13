@@ -16,7 +16,7 @@ class SocialRegistrationsController < Devise::RegistrationsController
   #   User signs up, is redirected to his homepage and an Authentication
   #   linked to his account is created
   # Failure:
-  #   User inputs invali data, is redirected to the same sign up page
+  #   User inputs invalid data, is redirected to the same sign up page
   #   and the error messages are displayed
   def new_social
     @email = params[:email]
@@ -35,7 +35,7 @@ class SocialRegistrationsController < Devise::RegistrationsController
   # Author:
   #   Amr Abdelraouf
   # Description:
-  #   Envoked when a guest signs up with an existing account.
+  #   Invoked when a guest signs up with an existing account.
   #   The gamer is created with the input values and then an authentication
   #   is created to link his social media account to that local account
   # Params:
@@ -57,7 +57,8 @@ class SocialRegistrationsController < Devise::RegistrationsController
   #   Gamer is created and an Authentcation is created linked
   #   to that gamer
   # Failure:
-  #   None
+  #   Entered data is invalid and the user is redirected back
+  #   to new_social.html.erb with error messages displayed
   def social_sign_in
     email = params[:gamer][:email]
     username = params[:gamer][:username]

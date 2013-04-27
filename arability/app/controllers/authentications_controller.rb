@@ -59,7 +59,7 @@ class AuthenticationsController < ApplicationController
   # Author:
   #   Amr Abdelraouf
   # Description:
-  #   Call back method envoked when facebook sends the hash back to
+  #   Call back method invoked when facebook sends the hash back to
   #   Arability. This method is quite a handful. If the hash is empty
   #   an error message is displayed. If the gamer is already signed in it
   #   indicates that the user wants to connect his account rather than sign
