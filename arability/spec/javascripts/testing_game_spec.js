@@ -33,6 +33,7 @@ describe("newGame()", function() {
 
 describe("setLang()", function() {
   it("asserts the language is arabic", function() {
+    lockLangButtons = false;
   	setLang(1);
   	getNewWords(5);
   	expect(lang).toBe(1);	
@@ -102,3 +103,16 @@ describe("voted on everything", function() {
     });
 });
 
+
+describe("Tutorial = true", function() {
+  it("should prompt the user with information a long the game to help him", function() {
+    tutorialFlag = true;
+    expect($('<div class="popover fade left in"><div class="arrow"></div></div></div>')).toExist();
+    arBtnPopOver();
+    expect($('<div class="popover fade left in"><div class="arrow"></div></div></div>')).toExist();
+    bothBtnPopOver();
+    expect($('<div class="popover fade left in"><div class="arrow"></div></div></div>')).toExist();
+    setLang(0);
+    expect($('<div class="popover fade left in"><div class="arrow"></div></div></div>')).toExist();
+    });
+});
