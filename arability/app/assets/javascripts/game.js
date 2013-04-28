@@ -40,6 +40,7 @@ var tutorialButtonId;
 var newDrop = false;
 var lockLangButtons = true;
 var tutorialFlagWas = false;
+var showSuspense = false;
 var continuePlayingBtn;
 var wordsListPopoverContent;
 var wordsListPopoverTitle;
@@ -443,6 +444,7 @@ function pause(){
  //   tutorial wasent started
 function endTutorial(){
 	tutorialFlag = false;
+	showSuspense = true;
 	tutorialFlagWas = true;
 	if(newDrop == true){
 		newDrop = false;
@@ -905,10 +907,14 @@ function fadeSomething(x){
 					}
 				}
 				if(win == true){
-					if(tutorialFlagWas == true){
+					if(tutorialFlagWas == true && level == 1){
+						tutorialflagwas = false;
+						buttonArray = [];
+						removeAblock();
 						pause();
 						setModalTranslations();
 						$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
+						$('.modal').css('z-index', '999999999999999')
 						$('.modal').on('hidden', function () {
 							winTheGame();
 						})
@@ -1140,8 +1146,8 @@ function suspense(){
 		}
 	}
 	if(enter == true){
-		if(tutorialFlagWas == true){
-			tutorialFlagWas = false;
+		if(showSuspense == true){
+			showSuspense = false;
 			tutorialFlag = true;
 			setPopoverAttributes();
 			$('#' + id).popover({

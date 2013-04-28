@@ -289,7 +289,7 @@ class GamesController < ApplicationController
   # failure:
   #   none
   def disableTutorial
-    current_gamer.update_attributes!(:show_tutorial => false)
+    current_gamer.update_attributes!(show_tutorial: false)
   end
 end
 
