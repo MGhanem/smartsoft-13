@@ -23,6 +23,7 @@ function report_submission(){
   });
 
   request.done(function (_, _, _){
+    restoreError();
     showFlash();
   });
 
