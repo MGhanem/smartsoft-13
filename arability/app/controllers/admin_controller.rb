@@ -272,7 +272,7 @@ class AdminController < ApplicationController
   #   Subscription models appear on the view in a table with all attributes.
   # Failure: 
   #   Nothing appears as there is no Subscription models in database.
-  def subscription_model
+  def view_subscription_models
     @models = SubscriptionModel.all
   end
 
@@ -321,9 +321,9 @@ class AdminController < ApplicationController
     @model.limit_follow = params[:subscription_model][:limit_follow]
     @model.limit_project = params[:subscription_model][:limit_project]
     if @model.save
-      redirect_to action: 'subscription_model'
+      redirect_to action: "subscription_model"
     else
-      redirect_to action: 'edit_subscription_model',
+      redirect_to action: "edit_subscription_model",
         errors: @model.errors.messages, model_id: @model.id
     end
   end
