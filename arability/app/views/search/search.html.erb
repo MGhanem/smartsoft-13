@@ -187,7 +187,7 @@
 							</div>
 
 							<div id="buttons<%= synonym.id %>" class="pull-right">
-								<% if @votes[synonym.id] != nil %>
+							<% if @votes[synonym.id] != nil %>
 								<button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
 									    <span><%=t(:view_stats)%></span>
      									<span style="display:none"><%=t(:hide_stats)%></span>
@@ -198,17 +198,35 @@
 		                  </script>
 								</button>
 								<%else%>
-								<button id="bstats<%= synonym.id %>" class="btn btn-mini btn-danger disabled why-disabled" style="display:inline;">
+								<button id="bstats<%= synonym.id %>" class="btn btn-mini disabled why-disabled" style="display:inline;">
 								<%=t(:view_stats)%>
 								</button>
 								<% end %>
 										<script type="text/javascript">
 											$(".why-disabled").popover({
-											    placement: 'left',
-											    content : "Sorry, no one voted for this synonym yet!",
-											    trigger: "hover"
+													placement: function () {
+													<% if I18n.locale == :ar %>
+													return 'right';
+													<% else %>
+													return 'left';
+													<% end %>
+													}, 
+											    content :function () {
+													<% if I18n.locale == :ar %>
+													return "عفوا, لا يوجد اصوات لهذه الكلمة";
+													<% else %>
+													return "Sorry, no one voted for this synonym yet!";
+													<% end %>
+													},
+											    trigger: "hover",
+											    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner myclass"><div class="popover-content"><p></p></div></div></div>'
 											});
 	                  </script>
+	                  <style type="text/css">
+	                  .myclass {
+	                  	width:230px;
+	                  }
+	                  </style>
 								<%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
 								<%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
 								<% end %>
@@ -233,7 +251,7 @@
 				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<% if @votes[synonym.id] != nil%>
-						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
+						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;" dir ="ltr">
 				    <div class="container-fluid">
               <div class="row-fluide">
                 <div class="span2">
