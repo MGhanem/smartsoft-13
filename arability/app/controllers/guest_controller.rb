@@ -47,14 +47,14 @@ class GuestController < ApplicationController
   # Author:
   #   Mohamed Tamer
   # Description
-  #   Creates a guest gamer with the given data
+  #   Creates a registered gamer with the given data
   # Params:
   #   gamer: a resource containing the data entered from the form and these data are email,
   #   password, password confirmation, username
   # Success: 
-  #   Creates guest gamer and redirects to gamer and the input from the user 
+  #   Creates gamer and redirects to gamer
   # Failure:
-  #   Redirects to continue sign up form with the errors
+  #   Redirects to continue sign up form with the errors and the input from the user 
   def continue_signing_up
     email = params[:gamer][:email]
     password = params[:gamer][:password]
@@ -106,7 +106,7 @@ class GuestController < ApplicationController
   #   gamer: a resource containing the data entered from the form  and these data are date of birth,
   #   gender, country, education level
   # Success: 
-  #   Creates guest gamer and redirects to gamer
+  #   Creates guest gamer and redirects to game
   # Failure:
   #   Redirects to sign up form with the errors and the input from the user 
   def signing_up
