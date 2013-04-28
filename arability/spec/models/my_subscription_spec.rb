@@ -32,7 +32,6 @@ describe MySubscription do
 		result = MySubscription.choose(developer.id, submodel.id)
 		expect(result).to eq(true)
   end
-
   it "follow permission is given" do 
     result = MySubscription.get_permission_follow(developer.id)
     expect(result).to eq(true)
