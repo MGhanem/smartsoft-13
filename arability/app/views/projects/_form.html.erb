@@ -48,17 +48,10 @@
           </label>
       </div>
   </div>
-  <div class="control-group">
-      <label class="control-label">
-      <span class="help-block"><%= t(:age) %></span>
-      </label>
-      <div class="controls d5pxup">
-          <%= f.text_field :minAge, class: "input-small", placeholder:  t(:from), id: "project_name"%>
-          <%= f.text_field :maxAge, class: "input-small", placeholder:  t(:to), id: "project_name" %>
-      </div>
-  </div>
-  <div class="control-group">
-    <%= f.label t(:country), :class => "control-label", id: "project_name" %>
+  <h5><%= t(:target) %></h5>
+  <br>
+   <div class="control-group">
+    <%= f.label t(:target_country), :class => "control-label", id: "project_name" %>
     <% if params[:action] == "new" %>
       <%= f.select(:country, ([t(:egypt),t(:lebanon),
       t(:jordan),t(:saudi_arabia),t(:libya),t(:united_arab_emirates),t(:qatar),t(:kuwait),t(:iraq),t(:algeria),t(:morocco),t(:bahrain),t(:mauritania),t(:somalia),t(:sudan),t(:tunisia),t(:others)]), {}, { id:"cat" }) %>
@@ -68,6 +61,15 @@
     <% end %>
   </div>
   <div class="control-group">
+      <label class="control-label">
+      <span class="help-block"><%= t(:target_age) %></span>
+      </label>
+      <div class="controls d5pxup">
+          <%= f.text_field :minAge, class: "input-small", placeholder:  t(:from), id: "project_name"%>
+          <%= f.text_field :maxAge, class: "input-small", placeholder:  t(:to), id: "project_name" %>
+      </div>
+  </div>
+  <div class="control-group">
     <%= f.label t(:education_level), :class => "control-label", id: "project_name"%>
     <% if params[:action] == "new" %>
       <%= f.select(:education_level, (['',t(:school),t(:university),t(:graduate)]), {}, { id:"cat" }) %>
@@ -75,8 +77,9 @@
       <%= f.select(:education_level, (['',t(:school),t(:university),t(:graduate)]),  { prompt: @select_value, selected: @project.education_level }, { id:"cat" }) %>
     <% end %>
   </div>
+  <br>
+  <h5><%= t(:desc) %>:</h5>
   <div class="control-group">
-      <%= f.label t(:desc), class: "control-label" %>
       <div class="controls">
           <%= f.text_area :description, id: "desc" %>
       </div>
