@@ -85,6 +85,7 @@
   }
 
   function showPrizes() {
+     show_menu_item('جوائز');
     if(nav_locked) {
       return;
     }
@@ -96,6 +97,7 @@
   }
 
   function showTrophies() {
+    show_menu_item('الإنجازات');
     if(nav_locked) {
       return;
     }
@@ -168,6 +170,7 @@ function setButtons(){
   // Failure:
   //   None
   function inviteFriends(){
+    show_menu_item('دعوات');
     if(nav_locked) {
       return;
     }
@@ -206,6 +209,16 @@ function setButtons(){
     nav_locked = true;
   }
 
+  function show_menu_item(title)
+  {
+    var item_html = '<div style="margin-top: -86px" class="nav-box btn btn-inverse" id = "navItems" > \
+     ' + title + ' \
+  </div>';
+    $("#selected_item").hide();
+    $("#selected_item").html(item_html);
+    $("#selected_item").show();
+  }
+
   function enableNav() {
     var lists = $("[id*='navItems']");
     lists.removeClass("disabled");
@@ -213,6 +226,7 @@ function setButtons(){
   }
 
   function hallOfFame(){
+    show_menu_item('الرتبة');
     if(nav_locked == true){
       return;
     }
@@ -237,27 +251,35 @@ function setButtons(){
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
-      الرتبة
-    </div>
+    <div class="btn-group ">
+       <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#" style= "width : 130px; height: 67px;"><i class="icon-cog"></i>
+         <span style="font-size: 30px">Action</span>
+        <span class="caret"></span>
+       </button>
+        <center id="selected_item"></center>
+        <ul class="dropdown-menu">
+         <li><a href="#"onclick="hallOfFame()">
+               <span style="font-size: 20px">الرتبة</span>
+              </a></li>
+         <li><a href="#" onclick="showPrizes()">
+             جوائز
+          </a></li>
+         <li> <a href="#" onclick="showTrophies()">
+           الإنجازات
+         </a></li>
+         <li><a href="#">
+          بروفيل
+         </a></li>
+         <li><a href="#">
 
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
-      جوائز
-  </div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
-      الإنجازات
+              إعدادات
+           </a></li>
+         <li> <a href="#" onclick="inviteFriends()">
+         دعوات
+         </a>
+          </li>
+        </ul>
     </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-     بروفيل
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-
-     إعدادات
-    </div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
-      دعوات
-    </div>
-
   </div>
 
   <% if I18n.locale==:ar %>
