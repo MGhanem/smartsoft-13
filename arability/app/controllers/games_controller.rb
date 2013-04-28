@@ -277,4 +277,26 @@ class GamesController < ApplicationController
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
   end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   gets the page of the current_gamer's rank and list of gamers ordered descendingly
+  #   according to score
+  # Parameters:
+  #   none
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   none
+  def halloffame
+    rank = Gamer.get_gamer_rank(current_gamer)
+    if rank.nil?
+    else
+      page = (rank/5.0).ceil
+      params[:page] = page
+    end
+    @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5)
+  end
+
 end

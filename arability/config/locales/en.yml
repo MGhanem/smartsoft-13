@@ -308,3 +308,8 @@ en:
   not_connected_to_facebook: "You are not connected to Facebook, connect from your settings"
   loading: "Loading"
   you_have_prizes: "You have won the following prizes!"
+  views:  
+    pagination:  
+      previous: "&lt; Previous"
+      next: "Next &gt;"
+      truncate: "&hellip;"

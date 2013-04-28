@@ -315,3 +315,10 @@ ar:
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر تغيير البيانات"
   loading: "تحميل"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  views:  
+    pagination:  
+      previous: "&lt; قبل"
+      next: "بعد &gt;"
+      first: "الاولى"
+      last: "الاخيرة"
+      truncate: "&hellip;"

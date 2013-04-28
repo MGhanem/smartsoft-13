@@ -352,6 +352,62 @@ def self.get_gamer_rank(current_gamer)
     return current_gamer_rank
   end
 
+# Author:
+#   Mirna Yacout
+# Description:
+#   This method is to get the rank of the current gamer based on the highest score
+#   within his facebook friends
+# Parameters:
+#   current_gamer: the record in Gamer table for the current user
+# Success:
+#   returns rank number of the gamer
+# Failure:
+#   returns nil if gamer is not found
+def self.get_facebook_rank(current_gamer)
+  common = Authentication.get_common_facebook_friends(current_gamer)
+  if common.nil?
+    return nil
+  end
+  gamers = Gamer.find(common, order: "highest_score DESC")
+  current_gamer_rank = nil
+  rank = 1
+  gamers.each do |user|
+    if user == current_gamer
+      current_gamer_rank = rank
+    end
+    rank = rank + 1
+  end
+  return current_gamer_rank
+end
+
+# Author:
+#   Mirna Yacout
+# Description:
+#   This method is to get the rank of the current gamer based on the highest score
+#   within his twitter friends
+# Parameters:
+#   current_gamer: the record in Gamer table for the current user
+# Success:
+#   returns rank number of the gamer
+# Failure:
+#   returns nil if gamer is not found
+def self.get_twitter_rank(current_gamer)
+  common = Authentication.get_common_twitter_friends(current_gamer)
+  if common.nil?
+    return nil
+  end
+  gamers = Gamer.find(common, order: "highest_score DESC")
+  current_gamer_rank = nil
+  rank = 1
+  gamers.each do |user|
+    if user == current_gamer
+      current_gamer_rank = rank
+    end
+    rank = rank + 1
+  end
+  return current_gamer_rank
+end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }

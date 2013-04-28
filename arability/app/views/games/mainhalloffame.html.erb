@@ -1,8 +1,9 @@
-<div id="all">
-  <p>
-    <%= t(:your_rank) %>
+<div id="all" align="center">
+  <br>
+  <h1>
+    <%= t(:your_rank) %>:
     <%= Gamer.get_gamer_rank(current_gamer) %>
-  </p>
+  </h1>
   <table class="table">
     <thead align="center" style="font-weight:bold;">
       <tr>
@@ -13,15 +14,14 @@
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.find(:all, :order => "highest_score DESC", limit: 10) %>
-      <% rank = 0 %>
+      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
       <tr style="background-color: #DDDDDD"><td>*
       <% else %>
       <tr><td>
       <% end %>
-        <%= rank = rank + 1 %></td>
+        <%= rank = Gamer.get_gamer_rank(user) %></td>
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
