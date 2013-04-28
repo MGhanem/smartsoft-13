@@ -180,19 +180,32 @@ class Synonym < ActiveRecord::Base
     return new_synonym.save , new_synonym
   end
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This method is used to get the countries of voters who voted for certain 
-  #  synonym along with the percentage of voters belonging to each country
-  # Parameters: --
-  # Returns:
-  #  On Success: a list of lists, each one of the inner lists consists of  
-  #  a key and value.
-  #  The key represents the country and the value is the percentage of voters 
-  #  that belong to this country
-  #  On failure: returns an empty list if no gamers voted for this synonym yet.
-  def get_visual_stats_country
+  #   This method is used to get the countries of voters who voted for certain 
+  #   synonym along with the percentage of voters belonging to each country
+  #   It can also get voters filtered according certain filters if they exists
+  # Params: 
+  #   --
+  # Success: 
+  #   a list of lists, each one of the inner lists consists of  
+  #   a key and value.
+  #   The key represents the country and the value is the percentage of voters 
+  #   that belong to this country
+  # Failure: 
+  #   returns an empty list if no gamers voted for this synonym yet or if
+  #   non of the voters satisifies filtering conditions
+  def get_visual_stats_country(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+    voters = voters
+      .where("gender = ?", gender) unless gender.blank?
+    voters = voters
+      .where("country = ?", country) unless country.blank?
+    voters = voters
+      .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :country)
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
@@ -200,39 +213,64 @@ class Synonym < ActiveRecord::Base
 
   end 
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This method is used to get the percentage of females and males who voted 
-  #  for certain synonym
-  # Parameters: --
-  # Returns:
-  #  On Success: a list of lists, each one of the inner lists consists of 
-  #  a key and value.
-  #  The key represents the gender and the value is the percentage of voters 
-  #  belonging to this gender.
-  #  On failure: returns an empty list if no gamers voted for this synonym yet.
-  def get_visual_stats_gender
+  #   This method is used to get the percentage of females and males who voted 
+  #   for certain synonym. It can also get voters filtered according certain 
+  #   filters if they exists 
+  # Params: 
+  #   --
+  # Success: 
+  #   a list of lists, each one of the inner lists consists of 
+  #   a key and value.
+  #   The key represents the gender and the value is the percentage of voters 
+  #   belonging to this gender.
+  # Failure: 
+  #   returns an empty list if no gamers voted for this synonym yet or if
+  #   non of the voters satisifies filtering conditions
+  def get_visual_stats_gender(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+    voters = voters
+      .where("gender = ?", gender) if gender unless gender.blank?
+    voters = voters
+      .where("country = ?", country) if country unless country.blank?
+    voters = voters
+      .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :gender)
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
     return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
   end 
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This method is used to get the percentage of gamers, who voted for 
-  #  certain synonym, belonging to each age groups 
-  # Parameters: --
-  # Returns:
-  #  On Success: a list of lists, each one of the inner lists consists of 
-  #  a key and value.
-  #  The key represents the age group and the value is the percentage of 
-  #  voters belong to this age group.
-  #  On failure: returns an empty list if no gamers voted for this synonym 
-  #  yet.
-  def get_visual_stats_age
+  #   This method is used to get the percentage of gamers, who voted for 
+  #   certain synonym, belonging to each age groups. It can also
+  #   get voters filtered according certain filters if they exists 
+  # Params: 
+  #   --
+  # Success: 
+  #   a list of lists, each one of the inner lists consists of 
+  #   a key and value.
+  #   The key represents the age group and the value is the percentage of 
+  #   voters belong to this age group.
+  # Failure: 
+  #   returns an empty list if no gamers voted for this synonym yet or if
+  #   non of the voters satisifies filtering conditions
+  def get_visual_stats_age(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+    voters = voters
+      .where("gender = ?", gender) if gender unless gender.blank?
+    voters = voters
+      .where("country = ?", country) if country unless country.blank?
+    voters = voters
+      .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     
     groupOne = voters.select('date_of_birth').group("date_of_birth")
     .having("date_of_birth <= ? AND date_of_birth >= ?", 
@@ -256,37 +294,35 @@ class Synonym < ActiveRecord::Base
     end
   end 
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This method is used to get the percentage of gamers, who voted for 
-  #  certain synonym, belonging to each educational level.
-  # Parameters: --
-  # Returns:
-  #  On Success: a list of lists, each one of the inner lists consists of 
-  #  a key and value.
-  #  The key represents the education level and the value is the percentage 
-  #  of voters having this education level.
-  #  On failure: returns an empty list if no gamers voted for this synonym yet.
-  def get_visual_stats_education
+  #   This method is used to get the percentage of gamers, who voted for 
+  #   certain synonym, belonging to each educational level.It can also
+  #   get voters filtered according certain filters if they exists
+  # Params: 
+  #   --
+  # Success: 
+  #   a list of lists, each one of the inner lists consists of 
+  #   a key and value.
+  #   The key represents the education level and the value is the percentage 
+  #   of voters having this education level.
+  # Failure: 
+  #   returns an empty list if no gamers voted for this synonym yet or if
+  #   non of the voters satisifies filtering conditions
+  def get_visual_stats_education(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+    voters = voters
+      .where("gender = ?", gender) if gender unless gender.blank?
+    voters = voters
+      .where("country = ?", country) if country unless country.blank?
+    voters = voters
+      .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :education_level)
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
     return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
-  end 
-
-  def self.filter_voters_gender(voters, gender)
-    filtered = voters.select{|v| v.gender == gender}
-    filtered 
-  end
-
-  def self.filter_voters_country(voters, country)
-    filtered = voters.select{|v| v.country == country}
-    filtered 
-  end
-
-  def self.filter_voters_education(voters, education)
-    filtered = voters.select{|v| v.education_level == education}
-    filtered 
   end
 end

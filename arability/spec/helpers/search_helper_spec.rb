@@ -1,7 +1,7 @@
 #encoding: UTF-8
 require 'spec_helper'
 
-describe SearchHelper do
+describe SearchHelper, search_helper_spec: true do
     
     let(:k){
       k = Keyword.new
@@ -80,27 +80,27 @@ describe SearchHelper do
 
 
       it "draws the chart for given synonym that shows gender statistics" do
-        chart = piechart_gender(s.id)
+        chart = piechart_gender(s.id, nil, nil, nil, nil)
         chart.first[:title][:text].should match(I18n.t(:stats_gender))
-        chart.data.first[:data].should =~ (s.get_visual_stats_gender)
+        chart.data.first[:data].should =~ (s.get_visual_stats_gender(nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows country statistics" do
-        chart = piechart_country(s.id)
+        chart = piechart_country(s.id, nil, nil, nil, nil)
         chart.first[:title][:text].should match(I18n.t(:stats_country))
-        chart.data.first[:data].should =~ (s.get_visual_stats_country)
+        chart.data.first[:data].should =~ (s.get_visual_stats_country(nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows age statistics" do
-        chart = piechart_age(s.id)
+        chart = piechart_age(s.id, nil, nil, nil, nil)
         chart.first[:title][:text].should match(I18n.t(:stats_age))
-        chart.data.first[:data].should =~ (s.get_visual_stats_age)
+        chart.data.first[:data].should =~ (s.get_visual_stats_age(nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows education statistics" do
-        chart = piechart_education(s.id)
+        chart = piechart_education(s.id, nil, nil, nil, nil)
         chart.first[:title][:text].should match(I18n.t(:stats_education))
-        chart.data.first[:data].should =~ (s.get_visual_stats_education)
+        chart.data.first[:data].should =~ (s.get_visual_stats_education(nil, nil, nil, nil))
       end
 end
 

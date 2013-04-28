@@ -251,35 +251,38 @@
 				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
 					<div class="accordion-inner">
 						<% if @votes[synonym.id] != nil%>
+						<% visuals = @charts.select {|f| f[synonym.id]} %>
+						<% charts = visuals.first[synonym.id] %>
 						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;" dir ="ltr">
 				    <div class="container-fluid">
               <div class="row-fluide">
-                <div class="span2">
-                  <%= high_chart("gender_#{synonym.id}", piechart_gender(synonym.id)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
+                <div class="span2">    
+		              <%= high_chart("gender_#{synonym.id}", charts[0]) do |c| %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+		              <% end %>
                 </div>
-                <div class="span2">
-                  <%= high_chart("country_#{synonym.id}", piechart_country(synonym.id)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %> 
+                <div class="span2">    
+		              <%= high_chart("country_#{synonym.id}", charts[1]) do |c| %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+		              <% end %>
                 </div>
-                <div class="span2">
-                  <%= high_chart("age_#{synonym.id}", piechart_age(synonym.id)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
+                <div class="span2">    
+		              <%= high_chart("age_#{synonym.id}", charts[2]) do |c| %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+		              <% end %>
                 </div>
-
-                <div class="span2" id="test">
-                  <%= high_chart("edu_#{synonym.id}", piechart_education(synonym.id)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
+                <div class="span2">    
+		              <%= high_chart("education_#{synonym.id}", charts[3]) do |c| %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+		              <% end %>
                 </div>
              </div>
+
+
 
 		        </div>
 		      	</div>

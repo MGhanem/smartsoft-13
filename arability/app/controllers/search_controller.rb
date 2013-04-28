@@ -2,6 +2,8 @@ class SearchController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
 
+  include SearchHelper
+
   #Description:
   #   search for keywords (in a particular category)
   # Author:
@@ -80,6 +82,10 @@ class SearchController < BackendController
         @no_synonyms_found = true if @synonyms.blank?
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+        if !@no_synonyms_found
+        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, @gender, @country, @education,  @age_to), piechart_country(s.id, @gender, @country, @education,  @age_to),
+         piechart_age(s.id, @gender, @country, @education,  @age_to), piechart_education(s.id, @gender, @country, @education,  @age_to)]}}
+        end 
       else
         redirect_to search_keywords_path(search: @search_keyword)
       end

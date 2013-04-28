@@ -14,9 +14,9 @@ module SearchHelper
   #  On success: returns a pie chart representing the gender statistics of  
   #  voters for certain synonym.
   #  On failure: no chart will be drawn 
-  def piechart_gender(synonym_id)
+  def piechart_gender(synonym_id, gender, country, education, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_gender
+    stats = synonym.get_visual_stats_gender(gender, country, education, age_to)
     header = t(:stats_gender)
     piechart(stats, header)
   end
@@ -35,9 +35,9 @@ module SearchHelper
   #  On success: returns a pie chart representing the country statistics of 
   #  voters for certain synonym.
   #  On failure: no chart will be drawn 
-  def piechart_country(synonym_id)
+  def piechart_country(synonym_id, gender, country, education, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_country
+    stats = synonym.get_visual_stats_country(gender, country, education, age_to)
     header = t(:stats_country)
     piechart(stats, header)
   end 
@@ -113,9 +113,9 @@ module SearchHelper
   #  On success: returns a pie chart representing the age statistics of 
   #  voters for certain synonym.
   #  On failure: no chart will be drawn 
-  def piechart_age(synonym_id)
+  def piechart_age(synonym_id, gender, country, education, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_age
+    stats = synonym.get_visual_stats_age(gender, country, education, age_to)
     header = t(:stats_age)
     piechart(stats, header)
   end 
@@ -134,9 +134,9 @@ module SearchHelper
   #  On success: returns a pie chart representing the education statistics of 
   #  voters for certain synonym.
   #  On failure: no chart will be drawn
-  def piechart_education(synonym_id)
+  def piechart_education(synonym_id, gender, country, education, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_education
+    stats = synonym.get_visual_stats_education(gender, country, education, age_to)
     header = t(:stats_education)
     piechart(stats, header)
   end 
