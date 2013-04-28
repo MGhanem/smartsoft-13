@@ -61,7 +61,6 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-      match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
       match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
@@ -106,7 +105,7 @@ Arability::Application.routes.draw do
 
   match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
  
-  match "/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
+  match "developers/projects/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

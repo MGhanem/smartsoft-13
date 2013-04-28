@@ -305,3 +305,6 @@ ar:
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
   add_to: "أضف إلى"
+  with: "مع"
+  synonym: "معنى"
+  add: "أضف"

@@ -391,65 +391,8 @@ end
     current_project = Project.find(params[:id])
   end
 
-# author:
-#   Khloud Khalid
-# description:
-#   method adds a keyword and a synonym to an existing project and if word already exists in the project updates
-#   its synonym
-# params:
-#   project_id, word_id, synonym_id
-# success:
-#   keyword and synonym are added to project or synonym of word updated 
-# failure:
-#   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist.
-  def add_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
-      @project_id = params[:project_id]
-      @word_id = Keyword.find_by_name(params[:keyword]).id
-      if Keyword.find_by_id(@word_id) != nil
-        @synonym_id = params[:synonym_id]
-        if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
-          @synonym_id = params[:synonym_id]
-          if Synonym.find_by_id(@synonym_id) != nil
-            @edited_word.synonym_id = @synonym_id
-            if @edited_word.save
-              flash[:success] = t(:Synonym_changed_successfully)
-              redirect_to project_path(@project_id), flash: flash
-              return
-            else
-              flash[:notice] = t(:Failed_to_update_synonym)
-              redirect_to project_path(@project_id), flash: flash
-              return
-            end
-          else
-            flash[:notice] = t(:synonym_does_not_exist)
-            redirect_to project_path(@project_id), flash: flash
-            return
-          end
-        else
-          @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
-          if @added_word
-            flash[:success] = t(:successfully_added_word_to_project)              
-            redirect_to project_path(@project_id), flash: flash
-            return
-          else
-            flash[:notice] = t(:failed_to_add_word_to_project)
-            redirect_to project_path(@project_id), flash: flash
-            return
-          end
-        end
-      else
-        flash[:notice] = t(:word_does_not_exist)
-        redirect_to project_path(@project_id), flash: flash
-        return
-      end
-    end
-  end
-
-
   # author:
-  #   Kareem Ali
+  #   Khloud Khalid, Kareem Ali
   # description:
   #   method adds a keyword and a synonym to an existing project and if word already 
   #   exists in the project updates its synonym and if the adds the categories of 
