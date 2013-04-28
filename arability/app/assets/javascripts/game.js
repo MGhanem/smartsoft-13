@@ -64,12 +64,12 @@ var modalNoButton;
  //   on page load, if the tutorial flag is true, the language buttons are locked
  //   and the popovers are displayed
  // params:
- //   none
+ //   --
  // success:
  //   the popovers are displayed successfuly or the tutorial falg is false,
  //   and the popovers are not displayed
  // failure:
- //   none
+ //   --
 $(function(){
 	if(tutorialFlag == false){
 		lockLangButtons = false;
@@ -145,11 +145,11 @@ function destroy(id){
  // description:
  //   displays the popover of the wordsList
  // params:
- //   none
+ //   --
  // success:
  //   the popover is displayed successfuly
  // failure:
- //   none
+ //   --
 function wordsListToolTip(){
 	$('#wordsList').popover();
 	setTimeout(function(){
@@ -167,11 +167,11 @@ function wordsListToolTip(){
  // description:
  //   displays the popover of the table
  // params:
- //   none
+ //   --
  // success:
  //   the popover is displayed successfuly
  // failure:
- //   none
+ //   --
 function tableToolTip(){
 	setPopoverAttributes();
 	$('#button7-5').popover({
@@ -197,11 +197,11 @@ function tableToolTip(){
  // description:
  //   displays the popover of the wordLabel
  // params:
- //   none
+ //   --
  // success:
  //   the popover is displayed successfuly
  // failure:
- //   none
+ //   --
 function wordLablelToolTip(){
 	$('#wordLabel').popover();
 	setTimeout(function(){
@@ -270,7 +270,7 @@ function destroyAndStart(id){
 //   the wordList that the keywords appear in, and also adds a popUp of the current level
 //   and allows it to fadein and out then calls the startGame function to start. 
 // params:
-//   none
+//   --
 // success:
 //   there are words in the database and the game zone is loaded successfuly.
 // failure:
@@ -296,11 +296,11 @@ function newGame(){
 //   parses a few Html elements into jquery objects to be used again later in jquery syntax
 //   and then calls the setLevelAttributes function. 
 // params:
-//   none
+//   --
 // success:
 //   setLevelAttrivutes is called successfuly and control is handed.
 // failure:
-//   none.
+//   --
 function startGame(){
 	levelTitle = $('#level');
 	table = $('#main-table');
@@ -316,11 +316,11 @@ function startGame(){
 //   initializes the table rows and columns with fixed width, with each td having a button inside
 //   having a letter inside the button which is generated from the generateLetter function. 
 // params:
-//   none
+//   --
 // success:
 //   table is created successfuly with buttons and letters inside the button.
 // failure:
-//   none(because no words in the database is handled in the newGame function).
+//   --(because no words in the database is handled in the newGame function).
 
 function initializeGame(){
 	var trHtml = [];
@@ -365,11 +365,11 @@ function initializeGame(){
 // description:
 //   puts the words in the wordsArray retrieved from the database in the list of words created above 
 // params:
-//   none
+//   --
 // success:
 //   the words are added successfuly in the lists.
 // failure:
-//   none.
+//   --
 function initializeList(){
 	var lsHtml = [];
 	for(var i = 0; i < wordsArray.length; i++){
@@ -392,7 +392,7 @@ function initializeList(){
 //   generates a letter and creates a new button and places it in the top row in a random column
 //   and then calls the dropAblockCont method. 
 // params:
-//   none
+//   --
 // success:
 //   the block and the letter are generated successfuly and placed in the correct place.
 // failure:
@@ -421,11 +421,11 @@ function dropAblock(){
  //   pauses the game, by stopping any blocks from falling
  //   or any button from being clicked
  // params:
- //   none
+ //   --
  // success:
  //   the game is paused successfuly
  // failure:
- //   none
+ //   --
 function pause(){
 	tutorialFlag = true;
 }
@@ -436,7 +436,7 @@ function pause(){
  //   unpauses the game and decides whether to drop a new block or
  //   continue pulling an old block based on the state of the game
  // params:
- //   none
+ //   --
  // success:
  //   the tutorial is stopped successfuly and the game starts
  // failure:
@@ -465,7 +465,7 @@ function endTutorial(){
  // description:
  //   does the same as endTutorial() without setting the tutorialflagwas to true
  // params:
- //   none
+ //   --
  // success:
  //   game is unpaused and started successfuly
  // failure:
@@ -571,11 +571,11 @@ function dropAblockCont(clss, btn, randNum, counter){
  //   checks if the game is over or not, if notcalls dropAblock to create
  //   a new block and start dropping it
  // params:
- //   none
+ //   --
  // success:
  //   either the game stops, or a new block is dropped
  // failure:
- //   none
+ //   --
 function blockLanded(){
 	buttons = table.find('button');
 	var tower = highestTower();
@@ -597,11 +597,11 @@ function blockLanded(){
 //   if a word could be formed from the current letters then it is given the color orange, else if it was
 //   successfuly formed it is striked out and given the color red, else if it cannot be formed it will have the color grey. 
 // params:
-//   none
+//   --
 // success:
 //   after each block lands this method is called and the possibilites are checked and the css is added.
 // failure:
-//   none.
+//   --
 function calculatePossible(){
 	var allLetters = '';
 	var l = table.find('button');
@@ -712,7 +712,7 @@ function formWord(id){
 //   loops over the array of buttons which was formed in the previous function and adds the current letters in
 //   a label for the gamer to see. 
 // params:
-//   none
+//   --
 // success:
 //   the array has buttons and they are added to the label successfuly.
 // failure:
@@ -846,7 +846,7 @@ function calculateCol(id){
 //   is called upon every button click and checks if the words in the label, are equal to
 //   one of the words in the array, if so another function will be called. 
 // params:
-//   none
+//   --
 // success:
 //   the words in the label match one of the words in the list.
 // failure:
@@ -931,7 +931,7 @@ function fadeSomething(x){
 //   loops over the whole table and finds the gap (1 upper button and 1 lower button with spaces between them)
 //   and calculates the size of the gap and calls the startPulling function to pull the blocks down the gap. 
 // params:
-//   none.
+//   --
 // success:
 //   gaps were found and the gap size is calculated successfuly.
 // failure:
@@ -1006,7 +1006,7 @@ function startPulling(r, c, count){
 //   takes all of the words in the word list and places their letters in a string, then generates a random number
 //   which will be the index of the letter to be generated from the string of all words. 
 // params:
-//   none.
+//   --
 // success:
 //   the word list contains words and a random letter is generated.
 // failure:
@@ -1034,7 +1034,7 @@ function generateLetter(){
 //   is called on button click of the clear word button, which deleted all the letters from the array of buttons
 //   and from the label aswell, and return their color back to the default. 
 // params:
-//   none.
+//   --
 // success:
 //   there was a word in the midst of formation, it will be successfuly cleared.
 // failure:
@@ -1058,7 +1058,7 @@ function clearWord(){
 //   is called upon the completion of a level, it increments the level number, and clears all the time outs
 //   and resets all the global variables. 
 // params:
-//   none.
+//   --
 // success:
 //   there exists a next level, it will be started.
 // failure:
@@ -1090,7 +1090,7 @@ function nextLevel(){
 // description:
 //   loops over the board and calculates the number of the highest column formed so far. 
 // params:
-//   none.
+//   --
 // success:
 //   the board is not empty and the height of the column is calculated successfuly.
 // failure:
@@ -1123,7 +1123,7 @@ function highestTower(){
 // description:
 //   checks if any column has reached a height of 8 or greater, then passes control onto another function to add effects. 
 // params:
-//   none.
+//   --
 // success:
 //   a column has reached a height of 8 or greater it will start flashing.
 // failure:
@@ -1173,7 +1173,7 @@ function suspense(){
 // description:
 //   checks if a column was flashing and then its height dropped to less than 8, it clears its time out and make it stop flashing. 
 // params:
-//   none.
+//   --
 // success:
 //   a tower was flashing and then dropped in height it will stop flashing.
 // failure:
@@ -1202,7 +1202,7 @@ function stopSuspense(){
 // success:
 //   the height of this column is greater than 7, it will start flashing.
 // failure:
-//   none.
+//   --
 
 function suspenseCont(col){
 		suspenseTimerArray[col] = setTimeout(function(){
@@ -1238,7 +1238,7 @@ function getNewWords(num){
 // success:
 //   the level is between the available levels in the game, this function will be called upon new level to set the criteria.
 // failure:
-//   none.
+//   --
 
 function setLevelAttributes(level){
 if(level == 1){
@@ -1323,7 +1323,7 @@ if(level == 6){
 // success:
 //   the button is clicked and the language is set.
 // failure:
-//   none.
+//   --
 
 function setLang(l){
 	if(lockLangButtons == true){
@@ -1345,11 +1345,11 @@ function setLang(l){
 // description:
 //   calculates the new score that the gamer gets based on the level and each formed word. 
 // params:
-//   none.
+//   --
 // success:
 //   the gamer formed a word and his score is added.
 // failure:
-//   none.
+//   --
 
 
 function calculateScore(){
@@ -1428,11 +1428,11 @@ function continuePlaying(){
 // description:
 //   an abstraction of the nextLevel() method to be called from various stages
 // params:
-//   none
+//   --
 // success:
 //   the gamer has finished the level and is redirected to the next level
 // failure:
-//   none
+//   --
 
 function toNextLevel(){
 	disableNav();
