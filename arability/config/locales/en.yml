@@ -303,3 +303,7 @@ en:
   submit: "Submit Report"
   report_sent_success: "Report submitted successfully"
   help_us_report: "See any inappropriate words?"
+  oh_snap: "Oh snap! You got an error!"
+  check_connection: >
+    Seems like your internet connection is down! 
+    Try re-connecting and then re-submitting your report.
