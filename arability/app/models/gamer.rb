@@ -329,6 +329,19 @@ def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     gamer
 end
 
+def self.get_gamer_rank(current_gamer)
+    gamers = Gamer.find(:all, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+      if user == current_gamer
+        current_gamer_rank = rank
+      end
+      rank = rank + 1
+    end
+    return current_gamer_rank
+  end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
   scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
