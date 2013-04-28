@@ -16,14 +16,21 @@ function report_submission(){
   $.each($reported_keywords, function(index, element){
     words.push($(element).attr("value"));
   });
-  $.post("<%= send_report_path %>", { reported_words: words }, function(data){
-    showFlash();
-  });
+  var request = $.post("<%= send_report_path %>", { reported_words: words });
   $.each($("input#chkbox"), function(index, element){
     $(element).attr("checked", false);
     $(element).attr("is_checked", false);
   });
+
+  request.done(function (_, _, _){
+    showFlash();
+  });
+
+  request.fail(function (_, _, _){
+    showError();
+  });
 }
+
 function showFlash(){
   $("#report_success").css("display", "block");
   $("#report_success").css("margin-bottom", "2px");
@@ -36,4 +43,17 @@ function showFlash(){
   $("#report_success").css("left", "42%");
   $("#report_success").css("right", "42%");
   $("#report_success").fadeOut(5000);
+}
+
+function showError(){
+  $("#report_failure").css("display", "block");
+  $("#report_failure").css("margin-bottom", "2px");
+  $("#report_failure").css("position", "fixed");
+  $("#report_failure").css("top", "50px");
+  $("#report_failure").css("left", "10%");
+  $("#report_failure").css("right", "10%");
+}
+
+function restoreError(){
+  $("#report_failure").css("display", "none");
 }

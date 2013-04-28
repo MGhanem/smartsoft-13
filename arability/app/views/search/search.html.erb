@@ -267,6 +267,11 @@
 	<div class="alert alert-success" id="report_success" style="display:none;">
 		<div style="text-align:center;"><%= t(:report_sent_success) %></div>
 	</div>
+	<div class="alert alert-block alert-error" id="report_failure" style="display:none;">
+	  <button type="button" class="close" onclick="restoreError()">×</button>
+	  <h4 class="alert-heading"><%= t(:oh_snap) %></h4>
+	  <p><%= t(:check_connection) %></p>
+  </div>
 	<div class="well">
 		<span><%=  t(:help_us_report) %></span>
 		<a href="#report_modal" role="button" class="btn btn-link" onClick="modalToggle()"
