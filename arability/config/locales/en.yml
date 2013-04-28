@@ -9,6 +9,7 @@ en:
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"
+  sign_out: "Sign out"
   email: "Email"
   password: "Password"
   english: "English"
@@ -316,3 +317,4 @@ en:
   developed_by: "Smartsoft"
   gamers: "Gamers"
   play: "Play now"
+  settings: "Settings"
