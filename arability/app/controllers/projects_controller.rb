@@ -406,8 +406,7 @@ end
   #   keyword or synonym does not exist, word add limit exceeded.
   def add_word_inside_project
     @project_id = params[:project_id]
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
-      && not(@project_id.blank?)
+    if current_developer != nil && !(@project_id.blank?)
       @word_id = Keyword.find_by_name(params[:keyword]).id
       if @word_id != nil && Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
@@ -438,14 +437,13 @@ end
             if @added_word
               project_categories = Project.find(@project_id).categories
               new_keyword = Keyword.find(@word_id)
-              for category in project_categories do
+              project_categories.each do |category|
                 if not new_keyword.categories.include?(category) 
                   new_keyword.categories.push(category)
                   new_keyword.save
                 end
               end
-              MySubscription.find_by_developer_id(current_developer.id)
-              .decrement_word_add
+              MySubscription.get_my_subscription.decrement_word_add
               flash[:success] = t(:successfully_added_word_to_project)              
               redirect_to project_path(@project_id), flash: flash
               return

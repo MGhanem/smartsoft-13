@@ -1,4 +1,5 @@
 class MySubscription < ActiveRecord::Base
+  include ApplicationHelper
   belongs_to :subscription_model
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
@@ -151,6 +152,18 @@ class MySubscription < ActiveRecord::Base
    def count_follow
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count
+   end
+
+    # Author:
+    #  Khloud Khalid
+    # Description:
+    #  returns the subscription model of a given developer
+    # Success:
+    #  subscription model returned 
+    # Failure:
+    #  none 
+   def get_my_subscription()
+    return MySubscription.joins(:developer).where(developer_id: current_developer).first
    end
 end
 end
