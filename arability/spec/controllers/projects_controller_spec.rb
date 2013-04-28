@@ -1,16 +1,11 @@
 #encoding: UTF-8
 require "spec_helper"
 require "request_helpers"
-<<<<<<< HEAD
 include Warden::Test::Helpers
 include RequestHelpers
-=======
-include RequestHelpers
-include Warden::Test::Helpers
 include Devise::TestHelpers
 
 describe ProjectsController, type: :controller do
->>>>>>> 7565c243161caa5267a52362d0525b7840757dab
 
   let(:gamer1){
 	  gamer = Gamer.new
@@ -27,13 +22,7 @@ describe ProjectsController, type: :controller do
 
   let(:developer1){
   	developer = Developer.new
-<<<<<<< HEAD
-  	# developer.first_name = "Mohamed"
-  	# developer.last_name = "Tamer"
   	developer.gamer_id = gamer1.id
-=======
-  	developer.gamer_id = gamer1.id 
->>>>>>> 7565c243161caa5267a52362d0525b7840757dab
   	developer.save
   	developer
   }
@@ -67,9 +56,9 @@ describe ProjectsController, type: :controller do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
-<<<<<<< HEAD
 end
 
+#Salma's Tests
 describe "GET #new" do
   it "initializes a new project" do
     a = create_logged_in_developer
@@ -164,7 +153,6 @@ describe 'PUT update' do
       response.should render_template :edit
     end
   end
-=======
 
   #khloud's tests
 
@@ -188,7 +176,7 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_csv with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_csv, project_id: p.id
     response.code.should eq("200")
@@ -196,7 +184,7 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_xml with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_xml, project_id: p.id
     response.code.should eq("200")
@@ -204,11 +192,10 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_json with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
 
->>>>>>> 7565c243161caa5267a52362d0525b7840757dab
 end
