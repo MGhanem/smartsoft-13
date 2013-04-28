@@ -21,11 +21,11 @@
       <% rank = 0 %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
-      <tr style="background-color: #DDDDDD">
+      <tr style="background-color: #DDDDDD"><td>*
       <% else %>
-      <tr>
+      <tr><td>
       <% end %>
-        <td><%= rank = rank + 1 %></td>
+        <%= rank = rank + 1 %></td>
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
