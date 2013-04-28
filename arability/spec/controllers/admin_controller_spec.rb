@@ -5,7 +5,8 @@ include RequestHelpers
 include Warden::Test::Helpers
 
 describe AdminController  do
-  describe "GET #edit_subscription_model" do
+
+  describe "GET #crud_categories" do
     let(:cat1) do
       category = Category.new
       category.english_name = "Test"
@@ -13,7 +14,7 @@ describe AdminController  do
       category.save validate: false
       category
     end
-	
+
 	  it "should login the user if correct username and password" do
 		  get :login
 		  expect(response.code).to eq("200")
@@ -28,17 +29,20 @@ describe AdminController  do
       get :login
       expect(response).to render_template("login")
     end
+
     it "should add subscription model" do
       post :login, username: "admin", password: "admin"
       post :add_category, english_name: "trial", arabic_name: "تجربة"
       assigns(:success).should eq (true)  
     end
+
     it "list all categories" do
       cat1
       post :login, username: "admin", password: "admin"
-      get :all_category
+      get :view_categories
       assigns(:categories).should =~ [cat1]
     end
+
     it "delete category" do
       cat1
       post :login, username: "admin", password: "admin"
@@ -46,5 +50,7 @@ describe AdminController  do
       get :delete_category, category_id: cat1.id
       }.to change(Category,:count).by(-1)
     end   
+
   end
+
 end

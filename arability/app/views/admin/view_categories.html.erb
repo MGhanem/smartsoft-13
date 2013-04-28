@@ -1,13 +1,13 @@
 <table class="table table-striped">
-    <% if flash[:success] %>
-            <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <div>
-                <%= flash[:success] %>
-            </div>
-        </div>
-        <% end %>
-    <tr>
+  <% if flash[:success] %>
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div>
+        <%= flash[:success] %>
+      </div>
+    </div>
+  <% end %>
+  <tr>
     <th>#</th>
     <th>إسم الفئة بالإنجليزية</th>
     <th>إسم الفئة بالعربية</th>
@@ -19,7 +19,6 @@
     	<th><%= category.english_name %></th>
     	<th><%= category.arabic_name %></th>
     	<th><a class="btn btn-mini" href="/admin/delete_category/?category_id=<%= category.id %>"><i class="icon-trash"></i></a></th>
-  </tr>
-<% end %>
-
- </table>
+    </tr>
+  <% end %>
+</table>

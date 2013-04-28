@@ -9,7 +9,6 @@ class Category < ActiveRecord::Base
   validates_presence_of :english_name, message: "لا يمكن تسجيل إسم فئة إنجليزي فارغ"
   validates_format_of :english_name, with: /^([a-zA-Z ]+)$/,
     message: "هذا الإسم الإنجليزي للفئة ليس بالإنجليزية"
-
   validates_uniqueness_of :arabic_name,
     message: "هذا الإسم بالعربية للفئة يوجد بلفعل"
   validates_presence_of :arabic_name,

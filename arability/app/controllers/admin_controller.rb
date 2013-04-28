@@ -265,16 +265,16 @@ class AdminController < ApplicationController
   #   Omar Hossam
   # Description:
   #   As an admin, I could add a new category by giving the new category an
-  #   arabic and english name of the category
+  #   arabic and english name of the category.
   # Parameters:
   #   english_name: the category's english name
-  #   arabic_name: the category's arabic name
+  #   arabic_name: the category's arabic name.
   # Success:
   #   Category is added to database, and a flash is viewed indicating succes of
-  #   add
+  #   add.
   # Failure: 
   #   Category is not saved due to any error in input data, and a flash is
-  #   viewed indicating the error
+  #   viewed indicating the error.
   def add_category
     if request.post?
       english_name = params[:english_name]
@@ -284,28 +284,28 @@ class AdminController < ApplicationController
         flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
           /#{@category.arabic_name} بنجاح"
         flash.keep
-        redirect_to action: 'add_category'
+        redirect_to action: "add_category"
       else
         flash[:error] = @category.errors.messages
         flash.keep
-        redirect_to action: 'add_category'
+        redirect_to action: "add_category"
       end
     else
-      render 'admin/add_category'
+      render "admin/add_category"
     end
   end
 
   # Author:
   #   Omar Hossam
   # Description:
-  #   As an admin, I could view all categories in database
+  #   As an admin, I could view all categories in database.
   # Parameters:
-  #   None
+  #   None.
   # Success:
-  #   All categories in database are viewed
+  #   All categories in database are viewed.
   # Failure: 
-  #   No categories are in database, so nothing is viewed
-  def all_category
+  #   No categories are in database, so nothing is viewed.
+  def view_categories
     @categories = Category.all
   end
 
@@ -313,21 +313,21 @@ class AdminController < ApplicationController
   #   Omar Hossam
   # Description:
   #   As an admin, I could delete any category from database by choosing it from
-  #   the view table and clicking the trash icon
+  #   the view table and clicking the trash icon.
   # Parameters:
-  #   category_id: id of category to be deleted
+  #   category_id: id of category to be deleted.
   # Success:
   #   Category is deleted from database and categories' view appears without the
-  #   deleted category, and a flash appears indicating the success of deletion
+  #   deleted category, and a flash appears indicating the success of deletion.
   # Failure: 
-  #   None
+  #   None.
   def delete_category
     category_id = params[:category_id]
     category = Category.find(category_id)
     category.delete
     flash[:success] = "لقد تم مسح الفئة بنجاح"
     flash.keep
-    redirect_to action: 'all_category'
+    redirect_to action: "all_category"
   end
 
 end
