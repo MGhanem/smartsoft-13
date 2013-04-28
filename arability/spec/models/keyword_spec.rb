@@ -112,7 +112,8 @@ describe Keyword do
     keyword2.id.should eq(keyword.id)
   end
 
-	it "should return an empty list for an empty search keyword" do
+	it "should return an empty list for an empty search keyword", 
+    nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -122,7 +123,8 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-	it "should return one matching keyword for the passed param in english" do
+	it "should return one matching keyword for the passed param in english", 
+    nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -134,7 +136,8 @@ describe Keyword do
 		keyword.first.name.should eq("clickMe")
 	end
 
-	it "should return two matching keywords for the passed param in english sorted by relevance" do
+	it "should return two matching keywords for the passed param in 
+    english sorted by relevance", nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -155,7 +158,8 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-	it "should return an empty list for a search keyword in english and not in the db" do
+	it "should return an empty list for a search keyword in english
+    and not in the db", nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -165,7 +169,8 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-		it "should return one matching keyword for the passed param in arabic" do
+		it "should return one matching keyword for the passed 
+      param in arabic", nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -175,7 +180,8 @@ describe Keyword do
 		keyword.first.name.should eq("ابتث")
 	end
 
-	it "should return two matching keywords for the passed param in arabic sorted by relevance" do
+	it "should return two matching keywords for the 
+    passed param in arabic sorted by relevance", nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -186,7 +192,8 @@ describe Keyword do
 		keyword.last.name.should eq("ابتث")
 	end
 
-	it "should return an empty list for a search keyword in arabic and not in the db" do
+	it "should return an empty list for a search keyword in arabic 
+    and not in the db", nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -196,7 +203,8 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-	it "should return an empty list if no synonyms were found without filters" do
+	it "should return an empty list if no synonyms were found without 
+    filters", nourhan_mohamed: true do
 		k
 		synonym = Synonym.create(name: "انقر")
 		synonyms, votes = k.retrieve_synonyms
@@ -204,7 +212,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-	it "should return an empty list if synonyms are unapproved" do
+	it "should return an empty list if synonyms are unapproved", 
+    nourhan_mohamed: true do
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id, approved: false)
 		synonyms, votes = k.retrieve_synonyms
@@ -212,7 +221,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-	it "should return an empty list if keyword is unapproved" do
+	it "should return an empty list if keyword is unapproved", 
+    nourhan_mohamed: true do
 		k
     k.approved = false
     k.save
@@ -222,7 +232,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-	it "should return an empty list of votes if synonym has no votes" do
+	it "should return an empty list of votes if synonym has no votes", 
+    nourhan_mohamed: true do
     gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -231,7 +242,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-	it "should return approved synonyms and votes of approved keywords" do
+	it "should return approved synonyms and votes of approved keywords", 
+    nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -241,7 +253,8 @@ describe Keyword do
 		votes[synonym.id].should eq(1)
 	end
 
-	it "should return votes according to country filter if applied" do
+	it "should return votes according to country filter if applied", 
+    nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -253,7 +266,8 @@ describe Keyword do
 		votes[synonym.id].should eq(1)
 	end
 
-	it "should return votes according to age range filter if applied" do
+	it "should return votes according to age range filter if applied", 
+    nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -271,7 +285,8 @@ describe Keyword do
 		votes[synonym.id].should eq(1)
 	end
 
-	it "should return votes according to gender filter if applied" do
+	it "should return votes according to gender filter if applied", 
+    nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -283,7 +298,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-		it "should return votes according to education_level filter if applied" do
+		it "should return votes according to education_level filter if 
+      applied", nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -295,7 +311,8 @@ describe Keyword do
 		votes.should eq({})
 	end
 
-	it "should return approved synonyms sorted according to votes" do
+	it "should return approved synonyms sorted according to votes", 
+    nourhan_mohamed: true do
 		gamer
 		k
 		synonym = Synonym.create(name: "انقر", keyword_id: k.id)
@@ -306,7 +323,8 @@ describe Keyword do
 		synonyms.last.name.should eq("دوس")
 	end
 
-  it "should filter synonym results upon formal/slang optional parameter", nourhan: true do
+  it "should filter synonym results upon formal/slang optional parameter", 
+    nourhan_mohamed: true do
     gamer
     k
     synonym = Synonym.create(name: "انقر", keyword_id: k.id, is_formal: false)

@@ -102,7 +102,7 @@ describe SearchController do
       assigns(:similar_keywords).should =~ [k, k2]
     end
 
-    it "should list keywords according to search" do
+    it "should list keywords according to search", nourhan_mohamed: true do
       d = create_logged_in_developer
       sign_in(d.gamer)
       k
@@ -111,7 +111,7 @@ describe SearchController do
       assigns(:similar_keywords).should eq([k, k2])
     end
 
-    it "should list synonyms according to vote count" do
+    it "should list synonyms according to vote count", nourhan_mohamed: true do
       d = create_logged_in_developer
       sign_in(d.gamer)
       k
@@ -125,7 +125,7 @@ describe SearchController do
       assigns(:votes)[2].should be_nil
     end
 
-    it "should list synonyms according to vote count upon filtering" do
+    it "should list synonyms according to vote count upon filtering", nourhan_mohamed: true do
       d = create_logged_in_developer
       sign_in(d.gamer)
       k
@@ -148,7 +148,7 @@ describe SearchController do
     end
 
     it "should redirect to search_keywords action if passed a non existing keyword 
-      to search or search_by_filters action" do
+      to search or search_by_filters action", nourhan_mohamed: true do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
@@ -162,7 +162,7 @@ describe SearchController do
     end
 
     it "should redirect to search_keywords action if passed an empty string 
-      to search or search_by_filters action" do
+      to search or search_by_filters action", nourhan_mohamed: true do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
