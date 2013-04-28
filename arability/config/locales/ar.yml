@@ -319,3 +319,5 @@ ar:
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  forgot_password: "هل نسيت كلمة السر؟"
+  remember_me: "ابقى متصلاً "
