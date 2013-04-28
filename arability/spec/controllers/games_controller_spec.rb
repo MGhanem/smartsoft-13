@@ -98,9 +98,79 @@ describe GamesController, :type => :controller do
     prize7
   }
 
+  let(:trophy1) {
+    trophy1 = Trophy.new
+    trophy1.name = "جأجأزجأج"
+    trophy1.level = 1
+    trophy1.score = 100
+    trophy1.save validate: false
+    trophy1
+  }
+
+  let(:trophy2) {
+    trophy2 = Trophy.new
+    trophy2.name = "جأزةجأ"
+    trophy2.level = 1
+    trophy2.score = 100
+    trophy2.save validate: false
+    trophy2
+  }
+
+  let(:trophy3) {
+    trophy3 = Trophy.new
+    trophy3.name = "جأجأأزة"
+    trophy3.level = 1
+    trophy3.score = 100
+    trophy3.save validate: false
+    trophy3
+  }
+
+  let(:trophy4) {
+    trophy4 = Trophy.new
+    trophy4.name = "ججأأزة"
+    trophy4.level = 1
+    trophy4.score = 100
+    trophy4.save validate: false
+    trophy4
+  }
+
+  let(:trophy5) {
+    trophy5 = Trophy.new
+    trophy5.name = "جأجأجأ"
+    trophy5.level = 1
+    trophy5.score = 100
+    trophy5.save validate: false
+    trophy5
+  }
+
+  let(:trophy6) {
+    trophy6 = Trophy.new
+    trophy6.name = "جأجأأجأجأ"
+    trophy6.level = 3
+    trophy6.score = 1000
+    trophy6.save validate: false
+    trophy6
+  }
+
+  let(:trophy7) {
+    trophy7 = Trophy.new
+    trophy7.name = "شسيضصثف"
+    trophy7.level = 3
+    trophy7.score = 2000
+    trophy7.save validate: false
+    trophy7
+  }
+
   before(:each) do
     gamer_adam
     gamer_yahya
+    trophy1
+    trophy2
+    trophy3
+    trophy4
+    trophy5
+    trophy6
+    trophy7
     prize1
     prize2
     prize3
@@ -115,13 +185,13 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:won_prizes).should =~ gamer_adam.get_won_prizes
     end
 
     it "Adam hasn't won any prize" do
       sign_in(gamer_adam)
-      get :showprizes
+      get :show_prizes
       assigns(:won_prizes).should =~ []
     end
 
@@ -129,9 +199,76 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:not_won_prizes).should =~ gamer_adam.get_available_prizes
     end
   end
 
+  describe "GET show_trophies" do
+    it "Adam has won all the trophies" do
+       sign_in(gamer_adam)
+       Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
+       gamer_adam.save validate: false
+       get :showtrophies
+       assigns(:won_trophies).should =~ gamer_adam.get_won_trophies
+    end
+
+    it "Adam hasn't won any trophy" do
+      sign_in(gamer_adam)
+      get :showtrophies
+      assigns(:won_trophies).should =~ []
+    end
+
+    it "Adam has won all the trophies and there is no not won trophies" do
+       sign_in(gamer_adam)
+       Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
+       gamer_adam.save validate: false
+       get :showtrophies
+       assigns(:not_won_trophies).should =~ gamer_adam.get_available_trophies
+    end
+  end
+
+  describe "GET get_trophies" do
+    it "should have no won trophies and no won prizes" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: -1, score: -1
+      assigns(:won_trophies).should =~ []
+    end
+
+    it "give 2 trophies to gamer" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: 3, score: 2500
+      assigns(:won_trophies).should =~ [trophy6, trophy7]
+    end
+
+    it "gamer should also be rewarded some prizes" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: 3, score: 2500
+      assigns(:bool_won_prizes).should eq(true)
+    end
+  end
+
+  describe "GET score_only" do
+    it "should have the score of the gamer" do
+      sign_in(gamer_adam)
+      get :get_score_only, score: 100000
+      assigns(:score).should eq(100000)
+    end
+  end
+
+  describe "GET get_prizes" do
+   it "should have no won prizes" do
+      sign_in(gamer_adam)
+      get :get_prizes, level: -1, score: -1
+      assigns(:won_prizes).should =~ []
+    end
+
+    it "give 2 prizes to gamer" do
+      sign_in(gamer_adam)
+      get :get_prizes, level: 3, score: 2500
+      assigns(:won_prizes).should =~ [prize6, prize7]
+    end
+  end
+
 end
+
