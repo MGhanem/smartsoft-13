@@ -3,9 +3,10 @@
 
 en:
   username_or_email: "Username or email"
-  omar_error1: "This keyword is not found"
-  omar_error2: "This synonym is empty"
-  omar_error3: "This is a dupplicate synonym for the same keyword"
+  not_existing_error: "This keyword is not found"
+  empty_name_error: "This synonym is empty"
+  dupplicate_error: "This is a dupplicate synonym for the same keyword"
+  invalid_format_error: "This synonym in not in arabic"
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"
