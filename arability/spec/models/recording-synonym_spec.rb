@@ -1,13 +1,14 @@
 #encoding: UTF-8
 require "spec_helper"
 
-describe "RecordSynonymTest_Omar" do
+describe "RecordSynonymTest" do
 
-    let(:word) {word = Keyword.new
+  let(:word) {
+    word = Keyword.new
     word.name = "testkeyword"
     word.save
     word
-    }
+  }
 
   it "should return false since the synonym is empty" do
     id = word.id
@@ -54,4 +55,5 @@ describe "RecordSynonymTest_Omar" do
     expect(result).to eq (false)
     expect(synonym.id).to eq (nil)
   end
+
 end

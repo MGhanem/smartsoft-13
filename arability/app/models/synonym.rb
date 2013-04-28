@@ -13,11 +13,8 @@ class Synonym < ActiveRecord::Base
 
   validates_format_of :name, with: /^([\u0621-\u0652 ])+$/,
     message: "#{I18n.t(:invalid_format_error)}" 
-
   validates_presence_of :name, message: "#{I18n.t(:empty_name_error)}"
-
   validate :existing?
-
   validates_uniqueness_of :name, scope: :keyword_id,
     message: "#{I18n.t(:duplicate_error)}"
 
@@ -126,11 +123,11 @@ class Synonym < ActiveRecord::Base
   # Parameters:
   #   synonym_name: string input parameter that represents the synonym name.
   #   keyword_id: integer input parameter representing the keyword id
-  #     the synonym points to.
+  #   the synonym points to.
   #   full_output: an optioanl boolean input parameter with a default false,
-  #     which returns the new synonym model if set to true.
+  #   which returns the new synonym model if set to true.
   #   approved: an optional boolean input parameter with a default false
-  #     represents if an admin has approved a synonym on database or not.
+  #   represents if an admin has approved a synonym on database or not.
   # Success:
   #   this method returns true and the new synonym model (if full_output is set
   #   to true) if the synonym has been recorded.
