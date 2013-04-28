@@ -49,6 +49,17 @@ class AdminController < ApplicationController
   def list_prizes
     @prizes_list = Prize.all
   end
+
+  def list_users
+    list_type = params[:type]
+    if list_type == 'Gamer'
+      @list = Gamer.all
+    elsif list_type == 'Developer'
+      @list = Developer.all
+    elsif list_type == 'Admin'
+      @list = Gamer.where(:admin => true).all
+    end        
+  end
   
   # Author:
   #   Karim ElNaggar
