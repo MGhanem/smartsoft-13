@@ -31,12 +31,12 @@ Arability::Application.routes.draw do
     post "games/vote" 
     post "games/record_vote"
     get 'games/getnewwords'
-    get "games/getprizes"
+    get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
     get 'games/gettrophies'
     get 'games/getnewwords'
-    get "games/showprizes"
+    get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/halloffame"
@@ -83,9 +83,11 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match 'search' => 'search#search'
+      match "search" => "search#search"
 
-      match 'search_keywords' => 'search#search_keywords'
+      match "search_keywords" => "search#search_keywords"
+
+      match "send_report" => "search#send_report"
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
