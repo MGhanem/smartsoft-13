@@ -131,7 +131,8 @@ class SearchController < BackendController
 
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
-        render json: { synonyms: @synonyms, votes: @votes }
+
+        render partial: "filtered_results.js" 
       else
         redirect_to search_keywords_path(search: search_keyword)
       end
