@@ -329,6 +329,16 @@ def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     gamer
 end
 
+# Author:
+#   Mirna Yacout
+# Description:
+#   This method is to get the rank of the current gamer based on the highest score
+# Parameters:
+#   current_gamer: the record in Gamer table for the current user
+# Success:
+#   returns rank number of the gamer
+# Failure:
+#   returns nil if gamer is not found
 def self.get_gamer_rank(current_gamer)
     gamers = Gamer.find(:all, order: "highest_score DESC")
     current_gamer_rank = nil
