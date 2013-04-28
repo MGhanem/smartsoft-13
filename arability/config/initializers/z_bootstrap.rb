@@ -73,10 +73,10 @@ hassan=add_gamer("mosatafa", "hassan", "male", "Jordan", 30, "Graduate")
 amr=add_gamer("amr", "raoof", "male", "Iraq", 30, "Graduate")
 
 Developer.delete_all
-timo_dev=Developer.create(first_name: "Timo", last_name: "Fattouh", gamer_id: timo.id)
-timo_dev=Developer.create(first_name: "Developer", last_name: "Smartsoft", gamer_id: smart.id)
-noha_dev=Developer.create(first_name: "Noha", last_name: "Mohamed", gamer_id: noha.id)
-hassan_dev=Developer.create(first_name: "Mostafa", last_name: "Hassan", gamer_id: hassan.id)
+timo_dev=Developer.create(gamer_id: timo.id)
+timo_dev=Developer.create(gamer_id: smart.id)
+noha_dev=Developer.create(gamer_id: noha.id)
+hassan_dev=Developer.create(gamer_id: hassan.id)
 
 Vote.delete_all
 Vote.record_vote(noha.id, a.id)
@@ -94,10 +94,10 @@ Vote.record_vote(amr.id, f.id)
 hassan_dev.keywords << click
 hassan_dev.keywords << sign_in
 
-SubscriptionModel.delete_all
-free=SubscriptionModel.create(name: "Free", limit_search: 20, limit_follow: 20, limit_project: 20)
-premium=SubscriptionModel.create(name: "Premium", limit_search: 200, limit_follow: 200, limit_project: 100)
-deluxe=SubscriptionModel.create(name: "Deluxe", limit_search: 300, limit_follow: 300, limit_project: 300)
+# SubscriptionModel.delete_all
+# free=SubscriptionModel.create(name: "Free", limit_search: 20, limit_follow: 20, limit_project: 20)
+# premium=SubscriptionModel.create(name: "Premium", limit_search: 200, limit_follow: 200, limit_project: 100)
+# deluxe=SubscriptionModel.create(name: "Deluxe", limit_search: 300, limit_follow: 300, limit_project: 300)
 
 project = Project.new
 project.name = "Read"
