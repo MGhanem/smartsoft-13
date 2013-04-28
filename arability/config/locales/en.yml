@@ -296,9 +296,10 @@ en:
     by choosing a word you find inappropriate and submitting a report using 
     this form. An email will be sent to you upon taking action concerning 
     the submitted report.
-  report_abusive: "Report abusive words"
+  report_abusive: "Report here"
   report: "Report"
   words_in_page: "Words that you can report within this page:"
   close: "Close"
   submit: "Submit Report"
   report_sent_success: "Report submitted successfully"
+  help_us_report: "See any inappropriate words?"
