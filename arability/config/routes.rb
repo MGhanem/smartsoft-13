@@ -31,12 +31,12 @@ Arability::Application.routes.draw do
     post "games/vote" 
     post "games/record_vote"
     get 'games/getnewwords'
-    get "games/getprizes"
+    get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
     get 'games/gettrophies'
     get 'games/getnewwords'
-    get "games/showprizes"
+    get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/fame"
