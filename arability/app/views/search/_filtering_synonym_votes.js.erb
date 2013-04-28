@@ -1,121 +1,21 @@
-var newSynonymListHTML =
-  '<% if !@synonyms.blank? %>
-    <div class="accordion-group">
-      <div class="accordion-heading">
-        <span class="accordion-toggle" data-toggle="false" href="#collective">
-          <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-        </span>
-      </div>
-      <div id="collective" class="accordion-body collapse in">
-        <div class="accordion-inner">
-
-          <% key_id = getID(@search_keyword) %>
-          <% result = Keyword.get_keyword_synonym_visual(key_id) %>
-          <% if  result != [] %>
-            <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
-            <%= raw "options.tooltip.formatter = function() {return "<b>"+ this.point.name +"</b>: "+ this.y +" %";}"  %>
-            <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-          <% end %>
-          <% else %>
-            <p><%= t(:no_votes_for_word)%></p>
-          <% end %>
-
-        </div>
-      </div>
-    </div>
-
-    <% @synonyms.each do |synonym| %>
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <div class="row">
-            <div class="span12">
-              <div class="accordion-toggle" style="padding-bottom:30px;">
-                <div id="synonyms<%= synonym.id %>" class="pull-left">
-                  <span class="span2">
-                    <%= synonym.name %>
-                  </span>
-                  <span class="span2" style="color:#bbb;"><i>
-                    <% if @votes[synonym.id] != nil %>
-                      <%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
-                    <% else %>
-                      <%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
-                    <% end %>
-                  </i></span>
-                </div>
-
-                <div id="buttons<%= synonym.id %>" class="pull-right">
-                  <button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
-                        <span><%=t(:view_stats)%></span>
-                        <span style="display:none"><%=t(:hide_stats)%></span>
-                        <script type="text/javascript">
-                          function reduce_div_height(){
-                            $(".centered_div .highcharts-container").css("height", "250px");
-                          }
-                        </script>
-                  </button>
-                  <%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
-                  <%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
-                  <% end %>
-                </div>
-                <script type="text/javascript">
-                  <% if I18n.locale == :ar %>
-                    $("#synonyms<%= synonym.id %>").attr("class", "pull-right");
-                    $("#buttons<%= synonym.id %>").attr("class", "pull-left");
-                  <% elsif I18n.locale == :en %>
-                    $("#synonyms<%= synonym.id %>").attr("class", "pull-left");
-                    $("#buttons<%= synonym.id %>").attr("class", "pull-right");
-                  <% end %>
-                </script>
-                <script>
-                  $("#bstats<%=synonym.id%>").click(function() {
-                      $("span",this).toggle();
-                  });
-                </script>
-              </div>
-            </div>
-          </div>
-          <div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
-            <div class="accordion-inner">
-              <!-- add charts here -->
-              <% if @votes[synonym.id] != nil%>
-              <div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
-              <div class="container-fluid">
-                <div class="row-fluide">
-                  <div class="span2">
-                    <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
-                        <%= raw "options.tooltip.formatter = function() {return "<b>"+ this.point.name +"</b>: "+ this.y +" %";}"  %>
-                        <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                    <% end %>
-                  </div>
-                  <div class="span2">
-                    <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
-                        <%= raw "options.tooltip.formatter = function() {return "<b>"+ this.point.name +"</b>: "+ this.y +" %";}"  %>
-                        <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                    <% end %> 
-                  </div>
-                  <div class="span2">
-                    <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
-                        <%= raw "options.tooltip.formatter = function() {return "<b>"+ this.point.name +"</b>: "+ this.y +" %";}"  %>
-                        <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                    <% end %>
-                  </div>
-
-                  <div class="span2" id="test">
-                    <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
-                        <%= raw "options.tooltip.formatter = function() {return "<b>"+ this.point.name +"</b>: "+ this.y +" %";}"  %>
-                        <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                    <% end %>
-                  </div>
-               </div>
-
-              </div>
-              </div>
-              <% else %>
-              <%= t(:stats_no_votes) %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  <% end %>'
+function applyFilters(keyword, country, age_from, age_to, gender, education){
+  age_from = parseInt(age_from);
+  age_to = parseInt(age_to);
+  if(age_from < 10 || age_from > 100)
+    return;
+  if(age_to < 10 || age_to > 100)
+    return;
+  if(isNaN(age_from))
+    age_from = ""
+  if(isNaN(age_to))
+    age_to = ""
+  $.ajax({
+    url: "<%= search_with_filters_path %>",
+    type: "post",
+    data: { search: keyword, country: country, age_from: age_from, 
+      age_to: age_to, gender: gender, education: education },
+    error:function(){
+      // display error message to user after merging with report story
+    }   
+  }); 
+}
