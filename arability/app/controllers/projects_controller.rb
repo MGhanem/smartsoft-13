@@ -146,11 +146,7 @@ class ProjectsController < BackendController
   # Failure:
   #   None
   def edit
-    if developer_signed_in?
-      @project = Project.find(params[:id])
-    else
-      developer_unauthorized
-    end
+    @project = Project.find(params[:id])
   end
 
   # Author:
