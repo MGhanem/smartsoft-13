@@ -405,16 +405,16 @@ end
   #   object not valid (no project or word id), word already exists in project, 
   #   keyword or synonym does not exist.
   def add_word_inside_project
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
-      @project_id = params[:project_id]
+    @project_id = params[:project_id]
+    if Developer.find_by_gamer_id(current_gamer.id) != nil && not(@project_id.blank?)
       @word_id = Keyword.find_by_name(params[:keyword]).id
-      if Keyword.find_by_id(@word_id) != nil
+      if @word_id != nil && Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
           @edited_word = PreferedSynonym.where(project_id:@project_id, 
             keyword_id:@word_id).first
           @synonym_id = params[:synonym_id]
-          if Synonym.find_by_id(@synonym_id) != nil
+          if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save
               flash[:success] = t(:Synonym_changed_successfully)
@@ -426,29 +426,35 @@ end
               return
             end
           else
-            flash[:notice] = t(:synonym_does_not_exist)
-            redirect_to project_path(@project_id), flash: flash
+            flash[:error] = t(:synonym_does_not_exist)
+            redirect_to :back, flash: flash
             return
           end
         else
-          @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
-            @synonym_id, @word_id, @project_id)
-          if @added_word
-            project_categories = Project.find(@project_id).categories
-            new_keyword = Keyword.find(@word_id)
-            for category in project_categories do
-              if not new_keyword.categories.include?(category) 
-                new_keyword.categories.push(category)
-                new_keyword.save
+          if MySubscription.get_permissions(current_developer.id, 2)
+            @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
+              @synonym_id, @word_id, @project_id)
+            if @added_word
+              project_categories = Project.find(@project_id).categories
+              new_keyword = Keyword.find(@word_id)
+              for category in project_categories do
+                if not new_keyword.categories.include?(category) 
+                  new_keyword.categories.push(category)
+                  new_keyword.save
+                end
               end
+              MySubscription.find_by_developer_id(current_developer.id).decrement_word_add
+              flash[:success] = t(:successfully_added_word_to_project)              
+              redirect_to project_path(@project_id), flash: flash
+              return
+            else
+              flash[:notice] = t(:failed_to_add_word_to_project)
+              redirect_to project_path(@project_id), flash: flash
+              return
             end
-            flash[:success] = t(:successfully_added_word_to_project)              
-            redirect_to project_path(@project_id), flash: flash
-            return
           else
-            flash[:notice] = t(:failed_to_add_word_to_project)
+            flash[:notice] = t(:exceeds_word_limit)
             redirect_to project_path(@project_id), flash: flash
-            return
           end
         end
       else
@@ -456,6 +462,9 @@ end
         redirect_to project_path(@project_id), flash: flash
         return
       end
+    else
+      flash[:error] = t(:choose_project)
+      redirect_to :back, flash: flash
     end
   end
 
