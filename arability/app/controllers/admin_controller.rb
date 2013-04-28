@@ -1,8 +1,8 @@
 #encoding: UTF-8
 class AdminController < ApplicationController
   protect_from_forgery
-  layout 'admin'
-  require 'csv'
+  layout "admin"
+  require "csv"
   include AdminHelper
 
   before_filter :authenticate_gamer!
@@ -60,7 +60,7 @@ class AdminController < ApplicationController
       @list = Gamer.where(:admin => true).all
     end        
   end
-  
+
   # Author:
   #   Karim ElNaggar
   # Description:
