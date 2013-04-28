@@ -3,7 +3,7 @@
     <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" />
     <%= t(:your_twitter_friends) %>
   </p>
-  <% common = Authentication.get_common_twitter_followers(current_gamer) %>
+  <% common = Authentication.get_common_twitter_friends(current_gamer) %>
   <% if common.nil? %>
   <p><%= t(:not_connected_to_twitter) %></p>
   <% else %>
