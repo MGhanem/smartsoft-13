@@ -403,7 +403,7 @@ end
   #   keyword and synonym are added to project and/or synonym of word updated 
   # failure:
   #   object not valid (no project or word id), word already exists in project, 
-  #   keyword or synonym does not exist.
+  #   keyword or synonym does not exist, word add limit exceeded.
   def add_word_inside_project
     @project_id = params[:project_id]
     if Developer.find_by_gamer_id(current_gamer.id) != nil && not(@project_id.blank?)
