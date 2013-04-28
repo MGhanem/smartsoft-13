@@ -21,7 +21,11 @@
       <% @gamers = Gamer.find(common, :order => "highest_score DESC") %>
       <% rank = 0 %>
       <% @gamers.each do |user| %>
+      <% if user == current_gamer %>
+      <tr style="background-color: #DDDDDD">
+      <% else %>
       <tr>
+      <% end %>
         <td><%= rank = rank + 1 %></td>
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
