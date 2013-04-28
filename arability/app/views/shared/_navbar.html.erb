@@ -34,6 +34,9 @@
         <li><%= link_to t(:backend), backend_home_path %></li>
         <% if I18n.locale==:en %>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
+        <% if current_gamer.try(:admin?) %>
+          <li><a href="/admin">Arability Control Panel</a></li>
+        <% end %>
         <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
         <% else I18n.locale==:ar %>
         <li><a href="/gamers/edit"><i class="icon-wrench"></i>تغيير البيانات</a></li>
