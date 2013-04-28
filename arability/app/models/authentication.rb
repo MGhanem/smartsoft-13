@@ -55,14 +55,14 @@ class Authentication < ActiveRecord::Base
   # Author:
   #  Mirna Yacout
   # Description:
-  #  This method is to retrieve the list of common arability friends and Twitter following
+  #  This method is to retrieve the list of common arability friends and Twitter friends
   # Parameters:
   #  current_gamer: the record in Gamer table for the current user
   # Success:
-  #  returns the list of common followers
+  #  returns the list of common friends
   # Failure:
   #  returns nil if no authentication is found
-  def self.get_common_twitter_followers(current_gamer)
+  def self.get_common_twitter_friends(current_gamer)
     auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
     if (auth.nil?)
       return nil
