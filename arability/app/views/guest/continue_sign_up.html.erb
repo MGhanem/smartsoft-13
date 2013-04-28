@@ -53,10 +53,10 @@
 
 
         <div><%= f.label t(:email), :class => "control-label" %>
-        <%= f.email_field :email, :style => "margin-left: 10px;" %></div></br>
+        <%= f.email_field :email, :value => "#{@email}", :style => "margin-left: 10px;" %></div></br>
 
         <div><%= f.label t(:username), :class => "control-label" %>
-        <%= f.text_field :username, :style => "margin-left: 10px;" %></div></br>
+        <%= f.text_field :username, :value => "#{@username}", :style => "margin-left: 10px;" %></div></br>
 
         <div><%= f.label t(:password), :class => "control-label" %>
         <%= f.password_field :password, :style => "margin-left: 10px;" %></div></br>

@@ -6,12 +6,23 @@ class GuestController < ApplicationController
   #   Renders guest sign up form and any errors
   # Params:
   #   errors: errors resulting from trying to save
+  #   dob: the date of birth that the user entered before
+  #   education: the education level that the user enetered before
+  #   gender: the gender that the user entered before
+  #   country: the country that the user enetered before
   # Success: 
   #   Renders form
   # Failure:
   #   None
   def sign_up
   	@errors = params[:errors]
+    dob = params[:dob]
+    if dob != nil
+      @dob2 = dob.to_date
+    end
+    @education = params[:education]
+    @gender = params[:gender]
+    @country = params[:country]
   end
 
   # Author:
@@ -20,12 +31,16 @@ class GuestController < ApplicationController
   #   Renders guest continue sign up form and any errors
   # Params:
   #   errors: errors resulting from trying to save
+  #   email: the email that the user entered before
+  #   username: the username that the user enetered before
   # Success: 
   #   Renders form
   # Failure:
   #   None
   def continue_sign_up
     @errors = params[:errors]
+    @email = params[:email]
+    @username = params[:username]
   end
 
 
@@ -37,7 +52,7 @@ class GuestController < ApplicationController
   #   gamer: a resource containing the data entered from the form and these data are email,
   #   password, password confirmation, username
   # Success: 
-  #   Creates guest gamer and redirects to gamer
+  #   Creates guest gamer and redirects to gamer and the input from the user 
   # Failure:
   #   Redirects to continue sign up form with the errors
   def continue_signing_up
@@ -72,14 +87,14 @@ class GuestController < ApplicationController
     if errors.size == 0
       gamer, flag = create_gamer(email, password, username)
       if flag == false 
-        redirect_to action: "continue_sign_up", errors: gamer.errors.messages     
+        redirect_to action: "continue_sign_up", errors: gamer.errors.messages, username: username, email: email
         return
       end
       sign_in gamer
       redirect_to ("/game")
       return
     end
-    redirect_to action: "continue_sign_up", errors: errors
+    redirect_to action: "continue_sign_up", errors: errors, username: username, email: email
   end
 
 
@@ -93,7 +108,7 @@ class GuestController < ApplicationController
   # Success: 
   #   Creates guest gamer and redirects to gamer
   # Failure:
-  #   Redirects to sign up form with the errors
+  #   Redirects to sign up form with the errors and the input from the user 
   def signing_up
   	year = params[:gamer]["date_of_birth(1i)"]
   	month = params[:gamer]["date_of_birth(2i)"]
@@ -123,12 +138,14 @@ class GuestController < ApplicationController
   	if errors.size == 0
        gamer, flag = create_guest_gamer(education, country, gender, dob)
        if flag == false 
-         redirect_to action: "sign_up", errors: gamer.errors.messages   	
-         return
+        redirect_to action: "sign_up", errors: gamer.errors.messages, dob: dob, education: education, 
+          country: country, gender: gender  	
+        return
        end
   	  redirect_to ("/game")
   	  return
   	end
-  	redirect_to action: "sign_up", errors: errors
+  	redirect_to action: "sign_up", errors: errors, dob: dob, education: education, 
+      country: country, gender: gender  
   end
 end
