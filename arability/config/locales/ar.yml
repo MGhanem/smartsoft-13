@@ -296,7 +296,7 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   report_sent: "تم تقديم التقرير بنجاح. سوف يتم ابلاغك بالايميل عند إتخاذ تصرف"
   report_abusive: "حدد الكلمات غير اللائقة"
   report: "إبلغ من هنا"
@@ -312,3 +312,10 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
+  add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
+  remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
+  connection_failure: "فشل التواصل!"
+  already_connected: "التواصل بالفعل موجود!"
+  remove_connection: "إلغاء الاتصال مع تويتر"
+  connect_to_twitter: "تواصل مع تويتر"
+  you_have_prizes: "لقد ربحت الجوائز التالية"

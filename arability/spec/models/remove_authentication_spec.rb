@@ -27,7 +27,7 @@ describe "remove authentication to Twitter for current_gamer" do
   it "should remove authentication record from database for current_gamer" do
     k1 = Authentication.exists?(authentication.id)
     expect(k1).to eq(true)
-  	Authentication.remove_conn(current_gamer)
+  	Authentication.remove_conn(current_gamer.id, "twitter")
     k2 = Authentication.exists?(authentication.id)
     expect(k2).to eq(false)
   end
