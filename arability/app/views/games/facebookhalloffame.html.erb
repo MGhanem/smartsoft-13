@@ -1,0 +1,42 @@
+<div id = "facebook">
+  <br>
+  <p>
+    <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" />
+    <%= t(:your_facebook_friends) %>
+  </p>
+  <% common = Authentication.get_common_facebook_friends(current_gamer) %>
+  <% if common.nil? %>
+  <p><%= t(:not_connected_to_facebook) %></p>
+  <% else %>
+  <table class="table">
+    <thead align="center" style="font-weight:bold;">
+      <tr>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
+      </tr>
+    </thead>
+    <tbody align="center">
+      <% @gamers = Gamer.find(common, :order => "highest_score DESC") %>
+      <% rank = 0 %>
+      <% @gamers.each do |user| %>
+      <tr>
+        <td><%= rank = rank + 1 %></td>
+        <td><%= user.username %></td>
+        <td><%= user.highest_score %></td>
+        <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
+      </tr>
+      <br>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

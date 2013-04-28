@@ -304,5 +304,6 @@ en:
   highest_score: "Highest Score"
   trophies: "Trophies"
   no_trophies: "No Trophies"
-  not_connected_to_twitter: "You are not connected to Twitter"
-  not_connected_to_facebook: "You are not connected to Facebook"
+  not_connected_to_twitter: "You are not connected to Twitter, connect from your settings"
+  not_connected_to_facebook: "You are not connected to Facebook, connect from your settings"
+  loading: "Loading"
