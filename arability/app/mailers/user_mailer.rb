@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
   # success:
   #   returns a Message object that you can call on deliver to send the email
   # failure:
-  #   this method doesnt fail
+  #   --
   def generic_email(mail_to, subject, message)
     mail to: mail_to, subject: subject, body: message
   end
@@ -29,7 +29,7 @@ class UserMailer < ActionMailer::Base
   # success:
   #   returns a Message object that you can call on deliver to send the email
   # failure:
-  #   this method doesnt fail
+  #   --
   def follow_notification(developer, keyword, synonym)
     subject = "A new meaning for #{keyword.name} has been found"
     @keyword = keyword
@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
   # success:
   #   returns a Message object that you can call on deliver to send the email
   # failure:
-  #   this method doesnt fail
+  #   --
   def invite(email, developer)
     subject = "You have been invited to arability"
     @developer = developer
