@@ -296,3 +296,5 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  routing_error: "Sorry, we seem to have misplaced the page you were looking for."
+  exception: "Oops, this is embarassing. A problem has occured, however we have notified an administrator and are working to fix it."

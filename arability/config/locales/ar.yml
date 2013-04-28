@@ -303,3 +303,6 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
+  routing_error: "لا توجد هذه الصفحة"
+  exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
+
