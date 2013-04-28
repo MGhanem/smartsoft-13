@@ -85,10 +85,16 @@
       </div>
   </div>
   <div class="control-group">
+    <% if I18n.locale == :en %>
+    <div class="controls">
+      <span3><a class="btn pull-right btn-medium" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-right btn-medium" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+    </div>
+    <% else %>
     <div class="controls">
       <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-      <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+      <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px; font-size=100"><%= t(:save_project) %></button>
     </div>
-  </div>
+    <% end %>
 <% end %>
 </div>
