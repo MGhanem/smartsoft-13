@@ -112,12 +112,11 @@ class GamesController < ApplicationController
   # returns:
   #   success: lists out the prizes the gamer wins in a js erb view
   #   failure: the action is not even called
-  def getprizes
+  def get_prizes
     @level = params[:level].to_i
     @score = params[:score].to_i
     @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, 
                                                  @score, @level)
-    @won_prizes.map { |wp| current_gamer.prizes << wp }
     respond_to do |format|
       format.js
     end
@@ -229,7 +228,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned prizes in a list and the prizes that haven't been 
   #   earned in another
-  def showprizes
+  def show_prizes
     @won_prizes = current_gamer.get_won_prizes
     @not_won_prizes = current_gamer.get_available_prizes
     respond_to do |format|
@@ -256,7 +255,7 @@ class GamesController < ApplicationController
       format.js
     end
   end
- 
+
   # Author:
   # 	Kareem Ali
   # Description:

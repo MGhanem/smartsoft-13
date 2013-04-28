@@ -14,7 +14,7 @@
     <% end %>
     <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a><br><a style="margin-left: -24px" target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h3>
   </div>
-  <% if @won_trophies.blank? %>
+  <% if !@won_trophies.blank? %>
   <div class="won">
     <h3 class="title-head" style="border-top: none;"><%= t(:you_have_won_these_trophies) %></h3>
      <% @won_trophies.each do |trophy| %>
