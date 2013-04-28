@@ -185,13 +185,13 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:won_prizes).should =~ gamer_adam.get_won_prizes
     end
 
     it "Adam hasn't won any prize" do
       sign_in(gamer_adam)
-      get :showprizes
+      get :show_prizes
       assigns(:won_prizes).should =~ []
     end
 
@@ -199,7 +199,7 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Prize.all.map { |prize| gamer_adam.prizes << prize }
        gamer_adam.save validate: false
-       get :showprizes
+       get :show_prizes
        assigns(:not_won_prizes).should =~ gamer_adam.get_available_prizes
     end
   end
@@ -209,13 +209,13 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
        gamer_adam.save validate: false
-       get :showtrophies
+       get :show_trophies
        assigns(:won_trophies).should =~ gamer_adam.get_won_trophies
     end
 
     it "Adam hasn't won any trophy" do
       sign_in(gamer_adam)
-      get :showtrophies
+      get :show_trophies
       assigns(:won_trophies).should =~ []
     end
 
@@ -223,9 +223,52 @@ describe GamesController, :type => :controller do
        sign_in(gamer_adam)
        Trophy.all.map { |trophy| gamer_adam.trophies << trophy }
        gamer_adam.save validate: false
-       get :showtrophies
+       get :show_trophies
        assigns(:not_won_trophies).should =~ gamer_adam.get_available_trophies
     end
   end
 
+  describe "GET get_trophies" do
+    it "should have no won trophies and no won prizes" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: -1, score: -1
+      assigns(:won_trophies).should =~ []
+    end
+
+    it "give 2 trophies to gamer" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: 3, score: 2500
+      assigns(:won_trophies).should =~ [trophy6, trophy7]
+    end
+
+    it "gamer should also be rewarded some prizes" do
+      sign_in(gamer_adam)
+      get :gettrophies, level: 3, score: 2500
+      assigns(:bool_won_prizes).should eq(true)
+    end
+  end
+
+  describe "GET score_only" do
+    it "should have the score of the gamer" do
+      sign_in(gamer_adam)
+      get :get_score_only, score: 100000
+      assigns(:score).should eq(100000)
+    end
+  end
+
+  describe "GET get_prizes" do
+   it "should have no won prizes" do
+      sign_in(gamer_adam)
+      get :get_prizes, level: -1, score: -1
+      assigns(:won_prizes).should =~ []
+    end
+
+    it "give 2 prizes to gamer" do
+      sign_in(gamer_adam)
+      get :get_prizes, level: 3, score: 2500
+      assigns(:won_prizes).should =~ [prize6, prize7]
+    end
+  end
+
 end
+
