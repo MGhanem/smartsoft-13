@@ -120,14 +120,14 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   handles what should happen when a guest becomes a user
+  #   Handles what should happen when a guest becomes a user
   # Params:
   #   id: id of the user
   #   guest_gamer: the guest gamer
   # Success: 
-  #   changes ids of the votes where the id was of the guest_gamer to the id from the parameters
+  #   Changes ids of the votes where the id was of the guest_gamer to the id from the parameters
   # Failure:
-  #   none
+  #   None
   def logging_in(id)
     guest_votes = Vote.where(gamer_id: guest_gamer.id)
       guest_votes.each do |vote|
@@ -139,15 +139,15 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   creates a gamer with the given data
+  #   Creates a gamer with the given data
   # Params:
   #   email: the email of a the gamer
   #   password: the password of the gamer
   #   username: the username of the gamer
   # Success: 
-  #   returns the created gamer and true
+  #   Returns the created gamer and true
   # Failure:
-  #   returns the gamer instance that wasn't created and false
+  #   Returns the gamer instance that wasn't created and false
   def create_gamer(email, password, username)
     gamer = Gamer.new
     gamer.username = username
@@ -169,16 +169,16 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   creates a guest with the given data
+  #   Creates a guest with the given data
   # Params:
   #   education: the education level of a the guest
   #   country: the country of the guest
   #   gender: the gender of the guest
   #   dob: the date of birth
   # Success: 
-  #   returns the created guest and true
+  #   Returns the created guest and true
   # Failure:
-  #   returns the gamer instance that wasn't created and false
+  #   Returns the gamer instance that wasn't created and false
   def create_guest_gamer(education, country, gender, dob)
     gamer = Gamer.new
     gamer.username = "Guest_#{Time.now.to_i}#{rand(99)}"
@@ -199,14 +199,14 @@ class ApplicationController < ActionController::Base
   # Author:
   #   Mohamed Tamer
   # Description
-  #   checks if there is a gamer signed in or not
+  #   Checks if there is a gamer signed in or not
   # Params:
   #   gamer_session: the session of a signed up regular user
   #   session[:guest_gamer_id]: the session of the guest gamer
   # Success: 
-  #   continues as normal 
+  #   Continues as normal to the page requested if the user is a guest or gamer 
   # Failure:
-  #   redirects to sign up as guest
+  #   Redirects to sign up as guest
   def authenticate_gamer_or_guest!
     if gamer_session == nil && session[:guest_gamer_id] == nil
       redirect_to guest_sign_up_path

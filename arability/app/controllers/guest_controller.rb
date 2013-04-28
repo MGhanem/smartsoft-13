@@ -3,13 +3,13 @@ class GuestController < ApplicationController
   # Author:
   #   Mohamed Tamer
   # Description
-  #   renders guest sign up form and any errors
+  #   Renders guest sign up form and any errors
   # Params:
   #   errors: errors resulting from trying to save
   # Success: 
-  #   renders form
+  #   Renders form
   # Failure:
-  #   none
+  #   None
   def sign_up
   	@errors = params[:errors]
   end
@@ -17,13 +17,13 @@ class GuestController < ApplicationController
   # Author:
   #   Mohamed Tamer
   # Description
-  #   renders guest continue sign up form and any errors
+  #   Renders guest continue sign up form and any errors
   # Params:
   #   errors: errors resulting from trying to save
   # Success: 
-  #   renders form
+  #   Renders form
   # Failure:
-  #   none
+  #   None
   def continue_sign_up
     @errors = params[:errors]
   end
@@ -32,13 +32,14 @@ class GuestController < ApplicationController
   # Author:
   #   Mohamed Tamer
   # Description
-  #   tries to creat a guest gamer with the given data
+  #   Creates a guest gamer with the given data
   # Params:
-  #   gamer: a resource containing the data entered from the form
+  #   gamer: a resource containing the data entered from the form and these data are email,
+  #   password, password confirmation, username
   # Success: 
-  #   creates guest gamer and redirects to gamer
+  #   Creates guest gamer and redirects to gamer
   # Failure:
-  #   redirects to sign up form with the errors
+  #   Redirects to continue sign up form with the errors
   def continue_signing_up
     email = params[:gamer][:email]
     password = params[:gamer][:password]
@@ -85,13 +86,14 @@ class GuestController < ApplicationController
   # Author:
   #   Mohamed Tamer
   # Description
-  #   tries to creat a guest gamer with the given data
+  #   Creates a guest gamer with the given data
   # Params:
-  #   gamer: a resource containing the data entered from the form
+  #   gamer: a resource containing the data entered from the form  and these data are date of birth,
+  #   gender, country, education level
   # Success: 
-  #   creates guest gamer and redirects to gamer
+  #   Creates guest gamer and redirects to gamer
   # Failure:
-  #   redirects to sign up form with the errors
+  #   Redirects to sign up form with the errors
   def signing_up
   	year = params[:gamer]["date_of_birth(1i)"]
   	month = params[:gamer]["date_of_birth(2i)"]
