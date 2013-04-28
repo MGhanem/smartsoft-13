@@ -443,7 +443,7 @@ end
                   new_keyword.save
                 end
               end
-              MySubscription.get_my_subscription.decrement_word_add
+              MySubscription.decrement_add(current_developer.id)
               flash[:success] = t(:successfully_added_word_to_project)              
               redirect_to project_path(@project_id), flash: flash
               return

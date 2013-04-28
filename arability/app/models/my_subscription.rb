@@ -1,5 +1,4 @@
 class MySubscription < ActiveRecord::Base
-  include ApplicationHelper
   belongs_to :subscription_model
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
@@ -27,7 +26,7 @@ class MySubscription < ActiveRecord::Base
       end
       my_sub.developer_id = dev_id
       my_sub.word_search=submodel.limit_search
-      my_sub.word_add=submodel.limit
+      my_sub.word_add=submodel.limit_add
       my_sub.word_follow=submodel.limit_follow
       my_sub.project=submodel.limit_project
       my_sub.subscription_model_id = submodel.id
@@ -154,16 +153,22 @@ class MySubscription < ActiveRecord::Base
     @count_follow=@developer.Keywords.count
    end
 
-    # Author:
-    #  Khloud Khalid
-    # Description:
-    #  returns the subscription model of a given developer
-    # Success:
-    #  subscription model returned 
-    # Failure:
-    #  none 
-   def get_my_subscription()
-    return MySubscription.joins(:developer).where(developer_id: current_developer).first
-   end
+    # author:
+    #   Khloud Khalid, Kareem Ali
+    # description:
+    #   decrements word_add of the subscription model of a given developer
+    # params:
+    #   dev_id
+    # success:
+    #   word add decremented successfully
+    # failure:
+    #   word add already is zero
+    def decrement_add(dev_id)
+      subscription = MySubscription.joins(:developer).where(developer_id: dev_id).readonly(false).first
+      if subscription.word_add != 0 
+        subscription.word_add -= 1
+        subscription.save
+      end
+    end
 end
 end
