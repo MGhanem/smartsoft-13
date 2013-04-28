@@ -25,6 +25,7 @@ class SearchController < BackendController
     if @categories.present?
       categories_array = @categories.split(/,/)
       categories_array.map! { |x| x.strip }
+      categories_array.map! { |x| x.downcase }
       categories_array.reject! { |x| x.blank? }
       categories_array.uniq!
     else
@@ -37,7 +38,29 @@ class SearchController < BackendController
     end
     @similar_keywords =
       Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array.join(", ")
+    @categories = categories_array
+  end
+
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   submits a report to each of the words chosen in the report form by the
+  #   current user
+  # params:
+  #   reported_words: an array of keywords/synonyms to be reported
+  # success:
+  #   returns submits a report with the chosen keywords/synonyms
+  # failure:
+  #   --
+  def send_report
+    reported_words = params["reported_words"]
+    reported_words = reported_words.to_a
+    reported_words.each do |word|
+      word = word.split(" ")
+      word_model = word[1] == "Keyword" ? 
+        Keyword.find(word[0].to_i) : Synonym.find(word[0].to_i)
+      @success, _ = Report.create_report(current_gamer, word_model)
+    end
   end
 
 	#Description:

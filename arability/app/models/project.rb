@@ -46,13 +46,13 @@ end
 # Failure:
 #   None
 def self.createcategories(project,categories)
-  array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
-  catArray = []
-  array.each do |m| m.capitalize!
-    catArray.push(Category.where(:name => m).first_or_create)
-  end
-  project.categories = catArray
-  project.save
+  # array = categories.split(/\s*[,;]\s*|\s{2,}|[\r\n]+/x)
+  # catArray = []
+  # array.each do |m| m.capitalize!
+  #   catArray.push(Category.where(:name => m).first_or_create)
+  # end
+  # project.categories = catArray
+  # project.save
   return project
 end
 

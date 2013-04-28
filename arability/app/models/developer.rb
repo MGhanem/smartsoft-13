@@ -14,7 +14,13 @@ class Developer < ActiveRecord::Base
 
   has_many :own_projects, class_name: "Project"
   has_and_belongs_to_many :shared_with_projects, class_name: "Project"
+
   attr_accessible :verified, :gamer_id
+
+
+  attr_accessible :verified, :gamer_id
+
+
   validates :gamer_id, presence: true, uniqueness: true
 
 

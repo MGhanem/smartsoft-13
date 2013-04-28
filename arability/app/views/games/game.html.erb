@@ -36,7 +36,7 @@
     }else{
       return false;
     }
-  } 
+  }
 
   function have_to_sign_in(){
     $.post("/games/vote_errors.js");
@@ -68,8 +68,6 @@
     }
   }
 
-
-
   function getTrophies(level, score) {
     clear();
     request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
@@ -77,7 +75,7 @@
   }
   function getPrizes(level, score) {
     clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    request_string = "/games/get_prizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
   function getScore() {
@@ -92,7 +90,7 @@
       cache = document.getElementById("zone").innerHTML;
     }    
     clear();
-    $.get("/games/showprizes");
+    $.get("/games/show_prizes");
   }
 
   function showTrophies() {
@@ -116,20 +114,15 @@
 
 
 function setButtons(){
-    <% if I18n.locale==:ar %>
+    <% if I18n.locale == :ar %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
-    <% else I18n.locale==:en %>
+    continuePlayingBtn = "الاستمرار في اللعب"
+    <% else %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
+    continuePlayingBtn = "Continue Playing"
     <% end %>
-  }
-
-
-  function getPrizes(level, score) {
-    clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
-    $.get(request_string);
   }
 
   function getScore() {
@@ -138,9 +131,9 @@ function setButtons(){
 
 
   function setLevelPopUpTitle(){
-    <% if I18n.locale==:ar %>
+    <% if I18n.locale == :ar %>
     levelPopUpTitle = 'مرحلة رقم';
-    <% else I18n.locale==:en %>
+    <% else %>
     levelPopUpTitle = 'Level';
     <% end %> 
   }
@@ -189,7 +182,7 @@ function setButtons(){
   function setScoreTitle(){
     <% if I18n.locale==:ar %>
     document.getElementById('game-score').innerHTML = score + ' :نقاط'
-    <% else I18n.locale==:en %>
+    <% else %>
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
   }
@@ -230,6 +223,26 @@ function setButtons(){
 
 
 
+  function generateGameOverPopUp(){
+    <% if I18n.locale == :en %>
+    gameOverFontSize = '150px';
+    return "Game Over";
+    <% else %>
+    gameOverFontSize = '300px';
+    return "النهاية";
+    <% end %>
+  }
+
+  function generateEmptyDbMsg(){
+    <% if I18n.locale == :ar %>
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
+    <% else %>
+      return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
+    <% end %>
+  }
+
+
+
 </script>
 
 
@@ -260,21 +273,21 @@ function setButtons(){
 
   </div>
 
-  <% if I18n.locale==:ar %>
+  <% if I18n.locale == :ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
 
-    <% else I18n.locale==:en %>
+    <% else %>
     <div class="zone" id="zone">
       <% end %> 
     <div class="divaya">
-      <% if I18n.locale==:ar %>
+      <% if I18n.locale == :ar %>
     <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
     <div class="game-lang">
       <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
       <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
       <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
     </div>
-    <% else I18n.locale==:en %>
+    <% else %>
     <h2 class="lang-header">Pick the language you want to play with</h2><br>
     <div class="game-lang">
       <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
