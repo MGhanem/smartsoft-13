@@ -20,7 +20,6 @@ class AuthenticationsController < ApplicationController
      current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
      auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer.id)
     redirect_to "/gamers/edit"
-    return
 	end
 
   # Author:
@@ -33,11 +32,10 @@ class AuthenticationsController < ApplicationController
   #   finds connection record, removes it correctly and redirect
   # Failure:
   #   doesnot find the record
-	def remove_twitter_connection
-    flash[:notice] = I18n.t(:remove_twitter_connection)
-	  Authentication.remove_conn(current_gamer.id, "twitter")
+	def remove_connection
+    flash[:notice] = I18n.t(:remove_social_connection)
+	  Authentication.remove_conn(current_gamer.id, params[:provider])
 	  redirect_to "/gamers/edit"
-	  return
 	end
 
   # Author:
