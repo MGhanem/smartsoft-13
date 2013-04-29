@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-  has_and_belongs_to_many :shared_with, :class_name => "Developer"
   has_one :owner, :class_name => "Developer"
   has_many :shared_projects
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
@@ -43,7 +42,7 @@ end
 # Failure:
 #   None
 def self.createcategories(project,cat_id)
-  if cat_id != ""
+  if cat_id != " "
     catArray = []
     catArray.push(cat_id)
     catArray.each do |m|
@@ -53,5 +52,4 @@ def self.createcategories(project,cat_id)
   end
   return project
 end
-
 end

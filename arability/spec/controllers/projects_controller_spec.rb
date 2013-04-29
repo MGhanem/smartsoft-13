@@ -3,9 +3,9 @@ require "spec_helper"
 require "request_helpers"
 include Warden::Test::Helpers
 include RequestHelpers
-include Devise::TestHelpers
 
-describe ProjectsController, type: :controller do
+describe ProjectsController do
+  include Devise::TestHelpers
 
   let(:gamer1){
 	  gamer = Gamer.new
@@ -56,16 +56,16 @@ describe ProjectsController, type: :controller do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
-end
 
-#Salma's Tests
-describe "GET #new" do
-  it "initializes a new project" do
-    a = create_logged_in_developer
-    sign_in(a.gamer)
-    get :new
+
+  #Salma's Tests
+  describe "GET #new" do
+    it "initializes a new project" do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :new
+    end
   end
-end
 
 describe "GET #create" do
   context "with valid attributes" do
@@ -154,6 +154,13 @@ describe 'PUT update' do
     end
   end
 
+  it "should make developer remove a project shared with him" do
+    sign_in gamer1
+    get :remove_project_from_developer, :dev_id => developer1.id, :project_id => project.id
+    #response.should be_success
+    response.code.should eq("302")
+  end
+
   #khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do
@@ -197,5 +204,4 @@ describe 'PUT update' do
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
-
 end
