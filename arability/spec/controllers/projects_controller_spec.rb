@@ -67,13 +67,6 @@ describe ProjectsController, type: :controller do
     response.code.should eq("200")
   end
 
-  it "assigns attributes to the new project" do
-    a = create_logged_in_developer
-    sign_in(a.gamer)
-    post :create, project: { name: "banking", category:"" }
-    response.code.should eq("200")
-  end
-
   it "assigns the requested project to project" do
     a = create_logged_in_developer
     sign_in(a.gamer)

@@ -34,6 +34,8 @@ let(:cat){
   cat
 }
 
+#Salma's tests
+
   it "Should have a name" do
   project.name = nil
   s = project.save
