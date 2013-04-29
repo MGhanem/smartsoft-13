@@ -1,0 +1,61 @@
+(function($) {
+  $.arabize = function (options) {
+    if(!options || !options["api_key"]) {
+      $.error("Api key not passed to arabize")
+    }
+
+    var keywords = []
+    var elements = {}
+    $("[data-arabize]").each(function (index, element) {
+      var word = $(element).data("arabize")
+      if (word != "") {
+        keywords = keywords.concat(word)
+        if(elements[word]) {
+          elements[word] = elements[word].concat(element)
+        } else {
+          elements[word] = [element]
+        }
+      console.log(element)
+      }
+    })
+
+    if(keywords.length == 0) {
+      return
+    }
+
+    var set_translations = function(keywords) {
+      console.log(keywords)
+      $.each(keywords, function(index, entry) {
+        if(entry["found"]) {
+          $(elements[entry["word"]]).each(function(index, element) {
+            element = $(element)
+
+            if(element.is("input, textarea")) {
+              if(!element.is("input[type=submit]") && 'placeholder' in element[0]) {
+                element.attr("placeholder", entry["translation"])
+              } else {
+                element.val(entry["translation"])
+              }
+            } else {
+              element.html(entry["translation"])
+            }
+          })
+        }
+      })
+    }
+
+    var get_translations = function() {
+      $.getJSON("<%= api_translate_url format: :json %>", {
+        "api_key"   : options["api_key"],
+        "keywords"  : keywords,
+        "overrides" : options["overrides"],
+      }, set_translations)
+    }
+
+    $.ready(get_translations)
+
+    if($.isReady) {
+      get_translations()
+    }
+  }
+})(jQuery)

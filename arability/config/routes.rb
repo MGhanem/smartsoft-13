@@ -17,13 +17,7 @@ Arability::Application.routes.draw do
     post "/add_prize"
   end
 
-  scope "/api" do
-    match "translate" => "api#get_synonyms"
-    match "/" => "api#index", as: :api_keys_list
-    match "create" => "api#create", as: :api_key_create
-    match "help" => "api#help", as: :api_help
-    get "/test"
-  end
+  match "/api/translate" => "api#get_synonyms", as: :api_translate
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
@@ -97,6 +91,18 @@ Arability::Application.routes.draw do
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
+
+      scope "/api" do
+        match "/" => "api#index", as: :api_keys_list
+
+        match "create" => "api#create", as: :api_key_create
+        match "delete" => "api#delete", as: :api_key_delete
+
+        match "help" => "api#help", as: :api_help
+
+        match "/test" => "api#test", as: :api_test
+      end
+
     end
   end
 

@@ -35,6 +35,25 @@ div.field_with_errors {
   @extend ul;
   margin: 0 0 0px 10px;
 }
+
+.dl-horizontal {
+  display: inline;
+}
+
+.dl-horizontal dt {
+  float: left;
+  width: 80px;
+  clear: left;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-horizontal dd {
+  margin-left: 90px;
+}
+
 @import "bootstrap-responsive";
 
 

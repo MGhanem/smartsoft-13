@@ -9,6 +9,8 @@ namespace :db do
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
+    success, username=Keyword.add_keyword_to_database("username", true)
+    success, password=Keyword.add_keyword_to_database("password", true)
     Keyword.create(name: "share", approved: true, is_english: true)
     Keyword.create(name: "post", approved: true, is_english: true)
     Keyword.create(name: "poke", approved: true, is_english: true)
@@ -60,6 +62,8 @@ namespace :db do
     g=Synonym.create(name: "رفع", keyword_id: upload.id, approved: true)
     h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true)
     i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true)
+    j=Synonym.create(name: "أسم المستخدم", keyword_id: username.id, approved: true)
+    j=Synonym.create(name: "كلمة السر", keyword_id: password.id, approved: true)
 
     Gamer.delete_all
     def self.add_gamer(first, last, gender, country, age, education)
