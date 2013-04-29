@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   def error_render_method(exception)
     path = request.path
     UserMailer.generic_email("smartsoft-13@googlegroups.com", 
-        "EXCEPTION THROWN", exception.backtrace.to_s).deliver
+        "EXCEPTION THROWN", exception.backtrace.join("\n")).deliver
     if path.include? "developers/"
       redirect_to projects_path, flash: { error: t(:exception) } 
       return
