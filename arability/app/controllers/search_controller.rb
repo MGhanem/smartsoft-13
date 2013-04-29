@@ -21,7 +21,8 @@ class SearchController < BackendController
   #     similar keywords were found
   def search_keywords
     @categories = params[:categories]
-    @project_id = params[:project_id]
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     if @categories.present?
       categories_array = @categories.split(/,/)
       categories_array.map! { |x| x.strip }
@@ -41,6 +42,28 @@ class SearchController < BackendController
     @categories = categories_array
   end
 
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   submits a report to each of the words chosen in the report form by the
+  #   current user
+  # params:
+  #   reported_words: an array of keywords/synonyms to be reported
+  # success:
+  #   returns submits a report with the chosen keywords/synonyms
+  # failure:
+  #   --
+  def send_report
+    reported_words = params["reported_words"]
+    reported_words = reported_words.to_a
+    reported_words.each do |word|
+      word = word.split(" ")
+      word_model = word[1] == "Keyword" ? 
+        Keyword.find(word[0].to_i) : Synonym.find(word[0].to_i)
+      @success, _ = Report.create_report(current_gamer, word_model)
+    end
+  end
+
 	#Description:
   #   search for synonyms for a particular keyword
   # Author:
@@ -56,7 +79,8 @@ class SearchController < BackendController
 	#			returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
-    @project_id = params[:project_id]
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?

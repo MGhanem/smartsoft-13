@@ -13,7 +13,7 @@
     <col style="width:10%">
     <col style="width:45%">
     <col style="width:45%">
-    <%= form_tag view_recommended_words_path do |f| %>
+    <%= form_tag get_recommended_words_path, :method => :post do %>
       <% for keyword in @karray %>
       <tr>
         <td style="text-align:center; vertical-align: middle">
@@ -23,21 +23,36 @@
           <%= keyword.name %>
         </td>
         <td style="text-align:center; vertical-align: middle">
-           <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name, { prompt: true }, { id:"key", disabled: true, 'data-id' => keyword.id}) %>
-        </td>
-        <script>
-          $('input[type=checkbox]').click(function() {
-              var $this = $(this);
-              if ($this.is(':checked')) {
-                  $("select[data-id=" + $this.val() + "]").removeAttr("disabled");
-              } else {
-                  $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
-              }
-          });
-        </script>
+         <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name,{}, { id:"key", disabled: true, 'data-id' => keyword.id}) %>
+       </td>
+       <script>
+       $('input[type=checkbox]').click(function() {
+        var $this = $(this);
+        if ($this.is(':checked')) {
+          $("select[data-id=" + $this.val() + "]").removeAttr("disabled");
+        } else {
+          $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
+        }
+      });
+       </script>
       </tr>
   <% end %>
   </table>
+<% if I18n.locale == :en %>
+   <%= submit_tag t(:add_to_project), :class => "btn btn-primary btn-large pull-right", :onclick => "return check();" %>
+   <% else %>
+   <%= submit_tag t(:add_to_project), :class => "btn btn-primary btn-large pull-left", :onclick => "return check();" %>
+   <% end %>
   <% end %>
-  <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px"><%= t(:add_to_project) %></button>
 <% end %>
+<script type="text/javascript">
+function check(){
+  var array = [];
+  var inpfields = frm.getElementsByTagName('check_box_tag');
+  var nr_inpfields = inpfields.length;
+  for(var i=0; i<nr_inpfields; i++) {
+    if(inpfields[i].type == 'checkbox' && inpfields[i].checked == true) array.push(inpfields[i].value);
+  }
+  return array;
+}
+</script>

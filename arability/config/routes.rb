@@ -31,12 +31,12 @@ Arability::Application.routes.draw do
     post "games/vote"
     post "games/record_vote"
     get 'games/getnewwords'
-    get "games/getprizes"
+    get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
     get 'games/gettrophies'
     get 'games/getnewwords'
-    get "games/showprizes"
+    get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/halloffame"
@@ -61,7 +61,6 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-      match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
       match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
@@ -69,6 +68,8 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
       match "/projects/:project_id/view_recommended_words" => "projects#view_recommended_words", :as => :view_recommended_words
+      match "/projects/:project_id/get_recommended_words" => "projects#get_recommended_words", :as => :get_recommended_words
+
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
@@ -84,9 +85,11 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match 'search' => 'search#search'
+      match "search" => "search#search"
 
-      match 'search_keywords' => 'search#search_keywords'
+      match "search_keywords" => "search#search_keywords"
+
+      match "send_report" => "search#send_report"
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
@@ -96,6 +99,18 @@ Arability::Application.routes.draw do
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+  match "/developers/projects/:project_id/change_synonym" => "projects#change_synonym", :as => "change_synonym"
+
+  match "/developers/projects/:project_id/quick_add" => "projects#quick_add", :as => "quick_add"
+
+  match "/developers/projects/load_synonyms" => "projects#load_synonyms"
+
+  match "/en/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+
+  match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+
+  match "developers/projects/add_word_inside_project" => "projects#add_word_inside_project", as: "add_word_inside_project"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
