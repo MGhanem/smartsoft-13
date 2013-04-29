@@ -19,14 +19,14 @@
                 <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
                 <br />
                 <strong><%= t(:projects_index_categories)%></strong>
-                <% if project1.category == nil %>
+                <% if project1.category.blank? %>
                   <%= t(:no_categories) %>
                 <% else %>
                   <%= project1.category.get_name_by_locale %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_country)%></strong>
-                <% if project1.country == nil %>
+                <% if project1.country.blank? %>
                   <%= t(:no_country) %>
                 <% else %>
                   <%= get_country_name_by_locale(project1.country) %>
@@ -52,7 +52,7 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_age)%></strong>
-                <% if project1.minAge == nil || project1.maxAge == nil %>
+                <% if project1.minAge.blank? || project1.maxAge.blank? %>
                   <%= t(:no_age) %>
                 <% else %>
                   <% if I18n.locale == :en  %>
@@ -63,14 +63,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project1.education_level.size == 0 %>
+                <% if project1.education_level.blank? %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project1.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project1.description.size == 0 %>
+                <% if project1.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project1.description %>
@@ -110,14 +110,14 @@
                   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
-                  <% if project2.category == nil %>
+                  <% if project2.category.blank? %>
                     <%= t(:no_categories) %>
                   <% else %>
                     <%= project2.category.get_name_by_locale %>
                   <% end %>
                   <br />
                   <strong><%= t(:projects_index_country)%></strong>
-                <% if project2.country == nil %>
+                <% if project2.country.blank? %>
                   <%= t(:no_country) %>
                 <% else %>
                   <%= get_country_name_by_locale(project2.country) %>
@@ -143,7 +143,7 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_age)%></strong>
-                <% if project2.minAge == nil || project2.maxAge == nil %>
+                <% if project2.minAge.blank? || project2.maxAge.blank? %>
                   <%= t(:no_age) %>
                 <% else %>
                   <% if I18n.locale == :en  %>
@@ -154,14 +154,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project2.education_level.size == 0 %>
+                <% if project2.education_level.blank? %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project2.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project2.description.size == 0 %>
+                <% if project2.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project2.description %>
@@ -217,14 +217,14 @@
                     <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
                     <br />
                     <strong><%= t(:projects_index_categories)%></strong>
-                  <% if project1.category == nil %>
+                  <% if project1.category.blank? %>
                     <%= t(:no_categories) %>
                   <% else %>
                     <%= project1.category.get_name_by_locale %>
                   <% end %>
                   <br />
                     <strong><%= t(:projects_index_country)%></strong>
-                    <% if project1.country == nil %>
+                    <% if project1.country.blank? %>
                       <%= t(:no_country) %>
                     <% else %>
                       <%= get_country_name_by_locale(project1.country) %>
@@ -250,7 +250,7 @@
                     <% end %>
                     <br />
                     <strong><%= t(:projects_index_age)%></strong>
-                    <% if project1.minAge == nil || project1.maxAge == nil %>
+                    <% if project1.minAge.blank? || project1.maxAge.blank? %>
                       <%= t(:no_age) %>
                     <% else %>
                       <% if I18n.locale == :en  %>
@@ -261,14 +261,14 @@
                     <% end %>
                     <br />
                     <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project1.education_level.size == 0 %>
+                <% if project1.education_level.blank? %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project1.education_level) %>
                 <% end %>
                 <br />
                     <strong><%= t(:projects_index_description)%></strong>
-                    <% if project1.description.size == 0 %>
+                    <% if project1.description.blank? %>
                       <%= t(:no_description) %>
                     <% else %>
                       <%= project1.description %>
@@ -311,14 +311,14 @@
                       <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                     <br />
                     <strong><%= t(:projects_index_categories)%></strong>
-                  <% if project2.category == nil %>
+                  <% if project2.category.blank? %>
                     <%= t(:no_categories) %>
                   <% else %>
                     <%= project2.category.get_name_by_locale %>
                   <% end %>
                   <br />
                   <strong><%= t(:projects_index_country)%></strong>
-                <% if project2.country == nil %>
+                <% if project2.country.blank? %>
                   <%= t(:no_country) %>
                 <% else %>
                   <%= get_country_name_by_locale(project2.country) %>
@@ -344,7 +344,7 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_age)%></strong>
-                <% if project2.minAge == nil || project2.maxAge == nil %>
+                <% if project2.minAge.blank? || project2.maxAge.blank? %>
                   <%= t(:no_age) %>
                 <% else %>
                   <% if I18n.locale == :en  %>
@@ -355,14 +355,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project2.education_level.size == 0 %>
+                <% if project2.education_level.blank? %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project2.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project2.description.size == 0 %>
+                <% if project2.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project2.description %>
