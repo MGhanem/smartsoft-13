@@ -46,7 +46,6 @@
   font-size: 50px;
   padding-top: 40px;
   height:50px;
-
 }
 
 #synonym_button{
@@ -104,19 +103,19 @@
   border-bottom-left-radius:6px;
 }
 
-.table1 .btn{
+.table1 .btn:not(.tutBtn){
   width: 51px;
   height: 35px;
 }
 
-.table1 td{
-  width: 40px;
+.table1 td:not(.tutBtn){
   height: 40px;
   min-height: 50px;
-  min-width: 50px;
+  width: 50px;
+  min-width: 53px;
 }
 
-.table1 tr{
+.table1 tr:not(.tutBtn){
   min-width: 50px;
   min-height: 50px;
 }
@@ -145,13 +144,15 @@
 
 
 .table1{ 
-  border: solid 1px black;
+  border-bottom: solid 1px black;
   border-radius: 15px;
   float: left; 
   width: 550px;  
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
+  max-width: 550px;
+  min-width: 550px;
 }
 
 #list-div{
@@ -178,6 +179,7 @@ margin-left: 80px;
 
 .game-lang{
   text-align: center;
+  line-height: 19px;
 }
 
 .game-lang .btn{
@@ -202,6 +204,7 @@ margin-left: 80px;
   height: 38px;
   padding-left:30px;
   margin-right: 50px;
+  border-radius: 10px;
 }
 
 #btn-restart{
@@ -209,6 +212,7 @@ margin-left: 80px;
   height: 29px;
   margin-right: 40px;
   line-height: 2;
+  border-radius: 10px;
 }
 
 #game-score{
@@ -311,7 +315,6 @@ margin-left: 80px;
 .award-zone {
   overflow-y: scroll;
   height:100%;
-  text-align:right;
 }
 
 .award {
@@ -365,13 +368,13 @@ margin-left: 80px;
   height:100%;
 }
 
-.table1 .btn{
+.table1 .btn:not(.tutBtn){
   width: 51px;
   height: 35px;
 }
 
 
-.table1 tr{
+.table1 tr:not(.tutBtn){
   min-width: 50px;
   min-height: 50px;
 }
@@ -458,8 +461,188 @@ margin-left: 80px;
   margin-right: 150px;
 }
 
-.table1 button{
+.table1 button:not(.tutBtn){
   width: 53px;
   height: 35px;
   border-radius: 10px;
+  font-size:17px;
+}
+
+.tutBtn{
+  width: 120px;
+  height:30px;
+  font-size: 20px;
+  color: white;
+}
+
+.popover-content button{
+  border-radius: 10px;
+}
+
+#list-div .popover{
+  max-width: none;
+  width: 348px;
+}
+
+#list-div .popover button{
+}
+
+.label-div .popover button{
+  width: 100px;
+}
+
+td .popover{
+  top: -230px;
+  left: -162.5px;
+  display: block;
+  max-width: none;
+  width: 378px;
+}
+
+td .popover button{
+}
+
+
+.popover p {
+  text-align: center;
+}
+.popover h4{
+  text-align: center;
+}
+
+.popover-content{
+  text-align: center;
+}
+
+.won, .not-won {
+  color: white;
+  width: 100%;
+  float: left;
+}
+
+.title-head {
+  color: white;
+  text-align: center;
+  font-size: 270%;
+  border-top:solid;
+  border-bottom: solid;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-width: 3px;
+  border-color: #41556B;
+  font-weight: 300;
+}
+
+.award-new {
+  padding-top: 8px;
+  float: left;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
+  background-color: #41556B;
+  border-radius: 10px;
+  margin-top: 14px;
+  margin-left: 24px;
+}
+
+.award-new:hover {
+  background-color: rgba(65,85,107,0.5);
+}
+
+.award-new:hover .award-image center img {
+  display:none;
+}
+
+.award-new:hover .award-new-req {
+  display: block;
+}
+
+.award-new:hover .award-new-name {
+  padding-top: 15px;
+}
+
+.award-image center img {
+  padding: 17px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.award-new-name {
+  padding-top: 4px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.award-new-req {
+  display: none;
+  padding-top: 18px;
+  text-align:center;
+  font-size: 18px;
+}
+
+
+.award-new-not {
+  padding-top: 8px;
+  float: left;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
+  background-color: rgba(203, 58, 77, 0.5);
+  border-radius: 10px;
+  margin-top: 14px;
+  margin-left: 24px;
+}
+
+.award-new-not:hover {
+  background-color: rgba(203,58,77,0.2);
+}
+
+.award-new-not:hover .award-image center img {
+  display:none;
+}
+
+.award-new-not:hover .award-new-req {
+  display: block;
+}
+
+.award-new-not:hover .award-new-name {
+  padding-top: 15px;
+}
+
+.award-image center img {
+  padding: 17px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.award-new-name {
+  padding-top: 4px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.award-new-req {
+  display: none;
+  padding-top: 18px;
+  text-align:center;
+  font-size: 18px;
+}
+
+.none {
+  width: 700px;
+  font-size: 190%;
+  line-height: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 12px;
+  padding-left: 12px;
+  text-align: center;
+  border-radius: 10px;
+  background-color:rgba(203,58,77,0.3);
+}
+
+.none:hover {
+  background-color: rgba(203,58,77,0.5);
 }

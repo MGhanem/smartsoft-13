@@ -8,7 +8,7 @@ module RequestHelpers
     gamer.username = "Nourhan"
     gamer.country = "Egypt"
     gamer.education_level="high"
-    gamer.gender = "male"
+    gamer.gender = "female"
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "test@test.com"
     gamer.password = "testing"
@@ -20,10 +20,8 @@ module RequestHelpers
   def create_logged_in_developer
     gamer = create_logged_in_user
     dev = Developer.new
-    dev.first_name = "test"
-    dev.last_name = "test"
     dev.gamer_id = gamer.id
-    dev.save
+    dev.save validate:false
     dev
   end
 
@@ -35,4 +33,16 @@ module RequestHelpers
     @request.env["devise.mapping"] = Devise.mappings[:gamer]
     sign_in u
   end
- end
+
+  def create_project
+    d = create_logged_in_developer()
+    sign_in(d.gamer)
+    project = Project.new
+    project.name = "banking"
+    project.minAge = 19
+    project.maxAge = 25
+    project.owner_id = d.id
+    project.save
+    project
+  end
+end
