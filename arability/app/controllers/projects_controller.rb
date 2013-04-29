@@ -36,7 +36,7 @@ class ProjectsController < BackendController
   # Params:
   #   current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
   # Success:
-  #   Array of projects that the developer own and the projects shared with him
+  #   Returns array of projects that the developer own and the projects shared with him
   # Failure:
   #   None
   def index  

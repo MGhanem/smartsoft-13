@@ -39,7 +39,7 @@ module ApplicationHelper
   # Params:
   #   country: the english name for country
   # Success: 
-  #   Arabic or english name country. Will be None if the country is not in the database
+  #    Returns arabic or english country name. Will be None if the country is not in the database
   # Failure:
   #   None
   def get_country_name_by_locale(country)
@@ -67,11 +67,11 @@ module ApplicationHelper
   # Author:
   #   Mohamed Tamer
   # Description
-  #   Gets education level name based on locale
+  #   Gets education level based on locale
   # Params:
   #   education_level: the english name for education_level
   # Success: 
-  #   Arabic or english name of education level. Will be "None" if the education level is not in the database
+  #   Returns arabic or english education level. Will be "None" if the education level is not in the database
   # Failure:
   #   None
   def get_education_level_by_locale(education_level)
