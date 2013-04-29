@@ -97,31 +97,31 @@ describe Synonym, synonym_spec: true  do
 
   describe "get_visual_stats_gender" do
   it "returns the genders of voters and correponding percenteges of voters belong to each gender" do
-   s.get_visual_stats_gender(nil, nil, nil, nil).should =~ [[I18n.t(:male), 50], [I18n.t(:female), 50]]
+   s.get_visual_stats_gender(nil, nil, nil, nil, nil).should =~ [[I18n.t(:male), 50], [I18n.t(:female), 50]]
   end
 
   it "returns an empty list when the synonym has no votes" do
-   unvoted_synonym.get_visual_stats_gender(nil, nil, nil, nil).should =~ []
+   unvoted_synonym.get_visual_stats_gender(nil, nil, nil, nil, nil).should =~ []
   end
 
   it "applies gender filter to voters if it exists" do
-   s.get_visual_stats_gender("male", nil, nil, nil).should =~ [[I18n.t(:male), 100]]
+   s.get_visual_stats_gender("male", nil, nil, nil, nil).should =~ [[I18n.t(:male), 100]]
   end
 
   it "applies country filter to voters if it exists" do
-   s.get_visual_stats_gender(nil, "Lebanon", nil, nil).should =~ [[I18n.t(:female), 100]]
+   s.get_visual_stats_gender(nil, "Lebanon", nil, nil, nil).should =~ [[I18n.t(:female), 100]]
   end
 
   it "applies education filter to voters if it exists" do
-   s.get_visual_stats_gender(nil, nil, "Graduate", nil).should =~ [[I18n.t(:female), 100]]
+   s.get_visual_stats_gender(nil, nil, "Graduate", nil, nil).should =~ [[I18n.t(:female), 100]]
   end
 
   it "applies upper age limit filter if it exists" do
-    s.get_visual_stats_gender(nil, nil, nil, 20).should =~ [[I18n.t(:male), 100]]
+    s.get_visual_stats_gender(nil, nil, nil, nil, 20).should =~ [[I18n.t(:male), 100]]
   end
 
   it "applies more than filter on voters if they exist" do 
-    s.get_visual_stats_gender(nil, "Lebanon", "Graduate", 45).should =~ [[I18n.t(:female), 100]]
+    s.get_visual_stats_gender(nil, "Lebanon", "Graduate", nil, 45).should =~ [[I18n.t(:female), 100]]
   end
 
   end
@@ -129,31 +129,31 @@ describe Synonym, synonym_spec: true  do
    describe "get_visual_stats_country" do 
 
   it "returns the list of countries of voters and correponding percenteges of voters from each country" do
-   s.get_visual_stats_country(nil, nil, nil, nil).should =~ [[I18n.t(:egypt), 50], [I18n.t(:lebanon), 50]]
+   s.get_visual_stats_country(nil, nil, nil, nil, nil).should =~ [[I18n.t(:egypt), 50], [I18n.t(:lebanon), 50]]
   end
 
   it "returns an empty list when the synonym has no votes" do
-   unvoted_synonym.get_visual_stats_country(nil, nil, nil, nil).should =~ []
+   unvoted_synonym.get_visual_stats_country(nil, nil, nil, nil, nil).should =~ []
   end
 
   it "applies gender filter to voters if it exists" do
-   s.get_visual_stats_country("male", nil, nil, nil).should =~ [[I18n.t(:egypt), 100]]
+   s.get_visual_stats_country("male", nil, nil, nil, nil).should =~ [[I18n.t(:egypt), 100]]
   end
 
   it "applies country filter to voters if it exists" do
-   s.get_visual_stats_country(nil, "Lebanon", nil, nil).should =~ [[I18n.t(:lebanon), 100]]
+   s.get_visual_stats_country(nil, "Lebanon", nil, nil, nil).should =~ [[I18n.t(:lebanon), 100]]
   end
 
   it "applies education filter to voters if it exists" do
-   s.get_visual_stats_country(nil, nil, "Graduate", nil).should =~ [[I18n.t(:lebanon), 100]]
+   s.get_visual_stats_country(nil, nil, "Graduate", nil, nil).should =~ [[I18n.t(:lebanon), 100]]
   end
 
   it "applies upper age limit filter if it exists" do
-    s.get_visual_stats_country(nil, nil, nil, 20).should =~ [[I18n.t(:egypt), 100]]
+    s.get_visual_stats_country(nil, nil, nil, nil, 20).should =~ [[I18n.t(:egypt), 100]]
   end
 
   it "applies more than filter on voters if they exist" do 
-    s.get_visual_stats_country("male", nil, "University", 45).should =~ [[I18n.t(:egypt), 100]]
+    s.get_visual_stats_country("male", nil, "University", nil, 45).should =~ [[I18n.t(:egypt), 100]]
   end
 
   end
@@ -161,63 +161,63 @@ describe Synonym, synonym_spec: true  do
    describe "get_visual_stats_age" do 
 
   it "returns the list of age groups of voters and correponding percenteges of voters from each age group" do
-   s.get_visual_stats_age(nil, nil, nil, nil).should =~ [["10-25", 50], ["26-45", 50], ["46+", 0]]
+   s.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ [["10-25", 50], ["26-45", 50], ["46+", 0]]
   end
 
   it "returns an empty list when the synonym has no votes" do
-   unvoted_synonym.get_visual_stats_age(nil, nil, nil, nil).should =~ []
+   unvoted_synonym.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ []
   end
 
 
   it "applies gender filter to voters if it exists" do
-   s.get_visual_stats_age("male", nil, nil, nil).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
+   s.get_visual_stats_age("male", nil, nil, nil, nil).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
   end
 
   it "applies country filter to voters if it exists" do
-   s.get_visual_stats_age(nil, "Lebanon", nil, nil).should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
+   s.get_visual_stats_age(nil, "Lebanon", nil, nil, nil).should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
   end
 
   it "applies education filter to voters if it exists" do
-   s.get_visual_stats_age(nil, nil, "Graduate", nil).should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
+   s.get_visual_stats_age(nil, nil, "Graduate", nil, nil).should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
   end
 
   it "applies upper age limit filter if it exists" do
-    s.get_visual_stats_age(nil, nil, nil, 20).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
+    s.get_visual_stats_age(nil, nil, nil, nil, 20).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
   end
 
   it "applies more than filter on voters if they exist" do 
-    s.get_visual_stats_age("male", "Egypt", "University", nil).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
+    s.get_visual_stats_age("male", "Egypt", "University", nil, nil).should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
   end
   end
 
    describe "get_visual_stats_education" do 
 
   it "returns the list of education levels of voters and correponding percenteges of voters belong to each level" do
-   s.get_visual_stats_education(nil, nil, nil, nil).should =~ [[I18n.t(:university), 50], [I18n.t(:graduate), 50]]
+   s.get_visual_stats_education(nil, nil, nil, nil, nil).should =~ [[I18n.t(:university), 50], [I18n.t(:graduate), 50]]
   end
 
   it "returns an empty list when the synonym has no votes" do
-  unvoted_synonym.get_visual_stats_education(nil, nil, nil, nil).should =~ []
+  unvoted_synonym.get_visual_stats_education(nil, nil, nil, nil, nil).should =~ []
   end
 
     it "applies gender filter to voters if it exists" do
-   s.get_visual_stats_education("male", nil, nil, nil).should =~ [[I18n.t(:university), 100]]
+   s.get_visual_stats_education("male", nil, nil, nil, nil).should =~ [[I18n.t(:university), 100]]
   end
 
   it "applies country filter to voters if it exists" do
-   s.get_visual_stats_education(nil, "Lebanon", nil, nil).should =~ [[I18n.t(:graduate), 100]]
+   s.get_visual_stats_education(nil, "Lebanon", nil, nil, nil).should =~ [[I18n.t(:graduate), 100]]
   end
 
   it "applies education filter to voters if it exists" do
-   s.get_visual_stats_education(nil, nil, "Graduate", nil).should =~ [[I18n.t(:graduate), 100]]
+   s.get_visual_stats_education(nil, nil, "Graduate", nil, nil).should =~ [[I18n.t(:graduate), 100]]
   end
 
   it "applies upper age limit filter if it exists" do
-    s.get_visual_stats_education(nil, nil, nil, 20).should =~ [[I18n.t(:university), 100]]
+    s.get_visual_stats_education(nil, nil, nil, nil, 20).should =~ [[I18n.t(:university), 100]]
   end
 
   it "applies more than filter on voters if they exist" do 
-    s.get_visual_stats_education("male", "Egypt", nil, 20).should =~ [[I18n.t(:university), 100]]
+    s.get_visual_stats_education("male", "Egypt", nil, nil, 20).should =~ [[I18n.t(:university), 100]]
   end
 
   end

@@ -1,26 +1,24 @@
 class SearchController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-
   include SearchHelper
 
-  #Description:
-  #   search for keywords (in a particular category)
   # Author:
   #   Mohamed Ashraf, Nourhan Mohamed
+  # Description:
+  #   search for keywords (in a particular category)
   # params:
   #   search: a string representing the search keyword, from the params list
   #     from a textbox in the search view
   #   categories: [optional] a string by which the categories can be filtered
-  #   is_successful: [optional] a boolean that is passed and set to true if the
-  #     controller is accessed due to a redirect from the keyword controller
-  # returns:
-  #   success: 
-  #     returns to the search view a list of keywords (in a certain category)
-  #     similar to the search keyword sorted by relevance
-  #   failure:
-  #     returns an empty list if the search keyword had no matches or no
-  #     similar keywords were found
+  #   project_id: an int indicating a redirection from a specific project
+  #     the same id as the int value
+  # success: 
+  #   returns to the search view a list of keywords (in a certain category)
+  #   similar to the search keyword sorted by relevance
+  # failure:
+  #   returns an empty list if the search keyword had no matches or no
+  #   similar keywords were found
   def search_keywords
     @categories = params[:categories]
     @project_id = params[:project_id]
@@ -43,51 +41,99 @@ class SearchController < BackendController
     @categories = categories_array
   end
 
-	#Description:
-  #   search for synonyms for a particular keyword
   # Author:
   #   Nourhan Mohamed
+	# Description:
+  #   search for synonyms for a particular keyword
 	#	params:
-	#		search: a string representing the search keyword, from the params list
+	#	  search: a string representing the search keyword, from the params list
 	#     from a textbox in the search_keywords view
-	#	returns:
-	#		success: 
-	#			returns to the search view a list of synonyms for the keyword
-	#     sorted by relevance
-	#		failure:
-	#			returns an empty list if the search keyword has no synonyms
+	#	success: 
+	#	  returns to the search view a list of synonyms for the keyword
+	#   sorted by vote count
+	#	failure:
+	#	  returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
-    @project_id = params[:project_id]
+
+    if !@search_keyword.blank?
+      @search_keyword = @search_keyword.strip
+      @search_keyword = @search_keyword.split(" ").join(" ")
+    
+      @no_synonyms_found = false
+      @search_keyword_model = Keyword.find_by_name(@search_keyword)
+      if !@search_keyword_model.blank?
+        @synonyms, @votes =
+          @search_keyword_model.retrieve_synonyms
+    
+        @no_synonyms_found = true if @synonyms.blank?
+    
+        @total_votes = 0
+        @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+        if !@no_synonyms_found
+        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, nil, nil, nil, nil, nil), piechart_country(s.id, nil, nil, nil, nil, nil),
+          piechart_age(s.id, nil, nil, nil, nil, nil), piechart_education(s.id, nil, nil, nil, nil, nil)]}}
+        end
+      else
+        redirect_to search_keywords_path(search: @search_keyword)
+      end
+    else
+      redirect_to search_keywords_path
+    end
+  end
+
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   search for synonyms for a particular keyword under certain filters
+  # params:
+  #   search: a string representing the search keyword, from the params list
+  #     from a textbox in the search_keywords view
+  #   country: a string representing country filter, maybe nil
+  #   age_from: a string representing age lower bound filter, maybe nil
+  #   age_to: a string representing age upper bound filter, maybe nil
+  #   education: a string representing education level filter, maybe nil
+  #   gender: a string representing gender filter, maybe nil
+  # success: 
+  #   returns to the search view a list of synonyms for the keyword
+  #   sorted by vote count according to passed filters
+  # failure:
+  #   returns a list of synonyms available for the search keyword, all with 0 votes
+  def search_with_filters
+    search_keyword = params["search"]
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
     @age_to = params["age_to"]
     @age_to = @age_to.to_i if !@age_to.blank?
-    if !@age_from.blank? && !@age_to.blank? && @age_from > @age_to
+    @gender = params["gender"]
+    @education = params["education"]
+
+    if !@age_from.blank? && !@age_to.blank? && @age_from.to_i > @age_to.to_i
       temp = @age_from
       @age_from = @age_to
       @age_to = temp
     end
-    @gender = params["gender"]
-    @education = params["education"]
-    if !@search_keyword.blank?
-      @search_keyword = @search_keyword.strip
-      @search_keyword = @search_keyword.split(" ").join(" ")
-      @no_synonyms_found = false
-      @search_keyword_model = Keyword.find_by_name(@search_keyword)
+
+    if !search_keyword.blank?
+      search_keyword = search_keyword.strip
+      search_keyword = search_keyword.split(" ").join(" ")
+
+      @search_keyword_model = Keyword.find_by_name(search_keyword)
       if !@search_keyword_model.blank?
         @synonyms, @votes =
           @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender, @education)
-        @no_synonyms_found = true if @synonyms.blank?
+          @no_synonyms_found = true if @synonyms.blank?
+
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
         if !@no_synonyms_found
-        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, @gender, @country, @education,  @age_to), piechart_country(s.id, @gender, @country, @education,  @age_to),
-         piechart_age(s.id, @gender, @country, @education,  @age_to), piechart_education(s.id, @gender, @country, @education,  @age_to)]}}
+        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, @gender, @country, @education, @age_from, @age_to), piechart_country(s.id, @gender, @country, @education, @age_from, @age_to),
+          piechart_age(s.id, @gender, @country, @education, @age_from, @age_to), piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)]}}
         end 
+        render "filtered_results.js" 
       else
-        redirect_to search_keywords_path(search: @search_keyword)
+        redirect_to search_keywords_path(search: search_keyword)
       end
     else
       redirect_to search_keywords_path

@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
-  attr_accessible :approved, :name, :keyword_id
+  attr_accessible :approved, :name, :keyword_id, :is_formal
   has_many :votes
   has_many :gamers, :through => :vote
 
@@ -196,7 +196,7 @@ class Synonym < ActiveRecord::Base
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
   #   non of the voters satisifies filtering conditions
-  def get_visual_stats_country(gender, country, education, age_to)
+  def get_visual_stats_country(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
@@ -204,6 +204,8 @@ class Synonym < ActiveRecord::Base
       .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :country)
@@ -229,7 +231,7 @@ class Synonym < ActiveRecord::Base
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
   #   non of the voters satisifies filtering conditions
-  def get_visual_stats_gender(gender, country, education, age_to)
+  def get_visual_stats_gender(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
@@ -237,6 +239,8 @@ class Synonym < ActiveRecord::Base
       .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :gender)
@@ -261,7 +265,7 @@ class Synonym < ActiveRecord::Base
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
   #   non of the voters satisifies filtering conditions
-  def get_visual_stats_age(gender, country, education, age_to)
+  def get_visual_stats_age(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
@@ -269,6 +273,8 @@ class Synonym < ActiveRecord::Base
       .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     
@@ -310,7 +316,7 @@ class Synonym < ActiveRecord::Base
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
   #   non of the voters satisifies filtering conditions
-  def get_visual_stats_education(gender, country, education, age_to)
+  def get_visual_stats_education(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
@@ -318,6 +324,8 @@ class Synonym < ActiveRecord::Base
       .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
+    voters = voters
+      .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     groups = voters.count(group: :education_level)
