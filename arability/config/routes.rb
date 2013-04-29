@@ -90,6 +90,8 @@ Arability::Application.routes.draw do
 
       match "send_report" => "search#send_report"
 
+      match 'autocomplete' => 'search#keyword_autocomplete'
+
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
     end
