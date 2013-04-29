@@ -47,15 +47,13 @@
 				function add_keyword_with_synonym(){
     					var synonym_id = $("#synonym_select option:selected").val();
     					var project_id = $("#project_select option:selected").val();
-    					// alert(synonym_id);
-    					// alert(project_id);
     					if(synonym_id != undefined && synonym_id !="" && project_id != undefined && project_id !=""){
         					$.ajax({
           						type: "POST",
           						url: "<%= add_word_inside_project_path %>",
           						data: {synonym_id: synonym_id, keyword: "<%= @search_keyword %>", project_id: project_id }
-        					});
-        					add_showSuccess(project_id);   
+        					}); 
+        					add_showSuccess(project_id);  
       					}
       					else{
       						if(project_id == undefined || project_id =="")
@@ -65,17 +63,23 @@
       					}
   					}
   				function add_showSuccess(project_id){
-  					var p = document.getElementById('add_msg');
-  					var link = document.createElement('a');
+  					var link = document.getElementById("go_to_project");
   					link.href = "/developers/projects/"+project_id;
   					link.innerHTML = "<%= t(:to_project) %>";
-  					p.appendChild(link);
  					$("#add_success").css("display", "block");
   					$("#add_success").css("margin-bottom", "2px");
   					$("#add_success").css("position", "fixed");
   					$("#add_success").css("top", "50px");
   					$("#add_success").css("left", "10%");
   					$("#add_success").css("right", "10%");
+				}
+				function add_error(){
+					$("#failed_add").css("display", "block");
+  					$("#failed_add").css("margin-bottom", "2px");
+  					$("#failed_add").css("position", "fixed");
+  					$("#failed_add").css("top", "50px");
+  					$("#failed_add").css("left", "10%");
+  					$("#failed_add").css("right", "10%");
 				}
 				function no_project_error(){
 					$("#no_project").css("display", "block");
@@ -98,6 +102,7 @@
   					$("#add_success").css("display", "none");
   					$("#no_project").css("display", "none");
   					$("#no_synonym").css("display", "none");
+  					$("#failed_add").css("display", "none");
 				}
 
 			</script>
@@ -334,7 +339,11 @@
   </div>
   <div class="alert alert-block alert-success" id="add_success" style="display:none;">
 	  <button type="button" class="close" onclick="restore()">×</button>
-	  <p id = "add_msg"><%= t(:successfully_added_word_to_project) %> </p>
+	  <p id = "add_msg"><%= t(:successfully_added_word_to_project) %> <a href="" id="go_to_project"></a></p>
+  </div>
+  <div class="alert alert-block alert-error" id="failed_add" style="display:none;">
+	  <button type="button" class="close" onclick="restore()">×</button>
+	  <p><%= t(:failed_to_add_word_to_project) %> </p>
   </div>
   <div class="alert alert-block alert-error" id="no_project" style="display:none;">
 	  <button type="button" class="close" onclick="restore()">×</button>
