@@ -6,7 +6,8 @@ class Project < ActiveRecord::Base
   has_many :developers_shared, :through => :shared_projects, :source => "developer"
   belongs_to :category
   has_many :keywords, :through => :prefered_synonym
-  attr_accessible :description, :formal, :maxAge, :minAge, :name, :category, :country, :education_level
+  attr_accessible :description, :formal, :maxAge, :minAge, :name, :category,
+   :country, :education_level, :gender
   validates :name, :presence => true,:length => { :maximum => 30 }
   validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }, :allow_nil => true
   validates :maxAge, :inclusion => { :in => 10..100,  :message => :maxAge_range },

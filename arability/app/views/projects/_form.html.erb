@@ -53,11 +53,11 @@
    <div class="control-group">
     <%= f.label t(:target_country), :class => "control-label", id: "project_name" %>
     <% if params[:action] == "new" %>
-      <%= f.select(:country, ([[t(:egypt),"egypt"],[t(:lebanon),"lebanon"],
-      [t(:jordan),"jordan"],[t(:saudi_arabia),"saudi_arabia"],[t(:libya),"libya"],[t(:united_arab_emirates),"united_arab_emirates"],[t(:qatar),"qatar"],[t(:kuwait),"kuwait"],[t(:iraq),"iraq"],[t(:algeria),"algeria"],[t(:morocco),"morocco"],[t(:bahrain),"bahrain"],[t(:mauritania),"mauritania"],[t(:somalia),"somalia"],[t(:sudan),"sudan"],[t(:tunisia),"tunisia"],[t(:others),"other"]]), {}, { id:"cat" }) %>
+      <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"Other"]]), {}, { id:"cat" }) %>
      <% else %>
-      <%= f.select(:country, ([[t(:egypt),"egypt"],[t(:lebanon),"lebanon"],
-      [t(:jordan),"jordan"],[t(:saudi_arabia),"saudi_arabia"],[t(:libya),"libya"],[t(:united_arab_emirates),"united_arab_emirates"],[t(:qatar),"qatar"],[t(:kuwait),"kuwait"],[t(:iraq),"iraq"],[t(:algeria),"algeria"],[t(:morocco),"morocco"],[t(:bahrain),"bahrain"],[t(:mauritania),"mauritania"],[t(:somalia),"somalia"],[t(:sudan),"sudan"],[t(:tunisia),"tunisia"],[t(:others),"other"]]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
+      <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"Other"]]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
     <% end %>
   </div>
   <div class="control-group">
@@ -72,9 +72,9 @@
   <div class="control-group">
     <%= f.label t(:education_level), :class => "control-label", id: "project_name"%>
     <% if params[:action] == "new" %>
-      <%= f.select(:education_level, (['',[t(:school),"school"],[t(:university),"university"],[t(:graduate),"graduate"]]), {}, { id:"cat" }) %>
+      <%= f.select(:education_level, (['',[t(:school),"School"],[t(:university),"University"],[t(:graduate),"Graduate"]]), {}, { id:"cat" }) %>
     <% else %>
-      <%= f.select(:education_level, (['',[t(:school),"school"],[t(:university),"university"],[t(:graduate),"graduate"]]),  { prompt: @select_value, selected: @project.education_level }, { id:"cat" }) %>
+      <%= f.select(:education_level, (['',[t(:school),"School"],[t(:university),"University"],[t(:graduate),"Graduate"]]),  { prompt: @select_value, selected: @project.education_level }, { id:"cat" }) %>
     <% end %>
   </div>
   <br>
