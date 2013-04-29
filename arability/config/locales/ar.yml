@@ -316,7 +316,7 @@ ar:
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
-  remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
+  remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
