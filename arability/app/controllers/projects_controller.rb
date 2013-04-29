@@ -40,19 +40,8 @@ class ProjectsController < BackendController
   # Failure:
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
   def index  
-    if current_gamer != nil 
-      @developer = Developer.where(:gamer_id => current_gamer.id).first
-      if @developer != nil
-        @my_projects = Project.where(:owner_id => @developer.id)
-        @shared_projects = @developer.projects_shared
-      else
-        flash[:notice] = "من فضلك سجل كمطور"
-        redirect_to developers_new_path
-      end
-    else
-      flash[:error] = t(:projects_index_error2)
-      redirect_to new_gamer_session_path
-    end
+    @my_projects = Project.where(:owner_id => @developer.id)
+    @shared_projects = @developer.projects_shared
   end
   # Author:
   #   Salma Farag
@@ -189,21 +178,15 @@ class ProjectsController < BackendController
   # Failure:
   #   None.
 def show
-  @projects = Project.where(owner_id: current_developer.id)
   @project = Project.find(params[:id])
-  if @projects.include?(@project)
-    @words = []
-    @synonyms = []
-    @words_synonyms = PreferedSynonym.where(project_id: params[:id])
-    @words_synonyms.each do |word_synonym|
-      word = Keyword.find(word_synonym.keyword_id)
-      syn = Synonym.find(word_synonym.synonym_id)
-      @words.push(word)
-      @synonyms.push(syn)
-    end
-  else
-    redirect_to action: "index"
-    developer_unauthorized
+  @words = []
+  @synonyms = []
+  @words_synonyms = PreferedSynonym.where(project_id: params[:id])
+  @words_synonyms.each do |word_synonym|
+    word = Keyword.find(word_synonym.keyword_id)
+    syn = Synonym.find(word_synonym.synonym_id)
+    @words.push(word)
+    @synonyms.push(syn)
   end
 end
 
