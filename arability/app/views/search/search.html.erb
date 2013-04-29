@@ -262,3 +262,55 @@
 		</div>
 	<% end %>
 <% end %>
+
+<% if !@search_keyword.blank? %>
+	<div class="alert alert-success" id="report_success" style="display:none;">
+		<div style="text-align:center;"><%= t(:report_sent_success) %></div>
+	</div>
+	<div class="alert alert-block alert-error" id="report_failure" style="display:none;">
+	  <button type="button" class="close" onclick="restoreError()">×</button>
+	  <h4 class="alert-heading"><%= t(:oh_snap) %></h4>
+	  <p><%= t(:check_connection) %></p>
+  </div>
+	<div class="well">
+		<span><%=  t(:help_us_report) %></span>
+		<a href="#report_modal" role="button" class="btn btn-link" onClick="modalToggle()"
+			style="padding:0px;" id="launch_report"><%= t(:report) %></a>
+	</div>	
+	<script type="text/javascript">
+		<% if I18n.locale == :ar %>
+			$("#launch_report").css("font-size","18px");
+		<% else %>
+			$("#launch_report").css("font-size","13px");
+		<% end %>
+	</script>
+	<div id="report_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		  <h3 id="modal_label"><%= t(:report_abusive) %></h3>
+		</div>
+		<div class="modal-body">
+		  <p><%= t(:help_us_through_reporting) %></p>
+		  <hr>
+		  <h4><%= t(:words_in_page)%></h4>
+		  <%= check_box_tag "chkbox", [@search_keyword_model.id, "Keyword"], false, onclick: "setChecked(this)", is_checked: false %>
+		  <%= @search_keyword %>
+		  <br>
+		  <% if !@synonyms.blank? %>
+		  	<% @synonyms.each do |synonym| %>
+		  	<%= check_box_tag "chkbox", [synonym.id, "Synonym"], false, onclick: "setChecked(this)", is_checked: false %>
+		  	<%= synonym.name %>
+		  	<br>
+		  	<% end %>
+		  <% end %>
+		</div>
+		<div class="modal-footer">
+		  <button class="btn" data-dismiss="modal"><%= t(:close) %></button>
+		  <button class="btn btn-primary" onclick="report_submission()" data-dismiss="modal"><%= t(:submit) %></button>
+		</div>
+	</div>
+<% end %>
+
+<script type="text/javascript">
+	<%= render "submit-report.js" %>
+</script>

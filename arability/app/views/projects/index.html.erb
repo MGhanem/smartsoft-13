@@ -128,8 +128,8 @@
         <h4><%= t(:confirm_share)%></h4>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
-        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning" %>
+        <button class="btn" data-dismiss="modal" style="font-size: 20px;"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning",:style => "font-size: 20px;" %>
       </div>
     </div>
   <br />
@@ -169,7 +169,7 @@
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
-        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning" %>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning"%>
       </div>
     </div>
   <br />

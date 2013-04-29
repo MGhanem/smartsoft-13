@@ -81,7 +81,7 @@ describe Keyword do
 	it "should return an empty list for an empty search keyword" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("")
@@ -91,7 +91,7 @@ describe Keyword do
 	it "should return one matching keyword for the passed param in english" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("clickme")
@@ -103,7 +103,7 @@ describe Keyword do
 	it "should return two matching keywords for the passed param in english sorted by relevance" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("click")
@@ -114,7 +114,7 @@ describe Keyword do
 	it "should return an empty list when searching for an unapproved keyword" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("click me")
@@ -124,7 +124,7 @@ describe Keyword do
 	it "should return an empty list for a search keyword in english and not in the db" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("nourhan")
@@ -134,7 +134,7 @@ describe Keyword do
 		it "should return one matching keyword for the passed param in arabic" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("ابتث")
@@ -144,7 +144,7 @@ describe Keyword do
 	it "should return two matching keywords for the passed param in arabic sorted by relevance" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("ابت")
@@ -155,7 +155,7 @@ describe Keyword do
 	it "should return an empty list for a search keyword in arabic and not in the db" do
 		Keyword.create(name: "click", approved: true)
 		Keyword.create(name: "clickMe", approved: true)
-		Keyword.create(name: "click me")
+		Keyword.create(name: "click me", approved: false)
 		Keyword.create(name: "ابت", approved: true)
 		Keyword.create(name: "ابتث", approved: true)
 		keyword = Keyword.get_similar_keywords("ضصثق")
@@ -172,14 +172,14 @@ describe Keyword do
 
 	it "should return an empty list if synonyms are unapproved" do
 		keyword = Keyword.create(name: "click", approved: true)
-		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id)
+		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: false)
 		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.should eq([])
 		votes.should eq({})
 	end
 
 	it "should return an empty list if keyword is unapproved" do
-		keyword = Keyword.create(name: "click")
+		keyword = Keyword.create(name: "click", approved: false)
 		synonym = Synonym.create(name: "انقر", keyword_id: keyword.id, approved: true)
 		synonyms, votes = keyword.retrieve_synonyms
 		synonyms.should eq([])
