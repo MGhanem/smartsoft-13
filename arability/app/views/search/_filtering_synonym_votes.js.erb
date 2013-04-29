@@ -1,30 +1,44 @@
+<%= render "success_and_error_messages.js" %>
+
 function applyFilters(keyword, country, age_from, age_to, gender, education){
   age_from = parseInt(age_from);
   age_to = parseInt(age_to);
-  if(age_from < 10 || age_from > 100)
+
+  if(age_from < 10 || age_from > 100){
+    showAgeError();
     return;
-  if(age_to < 10 || age_to > 100)
+  }
+
+  if(age_to < 10 || age_to > 100){
+    showAgeError();
     return;
+  }
+
   if(age_from > age_to){
     temp = age_from;
     age_from = age_to;
     age_to = temp; 
   }
+
   if(isNaN(age_from))
     age_from = ""
+
   if(isNaN(age_to))
     age_to = ""
+
   if(age_from == "" && age_to != "")
     age_from = 10;
+
   if(age_from != "" && age_to == "")
     age_to = 100;
+
   $.ajax({
     url: "<%= search_with_filters_path %>",
     type: "post",
     data: { search: keyword, country: country, age_from: age_from, 
       age_to: age_to, gender: gender, education: education },
     error:function(){
-      // display error message to user after merging with report story
+      showError();
     }   
   }); 
 }
