@@ -16,7 +16,7 @@ describe ProjectsController do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mohamedtamer5@gmail.com"
     gamer.password = "1234567"
-    gamer.save
+    gamer.save validate: false
     gamer
   }
 
@@ -70,7 +70,7 @@ describe ProjectsController do
 
     it "redirects to sign in page if the developer isn't signed in"
       get :index
-      response.code.should eq("302")
+      response.should redirect_to new_gamer_session_path
     end
   end
   #End of Timo's tests
