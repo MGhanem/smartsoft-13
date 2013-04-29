@@ -63,14 +63,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project1.education_level == nil %>
+                <% if project1.education_level.size == 0 %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project1.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project1.description == nil %>
+                <% if project1.description.size == 0 %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project1.description %>
@@ -154,14 +154,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project2.education_level == nil %>
+                <% if project2.education_level.size == 0 %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project2.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project2.description == nil %>
+                <% if project2.description.size == 0 %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project2.description %>
@@ -217,10 +217,10 @@
                     <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
                     <br />
                     <strong><%= t(:projects_index_categories)%></strong>
-                  <% if project2.category == nil %>
+                  <% if project1.category == nil %>
                     <%= t(:no_categories) %>
                   <% else %>
-                    <%= project2.category.get_name_by_locale %>
+                    <%= project1.category.get_name_by_locale %>
                   <% end %>
                   <br />
                     <strong><%= t(:projects_index_country)%></strong>
@@ -261,14 +261,14 @@
                     <% end %>
                     <br />
                     <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project1.education_level == nil %>
+                <% if project1.education_level.size == 0 %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project1.education_level) %>
                 <% end %>
                 <br />
                     <strong><%= t(:projects_index_description)%></strong>
-                    <% if project1.description == nil %>
+                    <% if project1.description.size == 0 %>
                       <%= t(:no_description) %>
                     <% else %>
                       <%= project1.description %>
@@ -355,14 +355,14 @@
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_education_level)%></strong>
-                <% if project2.education_level == nil %>
+                <% if project2.education_level.size == 0 %>
                   <%= t(:no_education_level) %>
                 <% else %>
                   <%= get_education_level_by_locale(project2.education_level) %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_description)%></strong>
-                <% if project2.description == nil %>
+                <% if project2.description.size == 0 %>
                   <%= t(:no_description) %>
                 <% else %>
                   <%= project2.description %>
