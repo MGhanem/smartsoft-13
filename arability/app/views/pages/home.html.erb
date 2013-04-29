@@ -195,7 +195,6 @@
 
     }
     </style>
-
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
@@ -288,3 +287,8 @@
       </footer>
     </div>
 <% end %>
+<script type="text/javascript">
+  <% if I18n.locale == :ar %>
+    $(".btn").attr("style", "font-size: 16px;");
+  <% end %>
+</script>
