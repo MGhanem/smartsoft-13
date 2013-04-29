@@ -56,105 +56,97 @@ describe ProjectsController, type: :controller do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
-end
+
 
 #Salma's Tests
-describe "GET #new" do
+
   it "initializes a new project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
     get :new
-  end
-end
-
-describe "GET #create" do
-  context "with valid attributes" do
-    it "assigns attributes to the new project" do
-      expect{
-        project :create
-      }
-   end
-
-    it "redirects to the project index" do
-      project
-      post :create, project: project
-      response.should redirect_to Project.index
-    end
+    response.code.should eq("200")
   end
 
-  context "with invalid attributes" do
-    it "does not save the new project" do
-      expect{
-        project
-        post :create, project: project
-      }.to_not change(Project,:count)
-    end
-
-    it "re-renders the new method" do
-      post :create, project: Factory.attributes_for(:invalid_project)
-      response.should render_template :new
-    end
+  it "assigns attributes to the new project" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
+    post :create, project: { name: "banking", category:"" }
+    response.code.should eq("200")
   end
-end
 
-describe "GET #edit" do
-  it "assigns the requested project to @project" do
+  it "assigns the requested project to project" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
     project
     get :edit, id: project
     assigns(:project).should eq(project)
   end
+
+  it "located the requested project" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
+    project
+    put :update, id: project.id, project: { name: "hospital", category:"" }
+    assigns(:project).should eq(project)
+  end
+
+  it "changes project's attributes" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
+    project
+    put :update, id: project,
+    project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
+    project.reload
+    project.name.should eq("Pro")
+    project.minAge.should eq(23)
+    project.maxAge.should eq(50)
+  end
+
+  it "redirects to the project index" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
+    project
+    put :update, id: project, project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
+    response.should redirect_to projects_path
+  end
+
+  it "locates the requested project" do
+    a = create_logged_in_developer
+    sign_in(a.gamer)
+    project
+    put :update, id: project, project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
+    assigns(:project).should eq(project)
+  end
+
+  it "does not change project's attributes" do
+   a = create_logged_in_developer
+   sign_in(a.gamer)
+   project
+   put :update, id: project,
+   project: { name: "Pro", minAge:"500", maxAge:"50",category:"" }
+   project.reload
+   project.name.should_not eq("Pro")
+   project.minAge.should_not eq(500)
+   project.minAge.should eq(19)
+ end
+
+ it "re-renders the edit method" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+  project
+  put :update, id: project, project: { name: "Pro", minAge:"500", maxAge:"50",category:"" }
+  response.should render_template :edit
 end
 
-describe 'PUT update' do
-  before :each do
-    @project = Factory(:project, name: "Pro", minAge:"23", maxAge:"50")
-  end
+it "renders the #show view" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+  project
+  get :show, id: project
+  response.should render_template project
+end
 
-  context "valid attributes" do
-    it "located the requested @project" do
-      project
-      put :update, id: @project, project: project
-      assigns(:project).should eq(@project)
-    end
-
-    it "changes @project's attributes" do
-      put :update, id: @project,
-        project: Factory.attributes_for(:project, name: "Pro", minAge:"23", maxAge:"50")
-      @project.reload
-      @project.name.should eq("Pro")
-      @project.minAge.should eq("23")
-      @project.maxAge.should eq("50")
-    end
-
-    it "redirects to the project index" do
-      project
-      put :update, id: @project, project: project
-      response.should redirect_to projects_path
-    end
-  end
-
-  context "invalid attributes" do
-    it "locates the requested @project" do
-      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
-      assigns(:project).should eq(@project)
-    end
-
-    it "does not change @project's attributes" do
-      put :update, id: @project,
-        project: Factory.attributes_for(:project, name: "Pro", minAge: "23", maxAge:nil)
-      @project.reload
-      @project.name.should_not eq("Pro")
-      @project.minAge.should_not eq("23")
-      @project.minAge.should eq("50")
-    end
-
-    it "re-renders the edit method" do
-      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
-      response.should render_template :edit
-    end
-  end
-
-  #khloud's tests
+  # khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do
     p = create_project
