@@ -44,6 +44,61 @@
 						$(".btnfollow").html("<%= t(:follow) %>");
 					}	
 				}
+				function add_keyword_with_synonym(){
+    					var synonym_id = $("#synonym_select option:selected").val();
+    					var project_id = $("#project_select option:selected").val();
+    					// alert(synonym_id);
+    					// alert(project_id);
+    					if(synonym_id != undefined && synonym_id !="" && project_id != undefined && project_id !=""){
+        					$.ajax({
+          						type: "POST",
+          						url: "<%= add_word_inside_project_path %>",
+          						data: {synonym_id: synonym_id, keyword: "<%= @search_keyword %>", project_id: project_id }
+        					});
+        					add_showSuccess(project_id);   
+      					}
+      					else{
+      						if(project_id == undefined || project_id =="")
+      							no_project_error();
+      						else
+      							no_synonym_error();
+      					}
+  					}
+  				function add_showSuccess(project_id){
+  					var p = document.getElementById('add_msg');
+  					var link = document.createElement('a');
+  					link.href = "/developers/projects/"+project_id;
+  					link.innerHTML = "<%= t(:to_project) %>";
+  					p.appendChild(link);
+ 					$("#add_success").css("display", "block");
+  					$("#add_success").css("margin-bottom", "2px");
+  					$("#add_success").css("position", "fixed");
+  					$("#add_success").css("top", "50px");
+  					$("#add_success").css("left", "10%");
+  					$("#add_success").css("right", "10%");
+				}
+				function no_project_error(){
+					$("#no_project").css("display", "block");
+  					$("#no_project").css("margin-bottom", "2px");
+  					$("#no_project").css("position", "fixed");
+  					$("#no_project").css("top", "50px");
+  					$("#no_project").css("left", "10%");
+  					$("#no_project").css("right", "10%");
+				}
+				function no_synonym_error(){
+					$("#no_synonym").css("display", "block");
+  					$("#no_synonym").css("margin-bottom", "2px");
+  					$("#no_synonym").css("position", "fixed");
+  					$("#no_synonym").css("top", "50px");
+  					$("#no_synonym").css("left", "10%");
+  					$("#no_synonym").css("right", "10%");
+				}
+				
+				function restore(){
+  					$("#add_success").css("display", "none");
+  					$("#no_project").css("display", "none");
+  					$("#no_synonym").css("display", "none");
+				}
 
 			</script>
 
@@ -148,14 +203,13 @@
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
 				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-				<%= form_tag(add_word_inside_project_path, method: "post", style: "margin:450px; display: inline;") do %>
-					<input type="hidden" value="<%= @search_keyword %>" name="keyword">
-					<%= t(:add_to) %>
-					<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%" }) %>
-					<%= t(:with) %>
-					<%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%" }) %>
-					<%= submit_tag("+ " + t(:add), class: "btn btn-primary", style: "margin-bottom:10px;") %>
-				<% end %>
+					<span class="form-search form-horizontal" style="margin: 450px">
+						<%= t(:add_to) %>
+						<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%" }) %>
+						<%= t(:with) %>
+						<%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%" }) %>
+						<input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" ></input>
+					</span>
 			</span>
 		</div>
 		<div id="collective" class="accordion-body collapse in">
@@ -277,6 +331,18 @@
 	  <button type="button" class="close" onclick="restoreError()">×</button>
 	  <h4 class="alert-heading"><%= t(:oh_snap) %></h4>
 	  <p><%= t(:check_connection) %></p>
+  </div>
+  <div class="alert alert-block alert-success" id="add_success" style="display:none;">
+	  <button type="button" class="close" onclick="restore()">×</button>
+	  <p id = "add_msg"><%= t(:successfully_added_word_to_project) %> </p>
+  </div>
+  <div class="alert alert-block alert-error" id="no_project" style="display:none;">
+	  <button type="button" class="close" onclick="restore()">×</button>
+	  <p><%= t(:choose_project) %> </p>
+  </div>
+  <div class="alert alert-block alert-error" id="no_synonym" style="display:none;">
+	  <button type="button" class="close" onclick="restore()">×</button>
+	  <p><%= t(:choose_synonym) %> </p>
   </div>
 	<div class="well">
 		<span><%=  t(:help_us_report) %></span>

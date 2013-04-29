@@ -3,16 +3,13 @@
 
 en:
   username_or_email: "Username or email"
-<<<<<<< HEAD
   omar_error1: "This keyword is not found"
   omar_error2: "This translation is empty"
   omar_error3: "This is a duplicate translation for the same keyword"
-=======
   not_existing_error: "This keyword is not found"
   empty_name_error: "This synonym is empty"
   dupplicate_error: "This is a dupplicate synonym for the same keyword"
   invalid_format_error: "This synonym in not in arabic"
->>>>>>> bac1b30dc8863c1f1a03713fe4d0d25cdd070103
   arability: "Arability"
   sign_up: "Sign Up"
   sign_in: "Sign In"
@@ -59,7 +56,7 @@ en:
   unfollow: "Unfollow"
   follow: "Follow"
   following: "Following"
-  select subscription: "Select Subscription"
+  select_subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
   my_projects: "My Projects"
@@ -366,3 +363,5 @@ en:
   add: "Add"
   exceeds_word_limit: "Sorry, you have exceeded the limit of words you can add defined by your subscription model."
   choose_project: "Please choose a project."
+  choose_synonym: "Please choose a synonym."
+  to_project: "Go to project."

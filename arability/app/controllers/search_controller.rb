@@ -50,7 +50,7 @@ class SearchController < BackendController
   # params:
   #   reported_words: an array of keywords/synonyms to be reported
   # success:
-  #   returns submits a report with the chosen keywords/synonyms
+  #   returns a report with the chosen keywords/synonyms
   # failure:
   #   --
   def send_report
