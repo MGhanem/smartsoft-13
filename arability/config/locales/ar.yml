@@ -39,17 +39,40 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
-  categories: "الفئات"
-  formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  please_select: "الرجاء الاختيار"
+  formality: "اللغة"
+  formal: "فصحى"
+  slang: "عامية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
+  target: "هذا المشروع يستهدف الفئة التالية:"
+  target_country: "البلد"
+  target_age: "الفئة العمرية"
+  target_education_level: "المستوى التعليمي"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< العودة"
+  egypt: "مصر"
+  lebanon: "لبنان"
+  jordan: "الاردن"
+  saudi_arabia: "السعودية"
+  libya: "ليبيا"
+  united_arab_emirates: "الامارات"
+  qatar: "قطر"
+  kuwait: "الكويت"
+  iraq: "العراق"
+  algeria: "الجزأئر"
+  morocco: "المغرب"
+  bahrain: "البحرين"
+  mauritania: "موريتانيا"
+  somalia: "الصومال"
+  sudan: "السودان"
+  tunisia: "تونس"
+  others: "اخري"
+  school: "مدرسة"
+  university: "جامعة"
+  graduate: "خريج"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -112,14 +135,25 @@ ar:
   projects_index_tab2: "مشاريع مشتركة معي"
   projects_index_add: " إضافة مشروع"
   projects_index_name: "اسم: "
-  projects_index_categories: "فئات: "
+  projects_index_categories: "فئة: "
   projects_index_description: "وصف: "
+  projects_index_country: "البلد: "
+  projects_index_formal_slang: "اللغة: "
+  projects_index_age: "الفئة العمرية: "
+  projects_index_education_level: "المستوي التعليمي: "
+  projects_index_owner: "صاحب المشروع: "
+  no_country: "ليس محدد"
+  no_formal: "ليس محدد"
+  no_age: "ليس محدد"
+  no_education_level: "ليس محدد"
   projects_index_edit: " تعديل"
+  projects_index_delete2: " مسح"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
-  no_categories: "هذا المشروع ليس له فئات"
-  no_description: "هذا المشروع ليس له وصف"
+  no_categories: "ليس محدد"
+  no_description: "ليس محدد"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -141,14 +175,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -159,8 +185,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -232,10 +257,6 @@ ar:
   activerecord:
     models:
       developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
@@ -304,7 +325,16 @@ ar:
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
-  before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  project_removed: "تم مسح المشروع المشترك"            
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   report_sent: "تم تقديم التقرير بنجاح. سوف يتم ابلاغك بالايميل عند إتخاذ تصرف"
   report_abusive: "حدد الكلمات غير اللائقة"
   report: "إبلغ من هنا"
@@ -320,6 +350,16 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
+  project_removed: "تم مسح المشروع المشترك"            
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+  project_delete: "تم مسح المشروع بنجاح"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -335,6 +375,17 @@ ar:
   you_have_won_these_trophies: "لقد حققت الانجازات التالية!"
   game_over: "انتهت اللعبة"
   lose_score: "لقد سجلت النقاط التالية"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  projects_index_delete: " الغاء الاشتراك"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك ,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "إلغاء"
   pick_lang: "إختر اللغة التي تريد اللعب بها"
   english_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
   english_popover_title: "<h4>الزر الانجليزي</h4>"
@@ -358,4 +409,43 @@ ar:
   modal_body: "لقد أكملت أول مرحلة. هل تريد أن ترى هذه الخطوات التعلمية مرة أخرى في المرة القادمة؟"
   modal_yes_button: "أجل"
   modal_no_button: "لا"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  projects_index_delete: " الغاء الاشتراك"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك ,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "إلغاء"
+  confirm: "هل أنت متأكد من مسح المشروع ؟"
+  delete: "مسح"
+  close_delete: "الغاء"
+  submit_delete: "مسح"
   you_have_prizes: "لقد ربحت الجوائز التالية"

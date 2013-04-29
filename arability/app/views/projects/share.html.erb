@@ -14,9 +14,6 @@
     	
     	<% @project.developers_shared.each do |dev|%>
       <tr>
-            <td>
-            <%= dev.name %>
-          </td>
           <td>
             <%= dev.email %>
           </td>
@@ -32,3 +29,20 @@
 <%end%>
 <%end%>
 </div>
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {
+  var usernames_and_emails = <%=@usernames_and_emails.to_json.html_safe%>;
+   $( "#email_" ).autocomplete({
+    source: usernames_and_emails,
+    change: function() {
+         
+      }
+    });
+   $("#ui-id-1").css("width", "220px;");
+   $('.ui-autocomplete-input').css('width','300px');
+})
+
+</script>

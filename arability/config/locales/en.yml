@@ -60,20 +60,43 @@ en:
   required: "The fields marked with * are required"
   name: "Name"
   category: "Category"
-  categories: "Categories"
-  formality: "Formality"
+  please_select: "Please select"
+  formality: "Language"
   formal: "Formal"
   slang: "Slang"
-  age: "Age"
   from: "From"
   to: "To"
-  desc: "Description"
+  desc: "About the project"
+  target: "This project will target the following group:"
+  target_country: "Country"
+  target_age: "Age"
+  target_education_level: "Education level"
   new_project: "New Project"
-  back: "Back"
+  back: "<< Back"
   edit_project: "Edit Project"
   create_project: "Create Project"
   save_project: "Save Project"
   click_here: "Click here"
+  egypt: "Egypt"
+  lebanon: "Lebanon"
+  jordan: "Jordan"
+  saudi_arabia: "Saudi Arabia"
+  libya: "Libya"
+  united_arab_emirates: "United Arab Emirates"
+  qatar: "Qatar"
+  kuwait: "Kuwait"
+  iraq: "Iraq"
+  algeria: "Algeria"
+  morocco: "Morocco"
+  bahrain: "Bahrain"
+  mauritania: "Mauritania"
+  somalia: "Somalia"
+  sudan: "Sudan"
+  tunisia: "Tunisia"
+  others: "Others"
+  school: "School"
+  university: "University"
+  graduate: "Graduate"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
   add_to_project: "Add to project"
@@ -84,12 +107,12 @@ en:
   error: "error"
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
-  not_in_range: "is not in range"
+  exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
   views:
     project:
-       flash_messages:
-         project_was_successfully_created: 'Project was successfully created.'
-         project_was_successfully_updated: 'Project was successfully updated.'
+      flash_messages:
+        project_was_successfully_created: 'Project was successfully created.'
+        project_was_successfully_updated: 'Project was successfully updated.'
   import: "Import"
   export: "Export"
   add_words: "Add words"
@@ -169,9 +192,19 @@ en:
   projects_index_tab2: "Projects shared with me"
   projects_index_add: " Add a project"
   projects_index_name: "Name: "
-  projects_index_categories: "Categories: "
+  projects_index_categories: "Category: "
   projects_index_description: "Description: "
-  projects_index_edit: " edit"
+  projects_index_country: "Country: "
+  projects_index_formal_slang: "Language: "
+  projects_index_age: "Age: "
+  projects_index_education_level: "Education level: "
+  no_country: "None"
+  no_formal: "None"
+  no_age: "None"
+  no_education_level: "None"
+  projects_index_owner: "Owner: "
+  projects_index_edit: " Edit"
+  projects_index_delete2: " Delete"
   projects_index_no_shared_projects: "There are no projects shared with you"
   add_word: "Add word"
   Add_words: "Add words"
@@ -192,19 +225,9 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
-
-  activerecord:
-    attributes:
-      project:
-        name: 'Name'
-        minAge: 'The minimum age'
-        maxAge: 'The maximum age'
-        categories: "Categories"
-        description: "Description"
   log_in_google: "Sign In with Google"
-
-  no_categories: "This project has no categories"
-  no_description: "This project has no description"
+  no_categories: "None"
+  no_description: "None"
   register_developer: "Please register as a developer first"
   developer_cant_see_project: "You are not allowed to view this project"
   first_name: "First Name"
@@ -212,10 +235,6 @@ en:
   activerecord:
     models:
       developer: "Developer"
-    attributes:
-      developer:
-        first_name: "First Name"
-        last_name: "Last Name"
   connect_to: "Connect to"
   disconnect_from: "Disconnect from"
   facebook: "facebook"
@@ -256,7 +275,7 @@ en:
   restart_game: "Restart Game"
   back_to_game: "Back"
   to_voting: "To Voting Page"
-  restart_game: "Restart Game" 
+  restart_game: "Restart Game"
   country: "Country:"
   age_from: "Age from:"
   age_to: "to:"
@@ -271,6 +290,20 @@ en:
   age_range: "(Kindly enter a value between 10 and 100)"
   follow_words_info: "Follow a word to recieve an email with every update. Updates include a new Synonym addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Synonyms of"
+  enter_keyword: "Enter a keyword"
+  username: "Username"
+  password_confirmation: "Password confirmation"
+  education_level: "Education level"
+  date_of_birth: "Date of Birth"
+  back_to_game: "Back"
+  keyword_added: "keyword added successfully"
+  add_twitter_connection: "Connected to Twitter successfully!"
+  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  connection_failure: "Failed to connect!"
+  already_connected: "already connected to Twitter!"
+  remove_connection: "Remove Connection"
+  connect_to_twitter: "Connect to Twitter"
+  you_have_prizes: "You have won the following prizes!"
   activerecord:
     errors:
       models:
@@ -292,11 +325,21 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  project_removed: "Project removed"
+  project_delete: "Project successfully deleted"
   keyword_added: "keyword added successfully"
   won_prizes_title: "Earned Prizes"
   not_won_prizes_title: "Available Prizes"
   no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
   all_prizes: "Wohoo! It seems that you have won all the prizes!"
+  activerecord:
+    attributes:
+      project:
+        name: "Name"
+        minAge: "The minimum age"
+        maxAge: "The maximum age"
+        categories: "Categories"
+        description: "Description"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
   help_us_through_reporting: > 
     Help us filter abusive keywords and synonyms 
@@ -329,6 +372,17 @@ en:
   you_have_won_these_trophies: "You have won these trophies too!"
   game_over: "GAME OVER"
   lose_score: "You have scored"
+  Email_dont: "Email doesnt exist"
+  Email_for_a_gamer: "Email for a gamer"
+  you_cant_share_with_yourself: "You cant share with yourself"
+  already_shared_project: "Project already shared"
+  project_successfully_shared: "Project has been successfully shared"
+  dev_unshare: "Developer unshared"
+  projects_index_delete: " Unshare"
+  delete_share: "Unshare"
+  confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
+  submit_remove: "unshare"
+  close_share: "cancel"
   pick_lang: "Pick the language you want to play with"
   english_popover_content: "<p>This button allows you to form and vote on, only English words during game play</p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>Next</button>"
   english_popover_title: "<h4>English Button</h4>"
@@ -352,4 +406,41 @@ en:
   modal_body: "You have finished the first Level. Would you like to see this Tutorial again the next time you play the game?"
   modal_yes_button: "Yes"
   modal_no_button: "No"
+  confirm: " Are you sure you want to delete the project?"
+  delete: "Delete"
+  close_delete: "Close"
+  submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
+  activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
+              less_than_minAge: "can not be less than the minimum age"
+    attributes:
+      project:
+        name: "Name"
+        minAge: "The minimum age"
+        maxAge: "The maximum age"
+        categories: "Categories"
+        description: "Description"
+  add_twitter_connection: "Connected to Twitter successfully!"
+  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  connection_failure: "Failed to connect!"
+  already_connected: "already connected to Twitter!"
+  remove_connection: "Remove Connection"
+  connect_to_twitter: "Connect to Twitter"
+  Email_dont: "Email doesnt exist"
+  Email_for_a_gamer: "Email for a gamer"
+  you_cant_share_with_yourself: "You cant share with yourself"
+  already_shared_project: "Project already shared"
+  project_successfully_shared: "Project has been successfully shared"
+  dev_unshare: "Developer unshared"
+  delete_share: "Unshare"
+  confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
+  submit_remove: "unshare"
+  close_share: "cancel"

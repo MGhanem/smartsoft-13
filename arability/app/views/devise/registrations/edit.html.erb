@@ -123,10 +123,8 @@
   <div><%= f.label t(:education_level), :class => "control-label" %>
             <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
             ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
-
   <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
-
   <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
 </div>
 <% end %>
@@ -137,7 +135,6 @@
 
         <div class="Facebook" style="width: 344px;margin-right: auto;margin-left: auto;">
         </div>
-
         <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
           <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
           <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" /><%=
