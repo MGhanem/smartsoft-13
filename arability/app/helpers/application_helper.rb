@@ -57,6 +57,11 @@ module ApplicationHelper
         end
       end
     end
+    if I18n.locale == :ar
+      return "ليس محدد"
+    else
+      return "None"
+    end
   end
 
   # Author:
@@ -79,6 +84,11 @@ module ApplicationHelper
           return c[1]
         end
       end
+    end
+    if I18n.locale == :ar
+      return "ليس محدد"
+    else
+      return "None"
     end
   end
 end
