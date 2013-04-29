@@ -258,7 +258,7 @@
               <div class="row-fluide">
                 <div class="span2">    
 		              <%= high_chart("gender_#{synonym.id}", charts[0]) do |c| %>
-		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +'\u066A';}"  %>
 		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
 		              <% end %>
                 </div>
@@ -270,7 +270,7 @@
                 </div>
                 <div class="span2">    
 		              <%= high_chart("age_#{synonym.id}", charts[2]) do |c| %>
-		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+		                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}" %>
 		                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
 		              <% end %>
                 </div>
