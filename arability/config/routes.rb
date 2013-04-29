@@ -34,17 +34,19 @@ Arability::Application.routes.draw do
     get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
-    get 'games/gettrophies'
+    get 'games/get_trophies'
     get 'games/getnewwords'
+    get "games/show_trophies"
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/halloffame"
+    get "games/disableTutorial"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-    get "authentications/remove_twitter_connection"
+    get "authentications/remove_connection"
     match '/auth/twitter/callback', :to => 'authentications#twitter_callback'
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
@@ -90,6 +92,8 @@ Arability::Application.routes.draw do
       match "search_keywords" => "search#search_keywords"
 
       match "send_report" => "search#send_report"
+
+      match 'autocomplete' => 'search#keyword_autocomplete'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"

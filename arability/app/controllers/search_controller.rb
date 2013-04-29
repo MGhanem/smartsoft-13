@@ -2,7 +2,7 @@ class SearchController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
 
-  #Description:
+  # Description:
   #   search for keywords (in a particular category)
   # Author:
   #   Mohamed Ashraf, Nourhan Mohamed
@@ -45,6 +45,27 @@ class SearchController < BackendController
   # Author:
   #   Nourhan Mohamed
   # Description:
+  #   returns json of keyword names matching autocompletion
+  # params:
+  #   search_keyword: a string representing the search keyword, from the params list
+  #     from a textbox in the search view
+  # success:
+  #   returns a json list of keywords similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def keyword_autocomplete
+    search_keyword = params["search"]
+    similar_keywords =
+      Keyword.get_similar_keywords(search_keyword, [])
+    similar_keywords.map! { |keyword| keyword.name }
+    render json: similar_keywords
+  end
+
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
   #   submits a report to each of the words chosen in the report form by the
   #   current user
   # params:
@@ -64,19 +85,19 @@ class SearchController < BackendController
     end
   end
 
-	#Description:
-  #   search for synonyms for a particular keyword
   # Author:
   #   Nourhan Mohamed
-	#	params:
-	#		search: a string representing the search keyword, from the params list
-	#     from a textbox in the search_keywords view
-	#	returns:
-	#		success: 
-	#			returns to the search view a list of synonyms for the keyword
-	#     sorted by relevance
-	#		failure:
-	#			returns an empty list if the search keyword has no synonyms
+  # Description:
+  #   search for synonyms for a particular keyword
+  # params:
+  #   search: a string representing the search keyword, from the params
+  #     list from a textbox in the search_keywords view
+  # returns:
+  #   success: 
+  #     returns to the search view a list of synonyms for the keyword
+  #     sorted by relevance
+  #   failure:
+  #     returns an empty list if the search keyword has no synonyms
   def search
     @search_keyword = params["search"]
     @developer_id = Developer.find_by_gamer_id(current_gamer.id).id

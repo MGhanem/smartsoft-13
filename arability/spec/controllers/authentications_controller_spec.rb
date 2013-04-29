@@ -26,7 +26,7 @@ describe AuthenticationsController do
 	end
 	it "should remove twitter connection" do
 		login_gamer(current_gamer)
-		get :remove_twitter_connection
+		get :remove_connection
 		response.should redirect_to "/gamers/edit"
 	end
 	it "it should redirect to home page" do
