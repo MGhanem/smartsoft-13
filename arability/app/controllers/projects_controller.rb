@@ -109,6 +109,10 @@ class ProjectsController < BackendController
   #  none
   def share
     @project = Project.find(params[:id])
+    #find gamers who have developers
+    gamers_ids = Developer.pluck(:gamer_id)
+
+    @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
 
   # Author:

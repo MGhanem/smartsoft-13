@@ -59,7 +59,8 @@ class DeveloperController < ApplicationController
   #  shared projects tab
   def share_project_with_developer
     @project = Project.find(params[:id])
-    gamer = Gamer.find_by_email(params[:email])
+    email = params[:email].first.split(" ").last
+    gamer = Gamer.find_by_email(email)
     if(!gamer.present?)
       flash[:notice] = t(:Email_dont)
     else
