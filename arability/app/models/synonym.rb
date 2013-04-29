@@ -232,9 +232,9 @@ class Synonym < ActiveRecord::Base
   def get_visual_stats_gender(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
-      .where("gender = ?", gender) if gender unless gender.blank?
+      .where("gender = ?", gender) unless gender.blank?
     voters = voters
-      .where("country = ?", country) if country unless country.blank?
+      .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
     voters = voters
@@ -264,9 +264,9 @@ class Synonym < ActiveRecord::Base
   def get_visual_stats_age(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
-      .where("gender = ?", gender) if gender unless gender.blank?
+      .where("gender = ?", gender) unless gender.blank?
     voters = voters
-      .where("country = ?", country) if country unless country.blank?
+      .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
     voters = voters
@@ -313,9 +313,9 @@ class Synonym < ActiveRecord::Base
   def get_visual_stats_education(gender, country, education, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
     voters = voters
-      .where("gender = ?", gender) if gender unless gender.blank?
+      .where("gender = ?", gender) unless gender.blank?
     voters = voters
-      .where("country = ?", country) if country unless country.blank?
+      .where("country = ?", country) unless country.blank?
     voters = voters
       .where("education_level = ?", education) unless education.blank?
     voters = voters
