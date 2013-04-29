@@ -63,7 +63,7 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-      match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
+      match '/projects/:project_id/:word_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project

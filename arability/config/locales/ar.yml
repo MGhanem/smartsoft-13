@@ -206,7 +206,7 @@ ar:
   successfully_added_word_to_project: "تمت إضافة الكلمة بنجاح."
   failed_to_add_word_to_project: "فشل إضافة الكلمة لمشروعك."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
-  remove_from_project: "إزالة من المشروع"
+  remove_from_project: "إزالة"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
   no_words_in_project: "لا توجد كلمات في هذا المشروع."

@@ -82,7 +82,9 @@
                 <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'input', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
               </td>
               <td style="text-align:center" >
-                <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
+                
+                <a href="<%= projects_remove_word_path(project_id: @project.id, word_id: @words[count].id) %>" class= "btn btn-danger"><i class="icon-remove"></i></a>  
+                
               </td>
               <% count = count + 1 %>
             </tr>
