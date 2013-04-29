@@ -109,9 +109,7 @@ class ProjectsController < BackendController
   #  none
   def share
     @project = Project.find(params[:id])
-    #find gamers who have developers
     gamers_ids = Developer.pluck(:gamer_id)
-
     @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
 
@@ -198,7 +196,7 @@ end
  # Description:
  #    Finds the project by its id then destroys it
  # Params:
- #    None
+ #    Project id
  # Success:
  #    A pop up appears and makes sure the user wants to
  #    delete the project by choosing ok the
@@ -551,10 +549,12 @@ end
   # Author:
   #   Noha Hesham
   # Description:
-  #   Finds the developer by its id and the project
-  #   and removes the developer fromm the developers_shared
+  #   Finds the developer and the project by their ids
+  #   and removes the developer from the developers_shared
   #   array, removing the project from the developer's
   #   shared projects
+  # Params:
+  #   dev_id,project_id
   # Success:
   #   Project is removed from shared projects
   # Failure:
