@@ -70,25 +70,19 @@ class ProjectsController < BackendController
   # Failure:
   #   Gives status errors
   def create
-    if developer_signed_in?
-      @project = Project.new(params[:project].except(:category))
-      @project = Project.createproject(params[:project],current_developer.id)
-      respond_to do |format|
-        if @project.save
-          format.html { redirect_to "/developers/projects",
-            flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
+    @project = Project.new(params[:project].except(:category))
+    @project = Project.createproject(params[:project],current_developer.id)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to "/developers/projects",
+          flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
-          @project.save
         else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
         end
       end
-    else
-     developer_unauthorized
-     render 'pages/home'
     end
-  end
 
   # Author:
   #   Salma Farag
