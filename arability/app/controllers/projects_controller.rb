@@ -554,7 +554,8 @@ end
   #   array, removing the project from the developer's
   #   shared projects
   # Params:
-  #   dev_id,project_id
+  #   dev_id is the id of the developer
+  #   project_id is the id of the project
   # Success:
   #   Project is removed from shared projects
   # Failure:
