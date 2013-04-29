@@ -10,3 +10,8 @@ function fetch_keywords(keyword, callback){
     callback(data);
   })
 }
+<% if I18n.locale == :en %>
+  $("#search").css("font-size","14px");
+<% elsif I18n.locale == :ar %>
+  $("#search").css("font-size","18px");
+<% end %>
