@@ -56,6 +56,36 @@ class ProjectsController < BackendController
     end
   end
 
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   A method that views the form that checks if the developer is signed in and has not exceeded the
+  #   max number of projects allowed and instantiates an empty project
+  #   after checking that the user is signed in.
+  # Params:
+  #   None
+  # Success:
+  #   An empty project will be instantiated
+  # Failure:
+  #   If not signed in he will be redirected to the sign in page.
+  #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
+  def new
+    if developer_signed_in?
+      # if current_developer.my_subscription.get_projects
+      @project = Project.new
+      respond_to do |format|
+        format.html
+        format.json { render json: @project }
+      end
+      # else
+      #   format.html { redirect_to "/my_subscriptions/choose_sub",
+      #   notice: I18n.t('exceeded_project_limit: ') }
+      # end
+    else
+      developer_unauthorized
+      render 'pages/home'
+    end
+  end
 
   # Author:
   #   Salma Farag
@@ -74,6 +104,7 @@ class ProjectsController < BackendController
     @project = Project.createproject(params[:project],current_developer.id)
     respond_to do |format|
       if @project.save
+        # current_developer.my_subscription.get_projects++
         format.html { redirect_to "/developers/projects",
           flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
@@ -84,36 +115,6 @@ class ProjectsController < BackendController
       end
     end
 
-  # Author:
-  #   Salma Farag
-  # Description:
-  #   A method that views the form that checks if the developer is signed in and has not exceeded the
-  #   max number of projects allowed and instantiates an empty project
-  #   after checking that the user is signed in.
-  # Params:
-  #   None
-  # Success:
-  #   An empty project will be instantiated
-  # Failure:
-  #   If not signed in he will be redirected to the sign in page.
-  #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
-  def new
-    if developer_signed_in?
-      # if current_developer.my_subscription.get_projects
-        @project = Project.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @project }
-        end
-      # else
-      #   format.html { redirect_to "/my_subscriptions/choose_sub",
-      #   notice: I18n.t('exceeded_project_limit: ') }
-      # end
-    else
-      developer_unauthorized
-      render 'pages/home'
-    end
-  end
 
   # Author:
   #  Noha Hesham

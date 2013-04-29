@@ -8,8 +8,9 @@ class Project < ActiveRecord::Base
   has_many :keywords, :through => :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :category, :country, :education_level
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }
-  validates :maxAge, :inclusion => { :in => 10..100,  :message => :maxAge_range }, :numericality => { :greater_than_or_equal_to => :minAge, :message => :less_than_minAge}
+  validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }, :allow_nil => true
+  validates :maxAge, :inclusion => { :in => 10..100,  :message => :maxAge_range },
+   :numericality => { :greater_than_or_equal_to => :minAge, :message => :less_than_minAge}, :allow_nil => true
 
 # Author:
 #   Salma Farag
