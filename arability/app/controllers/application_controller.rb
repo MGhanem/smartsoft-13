@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
     path = request.path
     if path.include? "developers/"
       redirect_to projects_path, flash: { error: t(:routing_error) } 
-    return
+      return
     end
     redirect_to get_root, flash: { error: t(:routing_error) }
   end
