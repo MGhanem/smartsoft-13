@@ -5,10 +5,19 @@ function applyFilters(keyword, country, age_from, age_to, gender, education){
     return;
   if(age_to < 10 || age_to > 100)
     return;
+  if(age_from > age_to){
+    temp = age_from;
+    age_from = age_to;
+    age_to = temp; 
+  }
   if(isNaN(age_from))
     age_from = ""
   if(isNaN(age_to))
     age_to = ""
+  if(age_from == "" && age_to != "")
+    age_from = 10;
+  if(age_from != "" && age_to == "")
+    age_to = 100;
   $.ajax({
     url: "<%= search_with_filters_path %>",
     type: "post",
