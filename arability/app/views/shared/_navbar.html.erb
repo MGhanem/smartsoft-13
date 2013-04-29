@@ -6,10 +6,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-
       <a class="brand" href="/"><%= t(:arability) %></a>
-
-
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
@@ -19,7 +16,7 @@
         <% end %>
       <% if !gamer_signed_in? %>
           <li><%= link_to t(:game),  "/game" %></li>
-          <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
+          <li><a href="<%= new_gamer_registration_path %>"><%= t :sign_up %></a></li>
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
@@ -33,12 +30,12 @@
       <% else %>
         <% path = request.path %>
         <% if path.include? "developers/" %>
-          <li><%= link_to t(:game),  "/game" %></li>
+          <li><%= link_to t(:game), game_path %></li>
         <% else %>
           <li><%= link_to t(:backend), backend_home_path %></li>
         <% end %>
-        <li><a href="/gamers/edit"><%= t(:settings) %></a></li>
-        <li><a href="/gamers/sign_out"><%= t(:sign_out) %></a></li>
+        <li><a href="<%= edit_gamer_registration_path %>"><%= t(:settings) %></a></li>
+        <li><a href="<%= destroy_gamer_session_path %>"><%= t(:sign_out) %></a></li>
       <% end %>
       </ul>
       </div>
