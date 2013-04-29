@@ -1,0 +1,73 @@
+<div>
+	<% submitted_word = @word %>
+	<% keyword = @keyword%>
+	<% syn_list =  @synonym_list %>
+	<table class="vote_table">
+		<tr>
+			<% if syn_list.size > 0 %>
+				<% if I18n.locale == :ar %>
+				<p id="text" class="text_arabic" > من فضلك اختر معني لكلمة:</p></br>
+				<% end %>
+				<% if I18n.locale == :en %>
+				<p id="text" class="text_english" > please choose a translation for the word:</p></br>
+				<% end %>
+			<% end %>
+			<% if syn_list.blank? %>
+				<% if I18n.locale == :ar %>
+				<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p>
+				<% else %>
+				<p id="text" class="text_english" > please enter a translation for the word:</p>
+				<% end %>
+			<% end %>
+			</td>
+		<tr>
+			<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>
+		</tr>
+		<% j = 0 %>
+		<% while syn_list.size>0  && j<syn_list.length %>
+		<tr>
+			<td style="width:350px; text-align:center;">
+			<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn_list[j].id %>)"><%= syn_list[j].name %></button>
+				<% j = j+1 %>
+			</td>
+			<td style="width:350px; text-align:center;">
+				<% if j<syn_list.length %>
+					<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn_list[j].id %>)"><%= syn_list[j].name %></button>
+					<% j = j+1 %>
+				<% end  %>
+			</td>
+		</tr>
+		<% end %>
+		<tr colspan=3>
+			<td style="text-align:center;">
+				<% if I18n.locale == :ar %>
+					<input type="text" id="suggest_synonym_textbox" placeholder="ادخل معني جديد" >
+				<% else %>
+					<input type="text" id="suggest_synonym_textbox" style="text-align:left;" placeholder="enter a new synonym" >
+				<% end %>
+			</td>
+			<td style="text-align:center;">
+				<select style="width:40px;">
+					<option>formal</option>
+					<option>slang</option>
+				</select>
+			</td>
+			<td style="text-align:center;">
+				<button class="btn btn-primary" type="submit"  onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >سجل هذا المعني</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td>
+				<% if I18n.locale == :ar %>
+					<button class="btn btn-primary"  type="submit" onclick="skip_keyword()">  تخطي هذه الكلمة >></button>
+				<% else %>
+					<button class="btn btn-primary"  type="submit" onclick="skip_keyword()">  skip this word>></button>
+				<% end %>
+			</td>
+			<td>
+			</td>
+		</tr>
+	</table>
+</div>
