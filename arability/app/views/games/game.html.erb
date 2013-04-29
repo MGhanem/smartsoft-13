@@ -85,7 +85,7 @@
   }
 
   function showPrizes() {
-     show_menu_item('جوائز');
+     show_menu_item('<%= t(:prizes) %>');
     if(nav_locked) {
       return;
     }
@@ -97,7 +97,7 @@
   }
 
   function showTrophies() {
-    show_menu_item('الإنجازات');
+    show_menu_item('<%= t(:trophies) %>');
     if(nav_locked) {
       return;
     }
@@ -170,7 +170,7 @@ function setButtons(){
   // Failure:
   //   None
   function inviteFriends(){
-    show_menu_item('دعوات');
+    show_menu_item('<%= t(:invite) %>');
     if(nav_locked) {
       return;
     }
@@ -211,9 +211,9 @@ function setButtons(){
 
   function show_menu_item(title)
   {
-    var item_html = '<div style="margin-top: -86px" class="nav-box btn btn-inverse" id = "navItems" > \
+    var item_html = '<h3 style="margin-top: -50px; font-size: 50px;"> \
      ' + title + ' \
-  </div>';
+  </h3>';
     $("#selected_item").hide();
     $("#selected_item").html(item_html);
     $("#selected_item").show();
@@ -226,7 +226,7 @@ function setButtons(){
   }
 
   function hallOfFame(){
-    show_menu_item('الرتبة');
+    show_menu_item('<%= t(:rank) %>');
     if(nav_locked == true){
       return;
     }
@@ -248,32 +248,33 @@ function setButtons(){
 
 
 
-
+<% if I18n.locale==:ar %>
 <div class="game-zone">
   <div class="game-nav">
-    <div class="btn-group ">
-       <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#" style= "width : 130px; height: 67px;"><i class="icon-cog"></i>
-         <span style="font-size: 30px">Action</span>
+    <div class="btn-group" style="height: 66px;">
+       <button type="submit" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#" style= "width : 130px; height: 67px;">
         <span class="caret"></span>
+        <img src="/assets/gear.png"/>  
        </button>
         <center id="selected_item"></center>
         <ul class="dropdown-menu">
          <li><a href="#"onclick="hallOfFame()">
-               <span style="font-size: 20px">الرتبة</span>
-              </a></li>
+              <span>الرتبة</span>
+             </a></li>
          <li><a href="#" onclick="showPrizes()">
              جوائز
           </a></li>
          <li> <a href="#" onclick="showTrophies()">
-           الإنجازات
-         </a></li>
+                الإنجازات
+              </a></li>
          <li><a href="#">
           بروفيل
-         </a></li>
+             </a>
+         </li>
          <li><a href="#">
-
               إعدادات
-           </a></li>
+             </a>
+         </li>
          <li> <a href="#" onclick="inviteFriends()">
          دعوات
          </a>
@@ -281,7 +282,42 @@ function setButtons(){
         </ul>
     </div>
   </div>
+  <% else I18n.locale==:en %>
+  <div class="game-zone">
+  <div class="game-nav">
+    <div class="btn-group" style="height: 66px;">
+       <button type="submit" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#" style= "width : 130px; height: 67px; margin-right:650px;">
+        <span class="caret"></span>
+        <img src="/assets/gear.png"/>  
+       </button>
+        <center id="selected_item"></center>
+        <ul class="dropdown-menu pull-left">
+         <li><a href="#" style="text-align: left;" onclick="hallOfFame()" >
+              <span >Rank</span>
+             </a></li>
+         <li><a href="#" style="text-align: left;" onclick="showPrizes()">
+              <span >Prizes</span>
+          </a></li>
+         <li> <a href="#" style="text-align: left;" onclick="showTrophies()">
+               <span>Trophies</span>
+              </a></li>
+         <li><a href="#" style="text-align: left;">
+         <span>Profile</span>
+             </a>
+         </li>
+         <li><a href="#" style="text-align: left;">
+             <span>Settings</span>
+             </a>
+         </li>
+         <li> <a href="#" style="text-align: left;" onclick="inviteFriends()">
+         <span>Invitations</span>
+         </a>
+          </li>
+        </ul>
+    </div>
+  </div>
 
+<% end%>
   <% if I18n.locale==:ar %>
   <div class="zone" id="zone" style="text-align:right; direction: rtl;">
 
