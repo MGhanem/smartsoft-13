@@ -322,3 +322,4 @@ ar:
       first: "الاولى"
       last: "الاخيرة"
       truncate: "&hellip;"
+  connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"

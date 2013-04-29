@@ -63,22 +63,26 @@ class Authentication < ActiveRecord::Base
   # Failure:
   #  returns nil if no authentication is found
   def self.get_common_twitter_friends(current_gamer)
-    auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
-    if (auth.nil?)
-      return nil
-    end
-    result = JSON.parse(open("https://api.twitter.com/1/friends/ids.json?user_id=#{auth.gid}").read)
-    followers = Array.new(result["ids"])
-    common = Array.new
-    i = 0
-    while i<followers.count
-      if Authentication.exists?(gid: followers.at(i), provider: "twitter")
-        common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
+    begin
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
+      if (auth.nil?)
+        return nil
       end
-      i = i + 1
+      result = JSON.parse(open("https://api.twitter.com/1/friends/ids.json?user_id=#{auth.gid}").read)
+      followers = Array.new(result["ids"])
+      common = Array.new
+      i = 0
+      while i<followers.count
+        if Authentication.exists?(gid: followers.at(i), provider: "twitter")
+          common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
+        end
+        i = i + 1
+      end
+      common.push(current_gamer.id)
+      return common
+    rescue Exception => e
+      return false
     end
-    common.push(current_gamer.id)
-    return common
   end
 
   # Author:
@@ -92,22 +96,26 @@ class Authentication < ActiveRecord::Base
   # Failure:
   #  returns nil if no gamer token is found
   def self.get_common_facebook_friends(current_gamer)
-    auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "facebook")
-    if (auth.nil?)
+    begin
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "facebook")
+      if (auth.nil?)
       return nil
-    end
-    @graph = Koala::Facebook::API.new(current_gamer.get_token)
-    friends = @graph.get_connections("me", "friends")
-    common = Array.new
-    i = 0
-    while i<friends.count
-      if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
-        common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
       end
-      i = i + 1
+      @graph = Koala::Facebook::API.new(current_gamer.get_token)
+      friends = @graph.get_connections("me", "friends")
+      common = Array.new
+      i = 0
+      while i<friends.count
+        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
+          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+        end
+        i = i + 1
+      end
+      common.push(current_gamer.id)
+      return common
+    rescue Exception => e
+      return false
     end
-    common.push(current_gamer.id)
-    return common
   end
 
 end

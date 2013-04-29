@@ -313,3 +313,4 @@ en:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "&hellip;"
+  connection_error: "Connection Error, please make sure you're connected to the internet"
