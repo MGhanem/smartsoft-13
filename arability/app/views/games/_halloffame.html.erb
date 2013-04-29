@@ -38,13 +38,17 @@
   });
 </script>
 
+<div>
+
 <div id="all" class="btn-group" data-toggle="buttons-radio" style = "padding-top:20px;" align="center">
   <button id = "1" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
-    <%= t(:your_rank) %></button>
+    <%= t(:hall_of_fame) %></button>
   <button id = "2" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
     <%= t(:your_facebook_friends) %></button>
   <button id = "3" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
     <%= t(:your_twitter_friends) %></button>
+</div>
+<h1 style="width:100px; margin-left:50px; margin-right:50px;"># <%= Gamer.get_gamer_rank(current_gamer) %></h1>
 </div>
 
 <div id="btengana" style = "width:770px; margin:0 auto;" align="center">
@@ -54,11 +58,10 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
-        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(8) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
       <tr style="background-color: #DDDDDD">
@@ -69,13 +72,6 @@
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
-        <td>
-          <% if @Trophies.nil? %>
-          <p><%= t(:no_trophies) %></p>
-          <% else %>
-          <%= @Trophies.trophy_id %>
-          <% end %>
-        </td>
       </tr>
       <br>
       <% end %>
@@ -101,28 +97,20 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
-        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(8) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
-      <tr style="background-color: #DDDDDD"><td>*
+      <tr style="background-color: #DDDDDD">
       <% else %>
-      <tr><td>
+      <tr>
       <% end %>
-        <%= rank = Gamer.get_twitter_rank(user) %></td>
+        <td><%= rank = Gamer.get_twitter_rank(user) %></td>
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
-        <td>
-          <% if @Trophies.nil? %>
-          <p><%= t(:no_trophies) %></p>
-          <% else %>
-          <%= @Trophies.trophy_id %>
-          <% end %>
-        </td>
       </tr>
       <br>
       <% end %>
@@ -151,28 +139,20 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
-        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(8) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
-      <tr style="background-color: #DDDDDD"><td>*
+      <tr style="background-color: #DDDDDD">
       <% else %>
-      <tr><td>
+      <tr>
       <% end %>
-        <%= rank = Gamer.get_facebook_rank(user) %></td>
+        <td><%= rank = Gamer.get_facebook_rank(user) %></td>
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
-        <td>
-          <% if @Trophies.nil? %>
-          <p><%= t(:no_trophies) %></p>
-          <% else %>
-          <%= @Trophies.trophy_id %>
-          <% end %>
-        </td>
       </tr>
       <br>
       <% end %>

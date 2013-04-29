@@ -80,7 +80,7 @@ class Authentication < ActiveRecord::Base
       end
       common.push(current_gamer.id)
       return common
-    rescue Exception => e
+    rescue SocketError
       return false
     end
   end
@@ -113,7 +113,7 @@ class Authentication < ActiveRecord::Base
       end
       common.push(current_gamer.id)
       return common
-    rescue Exception => e
+    rescue SocketError
       return false
     end
   end

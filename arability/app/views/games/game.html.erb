@@ -210,11 +210,11 @@ function setButtons(){
       return;
     }
     clear();
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; "><%= t(:loading) %></p></div>');
-    $('#loading-server').fadeTo(0,0);
-    $('#loading-server').fadeTo(1000,1);
-    $('#loading-server').fadeTo(1000,0);
+    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; "><%= t(:loading) %> ...</p></div>');
     $.get("/games/fame");
+    $(window).load(function(){
+      $('#loading-server').fadeOut();
+    });
   }
 
 
