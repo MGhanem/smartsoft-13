@@ -60,6 +60,8 @@ var modalYesButton;
 var modalNoButton;
 var letterPickerArray = [];
 var intPickerArray = [];
+var markRemoved = [];
+var initialIntValues = [];
 
  // author:
  //   Ali El Zoheiry
@@ -311,10 +313,6 @@ function startGame(){
 	cells = table.find('td');
 	buttons = table.find('button');
 	setLevelAttributes(level);
-	setLetterPicker();
-	alert(letterPickerArray);
-	alert(intPickerArray);
-	
 }
 // author:
 //   Ali El Zoheiry.
@@ -346,7 +344,12 @@ function initializeGame(){
 					trHtml.push('-');
 					trHtml.push(x);
 					trHtml.push('">');
-					letter = generateLetter();
+					while(true){
+						letter = generateLetter();
+						if (letter != -1){
+							break;
+						}
+					}
 					trHtml.push(letter);
 					trHtml.push('</button></td>');
 				}
@@ -411,7 +414,13 @@ function dropAblock(){
 	if( gameOver == true ){
 		return;
 	}
-	letter = generateLetter();
+	while(true){
+		letter = generateLetter();	
+		if(letter != -1){
+			break;
+		}
+	}
+	
 	var randNum = Math.floor(Math.random()*dimension);
 	var clss = 'col0-' + randNum;
 	var newButton = "<button id='btn" + blockId + "' onclick= 'callMethods(this.id)' class= 'btn btn-inverse'>" + letter + "</button>";
@@ -735,26 +744,6 @@ function generateWord(){
 }
 
 
-function setLetterPicker(){
-	var totalLetters = 0;
-	for(var i = 0; i < wordsArray.length; i++){
-		for(var j = 0; j < wordsArray[i].length; j++){
-			var index = jQuery.inArray(wordsArray[i].charAt(j), letterPickerArray);
-			if (index == -1){
-				letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
-				intPickerArray[totalLetters] = 1;
-				totalLetters++;
-			}
-			else{
-				intPickerArray[index]++;
-			}
-		}
-	}
-}
-
-function pickAletter(){
-
-}
 
 // author:
 //   Ali El Zoheiry.
@@ -886,6 +875,7 @@ function removeAblock(){
 	var word = document.getElementById("wordLabel").innerHTML;
 		for(x = 0; x < wordsArray.length; x++){
 			if(wordsArray[x] == word && wordExistsInArray[x] == true){
+				removeFromLetterPicker(word);
 				for(var i = 0; i < buttonArray.length; i++){
 					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
 					$('#' + toBeRemovedId).fadeTo('slow',0.5);
@@ -1033,6 +1023,42 @@ function startPulling(r, c, count){
 }
 
 
+
+function setLetterPicker(){
+	var totalLetters = 0;
+	letterPickerArray = [];
+	intPickerArray = [];
+	for(var i = 0; i < wordsArray.length; i++){
+		for(var j = 0; j < wordsArray[i].length; j++){
+			var index = jQuery.inArray(wordsArray[i].charAt(j), letterPickerArray);
+			if (index == -1){
+				letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
+				intPickerArray[totalLetters] = 1;
+				totalLetters++;
+			}
+			else{
+				intPickerArray[index]++;
+			}
+		}
+	}
+	for(var x = 0; x < intPickerArray.length; x++){
+		initialIntValues[x] = intPickerArray[x];
+	}
+}
+
+
+function removeFromLetterPicker(word){
+	for(var i = 0; i < word.length; i++){
+		var toBeRemovedIndex = jQuery.inArray(word.charAt(i), letterPickerArray);
+		if(initialIntValues[toBeRemovedIndex] == 1){
+			intPickerArray[toBeRemovedIndex] = -1;
+		}
+		else{
+			initialIntValues[toBeRemovedIndex]--;
+		}
+	}
+}
+
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -1046,18 +1072,25 @@ function startPulling(r, c, count){
 //   no words in the words list.
 function generateLetter(){
 	var letter;
-	var stringOfWords = '';
-	for(var i = 0; i < wordsArray.length; i++){
-		if(wordExistsInArray[i] == true){
-			for(var j = 0; j < wordsArray[i].length; j++){
-				stringOfWords =stringOfWords +  wordsArray[i].charAt(j);
-			}
-		}	
+	length = letterPickerArray.length;
+	var randIndex = Math.floor(Math.random() * length);
+	if(intPickerArray[randIndex] > 0){
+		intPickerArray[randIndex]--;
+		letter = letterPickerArray[randIndex];
+		return letter;
 	}
-	length = stringOfWords.length;
-	var randNumber = Math.floor(Math.random() * length);
-	letter = stringOfWords.charAt(randNumber);
-	return letter;
+	else{
+		if(markRemoved[randIndex] == true){
+			intPickerArray[randIndex] = -1;
+		}
+		if(intPickerArray[randIndex] == -1){
+			return -1;
+		}
+		else{
+			intPickerArray[randIndex] = 1;
+			return -1;
+		}
+	}
 }
 
 
@@ -1283,6 +1316,7 @@ if(level == 1){
 		for(var i = 0; i < wordsArray.length; i++){
 			wordExistsInArray[i] = true;
 		}
+		setLetterPicker();
 		initializeGame();
 		initializeList();
 		calculatePossible();
@@ -1302,6 +1336,7 @@ if(level == 6){
 		for(var i = 0; i < wordsArray.length; i++){
 			wordExistsInArray[i] = true;
 		}
+		setLetterPicker();
 		initializeGame();
 		initializeList();
 		calculatePossible();
@@ -1315,6 +1350,7 @@ if(level == 6){
 		for(var i = 0; i < wordsArray.length; i++){
 			wordExistsInArray[i] = true;
 		}
+		setLetterPicker();
 		initializeGame();
 		initializeList();
 		calculatePossible();
@@ -1328,6 +1364,7 @@ if(level == 6){
 		for(var i = 0; i < wordsArray.length; i++){
 			wordExistsInArray[i] = true;
 		}
+		setLetterPicker();
 		initializeGame();
 		initializeList();
 		calculatePossible();
@@ -1341,6 +1378,7 @@ if(level == 6){
 		for(var i = 0; i < wordsArray.length; i++){
 			wordExistsInArray[i] = true;
 		}
+		setLetterPicker();
 		initializeGame();
 		initializeList();
 		calculatePossible();
