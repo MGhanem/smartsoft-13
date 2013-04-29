@@ -31,18 +31,35 @@ module ApplicationHelper
     flash.now[:error] = "You are not authorized to view this page" 
   end
 
-  # find guest_user object associated with the current session,
-  # creating one as needed
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   Finds guest_user object associated with the current session 
+  #   and caches the value the first time it's gotten.
+  # Params:
+  #   guest_gamer_id: id of the guest gamer
+  # Success: 
+  #   Returns guest gamer
+  # Failure:
+  #   None
   def guest_gamer
-    # Cache the value the first time it's gotten.
     @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id])
 
-  rescue ActiveRecord::RecordNotFound # if session[:guest_gamer_id] invalid
-     session[:guest_gamer_id] = nil
-     guest_gamer
+  rescue ActiveRecord::RecordNotFound 
+    session[:guest_gamer_id] = nil
+    guest_gamer
   end
   
-  # if user is logged in, return current_user, else return guest_user
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   Gets the current gamer currently on the sysytem either a signed in gamer or guest
+  # Params:
+  #   current_gamer: the currently logged in gamer
+  # Success: 
+  #   Returns current_gamer if there is a gamer signed in or guest_gamer
+  # Failure:
+  #   None
   def current_or_guest_gamer
     if current_gamer
       current_gamer
