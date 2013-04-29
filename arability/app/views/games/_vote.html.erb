@@ -2,8 +2,9 @@
 	<% submitted_word = @word %>
 	<% keyword = @keyword%>
 	<% syn_list =  @synonym_list %>
-	<table class="vote_table">
+	<table class="vote_table" style="margin-bottom: 20px;">
 		<tr>
+			<td>
 			<% if syn_list.size > 0 %>
 				<% if I18n.locale == :ar %>
 				<p id="text" class="text_arabic" > من فضلك اختر معني لكلمة:</p></br>
@@ -14,15 +15,19 @@
 			<% end %>
 			<% if syn_list.blank? %>
 				<% if I18n.locale == :ar %>
-				<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p>
+				<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p></br>
 				<% else %>
-				<p id="text" class="text_english" > please enter a translation for the word:</p>
+				<p id="text" class="text_english" > please enter a translation for the word:</p></br>
 				<% end %>
 			<% end %>
 			</td>
 		<tr>
-			<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>
+			<td>
+				<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>
+			</td>		
 		</tr>
+	</table>
+	<table class="vote_table">
 		<% j = 0 %>
 		<% while syn_list.size>0  && j<syn_list.length %>
 		<tr>
@@ -55,9 +60,15 @@
 			</td>
 		</tr>
 		<tr>
+			<td colspan="2" style="width:460px; height: 100px;">
+				<div id="vote_error_messages"></div>
+			</td>
 			<td></td>
-			<td></td>
-			<td>
+		</tr>
+		<tr>
+			<td style="width:230px;"></td>
+			<td style="width:230px;"></td>
+			<td style="width:230px; text-align:center;">
 				<button class="btn btn-primary"  id="skip_button" type="submit" onclick="skip_keyword()"><%= t(:skip_this_keyword) %></button>
 			</td>
 		</tr>
