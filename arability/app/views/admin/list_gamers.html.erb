@@ -1,0 +1,41 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: 'sidebar-nav', locals: {active: "list-gamers"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-list-gamers">
+					<legend>
+						<div class="pull-left pagination">
+							<%= paginate @list, :remote => true %>
+						</div>
+						<a>
+							عرض اللاعبيين
+						</a>
+					</legend>
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>اسم المستخدم</td>
+								<td>البريد الاكترونى</td>
+								<td>عدد الانجازات</td>
+								<td>عدد الجوائز</td>
+								<td>عدد الاصوات</td>
+							</tr>
+						</thead>
+						<tbody>
+							<% for item in @list %>
+								<tr>
+									<td><%= item.username %></td>
+									<td><%= item.email %></td>
+									<td><%= item.trophies.count %></td>
+									<td><%= item.prizes.count %></td>
+									<td><%= item.votes.count %></td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

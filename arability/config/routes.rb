@@ -3,18 +3,25 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   scope "/admin" do 
-    get "/login"
-    get "/logout"
-    get "/index"
-    get "/import_csv"
-    get "/delete_trophy"
-    get "/delete_prize"
-
-    post "/login"
-    post "/upload"
-    post "/add_word"
-    post "/add_trophy"
-    post "/add_prize"
+    match "" => "admin#index", :via => [:get]
+    scope "/add" do
+      match "/word" => "admin#add_word", :via => [:get, :post]
+      match "/trophy" => "admin#add_trophy", :via => [:get, :post]
+      match "/prize" => "admin#add_prize", :via => [:get, :post]
+    end
+    scope "/list" do
+      match "/trophies" => "admin#list_trophies", :via => [:get]
+      match "/prizes" => "admin#list_prizes", :via => [:get]
+      match "/gamers" => "admin#list_gamers", :via => [:get]
+      match "/developers" => "admin#list_developers", :via => [:get]
+    end
+    scope "/delete" do
+      match "/trophy" => "admin#delete_trophy", :via => [:get]
+      match "/prize" => "admin#delete_prize", :via => [:get]
+    end
+    scope "/import" do
+      match "/csvfile" => "admin#upload", :via => [:get, :post]
+    end
   end
 
   # Only two languages are accepted: Arabic and English
