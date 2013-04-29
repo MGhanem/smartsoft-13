@@ -103,19 +103,19 @@
   border-bottom-left-radius:6px;
 }
 
-.table1 .btn{
+.table1 .btn:not(.tutBtn){
   width: 51px;
   height: 35px;
 }
 
-.table1 td{
-  width: 40px;
+.table1 td:not(.tutBtn){
   height: 40px;
   min-height: 50px;
-  min-width: 50px;
+  width: 50px;
+  min-width: 53px;
 }
 
-.table1 tr{
+.table1 tr:not(.tutBtn){
   min-width: 50px;
   min-height: 50px;
 }
@@ -144,13 +144,15 @@
 
 
 .table1{ 
-  border: solid 1px black;
+  border-bottom: solid 1px black;
   border-radius: 15px;
   float: left; 
   width: 550px;  
   height: 420px; 
   margin-top: 10px; 
   margin-left: 10px;
+  max-width: 550px;
+  min-width: 550px;
 }
 
 #list-div{
@@ -177,6 +179,7 @@ margin-left: 80px;
 
 .game-lang{
   text-align: center;
+  line-height: 19px;
 }
 
 .game-lang .btn{
@@ -201,6 +204,7 @@ margin-left: 80px;
   height: 38px;
   padding-left:30px;
   margin-right: 50px;
+  border-radius: 10px;
 }
 
 #btn-restart{
@@ -208,6 +212,7 @@ margin-left: 80px;
   height: 29px;
   margin-right: 40px;
   line-height: 2;
+  border-radius: 10px;
 }
 
 #game-score{
@@ -363,13 +368,13 @@ margin-left: 80px;
   height:100%;
 }
 
-.table1 .btn{
+.table1 .btn:not(.tutBtn){
   width: 51px;
   height: 35px;
 }
 
 
-.table1 tr{
+.table1 tr:not(.tutBtn){
   min-width: 50px;
   min-height: 50px;
 }
@@ -456,10 +461,57 @@ margin-left: 80px;
   margin-right: 150px;
 }
 
-.table1 button{
+.table1 button:not(.tutBtn){
   width: 53px;
   height: 35px;
   border-radius: 10px;
+  font-size:17px;
+}
+
+.tutBtn{
+  width: 120px;
+  height:30px;
+  font-size: 20px;
+  color: white;
+}
+
+.popover-content button{
+  border-radius: 10px;
+}
+
+#list-div .popover{
+  max-width: none;
+  width: 348px;
+}
+
+#list-div .popover button{
+}
+
+.label-div .popover button{
+  width: 100px;
+}
+
+td .popover{
+  top: -230px;
+  left: -162.5px;
+  display: block;
+  max-width: none;
+  width: 378px;
+}
+
+td .popover button{
+}
+
+
+.popover p {
+  text-align: center;
+}
+.popover h4{
+  text-align: center;
+}
+
+.popover-content{
+  text-align: center;
 }
 
 .won, .not-won {
