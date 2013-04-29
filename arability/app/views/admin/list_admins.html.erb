@@ -1,15 +1,15 @@
 <div class="container admin">
 	<div class="row">
-		<%= render partial: 'sidebar-nav', locals: {active: "list-gamers"} %>
+		<%= render partial: 'sidebar-nav', locals: {active: "admin-list-admins"} %>
 		<div class="span9 offset3">
 			<div class="tab-content">
-				<div class="tab-pane well span7 active" id="admin-list-gamers">
+				<div class="tab-pane well span7 active" id="admin-list-admins">
 					<legend>
 						<div class="pull-left pagination">
 							<%= paginate @list, :remote => true %>
 						</div>
 						<a>
-							عرض اللاعبيين
+							عرض المشرفيين
 						</a>
 					</legend>
 					<%= render 'admin-bootstrap-alert-messages' %>
@@ -18,10 +18,7 @@
 							<tr>
 								<td>اسم المستخدم</td>
 								<td>البريد الاكترونى</td>
-								<td>عدد الانجازات</td>
-								<td>عدد الجوائز</td>
-								<td>عدد الاصوات</td>
-								<td>تحويل الى مشرف</td>
+								<td>مسح المشرف</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -29,16 +26,7 @@
 								<tr>
 									<td><%= item.username %></td>
 									<td><%= item.email %></td>
-									<td><%= item.trophies.count %></td>
-									<td><%= item.prizes.count %></td>
-									<td><%= item.votes.count %></td>
-									<td>
-										<% if !item.admin %>
-											<a href="/admin/make_admin?id=<%= item.id %>">التحوييل</a>
-										<% else %>
-											مشرف بالفعل
-										<% end %>
-									</td>
+									<td><a href="/admin/remove_admin?id=<%= item.id %>">مسح</a></td>
 								</tr>
 							<% end %>
 						</tbody>

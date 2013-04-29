@@ -58,6 +58,39 @@ class AdminController < ApplicationController
     @list = Developer.order(params[:order]).page(params[:page]).per(5)
   end
 
+  def list_admins
+    @list = Gamer.where(:admin => true).order(params[:order])
+                          .page(params[:page]).per(5)
+  end
+
+  def make_admin
+    user = Gamer.find_by_id(params[:id])
+    if user != nil
+      user.admin = true
+      user.save
+      flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
+      flash.keep
+      redirect_to "/admin/list/admins"
+    else
+      flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
+      redirect_to "/admin/list/gamers"
+    end
+  end
+
+  def remove_admin
+    user = Gamer.find_by_id(params[:id])
+    if user.admin
+      user.admin = false
+      user.save
+      flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
+      flash.keep
+      redirect_to "/admin/list/admins"
+    else
+      flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
+      redirect_to "/admin/list/admins"
+    end
+  end
+
   # Author:
   #   Karim ElNaggar
   # Description:
