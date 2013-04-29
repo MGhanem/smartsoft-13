@@ -176,15 +176,15 @@ class GamesController < ApplicationController
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
   #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
-  def gettrophies
+  def get_trophies
     @level = params[:level].to_i
     @score = params[:score].to_i
-    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, 
+    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @won_prizes = current_gamer.won_prizes?(@score, @level)
-    @won_trophies.map { |nt| current_gamer.trophies << nt }
+    @bool_won_prizes = Prize.new_prizes_for_gamer?(current_gamer.id,
+                                                   @score, @level)
     if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+      current_gamer.update_attributes!(highest_score: @score)
     end
     respond_to do |format|
       format.js
@@ -248,7 +248,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned trophies in a list and the trophies that haven't been 
   #   earned in another
-  def showtrophies
+  def show_trophies
     @won_trophies = current_gamer.get_won_trophies
     @not_won_trophies = current_gamer.get_available_trophies
     respond_to do |format|
