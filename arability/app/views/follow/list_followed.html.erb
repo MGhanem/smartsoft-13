@@ -9,28 +9,23 @@
   </thead>
   <tbody>
   <% @keywords.each do |keyword| %>
-    
-      <tr id="<%= keyword.id %>">
-          <td><%= keyword.name %></td>
-          <td><span class="unfollowbtn"><a href="#" class="btn btn-primary" style="width: 60px" onclick="clickfollow(this, <%= keyword.id %>);"><%= t(:unfollow) %></a></span></td>
-      </tr>
+    <tr id="<%= keyword.id %>">
+      <td><%= keyword.name %></td>
+      <td><span class="unfollowbtn"><a href="#" class="btn btn-primary" onclick="clickunfollow(<%= keyword.id %>);"><%= t(:unfollow) %></a></span></td>
+    </tr>
   <% end %> 
   </tbody>
-</table>
+</table>  
 </div>
 <% else %>
 <h4><%= t(:no_followed_words) %></h4>
 <% end %>
 
 <script>
-  function clickfollow(button, id){
-    $button = $(button);
-    $('#'+id).fadeOut();
+  function clickunfollow(id){
     $.get("/developers/unfollow/" + id);
+    $('#'+id).fadeOut();
   }
-</script>
-
-<script type="text/javascript">
   <% if I18n.locale == :ar %>
     $(".unfollowbtn").attr("class", "pull-left");
   <% else %>
