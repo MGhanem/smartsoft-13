@@ -71,8 +71,8 @@ it "Minimum age should be greater than 9" do
 end
 
 it "should return a new project after calling createcategories" do
-  result = Project.createproject({:name => "Project1", :minAge => "20", :maxAge => "40",
-          :formal => "formal", :description => "da da da", :category => cat.id})
+  result = Project.createproject({ name: "Project1", minAge: "20", maxAge: "40",
+    formal: "formal", description: "da da da", category: cat.id }, developer.id)
   var = Project.exists?(result.id)
   expect(var).to eq(true)
 end
