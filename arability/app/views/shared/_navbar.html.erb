@@ -13,9 +13,9 @@
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
-          <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
+          <li style="font-size: 13px;"><%= link_to(t(:english), url_for(locale: :en)) %></li>
         <% else %>
-          <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
+          <li style="font-size: 15px;"><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
         <% end %>
       <% if !gamer_signed_in? %>
           <li><%= link_to t(:game),  "/game" %></li>
