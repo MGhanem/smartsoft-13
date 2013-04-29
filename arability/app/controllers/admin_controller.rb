@@ -316,7 +316,8 @@ class AdminController < ApplicationController
   #   edited, and the errors appear on the top of the page.
   def update_subscription_model
     @model = SubscriptionModel.find(params[:model_id])
-    @model.name = params[:subscription_model][:name]
+    @model.name_ar = params[:subscription_model][:name_ar]
+    @model.name_en = params[:subscription_model][:name_en]
     @model.limit_search = params[:subscription_model][:limit_search]
     @model.limit_follow = params[:subscription_model][:limit_follow]
     @model.limit_project = params[:subscription_model][:limit_project]

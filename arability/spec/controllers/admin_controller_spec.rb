@@ -9,7 +9,8 @@ describe AdminController  do
   describe "GET #edit_subscription_model" do
     let(:model1) do
       model = SubscriptionModel.new
-      model.name = "Test"
+      model.name_ar = "تجربة"
+      model.name_en = "Test"
       model.limit_search = "300"
       model.limit_follow = "200"
       model.limit_project = "100"
@@ -48,13 +49,13 @@ describe AdminController  do
 
     it "should edit subscription model" do
       model1
-      put :update_subscription_model, model_id: model1.id, subscription_model: {name: "Try", limit_search: "100", limit_follow: "200", limit_project: "300"}
+      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "Try", name_ar: "محاولة", limit_search: "100", limit_follow: "200", limit_project: "300"}
       assigns(:model).should_not eq model1
     end
 
     it "should not edit subscription model due to wrong data" do
       model1
-      put :update_subscription_model, model_id: model1.id, subscription_model: {name: "", limit_search: "100", limit_follow: "200", limit_project: "300"}
+      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "", name_ar: "", limit_search: "100", limit_follow: "200", limit_project: "300"}
       assigns(:model).should eq nil
     end    
 
