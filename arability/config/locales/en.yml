@@ -289,6 +289,10 @@ en:
         maxAge: "The maximum age"
         categories: "Categories"
         description: "Description"
+  won_prizes_title: "Earned Prizes"
+  not_won_prizes_title: "Available Prizes"
+  no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
+  all_prizes: "Wohoo! It seems that you have won all the prizes!"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
   help_us_through_reporting: > 
     Help us filter abusive keywords and synonyms 
@@ -307,7 +311,7 @@ en:
     Seems like an error that was encountered and prohibited the request from completion! 
     Please, try re-submitting your request.
   add_twitter_connection: "Connected to Twitter successfully!"
-  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  remove_social_connection: "Connection removed successfully!"
   connection_failure: "Failed to connect!"
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
@@ -323,6 +327,15 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
+  won_trophies_title: "Earned Trophies"
+  not_won_trophies_title: "Available Trophies"
+  no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
+  all_trophies: "Wow! You have one all the trophies!"
+  you_have_score: "Congratulations! you have scored"
+  share_your_score: "Share your score!"
+  you_have_won_these_trophies: "You have won these trophies too!"
+  game_over: "GAME OVER"
+  lose_score: "You have scored"
   pick_lang: "Pick the language you want to play with"
   english_popover_content: "<p>This button allows you to form and vote on, only English words during game play</p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>Next</button>"
   english_popover_title: "<h4>English Button</h4>"

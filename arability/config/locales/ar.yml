@@ -299,6 +299,11 @@ ar:
         categories: "الفئات"
         description: "الوصف"
         before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  won_prizes_title: "الجوائز التي تم الحصول عليها "
+  not_won_prizes_title: "الجوائز المتاحة "
+  no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
+  all_prizes: "لقد فزت بجميع الجوائز"
+  before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   report_sent: "تم تقديم التقرير بنجاح. سوف يتم ابلاغك بالايميل عند إتخاذ تصرف"
   report_abusive: "حدد الكلمات غير اللائقة"
   report: "إبلغ من هنا"
@@ -315,7 +320,7 @@ ar:
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
-  remove_twitter_connection: "تم إلغاء التواصل مع تويتر بنجاح!"
+  remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
@@ -331,6 +336,15 @@ ar:
   confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك ,هل أنت متأكد من الغاء الاشتراك ؟"
   submit_remove: "الغاء الاشتراك"
   close_share: "لا، شكراً"
+  won_trophies_title: "الانجازات التي تم اكمالها"
+  not_won_trophies_title: "الانجازات التي بامكانك اكمالها "
+  no_trophies: "لم تكمل أي انجازات حتى الأن"
+  all_trophies: "لقد أكملت كل الانجازات التي بمكانك انجزها "
+  you_have_score: "مبروك! لقد سجلت النقاط التالية"
+  share_your_score: "شارك على الشبكات الاجتماعية!"
+  you_have_won_these_trophies: "لقد حققت الانجازات التالية!"
+  game_over: "انتهت اللعبة"
+  lose_score: "لقد سجلت النقاط التالية"
   pick_lang: "إختر اللغة التي تريد اللعب بها"
   english_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
   english_popover_title: "<h4>الزر الانجليزي</h4>"
