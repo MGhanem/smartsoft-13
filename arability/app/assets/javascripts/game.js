@@ -58,6 +58,8 @@ var modalHeader;
 var modalBody;
 var modalYesButton;
 var modalNoButton;
+var letterPickerArray = [];
+var intPickerArray = [];
 
  // author:
  //   Ali El Zoheiry
@@ -309,6 +311,9 @@ function startGame(){
 	cells = table.find('td');
 	buttons = table.find('button');
 	setLevelAttributes(level);
+	setLetterPicker();
+	alert(letterPickerArray);
+	alert(intPickerArray);
 	
 }
 // author:
@@ -729,6 +734,28 @@ function generateWord(){
 		document.getElementById("wordLabel").innerHTML = newWord;
 }
 
+
+function setLetterPicker(){
+	var totalLetters = 0;
+	for(var i = 0; i < wordsArray.length; i++){
+		for(var j = 0; j < wordsArray[i].length; j++){
+			var index = jQuery.inArray(wordsArray[i].charAt(j), letterPickerArray);
+			if (index == -1){
+				letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
+				intPickerArray[totalLetters] = 1;
+				totalLetters++;
+			}
+			else{
+				intPickerArray[index]++;
+			}
+		}
+	}
+}
+
+function pickAletter(){
+
+}
+
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -1017,7 +1044,6 @@ function startPulling(r, c, count){
 //   the word list contains words and a random letter is generated.
 // failure:
 //   no words in the words list.
-
 function generateLetter(){
 	var letter;
 	var stringOfWords = '';
@@ -1033,6 +1059,8 @@ function generateLetter(){
 	letter = stringOfWords.charAt(randNumber);
 	return letter;
 }
+
+
 
 // author:
 //   Ali El Zoheiry.
