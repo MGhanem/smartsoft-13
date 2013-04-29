@@ -293,6 +293,10 @@ en:
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
   keyword_added: "keyword added successfully"
+  won_prizes_title: "Earned Prizes"
+  not_won_prizes_title: "Available Prizes"
+  no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
+  all_prizes: "Wohoo! It seems that you have won all the prizes!"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
   help_us_through_reporting: > 
     Help us filter abusive keywords and synonyms 
