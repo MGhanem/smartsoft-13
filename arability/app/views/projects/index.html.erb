@@ -110,14 +110,14 @@
               <% end %>
   <br />
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+    <a class="btn pull-left" style="font-size:17px;" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-   <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-warning" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+   <a style="margin-left : 6px; font-size:17px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-warning" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% end %>
     <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
@@ -125,11 +125,11 @@
       <h3 id="modal_label"><%= t(:delete_share) %></h3>
       </div>
       <div class="modal-body">
-        <h4><%= t(:confirm_share)%></h4>
+        <h5><%= t(:confirm_share)%></h5>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" style="font-size: 20px;"><%= t(:close_share) %></button>
-        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning",:style => "font-size: 20px;" %>
+        <button class="btn" data-dismiss="modal" style="font-size: 17px;"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger ",:style => "font-size: 17px;" %>
       </div>
     </div>
   <br />
@@ -149,15 +149,15 @@
               <%= project2.description %>
               <% end %>
   <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+   <% if I18n.locale == :ar %>
+    <a class="btn pull-left" style="font-size:17px;" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-   <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-warning" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+   <a style="margin-left : 6px; font-size:17px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% else %>
-  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-warning" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
   <% end %>
     <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
@@ -165,11 +165,11 @@
       <h3 id="modal_label"><%= t(:delete_share) %></h3>
       </div>
       <div class="modal-body">
-        <h4><%= t(:confirm_share)%></h4>
+        <h5><%= t(:confirm_share)%></h5>
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
-        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-warning"%>
+        <button class="btn" data-dismiss="modal" style="font-size: 17px;"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger ",:style => "font-size: 17px;" %>
       </div>
     </div>
   <br />

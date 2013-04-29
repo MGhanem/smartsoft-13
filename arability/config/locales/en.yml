@@ -319,7 +319,7 @@ en:
   project_successfully_shared: "Project has been successfully shared"
   dev_unshare: "Developer unshared"
   projects_index_delete: " unshare"
-  delete_share: "Unshare"
+  delete_share: "Remove from shared projects"
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
