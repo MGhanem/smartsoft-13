@@ -39,17 +39,40 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
-  categories: "الفئات"
-  formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  please_select: "الرجاء الاختيار"
+  formality: "اللغة"
+  formal: "فصحى"
+  slang: "عامية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
+  target: "هذا المشروع يستهدف الفئة التالية:"
+  target_country: "البلد"
+  target_age: "الفئة العمرية"
+  target_education_level: "المستوى التعليمي"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< العودة"
+  egypt: "مصر"
+  lebanon: "لبنان"
+  jordan: "الاردن"
+  saudi_arabia: "السعودية"
+  libya: "ليبيا"
+  united_arab_emirates: "الامارات"
+  qatar: "قطر"
+  kuwait: "الكويت"
+  iraq: "العراق"
+  algeria: "الجزأئر"
+  morocco: "المغرب"
+  bahrain: "البحرين"
+  mauritania: "موريتانيا"
+  somalia: "الصومال"
+  sudan: "السودان"
+  tunisia: "تونس"
+  others: "اخري"
+  school: "مدرسة"
+  university: "جامعة"
+  graduate: "خريج"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -120,6 +143,7 @@ ar:
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -141,14 +165,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -159,8 +175,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -232,11 +247,6 @@ ar:
   activerecord:
     models:
       developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
-  not_in_range: "ليس في الحدود المسموح بها"
   connect_to: "تواصل مع"
   disconnect_from: "افصل تواصلك مع"
   facebook: "فيسبوك"
@@ -345,3 +355,26 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"

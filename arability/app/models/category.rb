@@ -2,7 +2,7 @@
 class Category < ActiveRecord::Base
   attr_accessible :english_name, :arabic_name
   has_and_belongs_to_many :keywords
-  has_and_belongs_to_many :projects
+  has_many :projects
 
   validates_uniqueness_of :english_name
   validates_presence_of :english_name
@@ -10,7 +10,7 @@ class Category < ActiveRecord::Base
 
   validates_uniqueness_of :arabic_name
   validates_presence_of :arabic_name
-  validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/
+  # validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/
 
   class << self
     include StringHelper
