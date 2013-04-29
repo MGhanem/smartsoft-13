@@ -176,15 +176,15 @@ class GamesController < ApplicationController
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
   #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
-  def gettrophies
+  def get_trophies
     @level = params[:level].to_i
     @score = params[:score].to_i
-    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, 
+    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @won_prizes = current_gamer.won_prizes?(@score, @level)
-    @won_trophies.map { |nt| current_gamer.trophies << nt }
+    @bool_won_prizes = Prize.new_prizes_for_gamer?(current_gamer.id,
+                                                   @score, @level)
     if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+      current_gamer.update_attributes!(highest_score: @score)
     end
     respond_to do |format|
       format.js
@@ -248,7 +248,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned trophies in a list and the trophies that haven't been 
   #   earned in another
-  def showtrophies
+  def show_trophies
     @won_trophies = current_gamer.get_won_trophies
     @not_won_trophies = current_gamer.get_available_trophies
     respond_to do |format|
@@ -278,25 +278,16 @@ class GamesController < ApplicationController
       keyword_id: params[:keyword_id]).first 
   end
 
-  # Author:
-  #   Mirna Yacout
+  #   Ali El Zoheiry
   # Description:
-  #   gets the page of the current_gamer's rank and list of gamers ordered descendingly
-  #   according to score
-  # Parameters:
+  #   updates the value of the show_tutorial column to false
+  # params:
   #   none
-  # Success:
-  #   returns rank number of the gamer
-  # Failure:
+  # success:
+  #   the value of the column is successfuly changed to false
+  # failure:
   #   none
-  def halloffame
-    rank = Gamer.get_gamer_rank(current_gamer)
-    if rank.nil?
-    else
-      page = (rank/5.0).ceil
-      params[:page] = page
-    end
-    @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5)
+  def disableTutorial
+    current_gamer.update_attributes!(show_tutorial: false)
   end
-
 end
