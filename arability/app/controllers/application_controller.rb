@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
   require 'csv'
-  # rescue_from Exception, :with => :error_render_method
+  rescue_from Exception, :with => :error_render_method
 
   # Author:
   #   Mohamed Ashraf
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
   # params:
   #   --
   # success:
-  #   Redirects to home page. Sends a flash notice.
+  #   Redirects to projects page if in develoeprs and home otherwise.
   # failure:
   #   --
   def routing_error
