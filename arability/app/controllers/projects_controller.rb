@@ -94,7 +94,15 @@ class ProjectsController < BackendController
   #   that creates the project and redirects to the project page and prints
   #   an error if the data entered is invalid.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   Creates a new project and views it in the index page
   # Failure:
@@ -135,7 +143,15 @@ class ProjectsController < BackendController
   # Description:
   #   A method that specifies an already existing project by its ID
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   A form that contains the existing data of the project will open from the views.
   # Failure:
@@ -151,8 +167,15 @@ class ProjectsController < BackendController
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
   #   Then calls method createcategories that changes the category.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
-  #   and its category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An existing project will be updated.
   # Failure:
@@ -177,7 +200,15 @@ class ProjectsController < BackendController
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
   #   projects index.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An project will be showed with its words and synonyms.
   # Failure:
