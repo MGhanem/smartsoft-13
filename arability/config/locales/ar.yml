@@ -319,3 +319,6 @@ ar:
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  enter_a_synonym: "ادخل معني جديد"
+  skip_this_keyword: "تخطي هذا المعني"
+  suggest_this_synonym: "سجل هذا المعني"

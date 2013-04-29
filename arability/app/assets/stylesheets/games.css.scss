@@ -89,24 +89,23 @@
 
 #skip_button{
   float:left;
-  margin-left:-100;
-  font-size:25px;
+  font-size:20px;
+  border-radius: 10px;
+  width:170px;
 }
 
-#suggest_synonym_textbox_arabic{
-  margin-right: 40px;
+#suggest_synonym_textbox{
+  width:200px;
 }
 
-#suggest_synonym_button_arabic{
-  margin-right: 70px;
-  font-size: 21px;
+#suggest_synonym_button{
+  width: 210px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 35px;
+  font-size: 20px;
 }
 
-
-#suggest_synonym_button_english{
-  margin-left: 70px;
-  font-size: 19px;
-}
 
 .zone {
   height: 530px;

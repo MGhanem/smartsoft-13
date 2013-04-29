@@ -38,35 +38,27 @@
 			</td>
 		</tr>
 		<% end %>
-		<tr colspan=3>
-			<td style="text-align:center;">
-				<% if I18n.locale == :ar %>
-					<input type="text" id="suggest_synonym_textbox" placeholder="ادخل معني جديد" >
-				<% else %>
-					<input type="text" id="suggest_synonym_textbox" style="text-align:left;" placeholder="enter a new synonym" >
-				<% end %>
+	</table>
+	<table class="vote_table">
+		<tr>
+			<td style="text-align:center; width:230px;">
+				<input type="text" id="suggest_synonym_textbox" placeholder="<%= t(:enter_a_synonym)%>" >
 			</td>
-			<td style="text-align:center;">
-				<select style="width:40px;">
-					<option>formal</option>
-					<option>slang</option>
+			<td style="text-align:center; width:230px;">
+				<select style="width:120px;">
+					<option><%= t(:formal) %></option>
+					<option><%= t(:slang) %></option>
 				</select>
 			</td>
-			<td style="text-align:center;">
-				<button class="btn btn-primary" type="submit"  onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);" >سجل هذا المعني</button>
+			<td style="text-align:center; width:230px;">
+				<button class="btn btn-primary" type="submit" id="suggest_synonym_button" onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>);"><%= t(:suggest_this_synonym)%></button>
 			</td>
 		</tr>
 		<tr>
+			<td></td>
+			<td></td>
 			<td>
-			</td>
-			<td>
-				<% if I18n.locale == :ar %>
-					<button class="btn btn-primary"  type="submit" onclick="skip_keyword()">  تخطي هذه الكلمة >></button>
-				<% else %>
-					<button class="btn btn-primary"  type="submit" onclick="skip_keyword()">  skip this word>></button>
-				<% end %>
-			</td>
-			<td>
+				<button class="btn btn-primary"  id="skip_button" type="submit" onclick="skip_keyword()"><%= t(:skip_this_keyword) %></button>
 			</td>
 		</tr>
 	</table>
