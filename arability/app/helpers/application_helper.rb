@@ -32,6 +32,16 @@ module ApplicationHelper
     flash.now[:error] = "You are not authorized to view this page" 
   end
 
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   returns country name based on locale
+  # Params:
+  #   country: the english name for country
+  # Success: 
+  #   arabic or english name country
+  # Failure:
+  #   none
   def get_country_name_by_locale(country)
     countries = [['مصر','Egypt'],['لبنان','Lebanon'],
     ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
@@ -49,6 +59,16 @@ module ApplicationHelper
     end
   end
 
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   returns education level based on locale
+  # Params:
+  #   education_level: the english name for education_level
+  # Success: 
+  #   arabic or english name of education level
+  # Failure:
+  #   none
   def get_education_level_by_locale(education_level)
     education_levels = [['خريج','Graduate'],['طالب جامعي','University'],['طالب مدرسة','School']]
     education_levels.each do |c|

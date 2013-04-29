@@ -38,8 +38,9 @@ class ProjectsController < BackendController
   # Success:
   #    returns array of projects that the developer own and the projects shared with him
   # Failure:
-  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
+  #    none
   def index  
+    @developer = Developer.where(:gamer_id => current_gamer.id).first
     @my_projects = Project.where(:owner_id => @developer.id)
     @shared_projects = @developer.projects_shared
   end
