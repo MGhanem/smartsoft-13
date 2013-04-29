@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_locale
   require 'csv'
-  rescue_from Exception, :with => :error_render_method
+  # rescue_from Exception, :with => :error_render_method
 
   # Author:
   #   Mohamed Ashraf
@@ -58,8 +58,12 @@ class ApplicationController < ActionController::Base
   # failure:
   #   --
   def routing_error
-    path = get_root
-    redirect_to path, flash: {error: t(:routing_error)}
+    path = request.path
+    if path.include? "developers/"
+      redirect_to projects_path, flash: { error: t(:routing_error) } 
+    return
+    end
+    redirect_to get_root, flash: { error: t(:routing_error) }
   end
   
   # author:
@@ -79,17 +83,20 @@ class ApplicationController < ActionController::Base
   #   --
   def error_render_method(exception)
     path = request.path
-    if path.include? "developers/"
-      redirect_to projects_path, flash: {error: t(:exception)}
-    end
-    if path.include? "developers/projects"
-      redirect_to get_root, flash: {error: t(:exception)}
-    end
-    if path.include? "game"
-      redirect_to get_root, flash: {error: t(:exception)}
-    end
     UserMailer.generic_email("smartsoft-13@googlegroups.com", 
         "EXCEPTION THROWN", exception.backtrace.to_s).deliver
+    if path.include? "developers/"
+      redirect_to projects_path, flash: { error: t(:exception) } 
+      return
+    end
+    if path.include? "developers/projects"
+      redirect_to get_root, flash: { error: t(:exception) }
+      return 
+    end
+    if path.include? "game"
+      redirect_to get_root, flash: { error: t(:exception) }
+      return 
+    end
   end
   
   # author:

@@ -34,12 +34,14 @@ Arability::Application.routes.draw do
     get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
-    get 'games/gettrophies'
+    get 'games/get_trophies'
     get 'games/getnewwords'
+    get "games/show_trophies"
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/halloffame"
+    get "games/disableTutorial"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
@@ -98,7 +100,7 @@ Arability::Application.routes.draw do
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
-  match '*path', :to => 'application#routing_error'
+  match "*path", :to => "application#routing_error"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
