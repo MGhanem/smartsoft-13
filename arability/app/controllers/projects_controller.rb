@@ -216,21 +216,56 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is not a free trial, the method finds the project by its
-  #   id and then calls the method filterkeywords in Project tha filters the relevant keywords.
+  #   After checking that the user is not a free trial limit of words,
+  #   the method finds the project by its id and then calls the method
+  #   filterkeywords in Project tha filters the relevant keywords.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
-  #   Getting an array of categories relevant to the project
+  #   Getting an array of keywords relevant to the project
   # Failure:
-  #   None
+  #   The user has exceeded the maximum limit of words to be added and hence will not be able
+  #   to add any more.
   def view_recommended_words
     # if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
       @karray = Project.filterkeywords(@project.category_id)
+    # else
+      # flash[:notice] = "You cannot use this service, please subscribe as premium or deluxe"
     # end
   end
 
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After the users chooses the words he would like to add to his project from the recommended
+  #   words list, the method gets the chosen keyword ids,with their synonyms ids and the project
+  #   the words will be added to. The words and their synonyms will be added after checking some
+  #   authorization validations.
+  # Params:
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
+  #   :synonym: A hash containing the chosen keyword id along with its chosen synonym id
+  # Success:
+  #   The words will be successfully added to the project
+  # Failure:
+  #   The user has exceeded the maximum limit of words to be added and hence will not be able
+  #   to add any more.
   def get_recommended_words
     @project = Project.find(params[:project_id])
     params[:synonym].each do |key, syn|

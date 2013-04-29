@@ -71,10 +71,10 @@ def self.filterkeywords(cat_id)
   Keyword.all.each do |k|
     k.categories.each do |c|
       if c.id == cat_id
-        # if k.synonyms != []
+        if k.synonyms != []
           karray.push(k)
           break
-        # end
+        end
       end
     end
   end
