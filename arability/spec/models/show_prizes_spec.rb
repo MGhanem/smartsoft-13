@@ -1,7 +1,5 @@
 # encoding: utf-8
-
 require 'spec_helper'
-include 
 describe "Get Prizes" do
   
   let(:gamer_adam) {
@@ -113,34 +111,39 @@ describe "Get Prizes" do
     gamer_adam.prizes eq([])
   end
 
-  it "should get only one prize from the level" do
+  it "award gamer with one prize and checks if he has won it" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 1500, 3)
-    new_prizes.count.should eq(1)
+    gamer_adam.get_won_prizes.count.should eq(1)
   end
 
-  it "should be able to get 5 new prizes" do
-    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 234, 1)
-    new_prizes.count.should eq(5)
-  end
-
-  it "should give 5 prizes for gamer" do
-    Prize.get_new_prizes_for_gamer(gamer_adam.id, 234,1)
-    gamer_adam.prizes.length.should eq(5)
-  end
-
-  it "should not award the gamer with any prizes" do
-    Prize.get_new_prizes_for_gamer(gamer_adam.id, 234, 2)
-    gamer_adam.prizes.length.should eq(0)
-  end
-
-  it "should return 6" do
+  it "awards gamer with one prize and remains 6 prizes available" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 1500, 3)
-    gamer_adam.get_available_prizes.length.should eq(6)
+    gamer_adam.get_available_prizes.count.should eq(6)
   end
 
-  it "should return 5" do
-    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 2500, 3)
-    gamer_adam.get_available_prizes.length.should eq(5)
+  it "awards gamer with 5 prizes" do
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 150, 1)
+    gamer_adam.get_won_prizes.count.should eq(5)
   end
 
+  it "awards gamer with 5 prizes and there are 2 available prizes left" do
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 150, 1)
+    gamer_adam.get_available_prizes.count.should eq(2)
+  end
+
+  it "awards Adam with 5 prizes and Yahya will still have 7 prizes available" do
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 150, 1)
+    gamer_yahya.get_available_prizes.count.should eq(7)
+  end
+
+  it "shouldn't award Adam with the same prizes again if he has already won them" do
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 150, 1)
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 150, 1)
+    new_prizes.size.should eq(0)
+  end
+
+  it "shoudn't award the gamer with any prizes if the criteria doesn't exist" do
+    new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 10000, 10000)
+    gamer_adam.get_available_prizes.size.should eq(7)
+  end
 end
