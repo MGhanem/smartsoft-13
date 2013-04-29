@@ -1,8 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
-
 describe "Get Prizes" do
-
+  
   let(:gamer_adam) {
     gamer_adam = Gamer.new
     gamer_adam.username = "adamggg"
@@ -40,7 +39,7 @@ describe "Get Prizes" do
     trophy1.save validate: false
     trophy1
   }
- 
+
   let(:trophy2) {
     trophy2 = Trophy.new
     trophy2.name = "جأزةجأ"
@@ -67,7 +66,7 @@ describe "Get Prizes" do
     trophy4.save validate: false
     trophy4
   }
- 
+
   let(:trophy5) {
     trophy5 = Trophy.new
     trophy5.name = "جأجأجأ"
@@ -112,34 +111,39 @@ describe "Get Prizes" do
     gamer_adam.trophies eq([])
   end
 
-  it "should get only one trophy from the level" do
+  it "award gamer with one trophy and checks if he has won it" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 1500, 3)
-    new_trophies.count.should eq(1)
+    gamer_adam.get_won_trophies.count.should eq(1)
   end
 
-  it "should be able to get 5 new trophies" do
-    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234, 1)
-    new_trophies.count.should eq(5)
-  end
-
-  it "should give 5 trophies for gamer" do
-    Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234,1)
-    gamer_adam.trophies.length.should eq(5)
-  end
-
-  it "should not award the gamer with any trophies" do
-    Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234, 2)
-    gamer_adam.trophies.length.should eq(0)
-  end
-
-  it "should return 6" do
+  it "awards gamer with one trophy and remains 6 trophies available" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 1500, 3)
-    gamer_adam.get_available_trophies.length.should eq(6)
+    gamer_adam.get_available_trophies.count.should eq(6)
   end
 
-  it "should return 5" do
-    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 2500, 3)
-    gamer_adam.get_available_trophies.length.should eq(5)
+  it "awards gamer with 5 trophies" do
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 150, 1)
+    gamer_adam.get_won_trophies.count.should eq(5)
   end
 
+  it "awards gamer with 5 trophies and there are 2 available trophies left" do
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 150, 1)
+    gamer_adam.get_available_trophies.count.should eq(2)
+  end
+
+  it "awards Adam with 5 trophies and Yahya will still have 7 trophies available" do
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 150, 1)
+    gamer_yahya.get_available_trophies.count.should eq(7)
+  end
+
+  it "shouldn't award Adam with the same trophies again if he has already won them" do
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 150, 1)
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 150, 1)
+    new_trophies.size.should eq(0)
+  end
+
+  it "shoudn't award the gamer with any prizes if the criteria doesn't exist" do
+    new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 10000, 10000)
+    gamer_adam.get_available_trophies.size.should eq(7)
+  end
 end
