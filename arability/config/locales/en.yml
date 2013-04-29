@@ -195,6 +195,7 @@ en:
   projects_index_categories: "Categories: "
   projects_index_description: "Description: "
   projects_index_edit: " edit"
+  projects_index_delete: " delete"
   projects_index_no_shared_projects: "There are no projects shared with you"
   add_word: "Add word"
   Add_words: "Add words"
@@ -315,7 +316,8 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
-  project_removed: "Project removed"  
+  project_removed: "Project removed"
+  project_delete: "Project successfully deleted"
   keyword_added: "keyword added successfully"
   activerecord:
     attributes:
@@ -382,6 +384,10 @@ en:
   modal_body: "You have finished the first Level. Would you like to see this Tutorial again the next time you play the game?"
   modal_yes_button: "Yes"
   modal_no_button: "No"
+  confirm: " Are you sure you want to delete the project?"
+  delete: "Delete"
+  close_delete: "Close"
+  submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
   activerecord:
     errors:

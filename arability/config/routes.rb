@@ -56,10 +56,11 @@ Arability::Application.routes.draw do
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
+      
       match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
       match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
-      
+
       get "projects/update"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
@@ -68,9 +69,15 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      match '/projects/:id/destroy' => "projects#destroy", :as => :delete
+      put "projects/destroy"
+
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
+
       resources :projects
+
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"

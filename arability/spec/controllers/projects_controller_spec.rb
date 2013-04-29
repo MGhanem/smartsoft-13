@@ -57,7 +57,6 @@ describe ProjectsController do
     page.should have_content(I18n.t(:import_csv_title))
   end
 
-
   #Salma's Tests
   describe "GET #new" do
     it "initializes a new project" do
@@ -157,6 +156,13 @@ describe 'PUT update' do
   it "should make developer remove a project shared with him" do
     sign_in gamer1
     get :remove_project_from_developer, :dev_id => developer1.id, :project_id => project.id
+    #response.should be_success
+    response.code.should eq("302")
+  end
+
+  it "should delete a project" do
+    sign_in gamer1
+    put :destroy, :id => project.id
     #response.should be_success
     response.code.should eq("302")
   end

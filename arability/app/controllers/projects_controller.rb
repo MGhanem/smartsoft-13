@@ -6,9 +6,30 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
 
-  # author:
+ # author:Noha hesham
+ # Description:
+ #   finds the project by its id then destroys it
+ # params:
+ #   none
+ # success:
+ #   a pop up appears and makes sure the user wants to
+ #   delete the project by choosing ok the 
+ #   project is successfully deleted 
+ # failure:
+ #   project is not deleted
+  def destroy
+    @project = Project.find(params[:id])
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to :action => "index",:controller => "projects"}
+      format.json { head :no_content }
+      flash[:success] = t(:project_delete)
+    end
+  end
+    
+  # author: 
   #    Mohamed Tamer
   # description:
   #    function shows all the projects that a certain developer owns and the projects shared with him
@@ -185,27 +206,6 @@ def show
     developer_unauthorized
   end
 end
-
- # Author:
- #    Noha Hesham
- # Description:
- #    Finds the project by its id then destroys it
- # Params:
- #    None
- # Success:
- #    A pop up appears and makes sure the user wants to
- #    delete the project by choosing ok the
- #    project is successfully deleted
- # Failure:
- #    Project is not deleted
-  def destroy
-    @project = Project.find(params[:id])
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
-    end
-  end
 
   # Author:
   #   Mohamed Tamer
