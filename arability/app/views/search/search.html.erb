@@ -148,13 +148,13 @@
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
 				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-				<%= form_tag(add_word_inside_project_path, method: "post", style: "margin:10px; display: inline;") do %>
+				<%= form_tag(add_word_inside_project_path, method: "post", style: "margin:500px; display: inline;") do %>
 					<input type="hidden" value="<%= @search_keyword %>" name="keyword">
 					<%= t(:add_to) %>
 					<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%" }) %>
 					<%= t(:with) %>
 					<%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%" }) %>
-					<%= submit_tag("+ " + t(:add), class: "btn btn-primary btn-mini", style: "margin-bottom:10px;") %>
+					<%= submit_tag("+ " + t(:add), class: "btn btn-primary", style: "margin-bottom:10px;") %>
 				<% end %>
 			</span>
 		</div>
