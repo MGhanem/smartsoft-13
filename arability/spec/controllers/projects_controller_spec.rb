@@ -51,11 +51,29 @@ describe ProjectsController do
     syn
   }
 
-  it "a developer can open the link of import of one of his projects" do
-    sign_in developer1.gamer
-    get :import_csv, :project_id => project.id
-    page.should have_content(I18n.t(:import_csv_title))
+  #Timo's tests
+  describe "GET #index" do
+    it "populates an array of projects"
+      project
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :index
+      assigns(:my_projects).should eq([project])
+    end
+
+    it "renders the :index view"
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :index
+      response.should render_template :index
+    end
+
+    it "redirects to sign in page if the developer isn't signed in"
+      get :index
+      response.code.should eq("302")
+    end
   end
+  #End of Timo's tests
 
   #Salma's Tests
   describe "GET #new" do
