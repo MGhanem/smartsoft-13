@@ -42,6 +42,28 @@ class SearchController < BackendController
 
   # Author:
   #   Nourhan Mohamed
+  # Description:
+  #   submits a report to each of the words chosen in the report form by the
+  #   current user
+  # params:
+  #   reported_words: an array of keywords/synonyms to be reported
+  # success:
+  #   returns submits a report with the chosen keywords/synonyms
+  # failure:
+  #   --
+  def send_report
+    reported_words = params["reported_words"]
+    reported_words = reported_words.to_a
+    reported_words.each do |word|
+      word = word.split(" ")
+      word_model = word[1] == "Keyword" ? 
+        Keyword.find(word[0].to_i) : Synonym.find(word[0].to_i)
+      @success, _ = Report.create_report(current_gamer, word_model)
+    end
+  end
+
+  # Author:
+  #   Nourhan Mohamed
 	# Description:
   #   search for synonyms for a particular keyword
 	#	params:
@@ -95,7 +117,7 @@ class SearchController < BackendController
   # failure:
   #   returns a list of synonyms available for the search keyword, all with 0 votes
   def search_with_filters
-    search_keyword = params["search"]
+    @search_keyword = params["search"]
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
@@ -110,11 +132,11 @@ class SearchController < BackendController
       @age_to = temp
     end
 
-    if !search_keyword.blank?
-      search_keyword = search_keyword.strip
-      search_keyword = search_keyword.split(" ").join(" ")
+    if !@search_keyword.blank?
+      @search_keyword = @search_keyword.strip
+      @search_keyword = @search_keyword.split(" ").join(" ")
 
-      @search_keyword_model = Keyword.find_by_name(search_keyword)
+      @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if !@search_keyword_model.blank?
         @synonyms, @votes =
           @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender, @education)
@@ -124,7 +146,7 @@ class SearchController < BackendController
 
         render "filtered_results.js" 
       else
-        redirect_to search_keywords_path(search: search_keyword)
+        redirect_to search_keywords_path(search: @search_keyword)
       end
     else
       redirect_to search_keywords_path

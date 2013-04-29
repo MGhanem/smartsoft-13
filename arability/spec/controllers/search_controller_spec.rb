@@ -174,5 +174,30 @@ describe SearchController do
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path)
     end
+
+    it "should send report on a keyword successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      get :send_report, reported_words: ["#{k.id} Keyword"]
+      assigns(:success).should be(true)
+    end
+
+    it "should send report on a synonym successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      s
+      get :send_report, reported_words: ["#{s.id} Synonym"]
+      assigns(:success).should be(true)
+    end
+
+    it "should send report on both keywords and synonyms successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      s2
+      k2
+      get :send_report, reported_words: ["#{s2.id} Synonym", "#{k2.id} Keyword"]
+      assigns(:success).should eq(true)
+    end
   end
 end

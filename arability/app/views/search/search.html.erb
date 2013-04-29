@@ -43,22 +43,21 @@
 						$(".btnfollow").html("<%= t(:follow) %>");
 					}	
 				}
-
 			</script>
 
-			<% if I18n.locale==:en %>
-				<% if !is_following(@search_keyword_model.id) %>
-					<span class="pull-right"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
-				<% else %>
-					<span class="pull-right"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
-				<% end %>
+			<% if !is_following(@search_keyword_model.id) %>
+				<span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
 			<% else %>
-				<% if !is_following(@search_keyword_model.id) %>
-					<span class="pull-left"><a href="#" class="btn btnfollow btn-default" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
-				<% else %>
-					<span class="pull-left"><a href="#" class="btn btnfollow btn-info" onmouseover="on(this);" onmouseout="off(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
-				<% end %>
+				<span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
 			<% end %>
+
+			<script type="text/javascript">
+			<% if I18n.locale == :ar %>
+				$("#followbtn").attr("class", "pull-left");
+			<% else %>
+				$("#followbtn").attr("class", "pull-right");
+			<% end %>
+			</script>
 
 			<div class="row" style="padding:10px;">
 				<div class="span12">

@@ -148,7 +148,8 @@ describe Keyword do
 		keyword.last.name.should eq("clickMe")
 	end
 
-	it "should return an empty list when searching for an unapproved keyword" do
+	it "should return an empty list when searching for an unapproved keyword",
+    nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -169,7 +170,7 @@ describe Keyword do
 		keyword.should eq([])
 	end
 
-		it "should return one matching keyword for the passed 
+	it "should return one matching keyword for the passed 
       param in arabic", nourhan_mohamed: true do
 		k
 		k1
