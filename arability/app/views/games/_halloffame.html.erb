@@ -1,0 +1,184 @@
+<script type="text/javascript" charset="utf-8">
+  
+  function display(clicked_id)
+  {
+    if(clicked_id == 1)
+    {
+      $("#twitter").css("visibility", "hidden");
+      $("#facebook").css("visibility", "hidden");
+      $("#btengana").css("visibility", "visible");
+      $("#twitter").css("position", "fixed");
+      $("#facebook").css("position", "fixed");
+      $("#btengana").css("position", "relative");
+    }
+    else
+    {
+      if(clicked_id == 2)
+      {
+        $("#twitter").css("visibility", "hidden");
+        $("#facebook").css("visibility", "visible");
+        $("#btengana").css("visibility", "hidden");
+        $("#twitter").css("position", "fixed");
+        $("#facebook").css("position", "relative");
+        $("#btengana").css("position", "fixed");
+      }
+      else
+      {
+        $("#twitter").css("visibility", "visible");
+        $("#facebook").css("visibility", "hidden");
+        $("#btengana").css("visibility", "hidden");
+        $("#twitter").css("position", "relative");
+        $("#facebook").css("position", "fixed");
+        $("#btengana").css("position", "fixed");
+      }
+    }
+  }
+  $(document).ready(function() {
+    $("#btengana br, #facebook br, #twitter br").remove();
+  });
+</script>
+
+<div id="all" class="btn-group" data-toggle="buttons-radio" style = "padding-top:20px;" align="center">
+  <button id = "1" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+    <%= t(:your_rank) %></button>
+  <button id = "2" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+    <%= t(:your_facebook_friends) %></button>
+  <button id = "3" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+    <%= t(:your_twitter_friends) %></button>
+</div>
+
+<div id="btengana" style = "width:770px; margin:0 auto;" align="center">
+  <table class="table table-bordered" style = "background-color:white; margin-top:20px">
+    <thead align="center" style="font-weight:bold; color:orange;">
+      <tr>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
+      </tr>
+    </thead>
+    <tbody align="center">
+      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers.each do |user| %>
+      <% if user == current_gamer %>
+      <tr style="background-color: #DDDDDD">
+      <% else %>
+      <tr>
+      <% end %>
+        <td><%= rank = Gamer.get_gamer_rank(user) %></td>
+        <td><%= user.username %></td>
+        <td><%= user.highest_score %></td>
+        <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
+      </tr>
+      <br>
+      <% end %>
+    </tbody>
+  </table>
+  <div align="center"><%= paginate @gamers, remote: true %></div>
+</div>
+
+<div id = "twitter" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
+  <p>
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" />
+  </p>
+  <% common = Authentication.get_common_twitter_friends(current_gamer) %>
+  <% if common.nil? %>
+  <p style="color:white;"><%= t(:not_connected_to_twitter) %></p>
+  <% else %>
+  <% if !common %>
+  <p style="color:white;"><%= t(:connection_error) %></p>
+  <% else %>
+  <table class="table table-bordered" style = "background-color:white; margin-top:20px">
+    <thead align="center" style="font-weight:bold;">
+      <tr>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
+      </tr>
+    </thead>
+    <tbody align="center">
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers.each do |user| %>
+      <% if user == current_gamer %>
+      <tr style="background-color: #DDDDDD"><td>*
+      <% else %>
+      <tr><td>
+      <% end %>
+        <%= rank = Gamer.get_twitter_rank(user) %></td>
+        <td><%= user.username %></td>
+        <td><%= user.highest_score %></td>
+        <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
+      </tr>
+      <br>
+      <% end %>
+    </tbody>
+  </table>
+  <div align="center"><%= paginate @gamers %></div>
+  <% end %>
+  <% end %>
+</div>
+
+<div id = "facebook" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
+  <br>
+  <p>
+    <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" style="padding-top:10px" />
+  </p>
+  <% common = Authentication.get_common_facebook_friends(current_gamer) %>
+  <% if common.nil? %>
+  <p style="color:white;"><%= t(:not_connected_to_facebook) %></p>
+  <% else %>
+  <% if !common %>
+  <p style="color:white;"><%= t(:connection_error) %></p>
+  <% else %>
+  <table class="table table-bordered" style = "background-color:white; margin-top:20px">
+    <thead align="center" style="font-weight:bold;">
+      <tr>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
+      </tr>
+    </thead>
+    <tbody align="center">
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+      <% @gamers.each do |user| %>
+      <% if user == current_gamer %>
+      <tr style="background-color: #DDDDDD"><td>*
+      <% else %>
+      <tr><td>
+      <% end %>
+        <%= rank = Gamer.get_facebook_rank(user) %></td>
+        <td><%= user.username %></td>
+        <td><%= user.highest_score %></td>
+        <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
+      </tr>
+      <br>
+      <% end %>
+    </tbody>
+  </table>
+  <div align="center" style="color:white;"><%= paginate @gamers %></div>
+  <% end %>
+  <% end %>
+</div>

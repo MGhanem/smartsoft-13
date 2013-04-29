@@ -1,2 +1,3 @@
 $('#loading-server').remove();
-$('.zone').append('<%= render "halloffame" %>');
+$('.zone').empty();
+$('.zone').append('<%= escape_javascript(render("halloffame")) %>');
