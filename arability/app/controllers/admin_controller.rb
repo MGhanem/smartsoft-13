@@ -54,6 +54,10 @@ class AdminController < ApplicationController
     @list = Gamer.order(params[:order]).page(params[:page]).per(5)
   end
 
+  def list_developers
+    @list = Developer.order(params[:order]).page(params[:page]).per(5)
+  end
+
   # Author:
   #   Karim ElNaggar
   # Description:

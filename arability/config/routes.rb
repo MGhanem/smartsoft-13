@@ -13,6 +13,7 @@ Arability::Application.routes.draw do
       match "/trophies" => "admin#list_trophies", :via => [:get]
       match "/prizes" => "admin#list_prizes", :via => [:get]
       match "/gamers" => "admin#list_gamers", :via => [:get]
+      match "/developers" => "admin#list_developers", :via => [:get]
     end
     scope "/delete" do
       match "/trophy" => "admin#delete_trophy", :via => [:get]
