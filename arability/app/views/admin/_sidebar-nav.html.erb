@@ -4,8 +4,10 @@
 			<li <%= active == "dashboard"? "class=active" : "" %>>
 				<a href="/admin">الصفحة الرئيسية</a>
 			</li>
-			<li <%= active == "list-users"? "class=active" : "" %>>
-				<a href="/admin/list/users">عرض المشتركيين</a>
+			<li class="nav-header">إدارة الحسابات</li>
+			<li class="divider"></li>
+			<li <%= active == "list-gamers"? "class=active" : "" %>>
+				<a href="/admin/list/gamers">عرض اللاعبيين</a>
 			</li>
 			<li class="nav-header">إدارة الكلمات</li>
 			<li class="divider"></li>

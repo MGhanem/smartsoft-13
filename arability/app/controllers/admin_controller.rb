@@ -33,7 +33,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_trophies
-    @trophies_list = Trophy.all
+    @trophies_list = Trophy.order(params[:order]).page(params[:page]).per(2)
   end
 
   # Author:
@@ -47,18 +47,11 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_prizes
-    @prizes_list = Prize.all
+    @prizes_list = Prize.order(params[:order]).page(params[:page]).per(2)
   end
 
-  def list_users
-    list_type = params[:type]
-    if list_type == 'Gamer'
-      @list = Gamer.all
-    elsif list_type == 'Developer'
-      @list = Developer.all
-    elsif list_type == 'Admin'
-      @list = Gamer.where(:admin => true).all
-    end        
+  def list_gamers
+    @list = Gamer.order(params[:order]).page(params[:page]).per(5)
   end
 
   # Author:

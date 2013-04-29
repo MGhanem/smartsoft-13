@@ -10,6 +10,10 @@ li.nav-header {
 	margin-top: 5%;
 }
 
+table {
+  background-color: white;
+}
+
 /* image file upload css */
 
 .uploader-controls .uploader-preview {
@@ -116,4 +120,9 @@ div.trophy, div.prize {
 
 div.nav-fixed {
   position: fixed;
+}
+
+div.pull-left .pagination {
+  position: relative;
+  top: -25px;
 }

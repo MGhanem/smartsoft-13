@@ -19,6 +19,9 @@
             </div>
           </div>
           <legend>
+            <div class="pull-left pagination">
+              <%= paginate @prizes_list, :remote => true %>
+            </div>
             <a>
               عرض الجوائز
             </a>
@@ -32,19 +35,36 @@
                 </div>
               <% end %>
           <% if @prizes_list.length != 0 %>
-            <% @prizes_list.each do |t| %>
-              <div class="trophy well">
-                <span>الاسم: <%= t.name %></span>
-                <div class="uploader-controls">
-                  <div class="uploader-preview fileupload-preview thumbnail">
-                    <img src="<%= t.image %>">
-                  </div>
-                </div>
-                <span>المستوى: <%= t.level %></span>
-                <span>مجموع النقاط: <%= t.score %></span>
-                <span><a href="#myModalPrize" data-href="/admin/delete/prize?id=<%= t.id %>" role="button" class="edit-link-prize" data-toggle="modal">مسح</a></span>
-              </div>
-            <% end %>
+            <table class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <td>الاسم</td>
+                <td>الصورة</td>
+                <td>المستوى</td>
+                <td>مجموع النقاط</td>
+                <td>مسح</td>
+              </tr>
+              </thead>
+              <tbody>
+              <% @prizes_list.each do |t| %>
+                <tr>
+                  <td><%= t.name %></td>
+                  <td>
+                    <div class="uploader-controls">
+                      <div class="uploader-preview fileupload-preview thumbnail">
+                        <img src="<%= t.image %>">
+                      </div>
+                    </div>
+                  </td>
+                  <td><%= t.level %></td>
+                  <td><%= t.score %></td>
+                  <td>
+                    <a href="#myModalPrize" data-href="/admin/delete/prize?id=<%= t.id %>" role="button" class="edit-link-prize" data-toggle="modal">مسح</a>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
           <% else %>
             عفون لا يوجد جوائز
           <% end %>

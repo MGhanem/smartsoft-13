@@ -1,0 +1,22 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: 'sidebar-nav', locals: {active: "list-gamers"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-list-ganers">
+					<legend>
+						<div class="pull-left pagination">
+							<%= paginate @list, :remote => true %>
+						</div>
+						<a>
+							عرض اللاعبيين
+						</a>
+					</legend>
+					<% for item in @list %>
+						<%= item.username %> <br>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
