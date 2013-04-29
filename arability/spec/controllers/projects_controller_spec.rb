@@ -57,7 +57,6 @@ describe ProjectsController, type: :controller do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
-<<<<<<< HEAD
 end
 
 describe "GET #new" do
@@ -153,7 +152,8 @@ describe 'PUT update' do
       put :update, id: @project, project: Factory.attributes_for(:invalid_project)
       response.should render_template :edit
     end
-  end
+
+  # Noha's test
   it "should make developer remove a project shared with him" do
     sign_in gamer1
     get :remove_project_from_developer, :dev_id => developer1.id, :project_id => project.id
