@@ -114,11 +114,11 @@ class AuthenticationsController < ApplicationController
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
-          redirect_to "/", flash: {notice: t(:already_connected_fb)}
+          redirect_to root_url, flash: {notice: t(:already_connected_fb)}
         end
       end
     else
-      redirect_to "/", flash: {error: t(:oops_error_fb)}
+      redirect_to root_url, flash: {error: t(:oops_error_fb)}
     end
   end
 
