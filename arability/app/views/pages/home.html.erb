@@ -243,13 +243,13 @@
           <img src="../assets/game.png" alt="">
           <h2><%= t(:feat1h) %></h2>
           <p><%= t(:feat1b) %></p>
-          <p><a class="btn" href="/game"><%= t(:play) %> &raquo;</a></p>
+          <p><a class="btn" href="<%= game_path %>"><%= t(:play) %> &raquo;</a></p>
         </div><!-- /.span4 -->
          <div class="span4">
           <img src="../assets/up.png" alt="">
           <h2><%= t(:feat2h) %></h2>
           <p><%= t(:feat2b) %></p>
-          <p><a class="btn" href="/gamers/sign_up"><%= t(:sign_up) %> &raquo;</a></p>
+          <p><a class="btn" href="<%= new_gamer_registration_path %>"><%= t(:sign_up) %> &raquo;</a></p>
         </div>
         <!-- /.span4 -->
           <div class="span4">
@@ -257,7 +257,7 @@
           <h2><%= t(:feat3h) %></h2>
           <p><%= t(:feat3b) %></p>
 
-          <p><a class="btn" href="/developers"><%= t(:backend) %> &raquo;</a></p>
+          <p><a class="btn" href="<%= backend_home_path %>"><%= t(:backend) %> &raquo;</a></p>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
