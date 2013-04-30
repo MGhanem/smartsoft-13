@@ -35,13 +35,13 @@ module ApplicationHelper
   # Author:
   #   Mohamed Tamer
   # Description
-  #   returns country name based on locale
+  #   Gets country name based on locale
   # Params:
   #   country: the english name for country
   # Success: 
-  #   arabic or english name country
+  #    Returns arabic or english country name. Will be None if the country is not in the database
   # Failure:
-  #   none
+  #   None
   def get_country_name_by_locale(country)
     countries = [['مصر','Egypt'],['لبنان','Lebanon'],
     ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
@@ -67,13 +67,13 @@ module ApplicationHelper
   # Author:
   #   Mohamed Tamer
   # Description
-  #   returns education level based on locale
+  #   Gets education level based on locale
   # Params:
   #   education_level: the english name for education_level
   # Success: 
-  #   arabic or english name of education level
+  #   Returns arabic or english education level. Will be "None" if the education level is not in the database
   # Failure:
-  #   none
+  #   None
   def get_education_level_by_locale(education_level)
     education_levels = [['خريج','Graduate'],['طالب جامعي','University'],['طالب مدرسة','School']]
     education_levels.each do |c|

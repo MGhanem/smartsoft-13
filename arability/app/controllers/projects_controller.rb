@@ -30,15 +30,15 @@ class ProjectsController < BackendController
   end
     
   # author: 
-  #    Mohamed Tamer
+  #   Mohamed Tamer
   # description:
-  #    function shows all the projects that a certain developer owns and the projects shared with him
+  #   Function shows all the projects that a certain developer owns and the projects shared with him
   # Params:
-  #    current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
+  #   current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
   # Success:
-  #    returns array of projects that the developer own and the projects shared with him
+  #   Returns array of projects that the developer own and the projects shared with him
   # Failure:
-  #    none
+  #   None
   def index  
     @developer = Developer.where(:gamer_id => current_gamer.id).first
     @my_projects = Project.where(:owner_id => @developer.id)

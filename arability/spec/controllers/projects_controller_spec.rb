@@ -16,7 +16,7 @@ describe ProjectsController do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mohamedtamer5@gmail.com"
     gamer.password = "1234567"
-    gamer.save
+    gamer.save validate: false
     gamer
   }
 
@@ -54,23 +54,28 @@ describe ProjectsController do
   #Timo's tests
   describe "GET #index" do
     it "populates an array of projects"
-      project
       a = create_logged_in_developer
       sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
       get :index
-      assigns(:my_projects).should eq([project])
+      assigns(:my_projects).should eq([project2])
     end
 
-    it "renders the :index view"
+    it "renders the :index view" do
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :index
       response.should render_template :index
     end
 
-    it "redirects to sign in page if the developer isn't signed in"
+    it "redirects to sign in page if the developer isn't signed in" do
       get :index
-      response.code.should eq("302")
+      response.should redirect_to new_gamer_session_path
     end
   end
   #End of Timo's tests
