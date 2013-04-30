@@ -14,31 +14,31 @@
 	
 			<td width="300px">
 	<div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
-	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br />
-		<% if I18n.locale==:en %>
-		<h5>The number of words you can search for is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الأقصى للبحث عن الكلمات في مشروعك هي:</h5>
-		<% end %>
-		<%=sm.limit_search%><%= t(:per_month)%><br />
-		<% if I18n.locale==:en %>
-		<h5>The number of words you can follow is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الأقصى لمتابعة الكلمات هي:</h5>
-		<% end %>
-		<%=sm.limit_follow%><%= t(:per_month)%><br/>
-		<% if I18n.locale==:en %>
-		<h5>The number of words you can add to you project is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الأقصى لاضافة الكلمات إلى مشروعك هي:</h5>
-		<% end %>
-		<%=sm.limit%><%= t(:per_month)%><br />
-		<% if I18n.locale==:en %>
-		<h5>The number of projects you can create is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>عدد المشاريع</h5>
-		<% end %>
-		<%=sm.limit_project%>
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %>      <%= sm.name %><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can search for is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكنك البحث عنها هى:</h5>
+    <% end %>
+    <%=sm.limit_search%><%= t(:per_month)%><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can follow is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكنك متابعتها هي:</h5>
+    <% end %>
+    <%=sm.limit_follow%><%= t(:per_month)%><br/>
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can add to your project is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكن اضافتها إلى مشروعك هي :</h5>
+    <% end %>
+    <%=sm.limit%><%= t(:per_month)%><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of projects you can create is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد المشريع التي يمكنك انشائها هي :</h5>
+    <% end %>
+    <%=sm.limit_project%>
 	</p>
     </div>
             </td>
