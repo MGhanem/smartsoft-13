@@ -8,6 +8,8 @@ class AdminController < ApplicationController
   before_filter :authenticate_gamer!
   before_filter :authenticate_admin!
 
+  skip_before_filter :set_locale
+
   # Author:
   #   Karim ElNaggar
   # Description:
@@ -265,19 +267,15 @@ class AdminController < ApplicationController
     if request.post?
       english_name = params[:english_name]
       arabic_name = params[:arabic_name]
+      @arabic_name = arabic_name
+      @english_name = english_name
       @success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
       if @success
         flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
           /#{@category.arabic_name} بنجاح"
-        flash.keep
-        redirect_to action: "add_category"
       else
         flash[:error] = @category.errors.messages
-        flash.keep
-        redirect_to action: "add_category"
       end
-    else
-      render "admin/add_category"
     end
   end
 
@@ -347,7 +345,7 @@ class AdminController < ApplicationController
     category.delete
     flash[:success] = "لقد تم مسح الفئة بنجاح"
     flash.keep
-    redirect_to action: "all_category"
+    redirect_to action: "view_categories"
   end
 
   # Author:

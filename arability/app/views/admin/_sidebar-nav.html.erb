@@ -1,9 +1,6 @@
 <div class="span3">
 	<div class="well nav-fixed">
 		<ul class="nav nav-list nav-stacked" id="admin-tabs">
-			<li <%= active == "dashboard"? "class=active" : "" %>>
-				<a href="/admin">الصفحة الرئيسية</a>
-			</li>
 			<li class="nav-header">إدارة الحسابات</li>
 			<li class="divider"></li>
 			<li <%= active == "list-gamers"? "class=active" : "" %>>
@@ -19,6 +16,12 @@
 			<li class="divider"></li>
 			<li <%= active == "list-projects"? "class=active" : "" %>>
 				<a href="/admin/list/projects">عرض المشارييع</a>
+			</li>
+			<li <%= active == "add-category"? "class=active" : "" %>>
+				<a href="/admin/add_category">إضافة فئة جديدة</a>
+			</li>
+			<li <%= active == "view-categories"? "class=active" : "" %>>
+				<a href="/admin/view_categories">عرض الفئات</a>
 			</li>
 			<li class="nav-header">إدارة الكلمات</li>
 			<li class="divider"></li>
