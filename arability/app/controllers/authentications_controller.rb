@@ -20,7 +20,6 @@ class AuthenticationsController < ApplicationController
      current_gamer.id) || Authentication.create_with_omniauth(auth["provider"], auth["uid"],
      auth["credentials"]["token"],auth["credentials"]["secret"], nil, current_gamer.id)
     redirect_to "/gamers/edit"
-    return
 	end
 
   # Author:
@@ -33,11 +32,10 @@ class AuthenticationsController < ApplicationController
   #   finds connection record, removes it correctly and redirect
   # Failure:
   #   doesnot find the record
-	def remove_twitter_connection
-    flash[:notice] = I18n.t(:remove_twitter_connection)
-	  Authentication.remove_conn(current_gamer.id, "twitter")
+	def remove_connection
+    flash[:notice] = I18n.t(:remove_social_connection)
+	  Authentication.remove_conn(current_gamer.id, params[:provider])
 	  redirect_to "/gamers/edit"
-	  return
 	end
 
   # Author:
@@ -59,7 +57,7 @@ class AuthenticationsController < ApplicationController
   # Author:
   #   Amr Abdelraouf
   # Description:
-  #   Call back method envoked when facebook sends the hash back to
+  #   Call back method invoked when facebook sends the hash back to
   #   Arability. This method is quite a handful. If the hash is empty
   #   an error message is displayed. If the gamer is already signed in it
   #   indicates that the user wants to connect his account rather than sign
@@ -103,6 +101,7 @@ class AuthenticationsController < ApplicationController
             session["devise.token"] = token
             session["devise.gid"] = gid
             session["devise.token_secret"] = nil
+            flash[:notice] = t(:continue_reg_fb)
             redirect_to controller: "social_registrations",
             action: "new_social", email: email, username: username,
             gender: gender, provider: provider
@@ -115,11 +114,11 @@ class AuthenticationsController < ApplicationController
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
-          redirect_to "/", flash: {notice: t(:already_connected_fb)}
+          redirect_to root_url, flash: {notice: t(:already_connected_fb)}
         end
       end
     else
-      redirect_to "/", flash: {error: t(:oops_error_fb)}
+      redirect_to root_url, flash: {error: t(:oops_error_fb)}
     end
   end
 

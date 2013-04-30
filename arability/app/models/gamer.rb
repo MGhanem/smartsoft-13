@@ -17,8 +17,7 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local
-
+                  :highest_score, :gender, :login, :is_local, :show_tutorial
 
   has_many :services, :dependent => :destroy
 
@@ -27,7 +26,7 @@ class Gamer < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true,
     length: { minimum: 3, maximum: 20 }
 
-  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
+  validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
@@ -298,7 +297,7 @@ class Gamer < ActiveRecord::Base
 # Params:
 #   None
 # Success:
-#   Returns boolean whether or no is local
+#   Returns boolean whether or not is local
 # Failure:
 #   None
 def is_local_account
