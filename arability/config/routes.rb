@@ -2,7 +2,7 @@ Arability::Application.routes.draw do
 
   root :to => 'pages#home'
 
-  scope "/admin" do 
+  scope "/admin" do
     get "/login"
     get "/logout"
     get "/index"
@@ -32,14 +32,14 @@ Arability::Application.routes.draw do
 
     # required for routing by the devise module(gem)
 
-    devise_for :gamers do 
+    devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
       post "/social_registrations/social_sign_in"
     end
 
     match '/game' => 'games#game'
-    post "games/vote" 
+    post "games/vote"
     post "games/record_vote"
     get 'games/getnewwords'
     get "games/get_prizes"
@@ -58,18 +58,18 @@ Arability::Application.routes.draw do
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
     get "authentications/remove_connection"
-    match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
+    match '/auth/twitter/callback', :to => 'authentications#twitter_callback'
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
 
-    scope "developers/" do 
+    scope "developers/" do
       match "/" => "backend#home", :as => "backend_home"
-      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
       get "projects/remove_developer_from_project"
-      match "projects/:id/share/" => "projects#share", :as => "share_project"
+      match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
