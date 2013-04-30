@@ -44,13 +44,16 @@ function update_errors(record_output){
 			$('.alert').append('<p style="font-size:20px; ">يجب ان يكون المعني باللغة العربية</p>');
 		<% end %>
 	}
+	if( record_output == 4 ){
+		$('.alert').append('<p style="font-size:20px;"><%= t(:must_specify_formality) %></p>')
+	}
 }
 
 
-function suggest_synonym_to_word(keyword_id){
+function suggest_synonym_to_word(keyword_id, is_formal){
 	translation = document.getElementById('suggest_synonym_textbox').value;
 	$.post("/games/record_synonym" ,{synonym_name: translation, 
-		keyword_id: keyword_id});
+		keyword_id: keyword_id, is_formal:is_formal});
 }
 $(".zone").empty();
 $(".zone").append("<div class='vote_form'></div>")

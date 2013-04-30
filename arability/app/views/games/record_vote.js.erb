@@ -1,2 +1,8 @@
-<% current_gamer.select_synonym(params[:synonym_id], params[:is_formal]) %>
+<% if params[:is_formal] == "formal" %>
+	<% current_gamer.select_synonym(params[:synonym_id], true) %>
+<% elsif params[:is_formal] == "slang" %>
+	<% current_gamer.select_synonym(params[:synonym_id], false) %>
+<% else %>
+	<% current_gamer.select_synonym(params[:synonym_id]) %>
+<% end %>
 display_next_word();

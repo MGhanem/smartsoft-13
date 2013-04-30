@@ -358,3 +358,5 @@ en:
   suggest_this_synonym: "save new translation"
   formal_or_slang: "<p style='font-size:15px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>formal</button>&nbsp or &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>slang</button></p>"
   is_this_translation: "Is this translation"
+  must_specify_formality: "you need to choose whether translation is formal or slang"
+  choose_formality: "choose formality"

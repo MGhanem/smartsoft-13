@@ -1,10 +1,10 @@
-<% if @record_output == 2 %>
+<% if @record_output == 2 || @record_output == 0 %>
 	<% if @already_existing_synonym %>
-		record_vote(<%= @already_existing_synonym.id %>);
-	<% end %>
-<% elsif @record_output == 0 %>
-	<% if @already_existing_synonym %>
-		record_vote(<%= @already_existing_synonym.id %>);
+		<% if @is_formal == "formal" %>
+			record_vote(<%= @already_existing_synonym.id %>,true);
+		<% elsif @is_formal == "slang" %>
+			record_vote(<%= @already_existing_synonym.id %>,false);
+		<% end %>
 	<% end %>
 <% else %>
 	update_errors(<%= @record_output %>);
