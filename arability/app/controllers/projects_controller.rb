@@ -194,16 +194,16 @@ end
   # Author:
   #   Mohamed Tamer
   # Description:
-  #   calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
+  #   Calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
   #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number
   #   of synonyms and the synonyms accepted for each word
   # Params:
   #   csvfile: the csv file the user imported
   #   id: the project id
   # Success:
-  #   returns an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
+  #   Returns an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
   # Failure:
-  #   redirect back to the import_csv view with the error message
+  #   Redirects back to the import_csv view with the error message
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
     project_id =  params[:id]
@@ -275,8 +275,10 @@ end
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
-        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-          @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i
+        developer = Developer.where(:gamer_id => current_gamer.id)
+        if developer.respond_to?(:my_subscription)
+          my_sub = developer.my_subscription
+          @words_remaining = my_sub.max_add_word_count(project_id)
         else
           @words_remaining = 150
         end
@@ -321,32 +323,31 @@ end
   # author:
   #   Mohamed tamer
   # description:
-  #   add words and their synonym from the imported csv file to the project
+  #   Add words and their synonym from the imported csv file to the project
   # Params:
   #   words_ids: array of hashes of word id and their corresponding synonym id
   #   id: current project id
   # Success:
-  #   returns adds the word and synonym to project and redirects back to project
+  #   Returns adds the word and synonym to project and redirects back to project
   # Failure:
-  #   if the array size is bigger than the word_search of that developer nothing is added
+  #   If the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
     if id_words_project != nil
       words_synonyms_array = id_words_project.map {|x| x.split("|")}
-      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+      developer = Developer.where(:gamer_id => current_gamer.id)
+      if developer.respond_to?(:my_subscription)
+        my_sub = developer.my_subscription
+        words_count = my_sub.max_add_word_count(project_id)
+        if words_count < id_words_project.size
           flash[:error] = t(:java_script_disabled)
           redirect_to action: "show", id: project_id
           return
         end
       end
       words_synonyms_array.each do |word_syn|
-        if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-          if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-            MySubscription.decrement_word_search
-          end
-        end
+        PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
       end
     end
     redirect_to action: "show", id: project_id
@@ -355,13 +356,13 @@ end
   # Author:
   #   Mohamed Tamer
   # Description:
-  #   finds the project and renders the view
+  #   finds the project and renders the import_csv view
   # Params:
   #   id: the project id
   # Success:
-  #   loads the view
+  #   Loads the import_csv view
   # Failure:
-  #   no failure
+  #   No failure
   def import_csv
     current_project = Project.find(params[:id])
   end

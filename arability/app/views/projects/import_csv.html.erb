@@ -1,9 +1,7 @@
 <form class="form-horizontal" action="<%=choose_keywords_project_path%>" enctype="multipart/form-data" method="POST">
   <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
 	<legend>
-	  <a>
-	    <%=t(:import_csv_title)%>
-	  </a>
+	  <h3><%=t(:import_csv_title)%></h3>
 	</legend>
 
 	<%= link_to t(:back_to_project), project_path %>

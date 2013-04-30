@@ -1,8 +1,6 @@
 <div class="container">
 <legend>
-  <a>
-    <%= t(:choose_keyword_title) %>
-  </a>
+  <h3><%= t(:choose_keyword_title) %></h3>
 </legend>
 <%= link_to t(:back_to_project), project_path %>
 <h6 style="color:red;"><%=t(:choose_keyword_remaining)%> <%= @words_remaining %> <%=t(:choose_keywords_remaining2)%> </h6>

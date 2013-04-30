@@ -21,6 +21,9 @@ class PreferedSynonym < ActiveRecord::Base
   	def add_keyword_and_synonym_to_project(synonym_id, keyword_id, project_id)
       keyword = Keyword.where(id: keyword_id).first
       if keyword != nil && keyword.synonyms.where(:synonym_id => synonym_id) != nil
+        if PreferedSynonym.find_word_in_project(project_id, keyword_id)
+          return false
+        end
         entry = PreferedSynonym.new
         entry.project_id = project_id
         entry.synonym_id = synonym_id
