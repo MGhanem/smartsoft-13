@@ -269,7 +269,7 @@ en:
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
   age_range: "(Kindly enter a value between 10 and 100)"
-  follow_words_info: "Follow a word to recieve an email with every update. Updates include a new Synonym addition to a Keyword or the top voted Synonym gets changed."
+  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword."
   synonyms_of: "Synonyms of"
   activerecord:
     errors:
