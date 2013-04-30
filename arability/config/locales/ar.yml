@@ -115,6 +115,7 @@ ar:
   projects_index_categories: "فئات: "
   projects_index_description: "وصف: "
   projects_index_edit: " تعديل"
+  projects_index_delete: " مسح"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
   no_categories: "هذا المشروع ليس له فئات"
   no_description: "هذا المشروع ليس له وصف"
@@ -299,6 +300,7 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
@@ -325,6 +327,11 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال مع تويتر"
   connect_to_twitter: "تواصل مع تويتر"
+  confirm: "هل أنت متأكد من مسح المشروع ؟"
+  delete: "مسح"
+  close_delete: "الغاء"
+  submit_delete: "مسح"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
   fill_in_next: "من فضلك املأ الفراغات التالية"
   or: "أو"
   existing_account: "سجل بحساب اخر"
