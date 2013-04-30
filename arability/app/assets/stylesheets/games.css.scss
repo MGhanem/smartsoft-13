@@ -52,18 +52,42 @@
   height:50px;
 }
 
-#synonym_button{
+#synonym_button0{
   height:50px;
   width:200px;
   font-size:30px;
-  padding:20px;
-  padding-bottom:40px;
   margin-bottom: 20px;
   text-align: center;
   border-radius:7px;
 }
 
 #synonym_button1{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button2{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+#synonym_button3{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button{
   height: 50px;
   width: 170px;
   font-size: 30px;
@@ -88,9 +112,6 @@
   width:190px;
 }
 
-#formal_slang{
-  font-size:20px;
-}
 
 #suggest_synonym_textbox{
   width:200px;
@@ -212,6 +233,10 @@ margin-left: 80px;
 
 .divaya{
   padding-top: 20px;
+}
+
+.vote_table.popover{
+  width:250px;
 }
 
 #btn-clear{
