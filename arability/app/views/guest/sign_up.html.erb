@@ -39,8 +39,8 @@
 <%= form_for(resource, :url => guest_signing_up_path) do |f| %>
     <% if @errors != nil %>
       <%if @errors.is_a?(Hash)%>
-        <ul>
-          <div class="validation">
+        <div class="validation">
+          <ul>
             <% @errors.each do |error| %>
               <li>
                 <% if error[0] == "date_of_birth" %>
@@ -79,16 +79,16 @@
                 <%end%>
               </li>
             <%end%>
-          </div>
-        </ul>
+          </ul>
+        </div>
       <%else%>
-        <ul>
-          <div class="validation">
+        <div class="validation">
+          <ul>
             <% @errors.each do |error| %>
               <li><%=error%></li>
             <%end%>
-          </div>
-        </ul>
+            </ul>
+        </div>
       <%end%>
     <% end %>
 

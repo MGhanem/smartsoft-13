@@ -1,10 +1,10 @@
 <em><h3 class="text-info"><%=  t(:guest_continue_sign_up_title) %></h3></em>
-<div class="container well">
+<div>
 <%= form_for(resource, :url => guest_continue_signing_up_path) do |f| %>
     <% if @errors != nil %>
       <%if @errors.is_a?(Hash)%>
-        <ul>
-          <div class="validation">
+        <div class="validation">
+          <ul>
             <% @errors.each do |error| %>
               <li>
                 <% if error[0] == "username" %>
@@ -36,22 +36,21 @@
                 <%end%>
               </li>
             <%end%>
-          </div>
-        </ul>
+          </ul>
+        </div>
       <%else%>
-        <ul>
-          <div class="validation">
+        <div class="validation">
+          <ul>
             <% @errors.each do |error| %>
               <li><%=error%></li>
             <%end%>
-          </div>
-        </ul>
+          <ul>
+        </div>
       <%end%>
     <% end %>
 
-    <div class="container">
-
-
+    <div class="form-signin">
+      <div style="width:240px; margin:0 auto;">
         <div><%= f.label t(:email), :class => "control-label" %>
         <%= f.email_field :email, :value => "#{@email}", :style => "margin-left: 10px;" %></div></br>
 
@@ -65,10 +64,15 @@
         <%= f.password_field :password_confirmation, :style => "margin-left: 10px;" %></div></br>
 
         <% if I18n.locale == :ar %>
-            <div><%= f.submit "سجل الحساب", :class => "btn btn-success" %></div>
+          <div><%= f.submit "سجل الحساب", :class => "btn btn-success arabic" %></div>
         <% else %>
-            <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
+          <div><%= f.submit "Sign up", :class => "btn btn-success" %></div>
         <% end %>
+      </div>
     </div>
-    </div>
-    <% end %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(".arabic").attr("style", "font-size: 18px;");
+</script>
