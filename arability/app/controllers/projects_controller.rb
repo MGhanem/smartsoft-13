@@ -7,6 +7,9 @@ class ProjectsController < BackendController
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, 
   only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  before_filter :can_access_project?,
+  only: [:add_word_inside_project, 
+  :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
  # author:Noha hesham
  # Description:
@@ -406,7 +409,7 @@ end
   #   keyword or synonym does not exist, word add limit exceeded.
   def add_word_inside_project
     @project_id = params[:project_id]
-    if current_developer != nil && !(@project_id.blank?)
+    if !(@project_id.blank?)
       @word_id = Keyword.find_by_name(params[:keyword]).id
       if @word_id != nil && Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
@@ -573,16 +576,15 @@ end
 #   word removed successfully
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
-  def remove_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
-      @project_id = params[:project_id]
-      @word_id = params[:word_id]
-      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-      @removed_word.each do |word| 
-        if word.project_id = @project_id
-          @remove = word
-        end 
-      end
+  def remove_word 
+    @project_id = params[:project_id]
+    @word_id = params[:word_id]
+    @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+    @removed_word.each do |word| 
+      if word.project_id = @project_id
+        @remove = word
+      end 
+    end
       if  @remove != nil
         @remove.destroy
         flash[:success] = t(:word_removed_successfully)
@@ -592,7 +594,6 @@ end
         redirect_to project_path(@project_id), flash: flash
       end
     end
-  end
 
   # author:
   #   Khloud Khalid
