@@ -15,7 +15,7 @@
     <% end %>
 
     <div class="container">
-        <div class="control-group success">
+        <div class="control-group <%= @provider == 'twitter' ? ' ' : 'success' %>">
             <div class="controls">
                 <%= f.label t(:email), class: "control-label" %>
                 <% if @provider == "twitter" %>
@@ -33,7 +33,7 @@
             </div>
         </div></br>
 
-        <div class="control-group success">
+        <div class="control-group <%= @provider == 'twitter' ? ' ' : 'success' %>">
             <%= f.label t(:gender), :class => "control-label" %>
             <% if I18n.locale == :ar %>
                 <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']], {:selected => @gender}),{}, :style => "margin-left: 10px;" ) %> 
