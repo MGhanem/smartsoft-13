@@ -382,7 +382,12 @@ function initializeGame(){
 function initializeList(){
 	var lsHtml = [];
 	for(var i = 0; i < wordsArray.length; i++){
-		lsHtml.push("<li id='ls");
+		if(lang == 1){
+			lsHtml.push("<li style='font-size: 22px;' id='ls");
+		}
+		else{
+			lsHtml.push("<li id='ls");
+		}
 		lsHtml.push(i);
 		lsHtml.push("'>");
 		lsHtml.push(wordsArray[i]);
@@ -1424,6 +1429,9 @@ function continuePlaying(){
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	if(lang == 1){
+		$('#wordLabel').css('font-size', '22px');
+	}
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
