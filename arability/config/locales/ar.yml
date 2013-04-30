@@ -331,7 +331,6 @@ ar:
   already_shared_project: "تم مشاركة هذا المشروع سابقا"
   project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
   dev_unshare: "تم عدم المشاركة"
-  projects_index_delete: " الغاء الاشتراك"
   delete_share: "الغاء الاشتراك"
   confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
   submit_remove: "الغاء الاشتراك"
@@ -369,3 +368,4 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  unshare: " الغاء الاشتراك"

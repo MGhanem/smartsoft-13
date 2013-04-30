@@ -322,7 +322,6 @@ en:
   already_shared_project: "Project already shared"
   project_successfully_shared: "Project has been successfully shared"
   dev_unshare: "Developer unshared"
-  projects_index_delete: " unshare"
   delete_share: "Remove from shared projects"
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
@@ -360,3 +359,4 @@ en:
   modal_yes_button: "Yes"
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
+  unshare: "Unshare"
