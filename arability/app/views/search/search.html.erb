@@ -159,14 +159,27 @@
 	</div>
 <% end %>
 
+<%= debug @synonym_type %>
 <% if !@country.blank? || !@gender.blank? || !@age_from.blank? || 
-	!@age_to.blank? || !@education.blank? || !@synonym_type.blank? %>
+	!@age_to.blank? || !@education.blank? || @synonym_type != nil %>
 	<script type="text/javascript">
-	$("#filter").attr("class","collapse in");
+		$("#filter").attr("class","collapse in");
+		toggle_me();
 	</script>
+	<% if @synonym_type %>
+		<script type="text/javascript">
+			$("#formal").attr("class","btn btn-inverse active");
+			$("#slang").attr("class","btn");
+		</script>
+	<% elsif @synonym_type == false %>
+		<script type="text/javascript">
+			$("#formal").attr("class","btn");
+			$("#slang").attr("class","btn btn-inverse active");
+		</script>
+	<% end %>
 <% else %>
 	<script type="text/javascript">
-	$("#filter").attr("class","collapse");
+		$("#filter").attr("class","collapse");
 	</script>
 <% end %>
 
