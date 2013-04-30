@@ -51,9 +51,23 @@ describe "RecordSynonymTest" do
 
   it "should return false and the new synonym model id as nil" do
     id = word.id
-    result, synonym = Synonym.record_synonym("try",id)
+    result, synonym = Synonym.record_synonym("try",id,true)
     expect(result).to eq (false)
     expect(synonym.id).to eq (nil)
+  end
+
+  it "should set is_formal with the value entered" do
+    id = word.id
+    result, synonym = Synonym.record_synonym("عربي",id,true,false,false)
+    expect(result).to eq (true)
+    expect(synonym.is_formal).to eq (false)
+  end
+
+  it "should set is_formal with nil as there is no value entered" do
+    id = word.id
+    result, synonym = Synonym.record_synonym("عربي",id,true,false)
+    expect(result).to eq (true)
+    expect(synonym.is_formal).to eq (nil)
   end
 
 end

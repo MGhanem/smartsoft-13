@@ -20,7 +20,7 @@
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-              <%= form_for("gamer", url: gamer_session_path) do |f| %>
+               <%= form_for("gamer", url: gamer_session_path) do |f| %>
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
                 <% if I18n.locale == :ar %>
@@ -28,7 +28,25 @@
                 <% else %>
                   <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary" %>
                 <% end %>
+                <div style="padding-top:5px; text-align:center; font-style:italic;">
+                  <span><%= t(:or) %></span>
+                </div>
+                  <div style="padding:5px; text-align:center;">
+                  <span><%= t(:existing_account) %></span>
+                </div>
+                <div class="providers" style="text-align:center;">
+                  <a href="/auth/facebook" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/facebook-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                  <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/twitter-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                  <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/google_64.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                </div>
               <% end %>
+
             </div>
           </li>
       <% else %>
