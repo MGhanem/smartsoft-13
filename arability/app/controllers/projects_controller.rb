@@ -271,6 +271,15 @@ end
           end
         end
       end
+      developer = Developer.where(:gamer_id => current_gamer.id)
+      if developer.respond_to?(:my_subscription)
+        my_sub = developer.my_subscription
+        flag_continue = my_sub.max_add_word(project_id)
+        if !flag_continue
+          flash[:notice] = t(:upload_file_error5)
+          redirect_to action: "show", id: project_id  
+        end
+      end
       if @id_words_in_database_before.empty? && @id_words_not_in_database_before.empty?
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
