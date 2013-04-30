@@ -124,7 +124,7 @@ Arability::Application.routes.draw do
 
   match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
  
-  match "/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
+  match "/developers/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
