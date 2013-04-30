@@ -80,12 +80,12 @@
                 <% if I18n.locale == :ar %>
                   <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                 <% else %>
-                  <a style="font-size : 18px;" class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                  <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                 <% end %>
                 <% if I18n.locale == :ar %>
                   <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
                 <% else %>
-                  <a style="margin-right : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
                 <% end %>
                 <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-header">
@@ -172,12 +172,12 @@
                   <% if I18n.locale == :ar %>
                     <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                   <% else %>
-                    <a style="font-size : 18px;" class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                   <% end %>
                   <% if I18n.locale == :ar %>
                     <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
                   <% else %>
-                    <a style="margin-right : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                    <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
                   <% end %>
                   <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
@@ -193,38 +193,6 @@
                     </div>
                   </div>
                   <br />
-                  <strong><%= t(:projects_index_description)%></strong>
-                  <% if project2.description.size == 0 %>
-              <%= t(:no_description) %>
-              <% else %>  
-              <%= project2.description %>
-              <% end %>
-  <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-    <%else%>
-    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-
-   <% if I18n.locale == :ar %>
-     <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% else %>
-    <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% end %>
-    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 id="modal_label"><%= t(:delete) %></h3>
-    </div>
-      <div class="modal-body">
-        <span><%= t(:confirm)%></span>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
-        <%= link_to t(:submit_delete), delete_path(project1.id),class: "btn btn-danger" %>
-      </div>
-    </div>
-  <br />
                 </div>
               </td>
             <%end%>
@@ -314,12 +282,12 @@
                     <% if I18n.locale == :ar %>
                       <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                     <% else %>
-                      <a style="font-size : 18px;" class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                      <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                     <% end %>
                     <% if I18n.locale == :ar %>
                       <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
                     <% else %>
-                      <a style="margin-right : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                      <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
                     <% end %>
                     <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-header">
@@ -408,12 +376,12 @@
                     <% if I18n.locale == :ar %>
                       <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                     <% else %>
-                      <a style="font-size : 18px;" class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                      <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
                     <% end %>
                     <% if I18n.locale == :ar %>
                       <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
                     <% else %>
-                      <a style="margin-right : 6px;  font-size : 18px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                      <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
                     <% end %>
                     <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-header">
