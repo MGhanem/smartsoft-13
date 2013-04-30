@@ -3,16 +3,13 @@ require "spec_helper"
 require "request_helpers"
 include RequestHelpers
 include Warden::Test::Helpers
-# include Devise::TestHelpers
+
 
 describe MySubscriptionController do
 	 let(:submodel){
     submodel = SubscriptionModel.new
-    # submodel.name_en="Free"
-    # submodel.name_ar="مجانا"
     submodel.limit=50
     submodel.limit_search=50
-    #submodel.limit_add=50
     submodel.limit_follow=50
     submodel.limit_project=1
     submodel.save
