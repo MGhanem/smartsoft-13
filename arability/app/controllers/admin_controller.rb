@@ -63,6 +63,10 @@ class AdminController < ApplicationController
                           .page(params[:page]).per(5)
   end
 
+  def list_projects
+    @list = Project.order(params[:order]).page(params[:page]).per(5)
+  end
+
   def make_admin
     user = Gamer.find_by_id(params[:id])
     if user != nil
