@@ -477,3 +477,4 @@ en:
   close_share: "cancel"
   sub_changed: "chane %{sm.name} "
   you_have_prizes: "You have won the following prizes!"
+  back_to_project: "<< Back to project"
