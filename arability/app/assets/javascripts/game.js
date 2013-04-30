@@ -1050,6 +1050,9 @@ function setLetterPicker(){
 function removeFromLetterPicker(word){
 	for(var i = 0; i < word.length; i++){
 		var toBeRemovedIndex = jQuery.inArray(word.charAt(i), letterPickerArray);
+		if(toBeRemovedIndex == -1){
+			return;
+		}
 		if(initialIntValues[toBeRemovedIndex] == 1){
 			intPickerArray[toBeRemovedIndex] = -1;
 		}
@@ -1308,82 +1311,18 @@ function getNewWords(num){
 //   --
 
 function setLevelAttributes(level){
-if(level == 1){
-	getNewWords(2);
+	getNewWords(level + 1);
 	for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
+		wordsArray[x] = wordsArray[x].toUpperCase();
 	}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		setLetterPicker();
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-}
-
-
-if(level == 6){
-		alert("Thank You for Playing, you're Awesome!!");
-		return;
+	for(var i = 0; i < wordsArray.length; i++){
+		wordExistsInArray[i] = true;
 	}
-	if(level == 2){
-		getNewWords(3);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		setLetterPicker();
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 3){
-		getNewWords(4);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		setLetterPicker();
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 4){
-		getNewWords(5);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		setLetterPicker();
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 5){
-		getNewWords(5);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		setLetterPicker();
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
+	setLetterPicker();
+	initializeGame();
+	initializeList();
+	calculatePossible();
+	dropAblock();
 }
 
 // author:
