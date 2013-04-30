@@ -268,12 +268,13 @@ class Gamer < ActiveRecord::Base
   #   d_o_b: user date of birth
   #   country: user country
   #   ed_level: user educational level
+  #   provider: the social account provider
   # Sucess:
   #   New gamer is created with said attributes, returns the gamer and true
   # Failure:
   #   Gamer not saved because of validations, returns nil and false
   def self.create_with_social_account(
-    email, username, gender, d_o_b, country, ed_level)
+    email, username, gender, d_o_b, country, ed_level, provider)
     gamer = Gamer.new(
       email: email,
       username: username,
@@ -282,7 +283,8 @@ class Gamer < ActiveRecord::Base
       date_of_birth: d_o_b,
       country: country,
       education_level: ed_level,
-      is_local: false)
+      is_local: false,
+      provider: provider)
     if gamer.save
       return gamer, true
     else
