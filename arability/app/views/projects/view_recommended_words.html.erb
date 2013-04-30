@@ -7,6 +7,9 @@
       <%= t(:no_recommended_words) %>
     </span>
   </div>
+  <div style="text-align:center">
+    <span><a class="btn pull-center" href="/developers/projects/?project_id=<%= @project.id %>" > <%= t(:rec_back) %> </a></span>
+  </div>
 <% else %>
 <p style="color:blue"><%= t(:select_words) %><p>
   <table class="table table-bordered table-hover table-condensed" style="width:600px;background-color:white">
@@ -37,11 +40,13 @@
        </script>
       </tr>
   <% end %>
-  </table>
+</table>
 <% if I18n.locale == :en %>
-   <%= submit_tag t(:add_to_project), :class => "btn btn-primary btn-large pull-right", :onclick => "return check();" %>
-   <% else %>
-   <%= submit_tag t(:add_to_project), :class => "btn btn-primary btn-large pull-left", :onclick => "return check();" %>
+  <span4><a class="btn pull-right" href="/developers/projects/?project_id=<%= @project.id %>" style="margin-left: 20px"> <%= t(:cancel) %> </a></span4>
+  <%= submit_tag t(:add_to_project), :class => "btn btn-primary pull-right", :onclick => "return check();" %>
+<% else %>
+  <span3><a class="btn pull-left" href="/developers/projects" style="margin-right: 20px"> <%= t(:rec_back) %> </a></span3>
+  <%= submit_tag t(:add_to_project), :class => "btn btn-primary pull-left", :onclick => "return check();" %>
    <% end %>
   <% end %>
 <% end %>

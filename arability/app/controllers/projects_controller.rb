@@ -5,7 +5,7 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?,
+  # before_filter :developer_can_see_this_project?,
 
  # author:Noha hesham
  # Description:
@@ -220,15 +220,7 @@ class ProjectsController < BackendController
   #   the method finds the project by its id and then calls the method
   #   filterkeywords in Project tha filters the relevant keywords.
   # Params:
-  #   :description: about the project
-  #   :formal: formal/slang boolean value
-  #   :maxAge: maximum age
-  #   :minAge: minimum age
-  #   :name: name of the project
-  #   :category: project category
-  #   :country
-  #   :education_level
-  #   :gender m/f boolean value
+  #   Project id
   # Success:
   #   Getting an array of keywords relevant to the project
   # Failure:
@@ -237,7 +229,7 @@ class ProjectsController < BackendController
   def view_recommended_words
     # if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
-      @karray = Project.filterkeywords(@project.category_id)
+      @karray = Project.filterkeywords(@project.id,@project.category_id)
     # else
       # flash[:notice] = "You cannot use this service, please subscribe as premium or deluxe"
     # end
@@ -251,16 +243,8 @@ class ProjectsController < BackendController
   #   the words will be added to. The words and their synonyms will be added after checking some
   #   authorization validations.
   # Params:
-  #   :description: about the project
-  #   :formal: formal/slang boolean value
-  #   :maxAge: maximum age
-  #   :minAge: minimum age
-  #   :name: name of the project
-  #   :category: project category
-  #   :country
-  #   :education_level
-  #   :gender m/f boolean value
-  #   :synonym: A hash containing the chosen keyword id along with its chosen synonym id
+  #   Project id
+  #   A hash of the keywords and their synonyms
   # Success:
   #   The words will be successfully added to the project
   # Failure:
@@ -268,18 +252,16 @@ class ProjectsController < BackendController
   #   to add any more.
   def get_recommended_words
     @project = Project.find(params[:project_id])
-    params[:synonym].each do |key, syn|
-      @word_id = Keyword.find((key.to_i)).id
-      @synonym_id = syn.to_i
-      if PreferedSynonym.find_word_in_project(@project.id, @word_id) == false
+    if params[:synonym] != nil
+      params[:synonym].each do |key, syn|
+        @word_id = Keyword.find((key.to_i)).id
+        @synonym_id = syn.to_i
           # if MySubscription.get_permissions(current_developer.id, 2)
           @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
-          @synonym_id, @word_id, @project.id)
+            @synonym_id, @word_id, @project.id)
         # end
-      else
-        flash[:notice] = t(:Failed_to_update_synonym)
-      end
     end
+  end
     redirect_to project_path(@project.id)
   end
 

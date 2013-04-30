@@ -33,6 +33,7 @@ ar:
   follow: "تابع"
   following: "متابع"
   backend: "المطورون"
+  rec_back: "العودة"
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"

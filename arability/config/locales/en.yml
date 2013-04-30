@@ -58,6 +58,7 @@ en:
   following: "Following"
   select subscription: "Select Subscription"
   backend: "Developers"
+  rec_back: "Back"
   project: "Project"
   my_projects: "My Projects"
   required: "The fields marked with * are required"

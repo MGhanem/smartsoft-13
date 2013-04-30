@@ -65,14 +65,16 @@ end
 #   Returns an array of relevant keywords.
 # Failure:
 #   None
-def self.filterkeywords(cat_id)
+def self.filterkeywords(p_id,cat_id)
   karray = []
   Keyword.all.each do |k|
-    k.categories.each do |c|
-      if c.id == cat_id
-        if k.synonyms != []
-          karray.push(k)
-          break
+    if PreferedSynonym.find_word_in_project(p_id, k.id) == false
+      k.categories.each do |c|
+        if c.id == cat_id
+          if k.synonyms != []
+            karray.push(k)
+            break
+          end
         end
       end
     end
