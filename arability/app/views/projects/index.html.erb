@@ -115,11 +115,11 @@
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-   <a style="margin-left : 6px; font-size:17px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
+   <a style="margin-left : 6px; font-size:17px;" href="#remove_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
   <% else %>
-  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
+  <a style="margin-right : 6px;" href="#remove_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
   <% end %>
-    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="remove_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3 id="modal_label"><%= t(:delete_share) %></h3>
@@ -155,11 +155,11 @@
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
   <% if I18n.locale == :ar %>
-   <a style="margin-left : 6px; font-size:17px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
+   <a style="margin-left : 6px; font-size:17px;" href="#remove_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
   <% else %>
-  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
+  <a style="margin-right : 6px;" href="#remove_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
   <% end %>
-    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="remove_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3 id="modal_label"><%= t(:delete_share) %></h3>
