@@ -1,0 +1,30 @@
+<form method='post'>
+  <% if flash[:success] %>
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div>
+        <%= flash[:success] %>
+      </div>
+    </div>
+  <% end %>
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div>
+        <%= flash[:error][:arabic_name][0] %>
+        <br>
+        <%= flash[:error][:english_name][0] %>
+      </div>
+    </div>
+  <% end %>
+  <fieldset>
+    <legend>إضافة فئة جديدة</legend>
+    <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+    <label>إسم الفئة بالعربية</label>
+    <input type="text" placeholder="إسم الفئة" name="arabic_name">
+    <label>إسم الفئة بالإنجليزية</label>
+    <input type="text" placeholder="Name of category" name="english_name">
+    <br>
+    <button type="submit" class="btn">إضافة</button>
+  </fieldset>
+</form>
