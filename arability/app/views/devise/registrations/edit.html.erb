@@ -139,12 +139,12 @@
           <div class="Facebook" style="padding:10px">
             <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook") %>
             <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" />
-            <span font='20' style="position:relative; padding:40px;">
+            <span font="20" style="position:relative; padding:40px;">
               <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"facebook"}" %>
             </span>
             <% else %>
             <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" height="50px" />
-            <span font='20' style="position:relative; padding:40px;">
+            <span font="20" style="position:relative; padding:40px;">
               <%= link_to t(:connect_to_facebook), "/auth/facebook" %> 
             </span>
             <% end %>
@@ -158,7 +158,7 @@
             </span>
             <% else %>
             <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px" />
-            <span font='20' style="position:relative; padding:40px;">
+            <span font="20" style="position:relative; padding:40px;">
               <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
             </span>
             <% end %>
