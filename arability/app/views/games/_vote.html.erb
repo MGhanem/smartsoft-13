@@ -124,66 +124,7 @@
 		record_vote(synonym_id,"slang");
 	}
 
-	function modalToggle(){
-  $("#report_modal").modal("toggle");
-}
-function setChecked(chkbox){
-  $chkbox = $(chkbox)
-  if($chkbox.attr("is_checked") == "true")
-    $chkbox.attr("is_checked", false);
-  else
-    $chkbox.attr("is_checked", true);
-}
-function report_submission(){
-  $reported_keywords = $("#report_modal").find("[is_checked=true]");
-  if($reported_keywords.length == 0)
-    return;
-  words = new Array();
-  $.each($reported_keywords, function(index, element){
-    words.push($(element).attr("value"));
-  });
-  var request = $.post("<%= send_report_path %>", { reported_words: words });
-  $.each($("input#chkbox"), function(index, element){
-    $(element).attr("checked", false);
-    $(element).attr("is_checked", false);
-  });
-
-  request.done(function (_, _, _){
-    restoreError();
-    showFlash();
-  });
-
-  request.fail(function (_, _, _){
-    showError();
-  });
-}
-
-function showFlash(){
-  $("#report_success").css("display", "block");
-  $("#report_success").css("margin-bottom", "2px");
-  $("#report_success").css("padding-top", "6px");
-  $("#report_success").css("padding-bottom", "6px");
-  $("#report_success").css("padding-right", "12px");
-  $("#report_success").css("padding-left", "12px");
-  $("#report_success").css("position", "fixed");
-  $("#report_success").css("top", "100px");
-  $("#report_success").css("left", "42%");
-  $("#report_success").css("right", "42%");
-  $("#report_success").fadeOut(5000);
-}
-
-function showError(){
-  $("#report_failure").css("display", "block");
-  $("#report_failure").css("margin-bottom", "2px");
-  $("#report_failure").css("position", "fixed");
-  $("#report_failure").css("top", "50px");
-  $("#report_failure").css("left", "10%");
-  $("#report_failure").css("right", "10%");
-}
-
-function restoreError(){
-  $("#report_failure").css("display", "none");
-}
+	<%= render "search/submit-report.js" %>
 </script>
 <div class="alert alert-success" id="report_success" style="display:none; font-size: 16px;">
 			<div style="text-align:center;"><%= t(:report_sent_success) %></div>
