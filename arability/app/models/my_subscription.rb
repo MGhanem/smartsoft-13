@@ -43,7 +43,9 @@ class MySubscription < ActiveRecord::Base
   # Failure:
   #   None
   def get_permission_follow
-    if(self.word_follow > 0)
+    developer = self.developer
+    count_follow=developer.Keywords.count   
+    if(count_follow < self.word_follow)
       return true
     else
       return false
@@ -61,8 +63,8 @@ class MySubscription < ActiveRecord::Base
   # Failure:
   #  None 
   def count_follow
-    @developer = Developer.find(self.developer_id)
-    @count_follow=@developer.Keywords.count   
+    developer = self.developer
+    count_follow=developer.Keywords.count   
   end
   # Author:
   #   Noha Hesham
@@ -139,6 +141,9 @@ class MySubscription < ActiveRecord::Base
     else
       if self.word_search > Search.where(developer_id: self.developer).count
         search=Search.new
+        search.developer_id=developer
+        search.synonym_id=word_id
+        search.save
         return true
       else
         return false
