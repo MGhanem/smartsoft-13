@@ -3,7 +3,6 @@ require "spec_helper"
 require "request_helpers"
 include RequestHelpers
 include Warden::Test::Helpers
-include Devise::TestHelpers
 
 describe ProjectsController, type: :controller do
 
@@ -57,6 +56,7 @@ describe ProjectsController, type: :controller do
     page.should have_content(I18n.t(:import_csv_title))
   end
 
+<<<<<<< HEAD
 end
 
 describe "GET #new" do
@@ -154,6 +154,13 @@ describe 'PUT update' do
     end
   end
 
+=======
+  it "should delete a project" do
+    sign_in gamer1
+    put :destroy, id: project.id
+    response.code.should eq("302")
+  end
+>>>>>>> ce7d194d30f9c2339e8f46cb4f0aead354985c39
   #khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do
