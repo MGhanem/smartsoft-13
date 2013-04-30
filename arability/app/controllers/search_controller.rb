@@ -42,17 +42,22 @@ class SearchController < BackendController
   end
 
   # Author:
-  #   Nourhan Mohamed
+  #   Nourhan Mohamed, Nourhan Zakaria
 	# Description:
   #   search for synonyms for a particular keyword
+  #   calls the helper function that draws the piecharts of voters statistics
+  #   of certain synonym
 	#	params:
 	#	  search: a string representing the search keyword, from the params list
 	#     from a textbox in the search_keywords view
 	#	success: 
 	#	  returns to the search view a list of synonyms for the keyword
 	#   sorted by vote count
+  #   and a list of hashs and in each hash the key is the synonym id
+  #   and the value is a list of four pie charts
 	#	failure:
 	#	  returns an empty list if the search keyword has no synonyms
+  #   and no charts will be drawn if the keyword has no synonyms
   def search
     @search_keyword = params["search"]
 
@@ -83,9 +88,11 @@ class SearchController < BackendController
   end
 
   # Author:
-  #   Nourhan Mohamed
+  #   Nourhan Mohamed, Nourhan Zakaria
   # Description:
   #   search for synonyms for a particular keyword under certain filters
+  #   calls the helper function that draws the piecharts of voters statistics
+  #   of certain synonym
   # params:
   #   search: a string representing the search keyword, from the params list
   #     from a textbox in the search_keywords view
@@ -97,8 +104,11 @@ class SearchController < BackendController
   # success: 
   #   returns to the search view a list of synonyms for the keyword
   #   sorted by vote count according to passed filters
+  #   and a list of hashs and in each hash the key is the synonym id
+  #   and the value is a list of four pie charts
   # failure:
   #   returns a list of synonyms available for the search keyword, all with 0 votes
+  #   and no charts will be drawn if the keyword has no synonyms
   def search_with_filters
     search_keyword = params["search"]
     @country = params["country"]

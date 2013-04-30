@@ -1,19 +1,22 @@
 module SearchHelper
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This is the method that the search view call when button View Stats 
-  #  is clicked and it get the gender statistics of the voters of certain
-  #  synonym then call the piechart method with stats it gets and header to 
-  #  represent the stats visually.
-  # Parameters:
-  #  synonym_id: is the ID of the synonym that the View Stats button clicked
-  #  in the view belongs to and this the synonym needed to get the stats gender
-  #  for its voters
-  # Returns: 
-  #  On success: returns a pie chart representing the gender statistics of  
-  #  voters for certain synonym.
-  #  On failure: no chart will be drawn 
+  #   This is the method that the search button is clicked whether with filters
+  #   or not and it get the gender statistics of the voters of certain
+  #   synonym then call the piechart method with stats it gets and header to 
+  #   represent the stats visually.
+  #   The stats may be filtered accroding to certain criteria if filters exists
+  # Params:
+  #   synonym_id: is the ID of the synonym that the View Stats button clicked
+  #   in the view belongs to and this the synonym needed to get the stats gender
+  #   for its voters
+  # Success: 
+  #   returns a pie chart representing the gender statistics of  
+  #   all voters or filtered voters for certain synonym.
+  # Failure: 
+  #   no chart will be drawn if stats is empty list
   def piechart_gender(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
     stats = synonym.get_visual_stats_gender(gender, country, education, age_from, age_to)
@@ -21,20 +24,23 @@ module SearchHelper
     piechart(stats, header)
   end
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This is the method that the search view call when button View Stats 
-  #  is clicked and it get the country statistics of the voters of certain
-  #  synonym then call the piechart method with stats it gets and header to 
-  #  represent the stats visually.
-  # Parameters:
-  #  synonym_id: is the ID of the synonym that the View Stats button clicked
-  #  in the view belongs to and this the synonym needed to get the stats 
-  #  country for its voters
-  # Returns: 
-  #  On success: returns a pie chart representing the country statistics of 
-  #  voters for certain synonym.
-  #  On failure: no chart will be drawn 
+  #   This is the method that the search button is clicked whether with filters
+  #   or not and it get the country statistics of the voters of certain
+  #   synonym then call the piechart method with stats it gets and header to 
+  #   represent the stats visually.
+  #   The stats may be filtered accroding to certain criteria if filters exists
+  # Params:
+  #   synonym_id: is the ID of the synonym that the View Stats button clicked
+  #   in the view belongs to and this the synonym needed to get the stats 
+  #   country for its voters 
+  # Success: 
+  #   returns a pie chart representing the country statistics of 
+  #   all voters or filtered voters for certain synonym.
+  # Failure: 
+  #   no chart will be drawn if stats is empty list
   def piechart_country(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
     stats = synonym.get_visual_stats_country(gender, country, education, age_from, age_to)
@@ -99,20 +105,23 @@ module SearchHelper
   end
   end
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This is the method that the search view call when button View Stats 
-  #  is clicked and it get the age statistics of the voters of certain
-  #  synonym then call the piechart method with stats it gets and header to 
-  #  represent the stats visually.
-  # Parameters:
-  #  synonym_id: is the ID of the synonym that the View Stats button clicked
-  #  in the view belongs to and this the synonym needed to get the stats 
-  #  age for its voters
-  # Returns: 
-  #  On success: returns a pie chart representing the age statistics of 
-  #  voters for certain synonym.
-  #  On failure: no chart will be drawn 
+  #   This is the method that the search button is clicked whether with filters
+  #   or not and it get the age statistics of the voters of certain
+  #   synonym then call the piechart method with stats it gets and header to 
+  #   represent the stats visually.
+  #   The stats may be filtered accroding to certain criteria if filters exists
+  # Params:
+  #   synonym_id: is the ID of the synonym that the View Stats button clicked
+  #   in the view belongs to and this the synonym needed to get the stats 
+  #   age for its voters 
+  # Success: 
+  #   returns a pie chart representing the age statistics of 
+  #   all voters or filtered voters for certain synonym.
+  # Failure: 
+  #   no chart will be drawn if stats is empty list
   def piechart_age(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
     stats = synonym.get_visual_stats_age(gender, country, education, age_from, age_to)
@@ -120,20 +129,23 @@ module SearchHelper
     piechart(stats, header)
   end 
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This is the method that the search view call when button View Stats 
-  #  is clicked and it get the education statistics of the voters of certain
-  #  synonym then call the piechart method with stats it gets and header to 
-  #  represent the stats visually.
-  # Parameters:
-  #  synonym_id: is the ID of the synonym that the View Stats button clicked
-  #  in the view belongs to and this the synonym needed to get the stats 
-  #  education for its voters
-  # Returns: 
-  #  On success: returns a pie chart representing the education statistics of 
-  #  voters for certain synonym.
-  #  On failure: no chart will be drawn
+  #   This is the method that the search button is clicked whether with filters
+  #   or not is and it get the education statistics of the voters of certain
+  #   synonym then call the piechart method with stats it gets and header to 
+  #   represent the stats visually.
+  #   The stats may be filtered accroding to certain criteria if filters exists
+  # Params:
+  #   synonym_id: is the ID of the synonym that the View Stats button clicked
+  #   in the view belongs to and this the synonym needed to get the stats 
+  #   education for its voters
+  # Success: 
+  #   returns a pie chart representing the education statistics of 
+  #   voters for certain synonym.
+  # Failure: 
+  #   no chart will be drawn if stats is empty list
   def piechart_education(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
     stats = synonym.get_visual_stats_education(gender, country, education, age_from, age_to)
@@ -141,18 +153,20 @@ module SearchHelper
     piechart(stats, header)
   end 
 
-  # Author: Nourhan Zakaria
+  # Author: 
+  #   Nourhan Zakaria
   # Description:
-  #  This is the method that draws the piechart for the given stats and
-  #  with the given header.
-  # Parameters:
-  #  stats: the list of lists that represents the data that will be 
-  #  represented with the piechart
-  #  header: the header of the piechart
-  # Returns: 
-  #  On success: returns a pie chart representing the stats given and
-  #  with the given header.
-  #  On failure: no chart will be drawn
+  #   This is the method that draws the piechart for the given stats and
+  #   with the given header.
+  # Params:
+  #   stats: the list of lists that represents the data that will be 
+  #   represented with the piechart
+  #   header: the header of the piechart 
+  # Success: 
+  #   returns a pie chart representing the stats given and
+  #   with the given header.
+  # Failure: 
+  #   no chart will be drawn
   def piechart (stats, header)
     chart = LazyHighCharts::HighChart.new('pie') do |f|
       f.chart({:defaultSeriesType=>"pie" , :margin=> [0, 10, 150,25], 
