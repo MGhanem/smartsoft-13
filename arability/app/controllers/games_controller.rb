@@ -1,7 +1,6 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
   before_filter :authenticate_gamer_or_guest!
-  # before_filter :authenticate_gamer!
 
   def game
   end
