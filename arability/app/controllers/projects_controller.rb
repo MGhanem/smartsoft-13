@@ -684,10 +684,17 @@ end
       json_string = "{   "
       if @exported_data != []
         @exported_data.each do |word|
-          @keyword = Keyword.find(word.keyword_id).name
-          @synonym = Synonym.find(word.synonym_id).name
-          json_string << "\"word\": \"" +
-          @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
+          if(word == @exported_data.first)
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            json_string << "\"word\": \"" +
+            @keyword + "\", \"translation\": \"" + @synonym + "\""
+          else 
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            json_string << ", \"word\": \"" +
+            @keyword + "\", \"translation\": \"" + @synonym + "\"" 
+          end
         end
         json_string << "   }"
       else
