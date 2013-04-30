@@ -52,10 +52,8 @@ class Keyword < ActiveRecord::Base
       .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
 
-    if is_formal != nil
-      synonym_list = synonym_list
-        .reject { |synonym| synonym.is_formal != is_formal }
-    end
+    synonym_list = synonym_list
+      .reject { |synonym| synonym.is_formal != is_formal } if is_formal != nil
 
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
