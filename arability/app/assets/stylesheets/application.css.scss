@@ -41,3 +41,17 @@ div.d5pxdown {
 div.d5pxup input {
 	width: 95px;
 }
+
+.info, .success, .warning, .error, .validation {
+border: 1px solid;
+margin: 10px 0px;
+padding:15px 10px 15px 50px;
+background-repeat: no-repeat;
+background-position: 10px center;
+}
+
+.validation {
+color: #D63301;
+background-color: #FFCCBA;
+background-image: url('attention.png');
+}

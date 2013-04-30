@@ -4,7 +4,7 @@
     <% if @errors != nil %>
       <%if @errors.is_a?(Hash)%>
         <ul>
-          <div class="alert">
+          <div class="validation">
             <% @errors.each do |error| %>
               <li>
                 <% if error[0] == "username" %>
@@ -40,7 +40,7 @@
         </ul>
       <%else%>
         <ul>
-          <div class="alert">
+          <div class="validation">
             <% @errors.each do |error| %>
               <li><%=error%></li>
             <%end%>
