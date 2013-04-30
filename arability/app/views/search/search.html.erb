@@ -80,36 +80,31 @@
 									<%= label_tag t(:country), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
 									<% if I18n.locale == :ar %>
-										<%= select_tag :country, options_for_select([["مصر", "Egypt"], ["لبنان", "Lebanon"], ["الاردن", "Jordan"], ["السعودية", "Saudi Arabia"], ["ليبيا", "Libya"], ["الامارات", "United Arab Emirates"], ["قطر", "Qatar"], ["الكويت", "Kuwait"], ["العراق", "Iraq"], ["الجزأئر", "Algeria"], ["المغرب", "Morocco"], ["البحرين", "Bahrain"], ["موريتانيا", "Mauritania"], ["الصومال","Somalia"], ["السودان","Sudan"], ["تونس", "Tunisia"], ["اخري", "others"]]), include_blank: true, :class => "control", onchange: "applyFilters(
+										<%= select_tag :country, options_for_select([["مصر", "Egypt"], ["لبنان", "Lebanon"], ["الاردن", "Jordan"], ["السعودية", "Saudi Arabia"], ["ليبيا", "Libya"], ["الامارات", "United Arab Emirates"], ["قطر", "Qatar"], ["الكويت", "Kuwait"], ["العراق", "Iraq"], ["الجزأئر", "Algeria"], ["المغرب", "Morocco"], ["البحرين", "Bahrain"], ["موريتانيا", "Mauritania"], ["الصومال","Somalia"], ["السودان","Sudan"], ["تونس", "Tunisia"], ["اخري", "others"]], @country), include_blank: true, :class => "control", onchange: "applyFilters(
 											#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, 
 											#{:gender}.value, #{:education}.value, synonymType())" %>
                   <% elsif I18n.locale == :en %>
 	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", 
-	                  	"Bahrain", "Mauritania", "Somalia", "Sudan", "Tunisia", "others"]), include_blank: true, 
-	                  	:class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, 
-	                  	#{:age_from}.value,	#{:age_to}.value, #{:gender}.value, #{:education}.value, 
-	                  	synonymType())" %>
+	                  	"Bahrain", "Mauritania", "Somalia", "Sudan", "Tunisia", "others"], @country), include_blank: true, :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value,	#{:age_to}.value, #{:gender}.value, #{:education}.value, synonymType())" %>
                   <% end %>
 								</div>
 								<div class="control-group">
 									<%= label_tag t(:gender), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<%= select_tag :gender, options_for_select([[t(:male), "male"], [t(:female), "female"]]), 
-										include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, 
-											#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, 
+									<%= select_tag :gender, options_for_select([[t(:male), "male"], [t(:female), "female"]], @gender), include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, 
 											#{:education}.value, synonymType())" %>
 								</div>	
 								<div class="control-group">
 									<%= label_tag t(:age_from), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", style: 
+									<%= number_field_tag :age_from, @age_from, :in => 10...101, :class => "control", style: 
 									"width:70px;", onchange: "applyFilters(#{:search}.value, #{:country}.value, 
 									#{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, 
 									synonymType())" %>
 									&nbsp;
 									<%= label_tag t(:age_to), nil, style: "width:20px;" %>
 									&nbsp;
-									<%= number_field_tag :age_to, nil, :in => 10...101, :class => "control", style: 
+									<%= number_field_tag :age_to, @age_to, :in => 10...101, :class => "control", style: 
 									"width:70px;", onchange: "applyFilters(#{:search}.value, #{:country}.value, 
 									#{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, 
 									synonymType())" %>
@@ -119,14 +114,8 @@
 								<div class="control-group">
 									<%= label_tag t(:education), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<% if I18n.locale == :ar %>
-										<%= select_tag :education, options_for_select([["مدرسة", "School"], ["جامعة", "University"],["خريج", "Graduate"]]), include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, synonymType())" %>
-                  <% elsif I18n.locale == :en %>
-	                  <%= select_tag :education, options_for_select(["School", "University", "Graduate"]),
-	                  include_blank: true, :class => "control", onchange: "applyFilters(#{:search}.value, 
-										#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, 
-										#{:education}.value, synonymType())" %>
-                  <% end %>
+									<%= select_tag :education, options_for_select([[t(:school), "School"], [t(:university), 
+										"University"],[t(:graduate), "Graduate"]], @education), include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, synonymType())" %>
 								</div>
 								<div class="control-group">
 									<%= label_tag t(:synonyms), nil, :class => "control-label", style: "width:80px;" %>
@@ -168,6 +157,17 @@
 			</script>
 		</span>
 	</div>
+<% end %>
+
+<% if !@country.blank? || !@gender.blank? || !@age_from.blank? || 
+	!@age_to.blank? || !@education.blank? || !@synonym_type.blank? %>
+	<script type="text/javascript">
+	$("#filter").attr("class","collapse in");
+	</script>
+<% else %>
+	<script type="text/javascript">
+	$("#filter").attr("class","collapse");
+	</script>
 <% end %>
 
 <% if !@synonyms.blank? %>
