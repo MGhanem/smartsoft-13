@@ -1,7 +1,6 @@
-<p>You could translate your website on the fly using our api.
-To find out how you can see out <a href="<%= api_help_path %>">help pages</a></p>
+<p><%= t :help_text %> <a href="<%= api_help_path %>"><%= t :help_page %></a></p>
 <fieldset>
-  <legend>Generate an api key</legend>
+  <legend><%= t :generate_api_key %></legend>
 
   <% if @api_key.errors.present? %>
     <div class="alert alert-error">
@@ -17,46 +16,56 @@ To find out how you can see out <a href="<%= api_help_path %>">help pages</a></p
     html: {:class => "form-horizontal"}, method: :post do |f| %>
 
     <div class="control-group">
-      <label class="control-label" for="website">Website:</label>
+      <label class="control-label" for="website"><%= t :website %>:</label>
       <div class="controls">
         <%= f.text_field :website, id: "website", placeholder: "www.example.com" %>
-        <small>(the website you will use our api on)</small>
+        <small><%= t :website_small_text %></small>
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="website">Project:</label>
+      <label class="control-label" for="website"><%= t :project %>:</label>
       <div class="controls">
         <%= f.collection_select :project_id, @projects, :id, :name, include_blank: true %>
-        <small>(optional project to tie to this api key)</small>
+        <small><%= t :project_small_text %></small>
       </div>
     </div>
 
     <div class="control-group">
       <div class="controls">
-        <%= f.submit :class => "btn btn-primary" %>
+        <%= f.submit t(:generate), :class => "btn btn-primary" %>
       </div>
     </div>
   <% end %>
 </fieldset>
 
-<h4>Using your API Key</h4>
-<div>
-
-</div>
+<%
+  if I18n.locale == :ar
+    direction = "left"
+    klass = "english-ar"
+  else
+    direction = "right"
+    klass = "arabic-en"
+  end
+%>
+<style>
+.english-ar {
+  font-size: 15px;
+}
+</style>
 
 <% if @api_keys.present? %>
-  <h4 id="api-list-text">Your Api keys:</h4>
+  <h4 id="api-list-text"><%= t :your_api_keys %>:</h4>
   <% @api_keys.each do |api_key| %>
     <div class="well span5 api-entry" id="api-entry-<%= api_key.id %>" style="">
-        <button class="btn btn-danger pull-right delete-btn"
-          style="margin-top:20px; display:none;"
-            onclick="show_delete_modal(<%= api_key.id %>)">Delete</button>
+        <button class="btn btn-danger delete-btn"
+          style="display:none; float:<%= direction %>"
+            onclick="show_delete_modal(<%= api_key.id %>)"><%= t :delete %></button>
       <span style="padding-left: -30px;">
         <dl class="dl-horizontal">
-          <dt>API key:</dt> <dd><%= api_key.token %></dd>
-          <dt>Website:</dt> <dd><%= api_key.website %></dd>
-          <dt>Project:</dt>
+          <dt><%= t :api_key %>:</dt> <dd class="<%= klass %>"><%= api_key.token %></dd>
+          <dt><%= t :website %>:</dt> <dd class="<%= klass %>"><%= api_key.website %></dd>
+          <dt><%= t :project %>:</dt>
           <% if api_key.project.present? %>
           <dd><%= link_to api_key.project.name, project_path(api_key.project) %></dd>
           <% else %>
@@ -72,15 +81,15 @@ To find out how you can see out <a href="<%= api_help_path %>">help pages</a></p
   <div class="modal-header">
     <button type="button" class="close"
       data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Confirm Deletion</h3>
+    <h3><%= t :confirm %></h3>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete this API key</p>
+    <p><%= t :are_you_sure %></p>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-    <a href="#" class="btn btn-primary" id="delete-api-btn"
-      data-dismiss="modal" aria-hidden="true">Delete</a>
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true"><%= t :close %></a>
+    <a href="#" class="btn btn-danger" id="delete-api-btn"
+      data-dismiss="modal" aria-hidden="true"><%= t :delete %></a>
   </div>
 </div>
 

@@ -1,4 +1,35 @@
 en:
   api: "API"
+  help_text: >
+    You could translate your website on the fly using our api.
+    To find out how you can, see our
+  help_page: "help pages"
+  generate_api_key: "Generate api key"
+  generate: "Generate"
+  website: "Website"
+  website_small_text: "(the website you will use our api on)"
+  project_small_text: "(optional project to tie to this api key)"
+  your_api_keys: "Your Api keys"
+  delete: "Delete"
+  are_you_sure: "Are you sure you want to delete this API key"
+  confirm: "Confirm Deletion"
+  close: "Close"
+  api_key: "API key"
+  back_to_api: "back to your API keys"
 ar:
   api: "API"
+  help_text: >
+    يمكنك إستخدم موقعنا لترجمة موقعك باستخدام ال-"API". لمعرفة المزيد يمكنك زيارة
+  help_page: "صفحات المساعدة"
+  generate_api_key: "توليد مفتاح API جديد"
+  generate: "توليد"
+  website: "الموقع"
+  website_small_text: "(الموقع الذي ستستخدم فيه ال-API)"
+  project_small_text: "(يمكنك إختيار مشروع لربطه بمفتاح ال-API)"
+  your_api_keys: "مفاتيح ال-API"
+  delete: "مسح"
+  are_you_sure: "Are you sure you want to delete this API key"
+  confirm: "Confirm Deletion"
+  close: "لا شكراً"
+  api_key: "مفتاح ال-API"
+  back_to_api: "الرجوع إلى صفحة ال-API"

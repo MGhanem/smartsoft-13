@@ -90,6 +90,4 @@ group :test do
   gem "simplecov"
 end
 
-
-gem 'certified'
-
+gem "geocoder"
