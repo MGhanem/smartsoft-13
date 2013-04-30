@@ -3,8 +3,8 @@ require 'spec_helper'
 describe MySubscription do
   let(:developer){
 		developer=Developer.new
-    developer.first_name="Nourhan"
-    developer.last_name="Hassan"
+    # developer.first_name="Nourhan"
+    # developer.last_name="Hassan"
     developer.verified = true
     developer.gamer_id= 1
     developer.save
@@ -34,15 +34,4 @@ describe MySubscription do
 		expect(result).to eq(true)
 
 	end
-
-  it "Word add can de decremented" do
-		result = my_sub.decrement_word_add
-		expect(result).to eq(true)
-	end
-
-  it "Word search can de decremented" do
-		result = my_sub.decrement_word_search
-		expect(result).to eq(true)
-	end
-
 end

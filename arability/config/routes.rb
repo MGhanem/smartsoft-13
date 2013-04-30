@@ -82,6 +82,7 @@ Arability::Application.routes.draw do
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/my_subscriptions/pick_edit' => "my_subscription#pick_edit"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 

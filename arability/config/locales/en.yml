@@ -428,6 +428,10 @@ en:
         maxAge: "The maximum age"
         categories: "Categories"
         description: "Description"
+  choose_sub: "Subscription model"
+  developer_before_subscription: 'Please sign up as a developer to view this page'
+  keyword_added: "keyword added successfully"
+  per_month: "/month"
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_twitter_connection: "Connection to Twitter removed successfully!"
   connection_failure: "Failed to connect!"
@@ -444,3 +448,4 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
+  sub_changed: "chane %{sm.name} "

@@ -360,6 +360,9 @@ ar:
         categories: "الفئات"
         description: "الوصف"
   project_delete: "تم مسح المشروع بنجاح"
+  choose_sub: 'نظام الإشتراك'           
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -449,3 +452,4 @@ ar:
   close_delete: "الغاء"
   submit_delete: "مسح"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  sub_changed: "لقد غيرت نظامك "
