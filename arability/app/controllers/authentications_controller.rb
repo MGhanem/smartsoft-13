@@ -113,8 +113,13 @@ class AuthenticationsController < ApplicationController
       auth = Authentication.find_by_provider_and_gid(provider, gid)
       if !gamer_signed_in?
         if auth
-          flash[:success] = t(:signed_in_fb)
-          sign_in_and_redirect(:gamer, auth.gamer)
+          if auth.gamer
+            flash[:success] = t(:signed_in_fb)
+            sign_in_and_redirect(:gamer, auth.gamer)
+          else
+            flash[:error] = t(:no_account)
+            redirect_to "/gamers/sign_up"
+          end
         else
           gamer = Gamer.find_by_email(email)
           if gamer
