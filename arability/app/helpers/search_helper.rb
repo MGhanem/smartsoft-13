@@ -19,7 +19,8 @@ module SearchHelper
   #   no chart will be drawn if stats is empty list
   def piechart_gender(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_gender(gender, country, education, age_from, age_to)
+    stats = synonym
+      .get_visual_stats_gender(gender, country, education, age_from, age_to)
     header = t(:stats_gender)
     piechart(stats, header)
   end
@@ -43,7 +44,8 @@ module SearchHelper
   #   no chart will be drawn if stats is empty list
   def piechart_country(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_country(gender, country, education, age_from, age_to)
+    stats = synonym
+      .get_visual_stats_country(gender, country, education, age_from, age_to)
     header = t(:stats_country)
     piechart(stats, header)
   end 
@@ -124,7 +126,8 @@ module SearchHelper
   #   no chart will be drawn if stats is empty list
   def piechart_age(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_age(gender, country, education, age_from, age_to)
+    stats = synonym
+      .get_visual_stats_age(gender, country, education, age_from, age_to)
     header = t(:stats_age)
     piechart(stats, header)
   end 
@@ -148,7 +151,8 @@ module SearchHelper
   #   no chart will be drawn if stats is empty list
   def piechart_education(synonym_id, gender, country, education, age_from, age_to)
     synonym = Synonym.find(synonym_id)
-    stats = synonym.get_visual_stats_education(gender, country, education, age_from, age_to)
+    stats = synonym
+      .get_visual_stats_education(gender, country, education, age_from, age_to)
     header = t(:stats_education)
     piechart(stats, header)
   end 
@@ -168,35 +172,35 @@ module SearchHelper
   # Failure: 
   #   no chart will be drawn
   def piechart (stats, header)
-    chart = LazyHighCharts::HighChart.new('pie') do |f|
-      f.chart({:defaultSeriesType=>"pie" , :margin=> [0, 10, 150,25], 
-      :width => 157, :hieght => 50} )
+    chart = LazyHighCharts::HighChart.new("pie") do |f|
+      f.chart({ defaultSeriesType: "pie" , margin: [0, 10, 150, 25], 
+      width: 157, hieght: 50 } )
       series = {
-               :type=> 'pie',
-               :name=> 'voters stats',
-               :borderWidth => 0.7,
-               :data=>  stats         
+       type: "pie",
+       name: "voters stats",
+       borderWidth: 0.7,
+       data:  stats         
       }
       f.series(series)
       f.options[:title][:text] = header
       f.options[:title][:x] = 0
       f.tooltip = {
-        :borderColor => "null",
-        :borderWidth => '6px',
-        :useHTML => true,
-        :positioner => {:x => 0, :y =>0}
+        borderColor: "null",
+        borderWidth: "6px",
+        useHTML: true,
+        positioner: { x: 0, y: 0 }
       }
-      f.legend(:layout=> 'vertical',:style=> {:left=> '0px', 
-      :bottom=> '0px',:right=> '0px',:top=> '0px'}) 
-      f.plot_options(:pie=>{
-        :allowPointSelect=>true, 
-        :cursor=>"pointer" ,
-        :size =>'100%', 
-        :dataLabels=>{
-          :enabled=>false,
-          :color=>"black",
-          :style=>{
-            :font=>"13px Trebuchet MS, Verdana, sans-serif"
+      f.legend(layout: "vertical", style: { left: "0px", 
+      bottom: "0px", right: "0px", top: "0px" }) 
+      f.plot_options(pie: {
+        allowPointSelect: true, 
+        cursor: "pointer" ,
+        size: '100%', 
+        dataLabels: {
+          enabled: false,
+          color: "black",
+          style: {
+            font: "13px Trebuchet MS, Verdana, sans-serif"
           }
         }
       })

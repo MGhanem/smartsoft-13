@@ -198,6 +198,7 @@ class Synonym < ActiveRecord::Base
   #   non of the voters satisifies filtering conditions
   def get_visual_stats_country(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
     voters = voters
@@ -208,11 +209,12 @@ class Synonym < ActiveRecord::Base
       .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
+
     groups = voters.count(group: :country)
+
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
-
+    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
   end 
 
   # Author: 
@@ -233,6 +235,7 @@ class Synonym < ActiveRecord::Base
   #   non of the voters satisifies filtering conditions
   def get_visual_stats_gender(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
     voters = voters
@@ -243,10 +246,12 @@ class Synonym < ActiveRecord::Base
       .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
+
     groups = voters.count(group: :gender)
+
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
+    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
   end 
 
   # Author: 
@@ -267,6 +272,7 @@ class Synonym < ActiveRecord::Base
   #   non of the voters satisifies filtering conditions
   def get_visual_stats_age(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
     voters = voters
@@ -291,12 +297,13 @@ class Synonym < ActiveRecord::Base
     groupThree = voters.select('date_of_birth').group("date_of_birth")
     .having("date_of_birth < ?", 45.years.ago.to_date).count
     three = groupThree.sum{|v| v.last}
+
     sum = one + two + three
     if sum != 0
       list = [["10-25", one], ["26-45", two], ["46+", three]]
-      return list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+      list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     else
-      return []
+      []
     end
   end 
 
@@ -318,6 +325,7 @@ class Synonym < ActiveRecord::Base
   #   non of the voters satisifies filtering conditions
   def get_visual_stats_education(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
+
     voters = voters
       .where("gender = ?", gender) unless gender.blank?
     voters = voters
@@ -328,9 +336,11 @@ class Synonym < ActiveRecord::Base
       .where("date_of_birth <= ?", age_from.years.ago.to_date) unless age_from.blank?
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
+
     groups = voters.count(group: :education_level)
+
     sum = groups.sum{|v| v.last}
     mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    return mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
+    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
   end
 end

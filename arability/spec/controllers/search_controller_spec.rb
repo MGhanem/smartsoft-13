@@ -216,9 +216,11 @@ describe SearchController do
       response.should redirect_to(search_keywords_path)
     end
 
-    it "get the four pie charts corresponding to each synonym without filters", nourhan_zakaria_test: true do
+    it "get the four pie charts corresponding to each synonym without filters", 
+    nourhan_zakaria_test: true do
     d = create_logged_in_developer
     sign_in(d.gamer)
+
     k
     s
     s1
@@ -227,33 +229,45 @@ describe SearchController do
     gamer4
     gamer3_vote_s
     gamer4_vote_s1
+
     get :search, search: "test"
+
     assigns(:synonyms).should =~([s, s1])
     visuals = assigns(:charts).select {|f| f[s.id]}
     charts = visuals.first[s.id]
     charts[0].first[:title][:text].should match(I18n.t(:stats_gender))
-    charts[0].data.first[:data].should =~ (s.get_visual_stats_gender(nil, nil, nil, nil, nil))
+    charts[0].data.first[:data]
+      .should =~ (s.get_visual_stats_gender(nil, nil, nil, nil, nil))
     charts[1].first[:title][:text].should match(I18n.t(:stats_country))
-    charts[1].data.first[:data].should =~ (s.get_visual_stats_country(nil, nil, nil, nil, nil))
+    charts[1].data.first[:data]
+      .should =~ (s.get_visual_stats_country(nil, nil, nil, nil, nil))
     charts[2].first[:title][:text].should match(I18n.t(:stats_age))
-    charts[2].data.first[:data].should =~ (s.get_visual_stats_age(nil, nil, nil, nil, nil))
+    charts[2].data.first[:data]
+      .should =~ (s.get_visual_stats_age(nil, nil, nil, nil, nil))
     charts[3].first[:title][:text].should match(I18n.t(:stats_education))
-    charts[3].data.first[:data].should =~ (s.get_visual_stats_education(nil, nil, nil, nil, nil))
+    charts[3].data.first[:data]
+      .should =~ (s.get_visual_stats_education(nil, nil, nil, nil, nil))
     visuals_s1 = assigns(:charts).select {|f| f[s1.id]}
     charts_s1 = visuals_s1.first[s1.id]
     charts_s1[0].first[:title][:text].should match(I18n.t(:stats_gender))
-    charts_s1[0].data.first[:data].should =~ (s1.get_visual_stats_gender(nil, nil, nil, nil, nil))
+    charts_s1[0].data.first[:data]
+      .should =~ (s1.get_visual_stats_gender(nil, nil, nil, nil, nil))
     charts_s1[1].first[:title][:text].should match(I18n.t(:stats_country))
-    charts_s1[1].data.first[:data].should =~ (s1.get_visual_stats_country(nil, nil, nil, nil, nil))
+    charts_s1[1].data.first[:data]
+      .should =~ (s1.get_visual_stats_country(nil, nil, nil, nil, nil))
     charts_s1[2].first[:title][:text].should match(I18n.t(:stats_age))
-    charts_s1[2].data.first[:data].should =~ (s1.get_visual_stats_age(nil, nil, nil, nil, nil))
+    charts_s1[2].data.first[:data]
+      .should =~ (s1.get_visual_stats_age(nil, nil, nil, nil, nil))
     charts_s1[3].first[:title][:text].should match(I18n.t(:stats_education))
-    charts_s1[3].data.first[:data].should =~ (s1.get_visual_stats_education(nil, nil, nil, nil, nil))
+    charts_s1[3].data.first[:data]
+      .should =~ (s1.get_visual_stats_education(nil, nil, nil, nil, nil))
     end
 
-    it "get the four pie charts corresponding to each synonym with filters", nourhan_zakaria_test: true do
+    it "get the four pie charts corresponding to each synonym with filters", 
+    nourhan_zakaria_test: true do
     d = create_logged_in_developer
     sign_in(d.gamer)
+
     k
     s
     s1
@@ -262,19 +276,25 @@ describe SearchController do
     gamer4
     gamer3_vote_s
     gamer4_vote_s1
+
     get :search_with_filters, search: "test", country: "Lebanon", age_from: "10",
         age_to: "50", gender: "female", education: "University"
+
     assigns(:synonyms).should =~([s, s1])
     visuals = assigns(:charts).select {|f| f[s.id]}
     charts = visuals.first[s.id]
     charts[0].first[:title][:text].should match(I18n.t(:stats_gender))
-    charts[0].data.first[:data].should =~ (s.get_visual_stats_gender("female", "Lebanon", "University", 10, 50))
+    charts[0].data.first[:data]
+      .should =~ (s.get_visual_stats_gender("female", "Lebanon", "University", 10, 50))
     charts[1].first[:title][:text].should match(I18n.t(:stats_country))
-    charts[1].data.first[:data].should =~ (s.get_visual_stats_country("female", "Lebanon", "University", 10, 50))
+    charts[1].data.first[:data]
+      .should =~ (s.get_visual_stats_country("female", "Lebanon", "University", 10, 50))
     charts[2].first[:title][:text].should match(I18n.t(:stats_age))
-    charts[2].data.first[:data].should =~ (s.get_visual_stats_age("female", "Lebanon", "University", 10, 50))
+    charts[2].data.first[:data]
+      .should =~ (s.get_visual_stats_age("female", "Lebanon", "University", 10, 50))
     charts[3].first[:title][:text].should match(I18n.t(:stats_education))
-    charts[3].data.first[:data].should =~ (s.get_visual_stats_education("female", "Lebanon", "University", 10, 50))
+    charts[3].data.first[:data]
+      .should =~ (s.get_visual_stats_education("female", "Lebanon", "University", 10, 50))
     charts[3].data.first[:data].should_not =~ []
     end
   end 

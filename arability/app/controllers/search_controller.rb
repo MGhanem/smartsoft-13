@@ -76,8 +76,10 @@ class SearchController < BackendController
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
         if !@no_synonyms_found
-        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, nil, nil, nil, nil, nil), piechart_country(s.id, nil, nil, nil, nil, nil),
-          piechart_age(s.id, nil, nil, nil, nil, nil), piechart_education(s.id, nil, nil, nil, nil, nil)]}}
+        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, nil, nil, nil, nil, nil), 
+          piechart_country(s.id, nil, nil, nil, nil, nil),
+          piechart_age(s.id, nil, nil, nil, nil, nil), 
+          piechart_education(s.id, nil, nil, nil, nil, nil)]}}
         end
       else
         redirect_to search_keywords_path(search: @search_keyword)
@@ -138,8 +140,11 @@ class SearchController < BackendController
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
         if !@no_synonyms_found
-        @charts = @synonyms.map{|s| {s.id => [piechart_gender(s.id, @gender, @country, @education, @age_from, @age_to), piechart_country(s.id, @gender, @country, @education, @age_from, @age_to),
-          piechart_age(s.id, @gender, @country, @education, @age_from, @age_to), piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)]}}
+        @charts = @synonyms.map{|s| {s.id => 
+          [piechart_gender(s.id, @gender, @country, @education, @age_from, @age_to), 
+          piechart_country(s.id, @gender, @country, @education, @age_from, @age_to),
+          piechart_age(s.id, @gender, @country, @education, @age_from, @age_to), 
+          piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)]}}
         end 
         render "filtered_results.js" 
       else

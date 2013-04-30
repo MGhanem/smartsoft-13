@@ -14,12 +14,11 @@ describe SearchHelper, search_helper_spec: true do
 
     let(:s){
       s = Synonym.new
-        s.name =  "الثاني"
-        s.keyword_id =  k.id
-        s.approved = "true"
-        s.save
-        s
-
+      s.name =  "الثاني"
+      s.keyword_id =  k.id
+      s.approved = "true"
+      s.save
+      s
     }
 
     let(:g){
@@ -31,7 +30,7 @@ describe SearchHelper, search_helper_spec: true do
       g.gender = "male"
       g.email = "trialC@example.com"
       g.password = "1234567"
-      g.save(validate: false)
+      g.save validate: false
       g
     }
 
@@ -44,7 +43,7 @@ describe SearchHelper, search_helper_spec: true do
       gTwo.gender = "female"
       gTwo.email = "trialD@example.com"
       gTwo.password = "123456"
-      gTwo.save(validate: false)
+      gTwo.save validate: false
       gTwo
     }
 
@@ -55,7 +54,6 @@ describe SearchHelper, search_helper_spec: true do
       v.save
       v
     }
-
 
     let(:vTwo){
       vTwo = Vote.new
@@ -74,33 +72,40 @@ describe SearchHelper, search_helper_spec: true do
     }
 
     before (:each) do
-    v
-    vTwo
+      v
+      vTwo
     end
 
-
       it "draws the chart for given synonym that shows gender statistics" do
-        chart = piechart_gender(s.id, nil, nil, nil, nil)
-        chart.first[:title][:text].should match(I18n.t(:stats_gender))
-        chart.data.first[:data].should =~ (s.get_visual_stats_gender(nil, nil, nil, nil))
+        chart = piechart_gender(s.id, nil, nil, nil, nil, nil)
+        chart.first[:title][:text]
+          .should match(I18n.t(:stats_gender))
+        chart.data.first[:data]
+          .should =~ (s.get_visual_stats_gender(nil, nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows country statistics" do
-        chart = piechart_country(s.id, nil, nil, nil, nil)
-        chart.first[:title][:text].should match(I18n.t(:stats_country))
-        chart.data.first[:data].should =~ (s.get_visual_stats_country(nil, nil, nil, nil))
+        chart = piechart_country(s.id, nil, nil, nil, nil, nil)
+        chart.first[:title][:text]
+          .should match(I18n.t(:stats_country))
+        chart.data.first[:data]
+          .should =~ (s.get_visual_stats_country(nil, nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows age statistics" do
-        chart = piechart_age(s.id, nil, nil, nil, nil)
-        chart.first[:title][:text].should match(I18n.t(:stats_age))
-        chart.data.first[:data].should =~ (s.get_visual_stats_age(nil, nil, nil, nil))
+        chart = piechart_age(s.id, nil, nil, nil, nil, nil)
+        chart.first[:title][:text]
+          .should match(I18n.t(:stats_age))
+        chart.data.first[:data]
+          .should =~ (s.get_visual_stats_age(nil, nil, nil, nil, nil))
       end
 
       it "draws the chart for given synonym that shows education statistics" do
-        chart = piechart_education(s.id, nil, nil, nil, nil)
-        chart.first[:title][:text].should match(I18n.t(:stats_education))
-        chart.data.first[:data].should =~ (s.get_visual_stats_education(nil, nil, nil, nil))
+        chart = piechart_education(s.id, nil, nil, nil, nil, nil)
+        chart.first[:title][:text]
+          .should match(I18n.t(:stats_education))
+        chart.data.first[:data]
+          .should =~ (s.get_visual_stats_education(nil, nil, nil, nil, nil))
       end
 end
 
