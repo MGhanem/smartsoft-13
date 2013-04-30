@@ -3,19 +3,32 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   scope "/admin" do 
-    get "/login"
-    get "/logout"
-    get "/index"
-    get "/import_csv"
-    get "/delete_trophy"
-    get "/delete_prize"
-
-    post "/login"
-    post "/upload"
-    post "/add_word"
-    post "/add_trophy"
-    post "/add_prize"
-
+    match "" => "admin#index", :via => [:get]
+    scope "/add" do
+      match "/word" => "admin#add_word", :via => [:get, :post]
+      match "/trophy" => "admin#add_trophy", :via => [:get, :post]
+      match "/prize" => "admin#add_prize", :via => [:get, :post]
+    end
+    scope "/list" do
+      match "/trophies" => "admin#list_trophies", :via => [:get]
+      match "/prizes" => "admin#list_prizes", :via => [:get]
+      match "/gamers" => "admin#list_gamers", :via => [:get]
+      match "/developers" => "admin#list_developers", :via => [:get]
+      match "/admins" => "admin#list_admins", :via => [:get]
+      match "/projects" => "admin#list_projects", :via => [:get]
+    end
+    scope "/delete" do
+      match "/trophy" => "admin#delete_trophy", :via => [:get]
+      match "/prize" => "admin#delete_prize", :via => [:get]
+    end
+    scope "/import" do
+      match "/csvfile" => "admin#upload", :via => [:get, :post]
+    end
+    match "/make_admin" => "admin#make_admin", :via => [:get]
+    match "/remove_admin" => "admin#remove_admin", :via => [:get]
+    match "/add_category" => "admin#add_category"
+    match "/view_categories" => "admin#view_categories"
+    match "/delete_category"=>"admin#delete_category", :as => "delete_category"
     match "/view_subscription_models" => "admin#view_subscription_models"
     match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
     put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
@@ -26,10 +39,11 @@ Arability::Application.routes.draw do
   scope "(:locale)", :locale => /en|ar/ do
 
     # required for routing by the devise module(gem)
-    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-    # devise_for :gamers
+
     devise_for :gamers do 
-      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+      get '/gamers/sign_out' => 'devise/sessions#destroy'
+      match "/social_registrations/new_social" => "social_registrations#new_social"
+      post "/social_registrations/social_sign_in"
     end
 
     match '/game' => 'games#game'
@@ -57,15 +71,15 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match '/auth/facebook/callback' => 'authentications#facebook_callback'
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
-
+      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
-      match "projects/share/:id" => "projects#share", :as => "share_project"
-      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      match "projects/:id/share/" => "projects#share", :as => "share_project"
+      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
-      get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
@@ -73,8 +87,13 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      match "/projects/:id/destroy" => "projects#destroy", :as => :delete
+      put "projects/destroy"
+
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
+
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub

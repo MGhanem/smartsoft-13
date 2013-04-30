@@ -6,9 +6,7 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, 
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
-
-
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
 
  # author:Noha hesham
  # Description:
@@ -25,8 +23,9 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to action: "index",controller: "projects"}
       format.json { head :no_content }
+      flash[:success] = t(:project_delete)
     end
   end
     
