@@ -29,13 +29,13 @@ describe SearchController do
 
     let(:s) {
       k
-      s = Synonym.create(name: "ابت", keyword_id: k.id, approved: true)
+      s = Synonym.create(name: "ابت", keyword_id: k.id, approved: true, is_formal: true)
       s
     }
 
     let(:s1) {
       k
-      s = Synonym.create(name: "ابتث", keyword_id: k.id, approved: true)
+      s = Synonym.create(name: "ابتث", keyword_id: k.id, approved: true, is_formal: false)
       s
     }
 
@@ -136,14 +136,20 @@ describe SearchController do
       gamer_vote_s
 
       get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
-        age_to: "19", education: "high", gender: "female"
+        age_to: "19", education: "high", gender: "female", synonym_type: 0 
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should be_nil
       assigns(:votes)[2].should be_nil
 
+      get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
+        age_to: "19", education: "high", gender: "female", synonym_type: 2
+      assigns(:synonyms).should eq([s1])
+      assigns(:votes)[1].should be_nil
+      assigns(:votes)[2].should be_nil
+
       get :search_with_filters, search: "test", country: "Egypt", age_from: "40",
-        age_to: "19", gender: "female", education: "medium"
-      assigns(:synonyms).should eq([s, s1])
+        age_to: "19", gender: "female", education: "medium", synonym_type: 1
+      assigns(:synonyms).should eq([s])
       assigns(:votes)[1].should eq(1)
       assigns(:votes)[2].should be_nil
     end
