@@ -70,7 +70,6 @@ class ProjectsController < BackendController
   #   If not signed in he will be redirected to the sign in page.
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
-    if developer_signed_in?
       # if current_developer.my_subscription.get_projects
       @project = Project.new
       respond_to do |format|
@@ -81,10 +80,6 @@ class ProjectsController < BackendController
       #   format.html { redirect_to "/my_subscriptions/choose_sub",
       #   notice: I18n.t('exceeded_project_limit: ') }
       # end
-    else
-      developer_unauthorized
-      render 'pages/home'
-    end
   end
 
   # Author:
