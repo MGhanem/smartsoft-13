@@ -1,4 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
@@ -22,6 +24,11 @@ RSpec.configure do |config|
   OmniAuth.config.add_mock(:twitter, { 
     :user_info => {:name => "Joe Smith", :nickname => 'joesmith'}, :uid => '123456790',
     :credentials => {:token => "testtoken234tsdf", :secret => "tokensecrettest"}
+    })
+  OmniAuth.config.add_mock(:facebook, {
+    "info" => {"email" => "email@mock.com", "username" => "mockuser"}, "provider" => "facebook",
+    "uid" => "011252217", "credentials" => {"token" => "mock123token456"},
+    "extra" => {"raw_info" => {"gender" => "male"}}
     })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
