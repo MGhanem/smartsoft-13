@@ -182,7 +182,7 @@ ar:
               taken: "هذه فئة موجودة بالفعل"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
-  stats_gender: "احصائيات الجنس"
+  stats_gender: "احصائيات النوع"
   stats_country: "احصائيات البلاد"
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
