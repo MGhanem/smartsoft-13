@@ -356,3 +356,4 @@ en:
   enter_a_synonym: "enter a new synonym"
   skip_this_keyword: "skip this keyword"
   suggest_this_synonym: "save new translation"
+  formal_or_slang: "<p id='formal_slang'><button class='btn btn-primary'>formal</button>&nbsp or &nbsp<button class='btn btn-primary'>slang</button></p>"

@@ -32,12 +32,12 @@
 		<% while syn_list.size>0  && j<syn_list.length %>
 		<tr>
 			<td style="width:350px; text-align:center;">
-			<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn_list[j].id %>)"><%= syn_list[j].name %></button>
+				<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>')"><%= syn_list[j].name %></button>
 				<% j = j+1 %>
 			</td>
 			<td style="width:350px; text-align:center;">
 				<% if j<syn_list.length %>
-					<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote(<%= syn_list[j].id %>)"><%= syn_list[j].name %></button>
+					<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>')"><%= syn_list[j].name %></button>
 					<% j = j+1 %>
 				<% end  %>
 			</td>
@@ -74,3 +74,14 @@
 		</tr>
 	</table>
 </div>
+<script type="text/javascript">
+function check_formality(syn_id, syn_is_formal){
+	if(syn_is_formal == "true" || syn_is_formal == "false" ){
+		record_vote(syn_id);
+	}
+	else{
+		$('#synonym_button').popover({'title':"<p style='font-size:20px; font-weight:bold;'>Is this translation <button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button></p>"});
+		$('#synonym_button').popover('show');
+	}
+}
+</script>
