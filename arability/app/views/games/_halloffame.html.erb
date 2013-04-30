@@ -58,10 +58,11 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(8) %>
+      <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(6) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
       <tr style="background-color: #DDDDDD">
@@ -72,6 +73,13 @@
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies_won) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
       </tr>
       <br>
       <% end %>
@@ -97,10 +105,11 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(8) %>
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(6) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
       <tr style="background-color: #DDDDDD">
@@ -111,6 +120,13 @@
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies_won) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
       </tr>
       <br>
       <% end %>
@@ -139,10 +155,11 @@
         <td><%= t(:rank) %></td>
         <td><%= t(:name) %></td>
         <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
       </tr>
     </thead>
     <tbody align="center">
-      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(8) %>
+      <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(6) %>
       <% @gamers.each do |user| %>
       <% if user == current_gamer %>
       <tr style="background-color: #DDDDDD">
@@ -153,6 +170,13 @@
         <td><%= user.username %></td>
         <td><%= user.highest_score %></td>
         <% @Trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+        <td>
+          <% if @Trophies.nil? %>
+          <p><%= t(:no_trophies_won) %></p>
+          <% else %>
+          <%= @Trophies.trophy_id %>
+          <% end %>
+        </td>
       </tr>
       <br>
       <% end %>

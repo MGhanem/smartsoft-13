@@ -333,7 +333,7 @@ ar:
   rank: "الرتبة"
   highest_score: "أعلى نقاط"
   trophies: "الجوائز"
-  no_trophies: "لا يوجد جوائز"
+  no_trophies_won: "لا يوجد جوائز"
   not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر تغيير البيانات"
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر تغيير البيانات"
   loading: "تحميل"
