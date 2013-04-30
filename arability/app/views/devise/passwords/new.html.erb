@@ -1,12 +1,10 @@
-<h2>Forgot your password?</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.submit "Send me reset password instructions" %></div>
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name, :locale => I18n.locale), :html => { :method => :post, class: "form-signin", style: "min-width: 380px;" }) do |f| %>
+  <h2 class="form-signin-heading"><%= t(:reset_password) %></h2>
+  <% if resource.errors.any? %>
+      <div class="alert"><%= devise_error_messages! %></div>
+  <% end %>
+  <%= f.email_field :email, placeholder: t(:email), style: "padding: 8px; width: 300px;" %>
+  <div><%= f.submit t(:send_reset_password), class: "btn btn-large btn-primary" %></div>
 <% end %>
 
-<%= render "links" %>

@@ -12,9 +12,9 @@
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
-          <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
+          <li><%= link_to(t(:english), params.merge(locale: "en")) %></li>
         <% else %>
-          <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
+          <li><%= link_to(t(:arabic), params.merge(locale: "ar")) %></li>
         <% end %>
       <% if !gamer_signed_in? %>
           <li class="divider-vertical"></li>
@@ -26,9 +26,15 @@
               <%= form_for("gamer", url: gamer_session_path) do |f| %>
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
+                <% if I18n.locale == :ar %>
+                <div><%= f.check_box :remember_me, :class => "pull-right" %> <%= label_tag :remember_me, t(:remember_me), :class => "pull-right", style: "margin-right: 10px;" %></div>
+                <br /><br />
+                <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px;", class: "pull-right" %><br />
+                <% else %>
                 <div><%= f.check_box :remember_me, :class => "pull-left" %> <%= label_tag :remember_me, t(:remember_me), :class => "pull-left", style: "margin-left: 10px;" %></div>
                 <br /><br />
                 <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px;", class: "pull-left" %><br />
+                <% end %>
                 <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary" %>
               <% end %>
             </div>
