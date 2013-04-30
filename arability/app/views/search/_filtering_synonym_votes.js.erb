@@ -1,6 +1,6 @@
 <%= render "success_and_error_messages.js" %>
 
-function applyFilters(keyword, country, age_from, age_to, gender, education){
+function applyFilters(keyword, country, age_from, age_to, gender, education, synonym_type){
   age_from = parseInt(age_from);
   age_to = parseInt(age_to);
 
@@ -36,7 +36,7 @@ function applyFilters(keyword, country, age_from, age_to, gender, education){
     url: "<%= search_with_filters_path %>",
     type: "post",
     data: { search: keyword, country: country, age_from: age_from, 
-      age_to: age_to, gender: gender, education: education },
+      age_to: age_to, gender: gender, education: education, synonym_type: synonym_type },
     error:function(){
       showError();
     }   
