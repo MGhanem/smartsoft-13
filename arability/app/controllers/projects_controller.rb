@@ -5,8 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, 
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
+  before_filter :developer_can_see_this_project?,
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
   before_filter :can_access_project?,
   only: [:add_word_inside_project, 
   :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
@@ -26,8 +26,9 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to action: "index",controller: "projects"}
       format.json { head :no_content }
+      flash[:success] = t(:project_delete)
     end
   end
     
