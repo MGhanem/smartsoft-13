@@ -119,6 +119,7 @@
     </div>
   </form> 
 <script type="text/javascript" charset="utf-8">
+  $("#add_button").removeAttr('href');
   $(".input").change(function(){
       var new_synonym_id = $(this).val();
       $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
@@ -167,6 +168,7 @@
   }
   
   function compute_and_click(){
+    $("#add_button").removeAttr('href');
     var keyword_name = $("#selected_keyword").val();
     var synonym_id = $("#selected_synonym option:selected").val();
     var keyword_in_params = "keyword="+keyword_name;
@@ -179,6 +181,7 @@
     }
     else{
       $('#add_button').attr('href',complete_url);
+      $('#add_button').attr( 'onClick', 'return false' );
     }
   }
 </script>
