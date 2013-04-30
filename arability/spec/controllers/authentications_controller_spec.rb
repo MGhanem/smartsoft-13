@@ -57,7 +57,8 @@ describe AuthenticationsController do
 
 	it "should redirect to sign up page if no authentication found" do
 		get :twitter_callback
-		expect(response).to render_template("twitter_signin")
+		auth = request.env["omniauth.auth"]
+		response.should redirect_to "/ar/social_registrations/new_social?provider=#{auth["provider"]}"
 	end
 
 end
