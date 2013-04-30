@@ -122,7 +122,12 @@
   $("#add_button").removeAttr('href');
   $(".input").change(function(){
       var new_synonym_id = $(this).val();
-      $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
+      $.ajax({
+        type: "GET",
+        url: "/developers/projects/"+"<%= @project.id %>"+"/change_synonym",
+        data: { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" },
+        success: function(){ update_adding_synonym_alerts(); }
+      })
     });
   
   $("#selected_keyword").change(function (){
@@ -184,4 +189,14 @@
       $('#add_button').attr( 'onClick', 'return false' );
     }
   }
+  function update_adding_synonym_alerts(){
+    $('.alert').remove();
+    var message = " Synonym changed successfully. ";
+    var alert_added = []
+    alert_added.push(" <div class='alert alert-success row'> ");
+    alert_added.push(" <button type='button' class='close' data-dismiss='alert'>&times;</button> ");
+    alert_added.push(message);
+    alert_added.push(" </div> ");
+    $('.content').prepend(alert_added.join(" "));
+}
 </script>
