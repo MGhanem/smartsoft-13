@@ -151,17 +151,16 @@
             </div>
           <% end %>
           <% if current_gamer.provider != "twitter" %>
-            <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
+            <div class="Twitter" style="padding:10px">
               <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
-                <h5>
-                  <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50" />
-                  <%= t(:already_connected) %>
-                </h5>
-                <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"twitter"}" %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" />
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"twitter"}" %>
+                </span>
               <% else %>
-                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
-                <span font='20' style="position:relative; padding:40px;">
-                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px"/>
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %> 
                 </span>
               <% end %>
             </div>

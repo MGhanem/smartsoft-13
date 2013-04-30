@@ -19,7 +19,7 @@
             <div class="controls">
                 <%= f.label t(:email), class: "control-label" %>
                 <% if @provider == "twitter" %>
-                  <%= f.email_field :email, style: "margin-left: 10px;", value: @email, id: "inputSuccess"  %>
+                  <%= f.email_field :email, style: "margin-left: 10px;", value: @email %>
                 <% else %>
                   <%= f.email_field :email, :style => "margin-left: 10px;", :value => @email, :readonly => "readonly", :id => "inputSuccess"  %>
                 <% end %>
