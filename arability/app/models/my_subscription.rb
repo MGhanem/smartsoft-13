@@ -92,15 +92,21 @@ class MySubscription < ActiveRecord::Base
   #   Gives permission to add words
   # Failure:
   #   None 
-  def max_add_word
+  def max_add_word(proj_id)
     developer = self.developer
-    project = Project.where(owner_id: self.developer)
-    add=PreferedSynonym.where(project_id: project.id )
+    add=PreferedSynonym.where(project_id: proj_id )
     if add.count < self.limit
       return true
     else
       return false
     end
+  end
+
+   def max_add_word_count(proj_id)
+    developer = self.developer
+    add=PreferedSynonym.where(project_id: proj_id ).count
+    count_num=self.limit-add
+    return count_num
   end
   # Author:
   #   Noha Hesham
@@ -112,6 +118,7 @@ class MySubscription < ActiveRecord::Base
   #   Gives permission to search
   # Failure:
   #   None
+
   def get_max_words(word_id)
     developer = self.developer
     word = Search.joins(:keyword).where(keyword_id: word_id)

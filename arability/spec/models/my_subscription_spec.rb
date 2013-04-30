@@ -13,6 +13,16 @@ describe MySubscription do
 
   }
 
+  let(:project){
+    project = Project.new
+    project.name = "banking"
+    project.minAge = 19
+    project.maxAge = 25
+    project.owner_id = developer.id
+    project.save
+    project   
+  }
+
   let(:submodel){
     submodel = SubscriptionModel.new
     submodel.limit=50
@@ -45,7 +55,7 @@ describe MySubscription do
     expect(result).to eq(true)
   end
    it "add permission is given" do 
-    result = my_sub.max_add_word
+    result = my_sub.max_add_word(project.id)
     expect(result).to eq(true)
   end
    it "search permission is given" do 
