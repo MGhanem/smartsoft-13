@@ -1,0 +1,39 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: "sidebar-nav", locals: {active: "add-word"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-add-word">
+					<form class="form-horizontal" action="" method="post">
+						<fieldset>
+							<legend>
+								<a>
+									إضافة كلمة جديدة
+								</a>
+							</legend>
+							<% if flash[:success] %>
+								<div class="alert alert-success">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		<%= flash[:success] %>
+						    	</div>
+						  	</div>
+							<% end %>
+							<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+							<div class="control-group<%= flash[:error] && flash[:error][:name]? ' error' : ''%>">
+								<label class="control-label" for="inputkeyword">الكلمة</label>
+								<div class="controls">
+									<input type="text" id="inputkeyword" name="keyword[name]" placeholder="الكلمة" value="<%= @name %>" class="span4">
+									<button type="submit" class="btn btn-primary pull-left">إضافة الكلمة</button>
+									<% if flash[:error] && flash[:error][:name] %>
+											<span class="help-block">يجب ادخال كلمة باللغة العربية او الانجليزية</span>
+									<% end %>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
