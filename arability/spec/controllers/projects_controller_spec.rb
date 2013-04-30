@@ -56,7 +56,7 @@ describe ProjectsController, type: :controller do
     page.should have_content(I18n.t(:import_csv_title))
   end
 
-    it "should delete a project" do
+  it "should delete a project" do
     sign_in gamer1
     put :destroy, id: project.id
     response.code.should eq("302")
@@ -104,5 +104,5 @@ describe ProjectsController, type: :controller do
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
-  
+
 end

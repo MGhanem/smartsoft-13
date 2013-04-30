@@ -52,7 +52,6 @@
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
-  
   <% if I18n.locale == :ar %>
     <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
   <% else %>
