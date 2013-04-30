@@ -122,13 +122,4 @@ class AuthenticationsController < ApplicationController
     end
   end
 
-  # Author:
-  #   Amr Abdelraouf
-  # TMP method
-  def remove_facebook_connection
-    Authentication.remove_conn(current_gamer.id, "facebook")
-    flash[:notice] = I18n.t(:remove_fb_connection)
-    redirect_to "/gamers/edit"
-  end
-
 end
