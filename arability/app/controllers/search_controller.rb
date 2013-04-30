@@ -116,7 +116,7 @@ class SearchController < BackendController
       @synonym_type = nil
     elsif @synonym_type == "1"
       @synonym_type = true
-    else
+    elsif @synonym_type == "2"
       @synonym_type = false
     end
 
@@ -182,7 +182,7 @@ class SearchController < BackendController
       @synonym_type = nil
     elsif @synonym_type == "1"
       @synonym_type = true
-    else
+    elsif @synonym_type == "2"
       @synonym_type = false
     end
 
