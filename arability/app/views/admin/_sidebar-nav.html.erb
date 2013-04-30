@@ -1,0 +1,55 @@
+<div class="span3">
+	<div class="well nav-fixed">
+		<ul class="nav nav-list nav-stacked" id="admin-tabs">
+			<li class="nav-header">إدارة الحسابات</li>
+			<li class="divider"></li>
+			<li <%= active == "list-gamers"? "class=active" : "" %>>
+				<a href="/admin/list/gamers">عرض اللاعبيين</a>
+			</li>
+			<li <%= active == "list-developers"? "class=active" : "" %>>
+				<a href="/admin/list/developers">عرض المطوريين</a>
+			</li>
+			<li <%= active == "list-admins"? "class=active" : "" %>>
+				<a href="/admin/list/admins">عرض المشرفيين</a>
+			</li>
+			<li class="nav-header">إدارة المشارييع</li>
+			<li class="divider"></li>
+			<li <%= active == "list-projects"? "class=active" : "" %>>
+				<a href="/admin/list/projects">عرض المشارييع</a>
+			</li>
+			<li <%= active == "add-category"? "class=active" : "" %>>
+				<a href="/admin/add_category">إضافة فئة جديدة</a>
+			</li>
+			<li <%= active == "view-categories"? "class=active" : "" %>>
+				<a href="/admin/view_categories">عرض الفئات</a>
+			</li>
+			<li <%= active == "view-subscription-models"? "class=active" : "" %>>
+				<a href="/admin/view_subscription_models">عرض انظمة الاشتراك</a>
+			</li>
+			<li class="nav-header">إدارة الكلمات</li>
+			<li class="divider"></li>
+			<li <%= active == "add-word"? "class=active" : "" %>>
+				<a href="/admin/add/word">إضافة كلمة جديدة</a>
+			</li>
+			<li <%= active == "import-csv"? "class=active" : "" %>>
+				<a href="/admin/import/csvfile">استيراد ملف كلمات بصيغة CSV</a>
+			</li>
+			<li class="nav-header">إدارة الانجازات</li>
+			<li class="divider"></li>
+			<li <%= active == "add-trophy"? "class=active" : "" %>>
+				<a href="/admin/add/trophy">إضافة انجاز جديد</a>
+			</li>
+			<li <%= active == "list-trophies"? "class=active" : "" %>>
+				<a href="/admin/list/trophies">عرض الانجازات</a>
+			</li>
+			<li class="nav-header">إدارة الجوائز</li>
+			<li class="divider"></li>
+			<li <%= active == "add-prize"? "class=active" : "" %>>
+				<a href="/admin/add/prize">إضافة جائزة جديدة</a>
+			</li>
+			<li <%= active == "list-prizes"? "class=active" : "" %>>
+				<a href="/admin/list/prizes">عرض الجوائز</a>
+			</li>
+		</ul>
+	</div>
+</div>

@@ -1,48 +1,62 @@
-<div class = "container well" >
-  <%= form_for (@model),:url => update_model_path(@model) do |f| %>
-    <% if @errors != nil %>
-      <div id="error_explanation" class="req">
-        <ul>
-          <% @errors.each do |msg| %>
-            <li><%= msg[1][0] %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="control-group">
-      <%= f.label :الإسم العربي, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :name_ar, :placeholder => "الإسم العربي" %>
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "edit-subscription-models"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+            <legend>
+              <a>
+                تعديل نظام اشتراك
+              </a>
+            </legend>
+            <%= form_for (@model),:url => update_model_path(@model) do |f| %>
+              <% if @errors != nil %>
+                <div id="error_explanation" class="req">
+                  <ul>
+                    <% @errors.each do |msg| %>
+                      <li><%= msg[1][0] %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <div class="control-group">
+                <%= f.label :الإسم العربي, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :name_ar, :placeholder => "الإسم العربي" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :الإسم الإنجليزي, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :name_en, :placeholder => "English name" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :الحد_الأقصى_للبحث, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :limit_search, :placeholder => "الحد الأقصى للبحث" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :الحد_الأقصى_للمتابعة, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :limit_follow, :placeholder => "الحد الأقصى للمتابعة" %>
+                </div>
+              </div>  
+              <div class="control-group">
+                <%= f.label :الحد_الأقصى_للمشاريع, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :limit_project, :placeholder => "الحد الأقصى للمشاريع" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
+                </div>
+              </div>
+            <% end %>
+        </div>
       </div>
     </div>
-    <div class="control-group">
-      <%= f.label :الإسم الإنجليزي, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :name_en, :placeholder => "English name" %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :الحد_الأقصى_للبحث, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :limit_search, :placeholder => "الحد الأقصى للبحث" %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :الحد_الأقصى_للمتابعة, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :limit_follow, :placeholder => "الحد الأقصى للمتابعة" %>
-      </div>
-    </div>  
-    <div class="control-group">
-      <%= f.label :الحد_الأقصى_للمشاريع, :class => "control-label" %>
-      <div class="controls">
-        <%= f.text_field :limit_project, :placeholder => "الحد الأقصى للمشاريع" %>
-      </div>
-    </div>
-    <div class="control-group">
-      <div class="controls">
-        <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
-      </div>
-    </div>
-  <% end %>
+  </div>
 </div>
