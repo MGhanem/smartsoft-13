@@ -25,16 +25,24 @@ Arability::Application.routes.draw do
     end
     match "/make_admin" => "admin#make_admin", :via => [:get]
     match "/remove_admin" => "admin#remove_admin", :via => [:get]
+    match "/add_category" => "admin#add_category"
+    match "/view_categories" => "admin#view_categories"
+    match "/delete_category"=>"admin#delete_category", :as => "delete_category"
+    match "/view_subscription_models" => "admin#view_subscription_models"
+    match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
+    put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
+    resources :subscription_models
   end
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
 
     # required for routing by the devise module(gem)
-    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-    # devise_for :gamers
+
     devise_for :gamers do 
-      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+      get '/gamers/sign_out' => 'devise/sessions#destroy'
+      match "/social_registrations/new_social" => "social_registrations#new_social"
+      post "/social_registrations/social_sign_in"
     end
 
     match '/game' => 'games#game'
@@ -44,8 +52,9 @@ Arability::Application.routes.draw do
     get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
-    get 'games/gettrophies'
+    get 'games/get_trophies'
     get 'games/getnewwords'
+    get "games/show_trophies"
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
@@ -55,21 +64,21 @@ Arability::Application.routes.draw do
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
     match '/authentications/facebook_connect' => 'authentications#facebook_connect'
-    get "authentications/remove_twitter_connection"
+    get "authentications/remove_connection"
     match '/auth/twitter/callback', :to => 'authentications#twitter_callback' 
     match '/tweet/tweet_invitation' => "tweet#tweet_invitation"
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match '/auth/facebook/callback' => 'authentications#facebook_callback'
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
-
+      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
-      match "projects/share/:id" => "projects#share", :as => "share_project"
-      match "projects/share_project_with_developer" => "projects#share_project_with_developer", :via => :put
+      match "projects/:id/share/" => "projects#share", :as => "share_project"
+      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
-      get "projects/remove_developer_from_project"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
@@ -77,8 +86,13 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
+
+      match "/projects/:id/destroy" => "projects#destroy", :as => :delete
+      put "projects/destroy"
+
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
+
       resources :projects
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
@@ -99,6 +113,8 @@ Arability::Application.routes.draw do
       match "search_keywords" => "search#search_keywords"
 
       match "send_report" => "search#send_report"
+
+      match 'autocomplete' => 'search#keyword_autocomplete'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"

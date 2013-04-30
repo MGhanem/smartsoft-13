@@ -243,4 +243,141 @@ class AdminController < ApplicationController
     end
   end
 
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could add a new category by giving the new category an
+  #   arabic and english name of the category.
+  # Parameters:
+  #   english_name: the category's english name
+  #   arabic_name: the category's arabic name.
+  # Success:
+  #   Category is added to database, and a flash is viewed indicating succes of
+  #   add.
+  # Failure: 
+  #   Category is not saved due to any error in input data, and a flash is
+  #   viewed indicating the error.
+  def add_category
+    if request.post?
+      english_name = params[:english_name]
+      arabic_name = params[:arabic_name]
+      @success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
+      if @success
+        flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
+          /#{@category.arabic_name} بنجاح"
+        flash.keep
+        redirect_to action: "add_category"
+      else
+        flash[:error] = @category.errors.messages
+        flash.keep
+        redirect_to action: "add_category"
+      end
+    else
+      render "admin/add_category"
+    end
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I should be able to view all the subscription models in
+  #   database.
+  # Parameters:
+  #   None.
+  # Success:
+  #   Subscription models appear on the view in a table with all attributes.
+  # Failure: 
+  #   Nothing appears as there is no Subscription models in database.
+  def view_subscription_models
+    @models = SubscriptionModel.all
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could view all categories in database.
+  # Parameters:
+  #   None.
+  # Success:
+  #   All categories in database are viewed.
+  # Failure: 
+  #   No categories are in database, so nothing is viewed.
+  def view_categories
+    @categories = Category.all
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I should be able to view all the attributes of the
+  #   subscription model needed to be edited, and the data they have.
+  # Parameters:
+  #   errors: list of error messages of subscription model trying to edit.
+  #   model_id: id of subscription model to be edited.
+  # Success:
+  #   error messages appear on top of page, and attributes of subscription model
+  #   to be edited appear on page, with their original data.
+  # Failure: 
+  #   None.
+  def edit_subscription_model
+    @errors = params[:errors]
+    model_id = params[:model_id].to_i
+    @model = SubscriptionModel.find_by_id(model_id)
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could delete any category from database by choosing it from
+  #   the view table and clicking the trash icon.
+  # Parameters:
+  #   category_id: id of category to be deleted.
+  # Success:
+  #   Category is deleted from database and categories' view appears without the
+  #   deleted category, and a flash appears indicating the success of deletion.
+  # Failure: 
+  #   None.
+  def delete_category
+    category_id = params[:category_id]
+    category = Category.find(category_id)
+    category.delete
+    flash[:success] = "لقد تم مسح الفئة بنجاح"
+    flash.keep
+    redirect_to action: "all_category"
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I should be able edit data of a subscription model.
+  # Parameters:
+  #   model_id: id of subscription model to be edited.
+  #   subscription_model[name]: new name that should replace original name
+  #   subscription_model[limit_search]: new limit_search that should replace
+  #   original limit_search.
+  #   subscription_model[limit_follow]: new limit_follow that should replace
+  #   original limit_follow.
+  #   subscription_model[limit_project]: new limit_project that should replace
+  #   original limit_project.
+  # Success:
+  #   Subscription model attributes gets updated with new data and go back to
+  #   the view of all subscription models in database.
+  # Failure: 
+  #   Some of the Subscription model's validation prevents the model to be
+  #   edited, and the errors appear on the top of the page.
+  def update_subscription_model
+    @model = SubscriptionModel.find(params[:model_id])
+    @model.name_ar = params[:subscription_model][:name_ar]
+    @model.name_en = params[:subscription_model][:name_en]
+    @model.limit_search = params[:subscription_model][:limit_search]
+    @model.limit_follow = params[:subscription_model][:limit_follow]
+    @model.limit_project = params[:subscription_model][:limit_project]
+    if @model.save
+      redirect_to action: "subscription_model"
+    else
+      redirect_to action: "edit_subscription_model",
+        errors: @model.errors.messages, model_id: @model.id
+    end
+  end
+
 end
