@@ -10,10 +10,7 @@ class Developer < ActiveRecord::Base
   has_many :shared_projects
   has_many :projects_shared, :through => :shared_projects, :source => "project"
   has_many :projects, :foreign_key => "owner_id"
-
-
   has_many :own_projects, class_name: "Project"
-  has_and_belongs_to_many :shared_with_projects, class_name: "Project"
 
   attr_accessible :verified, :gamer_id
 

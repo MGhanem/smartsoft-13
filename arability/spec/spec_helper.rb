@@ -25,6 +25,11 @@ RSpec.configure do |config|
     :user_info => {:name => "Joe Smith", :nickname => 'joesmith'}, :uid => '123456790',
     :credentials => {:token => "testtoken234tsdf", :secret => "tokensecrettest"}
     })
+  OmniAuth.config.add_mock(:facebook, {
+    "info" => {"email" => "email@mock.com", "username" => "mockuser"}, "provider" => "facebook",
+    "uid" => "011252217", "credentials" => {"token" => "mock123token456"},
+    "extra" => {"raw_info" => {"gender" => "male"}}
+    })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
