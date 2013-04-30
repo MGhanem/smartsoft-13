@@ -40,23 +40,66 @@ class SearchController < BackendController
       Keyword.get_similar_keywords(@search_keyword, categories_array)
     @categories = categories_array
   end
+  
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   returns json of keyword names matching autocompletion
+  # params:
+  #   search_keyword: a string representing the search keyword, from the params list
+  #     from a textbox in the search view
+  # success:
+  #   returns a json list of keywords similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def keyword_autocomplete
+    search_keyword = params["search"]
+    similar_keywords =
+      Keyword.get_similar_keywords(search_keyword, [])
+    similar_keywords.map! { |keyword| keyword.name }
+    render json: similar_keywords
+  end
+
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
+  #   submits a report to each of the words chosen in the report form by the
+  #   current user
+  # params:
+  #   reported_words: an array of keywords/synonyms to be reported
+  # success:
+  #   returns submits a report with the chosen keywords/synonyms
+  # failure:
+  #   --
+  def send_report
+    reported_words = params["reported_words"]
+    reported_words = reported_words.to_a
+    reported_words.each do |word|
+      word = word.split(" ")
+      word_model = word[1] == "Keyword" ? 
+        Keyword.find(word[0].to_i) : Synonym.find(word[0].to_i)
+      @success, _ = Report.create_report(current_gamer, word_model)
+    end
+  end
 
   # Author:
   #   Nourhan Mohamed, Nourhan Zakaria
-	# Description:
+  # Description:
   #   search for synonyms for a particular keyword
   #   calls the helper function that draws the piecharts of voters statistics
   #   of certain synonym
-	#	params:
-	#	  search: a string representing the search keyword, from the params list
-	#     from a textbox in the search_keywords view
-	#	success: 
-	#	  returns to the search view a list of synonyms for the keyword
-	#   sorted by vote count
+  # params:
+  #   search: a string representing the search keyword, from the params list
+  #     from a textbox in the search_keywords view
+  # success: 
+  #   returns to the search view a list of synonyms for the keyword
+  #   sorted by vote count
   #   and a list of hashs and in each hash the key is the synonym id
   #   and the value is a list of four pie charts
-	#	failure:
-	#	  returns an empty list if the search keyword has no synonyms
+  # failure:
+  #   returns an empty list if the search keyword has no synonyms
   #   and no charts will be drawn if the keyword has no synonyms
   def search
     @search_keyword = params["search"]

@@ -150,6 +150,7 @@ describe SearchController do
       k2
       get :search_keywords, search: "test"
       assigns(:similar_keywords).should eq([k, k2])
+      assigns(:similar_keywords).should_not eq([k2, k])
     end
 
     it "should list synonyms according to vote count", nourhan_mohamed: true do
@@ -295,7 +296,66 @@ describe SearchController do
     charts[3].first[:title][:text].should match(I18n.t(:stats_education))
     charts[3].data.first[:data]
       .should =~ (s.get_visual_stats_education("female", "Lebanon", "University", 10, 50))
-    charts[3].data.first[:data].should_not =~ []
+    charts[3].data.first[:data].should_not =~ []     
+    end
+
+    it "should return json containing similar keywords" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "test"
+      json_response = JSON(response.body)
+      json_response.first.should eq("test")
+      json_response.last.should eq("testing")
+    end
+
+    it "should return empty json on not-found" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "click"
+      json_response = JSON(response.body)
+      json_response.should == []
+    end
+
+    it "should return empty json on non-approved keywords" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "ktest"
+      json_response = JSON(response.body)
+      json_response.should == []
+    end
+
+    it "should send report on a keyword successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      get :send_report, reported_words: ["#{k.id} Keyword"]
+      assigns(:success).should be(true)
+    end
+
+    it "should send report on a synonym successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      s
+      get :send_report, reported_words: ["#{s.id} Synonym"]
+      assigns(:success).should be(true)
+    end
+
+    it "should send report on both keywords and synonyms successfully" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      s2
+      k2
+      get :send_report, reported_words: ["#{s2.id} Synonym", "#{k2.id} Keyword"]
+      assigns(:success).should eq(true)
     end
   end 
 end

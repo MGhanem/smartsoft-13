@@ -206,3 +206,25 @@ function setButtons(){
       return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
   }
+
+  function setPopoverAttributes(){
+    wordsListPopoverContent = "<%= I18n.t(:words_list_popover_content) %>";
+    wordsListPopoverTitle = "<%= I18n.t(:words_list_popover_title) %>";
+    wordLabelPopoverContent = "<%= I18n.t(:word_label_popover_content) %>";
+    wordLabelPopoverTitle = "<%= I18n.t(:word_label_popover_title) %>";
+    tablePopoverContent = "<%= I18n.t(:table_popover_content) %>"
+    tablePopoverTitle = "<%= I18n.t(:table_popover_title) %>"
+    clickedButtonPopoverContent = "<%= I18n.t(:clicked_button_popover_content) %>";
+    clickedButtonPopoverTitle = "<%= I18n.t(:clicked_button_popover_title) %>";
+    clickedButtonPopoverButton = "<%= I18n.t(:clicked_button_popover_button) %>";
+    flashingTowerPopoverContent = "<%= I18n.t(:flashing_tower_popover_content) %>"
+    flashingTowerPopoverTitle = "<%= I18n.t(:flashing_tower_popover_title) %>"
+    flashingTowerPopoverButton = "<%= I18n.t(:flashing_tower_popover_button) %>"
+  }
+
+  function setModalTranslations(){
+    modalHeader = "<%= I18n.t(:modal_header) %>";
+    modalBody = "<%= I18n.t(:modal_body) %>";
+    modalYesButton = "<%= I18n.t(:modal_yes_button) %>";
+    modalNoButton = "<%= I18n.t(:modal_no_button) %>";
+  }

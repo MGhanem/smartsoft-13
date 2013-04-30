@@ -85,22 +85,6 @@ class GamesController < ApplicationController
     end
   end
 
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   When called the gammer will disconnect his/her account from facebook
-  # Params:
-  #   None
-  # Success:
-  #   The user's facebook data will be deleted and a flash notice will appear
-  #   to ensure the user that he's disconnected
-  # Failure:
-  #   None
-  def disconnect_facebook
-    current_gamer.disconnect_from_facebook
-    redirect_to "/gamers/edit", flash: {alert: t(:logged_out_of_fb)}
-  end
-
   # Description:
   #   After the gamer finishes a level this action is requested
   #   to award them with their prizes if they have any
@@ -112,12 +96,11 @@ class GamesController < ApplicationController
   # returns:
   #   success: lists out the prizes the gamer wins in a js erb view
   #   failure: the action is not even called
-  def getprizes
+  def get_prizes
     @level = params[:level].to_i
     @score = params[:score].to_i
     @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id, 
                                                  @score, @level)
-    @won_prizes.map { |wp| current_gamer.prizes << wp }
     respond_to do |format|
       format.js
     end
@@ -177,15 +160,15 @@ class GamesController < ApplicationController
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
   #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
-  def gettrophies
+  def get_trophies
     @level = params[:level].to_i
     @score = params[:score].to_i
-    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, 
+    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @won_prizes = current_gamer.won_prizes?(@score, @level)
-    @won_trophies.map { |nt| current_gamer.trophies << nt }
+    @bool_won_prizes = Prize.new_prizes_for_gamer?(current_gamer.id,
+                                                   @score, @level)
     if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+      current_gamer.update_attributes!(highest_score: @score)
     end
     respond_to do |format|
       format.js
@@ -229,7 +212,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned prizes in a list and the prizes that haven't been 
   #   earned in another
-  def showprizes
+  def show_prizes
     @won_prizes = current_gamer.get_won_prizes
     @not_won_prizes = current_gamer.get_available_prizes
     respond_to do |format|
@@ -249,34 +232,14 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned trophies in a list and the trophies that haven't been 
   #   earned in another
-  def showtrophies
+  def show_trophies
     @won_trophies = current_gamer.get_won_trophies
     @not_won_trophies = current_gamer.get_available_trophies
     respond_to do |format|
       format.js
     end
   end
-  
-  # Description:
-  #   Returns the view that the gamer can view the trophies that 
-  #   are available currently in the game and the trophies that they
-  #   have already earned
-  # Author:
-  #   Adam Ghanem
-  # @params:
-  #   none
-  # returns:
-  #   success: renders out a view using js erb view with the 
-  #   earned trophies in a list and the trophies that haven't been 
-  #   earned in another
-  def showtrophies
-    @won_trophies = current_gamer.get_won_trophies
-    @not_won_trophies = current_gamer.get_available_trophies
-    respond_to do |format|
-      format.js
-    end
-  end
-  
+
   # Author:
   # 	Kareem Ali
   # Description:
@@ -298,4 +261,20 @@ class GamesController < ApplicationController
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
   end
+
+  # Author:
+  #   Ali El Zoheiry
+  # Description:
+  #   updates the value of the show_tutorial column to false
+  # params:
+  #   none
+  # success:
+  #   the value of the column is successfuly changed to false
+  # failure:
+  #   none
+  def disableTutorial
+    current_gamer.update_attributes!(show_tutorial: false)
+  end
 end
+
+
