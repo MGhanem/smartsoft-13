@@ -334,11 +334,9 @@ describe Keyword do
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, true)
     synonyms.first.name.should eq("دوس")
     synonyms.length.should eq(1)
-    votes.should eq({})
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, false)
     synonyms.first.name.should eq("انقر")
     synonyms.length.should eq(1)
-    votes.should eq({1=>1})
   end
 
 end
