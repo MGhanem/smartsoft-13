@@ -174,7 +174,7 @@ module SearchHelper
   def piechart (stats, header)
     chart = LazyHighCharts::HighChart.new("pie") do |f|
       f.chart({ defaultSeriesType: "pie" , margin: [0, 10, 150, 25], 
-      width: 157, hieght: 50 } )
+      width: 157, hieght: 50 })
       series = {
        type: "pie",
        name: "voters stats",

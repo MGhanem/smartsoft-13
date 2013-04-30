@@ -36,18 +36,18 @@
                     <script type="text/javascript">
                       $(".why-disabled").popover({
                           placement: function () {
-                          <% if I18n.locale == :ar %>
-                          return 'right';
-                          <% else %>
-                          return 'left';
-                          <% end %>
+                            <% if I18n.locale == :ar %>
+                              return "right";
+                            <% else %>
+                              return "left";
+                            <% end %>
                           }, 
                           content :function () {
-                          <% if I18n.locale == :ar %>
-                          return "عفوا, لا يوجد اصوات لهذه الكلمة";
-                          <% else %>
-                          return "Sorry, no one voted for this synonym yet!";
-                          <% end %>
+                            <% if I18n.locale == :ar %>
+                             return "عفوا, لا يوجد اصوات لهذه الكلمة";
+                            <% else %>
+                             return "Sorry, no one voted for this synonym yet!";
+                            <% end %>
                           },
                           trigger: "hover",
                           template: '<div class="popover"><div class="arrow"></div><div class="popover-inner myclass"><div class="popover-content"><p></p></div></div></div>'
@@ -73,7 +73,7 @@
               </script>
               <script>
                 $("#bstats<%=synonym.id%>").click(function() {
-                    $("span",this).toggle();
+                  $("span",this).toggle();
                 });
               </script>
             </div>
@@ -81,46 +81,46 @@
         </div>
         <div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
           <div class="accordion-inner">
-            <% if @votes[synonym.id] != nil%>
-            <% visuals = @charts.select {|f| f[synonym.id]} %>
+            <% if @votes[synonym.id] != nil %>
+            <% visuals = @charts.select { |f| f[synonym.id] } %>
             <% charts = visuals.first[synonym.id] %>
             <div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;" dir ="ltr">
             <div class="container-fluid">
               <div class="row-fluide">
                 <div class="span2">    
                   <%= high_chart("gender_#{synonym.id}", charts[0]) do |c| %>
-                      <% if I18n.locale == :ar %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}"  %>
-                      <% else %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <% end %>
-                          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                    <% if I18n.locale == :ar %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}" %>
+                    <% else %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}" %>
+                    <% end %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }" %>
                   <% end %>
                 </div>
                 <div class="span2">    
                   <%= high_chart("country_#{synonym.id}", charts[1]) do |c| %>
-                      <% if I18n.locale == :ar %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}"  %>
-                      <% else %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <% end %>
-                          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                    <% if I18n.locale == :ar %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}" %>
+                    <% else %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}" %>
+                    <% end %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }" %>
                   <% end %>
                 </div>
                 <div class="span2">    
                   <%= high_chart("age_#{synonym.id}", charts[2]) do |c| %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                    <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}" %>
+                    <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }" %>
                   <% end %>
                 </div>
                 <div class="span2">    
                   <%= high_chart("education_#{synonym.id}", charts[3]) do |c| %>
-                      <% if I18n.locale == :ar %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}"  %>
-                      <% else %>
-                          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <% end %>
-                          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                    <% if I18n.locale == :ar %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}" %>
+                    <% else %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}" %>
+                    <% end %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }" %>
                   <% end %>
                 </div>
               </div>

@@ -183,9 +183,9 @@ class Synonym < ActiveRecord::Base
 
     groups = voters.count(group: :country)
 
-    sum = groups.sum{|v| v.last}
-    mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
+    sum = groups.sum{ |v| v.last }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
+    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
   end 
 
   # Author: 
@@ -220,9 +220,9 @@ class Synonym < ActiveRecord::Base
 
     groups = voters.count(group: :gender)
 
-    sum = groups.sum{|v| v.last}
-    mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
+    sum = groups.sum{ |v| v.last }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
+    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
   end 
 
   # Author: 
@@ -258,21 +258,21 @@ class Synonym < ActiveRecord::Base
     groupOne = voters.select('date_of_birth').group("date_of_birth")
     .having("date_of_birth <= ? AND date_of_birth >= ?", 
     10.years.ago.to_date, 25.years.ago.to_date).count
-    one = groupOne.sum{|v| v.last}
+    one = groupOne.sum{ |v| v.last }
 
     groupTwo = voters.select('date_of_birth').group("date_of_birth")
     .having("date_of_birth < ? AND date_of_birth >= ?", 
     25.years.ago.to_date, 45.years.ago.to_date).count
-    two = groupTwo.sum{|v| v.last}
+    two = groupTwo.sum{ |v| v.last }
 
     groupThree = voters.select('date_of_birth').group("date_of_birth")
     .having("date_of_birth < ?", 45.years.ago.to_date).count
-    three = groupThree.sum{|v| v.last}
+    three = groupThree.sum{ |v| v.last }
 
     sum = one + two + three
     if sum != 0
       list = [["10-25", one], ["26-45", two], ["46+", three]]
-      list.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
+      list.map { |key, value| [key,((value.to_f/sum)*100).to_i] }
     else
       []
     end
@@ -310,8 +310,8 @@ class Synonym < ActiveRecord::Base
 
     groups = voters.count(group: :education_level)
 
-    sum = groups.sum{|v| v.last}
-    mapping = groups.map {|key, value| [key.downcase.tr(" ", "_"),value]}
-    mapping.map {|key, value| [I18n.t(key),((value.to_f/sum)*100).to_i]}
+    sum = groups.sum{ |v| v.last }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
+    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
   end
 end
