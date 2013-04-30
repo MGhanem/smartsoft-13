@@ -120,7 +120,7 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
-      get :search, search: "test    "
+      get :search, search: "test    ", synonym_type: 0
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should eq(1)
       assigns(:votes)[2].should be_nil
