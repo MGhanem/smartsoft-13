@@ -14,45 +14,44 @@ class MySubscription < ActiveRecord::Base
   # failure:
   #  the limits are not put in the my subscription of the developer
   def self.choose(dev_id,sub_id)
-      submodel = SubscriptionModel.find(sub_id)
-      my_sub = MySubscription.where(:developer_id => dev_id).first
-      if(my_sub == nil)
-        my_sub = MySubscription.new
-      end
-      my_sub.developer_id = dev_id
-      my_sub.word_search=submodel.limit_search
-      my_sub.word_add=submodel.limit
-      my_sub.word_follow=submodel.limit_follow
-      my_sub.project=submodel.limit_project
-      my_sub.subscription_model_id = submodel.id
-      if my_sub.save
-        return true
-      else 
-        return false
-      end 
+    submodel = SubscriptionModel.find(sub_id)
+    my_sub = MySubscription.where(:developer_id => dev_id).first
+    if(my_sub == nil)
+      my_sub = MySubscription.new
     end
-    # author:Noha hesham
-    # Description:
-    #   takes the developer id and integer type and checks wether 
-    #   the developer's word search ,word add and word follow
-    #   limit has been reached ,if its not then it is greater than zero 
-    #   and permission is given by returning true else return false
-    #   and permission denied.
-    # params:
-    #   developer id and type
-    # success:
-    #   permission is given if the developer didnt exceed the search ,add
-    #   or follow limit
-    # fail:
-    #   none
-      def get_permission_follow(dev_id)
-          developer = self.developer
-          if @count < self.word_follow 
-            return true
-          else
-            return false
-          end
-      end        
+    my_sub.developer_id = dev_id
+    my_sub.word_search=submodel.limit_search
+    my_sub.word_add=submodel.limit
+    my_sub.word_follow=submodel.limit_follow
+    my_sub.project=submodel.limit_project
+    my_sub.subscription_model_id = submodel.id
+    if my_sub.save
+      return true
+    else
+      return false
+    end
+  end
+  # author:Noha hesham
+  # Description:
+  #   takes the developer id and integer type and checks wether
+  #   the developer's word search ,word add and word follow
+  #   limit has been reached ,if its not then it is greater than zero
+  #   and permission is given by returning true else return false
+  #   and permission denied.
+  # params:
+  #   developer id and type
+  # success:
+  #   permission is given if the developer didnt exceed the search ,add
+  #   or follow limit
+  # fail:
+  #   none
+  def get_permission_follow
+    if(self.word_follow > 0)
+      return true
+    else
+      return false
+    end
+  end
   # Author:
   #  Noha Hesham
   # Description:
@@ -62,7 +61,7 @@ class MySubscription < ActiveRecord::Base
   #  gets the correct number of words counted
   # Failure:
   #  none 
-   def count_follow
+  def count_follow
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count   
   end
@@ -77,7 +76,7 @@ class MySubscription < ActiveRecord::Base
   #   None 
   def get_projects_limit
     developer = self.developer
-    projects_count = Project.where(:owner_id => developer.id).count
+    projects_count = Project.where(owner_id: developer.id).count
     if(projects_count < self.project)
       return true
     else
@@ -95,35 +94,36 @@ class MySubscription < ActiveRecord::Base
   #   None 
   def max_add_word
     developer = self.developer
-    project = Project.where(:developer_id => owner_id)
-    add=PreferedSynonym.where(:project_id => project_id )
+    project = Project.where(owner_id: self.developer)
+    add=PreferedSynonym.where(project_id: project.id )
     if add.count < self.limit
       return true
     else
       return false
+    end
   end
   # Author:
   #   Noha Hesham
   # Description:
   #   It takes the word id and checks if the developer has searched for it before
-  #   if no it checks if the developer has passed the search limit and 
+  #   if no it checks if the developer has passed the search limit and
   #   gives permission accordingly
   # Success:
   #   Gives permission to search
   # Failure:
-  #   None 
-  def self.get_max_words(word_id)
+  #   None
+  def get_max_words(word_id)
     developer = self.developer
-    word = Search.joins(:keyword).where(:keyword_id => word_id)
+    word = Search.joins(:keyword).where(keyword_id: word_id)
     if word!= nil
       return true
-    else 
-      if self.word_search > Search.where(:developer_id => self.developer).count 
-         search=Search.new
-         return true
-       else
-        return false 
-       end 
+    else
+      if self.word_search > Search.where(developer_id: self.developer).count
+        search=Search.new
+        return true
+      else
+        return false
+      end
     end
   end
 end
