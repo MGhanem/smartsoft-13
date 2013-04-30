@@ -375,7 +375,7 @@ class AdminController < ApplicationController
     @model.limit_follow = params[:subscription_model][:limit_follow]
     @model.limit_project = params[:subscription_model][:limit_project]
     if @model.save
-      redirect_to action: "subscription_model"
+      redirect_to action: "view_subscription_models"
     else
       redirect_to action: "edit_subscription_model",
         errors: @model.errors.messages, model_id: @model.id
