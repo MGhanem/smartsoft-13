@@ -29,7 +29,7 @@ let(:cat){
   cat = Category.new
   cat.id = "13"
   cat.english_name = "Music"
-  cat.arabic_name = "Music_in_arabic"
+  cat.arabic_name = "مبروك"
   cat.save
   cat
 }
