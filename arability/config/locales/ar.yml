@@ -319,6 +319,7 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
+  enter_word_first: "ادخل كلمة اولآ"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"

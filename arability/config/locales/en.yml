@@ -291,6 +291,7 @@ en:
   education_level: "Education level"
   date_of_birth: "Date of Birth"
   back_to_game: "Back"
+  enter_word_first: "enter a word first"
   keyword_added: "keyword added successfully"
   won_prizes_title: "Earned Prizes"
   not_won_prizes_title: "Available Prizes"
