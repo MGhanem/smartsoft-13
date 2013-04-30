@@ -61,14 +61,14 @@ describe ProjectsController do
       assigns(:my_projects).should eq([project])
     end
 
-    it "renders the :index view"
+    it "renders the :index view" do
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :index
       response.should render_template :index
     end
 
-    it "redirects to sign in page if the developer isn't signed in"
+    it "redirects to sign in page if the developer isn't signed in" do
       get :index
       response.should redirect_to new_gamer_session_path
     end
