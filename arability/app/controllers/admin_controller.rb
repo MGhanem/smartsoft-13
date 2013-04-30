@@ -273,6 +273,7 @@ class AdminController < ApplicationController
       if @success
         flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
           /#{@category.arabic_name} بنجاح"
+        redirect_to "/admin/view_categories"
       else
         flash[:error] = @category.errors.messages
       end
