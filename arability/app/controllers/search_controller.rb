@@ -132,11 +132,13 @@ class SearchController < BackendController
   #   age_to: a string representing age upper bound filter, maybe nil
   #   education: a string representing education level filter, maybe nil
   #   gender: a string representing gender filter, maybe nil
+  #   synonym_type: an int indicating whether synonyms formal, slang or both
   # success: 
   #   returns to the search view a list of synonyms for the keyword
   #   sorted by vote count according to passed filters
   # failure:
-  #   returns a list of synonyms available for the search keyword, all with 0 votes
+  #   returns a list of synonyms available for the search keyword, all with 0 
+  #   votes
   def search_with_filters
     @search_keyword = params["search"]
     @country = params["country"]
@@ -146,11 +148,20 @@ class SearchController < BackendController
     @age_to = @age_to.to_i if !@age_to.blank?
     @gender = params["gender"]
     @education = params["education"]
+    @synonym_type = params["synonym_type"]
 
     if !@age_from.blank? && !@age_to.blank? && @age_from.to_i > @age_to.to_i
       temp = @age_from
       @age_from = @age_to
       @age_to = temp
+    end
+
+    if @synonym_type == "0"
+      @synonym_type = nil
+    elsif @synonym_type == "1"
+      @synonym_type = true
+    else
+      @synonym_type = false
     end
 
     if !@search_keyword.blank?
@@ -160,7 +171,8 @@ class SearchController < BackendController
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if !@search_keyword_model.blank?
         @synonyms, @votes =
-          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, @gender, @education)
+          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, 
+            @gender, @education, @synonym_type)
 
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
