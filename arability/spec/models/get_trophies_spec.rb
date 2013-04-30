@@ -1,9 +1,8 @@
 # encoding: utf-8
-
 require 'spec_helper'
-include 
+
 describe "Get Prizes" do
-  
+
   let(:gamer_adam) {
     gamer_adam = Gamer.new
     gamer_adam.username = "adamggg"
@@ -14,7 +13,7 @@ describe "Get Prizes" do
     gamer_adam.email = "ag@gmail.com"
     gamer_adam.password = "password"
     gamer_adam.password_confirmation = "password"
-    gamer_adam.save(:validate => false)
+    gamer_adam.save validate: false
     gamer_adam
   }
 
@@ -29,7 +28,7 @@ describe "Get Prizes" do
     gamer_yahya.password = "password"
     gamer_yahya.password_confirmation = "password"
     gamer_yahya.email = "ym@gmail.com"
-    gamer_yahya.save
+    gamer_yahya.save validate: false
     gamer_yahya
   }
 
@@ -38,7 +37,7 @@ describe "Get Prizes" do
     trophy1.name = "جأجأزجأج"
     trophy1.level = 1
     trophy1.score = 100
-    trophy1.save
+    trophy1.save validate: false
     trophy1
   }
  
@@ -47,7 +46,7 @@ describe "Get Prizes" do
     trophy2.name = "جأزةجأ"
     trophy2.level = 1
     trophy2.score = 100
-    trophy2.save
+    trophy2.save validate: false
     trophy2
   }
 
@@ -56,7 +55,7 @@ describe "Get Prizes" do
     trophy3.name = "جأجأأزة"
     trophy3.level = 1
     trophy3.score = 100
-    trophy3.save
+    trophy3.save validate: false
     trophy3
   }
 
@@ -65,7 +64,7 @@ describe "Get Prizes" do
     trophy4.name = "ججأأزة"
     trophy4.level = 1
     trophy4.score = 100
-    trophy4.save
+    trophy4.save validate: false
     trophy4
   }
  
@@ -74,7 +73,7 @@ describe "Get Prizes" do
     trophy5.name = "جأجأجأ"
     trophy5.level = 1
     trophy5.score = 100
-    trophy5.save
+    trophy5.save validate: false
     trophy5
   }
 
@@ -83,7 +82,7 @@ describe "Get Prizes" do
     trophy6.name = "جأجأأجأجأ"
     trophy6.level = 3
     trophy6.score = 1000
-    trophy6.save
+    trophy6.save validate: false
     trophy6
   }
 
@@ -92,7 +91,7 @@ describe "Get Prizes" do
     trophy7.name = "شسيضصثف"
     trophy7.level = 3
     trophy7.score = 2000
-    trophy7.save
+    trophy7.save validate: false
     trophy7
   }
 
@@ -107,19 +106,16 @@ describe "Get Prizes" do
     trophy6
     trophy7
   end
-  
 
   it "adam doesn't have any trophies" do
     gamer_adam.id.to_i.should_not eq(nil)
     gamer_adam.trophies eq([])
   end
-    
+
   it "should get only one trophy from the level" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 1500, 3)
     new_trophies.count.should eq(1)
   end
-
-
 
   it "should be able to get 5 new trophies" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234, 1)
@@ -130,7 +126,7 @@ describe "Get Prizes" do
     Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234,1)
     gamer_adam.trophies.length.should eq(5)
   end
-  
+
   it "should not award the gamer with any trophies" do
     Trophy.get_new_trophies_for_gamer(gamer_adam.id, 234, 2)
     gamer_adam.trophies.length.should eq(0)
@@ -140,12 +136,10 @@ describe "Get Prizes" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 1500, 3)
     gamer_adam.get_available_trophies.length.should eq(6)
   end
-  
+
   it "should return 5" do
     new_trophies = Trophy.get_new_trophies_for_gamer(gamer_adam.id, 2500, 3)
     gamer_adam.get_available_trophies.length.should eq(5)
   end
-
-
 
 end

@@ -84,6 +84,12 @@ namespace :db do
     a8=Synonym.create(name: "مركبة", keyword_id: arbya.id, approved: true)
     a9=Synonym.create(name: "سيتنجس", keyword_id: edadat.id, approved: true)
     a9=Synonym.create(name: "انجاز كتير", keyword_id: engazat.id, approved: true)
+    b1=Synonym.create(name: "يحمل", keyword_id: loading.id, approved: true)
+    b2=Synonym.create(name: "لودينج", keyword_id: loading.id, approved: true)
+    b3=Synonym.create(name: "شاريكوا", keyword_id: share.id, approved: true)
+    b4=Synonym.create(name: "دوررليا", keyword_id: find.id, approved: true)
+    b5=Synonym.create(name: "ابحثلي", keyword_id: search.id, approved: true)
+    b5=Synonym.create(name: "سيرشلي", keyword_id: search.id, approved: true)
 
     Gamer.delete_all
     def self.add_gamer(first, last, gender, country, age, education)
@@ -130,6 +136,7 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
+
     free=SubscriptionModel.create(name_en: "Free", limit_search: 20, limit_follow: 20, limit_project: 20)
     premium=SubscriptionModel.create(name_en: "Premium", limit_search: 200, limit_follow: 200, limit_project: 100)
     deluxe=SubscriptionModel.create(name_en: "Deluxe", limit_search: 300, limit_follow: 300, limit_project: 300)
