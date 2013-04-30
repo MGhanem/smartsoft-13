@@ -54,11 +54,16 @@ describe ProjectsController do
   #Timo's tests
   describe "GET #index" do
     it "populates an array of projects"
-      project
       a = create_logged_in_developer
       sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
       get :index
-      assigns(:my_projects).should eq([project])
+      assigns(:my_projects).should eq([project2])
     end
 
     it "renders the :index view" do
