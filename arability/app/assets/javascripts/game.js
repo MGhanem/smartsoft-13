@@ -1311,6 +1311,8 @@ function getNewWords(num){
 //   --
 
 function setLevelAttributes(level){
+	waitTime = 1000 - ((level - 1) * 70);
+	fallingTime = 200 - ((level - 1) * 15); 
 	getNewWords(level + 1);
 	for(var x = 0; x < wordsArray.length; x++){
 		wordsArray[x] = wordsArray[x].toUpperCase();
@@ -1447,8 +1449,6 @@ function continuePlaying(){
 
 function toNextLevel(){
 	disableNav();
-	level++;
-	fallingTime = fallingTime - 15;
 	waitTime = waitTime - 70;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
