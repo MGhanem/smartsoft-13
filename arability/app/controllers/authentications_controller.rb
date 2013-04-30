@@ -37,7 +37,12 @@ class AuthenticationsController < ApplicationController
         gamer = Gamer.find(authentication.gamer_id)
         sign_in_and_redirect(:gamer, gamer)
       else
-        render "twitter_signin"
+        session["devise.token"] = auth["credentials"]["token"]
+        session["devise.gid"] = auth["uid"]
+        session["devise.token_secret"] = auth["credentials"]["secret"]
+        redirect_to controller: "social_registrations",
+        action: "new_social", username: auth["info"]["nickname"],
+        provider: auth["provider"]
       end
     end
 	end
