@@ -15,16 +15,27 @@ Arability::Application.routes.draw do
     post "/add_word"
     post "/add_trophy"
     post "/add_prize"
+
+    match "/add_category" => "admin#add_category"
+    match "/view_categories" => "admin#view_categories"
+    match "/delete_category"=>"admin#delete_category", :as => "delete_category"
+
+    match "/view_subscription_models" => "admin#view_subscription_models"
+    match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
+    put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
+    resources :subscription_models
+
   end
 
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
 
     # required for routing by the devise module(gem)
-    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-    # devise_for :gamers
+
     devise_for :gamers do 
-      get '/gamers/sign_out' => 'devise/sessions#destroy' 
+      get '/gamers/sign_out' => 'devise/sessions#destroy'
+      match "/social_registrations/new_social" => "social_registrations#new_social"
+      post "/social_registrations/social_sign_in"
     end
 
     match '/game' => 'games#game'
@@ -34,12 +45,14 @@ Arability::Application.routes.draw do
     get "games/get_prizes"
     post "games/vote_errors"
     post "games/record_synonym"
-    get 'games/gettrophies'
+    get 'games/get_trophies'
     get 'games/getnewwords'
+    get "games/show_trophies"
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
     get "/games/halloffame"
+    get "games/disableTutorial"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
@@ -50,6 +63,7 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match '/auth/facebook/callback' => 'authentications#facebook_callback'
 
     scope "developers/" do 
       match "/" => "backend#home", :as => "backend_home"
@@ -83,9 +97,13 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match 'search' => 'search#search'
+      match "search" => "search#search"
 
-      match 'search_keywords' => 'search#search_keywords'
+      match "search_keywords" => "search#search_keywords"
+
+      match "send_report" => "search#send_report"
+
+      match 'autocomplete' => 'search#keyword_autocomplete'
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
