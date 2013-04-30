@@ -97,8 +97,8 @@ class MySubscription < ActiveRecord::Base
   #   None 
   def max_add_word(proj_id)
     developer = self.developer
-    add=PreferedSynonym.where(project_id: proj_id )
-    if add.count < self.limit
+    add=PreferedSynonym.where(project_id: proj_id)
+    if add.count < self.word_add
       return true
     else
       return false
@@ -118,7 +118,7 @@ class MySubscription < ActiveRecord::Base
   def max_add_word_count(proj_id)
   developer = self.developer
   add=PreferedSynonym.where(project_id: proj_id ).count
-  count_num=self.limit-add
+  count_num=self.word_add-add
   return count_num
   end
   # Author:
