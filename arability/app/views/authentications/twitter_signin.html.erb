@@ -1,9 +1,0 @@
-<%= form_tag("/authentications/twitter_signin") do %>
-  <%= label_tag(t(:email)) %>
-  <%= email_field(:gamer, :address) %>
-  <%= label_tag(t(:password)) %>
-  <%= password_field_tag(:password) %>
-  <br>
-  <%= submit_tag(t(:go_to_twitter)) %>
-  <%= image_tag("/assets/twitter.png", width: 100) %>
-<% end %>
