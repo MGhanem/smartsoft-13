@@ -1,4 +1,42 @@
 #Salma's Tests
+#encoding: UTF-8
+require "spec_helper"
+require "request_helpers"
+include Warden::Test::Helpers
+include RequestHelpers
+include Devise::TestHelpers
+
+describe ProjectsController, type: :controller do
+
+  let(:gamer1){
+    gamer = Gamer.new
+    gamer.username = "Nourhan"
+    gamer.country = "Egypt"
+    gamer.education_level = "high"
+    gamer.gender = "female"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "mohamedtamer5@gmail.com"
+    gamer.password = "1234567"
+    gamer.save
+    gamer
+  }
+
+  let(:developer1){
+    developer = Developer.new
+    developer.gamer_id = gamer1.id
+    developer.save
+    developer
+  }
+
+  let(:project){
+    project = Project.new
+    project.name = "banking"
+    project.minAge = 19
+    project.maxAge = 25
+    project.owner_id = developer1.id
+    project.save
+    project
+  }
 
   it "initializes a new project" do
     a = create_logged_in_developer
