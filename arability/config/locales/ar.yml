@@ -362,5 +362,5 @@ ar:
   enter_a_synonym: "ادخل معني جديد"
   skip_this_keyword: "تخطي هذا المعني"
   suggest_this_synonym: "سجل هذا المعني"
-  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary'>رسمي</button>&nbsp او &nbsp<button class='btn btn-primary'>بالعامية</button></p>"
+  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>رسمي</button>&nbsp او &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>بالعامية</button></p>"
   is_this_translation: "هل هذا المعني"

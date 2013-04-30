@@ -32,12 +32,20 @@
 		<% while syn_list.size>0  && j<syn_list.length %>
 		<tr>
 			<td style="width:350px; text-align:center;">
-				<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+				<% if syn_list[j].is_formal == nil %>
+					<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+				<% else %>
+					<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote('<%= syn_list[j].id%>','nil')"><%= syn_list[j].name %></button>
+				<% end %>
 				<% j = j+1 %>
 			</td>
 			<td style="width:350px; text-align:center;">
 				<% if j<syn_list.length %>
-					<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+					<% if syn_list[j].is_formal == nil %>
+						<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-title="<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='destroy(this.id)'>×</button>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+					<% else %>
+						<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote('<%= syn_list[j].id%>','nil')"><%= syn_list[j].name %></button>
+					<% end %>
 					<% j = j+1 %>
 				<% end  %>
 			</td>
@@ -74,30 +82,39 @@
 		</tr>
 	</table>
 </div>
+<input id="choosen_synonym_id" type="hidden" value="old_value"/>
 <script type="text/javascript">
-function check_formality(syn_id, syn_is_formal,j){
-	if(syn_is_formal == "true" || syn_is_formal == "false" ){
-		record_vote(syn_id);
+	function check_formality(syn_id, syn_is_formal,j){
+		if(syn_is_formal == "true" || syn_is_formal == "false" ){
+			record_vote(syn_id);
+		}
+		else{
+			document.getElementById('choosen_synonym_id').value=syn_id;
+			$('#synonym_button0').popover('destroy');
+			$('#synonym_button1').popover('destroy');
+			$('#synonym_button2').popover('destroy');
+			$('#synonym_button3').popover('destroy');
+			this_id = 'synonym_button'+j;
+			var title = []
+			title.push("<span style='font-weight:bold; font-size:20px; text-align:center;'><%= t(:is_this_translation)%>");
+			title.push("<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='hide()'>×</button></p>");
+			title.join();
+			$('#synonym_button'+j).popover({'title':title});
+			$('#synonym_button'+j).popover('show');
+		}
 	}
-	else{
+	function hide(){
 		$('#synonym_button0').popover('destroy');
 		$('#synonym_button1').popover('destroy');
 		$('#synonym_button2').popover('destroy');
 		$('#synonym_button3').popover('destroy');
-		this_id = 'synonym_button'+j;
-		var title = []
-		title.push("<span style='font-weight:bold; font-size:20px; text-align:center;'><%= t(:is_this_translation)%>");
-		title.push("<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='hide()'>×</button></p>");
-		title.join();
-		$('#synonym_button'+j).popover({'title':title});
-		$('#synonym_button'+j).popover('show');
 	}
-}
-function hide(){
-	$('#synonym_button0').popover('destroy');
-	$('#synonym_button1').popover('destroy');
-	$('#synonym_button2').popover('destroy');
-	$('#synonym_button3').popover('destroy');
-
-}
+	function choose_formal_and_vote(){
+		var synonym_id = $("%choosen_synonym_id").val();
+		record_vote(synonym_id,"formal");
+	}
+	function choose_slang_and_vote(){
+		var synonym_id = $("%choosen_synonym_id").val();
+		record_vote(synonym_id,"slang");
+	}
 </script>

@@ -40,7 +40,8 @@ class GamesController < ApplicationController
   # failure:
   #  	---------
   def record_vote
-    @synonym_id=params[:synonym_id]
+    @is_formal = params[:is_formal]
+    @synonym_id = params[:synonym_id]
   end 
 
   # Author:
