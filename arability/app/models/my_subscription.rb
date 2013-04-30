@@ -31,20 +31,17 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
-  # author:Noha hesham
+  # Author:
+  #   Noha hesham
   # Description:
-  #   takes the developer id and integer type and checks wether
-  #   the developer's word search ,word add and word follow
-  #   limit has been reached ,if its not then it is greater than zero
-  #   and permission is given by returning true else return false
-  #   and permission denied.
-  # params:
-  #   developer id and type
-  # success:
-  #   permission is given if the developer didnt exceed the search ,add
-  #   or follow limit
-  # fail:
-  #   none
+  #   Returns true if the followed words are less
+  #   than the follow limit,false otherwise
+  # Params:
+  #   None
+  # Success:
+  #   Permission is given if the developer didnt exceed the follow limit
+  # Failure:
+  #   None
   def get_permission_follow
     if(self.word_follow > 0)
       return true
@@ -55,12 +52,14 @@ class MySubscription < ActiveRecord::Base
   # Author:
   #  Noha Hesham
   # Description:
-  #  counts the number of the followed word by the
+  #  Counts the number of the followed word by the
   #  developer till now
+  # Params:
+  #   None
   # Success:
-  #  gets the correct number of words counted
+  #  Gets the correct number of words counted
   # Failure:
-  #  none 
+  #  None 
   def count_follow
     @developer = Developer.find(self.developer_id)
     @count_follow=@developer.Keywords.count   
@@ -70,6 +69,8 @@ class MySubscription < ActiveRecord::Base
   # Description:
   #   It compares the created projects with the developer's project
   #   limit and returns true if the developer didnt pass the limit
+  # Params:
+  #   None
   # Success:
   #   Gives permission
   # Failure:
@@ -88,6 +89,8 @@ class MySubscription < ActiveRecord::Base
   # Description:
   #   It compares the words added by the developer to the add
   #   limit and returns true if the developer didnt pass the limit
+  # Params:
+  #   Proj_id is the id of the project
   # Success:
   #   Gives permission to add words
   # Failure:
@@ -101,12 +104,22 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
-
-   def max_add_word_count(proj_id)
-    developer = self.developer
-    add=PreferedSynonym.where(project_id: proj_id ).count
-    count_num=self.limit-add
-    return count_num
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   It compares the words added by the developer to the add
+  #   limit and returns the number of words remaining
+  # Params:
+  #   Proj_id is the id of the project
+  # Success:
+  #   Returns number of words 
+  # Failure:
+  #   None 
+  def max_add_word_count(proj_id)
+  developer = self.developer
+  add=PreferedSynonym.where(project_id: proj_id ).count
+  count_num=self.limit-add
+  return count_num
   end
   # Author:
   #   Noha Hesham
@@ -118,7 +131,6 @@ class MySubscription < ActiveRecord::Base
   #   Gives permission to search
   # Failure:
   #   None
-
   def get_max_words(word_id)
     developer = self.developer
     word = Search.joins(:keyword).where(keyword_id: word_id)
