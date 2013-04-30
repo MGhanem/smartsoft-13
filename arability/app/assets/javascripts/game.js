@@ -1034,15 +1034,9 @@ function setLetterPicker(){
 	intPickerArray = [];
 	for(var i = 0; i < wordsArray.length; i++){
 		for(var j = 0; j < wordsArray[i].length; j++){
-			var index = jQuery.inArray(wordsArray[i].charAt(j), letterPickerArray);
-			if (index == -1){
-				letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
-				intPickerArray[totalLetters] = 1;
-				totalLetters++;
-			}
-			else{
-				intPickerArray[index]++;
-			}
+			letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
+			intPickerArray[totalLetters] = 1;
+			totalLetters++;
 		}
 	}
 	for(var x = 0; x < intPickerArray.length; x++){
@@ -1058,12 +1052,8 @@ function removeFromLetterPicker(word){
 		if(toBeRemovedIndex == -1 || howManyLeft < 2){
 			return;
 		}
-		if(initialIntValues[toBeRemovedIndex] == 1){
-			intPickerArray[toBeRemovedIndex] = -1;
-		}
-		else{
-			initialIntValues[toBeRemovedIndex]--;
-		}
+		letterPickerArray.splice(toBeRemovedIndex, 1);
+		intPickerArray.splice(toBeRemovedIndex, 1);
 	}
 }
 
@@ -1082,19 +1072,42 @@ function generateLetter(){
 	var letter;
 	length = letterPickerArray.length;
 	var randIndex = Math.floor(Math.random() * length);
-	if(intPickerArray[randIndex] > 0){
-		intPickerArray[randIndex]--;
+	if(intPickerArray[randIndex] == 1){
+		intPickerArray[randIndex] = 0;
 		letter = letterPickerArray[randIndex];
 		return letter;
 	}
 	else{
-		if(intPickerArray[randIndex] == -1){
-			return -1;
+		if(intPickerArray[randIndex] == 0){
+			var nextEntry = nextValidEntry();
+			if(nextEntry == false){
+				intPickerArray[randIndex] = 1;
+				return - 1;
+			}
+			else{
+				intPickerArray[nextEntry] = 0;
+				letter = letterPickerArray[nextEntry];
+				return letter;
+			}
 		}
 		else{
-			intPickerArray[randIndex] = 1;
-			return -1;
+			alert('something going wrong here');
 		}
+	}
+}
+
+
+function nextValidEntry(currentEntry){
+	var nextEntry;
+	nextEntry = jQuery.inArray(letterPickerArray[currentEntry],letterPickerArray, currentEntry + 1);
+	if(nextEntry == -1){
+		return false;
+	}
+	else if(intPickerArray[nextEntry] == 1){
+		return nextEntry;
+	}
+	else{
+		checkNextValidEntry(nextEntry);
 	}
 }
 
