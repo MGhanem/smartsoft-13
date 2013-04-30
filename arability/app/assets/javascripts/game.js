@@ -60,7 +60,6 @@ var modalYesButton;
 var modalNoButton;
 var letterPickerArray = [];
 var intPickerArray = [];
-var markRemoved = [];
 var initialIntValues = [];
 
  // author:
@@ -1054,8 +1053,9 @@ function setLetterPicker(){
 
 function removeFromLetterPicker(word){
 	for(var i = 0; i < word.length; i++){
+		var howManyLeft = countCurrentWords();
 		var toBeRemovedIndex = jQuery.inArray(word.charAt(i), letterPickerArray);
-		if(toBeRemovedIndex == -1){
+		if(toBeRemovedIndex == -1 || howManyLeft < 2){
 			return;
 		}
 		if(initialIntValues[toBeRemovedIndex] == 1){
@@ -1088,9 +1088,6 @@ function generateLetter(){
 		return letter;
 	}
 	else{
-		if(markRemoved[randIndex] == true){
-			intPickerArray[randIndex] = -1;
-		}
 		if(intPickerArray[randIndex] == -1){
 			return -1;
 		}
@@ -1101,6 +1098,16 @@ function generateLetter(){
 	}
 }
 
+
+function countCurrentWords(){
+	var count = 0;
+	for(var i = 0; i < wordExistsInArray.length; i++){
+		if(wordExistsInArray[i] == true){
+			count++;
+		}
+	}
+	return count;
+}
 
 
 // author:
@@ -1316,9 +1323,20 @@ function getNewWords(num){
 //   --
 
 function setLevelAttributes(level){
-	waitTime = 1000 - ((level - 1) * 70);
-	fallingTime = 200 - ((level - 1) * 15); 
-	getNewWords(level + 1);
+	if(level >= 8){
+		waitTime = 500;
+		fallingTime = 95;
+	}
+	else{
+		waitTime = 1000 - ((level - 1) * 70);
+		fallingTime = 200 - ((level - 1) * 15);
+	}
+	if(level >= 9){
+		getNewWords(10);
+	}
+	else{
+		getNewWords(level + 1);
+	}
 	for(var x = 0; x < wordsArray.length; x++){
 		wordsArray[x] = wordsArray[x].toUpperCase();
 	}
@@ -1457,7 +1475,7 @@ function continuePlaying(){
 
 function toNextLevel(){
 	disableNav();
-	waitTime = waitTime - 70;
+	level++;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
