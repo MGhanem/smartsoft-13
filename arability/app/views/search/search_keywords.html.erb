@@ -1,12 +1,13 @@
 <div class="row">
 	<div class="span12">
-		<%= form_tag(search_keywords_path, method: "post", :class => "form-search") do %>
+		<%= form_tag(search_path, method: "post", :class => "form-search") do %>
 	  	<%= content_tag(:div, :class => "input-append") do %>
 	  		<% text_field_tag(:search, @search_keyword,
 	  											placeholder: t(:search_here),
-	  											:class => "search-query") + %>
+	  											:class => "search-query autocomplete",
+	  											autocomplete: "off") + %>
 				<% button_tag(type: "submit", :class => "btn", id: "search_button") do %>
-					<% content_tag(:i, nil,:class => "icon-search") %>
+					<% content_tag(:i, nil, :class => "icon-search") %>
 				<% end %>
 			<% end %>
       <input name="categories_input" type="text" id="categories" class="categories-autocomplete" autocomplete="off" placeholder="<%= t :enter_categories %>" value=""/>
@@ -26,15 +27,10 @@
 					<% end %>
 				</span>
 			</div>
-		<% else %>
-			<% @similar_keywords.each do |c| %>
-				<div class="accordion-group" style="padding:10px;">
-					<div class="accordion-heading">
-						<%= link_to c.name, search_path(search: c.name, project_id: @project_id), method: :post %>
-					</div>
-				</div>
-			<% end %>
 		<% end %>
 	</div>
 </div>
+<script type="text/javascript">
+	<%= render "autocomplete-script.js" %>
+</script>
 <%= render "categories-autocomplete" %>

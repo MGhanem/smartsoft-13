@@ -43,6 +43,27 @@ class SearchController < BackendController
   # Author:
   #   Nourhan Mohamed
   # Description:
+  #   returns json of keyword names matching autocompletion
+  # params:
+  #   search_keyword: a string representing the search keyword, from the params list
+  #     from a textbox in the search view
+  # success:
+  #   returns a json list of keywords similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def keyword_autocomplete
+    search_keyword = params["search"]
+    similar_keywords =
+      Keyword.get_similar_keywords(search_keyword, [])
+    similar_keywords.map! { |keyword| keyword.name }
+    render json: similar_keywords
+  end
+
+  # Author:
+  #   Nourhan Mohamed
+  # Description:
   #   submits a report to each of the words chosen in the report form by the
   #   current user
   # params:

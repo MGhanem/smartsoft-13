@@ -6,9 +6,10 @@
 			<%= content_tag(:div, :class => "input-append") do %>
 				<% text_field_tag(:search, @search_keyword,
 													placeholder: t(:search_here),
-													:class => "search-query") + %>
-				<% button_tag(type: "submit",:class => "btn") do %>
-					<% content_tag(:i, nil,:class => "icon-search") %>
+													:class => "search-query autocomplete",
+													autocomplete: "off") + %>
+				<% button_tag(type: "submit", :class => "btn") do %>
+					<% content_tag(:i, nil, :class => "icon-search") %>
 				<% end %>
 			<% end %>
 
@@ -132,7 +133,6 @@
 	</div>
 </div>
 
-
 <% if @display_add %>
 	<div class="well">
 		<span>
@@ -184,4 +184,6 @@
 <% end %>
 <script type="text/javascript">
 	<%= render "filtering_synonym_votes.js" %>
+	<%= render "submit-report.js" %>
+	<%= render "autocomplete-script.js" %>
 </script>

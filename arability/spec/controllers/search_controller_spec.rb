@@ -109,6 +109,7 @@ describe SearchController do
       k2
       get :search_keywords, search: "test"
       assigns(:similar_keywords).should eq([k, k2])
+      assigns(:similar_keywords).should_not eq([k2, k])
     end
 
     it "should list synonyms according to vote count", nourhan_mohamed: true do
@@ -173,6 +174,40 @@ describe SearchController do
       get :search_with_filters, search: ""
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path)
+    end
+
+    it "should return json containing similar keywords" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "test"
+      json_response = JSON(response.body)
+      json_response.first.should eq("test")
+      json_response.last.should eq("testing")
+    end
+
+    it "should return empty json on not-found" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "click"
+      json_response = JSON(response.body)
+      json_response.should == []
+    end
+
+    it "should return empty json on non-approved keywords" do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      k3
+      get :keyword_autocomplete, search: "ktest"
+      json_response = JSON(response.body)
+      json_response.should == []
     end
 
     it "should send report on a keyword successfully" do
