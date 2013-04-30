@@ -185,8 +185,7 @@ describe 'PUT update' do
 
   it "should delete a project" do
     sign_in gamer1
-    put :destroy, :id => project.id
-    #response.should be_success
+    put :destroy, id: project.id
     response.code.should eq("302")
   end
 
@@ -233,4 +232,5 @@ describe 'PUT update' do
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
+
 end

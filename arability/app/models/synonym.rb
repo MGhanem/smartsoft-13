@@ -1,7 +1,7 @@
 #encoding: UTF-8
 class Synonym < ActiveRecord::Base
   belongs_to :keyword
-  attr_accessible :approved, :name, :keyword_id
+  attr_accessible :approved, :name, :keyword_id, :is_formal
   has_many :votes
   has_many :gamers, :through => :vote
 
@@ -128,6 +128,8 @@ class Synonym < ActiveRecord::Base
   #   which returns the new synonym model if set to true.
   #   approved: an optional boolean input parameter with a default false
   #   represents if an admin has approved a synonym on database or not.
+  #   is_formal: a boolean input parameter that indicates if synonym is formal,
+  #   and if not entered when recording synonym, it gets setted with nil.
   # Success:
   #   this method returns true and the new synonym model (if full_output is set
   #   to true) if the synonym has been recorded.
@@ -136,11 +138,12 @@ class Synonym < ActiveRecord::Base
   #   set to true) if word not saved to database due to synonym name not being
   #   in arabic or an incorrect keyword id for an unavaialable keyword in
   #   database or a dupplicate synonym for the same keyword.
-  def self.record_synonym(synonym_name, keyword_id, full_output = false, approved = true)
+  def self.record_synonym(synonym_name, keyword_id, full_output = false, approved = true, is_formal = nil)
     new_synonym = Synonym.new
     new_synonym.name = synonym_name
     new_synonym.keyword_id = keyword_id
     new_synonym.approved = approved
+    new_synonym.is_formal = is_formal
     if full_output
       return new_synonym.save , new_synonym
     else

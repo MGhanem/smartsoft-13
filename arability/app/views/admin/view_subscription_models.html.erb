@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <tr>
+    <th>#</th>
+    <th>الإسم العربي</th>
+    <th>الإسم الإنجليزي</th>
+    <th>الحد الأقصى للبحث</th>
+    <th>الحد الأقصى للمتابعة</th>
+    <th>الحد الأقصى للمشاريع</th>
+    <th>تعديل</th>
+  </tr>
+  <% @models.each do |model| %>
+    <tr>
+    	<th><%= model.id %></th>
+    	<th><%= model.name_ar %></th>
+      <th><%= model.name_en %></th>      
+      <th><%= model.limit_search %></th>
+      <th><%= model.limit_follow %></th>
+      <th><%= model.limit_project %></th>
+    	<th><a class="btn btn-mini" href="/admin/<%= model.id %>/edit_subscription_model"><i class="icon-edit"></i></a></th>
+    </tr>
+  <% end %>
+</table>
