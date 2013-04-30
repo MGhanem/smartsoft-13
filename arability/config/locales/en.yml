@@ -371,3 +371,4 @@ en:
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
+  expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
