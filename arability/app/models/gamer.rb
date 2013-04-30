@@ -18,7 +18,7 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :show_tutorial
+                  :login, :show_tutorial, :admin, :is_local
 
   has_many :services, :dependent => :destroy
 
@@ -27,7 +27,7 @@ class Gamer < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true,
     length: { minimum: 3, maximum: 20 }
 
-  validates :username, :format => { :with => /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/i, }
+  validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
   validates :country, :presence => true, :length => { :minimum => 2 }
 
@@ -35,6 +35,7 @@ class Gamer < ActiveRecord::Base
   
   validates :date_of_birth, :date => { :after_or_equal_to => 95.years.ago, 
     :before_or_equal_to => 10.years.ago }
+
 
   # Author:
   #   Adam Ghanem
@@ -212,85 +213,6 @@ class Gamer < ActiveRecord::Base
     return Trophy.all - self.trophies
   end
 
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Takes the values from the input authentication token and inserts it
-  # Params:
-  #   auth: an omniauth authentication hash coming form Facebook
-  # Success:
-  #   The values are saved into the database
-  # Failure:
-  #   None
-  def connect_to_facebook(auth)
-    self.provider = auth["provider"]
-    self.uid = auth["uid"]
-    self.token = auth["credentials"]["token"]
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Disconnects the user's facebook information
-  # Params:
-  #   None
-  # Success:
-  #   The user's facebook uid and token are deleted from the database 
-  # Failure:
-  #   None
-  def disconnect_from_facebook
-    self.provider = nil
-    self.uid = nil
-    self.token = nil
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Updates the user's token field
-  # Params:
-  #   auth: an omniauth authentication hash coming form Facebook
-  # Success:
-  #   The values are saved into the database
-  # Failure:
-  #   None
-  def update_access_token(auth)
-    self.uid = auth["uid"]
-    self.token = auth["credentials"]["token"]
-    self.save
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Checks whether the user is connected to Facebook
-  # Params:
-  #   None
-  # Success:
-  #   Boolean value is returned indicating whether or not the user
-  #   has a saved token
-  # Failure:
-  #   None
-  def is_connected_to_facebook
-    token != nil
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   Returns the user's facebook access token
-  # Params:
-  #   None
-  # Success:
-  #   Returns the user's access token
-  # Failure:
-  #   None
-  def get_token
-    token
-  end
-
   def won_prizes?(score, level)
     if Prize.get_new_prizes_for_gamer(self.id, score, level).count > 0
       return true
@@ -340,17 +262,17 @@ end
 # Failure:
 #   returns nil if gamer is not found
 def self.get_gamer_rank(current_gamer)
-    gamers = Gamer.find(:all, order: "highest_score DESC")
-    current_gamer_rank = nil
-    rank = 1
-    gamers.each do |user|
-      if user == current_gamer
-        current_gamer_rank = rank
-      end
-      rank = rank + 1
-    end
-    return current_gamer_rank
+  gamers = Gamer.find(:all, order: "highest_score DESC")
+  current_gamer_rank = nil
+  rank = 1
+  gamers.each do |user|
+   if user == current_gamer
+      current_gamer_rank = rank
+   end
+   rank = rank + 1
   end
+  return current_gamer_rank
+end
 
 # Author:
 #   Mirna Yacout
@@ -403,9 +325,59 @@ def self.get_twitter_rank(current_gamer)
     if user == current_gamer
       current_gamer_rank = rank
     end
-    rank = rank + 1
+  rank = rank + 1
   end
   return current_gamer_rank
+end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Creates a new gamer without the need of an input password
+  # Params:
+  #   email: user email
+  #   username: user username
+  #   gender: user gender
+  #   d_o_b: user date of birth
+  #   country: user country
+  #   ed_level: user educational level
+  #   provider: the social account provider
+  # Sucess:
+  #   New gamer is created with said attributes, returns the gamer and true
+  # Failure:
+  #   Gamer not saved because of validations, returns nil and false
+  def self.create_with_social_account(
+    email, username, gender, d_o_b, country, ed_level, provider)
+    gamer = Gamer.new(
+      email: email,
+      username: username,
+      password: Devise.friendly_token[0,20],
+      gender: gender,
+      date_of_birth: d_o_b,
+      country: country,
+      education_level: ed_level,
+      is_local: false,
+      provider: provider)
+    if gamer.save
+      return gamer, true
+    else
+      return gamer, false
+    end
+  end
+
+# Author:
+#   Amr Abdelraouf
+# Description
+#   Returns whether this account has been created locally
+#   or by a social media account
+# Params:
+#   None
+# Success:
+#   Returns boolean whether or not is local
+# Failure:
+#   None
+def is_local_account
+  is_local
 end
 
   #scopes defined for advanced search aid
