@@ -205,7 +205,7 @@
             <div class="carousel-caption">
               <h1><%= t(:caro1h) %></h1>
               <p class="lead"><%= t(:caro1b) %></p>
-              <a class="btn btn-primary" href="#more"><%= t(:more) %></a>
+              <a class="btn btn-primary arabicfont" href="#more"><%= t(:more) %></a>
             </div>
           </div>
         </div>
@@ -215,7 +215,7 @@
             <div class="carousel-caption">
               <h1>Another example headline.</h1>
               <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Learn more</a>
+              <a class="btn btn-large btn-primary arabicfont" href="#">Learn more</a>
             </div>
           </div>
         </div>
@@ -225,7 +225,7 @@
             <div class="carousel-caption">
               <h1>One more for good measure.</h1>
               <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+              <a class="btn btn-large btn-primary arabicfont" href="#">Browse gallery</a>
             </div>
           </div>
         </div>
@@ -242,13 +242,13 @@
           <img src="../assets/game.png" alt="">
           <h2><%= t(:feat1h) %></h2>
           <p><%= t(:feat1b) %></p>
-          <p><a class="btn" href="<%= game_path %>"><%= t(:play) %> &raquo;</a></p>
+          <p><a class="btn arabicfont" href="<%= game_path %>"><%= t(:play) %> &raquo;</a></p>
         </div><!-- /.span4 -->
          <div class="span4">
           <img src="../assets/up.png" alt="">
           <h2><%= t(:feat2h) %></h2>
           <p><%= t(:feat2b) %></p>
-          <p><a class="btn" href="<%= new_gamer_registration_path %>"><%= t(:sign_up) %> &raquo;</a></p>
+          <p><a class="btn arabicfont" href="<%= new_gamer_registration_path %>"><%= t(:sign_up) %> &raquo;</a></p>
         </div>
         <!-- /.span4 -->
           <div class="span4">
@@ -256,7 +256,7 @@
           <h2><%= t(:feat3h) %></h2>
           <p><%= t(:feat3b) %></p>
 
-          <p><a class="btn" href="<%= backend_home_path %>"><%= t(:backend) %> &raquo;</a></p>
+          <p><a class="btn arabicfont" href="<%= backend_home_path %>"><%= t(:backend) %> &raquo;</a></p>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
@@ -287,9 +287,8 @@
       </footer>
     </div>
 <% end %>
-
 <script type="text/javascript">
   <% if I18n.locale == :ar %>
-    $(".btn").attr("style", "font-size: 16px;");
+    $(".arabicfont").attr("style", "font-size: 16px;");
   <% end %>
 </script>

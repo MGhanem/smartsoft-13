@@ -23,7 +23,11 @@
               <%= form_for("gamer", url: gamer_session_path) do |f| %>
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
-                <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
+                <% if I18n.locale == :ar %>
+                  <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 16px;", class: "btn btn-primary" %>
+                <% else %>
+                  <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary" %>
+                <% end %>
               <% end %>
             </div>
           </li>
@@ -44,6 +48,6 @@
 </div>
 <script type="text/javascript">
   <% if I18n.locale == :ar %>
-    $(".btn .btn-primary").attr("style", "clear: left; width: 100%; height: 32px; font-size: 13px;");
+    $(".arabicfontdrop").attr("clear: left; width: 100%; height: 32px; font-size: 16px;");
   <% end %>
 </script>
