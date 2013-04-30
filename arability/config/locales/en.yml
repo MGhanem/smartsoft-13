@@ -217,7 +217,7 @@ en:
       developer:
         first_name: "First Name"
         last_name: "Last Name"
-  connect_to: "Connect to"
+  connect_to_facebook: "Connect to Facebook"
   disconnect_from: "Disconnect from"
   facebook: "facebook"
   my_info: "My Information"
@@ -335,6 +335,7 @@ en:
   already_connected_fb: "You're signed in and your account is already connected to facebook"
   errors_prohibited: "errors prohibited you from being saved"
   sign_up_e_acc: "Sign up with an existing account"
+  remove_fb_connection: "Connection to Facebook removed successfully!"
   continue_reg_fb: "Facebook provided us with some information about you. Please fill in the rest to continue your registration"
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
@@ -369,3 +370,4 @@ en:
   modal_yes_button: "Yes"
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
+  no_account: "You seem to have left us. Please create a new account"
