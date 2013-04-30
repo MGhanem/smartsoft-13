@@ -61,6 +61,14 @@
     <% end %>
   </div>
   <div class="control-group">
+      <%= f.label t(:pro_gender), :class => "control-label", id: "project_name"%>
+      <% if params[:action] == "new" %>
+        <%= f.select(:gender, (['',[t(:pro_male),"Male"],[t(:pro_female),"Female"]]), {}, { id:"gender" }) %>
+      <% else %>
+        <%= f.select(:gender, (['',[t(:pro_male),"Male"],[t(:pro_female),"Female"]]),  { prompt: @select_value, selected: @project.gender }, { id:"gender" }) %>
+      <% end %>
+  </div>
+  <div class="control-group">
       <label class="control-label">
       <span class="help-block"><%= t(:target_age) %></span>
       </label>
