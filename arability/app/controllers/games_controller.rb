@@ -87,22 +87,6 @@ class GamesController < ApplicationController
     end
   end
 
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   When called the gammer will disconnect his/her account from facebook
-  # Params:
-  #   None
-  # Success:
-  #   The user's facebook data will be deleted and a flash notice will appear
-  #   to ensure the user that he's disconnected
-  # Failure:
-  #   None
-  def disconnect_facebook
-    current_gamer.disconnect_from_facebook
-    redirect_to "/gamers/edit", flash: {alert: t(:logged_out_of_fb)}
-  end
-
   # Description:
   #   After the gamer finishes a level this action is requested
   #   to award them with their prizes if they have any
