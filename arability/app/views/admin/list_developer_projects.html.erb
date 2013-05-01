@@ -23,11 +23,12 @@
               <% for item in @list %>
                 <tr>
                   <td><%= item.name %></td>
-                  <td><%= item.keywords.count %></td>
+                  <td><%= PreferedSynonym.where(project_id: item.id).count %></td>
                 </tr>
               <% end %>
             </tbody>
           </table>
+          <a class="btn btn-large btn-primary pull-left" href="/admin/list/developers">العودة</a>
         </div>
       </div>
     </div>
