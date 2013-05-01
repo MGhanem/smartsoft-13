@@ -136,9 +136,7 @@ Arability::Application.routes.draw do
 
   match "/developers/projects/load_synonyms" => "projects#load_synonyms"
 
-  match "/en/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
-
-  match "/ar/developers/projects/autocomplete_keyword" => "projects#project_keyword_autocomplete"
+  match "/developers/projects/:project_id/autocomplete_keyword" => "projects#project_keyword_autocomplete"
  
   match "/developers/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", as: "add_word_inside_project"
 

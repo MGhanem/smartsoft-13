@@ -10,8 +10,6 @@ class ProjectsController < BackendController
   before_filter :can_access_project?,
   only: [:add_word_inside_project, 
   :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
-  before_filter :developer_can_see_this_project?, 
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
 
  # author:Noha hesham
  # Description:
