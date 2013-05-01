@@ -75,7 +75,8 @@ Arability::Application.routes.draw do
     match "/games/post_facebook" => "games#post"
 
 
-    scope "developers/" do 
+    scope "developers/" do
+      match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"

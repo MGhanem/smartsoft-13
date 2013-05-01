@@ -224,12 +224,21 @@
           <p><%= t(:feat1b) %></p>
           <p><a class="btn arabicfont" href="<%= game_path %>"><%= t(:play) %> &raquo;</a></p>
         </div><!-- /.span4 -->
-         <div class="span4">
-          <img src="../assets/up.png" alt="">
-          <h2><%= t(:feat2h) %></h2>
-          <p><%= t(:feat2b) %></p>
-          <p><a class="btn arabicfont" href="<%= new_gamer_registration_path %>"><%= t(:sign_up) %> &raquo;</a></p>
-        </div>
+        <% if !gamer_signed_in? %>
+           <div class="span4">
+            <img src="../assets/up.png" alt="">
+            <h2><%= t(:feat2h) %></h2>
+            <p><%= t(:feat2b) %></p>
+            <p><a class="btn arabicfont" href="<%= new_gamer_registration_path %>"><%= t(:sign_up) %> &raquo;</a></p>
+          </div>
+        <% else %>
+          <div class="span4">
+            <img src="../assets/facebook_twitter.png" alt="">
+            <h2><%= t(:feat4h) %></h2>
+            <p><%= t(:feat4b) %></p>
+            <p><a class="btn arabicfont" href="<%= edit_gamer_registration_path %>"><%= t(:settings) %> &raquo;</a></p>
+          </div>
+        <% end %>
         <!-- /.span4 -->
           <div class="span4">
           <img src="../assets/developers.png" alt="">
