@@ -95,7 +95,9 @@ class MySubscriptionController < ApplicationController
   #   Payment issues
   def pick
     @all_subscription_models = SubscriptionModel.all
-    @developer = Developer.find_by_gamer_id(current_gamer.id)
+    @developer = Developer.new
+    @developer.gamer_id = current_gamer.id
+    @developer.save
     sub_id = params[:my_subscription]
     dev_id = @developer.id
     if MySubscription.choose(dev_id, sub_id)

@@ -1,0 +1,75 @@
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "list-trophies"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active" id="admin-list-trophies">
+          <div id="myModalTrophy" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">تأكيد المسح</h3>
+            </div>
+            <div class="modal-body">
+              <p>هل أنت متأكد من مسح الانجاز</p>
+              <div class="prize-view"></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">غلق</button>
+              <a class="btn btn-warning">مسح</a>
+            </div>
+          </div>
+          <legend>
+            <div class="pull-left pagination">
+              <%= paginate @trophies_list, :remote => true %>
+            </div>
+            <a>
+              عرض الانجازات
+            </a>
+          </legend>
+          <% if flash[:successtype] && (flash[:successtype] == "addtrophy" || flash[:successtype] == "deletetrophy") && flash[:success] %>
+                <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <div>
+                    <%= flash[:success] %>
+                  </div>
+                </div>
+              <% end %>
+          <% if @trophies_list.length != 0 %>
+          <table class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <td>الاسم</td>
+                <td>الصورة</td>
+                <td>المستوى</td>
+                <td>مجموع النقاط</td>
+                <td>مسح</td>
+              </tr>
+              </thead>
+              <tbody>
+              <% @trophies_list.each do |t| %>
+                <tr>
+                  <td><%= t.name %></td>
+                  <td>
+                    <div class="uploader-controls">
+                      <div class="uploader-preview fileupload-preview thumbnail">
+                        <img src="<%= t.image %>">
+                      </div>
+                    </div>
+                  </td>
+                  <td><%= t.level %></td>
+                  <td><%= t.score %></td>
+                  <td>
+                    <a href="#myModalTrophy" data-href="/admin/delete/trophy?id=<%= t.id %>" role="button" class="edit-link-trophy" data-toggle="modal">مسح</a>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            عفون لا يوجد انجازات
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

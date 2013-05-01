@@ -1,8 +1,10 @@
 <% if I18n.locale == :en %>
+
 <em><h3 class="text-info">Edit <%= resource_name.to_s.humanize %></h3></em>
 <% else I18n.locale == :ar %>
 <em><h3 class="text-info">تغيير البيانات</h3></em>
 <% end %>
+
 <div class="tabbable"> <!-- Only required for left/right tabs -->
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:my_info)%></a></li>
@@ -132,25 +134,42 @@
     </div>
     </div>
     <div class="tab-pane" id="tab2">
-      <div class="well" style="width:1100px; height:480px">
-
-        <div class="Facebook" style="width: 344px;margin-right: auto;margin-left: auto;">
-        </div>
-        <div class="Twitter" style="width: 344px;margin-right: auto;margin-left: auto;">
-          <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
-          <h5><img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100" /><%=
-            t(:already_connected) %></h5>
-          <%= link_to t(:remove_connection), "/authentications/remove_twitter_connection" %>
-          <% else %>
-          <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="100px" height="100px" />
-          <span font='20' style="position:relative; padding:40px;">
-            <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
-          </span>
+      <div class="well" style="width:1100px; height:480px; text-align:center; display:inline-block">
+        <div class="providers" style="padding:30px; text-align:center">
+          <% if current_gamer.provider != "facebook" %>
+            <div class="Facebook" style="padding:10px">
+              <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook") %>
+                <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" />
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"facebook"}" %>
+                </span>
+              <% else %>
+                <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" height="50px"/>
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:connect_to_facebook), "/auth/facebook" %> 
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+          <% if current_gamer.provider != "twitter" %>
+            <div class="Twitter" style="padding:10px">
+              <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" />
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"twitter"}" %>
+                </span>
+              <% else %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px"/>
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %> 
+                </span>
+              <% end %>
+            </div>
           <% end %>
         </div>
       </div>
     </div>
-    <%end%>
+<% end %>
 
     <div class="tab-pane" id="tab3">
       <%if current_gamer != nil %>
@@ -169,30 +188,14 @@
       <td width="300px">
   <div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
   <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
-   <%= sm.name %><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can search for is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكنك البحث عنها هى:</h5>
-    <% end %>
+     <%= sm.name %><br />
+    <h5><%=t(:sub_search)%></h5>
     <%=sm.limit_search%><%= t(:per_month)%><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can follow is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكنك متابعتها هي:</h5>
-    <% end %>
+    <h5><%=t(:sub_follow)%></h5>
     <%=sm.limit_follow%><%= t(:per_month)%><br/>
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can add to your project is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكن اضافتها إلى مشروعك هي :</h5>
-    <% end %>
+    <h5><%=t(:sub_add)%></h5>
     <%=sm.limit%><%= t(:per_month)%><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of projects you can create is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد المشريع التي يمكنك انشائها هي :</h5>
-    <% end %>
+    <h5><%=t(:sub_project)%></h5>
     <%=sm.limit_project%>
   </p>
     </div>
