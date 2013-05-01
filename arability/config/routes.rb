@@ -139,6 +139,7 @@ Arability::Application.routes.draw do
   match "/developers/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", :as => "add_word_inside_project"
 
   match "/developers/projects/:project_id/test_followed_keyword" => "projects#test_followed_keyword"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
