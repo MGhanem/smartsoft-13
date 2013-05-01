@@ -671,6 +671,12 @@ function calculatePossible(){
 			$('#' + lsId).addClass('text-warning');
 			$('#' + lsId).css( "color", "orange" );
 		}
+		else{
+			var postfixNum = k - 1;
+			lsId = "ls" + postfixNum;
+			$('#' + lsId).removeClass('text-warning');
+			$('#' + lsId).css( "color", "#333333" );
+		}
 }
 
 
@@ -1089,9 +1095,6 @@ function generateLetter(){
 				letter = letterPickerArray[nextEntry];
 				return letter;
 			}
-		}
-		else{
-			alert('something going wrong here');
 		}
 	}
 }
