@@ -3,7 +3,7 @@
 
   <p><%= I18n.t(:confirm_body) %></p>
 
-  <p><%= link_to I18n.t(:confirm_button), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+  <p><%= link_to I18n.t(:confirm_button), confirmation_url(@resource, confirmation_token: @resource.confirmation_token) %></p>
 
   <h4><%= I18n.t(:arability) %></h4>
 </div>
