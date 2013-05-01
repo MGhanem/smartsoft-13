@@ -184,6 +184,15 @@ module SearchHelper
       f.series(series)
       f.options[:title][:text] = header
       f.options[:title][:x] = 0
+      if I18n.locale == :en
+        f.options[:title][:style] = {
+          fontSize: "14px"
+        }
+      else
+        f.options[:title][:style] = {
+          fontSize: "16px"
+        }
+      end
       f.tooltip = {
         borderColor: "null",
         borderWidth: "6px",
