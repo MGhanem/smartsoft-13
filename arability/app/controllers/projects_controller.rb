@@ -84,7 +84,7 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is signed in, the method that calls method createproject
+  #   After checking that the user is signed in, the method that calls method create_project
   #   that creates the project and redirects to the project page and prints
   #   an error if the data entered is invalid.
   # Params:
@@ -229,9 +229,9 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is not a free trial limit of words,
+  #   After checking that the user is not a free trial and the limit of words,
   #   the method finds the project by its id and then calls the method
-  #   filterkeywords in Project tha filters the relevant keywords.
+  #   filter_keywords in Project that filters the relevant keywords.
   # Params:
   #   Project id
   # Success:
