@@ -1,12 +1,11 @@
-var followed = "<%= @is_followed %>"
 function test_followed(){
-	return followed
+	return "<%= @is_followed %>"
 } 
-function unfollow(){
-  $.get("<%= unfollow_word_path @searched_keyword_id %>");
+  function unfollow(){
+  $.post("<%= unfollow_word_path @searched_keyword_id %>");
   $('.popover').hide();
 }
 function follow(){
-  $.get("<%= follow_word_path @searched_keyword_id %>");
+  $.post("<%= follow_word_path @searched_keyword_id %>");
   $('.popover').hide();
 }

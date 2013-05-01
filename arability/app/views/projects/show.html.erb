@@ -86,7 +86,7 @@
                 <%= link_to keyword, search_path(search: keyword, project_id: @project.id), :method => :post %>
               </td>
               <td style="text-align:center">
-                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'input', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
               </td>
               <td style="text-align:center" >
                 <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
@@ -121,7 +121,7 @@
 <script type="text/javascript" charset="utf-8">
   $('#selected_keyword').change(function(){$('.popover').hide()});
   $("#add_button").removeAttr('href');
-  $(".input").change(function(){
+  $(".select_change").change(function(){
       var new_synonym_id = $(this).val();
       $.ajax({
         type: "GET",

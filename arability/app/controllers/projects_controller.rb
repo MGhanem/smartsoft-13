@@ -32,11 +32,13 @@ class ProjectsController < BackendController
 
   def test_followed_keyword
     @project_id = params[:project_id]
-    keyword = params[:keyword].to_s
+    keyword = params[:keyword]
     if keyword
-      @searched_keyword_id = Keyword.where(name:keyword).first.id
+      searched_keyword = Keyword.where(name:keyword).first
+      @searched_keyword_id = searched_keyword.id
       @is_followed = is_following(@searched_keyword_id)
     end 
+    render "projects/test_followed_keyword.js"
   end
     
   # author: 
