@@ -32,10 +32,10 @@ class Project < ActiveRecord::Base
 #   Creates and returns a project after calling method createcategories.
 # Failure:
 #   None
-def self.createproject(params,developer_id)
+def self.create_project(params,developer_id)
   project = Project.new(params.except(:developer,:category))
   project.owner_id = developer_id
-  project = createcategories(project,params[:category])
+  project = create_categories(project,params[:category])
   return project
 end
 
@@ -59,7 +59,7 @@ end
 #   Sets the category of the project to an existing one by finding the equivalent id.
 # Failure:
 #   None
-def self.createcategories(project,cat_id)
+def self.create_categories(project,cat_id)
   if cat_id != ""
     catArray = []
     catArray.push(cat_id)
@@ -76,14 +76,14 @@ end
 # Description:
 #   A method that takes a category id of a project as a parameter and searches the database
 #   for keywords that have the same category, then adds them to an array of keywords. A keyword
-#   is dsregarded if it does not have any synonyms.
+#   is disregarded if it does not have any synonyms.
 # Params:
 #   The category id of the project.
 # Success:
 #   Returns an array of relevant keywords.
 # Failure:
 #   None
-def self.filterkeywords(p_id,cat_id)
+def self.filter_keywords(p_id,cat_id)
   karray = []
   Keyword.all.each do |k|
     if PreferedSynonym.find_word_in_project(p_id, k.id) == false

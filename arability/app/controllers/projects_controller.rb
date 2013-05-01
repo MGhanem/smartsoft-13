@@ -103,7 +103,7 @@ class ProjectsController < BackendController
   #   Gives status errors
   def create
     @project = Project.new(params[:project].except(:category))
-    @project = Project.createproject(params[:project],current_developer.id)
+    @project = Project.create_project(params[:project],current_developer.id)
     respond_to do |format|
       if @project.save
         format.html { redirect_to "/developers/projects",
@@ -175,7 +175,7 @@ class ProjectsController < BackendController
   #   The old values will be kept.
   def update
     @project = Project.find(params[:id])
-    @project = Project.createcategories(@project, params[:project][:category])
+    @project = Project.create_categories(@project, params[:project][:category])
     if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
       :authenticity_token, :commit, :action, :controller, :locale, :id))
       redirect_to action: "index"
@@ -242,7 +242,7 @@ class ProjectsController < BackendController
   def view_recommended_words
     # if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
-      @karray = Project.filterkeywords(@project.id,@project.category_id)
+      @karray = Project.filter_keywords(@project.id,@project.category_id)
     # else
       # redirect_to choose_sub_path
       # flash[:notice] = t(:trial_error)
