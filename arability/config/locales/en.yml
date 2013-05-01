@@ -427,3 +427,4 @@ en:
   feat4b: "For extra features, connect to your favorite social network."
   expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
   mail_place: "Please enter name or email"
+  back_share: "Back to projects"
