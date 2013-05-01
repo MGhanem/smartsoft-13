@@ -15,6 +15,9 @@ class GuestController < ApplicationController
   # Failure:
   #   None
   def sign_up
+    if session[:guest_gamer_id] != nil
+      redirect_to ("/game")
+    end
   	@errors = params[:errors]
     dob = params[:dob]
     if dob != nil
@@ -38,6 +41,9 @@ class GuestController < ApplicationController
   # Failure:
   #   None
   def continue_sign_up
+    if session[:guest_gamer_id] == nil
+      redirect_to action: "sign_up"
+    end
     @errors = params[:errors]
     @email = params[:email]
     @username = params[:username]
