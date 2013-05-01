@@ -22,9 +22,7 @@
             <div class="pull-left pagination">
               <%= paginate @trophies_list, :remote => true %>
             </div>
-            <a>
               عرض الانجازات
-            </a>
           </legend>
           <% if flash[:successtype] && (flash[:successtype] == "addtrophy" || flash[:successtype] == "deletetrophy") && flash[:success] %>
                 <div class="alert alert-success">
