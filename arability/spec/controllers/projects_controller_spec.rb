@@ -53,7 +53,8 @@ describe ProjectsController do
 
   #Timo's tests
   describe "GET #index" do
-    it "populates an array of projects"
+
+    it "populates an array of projects", timo: true do 
       a = create_logged_in_developer
       sign_in(a.gamer)
       project2 = Project.new
@@ -66,17 +67,13 @@ describe ProjectsController do
       assigns(:my_projects).should eq([project2])
     end
 
-    it "renders the :index view" do
+    it "renders the :index view", timo: true do
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :index
       response.should render_template :index
     end
 
-    it "redirects to sign in page if the developer isn't signed in" do
-      get :index
-      response.should redirect_to new_gamer_session_path
-    end
   end
   #End of Timo's tests
 
@@ -232,5 +229,5 @@ describe 'PUT update' do
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
-
+end
 end
