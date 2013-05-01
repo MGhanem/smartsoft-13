@@ -10,10 +10,13 @@
  *
  *= require_self
  */
-body {
+#navbar {
   padding-top: 60px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+}
+
+body {
+    background-color: #f5f5f5;
 }
 .boxed {
   width: 300px
