@@ -418,7 +418,7 @@ class AdminController < ApplicationController
       "Dear #{Gamer.find_by_id(report.gamer_id).username}, \nWe would like to thank you for your feedback. But our team finds nothing inappropiate in the word you reported and was kept on our website. \nThank you \nArability team").deliver
     report.delete
     @reportAll = Report.all
-    flash[:success] = "تم التصرف فلبلاغ و إبقاء الكلمة"
+    flash[:success] = "تم التصرف في البلاغ و إبقاء الكلمة"
     flash.keep
     redirect_to action: "view_reports"
   end
