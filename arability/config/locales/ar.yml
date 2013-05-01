@@ -330,7 +330,7 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
-  routing_error: "لا توجد هذه الصفحة"
+  routing_error: "خطأ ٤٠٤: لا توجد هذه الصفحة."
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
   you_have_prizes: "لقد ربحت الجوائز التالية"
   caro1h: "عربلتي"

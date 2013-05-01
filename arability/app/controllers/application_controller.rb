@@ -58,12 +58,13 @@ class ApplicationController < ActionController::Base
   # failure:
   #   --
   def routing_error
-    path = request.path
-    if path.include? "developers/"
-      redirect_to projects_path, flash: { error: t(:routing_error) } 
-      return
-    end
-    redirect_to get_root, flash: { error: t(:routing_error) }
+    # path = request.path
+    # if path.include? "developers/"
+    #   redirect_to projects_path, flash: { error: t(:routing_error) } 
+    #   return
+    # end
+    # redirect_to get_root, flash: { error: t(:routing_error) }
+    redirect_to "/404"
   end
   
   # author:
