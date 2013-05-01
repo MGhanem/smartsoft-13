@@ -62,26 +62,28 @@ class GamesController < ApplicationController
   #   will appear explaining the situation
   #   The user is not signed in: S/He'll be redirected to the sign in page
   def post
-    if current_gamer != nil
-      if !current_gamer.is_connected_to_facebook 
-        redirect_to "/gamers/edit",
-        flash: {notice: t(:connect_your_account)}
+    if current_gamer
+      if !Authentication.is_connected_to_facebook(current_gamer.id)
+        flash[:error] = t(:connect_your_account) 
+        redirect_to "/gamers/edit"
       else
         begin
-          token = current_gamer.get_token
+          token = Authentication.get_token(current_gamer.id, "facebook")
           @graph = Koala::Facebook::API.new(token)
           @graph.put_wall_post(
-            "Checkout the new Arability game @ www.arability.net")
-          redirect_to "/game", flash: {success: t(:shared_on_fb)}
+            "Checkout the new Arability game @ localhost:3000/game")
+          flash[:success] = t(:shared_on_fb)
+          redirect_to "/game"
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/gamers/auth/facebook"
+          redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          redirect_to "/game", flash: {notice: t(:error_fb)}
+          flash[:notice] = t(:error_fb)
+          redirect_to "/game"
         end
       end
     else
-      redirect_to "/gamers/sign_in",
-      flash: {notice: t(:sign_in_facebook)}
+      flash[:error] = t(:sign_in_facebook)
+      redirect_to "/gamers/sign_in"
     end
   end
 
