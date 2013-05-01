@@ -40,8 +40,8 @@ class ProjectsController < BackendController
   # Failure:
   #   None
   def index  
-    @developer = Developer.where(:gamer_id => current_gamer.id).first
-    @my_projects = Project.where(:owner_id => @developer.id)
+    @developer = Developer.where(gamer_id: current_gamer.id).first
+    @my_projects = Project.where(owner_id: @developer.id)
     @shared_projects = @developer.projects_shared
   end
   # Author:
@@ -222,6 +222,11 @@ end
       end
       redirect_to action: "import_csv", id: project_id
     else
+      if I18n.locale == :ar
+        @language = "arabic"
+      else
+        @language = "english"
+      end
       @id_words_in_database_before = Array.new
       @id_synonyms_words_in_database_before = Array.new
       @id_words_not_in_database_before = Array.new
@@ -236,16 +241,56 @@ end
               Synonym.record_synonym(row[i],keywrd.id)
             end
             counter = 0
-            for i in 1..row.size
-              synonm = Synonym.find_by_name(row[i], keywrd.id)
-              if synonm != nil
-                counter = counter + 1
-                @id_synonyms_words_in_database_before.push(synonm.id)
+            if @id_words_in_database_before.include?(keywrd.id) || @id_words_not_in_database_before.include?(keywrd.id)
+              if @id_words_in_database_before.include?(keywrd.id)
+                index = @id_words_in_database_before.index(keywrd.id)
+                index2 = 0
+                for i in 0..index
+                  index2 = index2 + @num_synonyms_words_in_database_before[i]
+                end
+                for i in 1..row.size
+                  synonm = Synonym.find_by_name(row[i], keywrd.id)
+                  if synonm != nil
+                    counter = counter + 1
+                    @id_synonyms_words_in_database_before.insert(index2, synonm.id)
+                    index2 = index2 + 1
+                  end
+                end
+                if counter > 0
+                  old_num_syns =  @num_synonyms_words_in_database_before[index].to_i
+                  @num_synonyms_words_in_database_before[index] = counter + old_num_syns
+                end  
+              else
+                index = @id_words_not_in_database_before.index(keywrd.id)
+                index2 = 0
+                for i in 0..index
+                  index2 = index2 + @num_synonyms_words_not_in_database_before[i]
+                end
+                for i in 1..row.size
+                  synonm = Synonym.find_by_name(row[i], keywrd.id)
+                  if synonm != nil
+                    counter = counter + 1
+                    @id_synonyms_words_not_in_database_before.insert(index2, synonm.id)
+                    index2 = index2 + 1
+                  end
+                end
+                if counter > 0
+                  old_num_syns =  @num_synonyms_words_not_in_database_before[index].to_i
+                  @num_synonyms_words_not_in_database_before[index] = counter + old_num_syns
+                end
+              end           
+            else
+              for i in 1..row.size
+                synonm = Synonym.find_by_name(row[i], keywrd.id)
+                if synonm != nil
+                  counter = counter + 1
+                  @id_synonyms_words_in_database_before.push(synonm.id)
+                end
               end
-            end
-            if counter > 0
-              @id_words_in_database_before.push(keywrd.id)
-              @num_synonyms_words_in_database_before.push(counter)
+              if counter > 0
+                @id_words_in_database_before.push(keywrd.id)
+                @num_synonyms_words_in_database_before.push(counter)
+              end
             end
           end
         else
