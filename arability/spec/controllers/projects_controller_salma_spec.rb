@@ -38,6 +38,25 @@ describe ProjectsController, type: :controller do
     project
   }
 
+let(:cat){
+  cat = Category.new
+  cat.id = "13"
+  cat.english_name = "Music"
+  cat.arabic_name = "hey"
+  cat.save
+  cat
+}
+
+  let(:keyword1){
+  keyword1 = Keyword.new
+  keyword1.name = "Art"
+  keyword1.synonyms = [Synonym.create(name: "hey", keyword_id: keyword1.id, approved: true)]
+  keyword1.categories = [cat]
+  keyword1.approved = "true"
+  keyword1.save
+  keyword1
+}
+
   it "initializes a new project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
@@ -116,4 +135,13 @@ it "renders the #show view" do
   get :show, id: project
   response.should render_template project
 end
+
+it "views recommended words" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+  project
+  get :view_recommended_words, project_id: project
+  response.code.should eq("200")
+end
+
 end

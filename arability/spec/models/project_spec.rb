@@ -34,6 +34,17 @@ let(:cat){
   cat
 }
 
+let(:keyword1){
+  keyword1 = Keyword.new
+  keyword1.id = 1
+  keyword1.name = "Art"
+  keyword1.synonyms = [Synonym.create(name: "hey", keyword_id: keyword1.id, approved: true)]
+  keyword1.categories = [Category.find(cat.id)]
+  keyword1.approved = "true"
+  keyword1.save
+  keyword1
+}
+
 #Salma's tests
 
   it "Should have a name" do
