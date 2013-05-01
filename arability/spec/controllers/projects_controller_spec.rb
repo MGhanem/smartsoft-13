@@ -60,17 +60,13 @@ describe ProjectsController, type: :controller do
     page.should have_content(I18n.t(:import_csv_title))
   end
 
-<<<<<<< HEAD
-
-  # khloud's tests
-=======
   it "should delete a project" do
     sign_in gamer1
     put :destroy, id: project.id
     response.code.should eq("302")
   end
+
   #khloud's tests
->>>>>>> 6d6f0a58c011379c4b32d11d83de2eda88570db2
 
   it "redirects to project path after calling export_to_csv if project empty" do
     p = create_project
