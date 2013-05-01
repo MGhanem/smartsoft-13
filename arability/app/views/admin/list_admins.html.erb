@@ -1,0 +1,37 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: 'sidebar-nav', locals: {active: "list-admins"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-list-admins">
+					<legend>
+						<div class="pull-left pagination">
+							<%= paginate @list, :remote => true %>
+						</div>
+						<a>
+							عرض المشرفيين
+						</a>
+					</legend>
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>اسم المستخدم</td>
+								<td>البريد الاكترونى</td>
+								<td>مسح المشرف</td>
+							</tr>
+						</thead>
+						<tbody>
+							<% for item in @list %>
+								<tr>
+									<td><%= item.username %></td>
+									<td><%= item.email %></td>
+									<td><a href="/admin/remove_admin?id=<%= item.id %>">مسح</a></td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
