@@ -3,7 +3,7 @@
   <%= hidden_field_tag "id", @project.id%>
   <%= f.label "#{t(:email2)}"%>
   <div class="form-search">
-  <%= text_field :email,"", :placeholder=>"Please enter an email"%>
+  <%= text_field :email,"", :placeholder=>t(:mail_place) %>
   <%= f.submit "#{t(:share)}", :class => "btn btn-success"%>
 </div>
 </br>
@@ -17,7 +17,6 @@
           <td>
             <%= dev.email %>
           </td>
-
             <td>
             <a href="/developers/projects/remove_developer_from_project?dev_id=<%=dev.id%>&project_id=<%=@project.id%>"><i class="icon-remove"></i></a>
           </td>
