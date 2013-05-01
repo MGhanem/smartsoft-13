@@ -69,17 +69,17 @@ class ProjectsController < BackendController
   #   If not signed in he will be redirected to the sign in page.
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
-      if current_developer.my_subscription.get_projects
+    if current_developer.my_subscription.get_projects_limit
       @project = Project.new
       respond_to do |format|
         format.html
         format.json { render json: @project }
       end
-      else
-        format.html { redirect_to "/my_subscriptions/choose_sub",
-        notice: I18n.t('exceeded_project_limit: ') }
+    else
+        redirect_to choose_sub_path
+        flash[:notice] = t(:exceeded_project_limit)
       end
-  end
+    end
 
   # Author:
   #   Salma Farag
@@ -106,8 +106,6 @@ class ProjectsController < BackendController
     @project = Project.createproject(params[:project],current_developer.id)
     respond_to do |format|
       if @project.save
-        current_developer.my_subscription.get_projects++
-        # raise Exception { current_developer.my_subscription.get_projects }
         format.html { redirect_to "/developers/projects",
           flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
