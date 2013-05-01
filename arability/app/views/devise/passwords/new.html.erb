@@ -1,5 +1,7 @@
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name, :locale => I18n.locale), :html => { :method => :post, class: "form-signin", style: "min-width: 380px;" }) do |f| %>
+<%= form_for(resource, as: resource_name,
+             url: password_path(resource_name, locale: I18n.locale),
+             html: { method: :post, class: "form-signin", style: "min-width: 380px;" }) do |f| %>
   <h2 class="form-signin-heading"><%= t(:reset_password) %></h2>
   <% if resource.errors.any? %>
       <div class="alert"><%= devise_error_messages! %></div>
