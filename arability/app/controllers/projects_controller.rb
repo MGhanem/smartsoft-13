@@ -240,13 +240,13 @@ class ProjectsController < BackendController
   #   The user has exceeded the maximum limit of words to be added and hence will not be able
   #   to add any more.
   def view_recommended_words
-    if current_developer.my_subscription.subscription_model_id != 1
+    # if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
       @karray = Project.filterkeywords(@project.id,@project.category_id)
-    else
-      redirect_to choose_sub_path
-      flash[:notice] = t(:trial_error)
-    end
+    # else
+      # redirect_to choose_sub_path
+      # flash[:notice] = t(:trial_error)
+    # end
   end
 
   # Author:

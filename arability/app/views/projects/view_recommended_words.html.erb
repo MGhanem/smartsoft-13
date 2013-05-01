@@ -26,18 +26,8 @@
           <%= keyword.name %>
         </td>
         <td style="text-align:center; vertical-align: middle">
-         <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name,{}, { id:"key", disabled: true, 'data-id' => keyword.id}) %>
+         <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name,{}, { id:"key",  'data-id' => keyword.id}) %>
        </td>
-       <script>
-       $('input[type=checkbox]').click(function() {
-        var $this = $(this);
-        if ($this.is(':checked')) {
-          $("select[data-id=" + $this.val() + "]").removeAttr("disabled");
-        } else {
-          $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
-        }
-      });
-       </script>
       </tr>
   <% end %>
 </table>
@@ -60,4 +50,20 @@ function check(){
   }
   return array;
 }
+</script>
+<script>
+$('input[type=checkbox]').click(function() {
+  var $this = $(this);
+  if ($this.is(':checked')) {
+    $("select[data-id=" + $this.val() + "]").removeAttr("disabled");
+  } else {
+    $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
+  }
+});
+</script>
+<script type="text/javascript">
+$('input[type=select]').click(function() {
+  var blah = $(this);
+  $("checkbox[data-id=" + blah.val() + "]").prop('checked', true);
+});
 </script>
