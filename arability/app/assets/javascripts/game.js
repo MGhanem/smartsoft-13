@@ -644,7 +644,7 @@ function calculatePossible(){
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).removeClass('text-warning');
-				$('#' + lsId).css( "color", "#333333" );
+				$('#' + lsId).css("color", "#333333");
 			}
 			for(var l = 0; l < wordsArray[k].length; l++){
 				canBeFormed = false;
@@ -669,13 +669,13 @@ function calculatePossible(){
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).addClass('text-warning');
-			$('#' + lsId).css( "color", "orange" );
+			$('#' + lsId).css("color", "orange");
 		}
 		else{
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).removeClass('text-warning');
-			$('#' + lsId).css( "color", "#333333" );
+			$('#' + lsId).css("color", "#333333");
 		}
 }
 
@@ -752,7 +752,6 @@ function generateWord(){
 		var oldLetters = document.getElementById("wordLabel").innerHTML;
 		document.getElementById("wordLabel").innerHTML = newWord;
 }
-
 
 
 // author:
@@ -1031,7 +1030,6 @@ function startPulling(r, c, count){
 	document.getElementById(place).innerHTML = btn;
 
 }
-
 
 
 function setLetterPicker(){
