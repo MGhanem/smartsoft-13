@@ -9,6 +9,14 @@
               عرض البلاغات
             </a>
           </legend>
+          <% if flash[:success] %>
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <div>
+                <%= flash[:success] %>
+              </div>
+            </div>
+          <% end %>
           <% if @reports == [] %>
             <p>لا يوجد بلاغات الأن</p>
           <% else %>
