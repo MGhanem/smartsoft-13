@@ -417,6 +417,7 @@ class AdminController < ApplicationController
       "report feedback on arability.com",
       "Dear #{Gamer.find_by_id(report.gamer_id).username}, \nWe would like to thank you for your feedback. But our team finds nothing inappropiate in the word you reported and was kept on our website. \nThank you \nArability team").deliver
     report.delete
+    @reportAll = Report.all
     flash[:success] = "تم التصرف فلبلاغ و إبقاء الكلمة"
     flash.keep
     redirect_to action: "view_reports"
@@ -446,6 +447,7 @@ class AdminController < ApplicationController
       "report feedback on arability.com",
       "Dear #{Gamer.find_by_id(report.gamer_id).username}, \nWe would like to thank you for your feedback. Your report has been considered, and we found out that this word is inappropiate and have been blocked from our website. \n \nThank you \n \nArability team").deliver
     report.delete
+    @reportAll = Report.all
     flash[:success] = "تم التصرف في البلاغ و إخفاء الكلمة"
     flash.keep
     redirect_to action: "view_reports"
