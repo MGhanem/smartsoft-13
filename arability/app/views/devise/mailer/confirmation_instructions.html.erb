@@ -1,5 +1,9 @@
-<p>Welcome <%= @resource.email %>!</p>
+<div style="<%= 'direction: rtl; font-size: 20px;' if I18n.locale == :ar %>">
+  <p><%= I18n.t(:hello) %> <%= @resource.username %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+  <p><%= I18n.t(:confirm_body) %></p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+  <p><%= link_to I18n.t(:confirm_button), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+  <h4><%= I18n.t(:arability) %></h4>
+</div>

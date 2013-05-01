@@ -40,10 +40,14 @@ Arability::Application.routes.draw do
 
     # required for routing by the devise module(gem)
 
-    devise_for :gamers do 
+    devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
       post "/social_registrations/social_sign_in"
+      get "/gamers/sign_in" => "devise/sessions#new"
+      post "/gamers/confirmation" => "devise/confirmations#create"
+      get "/gamers/confirmation/new" => "devise/confirmations#new", :as => "new_confirmation"
+      get "/gamers/confirmation" => "devise/confirmations#show"
     end
 
     match '/game' => 'games#game'
@@ -122,6 +126,12 @@ Arability::Application.routes.draw do
     end
   end
 
+  get "gamers/sign_in" => redirect("/en/gamers/sign_in")
+  get "gamers/sign_in" => redirect("/ar/gamers/sign_in")
+
+  get "gamers/gamers/confirmation/new" => redirect("/en/gamers/confirmation/new")
+  get "gamers/gamers/confirmation/new" => redirect("/ar/gamers/confirmation/new")
+  
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')

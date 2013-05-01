@@ -376,3 +376,8 @@ en:
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
+  resend_confirmation: "Resend confirmation instructions"
+  send: "Send"
+  hello: "Hello"
+  confirm_body: "You can confirm your account email through the link below"
+  confirm_button: "Confirm account"
