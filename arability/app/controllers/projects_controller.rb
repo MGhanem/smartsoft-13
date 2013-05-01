@@ -5,7 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  # before_filter :developer_can_see_this_project?,
+  before_filter :developer_can_see_this_project?,
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
 
  # author:Noha hesham
  # Description:
@@ -54,40 +55,6 @@ class ProjectsController < BackendController
     end
   end
 
-
-  # Author:
-  #   Salma Farag
-  # Description:
-  #   After checking that the user is signed in, the method that calls method createproject
-  #   that creates the project and redirects to the project page and prints
-  #   an error if the data entered is invalid.
-  # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name
-  # Success:
-  #   Creates a new project and views it in the index page
-  # Failure:
-  #   Gives status errors
-  def create
-    if developer_signed_in?
-      @project = Project.new(params[:project].except(:category))
-      @project = Project.createproject(params[:project],current_developer.id)
-      respond_to do |format|
-        if @project.save
-          format.html { redirect_to "/developers/projects",
-            flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
-          format.json { render json: @project, status: :created, location: @project }
-          @project.save
-        else
-          format.html { render action: "new" }
-          format.json { render json: @project.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-     developer_unauthorized
-     render 'pages/home'
-    end
-  end
-
   # Author:
   #   Salma Farag
   # Description:
@@ -102,22 +69,53 @@ class ProjectsController < BackendController
   #   If not signed in he will be redirected to the sign in page.
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
-    if developer_signed_in?
-      # if current_developer.my_subscription.get_projects
-        @project = Project.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @project }
-        end
-      # else
-      #   format.html { redirect_to "/my_subscriptions/choose_sub",
-      #   notice: I18n.t('exceeded_project_limit: ') }
-      # end
+    if current_developer.my_subscription.get_projects_limit
+      @project = Project.new
+      respond_to do |format|
+        format.html
+        format.json { render json: @project }
+      end
     else
-      developer_unauthorized
-      render 'pages/home'
+        redirect_to choose_sub_path
+        flash[:notice] = t(:exceeded_project_limit)
+      end
     end
-  end
+
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After checking that the user is signed in, the method that calls method createproject
+  #   that creates the project and redirects to the project page and prints
+  #   an error if the data entered is invalid.
+  # Params:
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
+  # Success:
+  #   Creates a new project and views it in the index page
+  # Failure:
+  #   Gives status errors
+  def create
+    @project = Project.new(params[:project].except(:category))
+    @project = Project.createproject(params[:project],current_developer.id)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to "/developers/projects",
+          flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
+          format.json { render json: @project, status: :created, location: @project }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
 
   # Author:
   #  Noha Hesham
@@ -138,17 +136,21 @@ class ProjectsController < BackendController
   # Description:
   #   A method that specifies an already existing project by its ID
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   A form that contains the existing data of the project will open from the views.
   # Failure:
   #   None
   def edit
-    if developer_signed_in?
-      @project = Project.find(params[:id])
-    else
-      developer_unauthorized
-    end
+    @project = Project.find(params[:id])
   end
 
   # Author:
@@ -158,25 +160,28 @@ class ProjectsController < BackendController
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
   #   Then calls method createcategories that changes the category.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
-  #   and its category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An existing project will be updated.
   # Failure:
   #   The old values will be kept.
   def update
-    if developer_signed_in?
-      @project = Project.find(params[:id])
-      @project = Project.createcategories(@project, params[:project][:category])
-      if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
-        :authenticity_token, :commit, :action, :controller, :locale, :id))
-        redirect_to action: "index"
-        flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
-      else
-        render action: 'edit'
-      end
+    @project = Project.find(params[:id])
+    @project = Project.createcategories(@project, params[:project][:category])
+    if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
+      :authenticity_token, :commit, :action, :controller, :locale, :id))
+      redirect_to action: "index"
+      flash[:success] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
     else
-      developer_unauthorized
+      render action: 'edit'
     end
   end
 
@@ -188,7 +193,15 @@ class ProjectsController < BackendController
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
   #   projects index.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An project will be showed with its words and synonyms.
   # Failure:
@@ -227,12 +240,13 @@ class ProjectsController < BackendController
   #   The user has exceeded the maximum limit of words to be added and hence will not be able
   #   to add any more.
   def view_recommended_words
-    # if current_developer.my_subscription.subscription_model_id != 1
+    if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
       @karray = Project.filterkeywords(@project.id,@project.category_id)
-    # else
-      # flash[:notice] = "You cannot use this service, please subscribe as premium or deluxe"
-    # end
+    else
+      redirect_to choose_sub_path
+      flash[:notice] = t(:trial_error)
+    end
   end
 
   # Author:

@@ -64,19 +64,46 @@ en:
   required: "The fields marked with * are required"
   name: "Name"
   category: "Category"
+  please_select: "Please select"
   formality: "Language"
+  pro_gender: "Gender"
+  pro_male: "Male"
+  pro_female: "Female"
   formal: "Formal"
   slang: "Slang"
-  age: "Age"
   from: "From"
   to: "To"
-  desc: "Description"
+  desc: "About the project"
+  target: "This project will target the following group:"
+  target_country: "Country"
+  target_age: "Age"
+  target_education_level: "Education level"
   new_project: "New Project"
   back: "<< Back"
   edit_project: "Edit Project"
   create_project: "Create Project"
   save_project: "Save Project"
   click_here: "Click here"
+  egypt: "Egypt"
+  lebanon: "Lebanon"
+  jordan: "Jordan"
+  saudi_arabia: "Saudi Arabia"
+  libya: "Libya"
+  united_arab_emirates: "United Arab Emirates"
+  qatar: "Qatar"
+  kuwait: "Kuwait"
+  iraq: "Iraq"
+  algeria: "Algeria"
+  morocco: "Morocco"
+  bahrain: "Bahrain"
+  mauritania: "Mauritania"
+  somalia: "Somalia"
+  sudan: "Sudan"
+  tunisia: "Tunisia"
+  others: "Others"
+  school: "School"
+  university: "University"
+  graduate: "Graduate"
   view_collectives: "Viewing collective statistics for word "
   view_stats: "View Stats"
   add_to_project: "Add to project"
@@ -118,12 +145,13 @@ en:
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
-  stats_no_votes: "Sorry! this translation has no votes yet!"
+  stats_no_votes: "Sorry! this synonym has no votes yet!"
+  exceeded_project_limit: "You have reached the maximum number of projects allowed. Please subscribe to Premium or Deluxe to create more."
   controller:
-   subscription:
-     messages_errors:
+    subscription:
+      messages_errors:
         you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
-        please_choose: 'please choose your subscription model'
+    please_choose: 'please choose your subscription model'
   already_registered_developer: "You are already registered as a developer. Don't you remember?"
   failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
   no_developer: "Please register as a developer before you choose your subscription model."
@@ -274,6 +302,21 @@ en:
           attributes:
             minAge:
               not_in_range: "is not in range"
+  synonyms_of: "Synonyms of"
+  enter_keyword: "Enter a keyword"
+  username: "Username"
+  password_confirmation: "Password confirmation"
+  education_level: "Education level"
+  date_of_birth: "Date of Birth"
+  back_to_game: "Back"
+  keyword_added: "keyword added successfully"
+  add_twitter_connection: "Connected to Twitter successfully!"
+  remove_twitter_connection: "Connection to Twitter removed successfully!"
+  connection_failure: "Failed to connect!"
+  already_connected: "already connected to Twitter!"
+  remove_connection: "Remove Connection"
+  connect_to_twitter: "Connect to Twitter"
+  you_have_prizes: "You have won the following prizes!"
   activerecord:
     errors:
       models:
@@ -289,6 +332,22 @@ en:
               blank: "category cant be empty"
               invalid: "The category can only consist of only english and arabic characters"
               taken: "This category already exists in the database"
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
+              less_than_minAge: "can not be less than the minimum age"
+    attributes:
+      project:
+        name: "Name"
+        minAge: "The minimum age"
+        maxAge: "The maximum age"
+        categories: "Categories"
+        description: "Description"
   enter_keyword: "Enter a keyword"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -332,14 +391,6 @@ en:
   exceeds_word_limit: "Sorry, you have exceeded the limit of words you can add defined by your subscription model."
   choose_project: "Please choose a project."
   you_have_prizes: "You have won the following prizes!"
-  activerecord:
-    attributes:
-      project:
-        name: "Name"
-        minAge: "The minimum age"
-        maxAge: "The maximum age"
-        categories: "Categories"
-        description: "Description"
   confirm: " Are you sure you want to delete the project?"
   delete: "Delete"
   close_delete: "Close"
@@ -389,3 +440,4 @@ en:
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
+  trial_error: "Sorry, you cannot use this service. Please subscribe to Premium or Deluxe to continue"

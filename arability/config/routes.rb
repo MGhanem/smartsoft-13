@@ -31,6 +31,7 @@ Arability::Application.routes.draw do
   scope "(:locale)", :locale => /en|ar/ do
 
     # required for routing by the devise module(gem)
+
     devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
@@ -66,9 +67,9 @@ Arability::Application.routes.draw do
 
     scope "developers/" do
       match "/" => "backend#home", :as => "backend_home"
-      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
       get "projects/remove_developer_from_project"
-      match "projects/:id/share/" => "projects#share", :as => "share_project"
+      match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
