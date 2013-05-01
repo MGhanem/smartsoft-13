@@ -1,20 +1,20 @@
-<div class = "main-div">
-<h3 id="header-vl" class ="heading"><%= t(:vote_log)%>
-<a class="btn btn-success btn-game" onClick="backToGame()"><%= t(:back_log)%></a>
+<div class = "main-div-vl">
+<h3 id = "header-vl" class = "heading-vl"><%= t(:vote_log) %>
+<a class = "btn btn-success btn-game-vl" onClick = "backToGame()"><%= t(:back_log) %></a>
 </h3>
-<table class="table table-bordered table-striped styling-center-table">
+<table class = "table table-bordered table-striped styling-center-table-vl">
   <% if !@vote_log.blank? %>
     <% @vote_log.each do |vote| %>
-     <tr>
+      <tr>
         <td></td>
-        <td id = "table-row-vl"> <b class = "coloring"><%= t(:you_vote) %></b> <%= t(:vote_action) %> <b class = "coloring"><%=vote.last %></b> <%= t(:chosen_action) %> <b class = "coloring"><%=vote.first%></b> </td>
+        <td id = "table-row-vl"> <b class = "coloring-vl"><%= t(:you_vote) %></b><%= t(:vote_action) %><b class = "coloring-vl"><%= vote.last %></b><%= t(:chosen_action) %><b class = "coloring-vl"><%= vote.first %></b></td>
         <td></td>
       </tr>
     <% end %>
   <% else %>
     <tr>
       <td></td>
-      <td id = "table-row-vl"> <b class = "coloring"> <%= t(:no_you) %>  </b> <%= t(:no_vote_log) %></td>
+      <td id = "table-row-vl"><b class = "coloring-vl"><%= t(:no_you) %></b><%= t(:no_vote_log) %></td>
       <td></td>
     </tr>
   <% end %>
@@ -22,65 +22,21 @@
 </div>
 
 <style>
+  .table td {
+    background-color: #FFFFFF;
+    border-width: 0px;
+  }
 
-.main-div {
-  text-align: center;
-  overflow-y: scroll;
-  height: 520px;
-  overflow-x: hidden;
-}
-
-.heading {
-  color:white;
-  padding-right: 20px;
-  padding-left: 20px;
-  position: relative;
-}
-
-.styling-center-table{
-  margin: 0 auto !important;
-  float: none !important;
-  font-size: 20px;
-  border: none;
-}
-
-.arabic-table-vl {
-  font-size: 25px;
-}
-
-.coloring {
-  color: #51a351;
-  font-weight: bold;
-}
-
-.table td{
-  background-color: #FFFFFF;
-  border-width: 0px;
-}
-
-.table {
-   width: 740px;
-}
-
-.arabic-head-vl {
-  font-size:38px;
-}
-
-.btn-game {
- position:absolute;
- top:5px;
- left:10px;
-}
-
+  .table {
+    width: 740px;
+  }
 </style>
 
 <script type="text/javascript">
-
-$(document).ready(function () {
-<% if I18n.locale == :ar %>
-$("#header-vl").addClass("arabic-head-vl");
-$("#table-row-vl").addClass("arabic-table-vl");
-<% end %>
-});
-
+  $(document).ready(function () {
+    <% if I18n.locale == :ar %>
+      $("#header-vl").addClass("arabic-head-vl");
+      $("#table-row-vl").addClass("arabic-table-vl");
+    <% end %>
+  });
 </script>

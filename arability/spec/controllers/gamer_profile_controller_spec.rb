@@ -1,75 +1,72 @@
 #encoding: UTF-8
 require "spec_helper"
 
-describe GamesController, vote_profile_test: true do
+describe GamesController, vote_log_test: true do
 
-   let(:k){
+  let(:k) {
     k = Keyword.new
-    k.name ="trialKeywordA"
-    k.is_english = "true"
-    k.approved = "true"
+    k.name = "trialKeywordA"
+    k.is_english = true
+    k.approved = true
     k.save
     k
   }
 
-  let(:kTwo){
+  let(:kTwo) {
     k = Keyword.new
-    k.name ="trialKeywordb"
-    k.is_english = "true"
-    k.approved = "true"
+    k.name = "trialKeywordb"
+    k.is_english = true
+    k.approved = true
     k.save
     k
   }
 
-    let(:kThree){
+  let(:kThree) {
     k = Keyword.new
-    k.name ="trialKeywordC"
-    k.is_english = "true"
-    k.approved = "false"
+    k.name = "trialKeywordC"
+    k.is_english = true
+    k.approved = false
     k.save
     k
   }
 
-  let(:s){
+  let(:s) {
     s = Synonym.new
-    s.name =  "الاول"
-    s.keyword_id =  k.id
-    s.approved = "true"
-    s.save
-    s
-
-  }
-
-  let(:sTwo){
-    s = Synonym.new
-    s.name =  "الثاني"
-    s.keyword_id =  k.id
-    s.approved = "true"
-    s.save
-    s
-
-  }
-
-  let(:sThree){
-    s = Synonym.new
-    s.name =  "الثالت"
-    s.keyword_id =  k.id
-    s.approved = "true"
-    s.save
-    s
-
-  }
-
-  let(:sFour){
-    s = Synonym.new
-    s.name =  "الرابع"
-    s.keyword_id =  kTwo.id
-    s.approved = "true"
+    s.name = "الاول"
+    s.keyword_id = k.id
+    s.approved = true
     s.save
     s
   }
 
-  let(:g){
+  let(:sTwo) {
+    s = Synonym.new
+    s.name = "الثاني"
+    s.keyword_id = k.id
+    s.approved = true
+    s.save
+    s
+  }
+
+  let(:sThree) {
+    s = Synonym.new
+    s.name = "الثالت"
+    s.keyword_id = k.id
+    s.approved = true
+    s.save
+    s
+  }
+
+  let(:sFour) {
+    s = Synonym.new
+    s.name = "الرابع"
+    s.keyword_id = kTwo.id
+    s.approved = true
+    s.save
+    s
+  }
+
+  let(:g) {
     g = Gamer.new
     g.username = "trialVoter"
     g.country = "Egypt"
@@ -78,11 +75,11 @@ describe GamesController, vote_profile_test: true do
     g.gender = "male"
     g.email = "trialC@example.com"
     g.password = "1234567"
-    g.save(validate: false)
+    g.save validate: false
     g
   }
 
-  let(:gTwo){
+  let(:gTwo) {
     gTwo = Gamer.new
     gTwo.username = "trialVoterTwo"
     gTwo.country = "Lebanon"
@@ -91,11 +88,11 @@ describe GamesController, vote_profile_test: true do
     gTwo.gender = "female"
     gTwo.email = "trialD@example.com"
     gTwo.password = "1234567"
-    gTwo.save(validate: false)
+    gTwo.save validate: false
     gTwo
   }
 
-  let(:v){
+  let(:v) {
     v = Vote.new
     v.synonym_id = s.id
     v.gamer_id = g.id
@@ -103,7 +100,7 @@ describe GamesController, vote_profile_test: true do
     v
   }
 
-  let(:vTwo){
+  let(:vTwo) {
     v = Vote.new
     v.synonym_id = sFour.id
     v.gamer_id = g.id
@@ -111,7 +108,7 @@ describe GamesController, vote_profile_test: true do
     v
   }
 
-  let(:vThree){
+  let(:vThree) {
     v = Vote.new
     v.synonym_id = s.id
     v.gamer_id = gTwo.id
@@ -119,31 +116,30 @@ describe GamesController, vote_profile_test: true do
     v
   }
 
-
   before (:each) do
-  k
-  kTwo
-  s
-  sTwo
-  sThree
-  sFour
-  g
+    k
+    kTwo
+    s
+    sTwo
+    sThree
+    sFour
+    g
   end
 
   describe "showProfile" do
     it "gets the list of voted keywords and their corresponding voted 
-        synonyms of current gamer" do
+      synonyms of current gamer" do
       sign_in(g)
       v
       vTwo
       get :showprofile
       assigns(:count).should eq(2)
       assigns(:vote_log).should =~ 
-      [["trialKeywordA", "الاول"], ["trialKeywordb", "الرابع"]]
+        [["trialKeywordA", "الاول"], ["trialKeywordb", "الرابع"]]
     end
 
     it "gets 1 and a list of one list only when the gamer voted only once" do
-     sign_in(gTwo)
+      sign_in(gTwo)
       vThree
       get :showprofile
       assigns(:count).should eq(1)

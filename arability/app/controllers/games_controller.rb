@@ -292,7 +292,7 @@ class GamesController < ApplicationController
   def showprofile
     @count, @vote_log = current_gamer.get_votes
     respond_to do |format|
-       format.js
+      format.js
     end
   end
 end
