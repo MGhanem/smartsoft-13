@@ -5,8 +5,8 @@ class ProjectsController < BackendController
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
+  # before_filter :developer_can_see_this_project?,
+  # only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
   before_filter :can_access_project?,
   only: [:add_word_inside_project, 
   :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
@@ -421,21 +421,35 @@ end
           if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save
-              flash[:success] = t(:Synonym_changed_successfully)
-              redirect_to project_path(@project_id), flash: flash
-              return
+              respond_to do |format|
+                format.html {
+                flash[:success] = t(:Synonym_changed_successfully)
+                redirect_to project_path(@project_id), flash: flash
+                return}
+                format.json  { render json: [t(:Synonym_changed_successfully)] }
+              end
             else
-              flash[:notice] = t(:Failed_to_update_synonym)
-              redirect_to project_path(@project_id), flash: flash
-              return
+              respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:Failed_to_update_synonym)
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json  { render json: [t(:Failed_to_update_synonym)] }
+              end
             end
           else
-            flash[:error] = t(:synonym_does_not_exist)
-            redirect_to :back, flash: flash
-            return
+            respond_to do |format|
+                format.html {
+                  flash[:error] = t(:synonym_does_not_exist)
+                  redirect_to :back, flash: flash
+                  return
+                }
+                format.json  { render json: [t(:synonym_does_not_exist)] }
+            end
           end
         else
-          if MySubscription.get_permissions(current_developer.id, 2)
+          # if MySubscription.get_permissions(current_developer.id, 2)
             @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
               @synonym_id, @word_id, @project_id)
             if @added_word
@@ -447,28 +461,51 @@ end
                   new_keyword.save
                 end
               end
-              MySubscription.decrement_add(current_developer.id)
-              flash[:success] = t(:successfully_added_word_to_project)              
-              redirect_to project_path(@project_id), flash: flash
-              return
+              # MySubscription.decrement_add(current_developer.id)
+              respond_to do |format|
+                format.html {
+                  flash[:success] = t(:successfully_added_word_to_project)              
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json  { render json: [t(:successfully_added_word_to_project)] }
+              end
+              
             else
-              flash[:notice] = t(:failed_to_add_word_to_project)
-              redirect_to project_path(@project_id), flash: flash
-              return
+              respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:failed_to_add_word_to_project)
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json  { render json: [t(:failed_to_add_word_to_project)] }
+              end
+              
             end
-          else
-            flash[:notice] = t(:exceeds_word_limit)
-            redirect_to project_path(@project_id), flash: flash
-          end
+          # else
+          #   flash[:notice] = t(:exceeds_word_limit)
+          #   redirect_to project_path(@project_id), flash: flash
+          # end
         end
       else
-        flash[:notice] = t(:word_does_not_exist)
-        redirect_to project_path(@project_id), flash: flash
-        return
+        respond_to do |format|
+          format.html {
+            flash[:notice] = t(:word_does_not_exist)
+            redirect_to project_path(@project_id), flash: flash
+            return
+          }
+          format.json  { render json: [t(:word_does_not_exist)] }
+        end
+        
       end
     else
-      flash[:error] = t(:choose_project)
-      redirect_to :back, flash: flash
+      respond_to do |format|
+          format.html {
+            flash[:error] = t(:choose_project)
+            redirect_to :back, flash: flash
+          }
+          format.json  { render json: [t(:choose_project)] }
+        end
     end
   end
 
