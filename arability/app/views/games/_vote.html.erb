@@ -85,6 +85,7 @@
 </div>
 <input id="choosen_synonym_id" type="hidden" value="old_value"/>
 <script type="text/javascript">
+	$('.popover-title').css('text-align','center');
 	function check_formality(syn_id, syn_is_formal,j){
 		if(syn_is_formal == "true" || syn_is_formal == "false" ){
 			record_vote(syn_id);
@@ -98,8 +99,8 @@
 			this_id = 'synonym_button'+j;
 			var translation = "<%= t(:is_this_translation) %>"
 			var title = []
-			title.push("<p>"+translation);
-			title.push("<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='hide()'>×</button></p>");
+			title.push(translation);
+			title.push("<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='hide()'>&times;</button>");
 			title.join();
 			$('#synonym_button'+j).popover({'title':title});
 			$('#synonym_button'+j).popover('show');
