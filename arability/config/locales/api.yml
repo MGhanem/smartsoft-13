@@ -16,6 +16,15 @@ en:
   close: "Close"
   api_key: "API key"
   back_to_api: "back to your API keys"
+  api_created: "Your API key has been successfully created"
+  activerecord:
+    attributes:
+      api_key:
+        website: "Website"
+    errors:
+      models:
+        api_key:
+          invalid: "should be in the format of www.example.com"
 ar:
   api: "API"
   help_text: >
@@ -33,3 +42,12 @@ ar:
   close: "لا شكراً"
   api_key: "مفتاح ال-API"
   back_to_api: "الرجوع إلى صفحة ال-API"
+  api_created: "Your API key has been successfully created"
+  activerecord:
+    attributes:
+      api_key:
+        website: "الموقع"
+    errors:
+      models:
+        api_key:
+          invalid: "يجب أن يكون على نحو www.example.com"

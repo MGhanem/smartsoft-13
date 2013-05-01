@@ -106,9 +106,12 @@ class ApiController < BackendController
 
     if @api_key.save
       redirect_to api_keys_list_path,
-        flash: {success: "Your API key has been successfully created" }
+        flash: {success: "#{ t :api_created }" }
     else
       @projects = current_developer.projects
+      @api_keys = current_developer.api_keys
+      @projects = current_developer.projects
+
       render :index
     end
   end

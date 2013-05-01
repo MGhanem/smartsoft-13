@@ -8,8 +8,7 @@ class ApiKey < ActiveRecord::Base
   attr_accessible :token, :website, :developer_id, :project_id
 
   validates_presence_of :developer_id
-  validates_format_of :website, with: /([a-z\-0-9]{2,}\.){1,}[a-z]{2,8}/,
-    message: "should be in the form of www.example.com"
+  validates_format_of :website, with: /([a-z\-0-9]{2,}\.){1,}[a-z]{2,8}/
 
   # Author:
   #   Mohamed Ashraf
@@ -17,7 +16,7 @@ class ApiKey < ActiveRecord::Base
   #   retrieved approved synonyms for a keyword through the project parameters
   #   and optional overides
   # Parameters:
-  #   keyword: a string representing the keyword for which the synonyms will
+  #   word: a string representing the keyword for which the synonyms will
   #     be retrieved
   #   country: [optional] filter by country name
   #   age_from: [optional] filter by age - lower limit
@@ -28,10 +27,14 @@ class ApiKey < ActiveRecord::Base
   #   returns the best synonyms for the passed keyword given the parameters
   # Failure:
   #   returns nil if the keyword doesnt exist or no synonyms are found for it
-  def get_synonym_for(keyword, country = nil, age_from = nil, age_to = nil,
+  def get_synonym_for(word, country = nil, age_from = nil, age_to = nil,
         gender = nil, education = nil)
-    keyword = Keyword.find_by_name(keyword)
-    return nil if keyword.blank?
+    keyword = Keyword.find_by_name(word)
+
+    if keyword.blank?
+      Keyword.add_keyword_to_database(word)
+      return nil
+    end
 
     if self.project.present?
 

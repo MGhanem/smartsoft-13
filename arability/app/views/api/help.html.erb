@@ -1,4 +1,10 @@
-<%= link_to "<< #{t :back_to_api }", api_keys_list_path %>
+<style>
+.table th, .table td {
+  text-align: left;
+}
+</style>
+<span style="direction: ltr; font-size:14px; text-align: left">
+<%= link_to "<< Back to your APIs", api_keys_list_path %>
 <div class="page-header">
   <h1>API help</h1>
 </div>
@@ -23,7 +29,12 @@
 &lt;/script&gt;
 </pre>
 <p>
-Any content on the page that requires translation should have <code>data-arabize</code> added to it like this</p>
+<span class="label label-info">Heads up!</span>
+Our script requires jquery to work make sure to include it in your page
+</p>
+<p>
+Any content on the page that requires translation should have <code>data-arabize</code>
+added to it like this</p>
 <pre>
 &lt;a href=&quot;/sign_in&quot; data-arabize=&quot;sign in&quot;&gt;Sign in&lt;/a&gt;
 &lt;input type=&quot;submit&quot; data-arabize=&quot;sign in&quot; value=&quot;sign in&quot; /&gt;
@@ -31,7 +42,9 @@ Any content on the page that requires translation should have <code>data-arabize
 </pre>
 <p>
 <span class="label label-info">Heads up!</span>
-In case the user has disabled javascript and our script wont run or if we donot have the keyword you are trying to translate in the database you should always have the text translated the usual way so that the user will not see english content in the arabic page
+In case the user has disabled javascript and our script wont run or if we donot have the
+keyword you are trying to translate in the database you should always have the text
+translated the usual way so that the user will not see english content in the arabic page
 </p>
 
 <h3>Available overrides</h3>
@@ -83,3 +96,4 @@ or no constraints would be applied at all</p>
   </tr>
 </tbody>
 </table>
+</span>
