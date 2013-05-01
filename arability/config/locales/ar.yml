@@ -405,3 +405,7 @@ ar:
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  no_translation_popover_title: "لا يوجد معاني لهدة الكلمة حاليا "
+  no_translation_popover_content: "تبيمسب،"
+  you_can: "تستطيع ان "
+  this_keyword: " هذة الكلمة"

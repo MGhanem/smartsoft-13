@@ -401,3 +401,6 @@ en:
   you_have_prizes: "You have won the following prizes!"
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
+  no_translation_popover_title: "there is no translations for this keyword"
+  you_can: "you can "
+  this_keyword: " this keyword"

@@ -119,6 +119,7 @@
     </div>
   </form> 
 <script type="text/javascript" charset="utf-8">
+  $('#selected_keyword').change(function(){$('.popover').hide()});
   $("#add_button").removeAttr('href');
   $(".input").change(function(){
       var new_synonym_id = $(this).val();
@@ -126,7 +127,7 @@
         type: "GET",
         url: "/developers/projects/"+"<%= @project.id %>"+"/change_synonym",
         data: { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" },
-        success: function(){ update_adding_synonym_alerts(); }
+        success: function(){ update_adding_synonym_alerts('Synonym changed successfully.'); }
       })
     });
   
@@ -189,14 +190,34 @@
       $('#add_button').attr( 'onClick', 'return false' );
     }
   }
-  function update_adding_synonym_alerts(){
+  function update_adding_synonym_alerts(message_error){
     $('.alert').remove();
-    var message = " Synonym changed successfully. ";
+    var message = message_error;
     var alert_added = []
     alert_added.push(" <div class='alert alert-success row'> ");
     alert_added.push(" <button type='button' class='close' data-dismiss='alert'>&times;</button> ");
     alert_added.push(message);
     alert_added.push(" </div> ");
     $('.content').prepend(alert_added.join(" "));
-}
+  }
+  function follow_popover (){
+    var keyword = $('#selected_keyword').val();
+    $.post("/developers/projects/"+"<%= @project.id %>"+"/test_followed_keyword", {keyword:$('#selected_keyword').val()});
+      var button = ""
+      if(test_followed() == "true"){
+        button = "<button class='btn btn-danger' onclick='unfollow()'>unfollow</button>"
+      }
+      else{
+        button = "<button class='btn btn-primary' onclick='follow()'>follow</button>"
+      }
+    $("#selected_synonym").popover({
+        trigger: 'manual',
+        html: 'true',
+        title: '<%= t(:no_translation_popover_title) %>'+'<button type="button" class="close" data-dismiss="popover" aria-hidden="true" onclick="$(\'.popover\').hide()">&times;</button>',
+        content: "<%= t(:you_can)%>" + button + "<%= t(:this_keyword)%>",
+        placement:'bottom' 
+      });
+    $('#selected_synonym').popover('show');
+    $('.popover').width(350);
+  }
 </script>

@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class ProjectsController < BackendController
   include ApplicationHelper
+  include SearchHelper
   # GET /projects
   # GET /projects.json
   before_filter :authenticate_gamer!
@@ -27,6 +28,15 @@ class ProjectsController < BackendController
       format.json { head :no_content }
       flash[:success] = t(:project_delete)
     end
+  end
+
+  def test_followed_keyword
+    @project_id = params[:project_id]
+    keyword = params[:keyword].to_s
+    if keyword
+      @searched_keyword_id = Keyword.where(name:keyword).first.id
+      @is_followed = is_following(@searched_keyword_id)
+    end 
   end
     
   # author: 
