@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   # params:
   #   --
   # success:
-  #   Redirects to projects page if in develoeprs and home otherwise.
+  #   Redirects to 404
   # failure:
   #   --
   def routing_error
