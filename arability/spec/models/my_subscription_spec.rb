@@ -21,7 +21,7 @@ describe MySubscription do
 
   let(:my_sub){
     MySubscription.choose(developer.id, submodel.id)
-    my_sub = MySubscription.where(:developer_id: developer.id).first
+    my_sub = MySubscription.where(developer_id: developer.id).first
     my_sub
 	}
 
