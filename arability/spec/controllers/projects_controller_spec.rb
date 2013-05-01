@@ -159,6 +159,11 @@ describe 'PUT update' do
     response.code.should eq("302")
   end
 
+  it "should delete a project" do
+    sign_in gamer1
+    put :destroy, id: project.id
+    response.code.should eq("302")
+  end
   #khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do

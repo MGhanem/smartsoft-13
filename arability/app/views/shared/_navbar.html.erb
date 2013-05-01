@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -6,42 +6,77 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-
       <a class="brand" href="/"><%= t(:arability) %></a>
-
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
-          <li><%= link_to(t(:english), url_for(locale: :en)) %></li>
+          <li style="font-size: 13px;"><%= link_to(t(:english), url_for(locale: :en)) %></li>
         <% else %>
-          <li><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
+          <li style="font-size: 15px;"><%= link_to(t(:arabic), url_for(locale: :ar)) %></li>
         <% end %>
       <% if !gamer_signed_in? %>
-          <li class="divider-vertical"></li>
-          <li><a href="/gamers/sign_up"><%= t :sign_up %></a></li>
-          <li class="divider-vertical"></li>
+          <li><%= link_to t(:game),  "/game" %></li>
+          <li><a href="<%= new_gamer_registration_path %>"><%= t :sign_up %></a></li>
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-              <%= form_for("gamer", url: gamer_session_path) do |f| %>
+               <%= form_for("gamer", url: gamer_session_path) do |f| %>
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
-                <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", :class => "btn btn-primary" %>
+                <% if I18n.locale == :ar %>
+                  <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 16px;", class: "btn btn-primary" %>
+                <% else %>
+                  <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary arabicfontdrop" %>
+                <% end %>
+                <div style="padding-top:5px; text-align:center; font-style:italic;">
+                  <span><%= t(:or) %></span>
+                </div>
+                  <div style="padding:5px; text-align:center;">
+                  <span><%= t(:existing_account) %></span>
+                </div>
+                <div class="providers" style="text-align:center;">
+                  <a href="/auth/facebook" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/facebook-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                  <a href="/auth/twitter" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/twitter-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                  <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                    <img src="/assets/google-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                  </a>
+                </div>
+
               <% end %>
+
             </div>
           </li>
       <% else %>
-        <li><%= link_to t(:backend), backend_home_path %></li>
-        <% if I18n.locale==:en %>
-        <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>Sign out</a></li>
-        <% else I18n.locale==:ar %>
-        <li><a href="/gamers/edit"><i class="icon-wrench"></i>تغيير البيانات</a></li>
-        <li><a href="/gamers/sign_out"><i class="icon-home"></i>تسجيل خروج</a></li>
+        <% path = request.path %>
+        <% if path.include? "developers/" %>
+          <li><%= link_to t(:game), game_path %></li>
+        <% else %>
+          <li><%= link_to t(:backend), backend_home_path %></li>
         <% end %>
+        <% if I18n.locale==:en %>
+          <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
+        <% if current_gamer.try(:admin?) %>
+          <li><a href="/admin">Arability Control Panel</a></li>
+        <% end %>
+        <% else I18n.locale==:ar %> 
+        <% if current_gamer.try(:admin?) %>
+          <li><a href="/admin">لوحة تحكم Arability</a></li>
+        <% end %>
+        <% end %>
+        <li><a href="<%= edit_gamer_registration_path %>"><%= t(:settings) %></a></li>
+        <li><a href="<%= destroy_gamer_session_path %>"><%= t(:sign_out) %></a></li>
       <% end %>
       </ul>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  <% if I18n.locale == :ar %>
+    $(".arabicfontdrop").attr("clear: left; width: 100%; height: 32px; font-size: 16px;");
+  <% end %>
+</script>
