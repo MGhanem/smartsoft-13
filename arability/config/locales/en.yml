@@ -407,7 +407,7 @@ en:
   vote_action: "voted for"
   chosen_action: "as the best translation for"
   vote_log: "Your Votes History"
-  no_you: "You" 
+  no_you: "You " 
   no_vote_log: "didn't vote for any translation yet!!"
   keyword_added: "keyword added successfully"
   back_log: "Game"
