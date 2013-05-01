@@ -76,7 +76,7 @@ class SocialRegistrationsController < Devise::RegistrationsController
     token_secret = params[:gamer][:token_secret]
     social_email = params[:gamer][:social_email]
     gamer, is_saved = Gamer.create_with_social_account(
-      email, username, gender, d_o_b, country, ed_level)
+      email, username, gender, d_o_b, country, ed_level, provider)
     if is_saved
       Authentication.create_with_omniauth(
         provider, gid, token, token_secret, social_email, gamer.id)

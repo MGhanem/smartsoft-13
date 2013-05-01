@@ -1,9 +1,7 @@
 <%= form_for(@developer, url: { :action => "create" }, html: { class: "form-signin" }) do |f| %>
   <h3 class="form-signin-heading">
     <%= t(:register_as_developer) %>
-  </h3>
-  <%= f.text_field :first_name, placeholder: t(:first_name), class: "input-block-level" %>
-  <%= f.text_field :last_name, placeholder: t(:last_name), class: "input-block-level" %>
+  </h3>  
   <div>
     <%= f.submit t(:next), class: "btn btn-primary pull-right", style: "margin-top:-10px;" %>
   </div>
