@@ -3,28 +3,36 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   scope "/admin" do 
-    get "/login"
-    get "/logout"
-    get "/index"
-    get "/import_csv"
-    get "/delete_trophy"
-    get "/delete_prize"
-
-    post "/login"
-    post "/upload"
-    post "/add_word"
-    post "/add_trophy"
-    post "/add_prize"
-
+    match "" => "admin#index", :via => [:get]
+    scope "/add" do
+      match "/word" => "admin#add_word", :via => [:get, :post]
+      match "/trophy" => "admin#add_trophy", :via => [:get, :post]
+      match "/prize" => "admin#add_prize", :via => [:get, :post]
+    end
+    scope "/list" do
+      match "/trophies" => "admin#list_trophies", :via => [:get]
+      match "/prizes" => "admin#list_prizes", :via => [:get]
+      match "/gamers" => "admin#list_gamers", :via => [:get]
+      match "/developers" => "admin#list_developers", :via => [:get]
+      match "/admins" => "admin#list_admins", :via => [:get]
+      match "/projects" => "admin#list_projects", :via => [:get]
+    end
+    scope "/delete" do
+      match "/trophy" => "admin#delete_trophy", :via => [:get]
+      match "/prize" => "admin#delete_prize", :via => [:get]
+    end
+    scope "/import" do
+      match "/csvfile" => "admin#upload", :via => [:get, :post]
+    end
+    match "/make_admin" => "admin#make_admin", :via => [:get]
+    match "/remove_admin" => "admin#remove_admin", :via => [:get]
     match "/add_category" => "admin#add_category"
     match "/view_categories" => "admin#view_categories"
     match "/delete_category"=>"admin#delete_category", :as => "delete_category"
-
     match "/view_subscription_models" => "admin#view_subscription_models"
     match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
     put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
     resources :subscription_models
-
   end
 
   # Only two languages are accepted: Arabic and English
@@ -64,8 +72,11 @@ Arability::Application.routes.draw do
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
+    match "/games/post_facebook" => "games#post"
 
-    scope "developers/" do 
+
+    scope "developers/" do
+      match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
@@ -100,13 +111,15 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match "search" => "search#search"
+      match "search" => "search#search_with_filters"
 
       match "search_keywords" => "search#search_keywords"
 
       match "send_report" => "search#send_report"
 
-      match 'autocomplete' => 'search#keyword_autocomplete'
+      match "search_with_filters" => "search#search_with_filters"
+
+      match "autocomplete" => "search#keyword_autocomplete"
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"

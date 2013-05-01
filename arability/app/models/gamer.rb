@@ -17,7 +17,8 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local, :show_tutorial
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login, :show_tutorial, :admin, :is_local
 
   has_many :services, :dependent => :destroy
 
@@ -220,11 +221,29 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  #scopes defined for advanced search aid
-  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+# author:
+#     Salma Farag
+# description:
+#     A  method that returns a gamer with an email equal to the email signed in on Google from
+#the access token.
+# params:
+#     The access token granted from Google and a signed in resources that is equal to nil.
+# success:
+#     Returns the gamer with the matching email.
+# failure:
+#     Creates a new gamer using the email and password
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    gamer = Gamer.where(:email => data["email"]).first
+
+    unless gamer
+         gamer = Gamer.create(
+              email: data["email"],
+              password: Devise.friendly_token[0,20]
+             )
+    end
+    gamer
+end
 
   class << self
     # Author:
@@ -267,12 +286,13 @@ class Gamer < ActiveRecord::Base
   #   d_o_b: user date of birth
   #   country: user country
   #   ed_level: user educational level
+  #   provider: the social account provider
   # Sucess:
   #   New gamer is created with said attributes, returns the gamer and true
   # Failure:
   #   Gamer not saved because of validations, returns nil and false
   def self.create_with_social_account(
-    email, username, gender, d_o_b, country, ed_level)
+    email, username, gender, d_o_b, country, ed_level, provider)
     gamer = Gamer.new(
       email: email,
       username: username,
@@ -281,7 +301,8 @@ class Gamer < ActiveRecord::Base
       date_of_birth: d_o_b,
       country: country,
       education_level: ed_level,
-      is_local: false)
+      is_local: false,
+      provider: provider)
     if gamer.save
       return gamer, true
     else
@@ -306,8 +327,7 @@ end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+  scope :filter_by_dob, lambda { |from, to| where date_of_birth: to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where gender: gender }
+  scope :filter_by_education, lambda { |education| where education_level: education }
 end
-
