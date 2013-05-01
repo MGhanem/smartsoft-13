@@ -1,17 +1,9 @@
 #encoding: UTF-8
 require "spec_helper"
 require "request_helpers"
-<<<<<<< HEAD
 include RequestHelpers
 include Warden::Test::Helpers
-=======
-include Warden::Test::Helpers
-<<<<<<< HEAD
 include RequestHelpers
-include Devise::TestHelpers
-=======
->>>>>>> 6d6f0a58c011379c4b32d11d83de2eda88570db2
->>>>>>> 277c9959d128252ac13469a5ca886518f8f7b3cd
 
 describe ProjectsController, type: :controller do
 
@@ -64,49 +56,16 @@ describe ProjectsController, type: :controller do
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
   end
-<<<<<<< HEAD
 
-<<<<<<< HEAD
 end
-=======
->>>>>>> 277c9959d128252ac13469a5ca886518f8f7b3cd
 
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-  context "invalid attributes" do
-    it "locates the requested @project" do
-      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
-      assigns(:project).should eq(@project)
-    end
-
-    it "does not change @project's attributes" do
-      put :update, id: @project,
-        project: Factory.attributes_for(:project, name: "Pro", minAge: "23", maxAge:nil)
-      @project.reload
-      @project.name.should_not eq("Pro")
-      @project.minAge.should_not eq("23")
-      @project.minAge.should eq("50")
-    end
-
-    it "re-renders the edit method" do
-      put :update, id: @project, project: Factory.attributes_for(:invalid_project)
-      response.should render_template :edit
-    end
-  end
-
-=======
   # khloud's tests
->>>>>>> 277c9959d128252ac13469a5ca886518f8f7b3cd
-=======
+
   it "should delete a project" do
     sign_in gamer1
     put :destroy, id: project.id
     response.code.should eq("302")
   end
->>>>>>> ce7d194d30f9c2339e8f46cb4f0aead354985c39
-  #khloud's tests
->>>>>>> 6d6f0a58c011379c4b32d11d83de2eda88570db2
 
   it "redirects to project path after calling export_to_csv if project empty" do
     p = create_project
@@ -150,7 +109,6 @@ end
     response.code.should eq("200")
   end
 
-<<<<<<< HEAD
   #Kareem Ali tests
 
   let(:test_keyword){
@@ -272,6 +230,4 @@ end
     response.should be_success
   end
 
-=======
->>>>>>> 277c9959d128252ac13469a5ca886518f8f7b3cd
 end
