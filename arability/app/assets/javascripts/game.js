@@ -42,9 +42,7 @@ var lockLangButtons = true;
 var tutorialFlagWas = false;
 var showSuspense = false;
 var continuePlayingBtn;
-<<<<<<< HEAD
 var isGuest;
-=======
 var wordsListPopoverContent;
 var wordsListPopoverTitle;
 var wordLabelPopoverContent;
@@ -265,8 +263,6 @@ function destroyAndStart(id){
 	destroy(id);
 	endTutorial();
 }
-
->>>>>>> f8136ee202610b62f7770b8637cfcaede4a0dd1c
 
 // author:
 //   Ali El Zoheiry.
@@ -911,31 +907,6 @@ function fadeSomething(x){
 					}
 				}
 				if(win == true){
-<<<<<<< HEAD
-					buttonArray = [];
-					removeAblockCont();
-					gameOver = true;
-					$(".zone").slideUp(1000);
-					setTimeout(function(){
-						$(".zone").slideDown(1000);
-					}, 1000);	
-					setTimeout(function(){
-						if(wordsInDb == false){
-							if(isGuest == true){
-								nextLevel();
-							}
-							else{	
-								getTrophies(level,score);
-							}
-						}
-						else{
-							setWordsArray();
-							enableNav();
-							have_to_sign_in();
-						}
-						return;
-					}, 1000);
-=======
 					if(tutorialFlagWas == true && level == 1){
 						tutorialflagwas = false;
 						buttonArray = [];
@@ -952,7 +923,6 @@ function fadeSomething(x){
 					else{
 						winTheGame();
 					}
->>>>>>> f8136ee202610b62f7770b8637cfcaede4a0dd1c
 				}		
 				else{
 					buttonArray = [];
