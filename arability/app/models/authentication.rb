@@ -107,7 +107,7 @@ class Authentication < ActiveRecord::Base
   # Failure:
   #   None
   def self.get_token(id, provider)
-    auth = Authentication.find_by_gamer_id_and_provider(id,provider)
+    auth = Authentication.find_by_gamer_id_and_provider(id, provider)
     return auth.token
   end
 
@@ -124,7 +124,7 @@ class Authentication < ActiveRecord::Base
   # Failure:
   #   none
   def self.update_token(id, provider, new_token)
-    auth = Authentication.find_by_gamer_id_and_provider(id,provider)
+    auth = Authentication.find_by_gamer_id_and_provider(id, provider)
     auth.update_attribute(:token, new_token)
   end
 
