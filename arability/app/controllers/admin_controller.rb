@@ -52,23 +52,88 @@ class AdminController < ApplicationController
     @prizes_list = Prize.order(params[:order]).page(params[:page]).per(2)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the gamers and links to make them admins
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays gamers
+  # Failure: 
+  #   none
   def list_gamers
     @list = Gamer.order(params[:order]).page(params[:page]).per(5)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the developers
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays developers
+  # Failure: 
+  #   none
   def list_developers
     @list = Developer.order(params[:order]).page(params[:page]).per(5)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the admins and links to remove them
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays admins
+  # Failure: 
+  #   none
   def list_admins
     @list = Gamer.where(:admin => true).order(params[:order])
                           .page(params[:page]).per(5)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the projects
+  # Params
+  #  none
+  # Success: 
+  #   refreshes the page and displays projects
+  # Failure: 
+  #   none
   def list_projects
     @list = Project.order(params[:order]).page(params[:page]).per(5)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the projects of a user
+  # Params
+  #   developer_id: the id of the developer
+  # Success: 
+  #   views a table with the projects of that user
+  # Failure: 
+  #   the user is not a valid developer so an error is displayed
+  def list_developer_projects
+    @developer = Developer.find_by_id(params[:id])
+    @list = @developer.projects.order(params[:order]).page(params[:page]).per(5)
+  end
+
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action makes a gamer an admin
+  # Params
+  #  none
+  # Success: 
+  #   redirects the new admin to list admins view and display success message
+  # Failure: 
+  #   the user is not a valid user so an error is displayed
   def make_admin
     user = Gamer.find_by_id(params[:id])
     if user != nil
@@ -83,6 +148,16 @@ class AdminController < ApplicationController
     end
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action removes an admin from the admins
+  # Params
+  #  none
+  # Success: 
+  #   removes the admin and redirects to list admins view
+  # Failure: 
+  #   the user is not a valid admin so an error is displayed
   def remove_admin
     user = Gamer.find_by_id(params[:id])
     if user.admin

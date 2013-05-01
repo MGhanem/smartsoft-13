@@ -26,7 +26,7 @@
 								<tr>
 									<td><%= item.gamer.username %></td>
 									<td><%= item.gamer.email %></td>
-									<td><%= item.projects.count %></td>
+									<td><a href="/admin/list_developer_projects?id=<%= item.id%>"><%= item.projects.count %></a></td>
 									<td><%= item.keywords.count %></td>
 								</tr>
 							<% end %>

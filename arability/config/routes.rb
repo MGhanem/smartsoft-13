@@ -24,6 +24,7 @@ Arability::Application.routes.draw do
     scope "/import" do
       match "/csvfile" => "admin#upload", :via => [:get, :post]
     end
+    match "/list_developer_projects", :via => [:get]
     match "/make_admin" => "admin#make_admin", :via => [:get]
     match "/remove_admin" => "admin#remove_admin", :via => [:get]
     match "/add_category" => "admin#add_category"
