@@ -146,7 +146,6 @@
 		</div>
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
-
 				<% key_id = getID(@search_keyword) %>
 				<% result = Keyword.get_keyword_synonym_visual(key_id) %>
 				<% if  result != [] %>
@@ -157,7 +156,6 @@
         <% else %>
           <p><%= t(:no_votes_for_word)%></p>
       	<% end %>
-
 			</div>
 		</div>
 	</div>
