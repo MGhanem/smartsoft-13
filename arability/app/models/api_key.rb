@@ -42,7 +42,7 @@ class ApiKey < ActiveRecord::Base
       country = self.project.country unless country.present?
       age_from = self.project.minAge unless age_from.present?
       age_to = self.project.maxAge unless age_to.present?
-      #gender = self.project.gender unless gender.present?
+      gender = self.project.gender unless gender.present?
       education = self.project.education_level unless education.present?
     end
 
@@ -51,23 +51,36 @@ class ApiKey < ActiveRecord::Base
     synonym_list.first
   end
 
-  def website
-    "test.com"
-  end
-
-  def website= name
-  end
-
 private
 
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   generates a random access token
+  # Params:
+  #   --
+  # Success:
+  #   sets a random access token
+  # Failure:
+  #   --
   def generate_access_token
     begin
       self.token = SecureRandom.hex
     end while self.class.exists?(token: token)
   end
 
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   downcase the website before storing
+  # Params:
+  #   --
+  # Success:
+  #   the website gets downcased
+  # Failure:
+  #   --
   def downcase_website
-    self.website.downcase!
+    self.website.downcase! if self.website.present?
   end
 
 end
