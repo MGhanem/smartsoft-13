@@ -410,6 +410,5 @@ en:
   no_you: "You" 
   no_vote_log: "didn't vote for any translation yet!!"
   keyword_added: "keyword added successfully"
-  back_log: "Back"
-  play_link_log: "start playing now"
+  back_log: "Game"
   vote_log_button: "Votes"

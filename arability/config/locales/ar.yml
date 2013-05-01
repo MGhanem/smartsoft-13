@@ -419,6 +419,5 @@ ar:
   vote_log: "اصواتك السابقة" 
   no_you: "انت"
   no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"
-  back_log: "الرجوع"
-  play_link_log: "ابدأ اللعبة"
+  back_log: "اللعبة"
   vote_log_button: "الأصوات"
