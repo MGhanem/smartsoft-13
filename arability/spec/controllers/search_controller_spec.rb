@@ -120,7 +120,7 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
-      get :search, search: "test    ", synonym_type: 0
+      get :search_with_filters, search: "test    ", synonym_type: 0
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should eq(1)
       assigns(:votes)[2].should be_nil
@@ -159,7 +159,7 @@ describe SearchController do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
-      get :search, search: "abc"
+      get :search_with_filters, search: "abc"
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path(search: "abc"))
 
@@ -173,7 +173,7 @@ describe SearchController do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
-      get :search, search: ""
+      get :search_with_filters, search: ""
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path)
 
