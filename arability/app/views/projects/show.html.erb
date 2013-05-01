@@ -127,7 +127,9 @@
         type: "GET",
         url: "/developers/projects/"+"<%= @project.id %>"+"/change_synonym",
         data: { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" },
-        success: function(){ update_adding_synonym_alerts('Synonym changed successfully.'); }
+        success: function(){ 
+          update_adding_synonym_alerts("<%= t(:Synonym_changed_successfully) %>"); 
+        }
       })
     });
   
