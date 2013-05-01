@@ -17,7 +17,7 @@
           </button>
         </div>
         <div class="btn-group">
-          <a class="btn" href="<%= view_recommended_words_path(@project.id) %>"><i class="icon-thumbs-up"></i> <%= t(:recommended_words) %></a>
+          <a class="btn" href="<%= view_recommended_words_path(project_id: @project.id, controller: "projects") %>"><i class="icon-thumbs-up"></i> <%= t(:recommended_words) %></a>
         </div>
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">

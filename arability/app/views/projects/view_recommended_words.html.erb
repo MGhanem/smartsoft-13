@@ -1,5 +1,4 @@
 <Legend class="container"><%= t(:recommended_for_project)%></Legend>
-<%= javascript_include_tag "application.js" %>
 <br>
 <% if @karray.size == 0 %>
   <div class="well">
@@ -8,7 +7,7 @@
     </span>
   </div>
   <div style="text-align:center">
-    <span><a class="btn pull-center" href="/developers/projects/?project_id=<%= @project.id %>" > <%= t(:rec_back) %> </a></span>
+    <span><a class="btn pull-center" href="/developers/projects/<%= @project.id %>" > <%= t(:rec_back) %> </a></span>
   </div>
 <% else %>
 <p style="color:blue"><%= t(:select_words) %><p>
@@ -26,16 +25,16 @@
           <%= keyword.name %>
         </td>
         <td style="text-align:center; vertical-align: middle">
-         <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name,{}, { id:"key",  'data-id' => keyword.id}) %>
+         <%= collection_select(:synonym, keyword.id, keyword.synonyms, :id, :name,{}, { id:"key", disabled: true, 'data-id' => keyword.id }) %>
        </td>
       </tr>
   <% end %>
 </table>
 <% if I18n.locale == :en %>
-  <span4><a class="btn pull-right" href="/developers/projects/?project_id=<%= @project.id %>" style="margin-left: 20px"> <%= t(:cancel) %> </a></span4>
+  <span4><a class="btn pull-right" href="/developers/projects/<%= @project.id %>" style="margin-left: 20px"> <%= t(:cancel) %> </a></span4>
   <%= submit_tag t(:add_to_project), :class => "btn btn-primary pull-right", :onclick => "return check();" %>
 <% else %>
-  <span3><a class="btn pull-left" href="/developers/projects" style="margin-right: 20px"> <%= t(:rec_back) %> </a></span3>
+  <span3><a class="btn pull-left" href="/developers/projects/<%= @project.id %>" style="margin-right: 20px"> <%= t(:rec_back) %> </a></span3>
   <%= submit_tag t(:add_to_project), :class => "btn btn-primary pull-left", :onclick => "return check();" %>
    <% end %>
   <% end %>
@@ -51,7 +50,7 @@ function check(){
   return array;
 }
 </script>
-<script>
+<script type="text/javascript">
 $('input[type=checkbox]').click(function() {
   var $this = $(this);
   if ($this.is(':checked')) {
@@ -59,11 +58,5 @@ $('input[type=checkbox]').click(function() {
   } else {
     $("select[data-id=" + $this.val() + "]").attr("disabled", "disabled");
   }
-});
-</script>
-<script type="text/javascript">
-$('input[type=select]').click(function() {
-  var blah = $(this);
-  $("checkbox[data-id=" + blah.val() + "]").prop('checked', true);
 });
 </script>

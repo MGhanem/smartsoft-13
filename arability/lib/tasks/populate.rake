@@ -3,15 +3,15 @@ namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true)
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true)
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true)
+    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.first])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first])
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.first])
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
-    share=Keyword.create(name: "share", approved: true, is_english: true)
-    post=Keyword.create(name: "post", approved: true, is_english: true)
-    poke=Keyword.create(name: "poke", approved: true, is_english: true)
+    share=Keyword.create(name: "share", approved: true, is_english: true, categories:[Category.first])
+    post=Keyword.create(name: "post", approved: true, is_english: true, categories:[Category.last])
+    poke=Keyword.create(name: "poke", approved: true, is_english: true categories:[Category.last])
     subscribe=Keyword.create(name: "subscribe", approved: true, is_english: true)
     broadcast=Keyword.create(name: "broadcast", approved: true, is_english: true)
     compile=Keyword.create(name: "compile", approved: true, is_english: true)
