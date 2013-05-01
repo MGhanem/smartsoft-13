@@ -17,7 +17,8 @@ class Gamer < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local, :show_tutorial
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login, :show_tutorial, :admin, :is_local
 
   has_many :services, :dependent => :destroy
 
@@ -285,12 +286,13 @@ end
   #   d_o_b: user date of birth
   #   country: user country
   #   ed_level: user educational level
+  #   provider: the social account provider
   # Sucess:
   #   New gamer is created with said attributes, returns the gamer and true
   # Failure:
   #   Gamer not saved because of validations, returns nil and false
   def self.create_with_social_account(
-    email, username, gender, d_o_b, country, ed_level)
+    email, username, gender, d_o_b, country, ed_level, provider)
     gamer = Gamer.new(
       email: email,
       username: username,
@@ -299,7 +301,8 @@ end
       date_of_birth: d_o_b,
       country: country,
       education_level: ed_level,
-      is_local: false)
+      is_local: false,
+      provider: provider)
     if gamer.save
       return gamer, true
     else
