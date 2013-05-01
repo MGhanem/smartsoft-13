@@ -195,6 +195,14 @@ en:
   no_words: "No words to export."
   no_project: "Project does not exist!"
   file: "file"
+  activerecord:
+    attributes:
+      project:
+        name: 'Name'
+        minAge: 'The minimum age'
+        maxAge: 'The maximum age'
+        categories: "Categories"
+        description: "Description"
   log_in_google: "Sign In with Google"
   no_categories: "This project has no categories"
   no_description: "This project has no description"
@@ -285,6 +293,10 @@ en:
         maxAge: "The maximum age"
         categories: "Categories"
         description: "Description"
+  choose_sub: "Subscription model"
+  developer_before_subscription: 'Please sign up as a developer to view this page'
+  keyword_added: "keyword added successfully"
+  per_month: "/month"
   project_delete: "Project successfully deleted"
   keyword_added: "keyword added successfully"
   twitter_signin: "Sign in with Twitter"
@@ -327,6 +339,7 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
+  sub_changed: "Subscription model changed "
   caro1h: "Arabilty"
   caro1b: "An easy to use, crowdsourced tool to help both native and non-native Arabic speaking developers easily find the best translations for their websites."
   more: "learn more"
@@ -402,4 +415,11 @@ en:
   you_have_prizes: "You have won the following prizes!"
   unshare: "Unshare"
   no_account: "You seem to have left us. Please create a new account"
+  expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
+  sub_search: "The number of words you can search for is:"
+  sub_follow: "The number of words you can follow is:"
+  sub_add: "The number of words you can add to your project is:"
+  sub_project: "The number of projects you can create is:"
+  feat4h: "Be Social"
+  feat4b: "For extra features, connect to your favorite social network."
   expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"

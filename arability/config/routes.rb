@@ -75,7 +75,8 @@ Arability::Application.routes.draw do
     match "/games/post_facebook" => "games#post"
 
 
-    scope "developers/" do 
+    scope "developers/" do
+      match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
@@ -83,6 +84,7 @@ Arability::Application.routes.draw do
       match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       get "projects/update"
+
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
@@ -101,6 +103,7 @@ Arability::Application.routes.draw do
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/my_subscriptions/pick_edit' => "my_subscription#pick_edit"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 

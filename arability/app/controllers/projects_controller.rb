@@ -30,7 +30,6 @@ class ProjectsController < BackendController
   end
     
   # author: 
->>>>>>> dcb887a74ced9d9dbac9e6194e97b9ca9129fd07
   #    Mohamed Tamer
   # description:
   #    function shows all the projects that a certain developer owns and the projects shared with him
