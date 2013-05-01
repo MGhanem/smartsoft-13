@@ -397,3 +397,6 @@ en:
   sub_follow: "The number of words you can follow is:"
   sub_add: "The number of words you can add to your project is:"
   sub_project: "The number of projects you can create is:"
+  feat4h: "Be Social"
+  feat4b: "For extra features, connect to your favorite social network."
+  expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
