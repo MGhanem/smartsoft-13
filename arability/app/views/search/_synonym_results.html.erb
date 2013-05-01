@@ -13,7 +13,7 @@
                   <% if @votes[synonym.id] != nil %>
                     <div id="progress<%= synonym.id %>" class="progress progress-info" 
                       style="margin-bottom:0px; height: 14px; margin-top: 3px;">
-                      <% percentage = (@votes[synonym.id]*100)/@total_votes %>
+                      <% percentage = (@votes[synonym.id] * 100) / @total_votes %>
                       <div class="bar" style="width: <%= "#{percentage}" %>%;"></div>
                       <script type="text/javascript">
                         $("#progress<%= synonym.id %>").tooltip({
