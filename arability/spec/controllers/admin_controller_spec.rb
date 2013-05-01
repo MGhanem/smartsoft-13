@@ -41,12 +41,56 @@ describe AdminController  do
       gamer
     end
 
-    it "list all gamers" do
-      model1
+    let(:developer) do
+      gamer
+      developer = Developer.new
+      developer.gamer_id = gamer.id
+      developer.save
+      developer
+    end
+
+    let(:project) do
+      gamer
+      developer
+      project = Project.new
+      project.name = "first project"
+      project.minAge = 50
+      project.maxAge = 60
+      project.owner_id = developer.id
+      project.save
+      project
+    end
+
+    it "should list all gamers" do
       gamer
       sign_in(gamer)
-      get "/admin/list/gamers"
+      get :list_gamers
       assigns(:list).should =~ [gamer]
+    end
+
+    it "should list all developers" do
+      gamer
+      developer
+      sign_in(gamer)
+      get :list_developers
+      assigns(:list).should =~ [developer]
+    end
+
+    it "should list all projects" do
+      project
+      gamer
+      sign_in(gamer)
+      get :list_projects
+      assigns(:list).should =~ [project]
+    end
+
+    it "should list all developer's projects" do
+      gamer
+      developer
+      project
+      sign_in(gamer)
+      get :list_developer_projects, id: developer.id
+      assigns(:list).should =~ [project]
     end
 
     it "list all subscription models" do
