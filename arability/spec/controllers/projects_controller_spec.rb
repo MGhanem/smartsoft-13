@@ -53,7 +53,7 @@ describe ProjectsController do
 
   #Timo's tests
   describe "GET #index" do
-    it "populates an array of projects"
+    it "populates an array of projects" do
       a = create_logged_in_developer
       sign_in(a.gamer)
       project2 = Project.new
@@ -76,6 +76,65 @@ describe ProjectsController do
     it "redirects to sign in page if the developer isn't signed in" do
       get :index
       response.should redirect_to new_gamer_session_path
+    end
+  end
+
+  describe "GET #import_csv" do
+    it "should render the :import_csv view", timo2: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      get :import_csv, id: project2.id
+      response.should render_template :import_csv
+    end
+  end
+
+  describe "PUT #add_from_csv_keywords", timo2: true do
+    it "should add keyword and synonym to project" do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      word2 = Keyword.new
+      word2.name = "testkeyword"
+      word2.save validate: false
+      syn2 = Synonym.new
+      syn2.name = "كلمة"
+      syn2.keyword_id = word.id
+      syn2.save validate: false
+      expect{
+        put :add_from_csv_keywords, words_ids: [word2.id|syn2.id], id: project2.id
+      }.to change(PreferedSynonym,:count).by(1)
+    end
+
+    it "should not add keyword and synonym to project", timo2: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      word2 = Keyword.new
+      word2.name = "testkeyword"
+      word2.save validate: false
+      syn2 = Synonym.new
+      syn2.name = "كلمة"
+      syn2.keyword_id = word.id
+      syn2.save validate: false
+      expect{
+        put :add_from_csv_keywords, words_ids: [], id: project2.id
+      }.to_not change(PreferedSynonym,:count)
     end
   end
   #End of Timo's tests
@@ -232,5 +291,5 @@ describe 'PUT update' do
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
-
+end
 end
