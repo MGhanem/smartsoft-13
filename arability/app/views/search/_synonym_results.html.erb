@@ -11,31 +11,30 @@
                 </span>
                 <span class="span2">
                   <% if @votes[synonym.id] != nil %>
-                    <div class="progress progress-info" style="margin-bottom:0px; height: 10px; 
-                      margin-top: 5px;">
+                    <div id="progress<%= synonym.id %>" class="progress progress-info" 
+                      style="margin-bottom:0px; height: 10px; margin-top: 5px;">
                       <% percentage = (@votes[synonym.id]*100)/@total_votes %>
                       <div class="bar" style="width: <%= "#{percentage}" %>%;"></div>
                       <script type="text/javascript">
-                      $(".progress").tooltip({
-                        trigger: "hover",
-                        placement: "top",
-                        title: "<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>"
-                      })
+                        $("#progress<%= synonym.id %>").tooltip({
+                          trigger: "hover",
+                          placement: "top",
+                          title: "<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>"
+                        });
                       </script>
                     </div>
-                    <% @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
                   <% else %>
-                    <div class="progress progress-info" style="margin-bottom:0px; height: 10px; 
-                      margin-top: 5px;">
+                    <div id="progress<%= synonym.id %>" class="progress progress-info" 
+                      style="margin-bottom:0px; height: 10px; margin-top: 5px;">
                       <div class="bar" style="width: 0%;" ></div>
                     </div>
                     <script type="text/javascript">
-                      $(".progress").tooltip({
+                      $("#progress<%= synonym.id %>").tooltip({
                         trigger: "hover",
                         placement: "top",
                         title: "<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>"
-                      })
-                      </script>
+                      });
+                    </script>
                   <% end %>
                 </span>
                 <span class="span1" style="color:#bbb; font-style:italic; margin-left:7px; margin-right:7px;">
