@@ -72,7 +72,7 @@ class Authentication < ActiveRecord::Base
       followers = Array.new(result["ids"])
       common = Array.new
       i = 0
-      while i<followers.count
+      while i < followers.count
         if Authentication.exists?(gid: followers.at(i), provider: "twitter")
           common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
         end
@@ -98,22 +98,22 @@ class Authentication < ActiveRecord::Base
   def self.get_common_facebook_friends(current_gamer)
     begin
       auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "facebook")
-      if (auth.nil?)
+      if auth.nil?
       return nil
       end
-      @graph = Koala::Facebook::API.new(current_gamer.get_token)
+      @graph = Koala::Facebook::API.new(auth.token)
       friends = @graph.get_connections("me", "friends")
       common = Array.new
       i = 0
-      while i<friends.count
-        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
-          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+      while i < friends.count
+        if Authentication.exists?(gid: friends.at(i)["id"], provider: "facebook")
+          common.push(Authentication.find_by_gid_and_provider(friends.at(i)["id"], "facebook").id)
         end
         i = i + 1
       end
       common.push(current_gamer.id)
       return common
-    rescue SocketError
+    rescue Faraday::Error::ConnectionFailed
       return false
     end
   end

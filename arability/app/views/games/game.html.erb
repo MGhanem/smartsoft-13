@@ -207,11 +207,14 @@ function setButtons(){
   }
 
   function hallOfFame(){
-    if(nav_locked == true){
+    if(nav_locked) {
       return;
     }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }    
     clear();
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; "><%= t(:loading) %> ...</p></div>');
+    $('.zone').append('<div id="loading-server" class="progress"><div class="bar" style="width: 60%;"></div></div>');
     $.get("/games/fame");
     $(window).load(function(){
       $('#loading-server').fadeOut();
