@@ -85,65 +85,6 @@ class SearchController < BackendController
 
   # Author:
   #   Nourhan Mohamed
-	# Description:
-  #   search for synonyms for a particular keyword
-	#	params:
-	#	  search: a string representing the search keyword, from the params list
-	#     from a textbox in the search_keywords view
-	#	success: 
-	#	  returns to the search view a list of synonyms for the keyword
-	#   sorted by vote count
-	#	failure:
-	#	  returns an empty list if the search keyword has no synonyms
-  def search
-    @search_keyword = params["search"]
-    @country = params["country"]
-    @age_from = params["age_from"]
-    @age_from = @age_from.to_i if !@age_from.blank?
-    @age_to = params["age_to"]
-    @age_to = @age_to.to_i if !@age_to.blank?
-    @gender = params["gender"]
-    @education = params["education"]
-    @synonym_type = params["synonym_type"]
-
-    if !@age_from.blank? && !@age_to.blank? && @age_from.to_i > @age_to.to_i
-      temp = @age_from
-      @age_from = @age_to
-      @age_to = temp
-    end
-
-    if @synonym_type == "0"
-      @synonym_type = nil
-    elsif @synonym_type == "1"
-      @synonym_type = true
-    elsif @synonym_type == "2"
-      @synonym_type = false
-    end
-
-    if !@search_keyword.blank?
-      @search_keyword = @search_keyword.strip
-      @search_keyword = @search_keyword.split(" ").join(" ")
-
-      @search_keyword_model = Keyword.find_by_name(@search_keyword)
-      if !@search_keyword_model.blank?
-        @synonyms, @votes =
-          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, 
-            @gender, @education, @synonym_type)
-    
-        @no_synonyms_found = true if @synonyms.blank?
-    
-        @total_votes = 0
-        @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
-      else
-        redirect_to search_keywords_path(search: @search_keyword)
-      end
-    else
-      redirect_to search_keywords_path
-    end
-  end
-
-  # Author:
-  #   Nourhan Mohamed
   # Description:
   #   search for synonyms for a particular keyword under certain filters
   # params:
@@ -196,10 +137,14 @@ class SearchController < BackendController
           @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, 
             @gender, @education, @synonym_type)
 
+        @no_synonyms_found = true if @synonyms.blank?
+
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
 
-        render "filtered_results.js" 
+        if request.xhr?
+        render "filtered_results.js"
+        end
       else
         redirect_to search_keywords_path(search: @search_keyword)
       end
