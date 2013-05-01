@@ -398,4 +398,37 @@ class AdminController < ApplicationController
     end
   end
 
+  def ignore_report
+    report_id = params[:report_id]
+    report = Report.find_by_id(report_id)
+    UserMailer.generic_email(Gamer.find_by_id(report.gamer_id).email,
+      "report feedback on arability.com","Dear Arability user, /n
+      We would like to thank you for your feedback. But our team finds nothing 
+      inappropiate in the word you reported and was kept on our website. /n
+      Thank you /n Arability team")
+    report.delete
+    flash[:success] = "تم التصرف فلبلاغ و إبقاء الكلمة"
+    flash.keep
+    redirect_to action: "view_reports"
+  end
+
+  def unapprove_word
+    report_id = params[:report_id]
+    report = Report.find_by_id(report_id)
+    if report.reported_word_type == "Synonym"
+      Synonym.disapprove_synonym(report.reported_word_id)
+    else
+      Keyword.disapprove_keyword(report.reported_word_id)
+    end
+    UserMailer.generic_email(Gamer.find_by_id(report.gamer_id).email,
+      "report feedback on arability.com","Dear Arability user, /n
+      We would like to thank you for your feedback. Your report has been 
+      considered, and we found out that this word is inappropiate and have been 
+      blocked from our website. /n Thank you /n Arability team")
+    report.delete
+    flash[:success] = "تم التصرف في البلاغ و إخفاء الكلمة"
+    flash.keep
+    redirect_to action: "view_reports"
+  end
+
 end

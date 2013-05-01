@@ -35,8 +35,8 @@
                       <th>كلمة</th>
                     <% end %>
                     <th><%= Gamer.find_by_id(report.gamer_id).username %></th>
-                    <th><a class="btn btn-mini" href="#"><i class="icon-ok"></i></a></th>
-                    <th><a class="btn btn-mini" href="#"><i class="icon-remove"></i></a></th>
+                    <th><a class="btn btn-mini" href="/admin/ignore_report?report_id=<%= report.id %>"><i class="icon-ok"></i></a></th>
+                    <th><a class="btn btn-mini" href="/admin/unapprove_word?report_id=<%= report.id %>"><i class="icon-remove"></i></a></th>
                   </tr>
                 <% end %>
               </tbody>
