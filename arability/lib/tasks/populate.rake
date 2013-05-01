@@ -105,6 +105,11 @@ namespace :db do
       g
     end
 
+    def self.make_admin(user)
+        user.admin = true
+        user.save
+    end
+
     noha=add_gamer("noha", "mohamed", "female", "Lebanon", 20, "School")
     mohamed=add_gamer("mohamed", "ashraf", "male", "Egypt", 40, "University")
     smart=add_gamer("developer", "smartsoft", "male", "Egypt", 30, "University")
@@ -112,6 +117,8 @@ namespace :db do
     kholoud=add_gamer("khloud", "khalid", "female", "Jordan", 10, "School")
     hassan=add_gamer("mosatafa", "hassan", "male", "Jordan", 30, "Graduate")
     amr=add_gamer("amr", "raoof", "male", "Iraq", 30, "Graduate")
+    karim=add_gamer("karim", "gmail", "male", "Egypt", 77, "Graduate")
+    make_admin(karim)
 
     Developer.delete_all
     timo_dev=Developer.create(gamer_id: timo.id)
@@ -136,10 +143,9 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
-
-    free=SubscriptionModel.create(name_en: "Free", limit_search: 20, limit_follow: 20, limit_project: 20)
-    premium=SubscriptionModel.create(name_en: "Premium", limit_search: 200, limit_follow: 200, limit_project: 100)
-    deluxe=SubscriptionModel.create(name_en: "Deluxe", limit_search: 300, limit_follow: 300, limit_project: 300)
+    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني",limit_search: 20, limit_follow: 20, limit_project: 20)
+    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit_project: 100)
+    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit_project: 300)
 
     project = Project.new
     project.name = "Read"
