@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Arability</title>
+  <link rel="shortcut icon" href="/assets/logo.png">
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "games", :media => "all" %>
   <%= stylesheet_link_tag "pages", :media => "all" %>
@@ -31,12 +32,14 @@
    display: none;
   }
 </style>
-
-<div role="main" id="main">
-  <div class="container">
-    <div class="content">
-      <%= render 'layouts/messages' %>
-      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+<%= yield(:home_content) %>
+<div id="navbar">
+  <div role="main" id="main">
+    <div class="container">
+      <div class="content">
+        <%= render "layouts/messages" %>
+        <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+      </div>
     </div>
   </div>
 </div>
