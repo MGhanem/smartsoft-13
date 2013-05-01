@@ -399,4 +399,6 @@ en:
   modal_no_button: "No"
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
+  feat4h: "Be Social"
+  feat4b: "For extra features, connect to your favorite social network."
   expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
