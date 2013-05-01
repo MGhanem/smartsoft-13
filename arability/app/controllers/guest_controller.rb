@@ -97,6 +97,7 @@ class GuestController < ApplicationController
         return
       end
       sign_in gamer
+      flash[:success] = t(:welcome_gamer)
       redirect_to ("/game")
       return
     end
@@ -142,12 +143,13 @@ class GuestController < ApplicationController
   		errors << "#{t(:guest_error4)}"
   	end
   	if errors.size == 0
-       gamer, flag = create_guest_gamer(education, country, gender, dob)
-       if flag == false 
+      gamer, flag = create_guest_gamer(education, country, gender, dob)
+      if flag == false 
         redirect_to action: "sign_up", errors: gamer.errors.messages, dob: dob, education: education, 
           country: country, gender: gender  	
         return
-       end
+      end
+      flash[:success] = t(:welcome_guest)
   	  redirect_to ("/game")
   	  return
   	end

@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  welcome_gamer: "Congratulations! You have successfully registered as a gamer"
+  welcome_guest: "You are now viewing a limited version of the game. Become a member to view the full version"
   username_or_email: "Username or email"
   not_existing_error: "This keyword is not found"
   empty_name_error: "This synonym is empty"

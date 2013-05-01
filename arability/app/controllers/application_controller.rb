@@ -157,6 +157,8 @@ class ApplicationController < ActionController::Base
     gamer.date_of_birth = guest_gamer.date_of_birth
     gamer.email = email
     gamer.password = password
+    gamer.show_tutorial = guest_gamer.show_tutorial
+    gamer.highest_score = guest_gamer.highest_score 
     if gamer.save
       logging_in(gamer.id)
       session[:guest_gamer_id] = nil
