@@ -153,4 +153,8 @@ class AuthenticationsController < ApplicationController
     end
   end
 
+  def google_callback
+    render :text => request.env["omniauth.auth"].to_yaml
+  end
+
 end
