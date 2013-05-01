@@ -205,10 +205,10 @@
     $.post("/developers/projects/"+"<%= @project.id %>"+"/test_followed_keyword", {keyword:$('#selected_keyword').val()});
       var button = ""
       if(test_followed() == "true"){
-        button = "<button class='btn btn-danger' onclick='unfollow()'>unfollow</button>"
+        button = "<button class='btn btn-danger' onclick='unfollow()'><%= t(:project_keyword_unfollow)%></button>"
       }
       else{
-        button = "<button class='btn btn-primary' onclick='follow()'>follow</button>"
+        button = "<button class='btn btn-primary' onclick='follow()'><%= t(:project_keyword_follow) %></button>"
       }
     $("#selected_synonym").popover({
         trigger: 'manual',

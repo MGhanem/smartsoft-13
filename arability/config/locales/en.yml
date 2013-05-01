@@ -404,3 +404,5 @@ en:
   no_translation_popover_title: "there is no translations for this keyword"
   you_can: "you can "
   this_keyword: " this keyword"
+  project_keyword_follow: "follow"
+  project_keyword_unfollow: "unfollow"
