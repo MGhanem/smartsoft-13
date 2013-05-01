@@ -4,3 +4,82 @@
 </div>
 
 <h3>Adding the API to your website</h3>
+<p>
+  To arabize keywords in your website you can place this piece of code anywhere in your
+  html. If you dont have an api key you can get one from
+  <%= link_to "here", api_keys_list_path %>
+</p>
+<pre>
+&lt;script src=&quot;http://localhost:3000/api/arabize.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $.arabize({
+    api_key : &quot;your api key here&quot;,
+    overrides : {
+      //optional overrides
+      country : "Egypt",
+      gender  : "female"
+    }
+  })
+&lt;/script&gt;
+</pre>
+<p>
+Any content on the page that requires translation should have <code>data-arabize</code> added to it like this</p>
+<pre>
+&lt;a href=&quot;/sign_in&quot; data-arabize=&quot;sign in&quot;&gt;Sign in&lt;/a&gt;
+&lt;input type=&quot;submit&quot; data-arabize=&quot;sign in&quot; value=&quot;sign in&quot; /&gt;
+&lt;input type=&quot;text&quot; data-arabize=&quot;username&quot; placeholder=&quot;username&quot; /&gt;
+</pre>
+<p>
+<span class="label label-info">Heads up!</span>
+In case the user has disabled javascript and our script wont run or if we donot have the keyword you are trying to translate in the database you should always have the text translated the usual way so that the user will not see english content in the arabic page
+</p>
+
+<h3>Available overrides</h3>
+<p>If no overrides are specified the constraints of the asociated project would be used
+or no constraints would be applied at all</p>
+<table class="table table-bordered table-striped">
+<thead>
+  <tr>
+    <th style="width: 100px;">Name</th>
+    <th>description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>
+      country
+    </td>
+    <td>
+      The name of the country that the user lives in. This overrides the geoip detection.
+      The valid values are "Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya",
+      "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria",
+      "Morocco", "Bahrain", "Mauritania", "Somalia", "Sudan" and "Tunisia"
+    </td>
+  </tr>
+  <tr>
+    <td>
+      gender
+    </td>
+    <td>
+      The gender of the current user. The valid values are "male", "female"
+    </td>
+  </tr>
+  <tr>
+    <td>
+      education_level
+    </td>
+    <td>
+      The education level of the user. The valid values are "School", "University",
+      "Graduate"
+    </td>
+  </tr>
+  <tr>
+    <td>
+      age_from, age_to
+    </td>
+    <td>
+      The age range to target. The maximum range is 10-100 years old.
+    </td>
+  </tr>
+</tbody>
+</table>

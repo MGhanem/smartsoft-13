@@ -81,4 +81,20 @@ class ApiController < BackendController
   def test
   end
 
+private
+  def get_valid_country country
+    countries = ["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya",
+                 "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria",
+                 "Morocco", "Bahrain", "Mauritania", "Somalia", "Sudan",
+                 "Tunisia"]
+    words = country.split(" ").map { |word| word.capitalize }
+    country = words.join(" ")
+    countries.include?(country) ? country : nil
+  end
+
+  def capitalize_sentence text
+    words = text.split(" ").map { |word| word.capitalize }
+    country = words.join(" ")
+  end
+
 end
