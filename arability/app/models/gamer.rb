@@ -72,9 +72,9 @@ class Gamer < ActiveRecord::Base
   #     the user is now admin
   #   failure:
   #     none
-  def make_admin(user)
-    user.admin = true
-    user.save
+  def make_admin
+    self.admin = true
+    self.save
   end
 
   # Description:
@@ -88,9 +88,9 @@ class Gamer < ActiveRecord::Base
   #     the user is now not an admin
   #   failure:
   #     none
-  def remove_admin(user)
-    user.admin = false
-    user.save
+  def remove_admin
+    self.admin = false
+    self.save
   end
 
   # Description:

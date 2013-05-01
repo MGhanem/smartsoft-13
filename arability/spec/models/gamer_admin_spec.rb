@@ -17,15 +17,15 @@ describe "gamer admin" do
 
 	it "should make the gamer admin" do
 		test_gamer
-		Gamer.make_admin(test_gamer)
+		test_gamer.make_admin
 		test_gamer.admin.should eq(true)
 	end
 
 	it "should make the gamer not an admin" do
 		test_gamer
-		Gamer.make_admin(test_gamer)
+		test_gamer.make_admin
 		test_gamer.admin.should eq(true)
-		Gamer.remove_admin(test_gamer)
+		test_gamer.remove_admin
 		test_gamer.admin.should eq(false)
 	end
 

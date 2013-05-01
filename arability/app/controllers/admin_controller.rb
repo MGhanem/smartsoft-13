@@ -145,7 +145,7 @@ class AdminController < ApplicationController
   def make_admin
     user = Gamer.find_by_id(params[:id])
     if user != nil
-      Gamer.make_admin(user)
+      user.make_admin
       flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
       flash.keep
       redirect_to "/admin/list/admins"
@@ -168,7 +168,7 @@ class AdminController < ApplicationController
   def remove_admin
     user = Gamer.find_by_id(params[:id])
     if user.admin
-      Gamer.remove_admin(user)
+      user.remove_admin
       flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
       flash.keep
       redirect_to "/admin/list/admins"
