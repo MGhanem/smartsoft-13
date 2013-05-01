@@ -29,7 +29,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the trophies and links to remove trophies
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays trophies
   # Failure: 
@@ -43,7 +44,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the prizes and links to remove trophies
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays prizes
   # Failure: 
@@ -57,7 +59,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the gamers and links to make them admins
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays gamers
   # Failure: 
@@ -71,7 +74,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the developers
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays developers
   # Failure: 
@@ -85,7 +89,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the admins and links to remove them
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays admins
   # Failure: 
@@ -100,7 +105,8 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the projects
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays projects
   # Failure: 
@@ -115,6 +121,8 @@ class AdminController < ApplicationController
   #   this action lists the projects of a user
   # Params
   #   developer_id: the id of the developer
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   views a table with the projects of that user
   # Failure: 
@@ -129,7 +137,7 @@ class AdminController < ApplicationController
   # Description:
   #   this action makes a gamer an admin
   # Params
-  #  none
+  #   id: the id of the gamer to be admin
   # Success: 
   #   redirects the new admin to list admins view and display success message
   # Failure: 
@@ -137,8 +145,7 @@ class AdminController < ApplicationController
   def make_admin
     user = Gamer.find_by_id(params[:id])
     if user != nil
-      user.admin = true
-      user.save
+      Gamer.make_admin(user)
       flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
       flash.keep
       redirect_to "/admin/list/admins"
@@ -153,7 +160,7 @@ class AdminController < ApplicationController
   # Description:
   #   this action removes an admin from the admins
   # Params
-  #  none
+  #   id: the id of the admin to be removed from admins
   # Success: 
   #   removes the admin and redirects to list admins view
   # Failure: 
@@ -161,8 +168,7 @@ class AdminController < ApplicationController
   def remove_admin
     user = Gamer.find_by_id(params[:id])
     if user.admin
-      user.admin = false
-      user.save
+      Gamer.remove_admin(user)
       flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
       flash.keep
       redirect_to "/admin/list/admins"

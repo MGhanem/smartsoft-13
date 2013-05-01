@@ -62,6 +62,38 @@ class Gamer < ActiveRecord::Base
   end
 
   # Description:
+  #   makes the user an admin
+  # Author:
+  #   Karim el naggar
+  # @params:
+  #   user: the user to be converted
+  # returns:
+  #   success:
+  #     the user is now admin
+  #   failure:
+  #     none
+  def make_admin(user)
+    user.admin = true
+    user.save
+  end
+
+  # Description:
+  #   removes the user from the admins
+  # Author:
+  #   Karim el naggar
+  # @params:
+  #   user: the user to be converted
+  # returns:
+  #   success:
+  #     the user is now not an admin
+  #   failure:
+  #     none
+  def remove_admin(user)
+    user.admin = false
+    user.save
+  end
+
+  # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
   # Author:
   #   Adam Ghanem
