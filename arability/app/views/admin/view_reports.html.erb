@@ -1,0 +1,49 @@
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "view-reports"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+          <legend>
+            <a>
+              عرض البلاغات
+            </a>
+          </legend>
+          <% if @reports == [] %>
+            <p>لا يوجد بلاغات الأن</p>
+          <% else %>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>الكلمة</th>
+                  <th>نوع الكلمة</th>
+                  <th>إسم اللاعب</th>
+                  <th>إبقاء</th>
+                  <th>مسح</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @reports.each do |report| %>
+                  <tr>
+                    <th><%= report.id %></th>
+                    <% if report.reported_word_type == "Synonym" %>
+                      <th><%= Synonym.find_by_id(report.reported_word_id).name %></th>
+                      <th>معنى</th>
+                    <% else %>
+                      <th><%= Keyword.find_by_id(report.reported_word_id).name %></th>
+                      <th>كلمة</th>
+                    <% end %>
+                    <th><%= Gamer.find_by_id(report.gamer_id).username %></th>
+                    <th><a class="btn btn-mini" href="#"><i class="icon-ok"></i></a></th>
+                    <th><a class="btn btn-mini" href="#"><i class="icon-remove"></i></a></th>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

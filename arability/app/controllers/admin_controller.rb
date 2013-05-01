@@ -312,6 +312,21 @@ class AdminController < ApplicationController
   # Author:
   #   Omar Hossam
   # Description:
+  #   As an admin, I could view all reported keywords/synonyms in database.
+  # Parameters:
+  #   None.
+  # Success:
+  #   All reported keywords/synonyms in database are viewed, and if none, a 
+  #   message is viewed stating that.
+  # Failure: 
+  #   None.
+  def view_reports
+    @reports = Report.all
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
   #   As an admin, I should be able to view all the attributes of the
   #   subscription model needed to be edited, and the data they have.
   # Parameters:
