@@ -37,7 +37,6 @@ class ApiKey < ActiveRecord::Base
     end
 
     if self.project.present?
-
       prefered_synonym = PreferedSynonym
         .where(keyword_id: keyword.id, project_id: self.project.id).first
       return prefered_synonym.synonym if prefered_synonym.present?
@@ -85,5 +84,4 @@ private
   def downcase_website
     self.website.downcase! if self.website.present?
   end
-
 end

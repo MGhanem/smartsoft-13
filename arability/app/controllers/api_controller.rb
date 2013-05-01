@@ -106,7 +106,7 @@ class ApiController < BackendController
 
     if @api_key.save
       redirect_to api_keys_list_path,
-        flash: {success: "#{ t :api_created }" }
+        flash: { success: "#{ t :api_created }" }
     else
       @projects = current_developer.projects
       @api_keys = current_developer.api_keys
@@ -131,7 +131,7 @@ class ApiController < BackendController
 
     if api_key && api_key.developer == current_developer
       api_key.destroy
-      render nothing: true, :status => 200
+      render nothing: true, status: 200
     else
       head :forbidden
     end
@@ -154,6 +154,7 @@ class ApiController < BackendController
   end
 
 private
+
   # Author:
   #   Mohamed Ashraf
   # Description:
@@ -194,5 +195,4 @@ private
     words = text.split(" ").map { |word| word.capitalize }
     words.join(" ")
   end
-
 end
