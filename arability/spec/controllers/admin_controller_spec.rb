@@ -41,6 +41,14 @@ describe AdminController  do
       gamer
     end
 
+    it "list all gamers" do
+      model1
+      gamer
+      sign_in(gamer)
+      get "/admin/list/gamers"
+      assigns(:list).should =~ [gamer]
+    end
+
     it "list all subscription models" do
       model1
       gamer
