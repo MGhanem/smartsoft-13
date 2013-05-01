@@ -88,7 +88,7 @@ class Authentication < ActiveRecord::Base
   # Params:
   #   id: the id of the gamer
   # Success:
-  #   Boolean is returned to ndicate whether the gamer is connected
+  #   Boolean is returned to indicate whether the gamer is connected
   # Failure:
   #   None
   def self.is_connected_to_facebook(id)
@@ -120,7 +120,7 @@ class Authentication < ActiveRecord::Base
   #   provider: provider that wants to update the token
   #   new_token: the new access token
   # Success:
-  #   acess token for provider is changed for a specified gamer
+  #   access token for provider is changed for a specified gamer
   # Failure:
   #   none
   def self.update_token(id, provider, new_token)
