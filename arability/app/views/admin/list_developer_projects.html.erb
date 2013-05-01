@@ -16,12 +16,14 @@
             <thead>
               <tr>
                 <td>اسم المشروع</td>
+                <td>عدد الكلمات</td>
               </tr>
             </thead>
             <tbody>
               <% for item in @list %>
                 <tr>
                   <td><%= item.name %></td>
+                  <td><%= item.keywords.count %></td>
                 </tr>
               <% end %>
             </tbody>
