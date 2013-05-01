@@ -1,6 +1,6 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-  tutorialFlag = <%= current_gamer.show_tutorial %>;
+  tutorialFlag = <%= current_or_guest_gamer.show_tutorial %>;
   var words;
   var cache = "";
   var nav_locked = false;
