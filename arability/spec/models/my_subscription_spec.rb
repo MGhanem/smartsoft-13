@@ -55,12 +55,12 @@ describe MySubscription do
     expect(result).to eq(true)
   end
    it "add permission is given" do 
-    result = my_sub.max_add_word(project.id)
+    result = my_sub.can_add_word(project.id)
     expect(result).to eq(true)
   end
    it "search permission is given" do 
     keyword = Keyword.create(name: "click", approved: true)
-    result = my_sub.get_max_words(keyword.id)
+    result = my_sub.can_search_word(keyword.id)
     expect(result).to eq(true)
   end
 end
