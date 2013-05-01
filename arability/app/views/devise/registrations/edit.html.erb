@@ -171,11 +171,11 @@
     </div>
 <% end %>
 
-    <div class="tab-pane" id="tab3">
-      <%if current_gamer != nil %>
-        <% developer = Developer.where(:gamer_id => current_gamer.id).first %>
-        <% if developer != nil %>
-       <%= form_for(:my_subscription, :url => my_subscriptions_pick_edit_path ) do %>
+<div class="tab-pane" id="tab3">
+    <%if current_gamer != nil %>
+      <% developer = Developer.where(:gamer_id => current_gamer.id).first %>
+      <% if developer != nil %>
+      <%= form_for(:my_subscription, :url => my_subscriptions_pick_edit_path ) do %>
 <div style = "width:1000px; margin: 0 auto;">
 <table>
     <tr>
@@ -199,28 +199,28 @@
     <%=sm.limit_project%>
   </p>
     </div>
-            </td>       
+      </td>       
 <% end %>
 <tr>
     </table>
 <center>
 <% if I18n.locale==:en %>
-<%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px;   " %>
+ <%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px;   " %>
 <% else I18n.locale==:ar %>
-<%= submit_tag "إختر",:class => "btn btn-success btn-large", :style => "margin-top: 20px;   "%>
+ <%= submit_tag "إختر",:class => "btn btn-success btn-large", :style => "margin-top: 20px;   "%>
 <% end %>
   </div>
 </div>
 </center>
 <% end %>
     </div>
-  </div>
-  </div>    
+</div>
+</div>    
      <% else %>
         <span style="color: red"><strong><%=t(:developer_before_subscription)%></strong></span>
-      <%end %>
-    <%else%>
+     <%end %>
+     <%else%>
       <% flash[:error] = t(:projects_index_error2) %>
       <% redirect_to new_gamer_session_path %>    
-    <%end %>
+     <%end %>
 </div>
