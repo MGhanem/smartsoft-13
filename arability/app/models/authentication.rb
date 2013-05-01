@@ -105,7 +105,7 @@ class Authentication < ActiveRecord::Base
   # Success:
   #   Returns the provider's access token for the gamer
   # Failure:
-  #   Record doesn't exist: null is returned
+  #   None
   def self.get_token(id, provider)
     auth = Authentication.find_by_gamer_id_and_provider(id,provider)
     return auth.token
