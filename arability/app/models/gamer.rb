@@ -70,7 +70,7 @@ class Gamer < ActiveRecord::Base
   # Success:
   #   the user is now admin
   # Failure:
-  #     none
+  #   none
   def make_admin
     self.admin = true
     self.save
