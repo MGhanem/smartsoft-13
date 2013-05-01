@@ -65,12 +65,11 @@ class Gamer < ActiveRecord::Base
   #   makes the user an admin
   # Author:
   #   Karim el naggar
-  # @params:
+  # Params:
   #   user: the user to be converted
-  # returns:
-  #   success:
-  #     the user is now admin
-  #   failure:
+  # Success:
+  #   the user is now admin
+  # Failure:
   #     none
   def make_admin
     self.admin = true
@@ -81,13 +80,12 @@ class Gamer < ActiveRecord::Base
   #   removes the user from the admins
   # Author:
   #   Karim el naggar
-  # @params:
+  # Params:
   #   user: the user to be converted
-  # returns:
-  #   success:
-  #     the user is now not an admin
-  #   failure:
-  #     none
+  # Success:
+  #   the user is now not an admin
+  # Failure:
+  #   none
   def remove_admin
     self.admin = false
     self.save
