@@ -97,7 +97,7 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match "search" => "search#search"
+      match "search" => "search#search_with_filters"
 
       match "search_keywords" => "search#search_keywords"
 
