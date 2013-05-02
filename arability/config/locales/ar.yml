@@ -497,9 +497,9 @@ ar:
         project:
           attributes:
             minAge:
-              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
             maxAge:
-              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              maxAge_range: "يجب ان يكون رقما بين ١٠ و ١٠٠ سنة"
               less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
     attributes:
       project:
@@ -538,9 +538,9 @@ ar:
         project:
           attributes:
             minAge:
-              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
             maxAge:
-              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              maxAge_range: "يجب ان يكون بين رقما بين ١٠ و ١٠٠ سنة"
               less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
     attributes:
       project:
