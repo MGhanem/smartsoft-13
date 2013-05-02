@@ -275,35 +275,29 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  #scopes defined for advanced search aid
-  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+# author:
+#     Salma Farag
+# description:
+#     A  method that returns a gamer with an email equal to the email signed in on Google from
+#the access token.
+# params:
+#     The access token granted from Google and a signed in resources that is equal to nil.
+# success:
+#     Returns the gamer with the matching email.
+# failure:
+#     Creates a new gamer using the email and password
+def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+    data = access_token.info
+    gamer = Gamer.where(:email => data["email"]).first
 
-  # author:
-  #     Salma Farag
-  # description:
-  #     A  method that returns a gamer with an email equal to the email signed in on Google from
-  #the access token.
-  # params:
-  #     The access token granted from Google and a signed in resources that is equal to nil.
-  # success:
-  #     Returns the gamer with the matching email.
-  # failure:
-  #     Creates a new gamer using the email and password
-  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-      data = access_token.info
-      gamer = Gamer.where(:email => data["email"]).first
-
-      unless gamer
-           gamer = Gamer.create(
-                email: data["email"],
-                password: Devise.friendly_token[0,20]
-               )
-      end
-      gamer
-  end
+    unless gamer
+         gamer = Gamer.create(
+              email: data["email"],
+              password: Devise.friendly_token[0,20]
+             )
+    end
+    gamer
+end
 
   class << self
     # Author:
@@ -333,7 +327,7 @@ class Gamer < ActiveRecord::Base
         return common
       end
     end
-    gamer
+
   end
 
 # Author:
@@ -491,4 +485,3 @@ end
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
 end
-
