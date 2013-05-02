@@ -9,6 +9,7 @@
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:my_info)%></a></li>
     <li><a href="#tab2" data-toggle="tab"><%= t(:social_media)%></a></li>
+    <li><a href="#tab3" data-toggle="tab"><%= t(:choose_sub)%></a></li>
   </ul>
   <div class="tab-content" style="width:1200px;">
     <div class="tab-pane active" id="tab1">
@@ -135,39 +136,107 @@
     <div class="tab-pane" id="tab2">
       <div class="well" style="width:1100px; height:480px; text-align:center; display:inline-block">
         <div class="providers" style="padding:30px; text-align:center">
-
-          <div class="Facebook" style="padding:10px">
-            <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook") %>
-              <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" />
-              <span font="20" style="position:relative; padding:40px;">
-                <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"facebook"}" %>
-              </span>
-            <% else %>
-              <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" height="50px"/>
-              <span font="20" style="position:relative; padding:40px;">
-                <%= link_to t(:connect_to_facebook), "/auth/facebook" %> 
-              </span>
-            <% end %>
-          </div>
-
-          <div class="Twitter" style="padding:10px">
-            <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
-              <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" />
-              <span font='20' style="position:relative; padding:40px;">
-                <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"twitter"}" %>
-              </span>
-            <% else %>
-              <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px" />
-              <span font="20" style="position:relative; padding:40px;">
-                <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
-              </span>
-            <% end %>
-          </div>
-
+          <% if current_gamer.provider != "facebook" %>
+            <div class="Facebook" style="padding:10px">
+              <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook") %>
+                <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" />
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"facebook"}" %>
+                </span>
+              <% else %>
+                <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" height="50px"/>
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:connect_to_facebook), "/auth/facebook" %> 
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+          <% if current_gamer.provider != "twitter" %>
+            <div class="Twitter" style="padding:10px">
+              <% if Authentication.exists?(gamer_id: current_gamer.id, provider: "twitter") %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" />
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:remove_connection), "/authentications/remove_connection?provider=#{"twitter"}" %>
+                </span>
+              <% else %>
+                <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px"/>
+                <span font="20" style="position:relative; padding:40px;">
+                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %> 
+                </span>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
 <% end %>
 
+    <div class="tab-pane" id="tab3">
+      <%if current_gamer != nil %>
+        <% developer = Developer.where(:gamer_id => current_gamer.id).first %>
+        <% if developer != nil %>
+       <%= form_for(:my_subscription, :url => my_subscriptions_pick_edit_path ) do %>
+<div style = "width:1000px; margin: 0 auto;">
+<table>
+    <tr>
+<% SubscriptionModel.all.each do |sm| %>
+  <%if(developer.my_subscription)
+    selected_sub_id = developer.my_subscription.subscription_model_id
+  else
+    selected_sub_id = 1
+  end%>
+      <td width="300px">
+  <div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
+  <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
+   <%= sm.name %><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can search for is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكنك البحث عنها هى:</h5>
+    <% end %>
+    <%=sm.limit_search%><%= t(:per_month)%><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can follow is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكنك متابعتها هي:</h5>
+    <% end %>
+    <%=sm.limit_follow%><%= t(:per_month)%><br/>
+    <% if I18n.locale==:en %>
+    <h5>The number of words you can add to your project is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد الكلمات التي يمكن اضافتها إلى مشروعك هي :</h5>
+    <% end %>
+    <%=sm.limit%><%= t(:per_month)%><br />
+    <% if I18n.locale==:en %>
+    <h5>The number of projects you can create is:</h5>
+    <% else I18n.locale==:ar %>
+    <h5>عدد المشريع التي يمكنك انشائها هي :</h5>
+    <% end %>
+    <%=sm.limit_project%>
+  </p>
+    </div>
+            </td>       
+<% end %>
+<tr>
+    </table>
+<center>
+<% if I18n.locale==:en %>
+<%= submit_tag "Select Subscription", :class => "btn btn-success btn-large", :style => "margin-top: 20px;   " %>
+<% else I18n.locale==:ar %>
+<%= submit_tag "إختر",:class => "btn btn-success btn-large", :style => "margin-top: 20px;   "%>
+<% end %>
   </div>
+</div>
+</center>
+<% end %>
+    </div>
+  </div>
+  </div>    
+     <% else %>
+        <span style="color: red"><strong><%=t(:developer_before_subscription)%></strong></span>
+      <%end %>
+    <%else%>
+      <% flash[:error] = t(:projects_index_error2) %>
+      <% redirect_to new_gamer_session_path %>    
+    <%end %>
 </div>

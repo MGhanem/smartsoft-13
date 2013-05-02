@@ -41,10 +41,10 @@ class ProjectsController < BackendController
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
   def index
     if current_gamer != nil
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @my_projects = Project.where(:owner_id => developer.id)
-        @shared_projects = developer.projects_shared
+      @developer = Developer.where(:gamer_id => current_gamer.id).first
+      if @developer != nil
+        @my_projects = Project.where(:owner_id => @developer.id)
+        @shared_projects = @developer.projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         redirect_to developers_new_path
@@ -78,8 +78,8 @@ class ProjectsController < BackendController
     else
         redirect_to choose_sub_path
         flash[:notice] = t(:exceeded_project_limit)
-      end
     end
+  end
 
   # Author:
   #   Salma Farag
@@ -129,6 +129,8 @@ class ProjectsController < BackendController
   #  none
   def share
     @project = Project.find(params[:id])
+    gamers_ids = Developer.pluck(:gamer_id)
+    @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
 
   # Author:
@@ -218,19 +220,6 @@ def show
     @synonyms.push(syn)
   end
 end
-
-
-
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
 
   # Author:
   #   Mohamed Tamer
@@ -566,6 +555,29 @@ end
       flash[:notice] = t(:no_project)
       redirect_to projects_path, flash: flash
     end
+  end
+
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   Finds the developer and the project by their ids
+  #   and removes the developer from the developers_shared
+  #   array, removing the project from the developer's
+  #   shared projects
+  # Params:
+  #   dev_id is the id of the developer
+  #   project_id is the id of the project
+  # Success:
+  #   Project is removed from shared projects
+  # Failure:
+  #   Project is not removed
+  def remove_project_from_developer
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    dev.projects_shared.delete(project)
+    dev.save
+    flash[:success] = t(:project_removed)
+    redirect_to :action => "index",:controller => "projects"
   end
 
   # author:

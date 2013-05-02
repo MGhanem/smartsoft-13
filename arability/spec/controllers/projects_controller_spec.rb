@@ -1,14 +1,11 @@
 #encoding: UTF-8
 require "spec_helper"
 require "request_helpers"
-include Warden::Test::Helpers
-<<<<<<< HEAD
 include RequestHelpers
-include Devise::TestHelpers
-=======
->>>>>>> 6d6f0a58c011379c4b32d11d83de2eda88570db2
+include Warden::Test::Helpers
 
 describe ProjectsController, type: :controller do
+
 
   let(:gamer1){
 	  gamer = Gamer.new
@@ -58,12 +55,6 @@ describe ProjectsController, type: :controller do
     sign_in developer1.gamer
     get :import_csv, :project_id => project.id
     page.should have_content(I18n.t(:import_csv_title))
-  end
-
-  it "should delete a project" do
-    sign_in gamer1
-    put :destroy, id: project.id
-    response.code.should eq("302")
   end
 
   #khloud's tests
