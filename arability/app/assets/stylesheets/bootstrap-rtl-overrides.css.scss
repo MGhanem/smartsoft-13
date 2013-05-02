@@ -1,12 +1,75 @@
+.input-append .add-on:last-child, .input-append .btn:last-child {
+    border-radius: 3px 0 0 3px;
+}
+.input-append input, .input-append select, .input-append .uneditable-input {
+    border-radius: 0 3px 3px 0;
+}
 .form-search .input-append .btn {
     border-radius: 14px 0 0 14px;
 }
 .form-search .input-append .search-query {
     border-radius: 0 14px 14px 0;
 }
-.btn {
-  font-size: 18px;
+
+.select2-container-multi .select2-choices .select2-search-choice {
+  padding: 3px 5px 3px 18px;
+  margin: 3px 3px 3px 2px;
+  position: relative;
+  line-height: 18px;
+  color: #333;
+  cursor: default;
+  border: 1px solid #aaaaaa;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #e4e4e4;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0 );
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+  background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: -ms-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
 }
+
+.select2-container-multi .select2-choices li {
+  float: right;
+  list-style: none;
+}
+
+.select2-search-choice-close {
+  display: block;
+  width: 12px;
+  height: 13px;
+  position: absolute;
+  left: 3px;
+  top: 4px;
+  font-size: 1px;
+  outline: none;
+  background: url(/assets/select2.png) right top no-repeat;
+}
+
+.select2-container-multi .select2-search-choice-close {
+  left: 3px;
+}
+
+.select2-offscreen {
+  position: absolute;
+  right: -10000px;
+}
+
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
@@ -251,6 +314,14 @@ background-position: -96px -96px;
   background-color: black;
 }
 
+.btn {
+  font-size: 18px;
+}
+
 .btn-mini {
   font-size: 16px;
+}
+
+.input-append .input.big-text {
+  font-size: 18px;
 }

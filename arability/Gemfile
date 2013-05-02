@@ -31,6 +31,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "select2-rails"
+
 gem 'jquery-rails'
 gem 'execjs'
 
@@ -70,16 +72,17 @@ gem "koala"
 
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
 gem 'twitter'
 gem 'fb_graph'
+
+group :test, :development do
+  gem "rspec-rails", "2.13.0"
+end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-end
-
-group :test, :development do
-  gem "rspec-rails", "2.13.0"
 end
 
 group :test do
