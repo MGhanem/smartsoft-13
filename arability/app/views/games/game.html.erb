@@ -211,12 +211,17 @@ function setButtons(){
 
   function show_menu_item(title)
   {
+    
     var item_html = '<h3 style="margin-top: -50px; font-size: 40px;"> \
-     ' + title + ' \
-  </h3>';
-    $("#selected_item").hide();
-    $("#selected_item").html(item_html);
-    $("#selected_item").show();
+    ' + title + ' \
+    </h3>';
+    $(".btn-group span.caret").text(title);
+    //$(".btn-group span.caret").html(item_html);
+
+
+    //$("#selected_item").hide();
+    //$("#selected_item").html(item_html);
+    //$("#selected_item").show();
   }
 
   function enableNav() {
@@ -253,8 +258,8 @@ function setButtons(){
   <div class="game-nav">
     <div class="btn-group" style="height: 66px;">
        <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width : 130px; height: 55px; margin-top:10px; border: medium none;">
-        <span class="caret"></span>
-        <img src="/assets/gear.png"/>  
+        <span class="caret">Menu</span>
+        
        </button>
         <center id="selected_item"></center>
         <ul class="dropdown-menu">
