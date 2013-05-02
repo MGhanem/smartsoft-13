@@ -1,0 +1,45 @@
+FORMAL = 1
+SLANG = 2
+BOTH = 0
+
+<% if I18n.locale == :en %>
+  $("#syn_types").css("margin-left", "7px");
+<% elsif I18n.locale == :ar %>
+  $("#syn_types").css("margin-right", "9px");
+<% end %>
+
+function invert_color(btnActive, btn1){
+  if(btnActive.className == "btn btn-inverse active"){
+    $(btnActive).attr("class", "btn");
+    applyFilters(<%= "#{:search}" %>.value, <%= "#{:country}" %>.value, 
+    <%= "#{:age_from}" %>.value, <%= "#{:age_to}" %>.value, 
+    <%= "#{:gender}" %>.value, <%= "#{:education}" %>.value, BOTH);
+  } else if(btnActive.id == "formal"){
+    $(btnActive).attr("class", "btn btn-inverse active");
+    applyFilters(<%= "#{:search}" %>.value, <%= "#{:country}" %>.value, 
+    <%= "#{:age_from}" %>.value, <%= "#{:age_to}" %>.value, 
+    <%= "#{:gender}" %>.value, <%= "#{:education}" %>.value, FORMAL);
+  } else {
+    $(btnActive).attr("class", "btn btn-inverse active");
+    applyFilters(<%= "#{:search}" %>.value, <%= "#{:country}" %>.value, 
+    <%= "#{:age_from}" %>.value, <%= "#{:age_to}" %>.value, 
+    <%= "#{:gender}" %>.value, <%= "#{:education}" %>.value, SLANG);
+  }
+  $(btn1).attr("class", "btn");
+}
+
+function synonymType(){
+  results = $(".btn-group .active")
+  if(results.length == 0){
+    $("#synonym_type").attr("value", BOTH);
+    return BOTH;
+  }
+
+  if(results[0].id == "formal"){
+    $("#synonym_type").attr("value", FORMAL);
+    return FORMAL;
+  }
+
+  $("#synonym_type").attr("value", SLANG);
+  return SLANG;
+}

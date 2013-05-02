@@ -1,3 +1,5 @@
+<%= render "success_and_error_messages.js" %>
+
 function modalToggle(){
   $("#report_modal").modal("toggle");
 }
@@ -30,31 +32,4 @@ function report_submission(){
   request.fail(function (_, _, _){
     showError();
   });
-}
-
-function showFlash(){
-  $("#report_success").css("display", "block");
-  $("#report_success").css("margin-bottom", "2px");
-  $("#report_success").css("padding-top", "6px");
-  $("#report_success").css("padding-bottom", "6px");
-  $("#report_success").css("padding-right", "12px");
-  $("#report_success").css("padding-left", "12px");
-  $("#report_success").css("position", "fixed");
-  $("#report_success").css("top", "50px");
-  $("#report_success").css("left", "42%");
-  $("#report_success").css("right", "42%");
-  $("#report_success").fadeOut(5000);
-}
-
-function showError(){
-  $("#report_failure").css("display", "block");
-  $("#report_failure").css("margin-bottom", "2px");
-  $("#report_failure").css("position", "fixed");
-  $("#report_failure").css("top", "50px");
-  $("#report_failure").css("left", "10%");
-  $("#report_failure").css("right", "10%");
-}
-
-function restoreError(){
-  $("#report_failure").css("display", "none");
 }

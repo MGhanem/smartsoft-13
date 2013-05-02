@@ -26,10 +26,13 @@ class SocialRegistrationsController < Devise::RegistrationsController
     @gid = session["devise.gid"]
     @token = session["devise.token"]
     @token_secret = session["devise.token_secret"]
+    @ed_level = params[:ed_level]
+    @country = params[:country]
+    @dob = params[:dob]
+    if @dob
+      @dob = @dob.to_date
+    end
     @errors = params[:errors]
-    session["devise.token"] = nil
-    session["devise.gid"] = nil
-    session["devise.token_secret"] = nil
   end
 
   # Author:
@@ -67,6 +70,7 @@ class SocialRegistrationsController < Devise::RegistrationsController
     month = params[:gamer]["date_of_birth(2i)"].to_i
     day = params[:gamer]["date_of_birth(3i)"].to_i
     d_o_b = Date.new(year, month, day)
+    dob = year.to_s + "-" + month.to_s + "-" + day.to_s
     d_o_b.to_datetime
     country = params[:gamer][:country]
     ed_level = params[:gamer][:education_level]
@@ -78,17 +82,23 @@ class SocialRegistrationsController < Devise::RegistrationsController
     gamer, is_saved = Gamer.create_with_social_account(
       email, username, gender, d_o_b, country, ed_level, provider)
     if is_saved
-      Authentication.create_with_omniauth(
-        provider, gid, token, token_secret, social_email, gamer.id)
+      if token != ""
+        Authentication.create_with_omniauth(
+          provider, gid, token, token_secret, social_email, gamer.id)
+        session["devise.token"] = nil
+        session["devise.gid"] = nil
+        session["devise.token_secret"] = nil
+      end
       flash[:success] = t(:signed_in_exst)
       sign_in_and_redirect(:gamer, gamer)
     else
       session["devise.token"] = token
       session["devise.gid"] = gid
-      session["devise.token_secret"] = nil
+      session["devise.token_secret"] = token_secret
       redirect_to controller: "social_registrations",
       action: "new_social", email: email, username: username,
-      gender: gender, provider: provider, errors: gamer.errors.full_messages
+      gender: gender, provider: provider, errors: gamer.errors.full_messages,
+      dob: dob, country: country, ed_level: ed_level
     end
   end
 

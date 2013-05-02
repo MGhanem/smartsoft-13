@@ -6,40 +6,29 @@
 <table>
 		<tr>
 <% @all_subscription_models.each do |sm| %>
-	<%if(@developer.my_subscription)
+  <%if @developer != nil
+	if(@developer.my_subscription)
 		selected_sub_id = @developer.my_subscription.subscription_model_id
 	else
 		selected_sub_id = 1
-	end%>
+	end
+  else
+    selected_sub_id = 1
+  end%>
 	
 			<td width="300px">
 	<div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
-	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> <%= sm.name %><br />
-		<% if I18n.locale==:en %>
-		<h5>The limit for the word search is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5> الحد الاقصى للبحث عن الكلمات:</h5>
-		<% end %>
-		<%=sm.limit_search%><br />
-		<% if I18n.locale==:en %>
-		<h5>The limit for the word follow is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الاقصى لمتابعة الكلمات:</h5>
-		<% end %>
-		<%=sm.limit_follow%><br/>
-		<% if I18n.locale==:en %>
-		<h5>The limit for the word add is:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الاقصى لاضافة الكلمات:</h5>
-		<% end %>
-		<%=sm.limit%><br />
-		<% if I18n.locale==:en %>
-		<h5>The limit for the projects:</h5>
-		<% else I18n.locale==:ar %>
-		<h5>الحد الاقصى لاضافة المشارىع:</h5>
-		<% end %>
-		<%=sm.limit_project%>
-	</p>
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
+     <%= sm.name %><br />
+    <h5><%=t(:sub_search)%></h5>
+    <%=sm.limit_search%><%= t(:per_month)%><br />
+    <h5><%=t(:sub_follow)%></h5>
+    <%=sm.limit_follow%><%= t(:per_month)%><br/>
+    <h5><%=t(:sub_add)%></h5>
+    <%=sm.limit%><%= t(:per_month)%><br />
+    <h5><%=t(:sub_project)%></h5>
+    <%=sm.limit_project%>
+  </p>
     </div>
             </td>
         

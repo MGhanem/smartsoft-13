@@ -1,9 +1,9 @@
 <div class="award-zone" id="award-list">
   <div class="won">
     <% if I18n.locale == :en %>
-      <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" onclick="backToGame()">Back</a>
+      <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" onclick="backToGame()">Game</a>
     <% else %>
-      <a class="pull-left btn btn-success" style="padding: 5px; margin-left: 28px; margin-top: 28px;" onclick="backToGame()">رجوع </a>
+      <a class="pull-left btn btn-success" style="padding: 5px; margin-left: 28px; margin-top: 28px;" onclick="backToGame()">اللعبة </a>
     <% end %>
     <h3 class="title-head"><%= t(:won_trophies_title) %></h3>
     <% if @won_trophies.blank? %>
