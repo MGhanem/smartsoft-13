@@ -124,10 +124,10 @@
   # Failure:
   #   None 
   def can_add_word_count(proj_id)
-  developer = self.developer
-  add=PreferedSynonym.where(project_id: proj_id ).count
-  count_num=self.word_add-add
-  return count_num
+    developer = self.developer
+    add=PreferedSynonym.where(project_id: proj_id ).count
+    count_num=self.word_add-add
+    return count_num
   end
 
   # Author:
@@ -149,13 +149,14 @@
       return true
     else
       if self.word_search > Search.where(developer_id: self.developer).count
-        search=Search.new
-        search.developer_id=developer
-        search.synonym_id=word_id
+        search = Search.new
+        search.developer_id = developer
+        search.synonym_id = word_id
         search.save
         return true
       else
         return false
       end
     end
+  end
 end
