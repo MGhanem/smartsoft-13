@@ -22,7 +22,7 @@ class AuthenticationsController < ApplicationController
      auth["uid"])
     if gamer_signed_in?
       if authentication.nil?
-        flash[:notice] = I18n.t(:add_twitter_connection)
+        flash[:success] = I18n.t(:add_twitter_connection)
         Authentication.create_with_omniauth(auth["provider"], auth["uid"],
          auth["credentials"]["token"],auth["credentials"]["secret"], nil,
           current_gamer.id)
@@ -33,7 +33,7 @@ class AuthenticationsController < ApplicationController
       return
     else
       if authentication
-        flash[:notice] = I18n.t(:twitter_signin_success)
+        flash[:success] = I18n.t(:twitter_signin_success)
         gamer = Gamer.find(authentication.gamer_id)
         sign_in_and_redirect(:gamer, gamer)
       else

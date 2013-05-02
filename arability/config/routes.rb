@@ -60,6 +60,7 @@ Arability::Application.routes.draw do
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
+    get "/games/fame"
     get "/games/halloffame"
     get "games/disableTutorial"
 
