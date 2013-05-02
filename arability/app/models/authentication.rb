@@ -111,7 +111,7 @@ class Authentication < ActiveRecord::Base
       while i < friends.count
         if Authentication.exists?(gid: friends.at(i)["id"], provider: "facebook")
           common.push(Authentication.find_by_gid_and_provider(friends.at(i)["id"],
-           "facebook").id)
+           "facebook").gamer_id)
         end
         i = i + 1
       end
