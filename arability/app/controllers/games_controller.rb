@@ -68,12 +68,17 @@ class GamesController < ApplicationController
         redirect_to "/gamers/edit"
       else
         begin
-          token = Authentication.get_token(current_gamer.id, "facebook")
-          @graph = Koala::Facebook::API.new(token)
-          @graph.put_wall_post(
-            "Checkout the new Arability game @ localhost:3000/game")
-          flash[:success] = t(:shared_on_fb)
-          redirect_to "/game"
+          if Authentication.exists?(id: current_gamer.id, provider: "facebook")
+            token = Authentication.get_token(current_gamer.id, "facebook")
+            @graph = Koala::Facebook::API.new(token)
+            @graph.put_wall_post(
+              "Checkout the new Arability game @ localhost:3000/game")
+            flash[:success] = t(:shared_on_fb)
+            redirect_to "/game"
+          else
+            flash[:error] = t(:you_need_to_connect_fb)
+            redirect_to "/gamers/edit"
+          end
         rescue Koala::Facebook::AuthenticationError
           redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
