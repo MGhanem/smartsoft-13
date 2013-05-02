@@ -20,15 +20,18 @@ class Keyword < ActiveRecord::Base
   #   age_to: [optional] filter by age - upper limit
   #   gender: [optional] filter by gender
   #   education: [optional] filter by education level
+  #   is_formal: [optional] filter synonyms by being formal or slang
   # Success:
   #   returns a list of synonyms for the passed keyword
   # Failure:
   #   returns an empty list if the keyword doesn't exist or if no approved
   #   synonyms where found for the keyword  
   def retrieve_synonyms(country = nil, age_from = nil, age_to = nil, 
-        gender = nil, education = nil)
+        gender = nil, education = nil, is_formal = nil)
     return [], {} if !self.approved
+
     keyword_id = self.id
+
     filtered_data = Gamer
     filtered_data = filtered_data
       .filter_by_country(country) unless country.blank?
@@ -41,17 +44,26 @@ class Keyword < ActiveRecord::Base
     filtered_data = filtered_data.joins(:synonyms)
     filtered_data = filtered_data
       .where(synonyms: { keyword_id: keyword_id, approved: true })
+
     votes_count = filtered_data.count(group: "synonyms.id")
+
     synonym_list = []
     filtered_data.each { |gamer| synonym_list += gamer.synonyms
       .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
+
+    synonym_list = synonym_list
+      .reject { |synonym| synonym.is_formal != is_formal } if is_formal != nil
+
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
+
     synonyms_with_no_votes = self.synonyms
       .where(synonyms: { approved: true }) - synonym_list
+    synonyms_with_no_votes
+      .reject! { |synonym| synonym.is_formal != is_formal } unless is_formal == nil
     synonym_list = synonym_list + synonyms_with_no_votes
-    return synonym_list, votes_count
+    [synonym_list, votes_count]
   end  
 
   class << self
@@ -207,17 +219,22 @@ class Keyword < ActiveRecord::Base
     #     similar keywords were found
     def self.get_similar_keywords(search_word, categories = [])
   		return [] if search_word.blank?
+
       search_word.downcase!
       search_word.strip!
       search_word = search_word.split(" ").join(" ")
+
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
+
       category_name = I18n.locale == :en ? :english_name : :arabic_name
+
       if categories != []
         keyword_list = 
           keyword_list.joins(:categories)
             .where("categories.#{category_name}" => categories)
       end
+
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
