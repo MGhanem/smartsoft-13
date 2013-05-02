@@ -64,40 +64,55 @@
 
 			<div class="row" style="padding:10px;">
 				<div class="span12">
-						<button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
-							<span id="filter_btn" class="icon-plus"></span>
-							<script type="text/javascript">
-								function toggle_me(){
-									$("#filter_btn").toggleClass("icon-minus");
-								}
-							</script>
-						</button>
-						<span>&nbsp;<%= t(:filter) %></span>
+						<div id="filter_label">
+							<button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
+								<span id="filter_btn" class="icon-plus"></span>
+								<script type="text/javascript">
+									function toggle_me(){
+										$("#filter_btn").toggleClass('icon-minus');
+									}
+								</script>
+							</button>
+							<span>&nbsp;<%= t(:filter) %></span>
+						</div>
 						<div id="filter" class="collapse"> 
 							<div style="padding:10px;">
 								<div class="control-group">
 									<%= label_tag t(:country), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
 									<% if I18n.locale == :ar %>
-										<%= select_tag :country, options_for_select([["مصر", "Egypt"], ["لبنان", "Lebanon"], ["الاردن", "Jordan"],	["السعودية", "Saudi Arabia"], ["ليبيا", "Libya"], ["الامارات", "United Arab Emirates"], ["قطر", "Qatar"], ["الكويت", "Kuwait"], ["العراق", "Iraq"], ["الجزأئر", "Algeria"], ["المغرب", "Morocco"], ["البحرين", "Bahrain"], ["موريتانيا", "Mauritania"], ["الصومال", "Somalia"], ["السودان", "Sudan"],	["تونس", "Tunisia"], ["اخري", "others"]]), include_blank: true, :class => "control" %>
+										<%= select_tag :country, options_for_select([["مصر","Egypt"],["لبنان","Lebanon"],["الاردن","Jordan"],
+											["السعودية","Saudi Arabia"],["ليبيا","Libya"],["الامارات","United Arab Emirates"],["قطر","Qatar"],
+											["الكويت","Kuwait"],["العراق","Iraq"],["الجزأئر","Algeria"],["المغرب","Morocco"],
+											["البحرين","Bahrain"],["موريتانيا","Mauritania"],["الصومال","Somalia"],["السودان","Sudan"],
+											["تونس","Tunisia"],["اخري","others"]]), :include_blank => true, :class => "control",
+											onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, 
+											#{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", "Bahrain", "Mauritania", "Somalia", "Sudan", "Tunisia", "others"]), include_blank: true, :class => "control" %>
+	                  <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", 
+	                  	"United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", "Bahrain", "Mauritania", 
+	                  	"Somalia", "Sudan", "Tunisia", "others"]), :include_blank => true, :class => "control",
+											onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, 
+											#{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
                   <% end %>
 								</div>
 								<div class="control-group">
 									<%= label_tag t(:gender), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<%= select_tag :gender, options_for_select([[t(:male), "male"], [t(:female), "female"]]), 
-										include_blank: true, :class => "control" %>
-								</div>
+									<%= select_tag :gender, options_for_select([[t(:male), 'male'], [t(:female), 'female']]), 
+										:include_blank => true,  :class => "control", onchange: "applyFilters(#{:search}.value, 
+											#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
+								</div>	
 								<div class="control-group">
 									<%= label_tag t(:age_from), nil, :class => "control-label", style: "width:80px;" %>
 									&nbsp;
-									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", style: "width:70px;" %>
+									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", :style => "width:70px;", onchange: "applyFilters(#{:search}.value, 
+											#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
 									&nbsp;
 									<%= label_tag t(:age_to), nil, style: "width:20px;" %>
 									&nbsp;
-									<%= number_field_tag :age_from, nil, :in => 10...101, :class => "control", style: "width:70px;" %>
+									<%= number_field_tag :age_to, nil, :in => 10...101, :class => "control", :style => "width:70px;", onchange: "applyFilters(#{:search}.value, 
+											#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
 									&nbsp;
 									<span style="opacity:0.9; font-size:10pt;"><i><%= t(:age_range) %></i></span>
 								</div>
@@ -107,8 +122,9 @@
 									<% if I18n.locale == :ar %>
 										<%= select_tag :education, options_for_select([["مدرسة", "School"], ["جامعة", "University"],["خريج", "Graduate"]]), include_blank: true, :class => "control" %>
                   <% elsif I18n.locale == :en %>
-	                  <%= select_tag :education, options_for_select(["School", "University", "Graduate"]),
-	                  	include_blank: true, :class => "control" %>
+	                  <%= select_tag :education, options_for_select(['School', 'University', 'Graduate']),
+	                  :include_blank => true, :class => "control", onchange: "applyFilters(#{:search}.value, 
+											#{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value)" %>
                   <% end %>
 								</div>	
 							</div>
@@ -133,6 +149,10 @@
 		<span>
 			<%= t(:no_synonyms_found) %>
 			<%= link_to t(:follow_word), follow_word_path(keyword_id: Keyword.where(:name => @search_keyword).first.id) %>
+			<script type="text/javascript">
+				$("#filter_label").hide();
+				$("#filter").hide();
+			</script>
 		</span>
 	</div>
 <% end %>
@@ -161,152 +181,13 @@
 			</div>
 		</div>
 	</div>
-
-	<% @synonyms.each do |synonym| %>
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<div class="row">
-					<div class="span12">
-						<div class="accordion-toggle" style="padding-bottom:30px;">
-							<div id="synonyms<%= synonym.id %>" class="pull-left">
-								<span class="span2">
-									<%= synonym.name %>
-								</span>
-								<span class="span2" style="color:#bbb;"><i>
-									<% if @votes[synonym.id] != nil %>
-										<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>
-									<% else %>
-										<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %> 
-									<% end %>
-								</i></span>
-							</div>
-
-							<div id="buttons<%= synonym.id %>" class="pull-right">
-								<button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
-									    <span><%=t(:view_stats)%></span>
-     									<span style="display:none"><%=t(:hide_stats)%></span>
-		     							<script type="text/javascript">
-												function reduce_div_height(){
-													$('.centered_div .highcharts-container').css('height', '250px');
-												}
-		                  </script>
-								</button>
-								<%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
-								<%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
-								<% end %>
-							</div>
-							<script type="text/javascript">
-								<% if I18n.locale == :ar %>
-									$("#synonyms<%= synonym.id %>").attr("class", "pull-right");
-									$("#buttons<%= synonym.id %>").attr("class", "pull-left");
-								<% elsif I18n.locale == :en %>
-									$("#synonyms<%= synonym.id %>").attr("class", "pull-left");
-									$("#buttons<%= synonym.id %>").attr("class", "pull-right");
-								<% end %>
-							</script>
-							<script>
-								$("#bstats<%=synonym.id%>").click(function() {
-								    $("span",this).toggle();
-								});
-							</script>
-						</div>
-					</div>
-				</div>
-				<div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
-					<div class="accordion-inner">
-						<!-- add charts here -->
-						<% if @votes[synonym.id] != nil%>
-						<div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
-				    <div class="container-fluid">
-              <div class="row-fluide">
-                <div class="span2">
-                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
-                </div>
-                <div class="span2">
-                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %> 
-                </div>
-                <div class="span2">
-                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
-                </div>
-
-                <div class="span2" id="test">
-                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
-                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-                  <% end %>
-                </div>
-             </div>
-
-		        </div>
-		      	</div>
-		        <% else %>
-		        <%= t(:stats_no_votes) %>
-		        <% end %>
-					</div>
-				</div>
-			</div>
-		</div>
-	<% end %>
-
-	<% if !@search_keyword.blank? %>
-		<div class="alert alert-success" id="report_success" style="display:none;">
-			<div style="text-align:center;"><%= t(:report_sent_success) %></div>
-		</div>
-		<div class="alert alert-block alert-error" id="report_failure" style="display:none;">
-		  <button type="button" class="close" onclick="restoreError()">×</button>
-		  <h4 class="alert-heading"><%= t(:oh_snap) %></h4>
-		  <p><%= t(:check_connection) %></p>
-	  </div>
-		<div class="well">
-			<span><%=  t(:help_us_report) %></span>
-			<a href="#report_modal" role="button" class="btn btn-link" onClick="modalToggle()"
-				style="padding:0px;" id="launch_report"><%= t(:report) %></a>
-		</div>	
-		<script type="text/javascript">
-			<% if I18n.locale == :ar %>
-				$("#launch_report").css("font-size","18px");
-			<% else %>
-				$("#launch_report").css("font-size","13px");
-			<% end %>
-		</script>
-		<div id="report_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			  <h3 id="modal_label"><%= t(:report_abusive) %></h3>
-			</div>
-			<div class="modal-body">
-			  <p><%= t(:help_us_through_reporting) %></p>
-			  <hr>
-			  <h4><%= t(:words_in_page)%></h4>
-			  <%= check_box_tag "chkbox", [@search_keyword_model.id, "Keyword"], false, onclick: "setChecked(this)", is_checked: false %>
-			  <%= @search_keyword %>
-			  <br>
-			  <% if !@synonyms.blank? %>
-			  	<% @synonyms.each do |synonym| %>
-			  	<%= check_box_tag "chkbox", [synonym.id, "Synonym"], false, onclick: "setChecked(this)", is_checked: false %>
-			  	<%= synonym.name %>
-			  	<br>
-			  	<% end %>
-			  <% end %>
-			</div>
-			<div class="modal-footer">
-			  <button class="btn" data-dismiss="modal"><%= t(:close) %></button>
-			  <button class="btn btn-primary" onclick="report_submission()" data-dismiss="modal"><%= t(:submit) %></button>
-			</div>
-		</div>
-	<% end %>
+	<%= render "synonym_results" %>
 <% end %>
-
+<script type="text/javascript">
+	<%= render "filtering_synonym_votes.js" %>
+</script>
 <script type="text/javascript">
 	<%= render "submit-report.js" %>
 	<%= render "autocomplete-script.js" %>
 </script>
+
