@@ -40,9 +40,9 @@ function checkboxlimit(checkgroup, limit, locale){
 			checkedcount+=(checkgroup[i].checked)? 1 : 0
 		  if (checkedcount>limit){
 		  	if (locale == "en") {
-		  	alert("You can only select a maximum of "+limit+" checkboxes")
+		  	  alert("You can only select a maximum of " + limit + " checkboxes")
 		  	} else {
-		  	alert("ليس بإمكانك الإختيار أكثر من "+limit+" خانات")
+		  	  alert("ليس بإمكانك الإختيار أكثر من " + limit + " خانات")
 		  	}
 			  this.checked=false
 			}

@@ -383,7 +383,7 @@ end
     project_id =  params[:id]
     if id_words_project != nil
       words_synonyms_array = id_words_project.map {|x| x.split("|")}
-      developer = Developer.where(:gamer_id => current_gamer.id).first
+      developer = Developer.where(gamer_id: current_gamer.id).first
       my_sub = developer.my_subscription
       words_count = my_sub.max_add_word_count(project_id)
       if words_count < id_words_project.size
