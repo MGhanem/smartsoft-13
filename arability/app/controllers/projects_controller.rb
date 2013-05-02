@@ -502,7 +502,7 @@ end
             new_keyword = Keyword.find(@word_id)
             for category in project_categories do
               if not new_keyword.categories.include?(category) 
-                new_keyword.categories.push(category)
+                new_keyword.categories << category
                 new_keyword.save
               end
             end
@@ -584,16 +584,16 @@ end
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
     project_categories = Project.find(params[:project_id]).categories
-    project_categories = project_categories.map {|cat| cat.get_name_by_locale}
+    project_categories = project_categories.map {|category| category.get_name_by_locale}
     similar_keywords = Keyword.get_similar_keywords(
       keyword, project_categories)
     similar_keywords = similar_keywords.uniq
-    match_category_no = similar_keywords.count 
+    match_category_count = similar_keywords.count 
     similar_keywords = similar_keywords.concat(
       Keyword.get_similar_keywords(keyword,[]))
     similar_keywords = similar_keywords.uniq 
     similar_keywords.map! { |keyword| keyword.name }
-    similar_keywords.push(match_category_no)
+    similar_keywords.push(match_category_count)
     render json: similar_keywords
   end 
 
