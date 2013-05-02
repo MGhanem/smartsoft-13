@@ -42,24 +42,31 @@
 						$(".btnfollow").removeClass("btn-danger");
 						$(".btnfollow").addClass("btn-default");
 						$(".btnfollow").html("<%= t(:follow) %>");
-					}	
+					}
+				}
+				function tooltipOn(){
+					$('#tip').tooltip('show')
+				}
+				function tooltipOff(){
+					$('#tip').tooltip('hide')
 				}
 			</script>
-
 			
-
-			<% if !is_following(@search_keyword_model.id) %>
-				<span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 85px"><%= t(:follow) %></a></span>
+			<% if allowed %>
+				<% if ! is_following(@search_keyword_model.id) %>
+					<span id="followbtn"><a href="#" class="btn btnfollow btn-default " onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 85px"><%= t(:follow) %></a></span>
+				<% else %>
+						<span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 85px" ><%= t(:following) %></a></span>
+				<% end %>
 			<% else %>
-				<span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 85px" ><%= t(:following) %></a></span>
+				<span id="followbtn"><a href="#" id="tip"class="btn btnfollow btn-default disabled" data-toggle="tooltip" title="" data-original-title="<%= t(:followmaxtip) %>" style="width: 85px" onmouseover="tooltipOn();" onmouseout="tooltipOff();"><%= t(:follow) %></a></span>
 			<% end %>
-
 			<script type="text/javascript">
-			<% if I18n.locale == :ar %>
-				$("#followbtn").attr("class", "pull-left");
-			<% else %>
-				$("#followbtn").attr("class", "pull-right");
-			<% end %>
+				<% if I18n.locale == :ar %>
+					$("#followbtn").attr("class", "pull-left");
+				<% else %>
+					$("#followbtn").attr("class", "pull-right");
+				<% end %>
 			</script>
 
 			<div class="row" style="padding:10px;">
@@ -310,3 +317,4 @@
 	<%= render "submit-report.js" %>
 	<%= render "autocomplete-script.js" %>
 </script>
+<script src="assets/js/bootstrap-tooltip.js"></script>

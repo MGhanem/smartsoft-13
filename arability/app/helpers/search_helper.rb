@@ -144,14 +144,30 @@ module SearchHelper
   # params:
   #   key_id: id for the keyword to check
   # success:
-  #   returns true if following
+  #   returns true if following, false if not following.
   # failure:
-  #   returns false if not following
+  #   --
   def is_following(key_id)
     developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids = developer.keyword_ids
     keyword_ids.include? key_id.to_i
   end
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   funtion checks whether a developer is allowed to follow a word
+  # params:
+  #   --
+  # success:
+  #   returns true if allowed, false if not allowed.
+  # failure:
+  #   --
+  def allowed
+    developer = Developer.where(gamer_id: current_gamer.id).first
+    developer.my_subscription.get_permission_follow
+  end
+
 
 end
 

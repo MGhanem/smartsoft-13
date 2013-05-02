@@ -299,7 +299,7 @@ en:
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
   age_range: "(Kindly enter a value between 10 and 100)"
-  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword."
+  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword. You can follow words by searching for them and clicking the Follow button"
   synonyms_of: "Synonyms of"
   enter_keyword: "Enter a keyword"
   username: "Username"
@@ -561,3 +561,4 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  followmaxtip: "You've reach your maximum number of followed words."

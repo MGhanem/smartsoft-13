@@ -18,17 +18,18 @@
 </table>  
 </div>
 <% else %>
-<div class="well" style="font-weight: bold; text-align:center;"><%= t(:follow_words_info)%></div>
-<h4><%= t(:no_followed_words) %></h4>
+  <div class="well" style="font-weight: bold; text-align:center;"><%= t(:follow_words_info)%></div>
+  <h4><%= t(:no_followed_words) %></h4>
 <% end %>
 
 <script>
-  function clickunfollow(id){
-    $.get("/developers/unfollow/" + id);
-    $('#'+id).fadeOut();
   <% if I18n.locale == :ar %>
     $(".unfollowbtn").attr("class", "pull-left");
   <% else %>
     $(".unfollowbtn").attr("class", "pull-right");
   <% end %>
+  function clickunfollow(id){
+    $.get("/developers/unfollow/" + id);
+    $('#'+id).fadeOut();
+  }
 </script>
