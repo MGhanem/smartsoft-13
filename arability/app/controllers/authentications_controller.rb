@@ -123,7 +123,7 @@ class AuthenticationsController < ApplicationController
         else
           gamer = Gamer.find_by_email(email)
           if gamer
-            Authentication.create_with_omniauth(provider,gid,
+            Authentication.create_with_omniauth(provider, gid,
               token, nil, email, gamer.id)
             flash[:success] = t(:signed_in_fb)
             sign_in_and_redirect(:gamer, gamer)
@@ -200,7 +200,7 @@ class AuthenticationsController < ApplicationController
         else
           gamer = Gamer.find_by_email(email)
           if gamer
-            Authentication.create_with_omniauth(provider,gid,
+            Authentication.create_with_omniauth(provider, gid,
               token, refresh_token, email, gamer.id)
             flash[:success] = t(:signed_in_google)
             sign_in_and_redirect(:gamer, gamer)
