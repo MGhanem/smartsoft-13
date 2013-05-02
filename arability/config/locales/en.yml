@@ -369,7 +369,7 @@ en:
   help_us_report: "See any inappropriate words?"
   oh_snap: "Oh snap! You got an error!"
   check_connection: >
-    Seems like an error that was encountered and prohibited the request from completion! 
+    Seems like an error was encountered and prohibited the request from completion! 
     Please, try re-submitting your request.
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_social_connection: "Connection removed successfully!"
@@ -551,6 +551,11 @@ en:
       next: "Next &gt;"
       truncate: "&hellip;"
   connection_error: "Connection Error, please make sure you're connected to the internet"
+  wrong_age_input: "Wrong age input"
+  synonyms: "Synonyms:"
+  school: "School"
+  university: "University"
+  graduate: "Graduate"
   no_account: "You seem to have left us. Please create a new account"
   unshare: "Unshare"
   no_account: "You seem to have left us. Please create a new account"

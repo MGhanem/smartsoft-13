@@ -44,7 +44,8 @@ ar:
   please_select: "الرجاء الاختيار"
   formality: "اللغة"
   formal: "فصحى"
-  slang: "عامية"
+  slang: "عامي"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
   desc: "عن المشروع"
@@ -497,6 +498,11 @@ ar:
       last: "الاخيرة"
       truncate: "&hellip;"
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
+  wrong_age_input: "ادخلت رقم خطأ"
+  synonyms: "المعاني:"
+  school: "مدرسة"
+  university: "جامعة"
+  graduate: "خريج"
   activerecord:
     errors:
       models:
