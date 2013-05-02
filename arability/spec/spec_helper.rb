@@ -4,8 +4,8 @@ SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'capybara/rspec'
 require 'rspec/autorun'
+require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -26,6 +26,11 @@ RSpec.configure do |config|
   OmniAuth.config.add_mock(:twitter, { 
     :user_info => {:name => "Joe Smith", :nickname => 'joesmith'}, :uid => '123456790',
     :credentials => {:token => "testtoken234tsdf", :secret => "tokensecrettest"}
+    })
+  OmniAuth.config.add_mock(:facebook, {
+    "info" => {"email" => "email@mock.com", "username" => "mockuser"}, "provider" => "facebook",
+    "uid" => "011252217", "credentials" => {"token" => "mock123token456"},
+    "extra" => {"raw_info" => {"gender" => "male"}}
     })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

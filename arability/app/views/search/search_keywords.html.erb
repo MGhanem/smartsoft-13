@@ -1,12 +1,13 @@
 <div class="row">
 	<div class="span12">
-		<%= form_tag(search_keywords_path, :method => "post", :class => "form-search") do %>
+		<%= form_tag(search_path, method: "post", :class => "form-search") do %>
 	  	<%= content_tag(:div, :class => "input-append") do %>
 	  		<% text_field_tag(:search, @search_keyword,
 	  											placeholder: t(:search_here),
-	  											:class => "search-query",
+	  											:class => "search-query autocomplete",
+	  											autocomplete: "off",
                           tabindex: "1") + %>
-				<% button_tag(:type => "submit", :class => "btn", id: "search_button",
+				<% button_tag(type: "submit", :class => "btn", id: "search_button",
           tabindex: "3") do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
@@ -24,23 +25,15 @@
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
 			<div class="well well-small">
 				<span>
-					<%= form_tag(keywords_create_path, method: "post",
-           style: "margin-bottom:0px;", onsubmit: "submit_add_keyword(this)") do %>
-            <%= content_tag(:span, t(:keyword_not_found)) %>
-            <input name="keyword[name]" value="<%= @search_keyword %>" type="hidden">
-            <input name="redirect" value="<%= search_keywords_path %>" type="hidden">
-            <input class="btn btn-link" style="padding:0px;" value="<%= t(:add_word) %>" type="submit">
+					<%= form_tag(keywords_create_path, method: "post", :class => "form-search", 
+						style: "margin-bottom:0px;") do %>
+						<%= content_tag(:span, t(:keyword_not_found)) %>
+						<input name="keyword[name]" value="<%= @search_keyword %>" type="hidden">
+						<input name="redirect" value="<%= search_keywords_path %>" type="hidden">
+						<input class="btn btn-link" style="padding:0px;" value="<%= t(:add_word) %>" type="submit">
 					<% end %>
 				</span>
 			</div>
-		<% else %>
-			<% @similar_keywords.each do |c| %>
-				<div class="accordion-group" style="padding:10px;">
-					<div class="accordion-heading">
-						<%= link_to c.name, search_path(:search => c.name, :project_id => @project_id), :method => :post %>
-					</div>
-				</div>
-			<% end %>
 		<% end %>
 	</div>
 </div>
@@ -61,5 +54,7 @@
   function preloaded() {
     return <%= raw @category_ids.to_s || [] %>;
   }
-</script>
 
+	<%= render "autocomplete-script.js" %>
+</script>
+<%= render "categories-autocomplete" %>

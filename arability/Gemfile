@@ -94,3 +94,4 @@ end
 
 gem 'certified'
 
+gem 'kaminari'

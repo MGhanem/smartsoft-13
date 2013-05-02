@@ -14,7 +14,7 @@ describe "Get Prizes" do
     gamer_adam.email = "ag@gmail.com"
     gamer_adam.password = "password"
     gamer_adam.password_confirmation = "password"
-    gamer_adam.save(:validate => false)
+    gamer_adam.save validate: false
     gamer_adam
   }
 
@@ -29,7 +29,7 @@ describe "Get Prizes" do
     gamer_yahya.password = "password"
     gamer_yahya.password_confirmation = "password"
     gamer_yahya.email = "ym@gmail.com"
-    gamer_yahya.save
+    gamer_yahya.save validate: false
     gamer_yahya
   }
 
@@ -38,16 +38,16 @@ describe "Get Prizes" do
     prize1.name = "جأجأزجأج"
     prize1.level = 1
     prize1.score = 100
-    prize1.save
+    prize1.save validate: false
     prize1
   }
- 
+
   let(:prize2) {
     prize2 = Prize.new
     prize2.name = "جأزةجأ"
     prize2.level = 1
     prize2.score = 100
-    prize2.save
+    prize2.save validate: false
     prize2
   }
 
@@ -56,7 +56,7 @@ describe "Get Prizes" do
     prize3.name = "جأجأأزة"
     prize3.level = 1
     prize3.score = 100
-    prize3.save
+    prize3.save validate: false
     prize3
   }
 
@@ -65,16 +65,16 @@ describe "Get Prizes" do
     prize4.name = "ججأأزة"
     prize4.level = 1
     prize4.score = 100
-    prize4.save
+    prize4.save validate: false
     prize4
   }
- 
+
   let(:prize5) {
     prize5 = Prize.new
     prize5.name = "جأجأجأ"
     prize5.level = 1
     prize5.score = 100
-    prize5.save
+    prize5.save validate: false
     prize5
   }
 
@@ -83,7 +83,7 @@ describe "Get Prizes" do
     prize6.name = "جأجأأجأجأ"
     prize6.level = 3
     prize6.score = 1000
-    prize6.save
+    prize6.save validate: false
     prize6
   }
 
@@ -92,7 +92,7 @@ describe "Get Prizes" do
     prize7.name = "شسيضصثف"
     prize7.level = 3
     prize7.score = 2000
-    prize7.save
+    prize7.save validate: false
     prize7
   }
 
@@ -107,19 +107,16 @@ describe "Get Prizes" do
     prize6
     prize7
   end
-  
 
   it "adam doesn't have any prizes" do
     gamer_adam.id.to_i.should_not eq(nil)
     gamer_adam.prizes eq([])
   end
-    
+
   it "should get only one prize from the level" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 1500, 3)
     new_prizes.count.should eq(1)
   end
-
-
 
   it "should be able to get 5 new prizes" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 234, 1)
@@ -130,7 +127,7 @@ describe "Get Prizes" do
     Prize.get_new_prizes_for_gamer(gamer_adam.id, 234,1)
     gamer_adam.prizes.length.should eq(5)
   end
-  
+
   it "should not award the gamer with any prizes" do
     Prize.get_new_prizes_for_gamer(gamer_adam.id, 234, 2)
     gamer_adam.prizes.length.should eq(0)
@@ -140,12 +137,10 @@ describe "Get Prizes" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 1500, 3)
     gamer_adam.get_available_prizes.length.should eq(6)
   end
-  
+
   it "should return 5" do
     new_prizes = Prize.get_new_prizes_for_gamer(gamer_adam.id, 2500, 3)
     gamer_adam.get_available_prizes.length.should eq(5)
   end
-
-
 
 end

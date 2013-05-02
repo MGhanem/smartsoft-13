@@ -1,6 +1,5 @@
 @import "bootstrap";
-
-
+@import "bootstrap-responsive";
 .form-signin {
   max-width: 300px;
   padding: 19px 29px 29px;
@@ -35,7 +34,6 @@ div.field_with_errors {
   @extend ul;
   margin: 0 0 0px 10px;
 }
-@import "bootstrap-responsive";
 
 .select2-container-multi .select2-choices .select2-search-choice {
   padding: 3px 5px 3px 18px;
@@ -70,4 +68,37 @@ div.field_with_errors {
   background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
 }
 
+.navbar {
+  .navbar-inner {
+    min-height: 30px;
+    max-height: 30px;
+    background-color: black;
+    background-image: none;
+  }
+} 
+
+.navbar {
+  font: 13px/27px Arial,sans-serif;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.navbar .brand {
+  font: 13px/27px Arial,sans-serif;
+  font-weight: bold;
+  line-height: 20px;
+  float: left;
+  padding: 4px  10px;
+  color: #bbb;
+}
+
+.navbar .nav > li > a {
+  float: right;
+  padding: 4px  18px;
+  color: #bbb;
+}
+
+#black {
+  background-color: black;
+}
 
