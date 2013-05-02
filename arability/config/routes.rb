@@ -136,6 +136,8 @@ Arability::Application.routes.draw do
         match "help" => "api#help", as: :api_help
 
         match "/test" => "api#test", as: :api_test
+
+        match "/script" => "api#script", as: :api_script
       end
 
     end

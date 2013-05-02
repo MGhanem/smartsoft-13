@@ -13,7 +13,7 @@
   <% end %>
 
   <%= form_for @api_key, url: { action: "create" },
-    html: {:class => "form-horizontal"}, method: :post do |f| %>
+    html: { :class => "form-horizontal" }, method: :post do |f| %>
 
     <div class="control-group">
       <label class="control-label" for="website"><%= t :website %>:</label>

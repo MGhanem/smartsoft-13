@@ -150,6 +150,30 @@ class ApiController < BackendController
   def help
   end
 
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   returns the script for the plugin
+  # Params:
+  #   --
+  # Success:
+  #   Displays the help pages
+  # Failure:
+  #   --
+  def script
+    render partial: "script.js"
+  end
+
+  # Author:
+  #   Mohamed Ashraf
+  # Description:
+  #   tests the api for the demo
+  # Params:
+  #   --
+  # Success:
+  #   displays the test page
+  # Failure:
+  #   --
   def test
   end
 

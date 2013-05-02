@@ -4,18 +4,36 @@
       $.error("Api key not passed to arabize")
     }
 
+    var set_translation_for_element = function (element, translation) {
+      element = $(element)
+
+      if(element.is("input, textarea")) {
+        if(!element.is("input[type=submit]") && 'placeholder' in element[0]) {
+          element.attr("placeholder", translation)
+        } else {
+          element.val(translation)
+        }
+      } else {
+        element.html(translation)
+      }
+    }
+
     var keywords = []
     var elements = {}
     $("[data-arabize]").each(function (index, element) {
       var word = $(element).data("arabize")
       if (word != "") {
-        keywords = keywords.concat(word)
-        if(elements[word]) {
-          elements[word] = elements[word].concat(element)
+        var translation = sessionStorage.getItem(word)
+        if (translation != null) {
+          set_translation_for_element(element, translation)
         } else {
-          elements[word] = [element]
+          keywords = keywords.concat(word)
+          if(elements[word]) {
+            elements[word] = elements[word].concat(element)
+          } else {
+            elements[word] = [element]
+          }
         }
-      console.log(element)
       }
     })
 
@@ -24,21 +42,11 @@
     }
 
     var set_translations = function(keywords) {
-      console.log(keywords)
       $.each(keywords, function(index, entry) {
         if(entry["found"]) {
+          sessionStorage.setItem(entry["word"], entry["translation"])
           $(elements[entry["word"]]).each(function(index, element) {
-            element = $(element)
-
-            if(element.is("input, textarea")) {
-              if(!element.is("input[type=submit]") && 'placeholder' in element[0]) {
-                element.attr("placeholder", entry["translation"])
-              } else {
-                element.val(entry["translation"])
-              }
-            } else {
-              element.html(entry["translation"])
-            }
+            set_translation_for_element(element, entry["translation"])
           })
         }
       })
