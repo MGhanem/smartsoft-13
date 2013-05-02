@@ -79,9 +79,9 @@ class ApplicationController < ActionController::Base
   #   --
   def error_render_method(exception)
     path = request.path
-    UserMailer.generic_email("mostafa.a.hassaan@gmail.com", 
+    UserMailer.generic_email("arability.smartsoft@gmail.com", 
         exception, exception.backtrace.join("\n")).deliver
-    if path.include? "developers/projects"
+    if path.include? "developers/followed" || path.include? "developers/search_keywords"
        redirect_to project_path, flash: { error: t(:exception) }
        return 
     end
