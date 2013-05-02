@@ -190,7 +190,8 @@ class ApplicationController < ActionController::Base
     gamer.email = email
     gamer.password = password
     gamer.show_tutorial = guest_gamer.show_tutorial
-    gamer.highest_score = guest_gamer.highest_score 
+    gamer.highest_score = guest_gamer.highest_score
+    gamer.confirmed_at = nil
     if gamer.save
       logging_in(gamer.id)
       session[:guest_gamer_id] = nil

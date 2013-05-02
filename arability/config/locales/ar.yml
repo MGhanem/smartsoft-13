@@ -328,7 +328,11 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  won_prizes_title: "الجوائز التي تم الحصول عليها "
+  not_won_prizes_title: "الجوائز المتاحة "
+  no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
+  all_prizes: "لقد فزت بجميع الجوائز"
   project_removed: "تم مسح المشروع المشترك"            
   activerecord:
     attributes:
@@ -375,6 +379,9 @@ ar:
         categories: "الفئات"
         description: "الوصف"
   project_delete: "تم مسح المشروع بنجاح"
+  choose_sub: 'نظام الإشتراك'           
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -392,6 +399,15 @@ ar:
   not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر تغيير البيانات"
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر تغيير البيانات"
   loading: "تحميل"
+  won_trophies_title: "الانجازات التي تم اكمالها"
+  not_won_trophies_title: "الانجازات التي بامكانك اكمالها "
+  no_trophies: "لم تكمل أي انجازات حتى الأن"
+  all_trophies: "لقد أكملت كل الانجازات التي بمكانك انجزها "
+  you_have_score: "مبروك! لقد سجلت النقاط التالية"
+  share_your_score: "شارك على الشبكات الاجتماعية!"
+  you_have_won_these_trophies: "لقد حققت الانجازات التالية!"
+  game_over: "انتهت اللعبة"
+  lose_score: "لقد سجلت النقاط التالية"
   you_have_prizes: "لقد ربحت الجوائز التالية"
   forgot_password: "هل نسيت كلمة السر؟"
   remember_me: "ابقى متصلاً "
@@ -542,6 +558,13 @@ ar:
   close_delete: "الغاء"
   submit_delete: "مسح"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+<<<<<<< HEAD
+=======
+  sub_changed: "لقد غيرت نظامك "
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  back_to_project: "<< عودة إلى المشروع"
+  unshare: " الغاء الاشتراك"
+>>>>>>> f1a7fa53e222359bc26e850928b06e9c091dcb48
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   unshare: " الغاء الاشتراك"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
