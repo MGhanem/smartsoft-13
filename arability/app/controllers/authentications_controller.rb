@@ -215,15 +215,8 @@ class AuthenticationsController < ApplicationController
           end
         end
       else
-        if !auth
-          Authentication.create_with_omniauth(provider,gid,
-            token, refresh_token, email, current_gamer.id)
-          flash[:success] = t(:logged_in_to_google)
-          redirect_to "/gamers/edit"
-        else
-          flash[:error] = t(:connected_to_google)
-          redirect_to root_url
-        end
+        flash[:error] = t(:connected_to_google)
+        redirect_to root_url
       end
     else
       flash[:error] = t(:oops_error_google)
