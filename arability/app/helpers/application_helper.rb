@@ -69,8 +69,6 @@ module ApplicationHelper
     end
   end
 
-end
-
   # Author:
   #   Mohamed Tamer
   # Description
