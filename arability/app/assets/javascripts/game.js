@@ -62,7 +62,9 @@ var modalNoButton;
 var letterPickerArray = [];
 var intPickerArray = [];
 var initialIntValues = [];
-
+var listCountersArray = [];
+var listCountersTimeouts = [];
+var alreadyCounting = [];
  // author:
  //   Ali El Zoheiry
  // description:
@@ -408,6 +410,10 @@ function initializeList(){
 		list.css('float', 'right');
 		list.css('margin-right', '20px');
 	}
+	 for(var x = 0; x < wordsArray.length; x++){
+        var listId = 'ls' + x;
+        $('#' + listId).append("<div style='float: right; color: white; display: inline-block; position: relative; margin-left: 20px;' id='ls" + x + "Counter'>1</div>");
+    }
 }
 
 // author:
@@ -457,6 +463,9 @@ function dropAblock(){
  // failure:
  //   --
 function pause(){
+	for(var x = 0; x < wordsArray.length; x++){
+		clearTimeout(listCountersTimeouts[x]);
+	}
 	tutorialFlag = true;
 }
 
@@ -473,6 +482,10 @@ function pause(){
  //   tutorial wasent started
 function endTutorial(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		startCounter(lsId);
+	}
 	showSuspense = true;
 	tutorialFlagWas = true;
 	if(newDrop == true){
@@ -503,6 +516,10 @@ function endTutorial(){
  //   game was not paused
 function unPause(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		startCounter(lsId);
+	}
 	if(newDrop == true){
 		newDrop = false;
 		dropAblock();
@@ -650,12 +667,14 @@ function calculatePossible(){
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).addClass('text-warning');
 				$('#' + lsId).css( "color", "orange" );
+				CheckStatus(lsId);
 			}
 			else{
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).removeClass('text-warning');
 				$('#' + lsId).css("color", "#333333");
+				stopCounter(lsId);
 			}
 			for(var l = 0; l < wordsArray[k].length; l++){
 				canBeFormed = false;
@@ -681,12 +700,14 @@ function calculatePossible(){
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).addClass('text-warning');
 			$('#' + lsId).css("color", "orange");
+			CheckStatus(lsId);
 		}
 		else{
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).removeClass('text-warning');
 			$('#' + lsId).css("color", "#333333");
+			stopCounter(lsId);
 		}
 }
 
@@ -893,17 +914,19 @@ function calculateCol(id){
 function removeAblock(){
 	var x;
 	var word = document.getElementById("wordLabel").innerHTML;
-		for(x = 0; x < wordsArray.length; x++){
-			if(wordsArray[x] == word && wordExistsInArray[x] == true){
-				removeFromLetterPicker(word);
-				for(var i = 0; i < buttonArray.length; i++){
-					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
-					$('#' + toBeRemovedId).fadeTo('slow',0.5);
-					// setTimeout(function(){document.getElementById(toBeRemovedId).innerHTML = '';}, 500);
-				}
-				setTimeout('fadeSomething(' + x + ')' , 300);
+	for(x = 0; x < wordsArray.length; x++){
+		if(wordsArray[x] == word && wordExistsInArray[x] == true){
+			removeFromLetterPicker(word);
+			var lsId = 'ls' + x
+			stopCounter(lsId);
+			alreadyCounting[x] = true;
+			for(var i = 0; i < buttonArray.length; i++){
+				var toBeRemovedId = buttonArray[i].closest('td').attr('id');
+				$('#' + toBeRemovedId).fadeTo('slow',0.5);
 			}
+			setTimeout('fadeSomething(' + x + ')' , 300);
 		}
+	}
 }
 
 // author:
@@ -930,7 +953,7 @@ function fadeSomething(x){
 	var lsId = "ls" + x;
 	var originalLi = document.getElementById(lsId).innerHTML;
 	document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
-	calculateScore();
+	calculateScore(lsId);
 	if(wordsInDb == true){
 		successfulWords.push(wordsArray[x]);
 	}
@@ -1395,6 +1418,7 @@ function setLevelAttributes(level){
 	}
 	for(var i = 0; i < wordsArray.length; i++){
 		wordExistsInArray[i] = true;
+		listCountersArray[i] = 1;
 	}
 	setLetterPicker();
 	initializeGame();
@@ -1437,8 +1461,11 @@ function setLang(l){
 //   the gamer formed a word and his score is added.
 // failure:
 //   --
-function calculateScore(){
-	score = score + (100 * level);
+function calculateScore(lsId){
+	var index = parseInt(lsId.replace('ls', ''));
+	var numLetters = wordsArray[index].length;
+	var timer = parseInt(document.getElementById(lsId + 'Counter').innerHTML);
+	score = Math.ceil(score + (((numLetters*100)/timer) * level));
 	setScoreTitle();
 }
 
@@ -1598,4 +1625,33 @@ function modalButtonClicked(answer){
 
 function disableTutorial(){
 	$.get("games/disableTutorial");
+}
+
+
+function CheckStatus(listId){
+	var index = parseInt(listId.replace('ls', ''));
+	if(alreadyCounting[index] == true || tutorialFlag == true){
+		return;
+	}
+	else{
+		alreadyCounting[index] = true;
+		startCounter(listId);
+	}
+}
+
+function startCounter(listId){
+	var index = parseInt(listId.replace('ls', ''));
+    listCountersTimeouts[index] = setTimeout(function(){
+        $('#' + listId +'Counter').empty();
+        var newVal = listCountersArray[index] + 1;
+        $('#' + listId +'Counter').append(newVal);
+        listCountersArray[index] = newVal;
+        startCounter(listId);
+    }, 1000);
+}
+
+function stopCounter(listId){
+    var index = parseInt(listId.replace('ls', ''));
+    alreadyCounting[index] = false;
+    clearTimeout(listCountersTimeouts[index]);
 }
