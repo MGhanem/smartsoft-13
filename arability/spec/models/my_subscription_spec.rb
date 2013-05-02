@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe MySubscription do
   let(:developer){
-    developer=Developer.new
+    developer = Developer.new
     developer.id = 1
     developer.verified = true
-    developer.gamer_id= 1
+    developer.gamer_id = 1
     developer.save
     puts "dev : #{developer.to_json}"
     developer
@@ -25,10 +25,10 @@ describe MySubscription do
 
   let(:submodel){
     submodel = SubscriptionModel.new
-    submodel.limit=50
-    submodel.limit_search=50
-    submodel.limit_follow=50
-    submodel.limit_project=1
+    submodel.limit = 50
+    submodel.limit_search = 50
+    submodel.limit_follow = 50
+    submodel.limit_project = 1
     submodel.save
     submodel
   }
