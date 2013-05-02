@@ -29,4 +29,3 @@ class SubscriptionModel < ActiveRecord::Base
   validates_uniqueness_of :name_ar, message: "هذا الإسم العربي موجود بالفعل"
 
 end
-

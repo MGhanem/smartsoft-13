@@ -52,14 +52,8 @@ class Keyword < ActiveRecord::Base
       .where(keyword_id: keyword_id, approved: true) }
     synonym_list.uniq!
 
-    rejected_synonyms = []
-    if is_formal != nil
-      accepted_synonyms = synonym_list
-        .reject { |synonym| synonym.is_formal != is_formal }
-      rejected_synonyms = synonym_list - accepted_synonyms
-      synonym_list = accepted_synonyms
-      rejected_synonyms.each { |synonym| votes_count.slice!{ :"#{synonym.id}" } }
-    end
+    synonym_list = synonym_list
+      .reject { |synonym| synonym.is_formal != is_formal } if is_formal != nil
 
     synonym_list = synonym_list.sort_by { |synonym| votes_count[synonym.id] }
       .reverse!
@@ -185,7 +179,7 @@ class Keyword < ActiveRecord::Base
     Keyword.where(approved: true).all
   end
 
-  # author:
+  # Author:
   #   Omar Hossam
   # Description:
   #   function takes no input and returns a list of all reported keywords.
@@ -197,7 +191,12 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #   returns an empty list if no words are reported.
   def self.list_reported_keywords
-    Keyword.where(reported: true).all
+    reports = Report.where(reported_word_type: "Keyword").all
+    reported_keywords = []
+    reports.each do |report|
+      reported_keywords << Keyword.find_by_id(report.reported_word_id)
+    end
+    reported_keywords
   end
 
     # Author:

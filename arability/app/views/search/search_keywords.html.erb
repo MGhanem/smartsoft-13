@@ -18,8 +18,9 @@
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
 			<div class="well well-small">
 				<span>
-					<%= form_tag(keywords_create_path, method: "post", :class => "form-search", style: "margin-bottom:0px;") do %>
-					<%= content_tag(:span, t(:keyword_not_found)) %>
+					<%= form_tag(keywords_create_path, method: "post", :class => "form-search", 
+						style: "margin-bottom:0px;") do %>
+						<%= content_tag(:span, t(:keyword_not_found)) %>
 						<input name="keyword[name]" value="<%= @search_keyword %>" type="hidden">
 						<input name="redirect" value="<%= search_keywords_path %>" type="hidden">
 						<input class="btn btn-link" style="padding:0px;" value="<%= t(:add_word) %>" type="submit">

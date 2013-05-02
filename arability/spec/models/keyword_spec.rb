@@ -11,6 +11,7 @@ describe Keyword do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "nour@gmail.com"
     gamer.password = "1234567"
+    gamer.confirmed_at = Time.now
     gamer.save validate: false
     gamer
   }
@@ -148,7 +149,8 @@ describe Keyword do
 		keyword.last.name.should eq("clickMe")
 	end
 
-	it "should return an empty list when searching for an unapproved keyword" do
+	it "should return an empty list when searching for an unapproved keyword",
+    nourhan_mohamed: true do
 		k
 		k1
 		k2
@@ -333,11 +335,8 @@ describe Keyword do
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, true)
     synonyms.first.name.should eq("دوس")
     synonyms.length.should eq(1)
-    votes.should eq({})
     synonyms, votes = k.retrieve_synonyms(nil, nil, nil, nil, nil, false)
     synonyms.first.name.should eq("انقر")
     synonyms.length.should eq(1)
-    votes.should eq({1=>1})
   end
-
 end

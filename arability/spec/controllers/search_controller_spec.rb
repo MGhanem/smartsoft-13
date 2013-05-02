@@ -30,13 +30,13 @@ describe SearchController do
 
     let(:s) {
       k
-      s = Synonym.create(name: "ابت", keyword_id: k.id, approved: true)
+      s = Synonym.create(name: "ابت", keyword_id: k.id, approved: true, is_formal: true)
       s
     }
 
     let(:s1) {
       k
-      s = Synonym.create(name: "ابتث", keyword_id: k.id, approved: true)
+      s = Synonym.create(name: "ابتث", keyword_id: k.id, approved: true, is_formal: false)
       s
     }
 
@@ -69,6 +69,7 @@ describe SearchController do
       gamer.email = "nour@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "medium"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -82,6 +83,7 @@ describe SearchController do
       gamer.email = "nour@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "high"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -102,6 +104,7 @@ describe SearchController do
       gamer.email = "nourhanA@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "University"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -122,6 +125,7 @@ describe SearchController do
       gamer.email = "nourhanB@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "Graduate"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -161,7 +165,7 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
-      get :search, search: "test    "
+      get :search_with_filters, search: "test    ", synonym_type: 0
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should eq(1)
       assigns(:votes)[2].should be_nil
@@ -177,14 +181,20 @@ describe SearchController do
       gamer_vote_s
 
       get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
-        age_to: "19", education: "high", gender: "female"
+        age_to: "19", education: "high", gender: "female", synonym_type: 0 
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should be_nil
       assigns(:votes)[2].should be_nil
 
+      get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
+        age_to: "19", education: "high", gender: "female", synonym_type: 2
+      assigns(:synonyms).should eq([s1])
+      assigns(:votes)[1].should be_nil
+      assigns(:votes)[2].should be_nil
+
       get :search_with_filters, search: "test", country: "Egypt", age_from: "40",
-        age_to: "19", gender: "female", education: "medium"
-      assigns(:synonyms).should eq([s, s1])
+        age_to: "19", gender: "female", education: "medium", synonym_type: 1
+      assigns(:synonyms).should eq([s])
       assigns(:votes)[1].should eq(1)
       assigns(:votes)[2].should be_nil
     end
@@ -194,7 +204,7 @@ describe SearchController do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
-      get :search, search: "abc"
+      get :search_with_filters, search: "abc"
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path(search: "abc"))
 
@@ -208,7 +218,7 @@ describe SearchController do
       d = create_logged_in_developer
       sign_in(d.gamer)
 
-      get :search, search: ""
+      get :search_with_filters, search: ""
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path)
 
@@ -231,7 +241,7 @@ describe SearchController do
     gamer3_vote_s
     gamer4_vote_s1
 
-    get :search, search: "test"
+    get :search_with_filters, search: "test"
 
     assigns(:synonyms).should =~([s, s1])
     visuals = assigns(:charts).select {|f| f[s.id]}
@@ -297,6 +307,7 @@ describe SearchController do
     charts[3].data.first[:data]
       .should =~ (s.get_visual_stats_education("female", "Lebanon", "University", 10, 50))
     charts[3].data.first[:data].should_not =~ []     
+
     end
 
     it "should return json containing similar keywords" do

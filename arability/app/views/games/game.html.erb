@@ -1,9 +1,15 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-  tutorialFlag = <%= current_gamer.show_tutorial %>;
+  tutorialFlag = <%= current_or_guest_gamer.show_tutorial %>;
   var words;
   var cache = "";
   var nav_locked = false;
+
+  <% if current_gamer == nil %>
+  isGuest = true;
+  <% else %>
+  isGuest = false;
+  <% end %>
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -27,9 +33,14 @@
 
   function check_empty_words(){
     if(words.length == 0){
-        if(win == true){
+      if(win == true){
+        if(isGuest == true){
+          nextLevel();
+        }
+        else{
          getTrophies(level, score);
-      }
+        }
+     }
       else{
         getScoreOnly(score);
       }
@@ -220,7 +231,13 @@ function setButtons(){
     $.get("/games/halloffame");
   }
 
-
+  function showProfile(){
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    } 
+    clear();
+    $.get("/games/showprofile");
+  }
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
@@ -268,12 +285,11 @@ function setButtons(){
 
 
 <div class="game-zone">
-
   <div class="game-nav">
     <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
-    <div class="nav-box btn btn-inverse" id="navItems">بروفيل</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
     <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
   </div>
