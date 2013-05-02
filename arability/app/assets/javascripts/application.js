@@ -30,7 +30,7 @@
 //   doesn't allow more slected checkboxes than the limit  
 // failure:
 //   none
-function checkboxlimit(checkgroup, limit){
+function checkboxlimit(checkgroup, limit, locale){
 	var checkgroup=checkgroup
 	var limit=limit
 	for (var i=0; i<checkgroup.length; i++){
@@ -39,7 +39,11 @@ function checkboxlimit(checkgroup, limit){
 		for (var i=0; i<checkgroup.length; i++)
 			checkedcount+=(checkgroup[i].checked)? 1 : 0
 		  if (checkedcount>limit){
+		  	if (locale == "en") {
 		  	alert("You can only select a maximum of "+limit+" checkboxes")
+		  	} else {
+		  	alert("ليس بإمكانك الإختيار أكثر من "+limit+" خانات")
+		  	}
 			  this.checked=false
 			}
 		}
