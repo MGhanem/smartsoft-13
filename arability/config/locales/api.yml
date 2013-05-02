@@ -31,7 +31,7 @@ ar:
     يمكنك إستخدم موقعنا لترجمة موقعك باستخدام ال-"API". لمعرفة المزيد يمكنك زيارة
   help_page: "صفحات المساعدة"
   generate_api_key: "توليد مفتاح API جديد"
-  generate: "توليد"
+  generate: "إصدار"
   website: "الموقع"
   website_small_text: "(الموقع الذي ستستخدم فيه ال-API)"
   project_small_text: "(يمكنك إختيار مشروع لربطه بمفتاح ال-API)"
