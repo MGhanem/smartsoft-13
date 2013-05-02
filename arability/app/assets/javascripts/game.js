@@ -65,6 +65,9 @@ var initialIntValues = [];
 var listCountersArray = [];
 var listCountersTimeouts = [];
 var alreadyCounting = [];
+var scorePopoverContent;
+var scorePopoverTitle;
+
  // author:
  //   Ali El Zoheiry
  // description:
@@ -221,12 +224,19 @@ function wordLablelToolTip(){
 }
 
 function scorePopover(){
+	var scoreButton;
+	if(JsLocale == "en"){
+		scoreButton = "Next";
+	}
+	else{
+		scoreButton = "التالي"
+	}
 	destroy('wordLabel');
 	$('#game-score').popover({
 		html: true,
 		trigger: 'manual',
-		content: "<p>The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word<p><button class='tutBtn btn btn-primary' id='game-score-po' onclick='callNextToolTip2(this.id)'>Next</button>",
-		title: '<h4>How Score is calculated</h4>',
+		content: "<p>" + scorePopoverContent + "<p><button class='tutBtn btn btn-primary' id='game-score-po' onclick='callNextToolTip2(this.id)'>" + scoreButton + "</button>",
+		title: '<h4>' + scorePopoverTitle + '</h4>',
 		placement: 'top'
 	});
 	setTimeout(function(){
@@ -238,7 +248,7 @@ function scorePopover(){
 		$('#wordsList').css('z-index', '99999999');
 		$('#wordsList').css('position', 'relative');
 		if(JsLocale == 'ar'){
-			$('.popover').css('top', '273px');
+			$('.popover').css('top', '322px');
 			$('.popover').css('left', '760px');
 			$('.popover').css('width', '422px');
 		}
@@ -440,7 +450,7 @@ function initializeList(){
         var listId = 'ls' + x;
         if(lang == 0){
         	var timerfloat = 'right';
-        	var margin = 'margin-left: 20px;'
+        	var margin = 'margin-left: 7px;'
         }
         else if(lang == 1){
         	var timerfloat = 'left';
