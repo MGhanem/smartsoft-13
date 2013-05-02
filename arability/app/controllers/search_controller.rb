@@ -101,7 +101,7 @@ class SearchController < BackendController
   #   sorted by vote count according to passed filters
   # failure:
   #   returns a list of synonyms available for the search keyword, all with 0 
-  #   votes
+  #   votes or returns to search keywords page if quota was exceeded
   def search_with_filters
     @search_keyword = params["search"]
     @country = params["country"]
