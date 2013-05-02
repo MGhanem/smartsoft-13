@@ -114,6 +114,33 @@ describe AdminController  do
       response.should redirect_to("http://test.host/admin/make_admin")
     end
 
+    it "should remove the current existing admin" do
+      gamer
+      gamer2
+      sign_in(gamer)
+      post :make_admin, email: gamer2.email
+      Gamer.find_by_email(gamer2.email).admin.should eq(true)
+      get :remove_admin, id: gamer2.id
+      Gamer.find_by_id(gamer2.id).admin.should eq(false)
+    end
+
+    it "should not remove the not existing admin" do
+      gamer
+      gamer2
+      sign_in(gamer)
+      get :remove_admin, id: gamer2.id
+      Gamer.find_by_id(gamer2.id).admin.should eq(false)
+      response.should redirect_to("http://test.host/admin/list/admins")
+    end
+
+    it "should not remove yourself from admins" do
+      gamer
+      sign_in(gamer)
+      get :remove_admin, id: gamer.id
+      Gamer.find_by_id(gamer.id).admin.should eq(true)
+      response.should redirect_to("http://test.host/admin/list/admins")
+    end
+
     it "should list all projects" do
       project
       gamer

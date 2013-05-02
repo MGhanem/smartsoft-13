@@ -193,10 +193,15 @@ class AdminController < ApplicationController
   def remove_admin
     user = Gamer.find_by_id(params[:id])
     if user.admin
-      user.remove_admin
-      flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
-      flash.keep
-      redirect_to "/admin/list/admins"
+      if user.id == current_gamer.id
+        flash[:error] = "لا يمكن مسح نفسك"
+        redirect_to "/admin/list/admins"
+      else
+        user.remove_admin
+        flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
+        flash.keep
+        redirect_to "/admin/list/admins"
+      end
     else
       flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
       redirect_to "/admin/list/admins"
