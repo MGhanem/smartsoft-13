@@ -174,7 +174,7 @@ class AdminController < ApplicationController
         flash.keep
         redirect_to "/admin/list/admins"
       else
-        flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
+        flash[:error] = "لم يتم العثورعلى الحساب الذي اختارته"
         redirect_to "/admin/make_admin"
       end
     end
