@@ -70,10 +70,6 @@
   right: -10000px;
 }
 
-.btn {
-  font-size: 18px;
-}
-
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
@@ -316,6 +312,10 @@ background-position: -96px -96px;
 
 #black {
   background-color: black;
+}
+
+.btn {
+  font-size: 18px;
 }
 
 .btn-mini {

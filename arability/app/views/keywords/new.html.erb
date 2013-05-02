@@ -2,7 +2,8 @@
     <span><%= t :enter_keyword %>:</span>
     <div class="input-append">
       <%= f.text_field :name, tabindex: "1" %>
-      <%= f.submit t(:add_word), :class => "btn btn-primary", tabindex: "3" %>
+      <%= f.submit t(:add_word), :class => "btn btn-primary", style: "font-size: 18px",
+      tabindex: "3" %>
     </div>
     <input type="hidden" name="override_categories" value="true">
     <select name="category_ids[]" id="categories-autocomplete" multiple="true" style="width: 500px" tabindex="2">
@@ -17,7 +18,6 @@
       placeholder: "<%= t(:tag_using_categories) %>",
       width: "resolve",
     }).val(preloaded).trigger("change");
-    $("#keyword_name").focus()
   });
 
   function preloaded() {

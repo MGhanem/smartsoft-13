@@ -19,18 +19,14 @@ class SearchController < BackendController
   #   returns an empty list if the search keyword had no matches or no
   #   similar keywords were found
   def search_keywords
-    @categories_by_locale = Category.all.map { |c| [c.id, c.get_name_by_locale] }
-    @category_ids = params[:category_ids] || []
     @project_id = params[:project_id]
     @search_keyword = params["search"]
-    categories_array = Category.where(id: @category_ids) || []
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
     end
     @similar_keywords =
-      Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array
+      Keyword.get_similar_keywords(@search_keyword)
   end
 
   # Author:

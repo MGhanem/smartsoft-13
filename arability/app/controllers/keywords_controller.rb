@@ -75,7 +75,7 @@ class KeywordsController < BackendController
         redirect_to search_path(search: @keyword.name), flash: flash
       else
         flash[:error] = @keyword.errors.messages[:name]
-        redirect_to keywords_new_path, flash: flash
+        redirect_to keywords_new_path, flash: flash, name: name
       end
     end
   end

@@ -8,27 +8,20 @@
 	  											autocomplete: "off",
                           tabindex: "1") + %>
 				<% button_tag(type: "submit", :class => "btn", id: "search_button",
-          tabindex: "3") do %>
+          tabindex: "2") do %>
 					<% content_tag(:i, nil,:class => "icon-search") %>
 				<% end %>
 			<% end %>
-      <div style="padding:5px; display:inline;">
-        <select name="category_ids[]" tabindex="2" style="width:565px" id="categories-autocomplete" multiple="true">
-          <% @categories_by_locale.each do |id, name| %>
-            <option value="<%= id %>"><%= name %></option>
-          <% end %>
-        </select>
-      </div>
       <input name="project_id" type="hidden" value="<%= @project_id %>"/>
 		<% end %>
 
 		<% if @similar_keywords.blank? && !@search_keyword.blank? %>
 			<div class="well well-small">
 				<span>
-					<%= form_tag(keywords_create_path, method: "post", :class => "form-search", 
+					<%= form_tag(keywords_new_path, method: "post", :class => "form-search",
 						style: "margin-bottom:0px;") do %>
 						<%= content_tag(:span, t(:keyword_not_found)) %>
-						<input name="keyword[name]" value="<%= @search_keyword %>" type="hidden">
+						<input name="name" value="<%= @search_keyword %>" type="hidden">
 						<input name="redirect" value="<%= search_keywords_path %>" type="hidden">
 						<input class="btn btn-link" style="padding:0px;" value="<%= t(:add_word) %>" type="submit">
 					<% end %>
@@ -38,23 +31,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-  function submit_add_keyword(form) {
-    $form = $(form);
-    $form.append($("#categories-autocomplete"));
-  }
-
   $(document).ready(function() {
-    $("#categories-autocomplete").select2({
-      placeholder: "<%= t(:enter_categories) %>",
-      width: 'resolve',
-    }).val(preloaded).trigger("change");
     $("input[name=search]").focus()
   });
-
-  function preloaded() {
-    return <%= raw @category_ids.to_s || [] %>;
-  }
-
 	<%= render "autocomplete-script.js" %>
 </script>
-<%= render "categories-autocomplete" %>
