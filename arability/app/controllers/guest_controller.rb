@@ -149,7 +149,6 @@ class GuestController < ApplicationController
           country: country, gender: gender  	
         return
       end
-      flash[:success] = t(:welcome_guest)
   	  redirect_to ("/game")
   	  return
   	end
