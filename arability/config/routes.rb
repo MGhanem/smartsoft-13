@@ -42,7 +42,8 @@ Arability::Application.routes.draw do
   scope "(:locale)", :locale => /en|ar/ do
 
     # required for routing by the devise module(gem)
-
+    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
     devise_for :gamers do 
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
@@ -136,6 +137,11 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
     end
   end
+
+
+  get "/en/gamers/password" => redirect("/en/gamers/password/edit")
+
+  get "/ar/gamers/password" => redirect("/ar/gamers/password/edit")
 
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 

@@ -1,16 +1,13 @@
-<h2>Change your password</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name, locale: I18n.locale),
+             :html => { method: :put, class: "form-signin", style: "min-width: 380px;" }) do |f| %>
+  <h2><%= t(:change_your_password) %></h2>
+  <% if resource.errors.any? %>
+      <div class="alert"><%= devise_error_messages! %></div>
+  <% end %>
   <%= f.hidden_field :reset_password_token %>
+  <%= f.password_field :password, placeholder: t(:password), class: "input-block-level" %>
+  <%= f.password_field :password_confirmation, placeholder: t(:password_confirmation), class: "input-block-level" %>
 
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Change my password" %></div>
+  <div><%= f.submit t(:change_password), class: "btn btn-primary" %></div>
 <% end %>
-
-<%= render "links" %>
