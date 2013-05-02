@@ -60,7 +60,7 @@ end
 # Failure:
 #   None
 def self.createcategories(project,cat_id)
-  if cat_id != " "
+  if cat_id != ""
     catArray = []
     catArray.push(cat_id)
     catArray.each do |m|
@@ -72,5 +72,4 @@ def self.createcategories(project,cat_id)
   project.save
   return project
 end
-
 end

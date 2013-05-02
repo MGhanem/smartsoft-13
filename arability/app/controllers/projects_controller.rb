@@ -32,27 +32,17 @@ class ProjectsController < BackendController
   # author:
   #    Mohamed Tamer
   # description:
-  #    function shows all the projects that a certain developer owns and the projects shared with him
+  #   Function shows all the projects that a certain developer owns and the projects shared with him
   # Params:
-  #    current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
+  #   current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
   # Success:
-  #    returns array of projects that the developer own and the projects shared with him
+  #   Returns array of projects that the developer own and the projects shared with him
   # Failure:
-  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
+  #   None
   def index
-    if current_gamer != nil
-      @developer = Developer.where(:gamer_id => current_gamer.id).first
-      if @developer != nil
-        @my_projects = Project.where(:owner_id => @developer.id)
-        @shared_projects = @developer.projects_shared
-      else
-        flash[:notice] = "من فضلك سجل كمطور"
-        redirect_to developers_new_path
-      end
-    else
-      flash[:error] = t(:projects_index_error2)
-      redirect_to new_gamer_session_path
-    end
+    @developer = Developer.where(gamer_id: current_gamer.id).first
+    @my_projects = Project.where(owner_id: @developer.id)
+    @shared_projects = @developer.projects_shared
   end
 
   # Author:
@@ -616,5 +606,4 @@ end
       redirect_to projects_path, flash: flash
     end
   end
-
 end
