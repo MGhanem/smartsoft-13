@@ -20,6 +20,8 @@ class SearchController < BackendController
   #   returns an empty list if the search keyword had no matches or no
   #   similar keywords were found
   def search_keywords
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     @project_id = params[:project_id]
     @search_keyword = params["search"]
     if(!@search_keyword.blank?)
@@ -59,7 +61,7 @@ class SearchController < BackendController
   # params:
   #   reported_words: an array of keywords/synonyms to be reported
   # success:
-  #   returns submits a report with the chosen keywords/synonyms
+  #   returns a report with the chosen keywords/synonyms
   # failure:
   #   --
   def send_report
@@ -98,6 +100,8 @@ class SearchController < BackendController
   #   and no charts will be drawn if the keyword has no synonyms
   def search_with_filters
     @search_keyword = params["search"]
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
