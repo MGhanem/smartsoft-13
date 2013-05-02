@@ -11,6 +11,7 @@ describe Keyword do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "nour@gmail.com"
     gamer.password = "1234567"
+    gamer.confirmed_at = Time.now
     gamer.save validate: false
     gamer
   }
@@ -338,5 +339,4 @@ describe Keyword do
     synonyms.first.name.should eq("انقر")
     synonyms.length.should eq(1)
   end
-
 end

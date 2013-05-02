@@ -37,6 +37,7 @@ describe AdminController  do
       gamer.password = "1234567"
       gamer.education_level = "University"
       gamer.admin = true
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
