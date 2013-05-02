@@ -82,9 +82,9 @@ class ApplicationController < ActionController::Base
     UserMailer.generic_email("mostafa.a.hassaan@gmail.com", 
         exception, exception.backtrace.join("\n")).deliver
     if path.include? "developers/projects"
--      redirect_to project_path, flash: { error: t(:exception) }
--      return 
--    end
+       redirect_to project_path, flash: { error: t(:exception) }
+       return 
+    end
     redirect_to root_path, flash: { error: t(:exception) }
   end
   
