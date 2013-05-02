@@ -70,16 +70,16 @@
     <tbody align="center">
       <% @gamers = Gamer.order("highest_score DESC").page(params[:page]).per(5) %>
       <% @gamers.each do |user| %>
-      <% if user == current_gamer %>
-        <tr style="background-color: #DDDDDD">
-      <% else %>
-        <tr>
-      <% end %>
-        <td><%= rank = Gamer.get_gamer_rank(user) %></td>
-        <td><%= user.username %></td>
-        <td><%= user.highest_score %></td>
-        <% trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
-        <td>
+        <% if user == current_gamer %>
+          <tr style="background-color: #DDDDDD">
+        <% else %>
+          <tr>
+        <% end %>
+          <td><%= rank = Gamer.get_gamer_rank(user) %></td>
+          <td><%= user.username %></td>
+          <td><%= user.highest_score %></td>
+          <% trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+          <td>
           <% if trophies.nil? %>
             <p><%= t(:no_trophies_won) %></p>
           <% else %>
@@ -89,9 +89,9 @@
               <img alt="trophy" class="border-none" src="/assets/<%= trophy.image_file_name %>" width="25" />
             <% end %>
           <% end %>
-        </td>
-      </tr>
-      <br>
+          </td>
+        </tr>
+        <br>
       <% end %>
     </tbody>
   </table>
@@ -169,9 +169,9 @@
           <% @gamers.each do |user| %>
             <% if user == current_gamer %>
               <tr style="background-color: #DDDDDD">
-           <% else %>
+            <% else %>
               <tr>
-           <% end %>
+            <% end %>
               <td><%= rank = Gamer.get_facebook_rank(user) %></td>
               <td><%= user.username %></td>
               <td><%= user.highest_score %></td>

@@ -15,19 +15,23 @@ describe "retrieve gamer rank according to the list displayed" do
     current_gamer.save
     current_gamer
   }
+
 	it "should return gamer rank within arability gamers" do
     current_gamer
 		rank = Gamer.get_gamer_rank(current_gamer)
 		rank.should eq(nil)
 	end
+
   it "should return gamer rank within facebook friends registered in arability" do
     current_gamer
     rank = Gamer.get_facebook_rank(current_gamer)
     rank.should eq(nil)
   end
+
   it "should return gamer rank within twitter friends registered in arability" do
     current_gamer
     rank = Gamer.get_twitter_rank(current_gamer)
     rank.should eq(nil)
   end
+
 end
