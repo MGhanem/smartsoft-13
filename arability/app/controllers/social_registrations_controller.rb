@@ -27,9 +27,6 @@ class SocialRegistrationsController < Devise::RegistrationsController
     @token = session["devise.token"]
     @token_secret = session["devise.token_secret"]
     @errors = params[:errors]
-    session["devise.token"] = nil
-    session["devise.gid"] = nil
-    session["devise.token_secret"] = nil
   end
 
   # Author:
@@ -78,14 +75,19 @@ class SocialRegistrationsController < Devise::RegistrationsController
     gamer, is_saved = Gamer.create_with_social_account(
       email, username, gender, d_o_b, country, ed_level, provider)
     if is_saved
-      Authentication.create_with_omniauth(
-        provider, gid, token, token_secret, social_email, gamer.id)
+      if token != ""
+        Authentication.create_with_omniauth(
+          provider, gid, token, token_secret, social_email, gamer.id)
+        session["devise.token"] = nil
+        session["devise.gid"] = nil
+        session["devise.token_secret"] = nil
+      end
       flash[:success] = t(:signed_in_exst)
       sign_in_and_redirect(:gamer, gamer)
     else
       session["devise.token"] = token
       session["devise.gid"] = gid
-      session["devise.token_secret"] = nil
+      session["devise.token_secret"] = token_secret
       redirect_to controller: "social_registrations",
       action: "new_social", email: email, username: username,
       gender: gender, provider: provider, errors: gamer.errors.full_messages

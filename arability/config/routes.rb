@@ -73,6 +73,7 @@ Arability::Application.routes.draw do
     match "/post_score"=>'games#post', :as => "post_facebook"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
     match "/games/post_facebook" => "games#post"
+    match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
 
     scope "developers/" do
