@@ -69,5 +69,4 @@ describe MySubscription do
 		expect(result).to eq(true)
 
 	end
-
 end
