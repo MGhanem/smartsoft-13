@@ -19,7 +19,8 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin,
+                  :confirmed_at
 
   has_many :services, :dependent => :destroy
 
