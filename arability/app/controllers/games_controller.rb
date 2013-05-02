@@ -194,8 +194,8 @@ class GamesController < ApplicationController
   #   failure: none
   def get_score_only
     @score = params[:score].to_i
-    if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+    if @score > current_or_guest_gamer.highest_score.to_i
+      current_or_guest_gamer.update_attributes!(:highest_score => @score)
     end
     respond_to do |format|
       format.js
