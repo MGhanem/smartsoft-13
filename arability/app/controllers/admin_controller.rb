@@ -165,13 +165,17 @@ class AdminController < ApplicationController
     if request.post?
       user = Gamer.find_by_email(params[:email])
       if user != nil
-        user.make_admin
-        flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
+        if user.admin?
+          flash[:success] = "#{user.username} مشرف بالفعل"
+        else
+          user.make_admin
+          flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
+        end
         flash.keep
         redirect_to "/admin/list/admins"
       else
         flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
-        redirect_to "/admin/list/gamers"
+        redirect_to "/admin/make_admin"
       end
     end
   end
