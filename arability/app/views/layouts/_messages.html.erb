@@ -1,5 +1,5 @@
 <% flash.each do |key,msg| %>
-  <div class="alert alert-<%= key %> row">
+  <div class="alert alert-<%= key %> row" id="err">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <% if msg.respond_to? "each" %>
         <div>
@@ -10,7 +10,7 @@
           </ul>
         </div>
       <% else %>
-        <%= content_tag :div, msg %>
+        <%= content_tag :div, msg.html_safe %>
       <% end %>
   </div>
 <% end %>

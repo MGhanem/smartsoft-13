@@ -1,12 +1,10 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
   <h2 class="form-signin-heading"><%= t(:sign_in) %></h2>
-  <%= f.text_field :email, :placeholder => t(:email), :class => "input-block-level" %>
-
-  <%= f.password_field :password, :placeholder => t(:password), :class => "input-block-level" %>
+  <%= f.text_field :login, placeholder: t(:username_or_email), :class => "input-block-level" %>
+  <%= f.password_field :password, placeholder: t(:password), :class => "input-block-level" %>
+  <br>
+  <div><%= f.check_box :remember_me, :class => "pull-left" %> <%= label_tag :remember_me, t(:remember_me), :class => "pull-left", style: "margin-left: 10px;" %></div>
   <br /><br />
-  <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-right", :style => "margin-top:-7px; padding-top:4px; padding-bottom:4px;" %></div>
-   <%= link_to "Sign in with Google", gamer_omniauth_authorize_path(:google_oauth2) %>
+  <%= link_to t(:forgot_password), new_password_path(resource_name), style: "display: block; margin-top: -14px;", :class => "pull-left" %><br />
+  <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-right", style: "margin-top:-37px; padding-top:10px; padding-bottom:10px;" %></div>
 <% end %>
-
-
-

@@ -1,51 +1,30 @@
 class DeveloperController < ApplicationController
+  include ApplicationHelper
   before_filter :authenticate_gamer!
-# author:
-#   Khloud Khalid
-# description:
-#   generates view with form for registration as developer
-# params:
-#   none
-# success:
-#   view generated successfully
-# failure:
-#   gamer not signed in
+
+  # author:
+  #   Khloud Khalid
+  # description:
+  #   creates new developer for the current gamer with the subscription mmodel initially set to free trial then redirects 
+  #   to the page where the user chooses his/her subscription model.
+  # params:
+  #   none
+  # success:
+  #   developer created successfully, redirects to choose subscription page
+  # failure:
+  #   gamer not signed in
   def new
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
+    if developer_signed_in?
       flash[:notice] = t(:already_registered_developer)
-      render "pages/home"
+      redirect_to projects_path
     else
       @developer = Developer.new
-    end
-  end
-
-# author:
-#   Khloud Khalid
-# description:
-#   creates new developer using parameters from registration form and renders my_subscription#new
-# params:
-#   parameters passed from form(params[:developer]):first_name, last_name
-# success:
-#   developer created successfully, redirects to choose subscription page
-# failure:
-#   gamer not signed in, data entered is invalid
-  def create
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      flash[:notice] = t(:already_registered_developer)
-      redirect_to backend_home_path
-    else
-      @developer = Developer.new(params[:developer])
       @developer.gamer_id = current_gamer.id
-      if @developer.save
-        MySubscription.choose(@developer.id,SubscriptionModel.first.id)
-        redirect_to choose_sub_path
-      else
-        flash[:notice] = t(:failed_developer_registration)
-        render action: "new"
-      end
+      @developer.save
+      MySubscription.choose(@developer.id, SubscriptionModel.first.id)
+      redirect_to choose_sub_path
     end
   end
-
 
   # Author:
   #  Noha Hesham
@@ -63,7 +42,7 @@ class DeveloperController < ApplicationController
     project = Project.find(params[:project_id])
     project.developers_shared.delete(dev)
     project.save
-    flash[:notice] = flash[:notice] = I18n.t('controller.my_subscription.flash_messages.developer_unshared')
+    flash[:notice] = t(:dev_unshare)
     redirect_to :action => "share",:controller => "projects", :id => params[:project_id]
   end
   # Author:
@@ -80,26 +59,27 @@ class DeveloperController < ApplicationController
   #  shared projects tab
   def share_project_with_developer
     @project = Project.find(params[:id])
-    gamer = Gamer.find_by_email(params[:email])
+    email = params[:email].first.split(" ").last
+    gamer = Gamer.find_by_email(email)
     if(!gamer.present?)
-      flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_doesnt_exist')
+      flash[:notice] = t(:Email_dont)
     else
        developer = Developer.find_by_gamer_id(gamer.id)
         if developer == nil
-         flash[:notice] = I18n.t('controller.my_subscription.flash_messages.Email_for_a_gamer_not_a_developer')
+         flash[:notice] = t(:Email_for_a_gamer)
         else
          developer2 = Developer.find_by_gamer_id(current_gamer.id)
           if developer == developer2 
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.you_cant_share_the_project_with_yourself')
+            flash[:notice] = t(:you_cant_share_with_yourself)
             redirect_to "/developers/projects/#{@project.id}/share"
             return
           end
           if(SharedProject.where("project_id = ? and developer_id = ?", @project.id, developer.id).size > 0)
-            flash[:notice] = I18n.t('controller.my_subscription.flash_messages.already_shared')
+            flash[:notice] = t(:already_shared_project)
           else
             developer.projects_shared << @project
             if(developer.save)
-              flash[:notice] = I18n.t('controller.my_subscription.flash_messages.project_has_been_successfully_shared')
+              flash[:notice] = t(:project_successfully_shared)
               redirect_to :action => "share",:controller => "projects", :id => params[:id]
               return
             else

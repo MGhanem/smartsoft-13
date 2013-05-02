@@ -23,3 +23,5 @@ schema.rb
 #Ignore testing files
 .rspec
 Guardfile
+coverage/*
+public/

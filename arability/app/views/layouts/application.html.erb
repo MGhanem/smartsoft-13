@@ -2,14 +2,17 @@
 <html>
 <head>
   <title>Arability</title>
+  <link rel="shortcut icon" href="/assets/logo.png">
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "games", :media => "all" %>
   <%= stylesheet_link_tag "pages", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap-tagmanager" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "pages" %>
   <% if I18n.locale == :ar %>
-    <%= stylesheet_link_tag "bootstrap.rtl", :media => "all" %>
-    <%= stylesheet_link_tag "bootstrap-responsive.rtl", :media => "all" %>
+    
+    <%= stylesheet_link_tag "bootstrap-responsive.rtl" %>
+<%= stylesheet_link_tag "bootstrap.rtl" %>
     <%= stylesheet_link_tag "bootstrap-rtl-overrides", :media => "all"%>
     <%= javascript_include_tag "bootstrap.rtl", :media => "all" %>
   <% else %>
@@ -18,6 +21,8 @@
   <% end %>
   <%= stylesheet_link_tag "bootstrap-fileupload.min", :media => "all"%>
   <%= javascript_include_tag "bootstrap-fileupload.min" %>
+  <%= javascript_include_tag "bootstrap-tagmanager" %>
+  <%= yield(:head) %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -28,16 +33,29 @@
    display: none;
   }
 </style>
-
-<div role="main" id="main">
-  <div class="container">
-    <div class="content">
-      <%= render 'layouts/messages' %>
-      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+<%= yield(:home_content) %>
+<div id="navbar">
+  <div role="main" id="main">
+    <div class="container">
+      <div class="content">
+        <%= render "layouts/messages" %>
+        <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+      </div>
     </div>
   </div>
 </div>
 
 <%= render 'shared/navbardropdownjs' %>
+<!-- YAMLI CODE START -->
+
+<script type="text/javascript">
+  if (typeof(Yamli) == "object" && Yamli.init( { uiLanguage: "<%= I18n.locale %>" , startMode: "onOrUserDefault" } ))
+  {
+    Yamli.yamlify( "suggest_synonym_textbox", { settingsPlacement: "inside" } );
+    Yamli.yamlify( "suggest_synonym_textbox_arabic", { settingsPlacement: "inside" } );
+    // to add yamli in any textbox just copy the above line and put the id of your textbox between " "(e.g Yamli.yamlify( "textbox_id", { settingsPlacement: "inside" } );)
+  }
+</script>
+<!-- YAMLI CODE END -->
 </body>
 </html>

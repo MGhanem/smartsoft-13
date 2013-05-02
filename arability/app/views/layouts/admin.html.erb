@@ -7,6 +7,7 @@
 	<%= stylesheet_link_tag "bootstrap.rtl", :media => "all" %>
 	<%= stylesheet_link_tag "bootstrap-responsive.rtl", :media => "all" %>
 	<%= stylesheet_link_tag "bootstrap-fileupload.min", :media => "all" %>
+	<%= stylesheet_link_tag "bootstrap-rtl-overrides", :media => "all" %>
 	<%= stylesheet_link_tag "admin", :media => "all" %>
 	<%= csrf_meta_tags %>
 	<style>
@@ -22,7 +23,6 @@
 </head>
 <body>
 	<%= render 'admin/admin-navbar' %>
-	<%= render 'admin/navbar' %>
 
 	<%= yield %>
 
