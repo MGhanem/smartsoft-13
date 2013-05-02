@@ -173,16 +173,14 @@ Arability::Application.routes.draw do
   match "/developers/projects/load_synonyms" => "projects#load_synonyms"
 
   match "developers/projects/:project_id/project_keyword_autocomplete" => "projects#project_keyword_autocomplete"
-
-  #match "/ar/developers/projects/:project_id/project_keyword_autocomplete" => "projects#project_keyword_autocomplete"
  
   match "/developers/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", as: "add_word_inside_project"
-
-  #match "*path", :to => "application#routing_error"
 
   match "/developers/projects/:project_id/test_followed_keyword" => "projects#test_followed_keyword"
 
   match "/developers/projects/:project_id/follow_unfollow" => "projects#follow_unfollow", :as => "follow_unfollow"
+  
+  match "*path", :to => "application#routing_error"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
