@@ -206,20 +206,23 @@
     var keyword = $('#selected_keyword').val();
     $.post("/developers/projects/"+"<%= @project.id %>"+"/test_followed_keyword", {keyword:$('#selected_keyword').val()});
       var button = ""
+      var paragraph = ""
       if(test_followed() == "true"){
-        button = "<button class='btn btn-danger' onclick='unfollow()'><%= t(:project_keyword_unfollow)%></button>"
+        button = "<a class='btn btn-danger' id='unfollow_button' onclick='unfollow()'><%= t(:project_keyword_unfollow)%></a>"
+        paragraph = "<p style='font-weight:bold;'>"+"<%= t(:you_followed_word) %>"+"</p>"
       }
       else{
-        button = "<button class='btn btn-primary' onclick='follow()'><%= t(:project_keyword_follow) %></button>"
+        button = "<a class='btn btn-primary' id='follow_button' onclick='follow()'><%= t(:project_keyword_follow)%></a>"
       }
     $("#selected_synonym").popover({
         trigger: 'manual',
         html: 'true',
         title: '<%= t(:no_translation_popover_title) %>'+'<button type="button" class="close" data-dismiss="popover" aria-hidden="true" onclick="$(\'.popover\').hide()">&times;</button>',
-        content: "<%= t(:you_can)%>" + button + "<%= t(:this_keyword)%>",
+        content: paragraph + "<%= t(:you_can)%>" +button + "<%= t(:this_keyword)%>",
         placement:'bottom' 
       });
     $('#selected_synonym').popover('show');
     $('.popover').width(350);
+    $('.popover-title').css('font-weight','bold');
   }
 </script>

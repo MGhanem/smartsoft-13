@@ -1,11 +1,23 @@
 function test_followed(){
 	return "<%= @is_followed %>"
-} 
-  function unfollow(){
-  $.post("<%= unfollow_word_path @searched_keyword_id %>");
-  $('.popover').hide();
 }
+
+function unfollow(){
+	$("#unfollow_button").removeAttr('href');
+    var keyword_id = "keyword_id="+"<%= @searched_keyword_id %>";
+    var project_id = "<%= @project_id %>"
+    var is_followed = "&is_followed="+"<%= @is_followed %>"
+    var url = "/developers/projects/"+project_id+"/follow_unfollow?"
+    var complete_url = url + keyword_id  + is_followed
+  	$('#unfollow_button').attr('href', complete_url);
+}
+
 function follow(){
-  $.post("<%= follow_word_path @searched_keyword_id %>");
-  $('.popover').hide();
+	$("#follow_button").removeAttr('href');
+    var keyword_id = "keyword_id="+"<%= @searched_keyword_id %>";
+    var project_id = "<%= @project_id %>"
+    var is_followed = "&is_followed="+"<%= @is_followed %>"
+    var url = "/developers/projects/"+project_id+"/follow_unfollow?"
+    var complete_url = url + keyword_id  + is_followed
+  	$('#follow_button').attr('href', complete_url);
 }

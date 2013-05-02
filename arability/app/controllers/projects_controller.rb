@@ -54,6 +54,43 @@ class ProjectsController < BackendController
     end 
     render "projects/test_followed_keyword.js"
   end
+
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   follows or unfollows a keyword which has no synonyms when the developer
+  #   searches for it inside the project
+  # Params:
+  #   project_id: containing the id of the project from this keyword has
+  #   been searched for.
+  #   keyword_id: containing the id of the keyword for the which the user might
+  #   follow
+  #   is_followed: a string containing "true" if the keyword is previously
+  #   followed or "false" if the keyword is not followed
+  # Success:
+  #   returns the flash of the keyword has been successfully unfollowed and
+  #   redirects to the project page
+  # Failure:
+  #   returns the flash of the keyword has been successfully followed and
+  #   redirects to the project page
+  def follow_unfollow
+    project_id = params[:project_id]
+    developer = current_developer
+    is_followed = params[:is_followed]
+    if params[:keyword_id] != nil
+      keyword_ids = developer.keyword_ids
+      keyword = Keyword.find(params[:keyword_id])
+      if is_followed == "true"
+        developer.unfollow(params[:keyword_id])
+        flash[:success] = t(:unfollow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash: flash
+      elsif is_followed == "false"
+        developer.follow(params[:keyword_id])
+        flash[:success] = t(:follow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash:flash
+      end
+    end
+  end
     
   # author: 
   #    Mohamed Tamer
