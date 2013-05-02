@@ -44,7 +44,7 @@ function checkboxlimit(checkgroup, limit, locale){
 		  	} else {
 		  	  alert("ليس بإمكانك الإختيار أكثر من " + limit + " خانات");
 		  	}
-			  this.checked=false;
+			  this.checked = false;
 			}
 		}
 	}
