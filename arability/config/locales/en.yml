@@ -373,7 +373,7 @@ en:
   help_us_report: "See any inappropriate words?"
   oh_snap: "Oh snap! You got an error!"
   check_connection: >
-    Seems like an error that was encountered and prohibited the request from completion! 
+    Seems like an error was encountered and prohibited the request from completion! 
     Please, try re-submitting your request.
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_social_connection: "Connection removed successfully!"
@@ -553,6 +553,11 @@ en:
   sub_changed: "chane %{sm.name} "
   you_have_prizes: "You have won the following prizes!"
   back_to_project: "<< Back to project"
+  wrong_age_input: "Wrong age input"
+  synonyms: "Synonyms:"
+  school: "School"
+  university: "University"
+  graduate: "Graduate"
   no_account: "You seem to have left us. Please create a new account"
   unshare: "Unshare"
   no_account: "You seem to have left us. Please create a new account"
@@ -569,5 +574,14 @@ en:
   feat4h: "Be Social"
   feat4b: "For extra features, connect to your favorite social network."
   expired_token: "Oops it seems your connection with facebook has expired. But don't worry, we solved the problem"
+  you_vote: "You " 
+  vote_action: "voted for "
+  chosen_action: " as the best translation for "
+  vote_log: "Your Votes History"
+  no_you: "You " 
+  no_vote_log: "didn't vote for any translation yet!!"
+  keyword_added: "keyword added successfully"
+  back_log: "Game"
+  vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"

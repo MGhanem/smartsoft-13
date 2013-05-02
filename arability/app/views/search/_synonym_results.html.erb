@@ -1,0 +1,174 @@
+<div id="synonym_results">
+  <% @synonyms.each do |synonym| %>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <div class="row">
+          <div class="span12">
+            <div class="accordion-toggle" style="padding-bottom:30px;">
+              <div id="synonyms<%= synonym.id %>" class="pull-left">
+                <span class="span2">
+                  <%= synonym.name %>
+                </span>
+                <span class="span2">
+                  <% if @votes[synonym.id] != nil %>
+                    <div id="progress<%= synonym.id %>" class="progress progress-info" 
+                      style="margin-bottom:0px; height: 14px; margin-top: 3px;">
+                      <% percentage = (@votes[synonym.id] * 100) / @total_votes %>
+                      <div class="bar" style="width: <%= "#{percentage}" %>%;"></div>
+                      <script type="text/javascript">
+                        $("#progress<%= synonym.id %>").tooltip({
+                          trigger: "hover",
+                          placement: "top",
+                          title: "<%= @votes[synonym.id].to_s + " " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>"
+                        });
+                      </script>
+                    </div>
+                  <% else %>
+                    <div id="progress<%= synonym.id %>" class="progress progress-info" 
+                      style="margin-bottom:0px; height: 14px; margin-top: 3px;">
+                      <div class="bar" style="width: 0%;" ></div>
+                    </div>
+                    <script type="text/javascript">
+                      $("#progress<%= synonym.id %>").tooltip({
+                        trigger: "hover",
+                        placement: "top",
+                        title: "<%= "0 " + t(:out_of) + " " + @total_votes.to_s + " " + t(:votes) %>"
+                      });
+                    </script>
+                  <% end %>
+                </span>
+                <span class="span1" style="color:#bbb; font-style:italic; margin-left:7px; margin-right:7px;">
+                  <%= t(:votes) %></span>
+              </div>
+
+              <div id="buttons<%= synonym.id %>" class="pull-right">
+                <button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
+                      <span><%=t(:view_stats)%></span>
+                      <span style="display:none"><%=t(:hide_stats)%></span>
+                      <script type="text/javascript">
+                        function reduce_div_height(){
+                          $('.centered_div .highcharts-container').css('height', '250px');
+                        }
+                      </script>
+                </button>
+                <%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
+                <%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
+                <% end %>
+              </div>
+              <script type="text/javascript">
+                <% if I18n.locale == :ar %>
+                  $("#synonyms<%= synonym.id %>").attr("class", "pull-right");
+                  $("#buttons<%= synonym.id %>").attr("class", "pull-left");
+                <% elsif I18n.locale == :en %>
+                  $("#synonyms<%= synonym.id %>").attr("class", "pull-left");
+                  $("#buttons<%= synonym.id %>").attr("class", "pull-right");
+                <% end %>
+              </script>
+              <script>
+                $("#bstats<%=synonym.id%>").click(function() {
+                    $("span",this).toggle();
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        <div id="collapse<%= synonym.id %>" class="accordion-body collapse" style="background-color:white;">
+          <div class="accordion-inner">
+            <% if @votes[synonym.id] != nil%>
+            <div class="centered_div" style="background-color: white; width: 880px; margin: 0 auto;">
+            <div class="container-fluid">
+              <div class="row-fluide">
+                <div class="span2">
+                  <%= high_chart("gender_#{synonym.id}", piechart(synonym.id,0)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+                <div class="span2">
+                  <%= high_chart("country_#{synonym.id}", piechart(synonym.id,1)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %> 
+                </div>
+                <div class="span2">
+                  <%= high_chart("age_#{synonym.id}", piechart(synonym.id,2)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+
+                <div class="span2" id="test">
+                  <%= high_chart("edu_#{synonym.id}", piechart(synonym.id,3)) do |c| %>
+                      <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                      <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+                  <% end %>
+                </div>
+             </div>
+
+            </div>
+            </div>
+            <% else %>
+            <%= t(:stats_no_votes) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if !@search_keyword.blank? %>
+    <div class="alert alert-success" id="report_success" style="display:none;">
+      <div style="text-align:center;"><%= t(:report_sent_success) %></div>
+    </div>
+    <div class="alert alert-block alert-error" id="report_failure" style="display:none;">
+      <button type="button" class="close" onclick="restoreError()">×</button>
+      <h4 class="alert-heading"><%= t(:oh_snap) %></h4>
+      <p><%= t(:check_connection) %></p>
+    </div>
+    <div class="well">
+      <span><%=  t(:help_us_report) %></span>
+      <a href="#report_modal" role="button" class="btn btn-link" onClick="modalToggle()"
+        style="padding:0px;" id="launch_report"><%= t(:report) %></a>
+    </div>  
+    <script type="text/javascript">
+      <% if I18n.locale == :ar %>
+        $("#launch_report").css("font-size","18px");
+      <% else %>
+        $("#launch_report").css("font-size","13px");
+      <% end %>
+    </script>
+    <div id="report_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="modal_label"><%= t(:report_abusive) %></h3>
+      </div>
+      <div class="modal-body">
+        <p><%= t(:help_us_through_reporting) %></p>
+        <hr>
+        <h4><%= t(:words_in_page)%></h4>
+        <%= check_box_tag "chkbox", [@search_keyword_model.id, "Keyword"], false, onclick: "setChecked(this)", is_checked: false %>
+        <%= @search_keyword %>
+        <br>
+        <% if !@synonyms.blank? %>
+          <% @synonyms.each do |synonym| %>
+          <%= check_box_tag "chkbox", [synonym.id, "Synonym"], false, onclick: "setChecked(this)", is_checked: false %>
+          <%= synonym.name %>
+          <br>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal"><%= t(:close) %></button>
+        <button class="btn btn-primary" onclick="report_submission()" data-dismiss="modal"><%= t(:submit) %></button>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="alert alert-error" id="age_error" style="display:none;">
+    <div style="text-align:center;"><%= t(:wrong_age_input) %></div>
+  </div>
+
+  <script type="text/javascript">
+    <%= render "submit-report.js" %>
+  </script>
+</div>
