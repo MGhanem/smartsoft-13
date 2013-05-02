@@ -81,9 +81,11 @@ class ApplicationController < ActionController::Base
     path = request.path
     UserMailer.generic_email("arability.smartsoft@gmail.com", 
         exception, exception.backtrace.join("\n")).deliver
-    if path.include? "developers/followed" || path.include? "developers/search_keywords"
-       redirect_to project_path, flash: { error: t(:exception) }
-       return 
+    if path.include? "developers/"
+      if !path.include? "developers/projects"
+        redirect_to project_path, flash: { error: t(:exception) }
+        return 
+      end
     end
     redirect_to root_path, flash: { error: t(:exception) }
   end
