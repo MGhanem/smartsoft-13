@@ -279,6 +279,7 @@ class Gamer < ActiveRecord::Base
       country: country,
       education_level: ed_level,
       is_local: false,
+      confirmed_at: Time.now
       provider: provider)
     if gamer.save
       return gamer, true
