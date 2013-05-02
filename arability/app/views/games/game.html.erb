@@ -225,11 +225,11 @@ function setButtons(){
       cache = document.getElementById("zone").innerHTML;
     }    
     clear();
-    $("#zone").append('<div id="loading" align="center" vertical-align="center">Loading content, please wait..<img src="/assets/ajax-loader.gif" alt="loading.." /></div>');
-    $.get("/games/fame");
-    $(window).load(function(){
-      $("#loading").hide();   
-  })
+    $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:loading) %></p><img src="/assets/ajax-loader.gif" alt="loading.." /></div>');
+    setTimeout(function(){$.get("/games/fame")},100);
+    // $($.get("/games/fame")).load(function(){
+    //   $("#loading").fadeOut();  
+    // });
   }
 
 
