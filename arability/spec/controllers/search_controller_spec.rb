@@ -87,6 +87,13 @@ describe SearchController do
       gamer
     end
 
+    let(:my_sub) do
+      my_sub = MySubscription.new
+      my_sub.word_search = 1
+      my_sub.save validate:false
+      my_sub
+    end
+
     it "should get only keywords in category" do
       c.keywords << k
       a = create_logged_in_developer
@@ -122,6 +129,12 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
+
       get :search_with_filters, search: "test    ", synonym_type: 0
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should eq(1)
@@ -136,6 +149,9 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
 
       get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
         age_to: "19", education: "high", gender: "female", synonym_type: 0 
@@ -182,6 +198,29 @@ describe SearchController do
       get :search_with_filters, search: ""
       response.code.should eq("302")
       response.should redirect_to(search_keywords_path)
+    end
+
+    it "should redirect to search_keywords path if search limit is exceeded",
+      nourhan_mohamed: true do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
+      
+      xhr :post, :search_with_filters, search: "test"
+      response.code.should eq("200")
+      
+      get :search_with_filters, search: "testing"
+      response.code.should eq("302")
+      response.should redirect_to(search_keywords_path)
+
+      get :search_with_filters, search: "test"
+      response.code.should eq("200")
     end
 
     it "should return json containing similar keywords" do
