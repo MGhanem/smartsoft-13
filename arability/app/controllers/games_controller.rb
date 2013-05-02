@@ -262,6 +262,7 @@ class GamesController < ApplicationController
       keyword_id: params[:keyword_id]).first 
   end
 
+  # Author:
   #   Ali El Zoheiry
   # Description:
   #   updates the value of the show_tutorial column to false

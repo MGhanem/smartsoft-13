@@ -64,7 +64,8 @@ class Authentication < ActiveRecord::Base
   #  returns nil if no authentication is found
   def self.get_common_twitter_friends(current_gamer)
     begin
-      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
+       "twitter")
       if (auth.nil?)
         return nil
       end
@@ -74,7 +75,8 @@ class Authentication < ActiveRecord::Base
       i = 0
       while i < followers.count
         if Authentication.exists?(gid: followers.at(i), provider: "twitter")
-          common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
+          common.push(Authentication.find_by_gid_and_provider(followers.at(i),
+           "twitter").gamer_id)
         end
         i = i + 1
       end
@@ -97,9 +99,10 @@ class Authentication < ActiveRecord::Base
   #  returns nil if no gamer token is found
   def self.get_common_facebook_friends(current_gamer)
     begin
-      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "facebook")
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
+       "facebook")
       if auth.nil?
-      return nil
+        return nil
       end
       @graph = Koala::Facebook::API.new(auth.token)
       friends = @graph.get_connections("me", "friends")
@@ -107,7 +110,8 @@ class Authentication < ActiveRecord::Base
       i = 0
       while i < friends.count
         if Authentication.exists?(gid: friends.at(i)["id"], provider: "facebook")
-          common.push(Authentication.find_by_gid_and_provider(friends.at(i)["id"], "facebook").id)
+          common.push(Authentication.find_by_gid_and_provider(friends.at(i)["id"],
+           "facebook").id)
         end
         i = i + 1
       end
