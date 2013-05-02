@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :set_locale
   require 'csv'
-  rescue_from Exception, :with => :error_render_method
+  # rescue_from Exception, :with => :error_render_method
 
   # Author:
   #   Mohamed Ashraf
@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
         exception, exception.backtrace.join("\n")).deliver
     if path.include? "developers/"
       if !path.include? "developers/projects"
-        redirect_to project_path, flash: { error: t(:exception) }
+        redirect_to projects_path, flash: { error: t(:exception) }
         return 
       end
     end
