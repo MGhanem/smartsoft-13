@@ -122,4 +122,51 @@ class Authentication < ActiveRecord::Base
     end
   end
 
+  # Author
+  #   Amr Abdelraouf
+  # Description:
+  #   Returns whether or not a gamer's account is connected to facebook
+  # Params:
+  #   id: the id of the gamer
+  # Success:
+  #   Boolean is returned to indicate whether the gamer is connected
+  # Failure:
+  #   None
+  def self.is_connected_to_facebook(id)
+    Authentication.exists?(gamer_id: id)
+  end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Returns the access token of a certain provider for a specified gamer
+  # Params
+  #   id: id of the gamer
+  #   provider: name of the provider
+  # Success:
+  #   Returns the provider's access token for the gamer
+  # Failure:
+  #   None
+  def self.get_token(id, provider)
+    auth = Authentication.find_by_gamer_id_and_provider(id, provider)
+    return auth.token
+  end
+
+  # Author:
+  #   Amr Abdelraouf
+  # Description:
+  #   Updates access token (mostly when it expires)
+  # Params:
+  #   id: id of the gamer
+  #   provider: provider that wants to update the token
+  #   new_token: the new access token
+  # Success:
+  #   access token for provider is changed for a specified gamer
+  # Failure:
+  #   none
+  def self.update_token(id, provider, new_token)
+    auth = Authentication.find_by_gamer_id_and_provider(id, provider)
+    auth.update_attribute(:token, new_token)
+  end
+
 end
