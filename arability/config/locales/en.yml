@@ -391,7 +391,7 @@ en:
         minAge: "The minimum age"
         maxAge: "The maximum age"
         categories: "Categories"
-        description: "Description"8
+        description: "Description"
   choose_sub: "Subscription model"
   developer_before_subscription: 'Please sign up as a developer to view this page'
   keyword_added: "keyword added successfully"
