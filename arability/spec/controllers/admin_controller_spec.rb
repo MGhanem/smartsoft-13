@@ -37,6 +37,7 @@ describe AdminController  do
       gamer.password = "1234567"
       gamer.education_level = "University"
       gamer.admin = true
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -71,7 +72,7 @@ describe AdminController  do
       assigns(:model).should_not eq model1
     end
 
-    it "should add subscription model" do
+    it "should add category" do
       gamer
       sign_in(gamer)
       post :add_category, english_name: "trial", arabic_name: "تجربة"

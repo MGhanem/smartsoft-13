@@ -60,6 +60,9 @@ ar:
   from: "من"
   to: "الى"
   desc: "عن المشروع"
+  new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
+  back: "<< عودة"
   target: "هذا المشروع يستهدف الفئة التالية:"
   target_country: "البلد"
   target_age: "الفئة العمرية"
@@ -112,13 +115,12 @@ ar:
   education: "التعليم"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
   follow_word_link: "إذا لم تعجبك هذه المرادفات أو تريد متابعة هذه الكلمة"
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-  select subscription: "إختر"
+  select_subscription: "إختر"
   choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
   choose_keyword_remaining: "تبقى لك عدد"
   choose_keywords_remaining2: "كلمة"
@@ -142,6 +144,7 @@ ar:
   upload_file_error3: "يوجد خطأ بهذا الملف"
   upload_file_error4: "هذا الملف ليس CSV"
   upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+  upload_file_error6: "ليس بإمكانك اضافة كلمات أخرى لهذا المشروع نتيجة لنظام اشتراكك"
   projects_index_error1: "من فضلك سجل كمطور"
   projects_index_error2: "من فضلك قم بالدخول"
   projects_index_title: "مشاريع"
@@ -190,12 +193,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
   views:
     project:
        flash_messages:
@@ -211,15 +208,9 @@ ar:
          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
          developer_unshared: 'مت عدم مشاركة المشروع'
          cant_share_the_project: 'لا يمكن مشاركة المشروع'
-        keyword:
-          attributes:
-            name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
-  stats_gender: "احصائيات الجنس"
+  stats_gender: "احصائيات النوع"
   stats_country: "احصائيات البلاد"
   stats_age: "احصائيات السن"
   stats_education: "احصائيات التعليم"
@@ -229,9 +220,8 @@ ar:
      messages_errors:
         you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
         please_choose: 'من فضلك إختر نظامك'
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
-  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   Add_words: "إضافة كلمات"
   Synonym_changed_successfully: "تم تغيير المعنى بنجاح."
@@ -240,7 +230,7 @@ ar:
   successfully_added_word_to_project: "تمت إضافة الكلمة بنجاح."
   failed_to_add_word_to_project: "فشل إضافة الكلمة لمشروعك."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
-  remove_from_project: "إزالة من المشروع"
+  remove_from_project: "إزالة"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
   no_words_in_project: "لا توجد كلمات في هذا المشروع."
@@ -263,9 +253,6 @@ ar:
   done: "إنتهاء"
   first_name: "الاسم الاول"
   last_name: "إسم العائلة"
-  activerecord:
-    models:
-      developer: "مطور"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to_facebook: "تواصل مع فيسبوك"
   disconnect_from: "افصل تواصلك مع"
@@ -309,16 +296,31 @@ ar:
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
-  enter_categories: "ابحث في التصنيفات"
+  egypt: "مصر"
+  lebanon: "لبنان"
+  jordan: "الاردن"
+  saudi_arabia: "السعودية"
+  libya: "ليبيا"
+  united_arab_emirates: "الامارات"
+  qatar: "قطر"
+  kuwait: "الكويت"
+  iraq: "العراق"
+  algeria: "الجزائر"
+  morroco: "المغرب"
+  sudan: "السودان"
+  somalia: "الصومال"
+  mauritania: "موريتانيا"
+  bahrain: "البحرين"
+  tunisia: "تونس"
+  others: "بلاد اخري"
+  graduate: "خريج"
+  school: "مدرسة"
+  university: "جامعة"
+  enter_categories:  "التصفية حسب الفئات"
   follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
-  must_sign_in: "سجل دخولك أو إشترك لكي تري الجوائز  او الانجازات"
-  trophies_won: "الانجازات التي تم الحصول عليها"
-  trophies_not_won: "الانجازات التي يمكنك الحصول عليها"
-  level: "المرحلة"
-  score: "النقاط"
   search: "بحث"
   search_here: "ابحث هنا"
   guest_sign_up_title: "ادخل هذه الأربع معلومات البسيطة عنك كي تسطيع أن تلعب"
@@ -341,6 +343,10 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  tag_using_categories: "إختر التصنيفات المناسبة"
+  keyword_exists: "هذه الكلمة موجودة بالفعل"
+  keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
+  category_tags: "التصنيفات"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
@@ -361,6 +367,10 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  project_removed: "تم مسح المشروع المشترك"            
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -391,8 +401,9 @@ ar:
         maxAge: 'السن'
         categories: "الفئات"
         description: "الوصف"
+  project_removed: "تم مسح المشروع المشترك"
   project_delete: "تم مسح المشروع بنجاح"
-  choose_sub: 'نظام الإشتراك'           
+  choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
@@ -507,11 +518,18 @@ ar:
   settings: "تغيير البيانات"
   game: "اللعبة"
   connected_before: "حساب تويتر هذا متصل مع حساب عربيليتي اخر"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "لا، شكراً"
   confirm: "هل أنت متأكد من مسح المشروع ؟"
   delete: "مسح"
-  close_delete: "الغاء"
-  submit_delete: "مسح"
-  you_have_prizes: "لقد ربحت الجوائز التالية"
   fill_in_next: "من فضلك املأ الفراغات التالية"
   or: "أو"
   existing_account: "سجل بحساب اخر"
@@ -557,34 +575,19 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  add_to: "أضف إلى"
+  with: "مع"
+  synonym: "معنى"
+  add: "أضف"
+  exceeds_word_limit: "لقد تجاوزت حد الكلمات المسموح بها لنظام اشتراكك."
+  choose_project: "من فضلك إختر مشروع لإضافة الكلمة."
+  choose_synonym: "من فضلك إختر معنى لإضافة الكلمة."
+  to_project: "إذهب إلى المشروع."
   wrong_age_input: "ادخلت رقم خطأ"
   synonyms: "المعاني:"
   school: "مدرسة"
   university: "جامعة"
   graduate: "خريج"
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
   Email_dont: "هذا البريد الالكتروني غير صحيح"
   Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
   you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
@@ -606,6 +609,13 @@ ar:
   back_to_project: "<< عودة إلى المشروع"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  no_translation_popover_title: "لا يوجد معاني لهذه الكلمة حاليا "
+  no_translation_popover_content: "تبيمسب،"
+  you_can: "تستطيع ان "
+  this_keyword: " هذة الكلمة"
+  project_keyword_follow: "تتابع"
+  project_keyword_unfollow: "تلغي متابعة"
+  you_followed_word: "لقد تابعت هذه الكلمة من قبل"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
   send: "ارسل "
   hello: "مرحبا"
@@ -618,6 +628,12 @@ ar:
   sub_project: "عدد المشريع التي يمكنك انشائها هي :"
   feat4h: "تواصل"
   feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  signed_in_google: "تم الدخول بنجاح بإستخدام جوجل"
+  continue_reg_google: "لقد اعطانا جوجل بعض المعلومات. من فضلك املأ الفراغات لتكملة التسجيل"
+  logged_in_to_google: "حسابك الآن متصل بـجوجل"
+  connected_to_google: "انت متصل بجوجل بالفعل"
+  oops_error_google: "واجهتنا مشاكل حين حولنا التواصل مع جوجل من فضلك حاول التواصل مرة أخرى"
   expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"  
   you_vote: ""
   vote_action: "لقد اخترت "
@@ -629,3 +645,56 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
+  no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
+  no_votes_visuals_popup: "right"
+  congrats_you_won: "مبروك لقد ربحت "
+  enter_word_first: "ادخل كلمة اولآ"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+      keyword:
+        name: "الكلمة"
+      category:
+        english_name: "الاسم الانجليزي"
+        arabic_name: "الاسم العربي"
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+        keyword:
+          attributes:
+            name:
+              blank: "برجاء إدخال كلمة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه الكلمة موجودة بالفعل"
+        category:
+          attributes:
+            english_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
+            arabic_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"

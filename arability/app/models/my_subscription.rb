@@ -145,12 +145,12 @@
   def can_search_word(word_id)
     developer = self.developer
     word = Search.where(keyword_id: word_id).first
-    if word != nil
+    if word!= nil
       return true
     else
-      if self.word_search > Search.where(developer_id: self.developer.id).count
+      if self.word_search > Search.where(developer_id: self.developer_id).count
         search = Search.new
-        search.developer_id = developer
+        search.developer_id = developer.id
         search.keyword_id = word_id
         search.save
         return true
