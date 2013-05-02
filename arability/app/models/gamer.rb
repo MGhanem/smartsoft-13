@@ -317,7 +317,8 @@ end
     count = voted_synonyms.count
     voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
     vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
-    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id).first.name, Synonym.where("id = ?", s.id).first.name] }]
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
   end
 
   #scopes defined for advanced search aid
