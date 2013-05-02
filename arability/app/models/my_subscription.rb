@@ -144,7 +144,7 @@
   #   None
   def can_search_word(word_id)
     developer = self.developer
-    word = Search.joins(:keyword).where(keyword_id: word_id)
+    word = Search.where(keyword_id: word_id).first
     if word!= nil
       return true
     else
