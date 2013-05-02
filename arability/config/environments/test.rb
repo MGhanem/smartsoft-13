@@ -34,4 +34,21 @@ Arability::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+    # set delivery method to :smtp, :sendmail or :test
+  config.action_mailer.delivery_method = :smtp
+
+  # these options are only needed if you choose smtp delivery
+  config.action_mailer.smtp_settings = {
+    :address              => 'smtp.gmail.com',
+    :port                 => 587,
+    :domain               => 'gmail.com',
+    :authentication       => :login,
+    :user_name            => 'arability.smartsoft@gmail.com',
+    :password             => 'cK1@BBs3#f',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.default_url_options = { host: "localhost:3000" }
+
 end
