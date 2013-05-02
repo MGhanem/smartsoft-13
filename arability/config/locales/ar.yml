@@ -41,15 +41,15 @@ ar:
   category: "الفئة"
   categories: "الفئات"
   formality: "النوع"
-  formal: "فصحة"
-  slang: "عامي"
-  age: "السن"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< عودة"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -120,7 +120,8 @@ ar:
   no_categories: "هذا المشروع ليس له فئات"
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
-  select_subscription: "إختر"
+  select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -142,14 +143,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -178,12 +171,6 @@ ar:
               blank: "برجاء إدخال كلمة"
               invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
               taken: "هذه الكلمة موجودة بالفعل"
-        category:
-          attributes:
-            name:
-              blank: "برجاء إدخال فئة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه فئة موجودة بالفعل"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -233,10 +220,6 @@ ar:
   activerecord:
     models:
       developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to_facebook: "تواصل مع فيسبوك"
   disconnect_from: "افصل تواصلك مع"
@@ -304,6 +287,16 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  project_removed: "تم مسح المشروع المشترك"            
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -325,7 +318,6 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
-  enter_word_first: "ادخل كلمة اولآ"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -355,6 +347,16 @@ ar:
   settings: "تغيير البيانات"
   game: "اللعبة"
   connected_before: "حساب تويتر هذا متصل مع حساب عربيليتي اخر"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "لا، شكراً"
   confirm: "هل أنت متأكد من مسح المشروع ؟"
   delete: "مسح"
   close_delete: "الغاء"
@@ -422,3 +424,4 @@ ar:
   feat4h: "تواصل"
   feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
   expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  unshare: " الغاء الاشتراك"
