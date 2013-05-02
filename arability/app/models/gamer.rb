@@ -281,29 +281,60 @@ class Gamer < ActiveRecord::Base
   scope :filter_by_gender, lambda { |gender| where :gender => gender }
   scope :filter_by_education, lambda { |education| where :education_level => education }
 
-# author:
-#     Salma Farag
-# description:
-#     A  method that returns a gamer with an email equal to the email signed in on Google from
-#the access token.
-# params:
-#     The access token granted from Google and a signed in resources that is equal to nil.
-# success:
-#     Returns the gamer with the matching email.
-# failure:
-#     Creates a new gamer using the email and password
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    gamer = Gamer.where(:email => data["email"]).first
+  # author:
+  #     Salma Farag
+  # description:
+  #     A  method that returns a gamer with an email equal to the email signed in on Google from
+  #the access token.
+  # params:
+  #     The access token granted from Google and a signed in resources that is equal to nil.
+  # success:
+  #     Returns the gamer with the matching email.
+  # failure:
+  #     Creates a new gamer using the email and password
+  def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
+      data = access_token.info
+      gamer = Gamer.where(:email => data["email"]).first
 
-    unless gamer
-         gamer = Gamer.create(
-              email: data["email"],
-              password: Devise.friendly_token[0,20]
-             )
+      unless gamer
+           gamer = Gamer.create(
+                email: data["email"],
+                password: Devise.friendly_token[0,20]
+               )
+      end
+      gamer
+  end
+
+  class << self
+    # Author:
+    #  Mirna Yacout
+    # Description:
+    #  This method is to retrieve the list of common arability friends and Facebook friends
+    # Parameters:
+    #  current_gamer: the record in Gamer table for the current user
+    # Success:
+    #  returns the list of common followers
+    # Failure:
+    #  returns nil if no gamer token is found
+    def get_common_facebook_friends(current_gamer)
+      if (current_gamer.token.nil?)
+        return nil
+      end
+      @graph = Koala::Facebook::API.new(current_gamer.get_token)
+      friends = @graph.get_connections("me", "friends")
+      common = Array.new
+      i = 0
+      while i<friends.count
+        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
+          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+          common.push(current_gamer.id)
+        end
+        i = i + 1
+        return common
+      end
     end
     gamer
-end
+  end
 
 # Author:
 #   Mirna Yacout
@@ -433,6 +464,26 @@ end
 def is_local_account
   is_local
 end
+
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Params:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Success: 
+  #   returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  # Failure: 
+  #   returns 0 and empty list if gamer has no votes
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id = ?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
+    vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
+  end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }

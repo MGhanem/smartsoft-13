@@ -127,26 +127,27 @@ class GamesController < ApplicationController
   #   will appear explaining the situation
   #   The user is not signed in: S/He'll be redirected to the sign in page
   def post_score_facebook
-    if current_gamer != nil
-      if !current_gamer.is_connected_to_facebook 
-        redirect_to "/gamers/edit",
-        flash: {notice: t(:connect_your_account)}
+    if current_gamer
+      if !Authentication.is_connected_to_facebook(current_gamer.id)
+        flash[:error] = t(:connect_your_account) 
+        redirect_to "/gamers/edit"
       else
         begin
-          token = current_gamer.get_token
+          token = Authentication.get_token(current_gamer.id, "facebook")
           @graph = Koala::Facebook::API.new(token)
-          score = params[:score]
-          @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
+          @graph.put_wall_post(
+            "لقد حصلت على #{score} نقطة في عربيلتي")
           render "games/share-facebook"
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/gamers/auth/facebook"
+          redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          redirect_to "/game", flash: {notice: t(:error_fb)}
+          flash[:notice] = t(:error_fb)
+          redirect_to "/game"
         end
       end
     else
-      redirect_to "/gamers/sign_in",
-      flash: {notice: t(:sign_in_facebook)}
+      flash[:error] = t(:sign_in_facebook)
+      redirect_to "/gamers/sign_in"
     end
   end
 
@@ -275,5 +276,23 @@ class GamesController < ApplicationController
   #   none
   def disableTutorial
     current_gamer.update_attributes!(show_tutorial: false)
+  end
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method calls get_vote on the current gamer to get
+  #   all votes given by a given gamer
+  # Params:
+  #   it just needs the current gamer 
+  # Success: 
+  #   renders a js view of the gamer vote log showing either
+  #   their votes histroy or no votes if he/she didn't vote yet
+  # Failure: 
+  #   --
+  def showprofile
+    @count, @vote_log = current_gamer.get_votes
+    respond_to do |format|
+      format.js
+    end
   end
 end

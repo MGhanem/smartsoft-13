@@ -101,6 +101,7 @@ namespace :db do
       g.date_of_birth = age.years.ago
       g.country = country
       g.education_level = education
+      g.confirmed_at = Time.now
       g.save
       g
     end
