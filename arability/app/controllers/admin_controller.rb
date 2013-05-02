@@ -383,4 +383,74 @@ class AdminController < ApplicationController
     end
   end
 
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could view all reported keywords/synonyms in database.
+  # Parameters:
+  #   None.
+  # Success:
+  #   All reported keywords/synonyms in database are viewed, and if none, a 
+  #   message is viewed stating that.
+  # Failure: 
+  #   None.
+  def view_reports
+    @reports = Report.all
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could ignore any report by pressing the icon-ok and the
+  #   word reported won't be in reports any more and will keep approved.
+  # Parameters:
+  #   report_id: id of report to be ignored.
+  # Success:
+  #   Report is ignored and removed from reports' list, an email is sent to
+  #   reporter and a flash appears indicating success of operation.
+  # Failure: 
+  #   None.
+  def ignore_report
+    report_id = params[:report_id]
+    report = Report.find_by_id(report_id)
+    UserMailer.generic_email(Gamer.find_by_id(report.gamer_id).email,
+      "report feedback on arability.com",
+      "Dear #{Gamer.find_by_id(report.gamer_id).username}, \nWe would like to thank you for your feedback. But our team finds nothing inappropiate in the word you reported and was kept on our website. \nThank you \nArability team").deliver
+    report.delete
+    @reportAll = Report.all
+    flash[:success] = "تم التصرف في البلاغ و إبقاء الكلمة"
+    flash.keep
+    redirect_to action: "view_reports"
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I could delete any report by pressing the icon-remove and the
+  #   word reported won't be in reports any more and will be unapproved.
+  # Parameters:
+  #   report_id: id of report to be ignored.
+  # Success:
+  #   Report is removed from reports' list, word gets unapproved, an email is
+  #   sent to reporter and a flash appears indicating success of operation.
+  # Failure: 
+  #   None.
+  def unapprove_word
+    report_id = params[:report_id]
+    report = Report.find_by_id(report_id)
+    if report.reported_word_type == "Synonym"
+      Synonym.disapprove_synonym(report.reported_word_id)
+    else
+      Keyword.disapprove_keyword(report.reported_word_id)
+    end
+    UserMailer.generic_email(Gamer.find_by_id(report.gamer_id).email,
+      "report feedback on arability.com",
+      "Dear #{Gamer.find_by_id(report.gamer_id).username}, \nWe would like to thank you for your feedback. Your report has been considered, and we found out that this word is inappropiate and have been blocked from our website. \n \nThank you \n \nArability team").deliver
+    report.delete
+    @reportAll = Report.all
+    flash[:success] = "تم التصرف في البلاغ و إخفاء الكلمة"
+    flash.keep
+    redirect_to action: "view_reports"
+  end
+
 end
