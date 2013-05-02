@@ -148,10 +148,10 @@
     if word!= nil
       return true
     else
-      if self.word_search > Search.where(developer_id: self.developer).count
+      if self.word_search > Search.where(developer_id: self.developer.id).count
         search = Search.new
         search.developer_id = developer
-        search.synonym_id = word_id
+        search.keyword_id = word_id
         search.save
         return true
       else
