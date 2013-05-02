@@ -106,7 +106,6 @@ Arability::Application.routes.draw do
       
       match "projects/:id/share" => "projects#share", :as => "share_project"
       get "projects/update"
-
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
