@@ -256,6 +256,7 @@ function setButtons(){
 <% if I18n.locale==:ar %>
 <div class="game-zone">
   <div class="game-nav">
+    <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
        <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width : 130px; height: 55px; margin-top:10px; border: medium none;">
         <span class="caret">Menu</span>
@@ -285,6 +286,7 @@ function setButtons(){
          </a>
           </li>
         </ul>
+        <% end %>
     </div>
   </div>
   <% else I18n.locale==:en %>
