@@ -32,6 +32,14 @@ RSpec.configure do |config|
     "uid" => "011252217", "credentials" => {"token" => "mock123token456"},
     "extra" => {"raw_info" => {"gender" => "male"}}
     })
+  OmniAuth.config.add_mock(:google_oauth2, {
+      "info" => {"email" => "email@mock.com"},
+      "extra" => {"raw_info" => {"gender" => "male"}},
+      "provider" => "google_oauth2",
+      "uid" => "123456",
+      "credentials" => {"token" => "mock123token456google789",
+        "refresh_token" => "mock123refresh456token789google101112"}
+    })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

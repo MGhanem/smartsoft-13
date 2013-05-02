@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :set_locale
   require 'csv'
-  rescue_from Exception, :with => :error_render_method
+  # rescue_from Exception, :with => :error_render_method
 
   # Author:
   #   Mohamed Ashraf
