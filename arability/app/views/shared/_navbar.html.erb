@@ -25,7 +25,7 @@
           </li>
           <li class="dropdown">
           <a class="dropdown-toggle" href="#" data-toggle="dropdown"><%= t :sign_in %> <strong class="caret"></strong></a>
-            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+            <div class="dropdown-menu" id="black" style="padding: 15px; padding-bottom: 0px;">
                <%= form_for("gamer", url: gamer_session_path) do |f| %>
                 <%= f.text_field :login, style: "margin-bottom: 15px;", placeholder: t(:username_or_email), size: "30" %>
                 <%= f.password_field :password, style: "margin-bottom: 15px;", placeholder: t(:password), size: "30" %>
@@ -48,7 +48,7 @@
                     <img src="/assets/twitter-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
                   <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
-                    <img src="/assets/google_64.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
+                    <img src="/assets/google-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
                 </div>
 
@@ -64,11 +64,11 @@
           <li><%= link_to t(:backend), backend_home_path %></li>
         <% end %>
         <% if I18n.locale==:en %>
-          <li><a href="/gamers/edit"><i class="icon-wrench"></i>Edit Account Settings</a></li>
+          <li><a href="/gamers/edit">Settings</a></li>
         <% if current_gamer.try(:admin?) %>
           <li><a href="/admin">Arability Control Panel</a></li>
         <% end %>
-        <% else I18n.locale==:ar %>
+        <% else I18n.locale==:ar %> 
         <% if current_gamer.try(:admin?) %>
           <li><a href="/admin">لوحة تحكم Arability</a></li>
         <% end %>

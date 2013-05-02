@@ -76,14 +76,26 @@ Arability::Application.routes.draw do
     match "guest/continue_sign_up" => "guest#continue_sign_up", as: "guest_continue_sign_up"
     post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
+    match "/games/post_facebook" => "games#post"
 
-    scope "developers/" do 
-      match "/" => "backend#home", :as => "backend_home"
+
+    scope "developers/" do
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
-      get "projects/remove_developer_from_project"
-      match "projects/:id/share/" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
+      match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
+       match "/projects/:id/destroy" => "projects#destroy", :as => :delete
+      put "projects/destroy"
+      resources :projects
+
+      match 'projects' => "projects#index", :as => :projects
+      match "/" => "backend#home", :as => "backend_home"
+      
+      get "projects/remove_developer_from_project"
+      
+      match "projects/:id/share" => "projects#share", :as => "share_project"
+      
       get "projects/update"
+
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
       match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
@@ -92,16 +104,16 @@ Arability::Application.routes.draw do
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-      match "/projects/:id/destroy" => "projects#destroy", :as => :delete
-      put "projects/destroy"
+     
 
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
 
-      resources :projects
+      
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/my_subscriptions/pick_edit' => "my_subscription#pick_edit"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 
@@ -129,6 +141,8 @@ Arability::Application.routes.draw do
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+  match "*path", :to => "application#routing_error"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

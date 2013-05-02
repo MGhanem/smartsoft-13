@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :set_locale
   require 'csv'
-
+  rescue_from Exception, :with => :error_render_method
 
   # Author:
   #   Mohamed Ashraf
@@ -48,16 +48,53 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   this method catches routing errors
+  # params:
+  #   --
+  # success:
+  #   Redirects to 404
+  # failure:
+  #   --
   def routing_error
-    path = get_root
-    redirect_to path, flash: {error: "Sorry, we seem to have misplaced the page you were looking for \"#{params[:path]}\""}
+    redirect_to "/404"
   end
-
+  
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   this method catches all exceptions
+  # params:
+  #   exception: The exception thrown
+  # success:
+  #   Redirects to home page if exception was thrown in projects page or
+  #   game page.
+  #   Redirects to projects page if exception was thrown in either list
+  #   followed or search pages.
+  #   After redirecting, it sends an email to "arability.smartsoft@gmail.com"
+  #   with the thrown exception.
+  # failure:
+  #   --
   def error_render_method(exception)
-    path = get_root
-    redirect_to path, 
-      flash: {error: "Oops, this is embarassing. A problem has occured, however we have notified an administrator and are working to fix it "}
+    path = request.path
+    UserMailer.generic_email("mostafa.a.hassaan@gmail.com", 
+        exception, exception.backtrace.join("\n")).deliver
+    if path.include? "developers/"
+      redirect_to projects_path, flash: { error: t(:exception) } 
+      return
+    end
+    if path.include? "developers/projects"
+      redirect_to get_root, flash: { error: t(:exception) }
+      return 
+    end
+    if path.include? "game"
+      redirect_to get_root, flash: { error: t(:exception) }
+      return 
+    end
   end
+  
   # author:
   #   Amr Abdelraouf
   # description:

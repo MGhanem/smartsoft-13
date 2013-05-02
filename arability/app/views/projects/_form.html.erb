@@ -1,3 +1,4 @@
+<%= link_to t(:back), {action: "index", controller: "projects"} %>
 <div class = "container well" >
     <p class="req"><%= t(:required) %></p>
     <%= form_for @project, :html => {:class => "form-horizontal"} do |f| %>
@@ -12,30 +13,33 @@
         </div>
       <% end %>
     <div class="control-group">
-        <%= f.label :name, :class => "control-label" %>
+        <%= f.label t(:name), :class => "control-label" %>
         <div class="controls">
-          <%= f.text_field :name, :placeholder => t(:name) %>
+          <%= f.text_field :name, :placeholder => t(:name), :id => "project_name"%>
           <span class="req">* </span>
         </div>
     </div>
     <div class="control-group">
-      <%= f.label :categories, :class => "control-label" %>
+      <%= f.label t(:categories), :class => "control-label" %>
       <div class="controls">
-        <%= text_field_tag("project[categories]", @categories, :placeholder => t(:enter_as_csv)) %>
-        <span class="req">* </span>
+        <% if I18n.locale == :en %>
+          <%= f.collection_select(:category, Category.all, :id, :english_name, {:prompt => true}, {:id =>"cat"}) %>
+        <% elsif I18n.locale == :ar %>
+          <%= f.collection_select(:category, Category.all, :id, :arabic_name, {:prompt => true}, {:id =>"cat"}) %>
+        <% end %>
     </div>
   </div>
   <div class="control-group">
       <label class="control-label">
-      <span class="help-block"><%= t(:formality) %></span>
+      <span class="help-block" id="project_name"><%= t(:formality) %></span>
       </label>
       <div class="controls">
-          <label class="radio">
-              <%= f.radio_button :formal, 'Formal' %>
+          <label class="radio" id="project_name">
+            <%= f.radio_button :formal, true %>
             <%= t(:formal) %>
           </label>
-          <label class="radio">
-            <%= f.radio_button :formal, 'Slang' %>
+          <label class="radio" id="project_name">
+            <%= f.radio_button :formal, false %>
             <%= t(:slang) %>
           </label>
       </div>
@@ -45,15 +49,15 @@
       <span class="help-block"><%= t(:age) %></span>
       </label>
       <div class="controls d5pxup">
-          <%= f.text_field :minAge, :class => "input-small", :placeholder =>  t(:from) %>
-          <%= f.text_field :maxAge, :class => "input-small", :placeholder =>  t(:to) %>
+          <%= f.text_field :minAge, :class => "input-small", :placeholder =>  t(:from), :id => "project_name"%>
+          <%= f.text_field :maxAge, :class => "input-small", :placeholder =>  t(:to), :id => "project_name" %>
           <span class="req">* </span>
       </div>
   </div>
   <div class="control-group">
-      <%= f.label :description, :class => "control-label" %>
+      <%= f.label t(:desc), :class => "control-label" %>
       <div class="controls">
-          <%= f.text_area :description, :size => "10x10" %>
+          <%= f.text_area :description, :id => "desc" %>
       </div>
   </div>
   <div class="control-group">

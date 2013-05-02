@@ -181,14 +181,12 @@ function setButtons(){
     }
     clear();
     <%if I18n.locale == :ar %>
-    $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-    $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;right:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;right:190px;"></a>')
-     <% else I18n.locale == :en %>
-     $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-     $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;left:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;left:190px;"></a>')
-     <% end %>
+      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share_ar.png" style="height:150px;padding:10px;"></a><a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share_ar.png" style="height:150px;"></a></div>')
+    <% else I18n.locale == :en %>
+      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share.png" style="height:150px;padding:10px;"></a><a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;"></a></div>')
+    <% end %>
   }
   
   function setScoreTitle(){
@@ -281,47 +279,44 @@ function setButtons(){
 
 
 <div class="game-zone">
+
   <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
-      الرتبة
-    </div>
-
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
-      جوائز
-  </div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
-      الإنجازات
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-     بروفيل
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-
-     إعدادات
-    </div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
-      دعوات
-    </div>
-
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
+    <div class="nav-box btn btn-inverse" id="navItems">بروفيل</div>
+    <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
   </div>
 
   <% if I18n.locale == :ar %>
-  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-
-    <% else %>
+    <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+  <% else %>
     <div class="zone" id="zone">
-      <% end %> 
-    <div class="divaya">
-    <h2 class="lang-header"><%= t(:pick_lang) %></h2><br>
-    <div class="game-lang">
-      
-      <div id="exposedEngBtnDiv"><button data-trigger="manual" data-content="<%= t(:english_popover_content) %>" data-placement="left" data-title="<%= t(:english_popover_title) %>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)"><%= t(:english_button) %></button></div><br><br><br><br>
+  <% end %> 
+      <div class="divaya">
+        <h2 class="lang-header"><%= t(:pick_lang) %></h2><br>
+        <div class="game-lang">
 
-      <div id="exposedArBtnDiv"><button data-trigger="manual" data-content="<%= t(:arabic_popover_content) %>" data-placement="right" data-title="<%= t(:arabic_popover_title) %>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)"><%= t(:arabic_button) %></button></div><br><br><br><br>
+          <div id="exposedEngBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:english_popover_content) %>" data-placement="left" data-title="<%= t(:english_popover_title) %>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">
+              <%= t(:english_button) %>
+            </button>
+          </div>
+          <br><br><br><br>
+          <div id="exposedArBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:arabic_popover_content) %>" data-placement="right" data-title="<%= t(:arabic_popover_title) %>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)">
+              <%= t(:arabic_button) %>
+            </button>
+          </div>
+          <br><br><br><br>
+          <div id="exposedBothBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:both_popover_content) %>" data-placement="left" data-title="<%= t(:both_popover_title) %>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)">
+              <%= t(:both_button) %>
+            </button>
+          </div>
 
-      <div id="exposedBothBtnDiv"><button data-trigger="manual" data-content="<%= t(:both_popover_content) %>" data-placement="left" data-title="<%= t(:both_popover_title) %>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)"><%= t(:both_button) %></button></div>
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
-  </div>
 </div>
