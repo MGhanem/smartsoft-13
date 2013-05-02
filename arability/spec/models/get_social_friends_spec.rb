@@ -66,16 +66,4 @@ describe "retrieve list of friends who are also gamers" do
     expect(result).to eq(nil)
   end
   
-  # it "should return false if no internet connection was found for facebook" do
-  #   current_gamer
-  #   fbauthentication
-  #   Koala::Facebook::API.stub(:new).with(fbauthentication.token) { raise Faraday::Error::ConnectionFailed }
-  #   Authentication.get_common_facebook_friends(current_gamer).should be_false
-  # end
-  # it "should retrieve list of facebook friends" do
-  #   current_gamer
-  #   fbauthentication
-  #   result = Authentication.get_common_facebook_friends(current_gamer)
-  #   expect(result).to eq([1])
-  # end
 end
