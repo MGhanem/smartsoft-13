@@ -55,7 +55,8 @@ ar:
   please_select: "الرجاء الاختيار"
   formality: "اللغة"
   formal: "فصحى"
-  slang: "عامية"
+  slang: "عامي"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
   desc: "عن المشروع"
@@ -340,6 +341,10 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  won_prizes_title: "الجوائز التي تم الحصول عليها "
+  not_won_prizes_title: "الجوائز المتاحة "
+  no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
+  all_prizes: "لقد فزت بجميع الجوائز"
   project_removed: "تم مسح المشروع المشترك"            
   activerecord:
     attributes:
@@ -387,6 +392,9 @@ ar:
         categories: "الفئات"
         description: "الوصف"
   project_delete: "تم مسح المشروع بنجاح"
+  choose_sub: 'نظام الإشتراك'           
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
@@ -549,6 +557,11 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  wrong_age_input: "ادخلت رقم خطأ"
+  synonyms: "المعاني:"
+  school: "مدرسة"
+  university: "جامعة"
+  graduate: "خريج"
   activerecord:
     errors:
       models:
@@ -588,6 +601,9 @@ ar:
   close_delete: "الغاء"
   submit_delete: "مسح"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  sub_changed: "لقد غيرت نظامك "
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  back_to_project: "<< عودة إلى المشروع"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
@@ -602,6 +618,14 @@ ar:
   sub_project: "عدد المشريع التي يمكنك انشائها هي :"
   feat4h: "تواصل"
   feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
-  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"  
+  you_vote: ""
+  vote_action: "لقد اخترت "
+  chosen_action: " كأنسب بديل لكلمة "
+  vote_log: "اصواتك السابقة" 
+  no_you: "انت "
+  no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"
+  back_log: "اللعبة"
+  vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"

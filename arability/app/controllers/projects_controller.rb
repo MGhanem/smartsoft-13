@@ -192,16 +192,16 @@ end
   # Author:
   #   Mohamed Tamer
   # Description:
-  #   calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
+  #   Calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
   #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number
   #   of synonyms and the synonyms accepted for each word
   # Params:
   #   csvfile: the csv file the user imported
   #   id: the project id
   # Success:
-  #   returns an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
+  #   Returns an array of words existing in database before, their synonyms, num of those synonyms and array of words new to database, their synonyms and the number of those synonyms
   # Failure:
-  #   redirect back to the import_csv view with the error message
+  #   Redirects back to the import_csv view with the error message
   def choose_keywords
     arr_of_arrs, message = parseCSV(params[:csvfile])
     project_id =  params[:id]
@@ -220,6 +220,11 @@ end
       end
       redirect_to action: "import_csv", id: project_id
     else
+      if I18n.locale == :ar
+        @language = "arabic"
+      else
+        @language = "english"
+      end
       @id_words_in_database_before = Array.new
       @id_synonyms_words_in_database_before = Array.new
       @id_words_not_in_database_before = Array.new
@@ -234,16 +239,56 @@ end
               Synonym.record_synonym(row[i],keywrd.id)
             end
             counter = 0
-            for i in 1..row.size
-              synonm = Synonym.find_by_name(row[i], keywrd.id)
-              if synonm != nil
-                counter = counter + 1
-                @id_synonyms_words_in_database_before.push(synonm.id)
+            if @id_words_in_database_before.include?(keywrd.id) || @id_words_not_in_database_before.include?(keywrd.id)
+              if @id_words_in_database_before.include?(keywrd.id)
+                index = @id_words_in_database_before.index(keywrd.id)
+                index2 = 0
+                for i in 0..index
+                  index2 = index2 + @num_synonyms_words_in_database_before[i]
+                end
+                for i in 1..row.size
+                  synonm = Synonym.find_by_name(row[i], keywrd.id)
+                  if synonm != nil
+                    counter = counter + 1
+                    @id_synonyms_words_in_database_before.insert(index2, synonm.id)
+                    index2 = index2 + 1
+                  end
+                end
+                if counter > 0
+                  old_num_syns =  @num_synonyms_words_in_database_before[index].to_i
+                  @num_synonyms_words_in_database_before[index] = counter + old_num_syns
+                end  
+              else
+                index = @id_words_not_in_database_before.index(keywrd.id)
+                index2 = 0
+                for i in 0..index
+                  index2 = index2 + @num_synonyms_words_not_in_database_before[i]
+                end
+                for i in 1..row.size
+                  synonm = Synonym.find_by_name(row[i], keywrd.id)
+                  if synonm != nil
+                    counter = counter + 1
+                    @id_synonyms_words_not_in_database_before.insert(index2, synonm.id)
+                    index2 = index2 + 1
+                  end
+                end
+                if counter > 0
+                  old_num_syns =  @num_synonyms_words_not_in_database_before[index].to_i
+                  @num_synonyms_words_not_in_database_before[index] = counter + old_num_syns
+                end
+              end           
+            else
+              for i in 1..row.size
+                synonm = Synonym.find_by_name(row[i], keywrd.id)
+                if synonm != nil
+                  counter = counter + 1
+                  @id_synonyms_words_in_database_before.push(synonm.id)
+                end
               end
-            end
-            if counter > 0
-              @id_words_in_database_before.push(keywrd.id)
-              @num_synonyms_words_in_database_before.push(counter)
+              if counter > 0
+                @id_words_in_database_before.push(keywrd.id)
+                @num_synonyms_words_in_database_before.push(counter)
+              end
             end
           end
         else
@@ -269,12 +314,23 @@ end
           end
         end
       end
+      developer = Developer.where(gamer_id: current_gamer.id)
+      if developer.respond_to?(:my_subscription)
+        my_sub = developer.my_subscription
+        flag_continue = my_sub.max_add_word(project_id)
+        if !flag_continue
+          flash[:notice] = t(:upload_file_error5)
+          redirect_to action: "show", id: project_id  
+        end
+      end
       if @id_words_in_database_before.empty? && @id_words_not_in_database_before.empty?
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
-        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-          @words_remaining = Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i
+        developer = Developer.where(gamer_id: current_gamer.id)
+        if developer.respond_to?(:my_subscription)
+          my_sub = developer.my_subscription
+          @words_remaining = my_sub.max_add_word_count(project_id)
         else
           @words_remaining = 150
         end
@@ -319,21 +375,24 @@ end
   # author:
   #   Mohamed tamer
   # description:
-  #   add words and their synonym from the imported csv file to the project
+  #   Add words and their synonym from the imported csv file to the project
   # Params:
   #   words_ids: array of hashes of word id and their corresponding synonym id
   #   id: current project id
   # Success:
-  #   returns adds the word and synonym to project and redirects back to project
+  #   Returns adds the word and synonym to project and redirects back to project
   # Failure:
-  #   if the array size is bigger than the word_search of that developer nothing is added
+  #   If the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
     project_id =  params[:id]
     if id_words_project != nil
       words_synonyms_array = id_words_project.map {|x| x.split("|")}
-      if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-        if Developer.where(:gamer_id => current_gamer.id).first.my_subscription.word_search.to_i < id_words_project.size
+      developer = Developer.where(:gamer_id => current_gamer.id)
+      if developer.respond_to?(:my_subscription)
+        my_sub = developer.my_subscription
+        words_count = my_sub.max_add_word_count(project_id)
+        if words_count < id_words_project.size
           flash[:error] = t(:java_script_disabled)
           redirect_to action: "show", id: project_id
           return
@@ -341,9 +400,9 @@ end
       end
       words_synonyms_array.each do |word_syn|
         if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
-          if Developer.where(:gamer_id => current_gamer.id).first.my_subscription != nil
-            MySubscription.decrement_word_search
-          end
+          flag, current_keyword = PreferedSynonym.find_word_in_project(project_id, word_syn[0], true)
+          current_project_category = Project.find_by_id(project_id).category
+          current_keyword.categories << current_project_category
         end
       end
     end
@@ -353,13 +412,13 @@ end
   # Author:
   #   Mohamed Tamer
   # Description:
-  #   finds the project and renders the view
+  #   finds the project and renders the import_csv view
   # Params:
   #   id: the project id
   # Success:
-  #   loads the view
+  #   Loads the import_csv view
   # Failure:
-  #   no failure
+  #   No failure
   def import_csv
     current_project = Project.find(params[:id])
   end

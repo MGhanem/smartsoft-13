@@ -70,6 +70,7 @@ Arability::Application.routes.draw do
     post "games/record_synonym"
     get "/games/halloffame"
     get "games/disableTutorial"
+    get "games/showprofile"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
@@ -134,13 +135,15 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match "search" => "search#search"
+      match "search" => "search#search_with_filters"
 
       match "search_keywords" => "search#search_keywords"
 
       match "send_report" => "search#send_report"
 
-      match 'autocomplete' => 'search#keyword_autocomplete'
+      match "search_with_filters" => "search#search_with_filters"
+
+      match "autocomplete" => "search#keyword_autocomplete"
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
