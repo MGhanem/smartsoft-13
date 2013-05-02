@@ -11,21 +11,22 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :show_tutorial, :admin, :is_local
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
@@ -251,12 +252,6 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  #scopes defined for advanced search aid
-  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
-
 # author:
 #     Salma Farag
 # description:
@@ -280,6 +275,36 @@ def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     end
     gamer
 end
+
+  class << self
+    # Author:
+    #  Mirna Yacout
+    # Description:
+    #  This method is to retrieve the list of common arability friends and Facebook friends
+    # Parameters:
+    #  current_gamer: the record in Gamer table for the current user
+    # Success:
+    #  returns the list of common followers
+    # Failure:
+    #  returns nil if no gamer token is found
+    def get_common_facebook_friends(current_gamer)
+      if (current_gamer.token.nil?)
+        return nil
+      end
+      @graph = Koala::Facebook::API.new(current_gamer.get_token)
+      friends = @graph.get_connections("me", "friends")
+      common = Array.new
+      i = 0
+      while i<friends.count
+        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
+          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
+          common.push(current_gamer.id)
+        end
+        i = i + 1
+        return common
+      end
+    end
+  end
 
 # Author:
 #   Mirna Yacout
@@ -410,10 +435,29 @@ def is_local_account
   is_local
 end
 
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Params:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Success: 
+  #   returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  # Failure: 
+  #   returns 0 and empty list if gamer has no votes
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id = ?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
+    vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
+  end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+  scope :filter_by_dob, lambda { |from, to| where date_of_birth: to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where gender: gender }
+  scope :filter_by_education, lambda { |education| where education_level: education }
 end
-

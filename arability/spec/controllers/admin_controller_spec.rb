@@ -6,7 +6,7 @@ include Warden::Test::Helpers
 
 describe AdminController  do
 
-  describe "GET #crud_categories and edit_subscription_model" do
+  describe "GET #admin_options" do
 
     let(:cat1) do
       category = Category.new
@@ -59,6 +59,14 @@ describe AdminController  do
       project.owner_id = developer.id
       project.save
       project
+    end
+
+    let(:word) do
+      word = Keyword.new
+      word.name = "Test"
+      word.is_english = true
+      word.save validate: false
+      word
     end
 
     it "should list all gamers" do
@@ -143,7 +151,36 @@ describe AdminController  do
       model1
       put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "", name_ar: "", limit_search: "100", limit_follow: "200", limit_project: "300"}
       assigns(:model).should eq nil
-    end    
+    end
+
+    it "list all reports" do
+      word
+      gamer
+      sign_in(gamer)
+      success , report = Report.create_report(gamer, word)
+      get :view_reports
+      assigns(:reports).should =~ [report]
+    end
+
+    it "remove report but keep word approved" do
+      word
+      gamer
+      sign_in(gamer)
+      success , reported = Report.create_report(gamer, word)
+      get :ignore_report, report_id: reported.id
+      assigns(:reportAll).should eq []
+    end
+
+    it "remove report and unapprove word" do
+      word
+      gamer
+      sign_in(gamer)
+      success , reported = Report.create_report(gamer, word)
+      get :unapprove_word, report_id: reported.id
+      result = Keyword.find_by_id(word.id).approved
+      expect(result).to eq (false)
+      assigns(:reportAll).should eq []
+    end
 
   end
 

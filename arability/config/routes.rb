@@ -30,6 +30,9 @@ Arability::Application.routes.draw do
     match "/add_category" => "admin#add_category"
     match "/view_categories" => "admin#view_categories"
     match "/delete_category"=>"admin#delete_category", :as => "delete_category"
+    match "/ignore_report"=>"admin#ignore_report", :as => "ignore_report"
+    match "/unapprove_word"=>"admin#unapprove_word", :as => "unapprove_word"
+    match "/view_reports" => "admin#view_reports"
     match "/view_subscription_models" => "admin#view_subscription_models"
     match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
     put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
@@ -41,10 +44,16 @@ Arability::Application.routes.draw do
 
     # required for routing by the devise module(gem)
 
-    devise_for :gamers do 
+    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
+    devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
       post "/social_registrations/social_sign_in"
+      get "/gamers/sign_in" => "devise/sessions#new"
+      post "/gamers/confirmation" => "devise/confirmations#create"
+      get "/gamers/confirmation/new" => "devise/confirmations#new", :as => "new_confirmation"
+      get "/gamers/confirmation" => "devise/confirmations#show"
     end
 
     match '/game' => 'games#game'
@@ -63,6 +72,7 @@ Arability::Application.routes.draw do
     get "/games/fame"
     get "/games/halloffame"
     get "games/disableTutorial"
+    get "games/showprofile"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
@@ -73,14 +83,30 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match "guest/sign_up" => "guest#sign_up", as: "guest_sign_up"
+    post "guest/signing_up" => "guest#signing_up", :as => "guest_signing_up"
+    match "guest/continue_sign_up" => "guest#continue_sign_up", as: "guest_continue_sign_up"
+    post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
+    match "/games/post_facebook" => "games#post"
 
-    scope "developers/" do 
-      match "/" => "backend#home", :as => "backend_home"
+
+    scope "developers/" do
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
       get "projects/remove_developer_from_project"
-      match "projects/:id/share/" => "projects#share", :as => "share_project"
+      
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
+      match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
+       match "/projects/:id/destroy" => "projects#destroy", :as => :delete
+      put "projects/destroy"
+      resources :projects
+
+      match 'projects' => "projects#index", :as => :projects
+      match "/" => "backend#home", :as => "backend_home"
+      
+      get "projects/remove_developer_from_project"
+      
+      match "projects/:id/share" => "projects#share", :as => "share_project"
       get "projects/update"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
@@ -90,16 +116,16 @@ Arability::Application.routes.draw do
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-      match "/projects/:id/destroy" => "projects#destroy", :as => :delete
-      put "projects/destroy"
+     
 
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
 
-      resources :projects
+      
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
+      match '/my_subscriptions/pick_edit' => "my_subscription#pick_edit"
       match '/my_subscriptions/new' => "my_subscription#new"
       match '/my_subscriptions/create' => "my_subscription#create"
 
@@ -111,22 +137,37 @@ Arability::Application.routes.draw do
       match "keywords/new" => "keywords#new", :as => :keywords_new
       match "keywords" => "keywords#viewall"
 
-      match "search" => "search#search"
+      match "search" => "search#search_with_filters"
 
       match "search_keywords" => "search#search_keywords"
 
       match "send_report" => "search#send_report"
 
-      match 'autocomplete' => 'search#keyword_autocomplete'
+      match "search_with_filters" => "search#search_with_filters"
+
+      match "autocomplete" => "search#keyword_autocomplete"
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
     end
   end
 
+  get "gamers/sign_in" => redirect("/en/gamers/sign_in")
+  get "gamers/sign_in" => redirect("/ar/gamers/sign_in")
+
+  get "gamers/gamers/confirmation/new" => redirect("/en/gamers/confirmation/new")
+  get "gamers/gamers/confirmation/new" => redirect("/ar/gamers/confirmation/new")
+  
+
+  get "/en/gamers/password" => redirect("/en/gamers/password/edit")
+
+  get "/ar/gamers/password" => redirect("/ar/gamers/password/edit")
+
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
+
+  match "*path", :to => "application#routing_error"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
