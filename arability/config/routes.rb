@@ -134,8 +134,6 @@ Arability::Application.routes.draw do
 
   match "*path", :to => "application#routing_error"
 
-  
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
