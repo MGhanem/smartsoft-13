@@ -258,9 +258,17 @@
         <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
         <span class="form-search form-horizontal" id = "add_span">
           <%= t(:add_to) %>
-          <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+          <% if @project_id != nil %>
+            <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name, { selected: @project_id }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+          <% else %>
+            <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+          <% end %>
           <%= t(:with) %>
-          <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+          <% if @project_id != nil %>
+            <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { selected: @project_id }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+          <% else %>
+            <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+          <% end %>
           <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" >
           </input>
         </span>
