@@ -50,8 +50,15 @@
                 </div>
               </div>
               <div class="control-group">
+                <%= f.label :الحد_الأقصى_للكلمات_للمشروع_الواحد, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :limit, :placeholder => "الحد الأقصى للكلمات للمشروع الواحد" %>
+                </div>
+              </div>
+              <div class="control-group">
                 <div class="controls">
                   <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
+                  <a class="btn btn-large" href="/admin/view_subscription_models" style="margin-left: 20px"><%= "رجوع" %></a>
                 </div>
               </div>
             <% end %>
