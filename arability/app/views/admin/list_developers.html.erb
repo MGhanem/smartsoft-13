@@ -1,0 +1,39 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: 'sidebar-nav', locals: {active: "list-developers"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-list-developers">
+					<legend>
+						<div class="pull-left pagination">
+							<%= paginate @list, :remote => true %>
+						</div>
+						<a>
+							عرض المطوريين
+						</a>
+					</legend>
+					<table class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<td>اسم المستخدم</td>
+								<td>البريد الاكترونى</td>
+								<td>عدد المشارييع</td>
+								<td>عدد الكلمات</td>
+							</tr>
+						</thead>
+						<tbody>
+							<% for item in @list %>
+								<tr>
+									<td><%= item.gamer.username %></td>
+									<td><%= item.gamer.email %></td>
+									<td><%= item.projects.count %></td>
+									<td><%= item.keywords.count %></td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

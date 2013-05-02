@@ -1,0 +1,46 @@
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "add-category"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+          <form method='post' class="form-horizontal">
+            <fieldset>
+              <legend>
+                <a>إضافة فئة جديدة</a>
+              </legend>
+              <input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+              <div class="control-group<%= flash[:error] && flash[:error][:arabic_name]? ' error' : ''%>">
+                <label class="control-label">إسم الفئة بالعربية</label>
+                <div class="controls">
+                  <input type="text" placeholder="إسم الفئة" name="arabic_name" value="<%= @arabic_name %>">
+                  <% if flash[:error] && flash[:error][:arabic_name] %>
+                    <% flash[:error][:arabic_name].each do |er| %>
+                      <span class="help-block"><%= er %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="control-group<%= flash[:error] && flash[:error][:english_name]? ' error' : ''%>">
+                <label class="control-label">إسم الفئة بالإنجليزية</label>
+                <div class="controls">
+                  <input type="text" placeholder="Name of category" name="english_name" value="<%= @english_name %>">
+                  <% if flash[:error] && flash[:error][:english_name] %>
+                    <% flash[:error][:english_name].each do |er| %>
+                      <span class="help-block"><%= er %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" class="btn btn-large btn-primary pull-left">إضافة الفئة</button> 
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

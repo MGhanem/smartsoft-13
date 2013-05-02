@@ -1,0 +1,42 @@
+<div class = "main-div-vl">
+<h3 id = "header-vl" class = "heading-vl"><%= t(:vote_log) %>
+<a class = "btn btn-success btn-game-vl" onClick = "backToGame()"><%= t(:back_log) %></a>
+</h3>
+<table class = "table table-bordered table-striped styling-center-table-vl">
+  <% if !@vote_log.blank? %>
+    <% @vote_log.each do |vote| %>
+      <tr>
+        <td></td>
+        <td class = "table-row-vl"> <b class = "coloring-vl"><%= t(:you_vote) %></b><%= t(:vote_action) %><b class = "coloring-vl"><%= vote.last %></b><%= t(:chosen_action) %><b class = "coloring-vl"><%= vote.first %></b></td>
+        <td></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td></td>
+      <td class = "table-row-vl"><b class = "coloring-vl"><%= t(:no_you) %></b><%= t(:no_vote_log) %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+</div>
+
+<style>
+  .table td {
+    background-color: #FFFFFF;
+    border-width: 0px;
+  }
+
+  .table {
+    width: 740px;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    <% if I18n.locale == :ar %>
+      $("#header-vl").addClass("arabic-head-vl");
+      $(".table-row-vl").addClass("arabic-table-vl");
+    <% end %>
+  });
+</script>
