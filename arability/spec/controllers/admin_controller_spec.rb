@@ -42,6 +42,20 @@ describe AdminController  do
       gamer
     end
 
+    let(:gamer2) do
+      gamer = Gamer.new
+      gamer.username = "ahmed"
+      gamer.country = "Egypt"
+      gamer.gender = "male"
+      gamer.date_of_birth = "1993-10-23"
+      gamer.email = "ahmed@gmail.com"
+      gamer.password = "1234567"
+      gamer.education_level = "University"
+      gamer.confirmed_at = Time.now
+      gamer.save validate: false
+      gamer
+    end
+
     let(:developer) do
       gamer
       developer = Developer.new
@@ -83,6 +97,14 @@ describe AdminController  do
       sign_in(gamer)
       get :list_developers
       assigns(:list).should =~ [developer]
+    end
+
+    it "should make ahmed an admin" do 
+      gamer
+      gamer2
+      sign_in(gamer)
+      get :make_admin, id: gamer2.id
+      gamer2.admin.should eq(true)
     end
 
     it "should list all projects" do
