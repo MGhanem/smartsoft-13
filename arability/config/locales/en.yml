@@ -355,9 +355,9 @@ en:
         project:
           attributes:
             minAge:
-              minAge_range: "has to be between 9 and 99 years"
+              minAge_range: "has to be a number between 9 and 99 years"
             maxAge:
-              maxAge_range: "has to be between 10 and 100 years"
+              maxAge_range: "has to be a number between 10 and 100 years"
               less_than_minAge: "can not be less than the minimum age"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -545,9 +545,9 @@ en:
         project:
           attributes:
             minAge:
-              minAge_range: "has to be between 9 and 99 years"
+              minAge_range: "has to be a number between 9 and 99 years"
             maxAge:
-              maxAge_range: "has to be between 10 and 100 years"
+              maxAge_range: "has to be a number between 10 and 100 years"
               less_than_minAge: "can not be less than the minimum age"
     attributes:
       project:

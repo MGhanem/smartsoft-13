@@ -1,10 +1,8 @@
 <%= link_to t(:back), {action: "index", controller: "projects"} %>
 <div class = "container well" >
-    <p class="req"><%= t(:required) %></p>
     <%= form_for @project, html: {class: "form-horizontal"} do |f| %>
       <% if @project.errors.any? %>
-        <div id="error_explanation" class="req">
-           <h2 class="req"><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
+        <div id="error_explanation" class="req alert">
            <ul>
                <% @project.errors.full_messages.each do |msg| %>
                  <li><%= msg %></li>
@@ -12,6 +10,8 @@
            </ul>
         </div>
       <% end %>
+    <p class="req"><%= t(:required) %></p>
+    <br>
     <div class="control-group">
         <%= f.label t(:name), class: "control-label" %>
         <div class="controls">
@@ -54,10 +54,10 @@
     <%= f.label t(:target_country), :class => "control-label", id: "project_name" %>
     <% if params[:action] == "new" %>
       <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
-      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"Other"]]), {}, { id:"cat" }) %>
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"others"]]), {}, { id:"cat" }) %>
      <% else %>
       <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
-      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"Other"]]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"others"]]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
     <% end %>
   </div>
   <div class="control-group">
@@ -91,7 +91,6 @@
    <%= f.label t(:desc2), :class => "control-label", id: "project_name"%>
     <%= f.text_area :description, id: "desc" %>
   </div>
-</div>
   <div class="control-group">
     <% if I18n.locale == :en %>
     <div class="controls">
