@@ -20,25 +20,14 @@ class SearchController < BackendController
   #   returns an empty list if the search keyword had no matches or no
   #   similar keywords were found
   def search_keywords
-    @categories = params[:categories]
     @project_id = params[:project_id]
-    if @categories.present?
-      categories_array = @categories.split(/,/)
-      categories_array.map! { |x| x.strip }
-      categories_array.map! { |x| x.downcase }
-      categories_array.reject! { |x| x.blank? }
-      categories_array.uniq!
-    else
-      categories_array = []
-    end
     @search_keyword = params["search"]
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
     end
     @similar_keywords =
-      Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array
+      Keyword.get_similar_keywords(@search_keyword)
   end
   
   # Author:
@@ -146,6 +135,11 @@ class SearchController < BackendController
 
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+
+        @categories =
+          @search_keyword_model.categories.map { |c| c.get_name_by_locale }
+
+        @category_ids = @search_keyword_model.categories.map { |c| c.id }
 
         if !@no_synonyms_found
           @charts = @synonyms.map{ |s| { s.id => 
