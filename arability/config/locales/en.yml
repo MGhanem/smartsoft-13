@@ -585,3 +585,6 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  search_not_allowed: >
+    Sorry! You have reached your search quota limit, but you can still search for words 
+    you searched for before.
