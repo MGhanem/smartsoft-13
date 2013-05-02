@@ -26,7 +26,6 @@
   function clickunfollow(id){
     $.get("/developers/unfollow/" + id);
     $('#'+id).fadeOut();
-  }
   <% if I18n.locale == :ar %>
     $(".unfollowbtn").attr("class", "pull-left");
   <% else %>
