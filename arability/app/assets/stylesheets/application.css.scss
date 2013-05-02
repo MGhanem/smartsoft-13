@@ -26,6 +26,11 @@ body {
     color: red;
 }
 
+div.field_with_errors {
+  @extend .control-group.error;
+  display: inline;
+}
+
 label.radio {
 	display: inline-block;
 	margin-top: 8px;
@@ -42,5 +47,23 @@ div.d5pxdown {
 }
 
 div.d5pxup input {
-	width: 95px;
+	width: 92px;
+}
+
+#project_name {
+  padding: 10px;
+}
+
+#desc {
+  min-width:500px;
+  max-width:500px;
+  min-height:180px;
+  max-height:180px;
+}
+
+#cat {
+  min-height:41px;
+  max-height:41px;
+  min-width: 232px;
+  min-width: 232px;
 }
