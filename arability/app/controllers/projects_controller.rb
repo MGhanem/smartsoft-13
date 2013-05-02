@@ -179,7 +179,7 @@ class ProjectsController < BackendController
 
 
   # Author:
-  #    Salma Farag
+  #   Salma Farag
   # Description:
   #   A method that finds the projects of the current developer and then checks for a certain project
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
