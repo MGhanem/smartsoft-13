@@ -3,8 +3,7 @@ require 'spec_helper'
 
 describe MySubscription do
   let(:developer){
-    developer=Developer.new
-    developer.id = 1
+		developer=Developer.new
     developer.verified = true
     developer.gamer_id= 1
     developer.save

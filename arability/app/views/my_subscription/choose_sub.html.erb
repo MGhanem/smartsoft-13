@@ -6,40 +6,29 @@
 <table>
 		<tr>
 <% @all_subscription_models.each do |sm| %>
-	<%if(@developer.my_subscription)
+  <%if @developer != nil
+	if(@developer.my_subscription)
 		selected_sub_id = @developer.my_subscription.subscription_model_id
 	else
 		selected_sub_id = 1
-	end%>
+	end
+  else
+    selected_sub_id = 1
+  end%>
 	
 			<td width="300px">
 	<div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
-	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %>      <%= sm.name %><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can search for is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكنك البحث عنها هى:</h5>
-    <% end %>
+	<p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
+     <%= sm.name %><br />
+    <h5><%=t(:sub_search)%></h5>
     <%=sm.limit_search%><%= t(:per_month)%><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can follow is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكنك متابعتها هي:</h5>
-    <% end %>
+    <h5><%=t(:sub_follow)%></h5>
     <%=sm.limit_follow%><%= t(:per_month)%><br/>
-    <% if I18n.locale==:en %>
-    <h5>The number of words you can add to your project is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد الكلمات التي يمكن اضافتها إلى مشروعك هي :</h5>
-    <% end %>
+    <h5><%=t(:sub_add)%></h5>
     <%=sm.limit%><%= t(:per_month)%><br />
-    <% if I18n.locale==:en %>
-    <h5>The number of projects you can create is:</h5>
-    <% else I18n.locale==:ar %>
-    <h5>عدد المشريع التي يمكنك انشائها هي :</h5>
-    <% end %>
+    <h5><%=t(:sub_project)%></h5>
     <%=sm.limit_project%>
-	</p>
+  </p>
     </div>
             </td>
         

@@ -35,6 +35,43 @@ module ApplicationHelper
   # Author:
   #   Mohamed Tamer
   # Description
+  #   Finds guest_user object associated with the current session 
+  #   and caches the value the first time it's gotten.
+  # Params:
+  #   guest_gamer_id: id of the guest gamer
+  # Success: 
+  #   Returns guest gamer
+  # Failure:
+  #   None
+  def guest_gamer
+    @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id])
+
+  rescue ActiveRecord::RecordNotFound 
+    session[:guest_gamer_id] = nil
+    guest_gamer
+  end
+  
+  # Author:
+  #   Mohamed Tamer
+  # Description
+  #   Gets the current gamer currently on the sysytem either a signed in gamer or guest
+  # Params:
+  #   current_gamer: the currently logged in gamer
+  # Success: 
+  #   Returns current_gamer if there is a gamer signed in or guest_gamer
+  # Failure:
+  #   None
+  def current_or_guest_gamer
+    if current_gamer
+      current_gamer
+    else
+      guest_gamer
+    end
+  end
+
+  # Author:
+  #   Mohamed Tamer
+  # Description
   #   Gets country name based on locale
   # Params:
   #   country: the english name for country

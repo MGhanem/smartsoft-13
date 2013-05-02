@@ -10,10 +10,13 @@
  *
  *= require_self
  */
-body {
+#navbar {
   padding-top: 60px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+}
+
+body {
+    background-color: #f5f5f5;
 }
 .boxed {
   width: 300px
@@ -63,4 +66,14 @@ div.d5pxup input {
   max-height:41px;
   min-width: 232px;
   min-width: 232px;
+}
+
+.validation {
+border: 1px solid;
+margin: 10px 0px;
+padding:15px 10px 15px 50px;
+background-repeat: no-repeat;
+background-position: 10px center;
+color: #D63301;
+background-color: #FFCCBA;
 }

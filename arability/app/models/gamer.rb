@@ -11,20 +11,22 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local, :show_tutorial
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
@@ -267,12 +269,13 @@ class Gamer < ActiveRecord::Base
   #   d_o_b: user date of birth
   #   country: user country
   #   ed_level: user educational level
+  #   provider: the social account provider
   # Sucess:
   #   New gamer is created with said attributes, returns the gamer and true
   # Failure:
   #   Gamer not saved because of validations, returns nil and false
   def self.create_with_social_account(
-    email, username, gender, d_o_b, country, ed_level)
+    email, username, gender, d_o_b, country, ed_level, provider)
     gamer = Gamer.new(
       email: email,
       username: username,
@@ -281,7 +284,8 @@ class Gamer < ActiveRecord::Base
       date_of_birth: d_o_b,
       country: country,
       education_level: ed_level,
-      is_local: false)
+      is_local: false,
+      provider: provider)
     if gamer.save
       return gamer, true
     else

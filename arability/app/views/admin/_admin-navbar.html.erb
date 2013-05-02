@@ -1,14 +1,12 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container">
-			<a class="brand" href="/admin/index">لوحة تحكم Arability</a>
-			<% if logged_in? %>
+			<a class="brand" href="/admin">لوحة تحكم Arability</a>
 			<ul class="nav pull-right">
 				<li>
-					<%= link_to "تسجيل الخروج", :action => "logout" %>
+					<%= link_to "العودة الى Arability", "/" %>
 				</li>
 			</ul>
-			<% end %>
 		</div>
 	</div>
 </div>

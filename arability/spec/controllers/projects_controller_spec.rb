@@ -66,17 +66,13 @@ describe ProjectsController do
       assigns(:my_projects).should eq([project2])
     end
 
-    it "renders the :index view" do
+    it "renders the :index view", timo: true do
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :index
       response.should render_template :index
     end
 
-    it "redirects to sign in page if the developer isn't signed in" do
-      get :index
-      response.should redirect_to new_gamer_session_path
-    end
   end
 
   describe "GET #import_csv" do
@@ -235,10 +231,11 @@ describe 'PUT update' do
     end
   end
 
+
+  # Noha's test
   it "should make developer remove a project shared with him" do
     sign_in gamer1
-    get :remove_project_from_developer, :dev_id => developer1.id, :project_id => project.id
-    #response.should be_success
+    get :remove_project_from_developer, dev_id: developer1.id, project_id: project.id
     response.code.should eq("302")
   end
 
