@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class AdminController < ApplicationController
-  protect_from_forgery
   layout "admin"
   require "csv"
   include AdminHelper
@@ -59,17 +58,17 @@ class AdminController < ApplicationController
   # Description:
   #   returns json of gamer emails matching autocompletion
   # params:
-  #   email: a string representing the email
+  #   search: a string representing the email
   # success:
   #   returns a json list of emails similar to what's currently typed
   #   in the search textbox
   # failure:
   #   returns an empty list if what's currently typed in the search textbox
   #   had no matches
-  def keyword_autocomplete
-    search_email = params[:email]
+  def gamer_email_autocomplete
+    search_email = params[:search]
     similar_emails =
-      Gamer.get_similar_emails(search_email, [])
+      Gamer.get_similar_emails(search_email)
     similar_emails.map! { |email| email.email }
     render json: similar_emails
   end

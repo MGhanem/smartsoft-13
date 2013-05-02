@@ -77,7 +77,7 @@ class Gamer < ActiveRecord::Base
   def self.get_similar_emails(email)
     return [] if email.blank?
     email.strip!
-    email_list = self.where("gamers.email LIKE ?", "%#{email}%")
+    email_list = self.where("gamers.email LIKE ?", "#{email}%")
 
     relevant_first_list = email_list
       .sort_by { |gamer| [gamer.email.downcase.index(email),
