@@ -63,7 +63,6 @@
           <li><%= link_to t(:backend), backend_home_path %></li>
         <% end %>
         <% if I18n.locale==:en %>
-          <li><a href="/gamers/edit">Settings</a></li>
         <% if current_gamer.try(:admin?) %>
           <li><a href="/admin">Arability Control Panel</a></li>
         <% end %>
