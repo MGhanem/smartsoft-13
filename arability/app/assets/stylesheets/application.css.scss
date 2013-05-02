@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require select2
  */
 #navbar {
   padding-top: 60px;
@@ -24,6 +25,11 @@ body {
 
 .req{
     color: red;
+}
+
+div.field_with_errors {
+  @extend .control-group.error;
+  display: inline;
 }
 
 label.radio {
@@ -42,6 +48,34 @@ div.d5pxdown {
 }
 
 div.d5pxup input {
-	width: 95px;
+	width: 92px;
+}
+
+#project_name {
+  padding: 10px;
+}
+
+#desc {
+  min-width:500px;
+  max-width:500px;
+  min-height:180px;
+  max-height:180px;
+}
+
+#cat {
+  min-height:41px;
+  max-height:41px;
+  min-width: 232px;
+  min-width: 232px;
+}
+
+.validation {
+border: 1px solid;
+margin: 10px 0px;
+padding:15px 10px 15px 50px;
+background-repeat: no-repeat;
+background-position: 10px center;
+color: #D63301;
+background-color: #FFCCBA;
 }
 
