@@ -32,27 +32,17 @@ class ProjectsController < BackendController
   # author:
   #    Mohamed Tamer
   # description:
-  #    function shows all the projects that a certain developer owns and the projects shared with him
+  #   Function shows all the projects that a certain developer owns and the projects shared with him
   # Params:
-  #    current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
+  #   current_gamer: the current logged in gamer, will be nil if there is no logged in gamer
   # Success:
-  #    returns array of projects that the developer own and the projects shared with him
+  #   Returns array of projects that the developer own and the projects shared with him
   # Failure:
-  #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
+  #   None
   def index
-    if current_gamer != nil
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @my_projects = Project.where(:owner_id => developer.id)
-        @shared_projects = developer.projects_shared
-      else
-        flash[:notice] = "من فضلك سجل كمطور"
-        redirect_to developers_new_path
-      end
-    else
-      flash[:error] = t(:projects_index_error2)
-      redirect_to new_gamer_session_path
-    end
+    @developer = Developer.where(gamer_id: current_gamer.id).first
+    @my_projects = Project.where(owner_id: @developer.id)
+    @shared_projects = @developer.projects_shared
   end
 
   # Author:
@@ -69,17 +59,17 @@ class ProjectsController < BackendController
   #   If not signed in he will be redirected to the sign in page.
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
-    # if current_developer.my_subscription.get_projects_limit
+    if current_developer.my_subscription.get_projects_limit
       @project = Project.new
       respond_to do |format|
         format.html
         format.json { render json: @project }
       end
-    # else
-    #     redirect_to choose_sub_path
-    #     flash[:notice] = t(:exceeded_project_limit)
-    #   end
+    else
+        redirect_to choose_sub_path
+        flash[:notice] = t(:exceeded_project_limit)
     end
+  end
 
   # Author:
   #   Salma Farag
@@ -103,18 +93,18 @@ class ProjectsController < BackendController
   #   Gives status errors
   def create
     @project = Project.new(params[:project].except(:category))
-    @project = Project.create_project(params[:project],current_developer.id)
+    @project = Project.createproject(params[:project],current_developer.id)
     respond_to do |format|
       if @project.save
         format.html { redirect_to "/developers/projects",
-          flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
+          flash: { success: I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
-        else
+      else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
-        end
       end
     end
+  end
 
 
   # Author:
@@ -129,6 +119,8 @@ class ProjectsController < BackendController
   #  none
   def share
     @project = Project.find(params[:id])
+    gamers_ids = Developer.pluck(:gamer_id)
+    @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
 
   # Author:
@@ -175,7 +167,7 @@ class ProjectsController < BackendController
   #   The old values will be kept.
   def update
     @project = Project.find(params[:id])
-    @project = Project.create_categories(@project, params[:project][:category])
+    @project = Project.createcategories(@project, params[:project][:category])
     if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
       :authenticity_token, :commit, :action, :controller, :locale, :id))
       redirect_to action: "index"
@@ -206,25 +198,18 @@ class ProjectsController < BackendController
   #   An project will be showed with its words and synonyms.
   # Failure:
   #   None.
-  def show
-    @projects = Project.where(owner_id: current_developer.id)
-    @project = Project.find(params[:id])
-    if @projects.include?(@project)
-      @words = []
-      @synonyms = []
-      @words_synonyms = PreferedSynonym.where(project_id: params[:id])
-      @words_synonyms.each do |word_synonym|
-        word = Keyword.find(word_synonym.keyword_id)
-        syn = Synonym.find(word_synonym.synonym_id)
-        @words.push(word)
-        @synonyms.push(syn)
-      end
-    else
-      redirect_to action: "index"
-      developer_unauthorized
-    end
-  end
 
+def show
+  @project = Project.find(params[:id])
+  @words = []
+  @synonyms = []
+  @words_synonyms = PreferedSynonym.where(project_id: params[:id])
+  @words_synonyms.each do |word_synonym|
+    word = Keyword.find(word_synonym.keyword_id)
+    syn = Synonym.find(word_synonym.synonym_id)
+    @words.push(word)
+    @synonyms.push(syn)
+  end
 
   # Author:
   #   Salma Farag
@@ -240,13 +225,13 @@ class ProjectsController < BackendController
   #   The user has exceeded the maximum limit of words to be added and hence will not be able
   #   to add any more.
   def view_recommended_words
-    # if current_developer.my_subscription.subscription_model_id != 1
+    if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
       @karray = Project.filter_keywords(@project.id,@project.category_id)
-    # else
-      # redirect_to choose_sub_path
-      # flash[:notice] = t(:trial_error)
-    # end
+    else
+      redirect_to choose_sub_path
+      flash[:notice] = t(:trial_error)
+    end
   end
 
   # Author:
@@ -270,12 +255,12 @@ class ProjectsController < BackendController
       params[:synonym].each do |key, syn|
         @word_id = Keyword.find((key.to_i)).id
         @synonym_id = syn.to_i
-          # if MySubscription.get_permissions(current_developer.id, 2)
+        if current_developer.my_subscription.can_add_word(@project.id)
           @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
             @synonym_id, @word_id, @project.id)
-        # end
+        end
+      end
     end
-  end
     redirect_to project_path(@project.id)
   end
 
@@ -739,6 +724,29 @@ class ProjectsController < BackendController
     end
   end
 
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   Finds the developer and the project by their ids
+  #   and removes the developer from the developers_shared
+  #   array, removing the project from the developer's
+  #   shared projects
+  # Params:
+  #   dev_id is the id of the developer
+  #   project_id is the id of the project
+  # Success:
+  #   Project is removed from shared projects
+  # Failure:
+  #   Project is not removed
+  def remove_project_from_developer
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    dev.projects_shared.delete(project)
+    dev.save
+    flash[:success] = t(:project_removed)
+    redirect_to :action => "index",:controller => "projects"
+  end
+
   # author:
   #   Khloud Khalid
   # description:
@@ -775,5 +783,5 @@ class ProjectsController < BackendController
       redirect_to projects_path, flash: flash
     end
   end
-
+end
 end

@@ -5,7 +5,7 @@ class MySubscription < ActiveRecord::Base
   belongs_to :developer
   validates :subscription_model_id, :presence => true
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
   #  it finds the chosen subscription model by the developer
   #  and sets the limits in the subscription model
@@ -45,7 +45,7 @@ class MySubscription < ActiveRecord::Base
   #   None
   def get_permission_follow
     developer = self.developer
-    count_follow=developer.Keywords.count
+    count_follow=developer.keywords.count
     if(count_follow < self.word_follow)
       return true
     else
@@ -65,7 +65,7 @@ class MySubscription < ActiveRecord::Base
   #  None
   def count_follow
     developer = self.developer
-    count_follow=developer.Keywords.count
+    count_follow=developer.keywords.count
   end
   # Author:
   #   Noha Hesham
@@ -98,7 +98,7 @@ class MySubscription < ActiveRecord::Base
   #   Gives permission to add words
   # Failure:
   #   None
-  def max_add_word(proj_id)
+  def can_add_word(proj_id)
     developer = self.developer
     add=PreferedSynonym.where(project_id: proj_id)
     if add.count < self.word_add
@@ -118,7 +118,7 @@ class MySubscription < ActiveRecord::Base
   #   Returns number of words
   # Failure:
   #   None
-  def max_add_word_count(proj_id)
+  def can_add_word_count(proj_id)
   developer = self.developer
   add=PreferedSynonym.where(project_id: proj_id ).count
   count_num=self.word_add-add
@@ -134,7 +134,7 @@ class MySubscription < ActiveRecord::Base
   #   Gives permission to search
   # Failure:
   #   None
-  def get_max_words(word_id)
+  def can_search_word(word_id)
     developer = self.developer
     word = Search.joins(:keyword).where(keyword_id: word_id)
     if word!= nil
@@ -150,31 +150,5 @@ class MySubscription < ActiveRecord::Base
         return false
       end
     end
-
-    # Author:
-    #  Noha Hesham
-    # Description:
-    #  counts the number of the followed word by the
-    #  developer till now
-    # Success:
-    #  gets the correct number of words counted
-    # Failure:
-    #  none
-   def count_follow
-    @developer = Developer.find(self.developer_id)
-    @count_follow=@developer.Keywords.count
-   end
-
-    # Author:
-    #  Khloud Khalid
-    # Description:
-    #  returns the subscription model of a given developer
-    # Success:
-    #  subscription model returned
-    # Failure:
-    #  none
-   def get_my_subscription()
-    return MySubscription.joins(:developer).where(developer_id: current_developer).first
-   end
 end
 end

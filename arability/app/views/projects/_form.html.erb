@@ -26,7 +26,7 @@
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true }, { id:"cat" }) %>
         <% else %>
         <% if @project.category_id != nil %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i,include_blank: t(:please_select) }, { id:"cat" } ) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i, include_blank: t(:please_select) }, { id:"cat" } ) %>
         <% else %>
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true, selected: @project.category_id.to_i }, { id:"cat" } ) %>
           <% end %>
@@ -63,9 +63,9 @@
   <div class="control-group">
       <%= f.label t(:pro_gender), :class => "control-label", id: "project_name"%>
       <% if params[:action] == "new" %>
-        <%= f.select(:gender, (['',[t(:pro_male),"Male"],[t(:pro_female),"Female"]]), {}, { id:"gender" }) %>
+        <%= f.select(:gender, (['',[t(:pro_male),"male"],[t(:pro_female),"female"]]), {}, { id:"gender" }) %>
       <% else %>
-        <%= f.select(:gender, (['',[t(:pro_male),"Male"],[t(:pro_female),"Female"]]),  { prompt: @select_value, selected: @project.gender }, { id:"gender" }) %>
+        <%= f.select(:gender, (['',[t(:pro_male),"male"],[t(:pro_female),"female"]]),  { prompt: @select_value, selected: @project.gender }, { id:"gender" }) %>
       <% end %>
   </div>
   <div class="control-group">
@@ -88,20 +88,20 @@
   <br>
   <h5><%= t(:desc) %>:</h5>
   <div class="control-group">
-      <div class="controls">
-          <%= f.text_area :description, id: "desc" %>
-      </div>
+   <%= f.label t(:desc2), :class => "control-label", id: "project_name"%>
+    <%= f.text_area :description, id: "desc" %>
   </div>
+</div>
   <div class="control-group">
     <% if I18n.locale == :en %>
     <div class="controls">
-      <span3><a class="btn pull-right btn-medium" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-      <button class="btn btn-info pull-right btn-medium" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+      <span3><a class="btn pull-right" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-right" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
     </div>
     <% else %>
     <div class="controls">
-      <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-      <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px; font-size=100"><%= t(:save_project) %></button>
+      <span3><a class="btn pull-left" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-left" type="submit" style="margin-right: 20px; font-size=100"><%= t(:save_project) %></button>
     </div>
     <% end %>
 <% end %>

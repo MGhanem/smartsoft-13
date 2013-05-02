@@ -11,21 +11,22 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local, :show_tutorial,
-                  :provider
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 

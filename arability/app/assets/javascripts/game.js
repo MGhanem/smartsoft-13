@@ -42,6 +42,7 @@ var lockLangButtons = true;
 var tutorialFlagWas = false;
 var showSuspense = false;
 var continuePlayingBtn;
+var isGuest;
 var wordsListPopoverContent;
 var wordsListPopoverTitle;
 var wordLabelPopoverContent;
@@ -262,7 +263,6 @@ function destroyAndStart(id){
 	destroy(id);
 	endTutorial();
 }
-
 
 // author:
 //   Ali El Zoheiry.

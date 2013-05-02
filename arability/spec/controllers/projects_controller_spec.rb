@@ -3,7 +3,6 @@ require "spec_helper"
 require "request_helpers"
 include RequestHelpers
 include Warden::Test::Helpers
-include RequestHelpers
 
 describe ProjectsController, type: :controller do
 
@@ -16,7 +15,7 @@ describe ProjectsController, type: :controller do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mohamedtamer5@gmail.com"
     gamer.password = "1234567"
-    gamer.save
+    gamer.save validate: false
     gamer
   }
 
@@ -51,21 +50,48 @@ describe ProjectsController, type: :controller do
     syn
   }
 
-  it "a developer can open the link of import of one of his projects" do
-    sign_in developer1.gamer
-    get :import_csv, :project_id => project.id
-    page.should have_content(I18n.t(:import_csv_title))
+  #Timo's tests
+  describe "GET #index" do
+
+    it "populates an array of projects", timo: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      get :index
+      assigns(:my_projects).should eq([project2])
+    end
+
+    it "renders the :index view", timo: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :index
+      response.should render_template :index
+    end
+
+  end
+  #End of Timo's tests
+
+
+  # Noha's test
+  it "should make developer remove a project shared with him" do
+    sign_in gamer1
+    get :remove_project_from_developer, dev_id: developer1.id, project_id: project.id
+    response.code.should eq("302")
   end
 
-end
-
-  # khloud's tests
 
   it "should delete a project" do
     sign_in gamer1
     put :destroy, id: project.id
     response.code.should eq("302")
   end
+
+  #khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do
     p = create_project

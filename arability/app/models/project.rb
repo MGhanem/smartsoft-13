@@ -1,16 +1,16 @@
 #encoding: UTF-8
 class Project < ActiveRecord::Base
-  has_one :owner, :class_name => "Developer"
+  has_one :owner, class_name: "Developer"
   has_many :shared_projects
-  has_many :developers_shared, :through => :shared_projects, :source => "developer"
+  has_many :developers_shared, through: :shared_projects, source: "developer"
   belongs_to :category
-  has_many :keywords, :through => :prefered_synonym
+  has_many :keywords, through: :prefered_synonym
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :category,
    :country, :education_level, :gender
-  validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }, :allow_nil => true
-  validates :maxAge, :inclusion => { :in => 10..100,  :message => :maxAge_range },
-   :numericality => { :greater_than_or_equal_to => :minAge, :message => :less_than_minAge}, :allow_nil => true
+  validates :name, presence: true, length: { maximum: 30 }
+  validates :minAge, inclusion: { in: 9..99,  message: :minAge_range }, allow_blank: true
+  validates :maxAge, inclusion: { in: 10..100,  message: :maxAge_range },
+   numericality: { greater_than_or_equal_to: :minAge, message: :less_than_minAge, if: :minAge? }, allow_blank: true
 
 # Author:
 #   Salma Farag
@@ -32,10 +32,10 @@ class Project < ActiveRecord::Base
 #   Creates and returns a project after calling method createcategories.
 # Failure:
 #   None
-def self.create_project(params,developer_id)
+def self.createproject(params,developer_id)
   project = Project.new(params.except(:developer,:category))
   project.owner_id = developer_id
-  project = create_categories(project,params[:category])
+  project = createcategories(project,params[:category])
   return project
 end
 
@@ -59,15 +59,17 @@ end
 #   Sets the category of the project to an existing one by finding the equivalent id.
 # Failure:
 #   None
-def self.create_categories(project,cat_id)
+def self.createcategories(project,cat_id)
   if cat_id != ""
     catArray = []
     catArray.push(cat_id)
     catArray.each do |m|
       project.category = Category.find(cat_id)
     end
-    project.save
+  else
+    project.category = nil
   end
+  project.save
   return project
 end
 
