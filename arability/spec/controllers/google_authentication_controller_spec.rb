@@ -13,7 +13,7 @@ describe AuthenticationsController do
     I18n.locale = :ar
     get :google_callback
     response.should redirect_to "/ar/social_registrations/new_social?" +
-    "email=email%40mock.com&gender=male&provider=google_oauth2"
+    "email=email%40mock.com&gender=male&provider=google_oauth2&username=email"
   end
 
   it "should redirect to home page, sign the user in and create an auth in his name" do
