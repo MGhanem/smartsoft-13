@@ -10,21 +10,24 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
-                  :highest_score, :gender, :login, :is_local, :show_tutorial
+                  :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin,
+                  :confirmed_at
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
@@ -227,12 +230,6 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  #scopes defined for advanced search aid
-  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
-
   class << self
     # Author:
     #  Mirna Yacout
@@ -274,12 +271,13 @@ class Gamer < ActiveRecord::Base
   #   d_o_b: user date of birth
   #   country: user country
   #   ed_level: user educational level
+  #   provider: the social account provider
   # Sucess:
   #   New gamer is created with said attributes, returns the gamer and true
   # Failure:
   #   Gamer not saved because of validations, returns nil and false
   def self.create_with_social_account(
-    email, username, gender, d_o_b, country, ed_level)
+    email, username, gender, d_o_b, country, ed_level, provider)
     gamer = Gamer.new(
       email: email,
       username: username,
@@ -288,7 +286,9 @@ class Gamer < ActiveRecord::Base
       date_of_birth: d_o_b,
       country: country,
       education_level: ed_level,
-      is_local: false)
+      is_local: false,
+      confirmed_at: Time.now,
+      provider: provider)
     if gamer.save
       return gamer, true
     else
@@ -311,10 +311,29 @@ def is_local_account
   is_local
 end
 
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Params:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Success: 
+  #   returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  # Failure: 
+  #   returns 0 and empty list if gamer has no votes
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id = ?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
+    vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
+  end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+  scope :filter_by_dob, lambda { |from, to| where date_of_birth: to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where gender: gender }
+  scope :filter_by_education, lambda { |education| where education_level: education }
 end
-

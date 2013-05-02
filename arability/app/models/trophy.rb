@@ -91,6 +91,15 @@ class Trophy < ActiveRecord::Base
   # failure: 
   #     returns false and the trophy if it is not added to the database
   def self.add_trophy_to_database(name, level, score, image)
+    if name
+      name.strip!
+    end
+    if level
+      level.strip!
+    end
+    if score
+      score.strip!
+    end
     new_trophy = Trophy.new(name: name, level: level, score: score, image: image)
     if new_trophy.save
       return true, new_trophy

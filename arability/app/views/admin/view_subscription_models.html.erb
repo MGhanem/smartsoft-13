@@ -1,22 +1,50 @@
-<table class="table table-striped">
-  <tr>
-    <th>#</th>
-    <th>الإسم العربي</th>
-    <th>الإسم الإنجليزي</th>
-    <th>الحد الأقصى للبحث</th>
-    <th>الحد الأقصى للمتابعة</th>
-    <th>الحد الأقصى للمشاريع</th>
-    <th>تعديل</th>
-  </tr>
-  <% @models.each do |model| %>
-    <tr>
-    	<th><%= model.id %></th>
-    	<th><%= model.name_ar %></th>
-      <th><%= model.name_en %></th>      
-      <th><%= model.limit_search %></th>
-      <th><%= model.limit_follow %></th>
-      <th><%= model.limit_project %></th>
-    	<th><a class="btn btn-mini" href="/admin/<%= model.id %>/edit_subscription_model"><i class="icon-edit"></i></a></th>
-    </tr>
-  <% end %>
-</table>
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: nil} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+            <legend>
+              <a>
+                عرض انظمة الاشتراك
+              </a>
+            </legend>
+            <% if flash[:success] %>
+              <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div>
+                  <%= flash[:success] %>
+                </div>
+              </div>
+            <% end %>
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th>الإسم العربي</th>
+                <th>الإسم الإنجليزي</th>
+                <th>الحد الأقصى للبحث</th>
+                <th>الحد الأقصى للمتابعة</th>
+                <th>الحد الأقصى للمشاريع</th>
+                <th>الحد الأقصى للكلمات للمشروع الواحد</th>
+                <th>تعديل</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @models.each do |model| %>
+                <tr>
+                  <th><%= model.name_ar %></th>
+                  <th><%= model.name_en %></th>      
+                  <th><%= model.limit_search %></th>
+                  <th><%= model.limit_follow %></th>
+                  <th><%= model.limit_project %></th>
+                  <th><%= model.limit %></th>
+                  <th><a class="btn btn-mini" href="/admin/<%= model.id %>/edit_subscription_model"><i class="icon-edit"></i></a></th>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
