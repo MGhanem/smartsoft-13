@@ -11,6 +11,8 @@ class SubscriptionModel < ActiveRecord::Base
     message: "لا يمكن أن يكون الحد الأقصى للمتابعة فارغ"
   validates_presence_of :limit_project,
     message: "لا يمكن أن يكون الحد الأقصى للمشاريع فارغ"
+  validates_presence_of :limit,
+    message: "لا يمكن أن يكون الحد الأقصى للكلمات للمشروع الواحد فارغ"
   validates_format_of :name_en, with: /^([a-zA-Z ]+)$/,
     message: "هذا الإسم ليس باللغة الإنجليزية"
   validates_format_of :name_ar, with: /^([\u0621-\u0652 ])+$/,
@@ -20,6 +22,8 @@ class SubscriptionModel < ActiveRecord::Base
   validates_numericality_of :limit_follow, only_integer: true,
     greater_than_or_equal_to: 0, message: "يجب أن يكون الحد الاقصى رقم"
   validates_numericality_of :limit_project, only_integer: true,
+    greater_than_or_equal_to: 0, message: "يجب أن يكون الحد الاقصى رقم"
+  validates_numericality_of :limit, only_integer: true,
     greater_than_or_equal_to: 0, message: "يجب أن يكون الحد الاقصى رقم"
   validates_uniqueness_of :name_en, message: "هذا الإسم الإنجليزي موجود بالفعل"
   validates_uniqueness_of :name_ar, message: "هذا الإسم العربي موجود بالفعل"
