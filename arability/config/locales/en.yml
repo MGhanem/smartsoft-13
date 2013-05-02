@@ -40,13 +40,6 @@ en:
   age_to: "to:"
   gender: "Gender:"
   education: "Education:"
-<<<<<<< HEAD
-  no_synonyms_found: "Sorry! We couldn't find translations matching the search keyword in our database. "
-  follow_word: "Follow word"
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
-=======
-  keyword_not_found: "Sorry! We couldn't find keywords matching the search keyword using these category filters. "
->>>>>>> baec88284dd3121d2abc7099f48e0419147068bc
   add_word: "Add Keyword"
   female: "female"
   male: "male"
@@ -136,11 +129,6 @@ en:
   no_votes_for_word: "No votes exsist for this word"
   no_synonyms_found: "Sorry! We couldn't find translations matching the search keyword in our database. "
   follow_word: "Follow word"
-<<<<<<< HEAD
-  no_synonyms_found: "Sorry! We couldn't find translations matching the search keyword in our database. "
-  keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
-=======
->>>>>>> baec88284dd3121d2abc7099f48e0419147068bc
   add_word: "Add Keyword"
   stats_gender: "Gender Statistics"
   stats_country: "Country Statistics"
@@ -162,12 +150,7 @@ en:
   register_as_developer: "Developer Registration"
   next: "Next"
   done: "Done!"
-<<<<<<< HEAD
-  no_synonyms_found: "Sorry! We couldn't find translations matching the search keyword in our database. "
-  follow_word: "Follow word"
   keyword_not_found: "Sorry! We couldn't find the search keywords in our database. "
-=======
->>>>>>> baec88284dd3121d2abc7099f48e0419147068bc
   add_word: "Add Keyword"
   Add_words: "Add words"
   Synonym_changed_successfully: "Translation changed successfully."
@@ -334,40 +317,6 @@ en:
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
   you_have_prizes: "You have won the following prizes!"
-  activerecord:
-    attributes:
-      developer:
-        first_name: "First Name"
-        last_name: "Last Name"
-      project:
-        name: 'Name'
-        minAge: 'The minimum age'
-        maxAge: 'The maximum age'
-        categories: "Categories"
-        description: "Description"
-    models:
-      developer: "Developer"
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "has to be between 9 and 99 years"
-            maxAge:
-              maxAge_range: "has to be between 10 and 100 years"
-              less_than_minAge: "can not be less than the minimum age"
-        keyword:
-          attributes:
-            name:
-              blank: "word cant be empty"
-              invalid: "The word can only consist of only english and arabic characters"
-              taken: "This word already exists in the database"
-        category:
-          attributes:
-            name:
-              blank: "category cant be empty"
-              invalid: "The category can only consist of only english and arabic characters"
-              taken: "This category already exists in the database"
   enter_keyword: "Enter a keyword"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -630,3 +579,37 @@ en:
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
+  activerecord:
+    attributes:
+      developer:
+        first_name: "First Name"
+        last_name: "Last Name"
+      project:
+        name: 'Name'
+        minAge: 'The minimum age'
+        maxAge: 'The maximum age'
+        categories: "Categories"
+        description: "Description"
+    models:
+      developer: "Developer"
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
+              less_than_minAge: "can not be less than the minimum age"
+        keyword:
+          attributes:
+            name:
+              blank: "word cant be empty"
+              invalid: "The word can only consist of only english and arabic characters"
+              taken: "This word already exists in the database"
+        category:
+          attributes:
+            name:
+              blank: "category cant be empty"
+              invalid: "The category can only consist of only english and arabic characters"
+              taken: "This category already exists in the database"

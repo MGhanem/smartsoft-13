@@ -111,10 +111,7 @@ ar:
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-<<<<<<< HEAD
   select_subscription: "إختر"
-=======
->>>>>>> baec88284dd3121d2abc7099f48e0419147068bc
   choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
   choose_keyword_remaining: "تبقى لك عدد"
   choose_keywords_remaining2: "كلمة"
@@ -186,53 +183,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    models:
-      developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
-      keyword:
-        name: "الكلمة"
-      category:
-        english_name: "الاسم الانجليزي"
-        arabic_name: "الاسم العربي"
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
-        keyword:
-          attributes:
-            name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
-        category:
-          attributes:
-            english_name:
-              blank: "برجاء إدخال فئة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه فئة موجودة بالفعل"
-            arabic_name:
-              blank: "برجاء إدخال فئة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه فئة موجودة بالفعل"
   views:
     project:
        flash_messages:
@@ -376,21 +326,10 @@ ar:
   guest_error9: "كلمات المرور غير متطابقة"
   become_member: "اشترك الآن"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
-<<<<<<< HEAD
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
-  enter_word_first: "ادخل كلمة اولآ"
-=======
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
   category_tags: "التصنيفات"
->>>>>>> baec88284dd3121d2abc7099f48e0419147068bc
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
@@ -399,15 +338,6 @@ ar:
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
   project_removed: "تم مسح المشروع المشترك"            
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
-        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -468,7 +398,6 @@ ar:
   delete_share: "الغاء الاشتراك"
   confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
   submit_remove: "الغاء الاشتراك"
-
   close_share: "لا، شكراً"
   routing_error: "خطأ ٤٠٤: لا توجد هذه الصفحة."
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
@@ -627,3 +556,52 @@ ar:
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
+  enter_word_first: "ادخل كلمة اولآ"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+      keyword:
+        name: "الكلمة"
+      category:
+        english_name: "الاسم الانجليزي"
+        arabic_name: "الاسم العربي"
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+        keyword:
+          attributes:
+            name:
+              blank: "برجاء إدخال كلمة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه الكلمة موجودة بالفعل"
+        category:
+          attributes:
+            english_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
+            arabic_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
