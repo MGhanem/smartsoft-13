@@ -12,7 +12,9 @@ require 'capybara/rspec'
 #Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+
   config.include Devise::TestHelpers, :type => :controller
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -29,6 +31,14 @@ RSpec.configure do |config|
     "info" => {"email" => "email@mock.com", "username" => "mockuser"}, "provider" => "facebook",
     "uid" => "011252217", "credentials" => {"token" => "mock123token456"},
     "extra" => {"raw_info" => {"gender" => "male"}}
+    })
+  OmniAuth.config.add_mock(:google_oauth2, {
+      "info" => {"email" => "email@mock.com"},
+      "extra" => {"raw_info" => {"gender" => "male"}},
+      "provider" => "google_oauth2",
+      "uid" => "123456",
+      "credentials" => {"token" => "mock123token456google789",
+        "refresh_token" => "mock123refresh456token789google101112"}
     })
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
