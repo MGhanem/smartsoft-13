@@ -396,6 +396,18 @@ function initializeList(){
 	if(tutorialFlag == true){
 		wordsListToolTip();
 	}
+	if(lang == 0){
+		list.css('float', 'left');
+		list.css('direction', 'ltr');
+		list.css('margin-left', '10px');
+		list.css('text-align', 'left');
+	}
+	else if(lang == 1){
+		list.css('direction', 'rtl');
+		list.css('text-align', 'right');
+		list.css('float', 'right');
+		list.css('margin-right', '20px');
+	}
 }
 
 // author:
@@ -1484,6 +1496,11 @@ function continuePlaying(){
 	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	if(JsLocale == 'ar'){
+		$('#game-score').css('text-align', 'right');
+		$('#game-score').css('direction', 'ltr');
+		$('#game-score').css('margin-right', '20px');
+	}
 	if(lang == 1){
 		$('#wordLabel').css('font-size', '22px');
 	}
