@@ -9,7 +9,7 @@ describe SearchController do
   describe "GET search" do
   include Devise::TestHelpers
     let(:c) do
-      success, category = Category.add_category_to_database_if_not_exists("test", "سنبنتش")
+      success, category = Category.add_category("test", "سنبنتش")
       category
     end
 
@@ -88,6 +88,11 @@ describe SearchController do
       gamer
     end
 
+    before :each do
+      k
+      k2
+    end
+
     let(:gamer3) do
       gamer = Gamer.new
       gamer.username = "Nourhan"
@@ -130,17 +135,8 @@ describe SearchController do
       vote
     }
 
-    it "should get only keywords in category" do
+    it "should get all keywords if no category specified", mohamed: true do
       c.keywords << k
-      a = create_logged_in_developer
-      sign_in(a.gamer)
-      get :search_keywords, :categories => "سنبنتش", :search => "test"
-      assigns(:similar_keywords).should =~ [k]
-    end
-
-    it "should get all keywords if no category specified" do
-      c.keywords << k
-      k2
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :search_keywords, :search => "test"

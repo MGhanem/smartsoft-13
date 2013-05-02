@@ -1,5 +1,4 @@
 <script type="text/javascript" charset="utf-8">
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
 <div class="award-zone" >
   <div class="won" style="padding-bottom:0px;">
@@ -8,7 +7,11 @@
     <% english_style = "padding: 5px; margin-right: 12px; margin-top: 28px;" %>
     <% arabic_style = "padding: 5px; margin-left:28px; margin-top: 28px;" %>
     <a class="<%= I18n.locale == :en ? english_class : arabic_class %>" style="<%= I18n.locale == :en ? english_style : arabic_style %>" onclick="nextLevel()"><%= t(:to_next_level) %></a>
-    <h3 class="title-head"><br><div style="margin-bottom: 10px;"><%= t(:you_have_score) %></div><div style="margin-bottom: 15px;"><%= @score %></div><%= t(:share_your_score) %><br><a href="https://twitter.com/share" class="twitter-share-button" data-text="لقد حصلت على <%= @score %> نقطة" data-via="SmartSoft2013">Tweet</a><a style="margin-left: -24px" target="_blank" href="/share_on_facebook/?score=<%= @score %>  "><img src="/assets/fb.png"></a></h3>
+    <% if I18n.locale == :ar %>
+      <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a style="margin-right: -40px" target="_blank" href="http://www.twitter.com/share?text=لقد حصلت على <%= @score %> نقطة على http://localhost:3000/ via @SmartSoft2013"><img src="/assets/tweet-button.jpg" style="height:26px; width:100px;"></a><a style="margin-right: 100px" target="_blank" href="/share_on_facebook/?score=<%= @score %>"><img src="/assets/fb.png" style="height:30px; width:100px"></a></h3>
+    <% else %>
+      <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a style="margin-left: -40px" target="_blank" href="http://www.twitter.com/share?text=I've scored <%= @score %> points on http://localhost:3000/ via @SmartSoft2013"><img src="/assets/tweet-button.jpg" style="height:26px; width:100px;"></a><a style="margin-left: 100px" target="_blank" href="/share_on_facebook/?score=<%= @score %>"><img src="/assets/fb.png" style="height:30px; width:100px"></a></h3>
+    <% end %>
   </div>
   <% if !@won_trophies.blank? %>
   <div class="won">
