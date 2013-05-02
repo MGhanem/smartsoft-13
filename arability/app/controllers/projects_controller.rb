@@ -449,7 +449,9 @@ end
             end
           end
         else
-          # if MySubscription.get_permissions(current_developer.id, 2)
+          @my_subscription =
+           MySubscription.where(developer_id: current_developer.id).first
+          if @my_subscription.can_add_word(@project_id)
             @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
               @synonym_id, @word_id, @project_id)
             if @added_word
@@ -461,7 +463,6 @@ end
                   new_keyword.save
                 end
               end
-              # MySubscription.decrement_add(current_developer.id)
               respond_to do |format|
                 format.html {
                   flash[:success] = t(:successfully_added_word_to_project)              
@@ -481,10 +482,15 @@ end
                 format.json { render json: [t(:failed_to_add_word_to_project)] }
               end
             end
-          # else
-          #   flash[:notice] = t(:exceeds_word_limit)
-          #   redirect_to project_path(@project_id), flash: flash
-          # end
+          else
+            respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:exceeds_word_limit)
+                  redirect_to project_path(@project_id), flash: flash
+                }
+                format.json { render json: [t(:exceeds_word_limit)] }
+              end
+          end
         end
       else
         respond_to do |format|
