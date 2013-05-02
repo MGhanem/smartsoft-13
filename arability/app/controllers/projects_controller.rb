@@ -6,7 +6,8 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update,
+    :view_recommended_words, :get_recommended_words]
 
  # author:Noha hesham
  # Description:
@@ -279,7 +280,7 @@ end
                 if counter > 0
                   old_num_syns =  @num_synonyms_words_in_database_before[index].to_i
                   @num_synonyms_words_in_database_before[index] = counter + old_num_syns
-                end  
+                end
               else
                 index = @id_words_not_in_database_before.index(keywrd.id)
                 index2 = 0
@@ -298,7 +299,7 @@ end
                   old_num_syns =  @num_synonyms_words_not_in_database_before[index].to_i
                   @num_synonyms_words_not_in_database_before[index] = counter + old_num_syns
                 end
-              end           
+              end
             else
               for i in 1..row.size
                 synonm = Synonym.find_by_name(row[i], keywrd.id)
@@ -342,7 +343,7 @@ end
         flag_continue = my_sub.max_add_word(project_id)
         if !flag_continue
           flash[:notice] = t(:upload_file_error5)
-          redirect_to action: "show", id: project_id  
+          redirect_to action: "show", id: project_id
         end
       end
       if @id_words_in_database_before.empty? && @id_words_not_in_database_before.empty?
