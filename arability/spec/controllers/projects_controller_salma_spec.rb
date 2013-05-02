@@ -38,6 +38,23 @@ describe ProjectsController, type: :controller do
     project
   }
 
+   let(:submodel){
+    submodel = SubscriptionModel.new
+    submodel.limit=50
+    submodel.limit_search=50
+    submodel.limit_follow=50
+    submodel.limit_project=1
+    submodel.save
+    submodel
+  }
+
+  let(:my_sub){
+    MySubscription.choose(developer1.id, submodel.id)
+    puts "dev_id : #{developer1.id}"
+    my_sub = MySubscription.where(:developer_id => developer1.id).first
+    my_sub
+  }
+
   it "initializes a new project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
