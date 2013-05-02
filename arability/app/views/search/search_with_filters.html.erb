@@ -48,7 +48,7 @@
 				function add_keyword_with_synonym(){
     				var synonym_id = $("#synonym_select option:selected").val();
     				var project_id = $("#project_select option:selected").val();
-    				var msg = "batee5";
+    				var msg = "";
     				if(synonym_id != undefined && synonym_id !="" && project_id != undefined && project_id !=""){
         				var request = $.post("/developers/projects/"+project_id+"/add_word_inside_project.json", {synonym_id: synonym_id, keyword: "<%= @search_keyword %>", project_id: project_id } );
         				request.done(function (data, status, xhr){
@@ -256,7 +256,7 @@
 		<div class="accordion-heading">
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
 				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-				<span class="form-search form-horizontal" style="margin: 470px">
+				<span class="form-search form-horizontal" style="margin: 440px">
 					<%= t(:add_to) %>
 					<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
 					<%= t(:with) %>

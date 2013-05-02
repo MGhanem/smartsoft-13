@@ -11,21 +11,22 @@ class Gamer < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
    devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :show_tutorial, :admin, :is_local
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 
@@ -221,30 +222,6 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-# author:
-#     Salma Farag
-# description:
-#     A  method that returns a gamer with an email equal to the email signed in on Google from
-#the access token.
-# params:
-#     The access token granted from Google and a signed in resources that is equal to nil.
-# success:
-#     Returns the gamer with the matching email.
-# failure:
-#     Creates a new gamer using the email and password
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    gamer = Gamer.where(:email => data["email"]).first
-
-    unless gamer
-         gamer = Gamer.create(
-              email: data["email"],
-              password: Devise.friendly_token[0,20]
-             )
-    end
-    gamer
-end
-
   class << self
     # Author:
     #  Mirna Yacout
@@ -324,6 +301,26 @@ end
 def is_local_account
   is_local
 end
+
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Params:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Success: 
+  #   returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  # Failure: 
+  #   returns 0 and empty list if gamer has no votes
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id = ?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
+    vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
+  end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }

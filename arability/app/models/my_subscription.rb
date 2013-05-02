@@ -1,10 +1,10 @@
-class MySubscription < ActiveRecord::Base
+ class MySubscription < ActiveRecord::Base
   belongs_to :subscription_model
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, :presence => true
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
   #  it finds the chosen subscription model by the developer 
   #  and sets the limits in the subscription model

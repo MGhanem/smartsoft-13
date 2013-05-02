@@ -1,7 +1,11 @@
 #encoding: UTF-8
 class SubscriptionModel < ActiveRecord::Base
-  has_many :my_subscriptions
-  attr_accessible :name_en, :name_ar, :limit_search, :limit_follow, :limit_project, :limit_add
+	has_many :my_subscriptions
+  attr_accessible :name_en, :name_ar, :limit_search, :limit_follow, :limit_project ,:limit
+
+  def name
+    self.send("name_#{I18n.locale}")
+  end
 
   validates_presence_of :name_en, message: "لا يمكن أن يكون الإسم الإنجليزي فارغ"
   validates_presence_of :name_ar, message: "لا يمكن أن يكون الإسم العربي فارغ"

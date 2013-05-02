@@ -137,8 +137,8 @@ class SearchController < BackendController
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if !@search_keyword_model.blank?
         @synonyms, @votes =
-          @search_keyword_model.retrieve_synonyms(@country, @age_from, @age_to, 
-            @gender, @education, @synonym_type)
+          @search_keyword_model.retrieve_synonyms(@country, @age_from, 
+            @age_to, @gender, @education, @synonym_type)
 
         @no_synonyms_found = true if @synonyms.blank?
 
@@ -146,7 +146,7 @@ class SearchController < BackendController
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
 
         if request.xhr?
-        render "filtered_results.js"
+          render "filtered_results.js"
         end
       else
         redirect_to search_keywords_path(search: @search_keyword)
