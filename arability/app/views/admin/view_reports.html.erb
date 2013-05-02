@@ -23,18 +23,44 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>الكلمة</th>
                   <th>نوع الكلمة</th>
                   <th>إسم اللاعب</th>
                   <th>إبقاء</th>
-                  <th>مسح</th>
+                  <th>إخفاء</th>
                 </tr>
               </thead>
               <tbody>
                 <% @reports.each do |report| %>
+                  <div id="myModalDelete<%= report.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h3 id="myModalLabel">تأكيد الإخفاء</h3>
+                    </div>
+                    <div class="modal-body">
+                      <p>هل أنت متأكد من إخفاء الكلمة للأبد؟</p>
+                      <div class="prize-view"></div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn" data-dismiss="modal" aria-hidden="true">لا شكراً</button>
+                      <a class="btn btn-danger" href="/admin/unapprove_word?report_id=<%= report.id %>">إخفاء</a>
+                    </div>
+                  </div>
+                  <div id="myModalIgnore<%= report.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h3 id="myModalLabel">تأكيد الإبقاء</h3>
+                    </div>
+                    <div class="modal-body">
+                      <p>هل أنت متأكد من إبقاء هذه الكلمة لدينا؟</p>
+                      <div class="prize-view"></div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn" data-dismiss="modal" aria-hidden="true">لا شكراً</button>
+                      <a class="btn btn-success" href="/admin/ignore_report?report_id=<%= report.id %>">إبقاء</a>
+                    </div>
+                  </div>
                   <tr>
-                    <th><%= report.id %></th>
                     <% if report.reported_word_type == "Synonym" %>
                       <th><%= Synonym.find_by_id(report.reported_word_id).name %></th>
                       <th>معنى</th>
@@ -43,8 +69,8 @@
                       <th>كلمة</th>
                     <% end %>
                     <th><%= Gamer.find_by_id(report.gamer_id).username %></th>
-                    <th><a class="btn btn-mini" href="/admin/ignore_report?report_id=<%= report.id %>"><i class="icon-ok"></i></a></th>
-                    <th><a class="btn btn-mini" href="/admin/unapprove_word?report_id=<%= report.id %>"><i class="icon-remove"></i></a></th>
+                    <th><a class="btn btn-mini btn-success" href="#myModalIgnore<%= report.id %>" role="button" class="edit-link-prize" data-toggle="modal"><i class="icon-ok"></i></a></th>
+                    <th><a class="btn btn-mini btn-danger" href="#myModalDelete<%= report.id %>" role="button" class="edit-link-prize" data-toggle="modal"><i class="icon-remove"></i></a></th>
                   </tr>
                 <% end %>
               </tbody>
