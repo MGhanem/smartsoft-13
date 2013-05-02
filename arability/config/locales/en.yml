@@ -374,7 +374,7 @@ en:
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
-  all_trophies: "Wow! You have one all the trophies!"
+  all_trophies: "Wow! You have won all the trophies!"
   you_have_score: "Congratulations! you have scored"
   share_your_score: "Share your score!"
   you_have_won_these_trophies: "You have won these trophies too!"
@@ -469,7 +469,7 @@ en:
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
-  all_trophies: "Wow! You have one all the trophies!"
+  all_trophies: "Wow! You have won all the trophies!"
   you_have_score: "Congratulations! you have scored"
   share_your_score: "Share your score!"
   you_have_won_these_trophies: "You have won these trophies too!"
@@ -579,6 +579,7 @@ en:
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
+  congrats_you_won: "Congratulations! You have won!"
   activerecord:
     attributes:
       developer:
