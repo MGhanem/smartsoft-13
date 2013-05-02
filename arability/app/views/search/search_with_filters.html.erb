@@ -256,7 +256,7 @@
     <div class="accordion-heading">
       <span class="accordion-toggle" data-toggle="false" href="#collective">
         <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-        <span class="form-search form-horizontal" style="margin: 440px">
+        <span class="form-search form-horizontal" id = "add_span">
           <%= t(:add_to) %>
           <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
           <%= t(:with) %>
@@ -264,6 +264,13 @@
           <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" >
           </input>
         </span>
+        <script type="text/javascript">
+          <% if I18n.locale == :ar %>
+            $("#add_span").css("margin", "250px");
+          <% else %>
+            $("#add_span").css("margin", "440px");
+          <% end %>
+        </script>
       </span>
     </div>
     <div id="collective" class="accordion-body collapse in">

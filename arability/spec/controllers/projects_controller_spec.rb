@@ -230,7 +230,7 @@ describe 'PUT update' do
       response.should render_template :edit
     end
   end
-
+end
 
   # Noha's test
   it "should make developer remove a project shared with him" do
@@ -247,25 +247,25 @@ describe 'PUT update' do
 
   #khloud's tests
 
-  it "redirects to project path after calling export_to_csv if project empty" do
+  it "redirects to project path after calling export_to_csv if project empty", khloud: true do
     p = create_project
     get :export_to_csv, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "redirects to project path after calling export_to_xml if project empty" do
+  it "redirects to project path after calling export_to_xml if project empty", khloud: true  do
     p = create_project
     get :export_to_xml, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "redirectsto project path after calling export_to_json if project empty" do
+  it "redirectsto project path after calling export_to_json if project empty", khloud: true  do
     p = create_project
     get :export_to_json, project_id: p.id
     response.should redirect_to project_path(p.id)
   end
 
-  it "responds with ok code after calling export_to_csv with valid project" do
+  it "responds with ok code after calling export_to_csv with valid project", khloud: true  do
     p = create_project
     ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
@@ -273,7 +273,7 @@ describe 'PUT update' do
     response.code.should eq("200")
   end
 
-  it "responds with ok code after calling export_to_xml with valid project" do
+  it "responds with ok code after calling export_to_xml with valid project", khloud: true  do
     p = create_project
     ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
@@ -281,7 +281,7 @@ describe 'PUT update' do
     response.code.should eq("200")
   end
 
-  it "responds with ok code after calling export_to_json with valid project" do
+  it "responds with ok code after calling export_to_json with valid project", khloud: true  do
     p = create_project
     ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
