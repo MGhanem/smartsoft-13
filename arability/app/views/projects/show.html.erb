@@ -81,14 +81,14 @@
           <% count=0 %>
           <% while count<@words.count %>
             <tr>
-              <td style="text-align:center">
+              <td style="text-align:center; vertical-align: middle;">
                 <% keyword = @words[count].name%>
                 <%= link_to keyword, search_path(search: keyword, project_id: @project.id), :method => :post %>
               </td>
               <td style="text-align:center">
                 <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, {selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%'}) %>
               </td>
-              <td style="text-align:center" >
+              <td style="text-align:center; vertical-align: middle;" >
                 <%= link_to t(:remove_from_project), {action: "remove_word", controller: "projects", project_id: @project.id, word_id: @words[count].id}, {style:"color:#FF0000", class: "css_class"} %>
               </td>
               <% count = count + 1 %>
