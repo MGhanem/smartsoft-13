@@ -277,6 +277,24 @@ class GamesController < ApplicationController
   def disableTutorial
     current_gamer.update_attributes!(show_tutorial: false)
   end
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method calls get_vote on the current gamer to get
+  #   all votes given by a given gamer
+  # Params:
+  #   it just needs the current gamer 
+  # Success: 
+  #   renders a js view of the gamer vote log showing either
+  #   their votes histroy or no votes if he/she didn't vote yet
+  # Failure: 
+  #   --
+  def showprofile
+    @count, @vote_log = current_gamer.get_votes
+    respond_to do |format|
+      format.js
+    end
+  end
 end
 
 

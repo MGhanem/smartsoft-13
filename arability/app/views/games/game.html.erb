@@ -231,7 +231,13 @@ function setButtons(){
     $.get("/games/halloffame");
   }
 
-
+  function showProfile(){
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    } 
+    clear();
+    $.get("/games/showprofile");
+  }
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
@@ -279,12 +285,11 @@ function setButtons(){
 
 
 <div class="game-zone">
-
   <div class="game-nav">
     <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
-    <div class="nav-box btn btn-inverse" id="navItems">بروفيل</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
     <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
   </div>

@@ -70,6 +70,7 @@ Arability::Application.routes.draw do
     post "games/record_synonym"
     get "/games/halloffame"
     get "games/disableTutorial"
+    get "games/showprofile"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"
