@@ -88,10 +88,10 @@
   <br>
   <h5><%= t(:desc) %>:</h5>
   <div class="control-group">
-      <div class="controls">
-          <%= f.text_area :description, id: "desc" %>
-      </div>
+   <%= f.label t(:desc2), :class => "control-label", id: "project_name"%>
+    <%= f.text_area :description, id: "desc" %>
   </div>
+</div>
   <div class="control-group">
     <% if I18n.locale == :en %>
     <div class="controls">

@@ -8,9 +8,9 @@ class Project < ActiveRecord::Base
   attr_accessible :description, :formal, :maxAge, :minAge, :name, :category,
    :country, :education_level, :gender
   validates :name, :presence => true,:length => { :maximum => 30 }
-  validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }, :allow_nil => true
+  validates :minAge, :inclusion => { :in => 9..99,  :message => :minAge_range }, :allow_blank => true
   validates :maxAge, :inclusion => { :in => 10..100,  :message => :maxAge_range },
-   :numericality => { :greater_than_or_equal_to => :minAge, :message => :less_than_minAge}, :allow_nil => true
+   :numericality => { :greater_than_or_equal_to => :minAge, :message => :less_than_minAge, :if => :minAge? }, :allow_blank => true
 
 # Author:
 #   Salma Farag

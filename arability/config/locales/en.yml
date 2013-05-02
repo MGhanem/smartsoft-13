@@ -70,6 +70,7 @@ en:
   from: "From"
   to: "To"
   desc: "About the project"
+  desc2: "Description"
   target: "This project will target the following group:"
   target_country: "Country"
   target_age: "Age"

@@ -46,6 +46,7 @@ ar:
   from: "من"
   to: "الى"
   desc: "عن المشروع"
+  desc2: "الوصف"
   pro_gender: "النوع"
   pro_male: "ذكر"
   pro_female: "انثي"
