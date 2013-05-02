@@ -201,11 +201,9 @@ class Keyword < ActiveRecord::Base
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
-  	#Description:
+    # Description:
     #   gets words similar to a search keyword (in a certain category) and sorts 
     #   result by relevance
-    # Author:
-    #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:
   	#		search_word: a string representing the search keyword that should 
     #     be retrieved if found in the database
