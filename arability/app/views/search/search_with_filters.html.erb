@@ -257,47 +257,63 @@
 			<span class="accordion-toggle" data-toggle="false" href="#collective">
 				<span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
 				<span class="form-search form-horizontal" style="margin: 470px">
-						<%= t(:add_to) %>
-						<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
-						<%= t(:with) %>
-						<%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
-						<input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" ></input>
-					</span>
+					<%= t(:add_to) %>
+					<%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+					<%= t(:with) %>
+					<%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+					<input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" >
+					</input>
+				</span>
 			</span>
 		</div>
 		<div id="collective" class="accordion-body collapse in">
 			<div class="accordion-inner">
-
 				<% key_id = getID(@search_keyword) %>
 				<% result = Keyword.get_keyword_synonym_visual(key_id) %>
 				<% if  result != [] %>
 				 	<%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
-          <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-        <% end %>
-        <% else %>
-          <p><%= t(:no_votes_for_word)%></p>
-      	<% end %>
-
+          				<%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+          				<%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+        			<% end %>
+        		<% else %>
+          			<p>
+          				<%= t(:no_votes_for_word)%>
+          			</p>
+      			<% end %>
 			</div>
 		</div>
-		 <div class="alert alert-block alert-success" id="add_success" style="display:none;">
-	  <button type="button" class="close" onclick="restore()">×</button>
-	  <p id = "add_msg" style = "display:inline;"> </p>
-	  <a href="" id="go_to_project"></a>
-  </div>
-  <div class="alert alert-block alert-error" id="failed_add" style="display:none;">
-	  <button type="button" class="close" onclick="restore()">×</button>
-	  <p id= "fail_msg"> </p>
-  </div>
-  <div class="alert alert-block alert-error" id="no_project" style="display:none;">
-	  <button type="button" class="close" onclick="restore()">×</button>
-	  <p><%= t(:choose_project) %> </p>
-  </div>
-  <div class="alert alert-block alert-error" id="no_synonym" style="display:none;">
-	  <button type="button" class="close" onclick="restore()">×</button>
-	  <p><%= t(:choose_synonym) %> </p>
-  </div>
+		<div class="alert alert-block alert-success" id="add_success" style="display:none;">
+	  		<button type="button" class="close" onclick="restore()">
+	  			×
+	  		</button>
+	  		<p id = "add_msg" style = "display:inline;">
+	  		</p>
+	  		<a href="" id="go_to_project">
+	  		</a>
+  		</div>
+  		<div class="alert alert-block alert-error" id="failed_add" style="display:none;">
+	  		<button type="button" class="close" onclick="restore()">
+	  			×
+	  		</button>
+	  		<p id= "fail_msg"> 
+	  		</p>
+  		</div>
+  		<div class="alert alert-block alert-error" id="no_project" style="display:none;">
+	 		<button type="button" class="close" onclick="restore()">
+	 			×
+	 		</button>
+	  		<p>
+	  			<%= t(:choose_project) %> 
+	  		</p>
+	  	</div>
+  		<div class="alert alert-block alert-error" id="no_synonym" style="display:none;">
+	  		<button type="button" class="close" onclick="restore()">
+	  			×
+	  		</button>
+	  		<p>
+	  			<%= t(:choose_synonym) %> 
+	  		</p>
+  		</div>
 	</div>
 
 	<%= render "synonym_results" %>

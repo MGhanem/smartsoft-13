@@ -426,7 +426,7 @@ end
                 flash[:success] = t(:Synonym_changed_successfully)
                 redirect_to project_path(@project_id), flash: flash
                 return}
-                format.json  { render json: [t(:Synonym_changed_successfully)] }
+                format.json { render json: [t(:Synonym_changed_successfully)] }
               end
             else
               respond_to do |format|
@@ -435,7 +435,7 @@ end
                   redirect_to project_path(@project_id), flash: flash
                   return
                 }
-                format.json  { render json: [t(:Failed_to_update_synonym)] }
+                format.json { render json: [t(:Failed_to_update_synonym)] }
               end
             end
           else
@@ -445,7 +445,7 @@ end
                   redirect_to :back, flash: flash
                   return
                 }
-                format.json  { render json: [t(:synonym_does_not_exist)] }
+                format.json { render json: [t(:synonym_does_not_exist)] }
             end
           end
         else
@@ -468,7 +468,7 @@ end
                   redirect_to project_path(@project_id), flash: flash
                   return
                 }
-                format.json  { render json: [t(:successfully_added_word_to_project)] }
+                format.json { render json: [t(:successfully_added_word_to_project)] }
               end
               
             else
@@ -478,9 +478,8 @@ end
                   redirect_to project_path(@project_id), flash: flash
                   return
                 }
-                format.json  { render json: [t(:failed_to_add_word_to_project)] }
+                format.json { render json: [t(:failed_to_add_word_to_project)] }
               end
-              
             end
           # else
           #   flash[:notice] = t(:exceeds_word_limit)
@@ -494,18 +493,17 @@ end
             redirect_to project_path(@project_id), flash: flash
             return
           }
-          format.json  { render json: [t(:word_does_not_exist)] }
-        end
-        
+          format.json { render json: [t(:word_does_not_exist)] }
+        end  
       end
     else
       respond_to do |format|
-          format.html {
-            flash[:error] = t(:choose_project)
-            redirect_to :back, flash: flash
-          }
-          format.json  { render json: [t(:choose_project)] }
-        end
+        format.html {
+          flash[:error] = t(:choose_project)
+          redirect_to :back, flash: flash
+        }
+        format.json { render json: [t(:choose_project)] }
+      end
     end
   end
 
