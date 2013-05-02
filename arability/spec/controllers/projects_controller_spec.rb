@@ -107,6 +107,19 @@ describe ProjectsController, type: :controller do
 
   #Kareem Ali tests
 
+  let(:test_gamer){
+    gamer = Gamer.new
+    gamer.username = "kareem"
+    gamer.country = "Egypt"
+    gamer.education_level = "school"
+    gamer.gender = "male"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "kareemali@gmail.com"
+    gamer.password = "1234567"
+    gamer.save
+    gamer
+  }
+
   let(:test_keyword){
     test_keyword = Keyword.new
     test_keyword.name = "desk"
@@ -123,6 +136,15 @@ describe ProjectsController, type: :controller do
     test_keyword.is_english = true
     test_keyword.save
     test_keyword
+  }
+
+  let(:keyword_without_synonyms){
+    keyword_without_synonyms = Keyword.new
+    keyword_without_synonyms.name = "hide"
+    keyword_without_synonyms.approved = true
+    keyword_without_synonyms.is_english = true
+    keyword_without_synonyms.save
+    keyword_without_synonyms
   }
 
   let(:synonym1){
@@ -172,9 +194,16 @@ describe ProjectsController, type: :controller do
     category
   }
 
+  let(:developer){
+    developer = Developer.new
+    developer.gamer_id = test_gamer.id 
+    developer.save
+    developer
+  }
+
+
   before(:each) do
-    developer = create_logged_in_developer
-    sign_in(developer.gamer)
+    login_gamer (developer.gamer)
     test_keyword
     synonym1
     synonym2
@@ -194,7 +223,7 @@ describe ProjectsController, type: :controller do
 
   it "should redirects to project view when new synonym to an existing keyword",
    kareem:true do
-    post :quick_add, project_id: test_project.id, keyword: test_keyword.name, synonym_id: synonym2.id
+    post :add_word_inside_project, project_id: test_project.id, keyword: test_keyword.name, synonym_id: synonym2.id
     prefered_synonyms = PreferedSynonym.where(project_id: test_project.id)
     saved_prefered_synonym = prefered_synonyms.where(keyword_id: test_keyword.id).first
     response.should redirect_to project_path(test_project.id)
@@ -225,5 +254,36 @@ describe ProjectsController, type: :controller do
     response.body.should == similar_keyword.to_json
     response.should be_success
   end
+
+  it "should return false for followed word", kareem: true do
+    keyword_without_synonyms
+    developer.follow(keyword_without_synonyms.id)
+    get :test_followed_keyword, project_id: test_project.id, keyword: keyword_without_synonyms.name
+    response.should render_template("projects/test_followed_keyword")
+    response.should be_success
+    developer.keyword_ids.include?(keyword_without_synonyms.id).should eq(true)
+  end
+
+  it "should return true for unfollowed word", kareem: true do
+    keyword_without_synonyms
+    get :test_followed_keyword, project_id: test_project.id, keyword: keyword_without_synonyms.name
+    response.should render_template("projects/test_followed_keyword")
+    developer.keyword_ids.include?(keyword_without_synonyms.id).should eq(false)    
+  end
+
+  it "should redirects to project view when follow a word", kareem: true do
+    is_following = developer.keyword_ids.include?(keyword_without_synonyms.id).to_s
+    get :follow_unfollow, project_id: test_project.id, is_followed: is_following, keyword_id: keyword_without_synonyms.id
+    flash[:success].should eq("لقد تم متابعة هذه الكلمة: #{keyword_without_synonyms.name}") 
+    response.should redirect_to project_path(test_project.id)
+  end  
+
+  it "should redirects to project view when unfollow a word", kareem: true do
+    developer.follow(keyword_without_synonyms.id)
+    is_following = developer.keyword_ids.include?(keyword_without_synonyms.id).to_s
+    get :follow_unfollow, project_id: test_project.id, is_followed: is_following, keyword_id: keyword_without_synonyms.id
+    flash[:success].should eq("لقد تم إلغاء متابعة هذه الكلمة: #{keyword_without_synonyms.name}")
+    response.should redirect_to project_path(test_project.id)
+  end  
 
 end
