@@ -13,6 +13,11 @@
 				<% end %>
 			<% end %>
 
+    <div style="margin-top:5px; display: inline;">
+      <%= t :category_tags %>:
+      <a href="#" onclick="submit_category_form();return false;"><%= @categories.join(", ") %></a>
+    </div>
+
 			<script type="text/javascript">
 				function onhovering(button){
 					$button = $(button);
@@ -136,6 +141,18 @@
 		<% end %>
 	</div>
 </div>
+
+<%= form_tag keywords_new_path, method: "post", id: "category_form" do %>
+  <input type="hidden" name="name" value="<%= @search_keyword %>"/>
+  <input type="hidden" name="override_categories" value="true"/>
+  <input type="hidden" name="category_ids" value="<%= @category_ids.join(",") %>"/>
+<% end %>
+<script>
+  function submit_category_form() {
+    $("#category_form").submit();
+    return false;
+  }
+</script>
 
 <% if @display_add %>
 	<div class="well">
