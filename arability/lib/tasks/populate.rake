@@ -121,6 +121,11 @@ namespace :db do
     karim=add_gamer("karim", "gmail", "male", "Egypt", 77, "Graduate")
     make_admin(karim)
 
+    Report.delete_all
+    success, report1=Report.create_report(smart, upload)
+    success, report2=Report.create_report(karim, a)
+    success, report3=Report.create_report(timo, n)
+
     Developer.delete_all
     timo_dev=Developer.create(gamer_id: timo.id)
     timo_dev=Developer.create(gamer_id: smart.id)
@@ -145,9 +150,9 @@ namespace :db do
 
     SubscriptionModel.delete_all
 
-    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20)
-    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100)
-    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300)
+    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20, limit: 500)
+    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100, limit: 2000)
+    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, limit: 5000)
 
     MySubscription.choose(timo_dev.id, SubscriptionModel.first.id)
 
