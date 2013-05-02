@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class ProjectsController < BackendController
   include ApplicationHelper
+  include SearchHelper
   # GET /projects
   # GET /projects.json
   before_filter :authenticate_gamer!
@@ -29,6 +30,68 @@ class ProjectsController < BackendController
       format.html { redirect_to action: "index",controller: "projects"}
       format.json { head :no_content }
       flash[:success] = t(:project_delete)
+    end
+  end
+
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   Tests whether this the current_developer has followed this keyword
+  #   or not.
+  # Params:
+  #   project_id: containing the id of the project from this keyword has
+  #   been searched for.
+  #   keyword: containing the nae of the keyword for the which the user might
+  #   follow
+  # Success:
+  #   returns true if the keyword has been followed and the it's id
+  # Failure:
+  #   returns false if the keyword is not followed by the developer and it's id
+  def test_followed_keyword
+    @project_id = params[:project_id]
+    keyword = params[:keyword]
+    if keyword
+      searched_keyword = Keyword.where(name: keyword).first
+      @searched_keyword_id = searched_keyword.id
+      @is_followed = is_following(@searched_keyword_id)
+    end 
+    render "projects/test_followed_keyword.js"
+  end
+
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   follows or unfollows a keyword which has no synonyms when the developer
+  #   searches for it inside the project
+  # Params:
+  #   project_id: containing the id of the project from this keyword has
+  #   been searched for.
+  #   keyword_id: containing the id of the keyword for the which the user might
+  #   follow
+  #   is_followed: a string containing "true" if the keyword is previously
+  #   followed or "false" if the keyword is not followed
+  # Success:
+  #   returns the flash of the keyword has been successfully unfollowed and
+  #   redirects to the project page
+  # Failure:
+  #   returns the flash of the keyword has been successfully followed and
+  #   redirects to the project page
+  def follow_unfollow
+    project_id = params[:project_id]
+    developer = current_developer
+    is_followed = params[:is_followed]
+    if params[:keyword_id] != nil
+      keyword_ids = developer.keyword_ids
+      keyword = Keyword.find(params[:keyword_id])
+      if is_followed == "true"
+        developer.unfollow(params[:keyword_id])
+        flash[:success] = t(:unfollow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash: flash
+      elsif is_followed == "false"
+        developer.follow(params[:keyword_id])
+        flash[:success] = t(:follow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash: flash
+      end
     end
   end
     
@@ -456,7 +519,8 @@ end
                 format.html {
                 flash[:success] = t(:Synonym_changed_successfully)
                 redirect_to project_path(@project_id), flash: flash
-                return}
+                return
+              }
                 format.json { render json: [t(:Synonym_changed_successfully)] }
               end
             else
@@ -486,13 +550,12 @@ end
             @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
               @synonym_id, @word_id, @project_id)
             if @added_word
-              project_categories = Project.find(@project_id).categories
+              project_category = Project.find(@project_id).category
               new_keyword = Keyword.find(@word_id)
-              project_categories.each do |category|
-                if not new_keyword.categories.include?(category) 
-                  new_keyword.categories.push(category)
-                  new_keyword.save
-                end
+              if project_category and 
+                not new_keyword.categories.include?(project_category) 
+                new_keyword.categories << project_category
+                new_keyword.save
               end
               respond_to do |format|
                 format.html {
@@ -501,8 +564,7 @@ end
                   return
                 }
                 format.json { render json: [t(:successfully_added_word_to_project)] }
-              end
-              
+              end 
             else
               respond_to do |format|
                 format.html {
@@ -567,25 +629,6 @@ end
   # author:
   #   Kareem Ali
   # description:
-  #   quickly add a keyword and the choosen synonym to a project inside the 
-  #   project view
-  # params:
-  #   project_id, word_id, synonym_id
-  # success:
-  #   redirects to the add_word_inside_project method inside the controller 
-  #   to add the keyword and prefered synonym
-  # failure:
-  #   will redirect to the add_word_inside_project to handle the incorrect object
-  def quick_add
-    @project_id = params[:project_id].to_i
-    @synonym_id = params[:synonym_id].to_i
-    @keyword = params[:keyword]
-    add_word_inside_project and return
-  end
-
-  # author:
-  #   Kareem Ali
-  # description:
   #   Used to load the synonyms in the dropdown menu next to the keyword 
   #   inside the project to change the synonym
   # params:
@@ -623,18 +666,21 @@ end
   #   no keyword match the entered character(s), will return empty array  
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
-    project_categories = Project.find(params[:project_id]).categories
-    project_categories = project_categories.map {|cat| cat.get_name_by_locale}
-    similar_keywords = Keyword.get_similar_keywords(
-      keyword, project_categories)
-    similar_keywords = similar_keywords.uniq
-    match_category_no = similar_keywords.count 
-    similar_keywords = similar_keywords.concat(
-      Keyword.get_similar_keywords(keyword,[]))
-    similar_keywords = similar_keywords.uniq 
-    similar_keywords.map! { |keyword| keyword.name }
-    similar_keywords.push(match_category_no)
-    render json: similar_keywords
+    project_category = Project.find(params[:project_id]).category
+    similar_keywords = []
+    if project_category != nil
+      project_category = project_category.get_name_by_locale
+      similar_keywords = Keyword.get_similar_keywords(
+        keyword, [project_category])
+      similar_keywords = similar_keywords.uniq
+    end
+      match_category_count = similar_keywords.count 
+      similar_keywords = similar_keywords.concat(
+        Keyword.get_similar_keywords(keyword,[]))
+      similar_keywords = similar_keywords.uniq 
+      similar_keywords.map! { |keyword| keyword.name }
+      similar_keywords.push(match_category_count)
+      render json: similar_keywords
   end 
 
 # author:
