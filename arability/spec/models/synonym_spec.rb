@@ -21,6 +21,15 @@ describe Synonym, synonym_spec: true  do
       s
     }
 
+    let(:sTwo){
+      s = Synonym.new
+      s.name =  "معني ثاني"
+      s.keyword_id =  k.id
+      s.approved = true
+      s.save
+      s
+    }
+
     let(:g){
       g = Gamer.new
       g.username = "trialGamer"
@@ -30,6 +39,7 @@ describe Synonym, synonym_spec: true  do
       g.gender = "male"
       g.email = "trialA@example.com"
       g.password = "123456"
+      g.confirmed_at = Time.now
       g.save validate: false
       g
     }
@@ -43,6 +53,7 @@ describe Synonym, synonym_spec: true  do
       gTwo.gender = "female"
       gTwo.email = "trialB@example.com"
       gTwo.password = "123456"
+      gTwo.confirmed_at = Time.now
       gTwo.save validate: false
       gTwo
     }
@@ -56,6 +67,20 @@ describe Synonym, synonym_spec: true  do
       gTwo.gender = "male"
       gTwo.email = "trialC@example.com"
       gTwo.password = "123456"
+      gTwo.confirmed_at = Time.now
+      gTwo.save validate: false
+      gTwo
+    }
+
+    let(:gFour){
+      gTwo = Gamer.new
+      gTwo.username = "trialGFour"
+      gTwo.country = "Egypt"
+      gTwo.education_level = "University"
+      gTwo.gender = "male"
+      gTwo.email = "trialD@example.com"
+      gTwo.password = "123456"
+      gTwo.confirmed_at = Time.now
       gTwo.save validate: false
       gTwo
     }
@@ -89,6 +114,8 @@ describe Synonym, synonym_spec: true  do
       gThree
       v
       vTwo
+      gFour
+      sTwo
     end
 
 
@@ -180,6 +207,11 @@ describe Synonym, synonym_spec: true  do
 
     it "returns an empty list when the synonym has no votes" do
      unvoted_synonym.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ []
+    end
+
+    it "returns an empty list when the voter or voters of synonym has date of birth nil" do
+      Vote.record_vote(gFour.id, sTwo.id)
+      sTwo.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ []
     end
 
     it "applies gender filter to voters if it exists" do

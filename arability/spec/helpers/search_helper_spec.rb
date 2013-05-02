@@ -30,6 +30,7 @@ describe SearchHelper, search_helper_spec: true do
       g.gender = "male"
       g.email = "trialC@example.com"
       g.password = "1234567"
+      g.confirmed_at = Time.now
       g.save validate: false
       g
     }
@@ -43,6 +44,7 @@ describe SearchHelper, search_helper_spec: true do
       gTwo.gender = "female"
       gTwo.email = "trialD@example.com"
       gTwo.password = "123456"
+      gTwo.confirmed_at = Time.now
       gTwo.save validate: false
       gTwo
     }
