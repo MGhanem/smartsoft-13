@@ -37,7 +37,6 @@ module RequestHelpers
 
   def create_project
     d = create_logged_in_developer()
-    # sign_in(d.gamer)
     project = Project.new
     project.name = "banking"
     project.minAge = 19
