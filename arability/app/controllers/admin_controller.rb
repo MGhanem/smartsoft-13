@@ -143,15 +143,17 @@ class AdminController < ApplicationController
   # Failure: 
   #   the user is not a valid user so an error is displayed
   def make_admin
-    user = Gamer.find_by_id(params[:id])
-    if user != nil
-      user.make_admin
-      flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
-      flash.keep
-      redirect_to "/admin/list/admins"
-    else
-      flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
-      redirect_to "/admin/list/gamers"
+    if request.post?
+      user = Gamer.find_by_email(params[:email])
+      if user != nil
+        user.make_admin
+        flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
+        flash.keep
+        redirect_to "/admin/list/admins"
+      else
+        flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
+        redirect_to "/admin/list/gamers"
+      end
     end
   end
 
