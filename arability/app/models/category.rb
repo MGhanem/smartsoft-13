@@ -2,7 +2,7 @@
 class Category < ActiveRecord::Base
   attr_accessible :english_name, :arabic_name
   has_and_belongs_to_many :keywords
-  has_and_belongs_to_many :projects
+  has_many :projects
 
   validates_uniqueness_of :english_name,
     message: "هذا الإسم بالإنجليزية للفئة يوجد بلفعل"

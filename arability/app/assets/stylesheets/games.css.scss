@@ -651,3 +651,45 @@ td .popover button{
 .none:hover {
   background-color: rgba(203,58,77,0.5);
 }
+
+// start of vote log view styling
+.main-div-vl {
+  text-align: center;
+  overflow-y: scroll;
+  height: 520px;
+  overflow-x: hidden;
+}
+
+.heading-vl {
+  color:white;
+  padding-right: 20px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.styling-center-table-vl{
+  margin: 0 auto !important;
+  float: none !important;
+  font-size: 20px;
+  border: none;
+}
+
+.arabic-table-vl {
+  font-size: 25px;
+}
+
+.coloring-vl {
+  color: #51a351;
+  font-weight: bold;
+}
+
+.arabic-head-vl {
+  font-size:38px;
+}
+
+.btn-game-vl {
+ position:absolute;
+ top:5px;
+ left:10px;
+}
+// end of vote log view styling

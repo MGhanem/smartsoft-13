@@ -1,0 +1,326 @@
+<div class="row">
+  <div class="span12">
+    <%= form_tag(search_path, method: "post", :class => "form-search form-horizontal", 
+      style: "margin-bottom:0px;") do %>
+      <input type="hidden" value="<%= @project_id %>" name="project_id">
+      <%= content_tag(:div, :class => "input-append") do %>
+        <% text_field_tag(:search, @search_keyword,
+                          placeholder: t(:search_here),
+                          :class => "search-query autocomplete",
+                          autocomplete: "off") + %>
+        <% button_tag(type: "submit", :class => "btn", onclick: "synonymType();") do %>
+          <% content_tag(:i, nil, :class => "icon-search") %>
+        <% end %>
+      <% end %>
+
+      <script type="text/javascript">
+        function onhovering(button){
+          $button = $(button);
+          if ($button.hasClass("btn-info")) {
+            $(".btnfollow").removeClass("btn-info");
+            $(".btnfollow").addClass("btn-danger");
+            $(".btnfollow").html("<%= t(:unfollow) %>");
+          }
+        }
+        function offhovering(button){
+          $button = $(button);
+          if ($button.hasClass("btn-danger")) {
+            $(".btnfollow").removeClass("btn-danger");
+            $(".btnfollow").addClass("btn-info");
+            $(".btnfollow").html("<%= t(:following) %>");
+          }
+        }
+        function clickfollow(button){
+          $button = $(button);
+          if ($button.hasClass("btn-default")) {
+            $.get("<%= follow_word_path @search_keyword_model.id %>");
+            $(".btnfollow").removeClass("btn-default");
+            $(".btnfollow").addClass("btn-info");
+            $(".btnfollow").html("<%= t(:following) %>");
+          } else {
+            $.get("<%= unfollow_word_path @search_keyword_model.id %>");
+            $(".btnfollow").removeClass("btn-info");
+            $(".btnfollow").removeClass("btn-danger");
+            $(".btnfollow").addClass("btn-default");
+            $(".btnfollow").html("<%= t(:follow) %>");
+          } 
+        }
+        function add_keyword_with_synonym(){
+            var synonym_id = $("#synonym_select option:selected").val();
+            var project_id = $("#project_select option:selected").val();
+            var msg = "";
+            if(synonym_id != undefined && synonym_id !="" && project_id != undefined && project_id !=""){
+                var request = $.post("/developers/projects/"+project_id+"/add_word_inside_project.json", {synonym_id: synonym_id, keyword: "<%= @search_keyword %>", project_id: project_id } );
+                request.done(function (data, status, xhr){
+                  if(data.toString() == "<%= t(:Synonym_changed_successfully) %>" || data.toString() == "<%= t(:successfully_added_word_to_project) %>")
+                  add_showSuccess(project_id, data.toString());
+                else
+                  add_error(data.toString());
+              });
+              request.fail(function (error, _, _){
+                add_error(error.toString());
+              });
+              }
+              else{
+                if(project_id == undefined || project_id == "")
+                no_project_error();
+              else
+                  no_synonym_error();
+              }
+          }
+        function add_showSuccess(project_id, msg){
+          var link = document.getElementById("go_to_project");
+          link.href = "/developers/projects/"+project_id;
+          link.innerHTML = "<%= t(:to_project) %>";
+          var text = document.getElementById("add_msg");
+          text.innerHTML = msg;
+          $("#add_success").css("display", "block");
+          $("#add_success").css("margin-bottom", "2px");
+          $("#add_success").css("position", "fixed");
+          $("#add_success").css("top", "50px");
+          $("#add_success").css("left", "10%");
+          $("#add_success").css("right", "10%");
+        }
+        function add_error(msg){
+          var text = document.getElementById("fail_msg");
+          text.innerHTML = msg;
+          $("#failed_add").css("display", "block");
+          $("#failed_add").css("margin-bottom", "2px");
+          $("#failed_add").css("position", "fixed");
+          $("#failed_add").css("top", "50px");
+          $("#failed_add").css("left", "10%");
+          $("#failed_add").css("right", "10%");
+        }
+        function no_project_error(){
+          $("#no_project").css("display", "block");
+          $("#no_project").css("margin-bottom", "2px");
+          $("#no_project").css("position", "fixed");
+          $("#no_project").css("top", "50px");
+          $("#no_project").css("left", "10%");
+          $("#no_project").css("right", "10%");
+        }
+        function no_synonym_error(){
+          $("#no_synonym").css("display", "block");
+          $("#no_synonym").css("margin-bottom", "2px");
+          $("#no_synonym").css("position", "fixed");
+          $("#no_synonym").css("top", "50px");
+          $("#no_synonym").css("left", "10%");
+          $("#no_synonym").css("right", "10%");
+        }
+        
+        function restore(){
+          $("#add_success").css("display", "none");
+          $("#no_project").css("display", "none");
+          $("#no_synonym").css("display", "none");
+          $("#failed_add").css("display", "none");
+        }
+      </script>
+
+      <% if !is_following(@search_keyword_model.id) %>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+      <% else %>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
+      <% end %>
+
+      <script type="text/javascript">
+      <% if I18n.locale == :ar %>
+        $("#followbtn").attr("class", "pull-left");
+      <% else %>
+        $("#followbtn").attr("class", "pull-right");
+      <% end %>
+      </script>
+
+      <div class="row" style="padding:10px;">
+        <div class="span12">
+            <div id="filter_label">
+              <button type="button" class="btn btn-mini" onClick="toggle_me()" data-toggle="collapse" data-target="#filter">
+                <span id="filter_btn" class="icon-plus"></span>
+                <script type="text/javascript">
+                  function toggle_me(){
+                    $("#filter_btn").toggleClass("icon-minus");
+                  }
+                </script>
+              </button>
+              <span>&nbsp;<%= t(:filter) %></span>
+            </div>
+            <div id="filter" class="collapse"> 
+              <div style="padding:10px;">
+                <div class="control-group">
+                  <%= label_tag t(:country), nil, :class => "control-label", style: "width:80px;" %>
+                  &nbsp;
+                  <% if I18n.locale == :ar %>
+                    <%= select_tag :country, options_for_select([["مصر", "Egypt"], ["لبنان", "Lebanon"], ["الاردن", "Jordan"], ["السعودية", "Saudi Arabia"], ["ليبيا", "Libya"], ["الامارات", "United Arab Emirates"], ["قطر", "Qatar"], ["الكويت", "Kuwait"], ["العراق", "Iraq"], ["الجزأئر", "Algeria"], ["المغرب", "Morocco"], ["البحرين", "Bahrain"], ["موريتانيا", "Mauritania"], ["الصومال","Somalia"], ["السودان","Sudan"], ["تونس", "Tunisia"], ["اخري", "others"]], @country), include_blank: true, :class => "control", onchange: "applyFilters(
+                      #{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, 
+                      #{:gender}.value, #{:education}.value, synonymType())" %>
+                  <% elsif I18n.locale == :en %>
+                    <%= select_tag :country, options_for_select(["Egypt", "Lebanon", "Jordan", "Saudi Arabia", "Libya", "United Arab Emirates", "Qatar", "Kuwait", "Iraq", "Algeria", "Morocco", 
+                      "Bahrain", "Mauritania", "Somalia", "Sudan", "Tunisia", "others"], @country), include_blank: true, :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value,  #{:age_to}.value, #{:gender}.value, #{:education}.value, synonymType())" %>
+                  <% end %>
+                </div>
+                <div class="control-group">
+                  <%= label_tag t(:gender), nil, :class => "control-label", style: "width:80px;" %>
+                  &nbsp;
+                  <%= select_tag :gender, options_for_select([[t(:male), "male"], [t(:female), "female"]], @gender), include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, 
+                      #{:education}.value, synonymType())" %>
+                </div>  
+                <div class="control-group">
+                  <%= label_tag t(:age_from), nil, :class => "control-label", style: "width:80px;" %>
+                  &nbsp;
+                  <%= number_field_tag :age_from, @age_from, :in => 10...101, :class => "control", style: 
+                  "width:70px;", onchange: "applyFilters(#{:search}.value, #{:country}.value, 
+                  #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, 
+                  synonymType())" %>
+                  &nbsp;
+                  <%= label_tag t(:age_to), nil, style: "width:20px;" %>
+                  &nbsp;
+                  <%= number_field_tag :age_to, @age_to, :in => 10...101, :class => "control", style: 
+                  "width:70px;", onchange: "applyFilters(#{:search}.value, #{:country}.value, 
+                  #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, 
+                  synonymType())" %>
+                  &nbsp;
+                  <span style="opacity:0.9; font-size:10pt;"><i><%= t(:age_range) %></i></span>
+                </div>
+                <div class="control-group">
+                  <%= label_tag t(:education), nil, :class => "control-label", style: "width:80px;" %>
+                  &nbsp;
+                  <%= select_tag :education, options_for_select([[t(:school), "School"], [t(:university), 
+                    "University"],[t(:graduate), "Graduate"]], @education), include_blank: true,  :class => "control", onchange: "applyFilters(#{:search}.value, #{:country}.value, #{:age_from}.value, #{:age_to}.value, #{:gender}.value, #{:education}.value, synonymType())" %>
+                </div>
+                <div class="control-group">
+                  <%= label_tag t(:synonyms), nil, :class => "control-label", style: "width:80px;" %>
+                  <input type="hidden" value="" name="synonym_type" id="synonym_type">
+                  <div id="syn_types" class="btn-group control">
+                    <button id="formal" type="button" class="btn" onclick="invert_color(this, slang)">
+                      <%= t(:formal) %>
+                    </button>
+                    <button id="slang" type="button" class="btn" onclick="invert_color(this, formal)">
+                      <%= t(:slang) %>
+                    </button>
+                  </div>  
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @display_add %>
+  <div class="well">
+    <span>
+      <%= t(:keyword_not_found) %>
+      <%= link_to t(:add_word), "add_path" %>
+    </span>
+  </div>
+<% end %>
+
+<% if @no_synonyms_found %>
+  <div class="well">
+    <span>
+      <%= t(:no_synonyms_found) %>
+      <%= link_to t(:follow_word), follow_word_path(keyword_id: Keyword.where(:name => @search_keyword).first.id) %>
+      <script type="text/javascript">
+        $("#filter_label").hide();
+        $("#filter").hide();
+      </script>
+    </span>
+  </div>
+<% end %>
+
+<% if !@country.blank? || !@gender.blank? || !@age_from.blank? || 
+  !@age_to.blank? || !@education.blank? || @synonym_type != nil %>
+  <script type="text/javascript">
+    $("#filter").attr("class","collapse in");
+    toggle_me();
+  </script>
+  <% if @synonym_type %>
+    <script type="text/javascript">
+      $("#formal").attr("class","btn btn-inverse active");
+      $("#slang").attr("class","btn");
+    </script>
+  <% elsif @synonym_type == false %>
+    <script type="text/javascript">
+      $("#formal").attr("class","btn");
+      $("#slang").attr("class","btn btn-inverse active");
+    </script>
+  <% end %>
+<% else %>
+  <script type="text/javascript">
+    $("#filter").attr("class","collapse");
+  </script>
+<% end %>
+
+<% if !@synonyms.blank? %>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <span class="accordion-toggle" data-toggle="false" href="#collective">
+        <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
+        <span class="form-search form-horizontal" style="margin: 440px">
+          <%= t(:add_to) %>
+          <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+          <%= t(:with) %>
+          <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+          <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" >
+          </input>
+        </span>
+      </span>
+    </div>
+    <div id="collective" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <% key_id = getID(@search_keyword) %>
+        <% result = Keyword.get_keyword_synonym_visual(key_id) %>
+        <% if  result != [] %>
+          <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
+                  <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+                  <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+              <% end %>
+            <% else %>
+                <p>
+                  <%= t(:no_votes_for_word)%>
+                </p>
+            <% end %>
+      </div>
+    </div>
+    <div class="alert alert-block alert-success" id="add_success" style="display:none;">
+        <button type="button" class="close" onclick="restore()">
+          ×
+        </button>
+        <p id = "add_msg" style = "display:inline;">
+        </p>
+        <a href="" id="go_to_project">
+        </a>
+      </div>
+      <div class="alert alert-block alert-error" id="failed_add" style="display:none;">
+        <button type="button" class="close" onclick="restore()">
+          ×
+        </button>
+        <p id= "fail_msg"> 
+        </p>
+      </div>
+      <div class="alert alert-block alert-error" id="no_project" style="display:none;">
+      <button type="button" class="close" onclick="restore()">
+        ×
+      </button>
+        <p>
+          <%= t(:choose_project) %> 
+        </p>
+      </div>
+      <div class="alert alert-block alert-error" id="no_synonym" style="display:none;">
+        <button type="button" class="close" onclick="restore()">
+          ×
+        </button>
+        <p>
+          <%= t(:choose_synonym) %> 
+        </p>
+      </div>
+  </div>
+
+  <%= render "synonym_results" %>
+<% end %>
+<script type="text/javascript">
+  <%= render "filtering_synonym_votes.js" %>
+  <%= render "submit-report.js" %>
+  <%= render "autocomplete-script.js" %>
+  <%= render "formal-slang-scripts.js" %>
+</script>

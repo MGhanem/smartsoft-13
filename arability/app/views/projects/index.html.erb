@@ -1,8 +1,3 @@
-<legend>
-  <a>
-    <%= t(:projects_index_title)%>
-  </a>
-</legend> 
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
@@ -10,123 +5,193 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a>
-      <br />
+      <p><a class="btn" href="<%= new_project_path %>"><i class="icon-plus"></i><%= t(:projects_index_add)%></a></p>
       <br />
       <%counter_bigloop = 0%>
       <%size_bigloop = @my_projects.size%>
       <table>
-      <% while counter_bigloop < size_bigloop %>
-        <%project1 = @my_projects[counter_bigloop]%>
-        <%project2 = @my_projects[counter_bigloop + 1]%>
-        <tr>
-          <td class="span5">
-            <div class="well well-small" style="padding-bottom: 20px;">
-              <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
-              <br />
-              <strong><%= t(:projects_index_categories)%></strong>
-              <% size = project1.categories.length %>
-              <% if size == 0 %>
-              <%= t(:no_categories) %>
-              <% else %>
-              <% counter = 1 %>
-              <% project1.categories.each do |c| %>
-                <% if counter < size %>
-                  <%= c.get_name_by_locale %>,
-                  <% counter = counter + 1 %>
+        <% while counter_bigloop < size_bigloop %>
+          <%project1 = @my_projects[counter_bigloop]%>
+          <%project2 = @my_projects[counter_bigloop + 1]%>
+          <tr>
+            <td style="width:470px;">
+              <div class="well well-small" style="padding-bottom: 20px;">
+                <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+                <br />
+                <strong><%= t(:projects_index_categories)%></strong>
+                <% if project1.category.blank? %>
+                  <%= t(:no_categories) %>
                 <% else %>
-                  <%= c.get_name_by_locale %>
+                  <%= project1.category.get_name_by_locale %>
                 <% end %>
-              <% end %>
-              <% end %>
-              <br />
-              <strong><%= t(:projects_index_description)%></strong>
-              <% if project1.description.size == 0 %>
-              <%= t(:no_description) %>
-              <% else %>  
-              <%= project1.description %>
-              <% end %>
-  <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-  <% if I18n.locale == :ar %>
-    <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% else %>
-   <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% end %>
-    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 id="modal_label"><%= t(:delete) %></h3>
-    </div>
-      <div class="modal-body">
-        <span><%= t(:confirm)%></span>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
-        <%= link_to t(:submit_delete), delete_path(project1.id),class: "btn btn-danger" %>
-      </div>
-    </div>
-  <br />
-            </div>
-          </td>
-          <td style="width:40px;"></td>
+                <br />
+                <strong><%= t(:projects_index_country)%></strong>
+                <% if project1.country.blank? %>
+                  <%= t(:no_country) %>
+                <% else %>
+                  <%= get_country_name_by_locale(project1.country) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_formal_slang)%></strong>
+                <% if project1.formal == nil %>
+                  <%= t(:no_formal) %>
+                <% else %>
+                  <% if project1.formal == true %>
+                    <% if I18n.locale == :en %>
+                      Formal
+                    <% else %>
+                      فصحى
+                    <% end %>
+                  <% else %>
+                    <% if I18n.locale == :en  %>
+                      Slang
+                    <% else %>
+                      عامية
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_age)%></strong>
+                <% if project1.minAge.blank? || project1.maxAge.blank? %>
+                  <%= t(:no_age) %>
+                <% else %>
+                  <% if I18n.locale == :en  %>
+                    From <%= project1.minAge %> to <%= project1.maxAge %>
+                  <% else %>
+                    من <%= project1.minAge %> الى <%= project1.maxAge %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_education_level)%></strong>
+                <% if project1.education_level.blank? %>
+                  <%= t(:no_education_level) %>
+                <% else %>
+                  <%= get_education_level_by_locale(project1.education_level) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_description)%></strong>
+                <% if project1.description.blank? %>
+                  <%= t(:no_description) %>
+                <% else %>
+                  <%= project1.description %>
+                <% end %>
+                <br />
+                <br />
+                <% if I18n.locale == :ar %>
+                  <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                <% else %>
+                  <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                <% end %>
+                <% if I18n.locale == :ar %>
+                  <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                <% else %>
+                  <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                <% end %>
+                <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 id="modal_label"><%= t(:delete) %></h3>
+                  </div>
+                  <div class="modal-body">
+                    <h4><%= t(:confirm)%></h4>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
+                    <%= link_to t(:submit_delete), delete_path(project1.id),:class => "btn btn-danger" %>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </td>
+            <td style="width:40px;"></td>
             <%if project2 != nil%>
-              <td class="span5">
+              <td style="width:470px;">
                 <div class="well well-small" style="padding-bottom: 20px;">
                   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
-                  <% size = project2.categories.length %>
-                  <% if size == 0 %>
-              <%= t(:no_categories) %>
-              <% else %>
-                  <% counter = 1 %>
-                  <% project2.categories.each do |c| %>
-                    <% if counter < size %>
-                      <%= c.name %>,
-                      <% counter = counter + 1 %>
-                    <% else %>
-                      <%= c.name %>
-                    <% end %>
-                  <% end %>
+                  <% if project2.category.blank? %>
+                    <%= t(:no_categories) %>
+                  <% else %>
+                    <%= project2.category.get_name_by_locale %>
                   <% end %>
                   <br />
-                  <strong><%= t(:projects_index_description)%></strong>
-                  <% if project2.description.size == 0 %>
-              <%= t(:no_description) %>
-              <% else %>  
-              <%= project2.description %>
-              <% end %>
-  <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-    <%else%>
-    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-
-   <% if I18n.locale == :ar %>
-     <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% else %>
-    <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
-  <% end %>
-    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 id="modal_label"><%= t(:delete) %></h3>
-    </div>
-      <div class="modal-body">
-        <span><%= t(:confirm)%></span>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
-        <%= link_to t(:submit_delete), delete_path(project1.id),class: "btn btn-danger" %>
-      </div>
-    </div>
-  <br />
+                  <strong><%= t(:projects_index_country)%></strong>
+                <% if project2.country.blank? %>
+                  <%= t(:no_country) %>
+                <% else %>
+                  <%= get_country_name_by_locale(project2.country) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_formal_slang)%></strong>
+                <% if project2.formal == nil %>
+                  <%= t(:no_formal) %>
+                <% else %>
+                  <% if project2.formal == true %>
+                    <% if I18n.locale == :en %>
+                      Formal
+                    <% else %>
+                      فصحى
+                    <% end %>
+                  <% else %>
+                    <% if I18n.locale == :en  %>
+                      Slang
+                    <% else %>
+                      عامية
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_age)%></strong>
+                <% if project2.minAge.blank? || project2.maxAge.blank? %>
+                  <%= t(:no_age) %>
+                <% else %>
+                  <% if I18n.locale == :en  %>
+                    From <%= project2.minAge %> to <%= project2.maxAge %>
+                  <% else %>
+                    من <%= project2.minAge %> الى <%= project2.maxAge %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_education_level)%></strong>
+                <% if project2.education_level.blank? %>
+                  <%= t(:no_education_level) %>
+                <% else %>
+                  <%= get_education_level_by_locale(project2.education_level) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_description)%></strong>
+                <% if project2.description.blank? %>
+                  <%= t(:no_description) %>
+                <% else %>
+                  <%= project2.description %>
+                <% end %>
+                  <br />
+                  <br />
+                  <% if I18n.locale == :ar %>
+                    <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                  <% else %>
+                    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                  <% end %>
+                  <% if I18n.locale == :ar %>
+                    <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                  <% else %>
+                    <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete2)%></a>
+                  <% end %>
+                  <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h3 id="modal_label"><%= t(:delete) %></h3>
+                    </div>
+                    <div class="modal-body">
+                      <h4><%= t(:confirm)%></h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
+                      <%= link_to t(:submit_delete), delete_path(project1.id),:class => "btn btn-danger" %>
+                    </div>
+                  </div>
+                  <br />
                 </div>
               </td>
             <%end%>
@@ -134,8 +199,6 @@
           <% counter_bigloop = counter_bigloop +2 %>
         <% end %>
       </table>
-    </p>
-
     </div>
     <div class="tab-pane" id="tab2">
       <p>
@@ -143,95 +206,211 @@
           <span style="color:red;"><%= t(:projects_index_no_shared_projects)%></span>
         <%else%>
           <%counter_bigloop = 0%>
-<%size_bigloop = @shared_projects.size%>
-<table>
-<% while counter_bigloop < size_bigloop %>
-<%project1 = @shared_projects[counter_bigloop]%>
-<%project2 = @shared_projects[counter_bigloop + 1]%>
-  <tr>
-    <td class="span5">
-      <div class="well well-small" style="padding-bottom: 20px;">
-        <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
-        <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project1.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project1.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
-  <br />
-  <strong><%= t(:projects_index_description)%></strong>
-  <% if project1.description.size == 0 %>
-              <%= t(:no_description) %>
-              <% else %>  
-              <%= project1.description %>
-              <% end %>
-  <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-  <br />
-</div>
-    </td>
-    <td style="width:40px;"></td>
-    <%if project2 != nil%>
-      <td class="span5">
-      <div class="well well-small" style="padding-bottom: 20px;">
-  <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
-  <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project2.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project2.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
-  <br />
-  <strong><%= t(:projects_index_description)%></strong>
-  <% if project2.description.size == 0 %>
-              <%= t(:no_description) %>
-              <% else %>  
-              <%= project2.description %>
-              <% end %>
-  <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% end %>
-  <br />
-</div>
-    </td>
-    <%end%>
-  </tr>
-  <% counter_bigloop = counter_bigloop +2 %>
-<% end %>
-</table>
-        <%end%>
-      </p>
-    </div>
+          <%size_bigloop = @shared_projects.size%>
+        <table>
+          <% while counter_bigloop < size_bigloop %>
+            <%project1 = @shared_projects[counter_bigloop]%>
+            <%project2 = @shared_projects[counter_bigloop + 1]%>
+            <tr>
+              <td style="width:470px;">
+                <div class="well well-small" style="padding-bottom: 20px;">
+                    <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
+                    <br />
+                    <strong><%= t(:projects_index_categories)%></strong>
+                  <% if project1.category.blank? %>
+                    <%= t(:no_categories) %>
+                  <% else %>
+                    <%= project1.category.get_name_by_locale %>
+                  <% end %>
+                  <br />
+                    <strong><%= t(:projects_index_country)%></strong>
+                    <% if project1.country.blank? %>
+                      <%= t(:no_country) %>
+                    <% else %>
+                      <%= get_country_name_by_locale(project1.country) %>
+                    <% end %>
+                    <br />
+                    <strong><%= t(:projects_index_formal_slang)%></strong>
+                    <% if project1.formal == nil %>
+                      <%= t(:no_formal) %>
+                    <% else %>
+                      <% if project1.formal == true %>
+                        <% if I18n.locale == :en %>
+                          Formal
+                        <% else %>
+                          فصحى
+                        <% end %>
+                      <% else %>
+                        <% if I18n.locale == :en  %>
+                          Slang
+                        <% else %>
+                          عامية
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <br />
+                    <strong><%= t(:projects_index_age)%></strong>
+                    <% if project1.minAge.blank? || project1.maxAge.blank? %>
+                      <%= t(:no_age) %>
+                    <% else %>
+                      <% if I18n.locale == :en  %>
+                        From <%= project1.minAge %> to <%= project1.maxAge %>
+                      <% else %>
+                        من <%= project1.minAge %> الى <%= project1.maxAge %>
+                      <% end %>
+                    <% end %>
+                    <br />
+                    <strong><%= t(:projects_index_education_level)%></strong>
+                <% if project1.education_level.blank? %>
+                  <%= t(:no_education_level) %>
+                <% else %>
+                  <%= get_education_level_by_locale(project1.education_level) %>
+                <% end %>
+                <br />
+                    <strong><%= t(:projects_index_description)%></strong>
+                    <% if project1.description.blank? %>
+                      <%= t(:no_description) %>
+                    <% else %>
+                      <%= project1.description %>
+                    <% end %>
+                    <br />
+                    <strong><%= t(:projects_index_owner)%></strong>
+                    <%= Gamer.find((Developer.find(project1.owner_id).gamer_id)).username %>
+                    <br />
+                    <br />
+                    <% if I18n.locale == :ar %>
+                      <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                    <% else %>
+                      <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                    <% end %>
+                    <% if I18n.locale == :ar %>
+                      <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                    <% else %>
+                      <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                    <% end %>
+                    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 id="modal_label"><%= t(:delete_share) %></h3>
+                      </div>
+                      <div class="modal-body">
+                        <h4><%= t(:confirm_share)%></h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" style="font-size: 20px;"><%= t(:close_share) %></button>
+                        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger",:style => "font-size: 20px;" %>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </td>
+                <td style="width:40px;"></td>
+                <%if project2 != nil%>
+                  <td style="width:470px;">
+                    <div class="well well-small" style="padding-bottom: 20px;">
+                      <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
+                    <br />
+                    <strong><%= t(:projects_index_categories)%></strong>
+                  <% if project2.category.blank? %>
+                    <%= t(:no_categories) %>
+                  <% else %>
+                    <%= project2.category.get_name_by_locale %>
+                  <% end %>
+                  <br />
+                  <strong><%= t(:projects_index_country)%></strong>
+                <% if project2.country.blank? %>
+                  <%= t(:no_country) %>
+                <% else %>
+                  <%= get_country_name_by_locale(project2.country) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_formal_slang)%></strong>
+                <% if project2.formal == nil %>
+                  <%= t(:no_formal) %>
+                <% else %>
+                  <% if project2.formal == true %>
+                    <% if I18n.locale == :en %>
+                      Formal
+                    <% else %>
+                      فصحى
+                    <% end %>
+                  <% else %>
+                    <% if I18n.locale == :en  %>
+                      Slang
+                    <% else %>
+                      عامية
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_age)%></strong>
+                <% if project2.minAge.blank? || project2.maxAge.blank? %>
+                  <%= t(:no_age) %>
+                <% else %>
+                  <% if I18n.locale == :en  %>
+                    From <%= project2.minAge %> to <%= project2.maxAge %>
+                  <% else %>
+                    من <%= project2.minAge %> الى <%= project2.maxAge %>
+                  <% end %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_education_level)%></strong>
+                <% if project2.education_level.blank? %>
+                  <%= t(:no_education_level) %>
+                <% else %>
+                  <%= get_education_level_by_locale(project2.education_level) %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_description)%></strong>
+                <% if project2.description.blank? %>
+                  <%= t(:no_description) %>
+                <% else %>
+                  <%= project2.description %>
+                <% end %>
+                <br />
+                <strong><%= t(:projects_index_owner)%></strong>
+                    <%= Gamer.find((Developer.find(project2.owner_id).gamer_id)).username %>
+                    <br />
+                    <br />
+                    <% if I18n.locale == :ar %>
+                      <a style="font-size : 18px;" class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                    <% else %>
+                      <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+                    <% end %>
+                    <% if I18n.locale == :ar %>
+                      <a style="margin-left : 6px; font-size : 18px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                    <% else %>
+                      <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:projects_index_delete)%></a>
+                    <% end %>
+                    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 id="modal_label"><%= t(:delete_share) %></h3>
+                      </div>
+                      <div class="modal-body">
+                        <h4><%= t(:confirm_share)%></h4>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><%= t(:close_share) %></button>
+                        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger"%>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </td>
+              <%end%>
+            </tr>
+            <% counter_bigloop = counter_bigloop +2 %>
+          <% end %>
+        </table>
+      <%end%>
+    </p>
   </div>
 </div>
-
+</div>
+<script type="text/javascript">
+<%= render "remove.js" %>
+</script>
 <script type="text/javascript">
  <%= render "delete.js" %>
 </script>
