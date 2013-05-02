@@ -314,7 +314,7 @@ end
           end
         end
       end
-      developer = Developer.where(:gamer_id => current_gamer.id)
+      developer = Developer.where(gamer_id: current_gamer.id)
       if developer.respond_to?(:my_subscription)
         my_sub = developer.my_subscription
         flag_continue = my_sub.max_add_word(project_id)
@@ -327,7 +327,7 @@ end
         flash[:notice] = t(:upload_file_error5)
         redirect_to action: "show", id: project_id
       else
-        developer = Developer.where(:gamer_id => current_gamer.id)
+        developer = Developer.where(gamer_id: current_gamer.id)
         if developer.respond_to?(:my_subscription)
           my_sub = developer.my_subscription
           @words_remaining = my_sub.max_add_word_count(project_id)
@@ -399,7 +399,11 @@ end
         end
       end
       words_synonyms_array.each do |word_syn|
-        PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+        if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
+          flag, current_keyword = PreferedSynonym.find_word_in_project(project_id, word_syn[0], true)
+          current_project_category = Project.find_by_id(project_id).category
+          current_keyword.categories << current_project_category
+        end
       end
     end
     redirect_to action: "show", id: project_id
