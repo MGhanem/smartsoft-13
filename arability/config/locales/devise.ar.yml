@@ -27,7 +27,8 @@ ar:
     failure:
       already_authenticated: 'لقد قمت بتسجيل الدخول مسبقاً.'
       unauthenticated: 'تحتاج لتسجيل الدخول أو الاشتراك قبل المتابعة.'
-      unconfirmed: 'لا بد من تأكيد حسابك قبل المتابعة.'
+      unconfirmed: "لا بد من تأكيد حسابك قبل المتابعة. لم يصلك رسالة التفعيل ؟ <a href='/ar/gamers/confirmation/new'>إعادة إرسال</a>"
+      resend: "إعادة إرسال"
       locked: 'حسابك مغلق.'
       invalid: "البيانات التي ادخلتها غير صحيحة "
       invalid_token: 'رمز التوثيق غير صالح.'
@@ -45,6 +46,11 @@ ar:
       send_instructions: 'سوف تتلقى رسالة بريد إلكتروني تحوي تعليمات تبين كيفية تأكيد حسابك خلال بضع دقائق.'
       send_paranoid_instructions: 'ستصل إلى بريدك الإلكتروني (إذا كان مسجلاً لدينا) خلال بضع دقائق رسالة تحوي تعليمات تبين كيفية تأكيد حسابك.'
       confirmed: 'تم تأكيد حسابك بنجاح. وقد تم تسجيل الدخول.'
+      resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+      send: "أرس"
+      hello: "مرحبا"
+      confim_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
+      confirm_button: "تفعيل الحساب"
     registrations:
       signed_up: 'لقد قمت بالتسجيل بنجاح، أهلاً بك!'
       signed_up_but_unconfirmed: 'تم إرسال رسالة تحتوي على رابط تأكيد إلى بريدك الإلكتروني. يرجى فتح الرابط لتفعيل حسابك.'
@@ -63,6 +69,11 @@ ar:
     mailer:
       confirmation_instructions:
         subject: 'تعليمات التأكيد'
+        resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+        send: "أرس"
+        hello: "مرحبا"
+        confim_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
+        confirm_button: "تفعيل الحساب"
       reset_password_instructions:
         subject: 'تعليمات إعادة تعيين كلمة المرور'
       unlock_instructions:
