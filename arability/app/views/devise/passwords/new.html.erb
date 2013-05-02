@@ -1,12 +1,13 @@
-
+<center>
 <%= form_for(resource, as: resource_name,
              url: password_path(resource_name, locale: I18n.locale),
-             html: { method: :post, class: "form-signin", style: "min-width: 380px;" }) do |f| %>
+             html: { method: :post, class: "form-signin", style: "min-width: 380px; min-height: 140px;" }) do |f| %>
   <h2 class="form-signin-heading"><%= t(:reset_password) %></h2>
   <% if resource.errors.any? %>
       <div class="alert"><%= devise_error_messages! %></div>
   <% end %>
   <%= f.email_field :email, placeholder: t(:email), style: "padding: 8px; width: 300px;" %>
-  <div><%= f.submit t(:send_reset_password), class: "btn btn-large btn-primary" %></div>
+  <center><div><%= f.submit t(:send_reset_password), class: "btn btn-primary", style: "padding-top: 10px; padding-bottom: 10px; padding-right: 14px; padding-left: 14px; margin-bottom: -14px;" %></div></center>
 <% end %>
+  </center>
 
