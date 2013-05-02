@@ -48,7 +48,7 @@ class ProjectsController < BackendController
     @project_id = params[:project_id]
     keyword = params[:keyword]
     if keyword
-      searched_keyword = Keyword.where(name:keyword).first
+      searched_keyword = Keyword.where(name: keyword).first
       @searched_keyword_id = searched_keyword.id
       @is_followed = is_following(@searched_keyword_id)
     end 
@@ -87,7 +87,7 @@ class ProjectsController < BackendController
       elsif is_followed == "false"
         developer.follow(params[:keyword_id])
         flash[:success] = t(:follow_keyword_alert) + " " + keyword.name
-        redirect_to project_path(project_id), flash:flash
+        redirect_to project_path(project_id), flash: flash
       end
     end
   end
@@ -475,8 +475,8 @@ end
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.where(project_id:@project_id, 
-            keyword_id:@word_id).first
+          @edited_word = PreferedSynonym.where(project_id: @project_id, 
+            keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
