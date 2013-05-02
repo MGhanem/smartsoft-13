@@ -6,9 +6,7 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?, 
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords]
-
-
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
 
  # author:Noha hesham
  # Description:
@@ -25,8 +23,9 @@ class ProjectsController < BackendController
     @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to action: "index",controller: "projects"}
       format.json { head :no_content }
+      flash[:success] = t(:project_delete)
     end
   end
     
@@ -42,21 +41,19 @@ class ProjectsController < BackendController
   #    redirects to developers/new if the current gamer doesn't have a developer account of sign in page if there is no logged in gamerdef index
   def index  
     if current_gamer != nil 
-      developer = Developer.where(:gamer_id => current_gamer.id).first
-      if developer != nil
-        @my_projects = Project.where(:owner_id => developer.id)
-        @shared_projects = developer.projects_shared
+      @developer = Developer.where(:gamer_id => current_gamer.id).first
+      if @developer != nil
+        @my_projects = Project.where(:owner_id => @developer.id)
+        @shared_projects = @developer.projects_shared
       else
         flash[:notice] = "من فضلك سجل كمطور"
         redirect_to developers_new_path
       end
     else
       flash[:error] = t(:projects_index_error2)
-      redirect_to new_gamer_session_path      
+      redirect_to new_gamer_session_path
     end
   end
-
-
   # Author:
   #   Salma Farag
   # Description:
@@ -71,12 +68,14 @@ class ProjectsController < BackendController
   #   Gives status errors
   def create
     if developer_signed_in?
-      @project = Project.createproject(params[:project],current_developer.id)
+      @project = Project.new(params[:project].except(:category))
+      @project = Project.createproject(params[:project], current_developer.id)
       respond_to do |format|
         if @project.save
           format.html { redirect_to "/developers/projects",
             notice: I18n.t('views.project.flash_messages.project_was_successfully_created') }
           format.json { render json: @project, status: :created, location: @project }
+          @project.save
         else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -89,24 +88,30 @@ class ProjectsController < BackendController
   end
 
   # Author:
-  #    Salma Farag
+  #   Salma Farag
   # Description:
-  #   A method that views the form that  instantiates an empty project object
+  #   A method that views the form that checks if the developer is signed in and has not exceeded the
+  #   max number of projects allowedinstantiates an empty project object
   #   after checking that the user is signed in.
   # Params:
   #   None
   # Success:
   #   An empty project will be instantiated
   # Failure:
-  #   None
+  #   If not signed in he will be redirected to the sign in page.
+  #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
     if developer_signed_in?
-      @project = Project.new
-      @categories = @project.categories
-      respond_to do |format|
-        format.html
-        format.json { render json: @project }
-      end
+      # if current_developer.my_subscription.get_projects
+        @project = Project.new
+        respond_to do |format|
+          format.html
+          format.json { render json: @project }
+        end
+      # else
+      #   format.html { redirect_to "/my_subscriptions/choose_sub",
+      #   notice: I18n.t('exceeded_project_limit: ') }
+      # end
     else
       developer_unauthorized
       render 'pages/home'
@@ -120,11 +125,13 @@ class ProjectsController < BackendController
   # Params:
   #  none
   # success:
-  #  project is found 
+  #  project is found
   # failure:
   #  none
   def share
     @project = Project.find(params[:id])
+    gamers_ids = Developer.pluck(:gamer_id)
+    @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
 
   # Author:
@@ -140,7 +147,7 @@ class ProjectsController < BackendController
   def edit
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @categories = Project.printarray(@project.categories)
+      # @categories = Project.printarray(@project.categories)
     else
       developer_unauthorized
     end
@@ -160,8 +167,8 @@ class ProjectsController < BackendController
   def update
     if developer_signed_in?
       @project = Project.find(params[:id])
-      @project = Project.createcategories(@project, params[:project][:categories])
-      if @project.update_attributes(params[:project].except(:categories,:utf8, :_method,
+      @project = Project.createcategories(@project, params[:project][:category])
+      if @project.update_attributes(params[:project].except(:category, :utf8, :_method,
         :authenticity_token, :project, :commit, :action, :controller, :locale, :id))
         redirect_to :action => "index"
         flash[:notice] = I18n.t('views.project.flash_messages.project_was_successfully_updated')
@@ -203,26 +210,13 @@ def show
     redirect_to :action => "index"
     developer_unauthorized
   end
-end  
-  
+end
 
-
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
-  
   # Author:
   #   Mohamed Tamer
   # Description:
   #   calls parseCSV that returns an array of arrays containing the words and synonyms and checks if these words
-  #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number 
+  #   are new to database or not and accordingly puts them in the corresponding array of new words or and checks the number
   #   of synonyms and the synonyms accepted for each word
   # Params:
   #   csvfile: the csv file the user imported
@@ -348,13 +342,13 @@ end
   # author:
   #   Mohamed tamer
   # description:
-  #   add words and their synonym from the imported csv file to the project 
+  #   add words and their synonym from the imported csv file to the project
   # Params:
   #   words_ids: array of hashes of word id and their corresponding synonym id
   #   id: current project id
   # Success:
   #   returns adds the word and synonym to project and redirects back to project
-  # Failure: 
+  # Failure:
   #   if the array size is bigger than the word_search of that developer nothing is added
   def add_from_csv_keywords
     id_words_project = params[:words_ids]
@@ -378,10 +372,10 @@ end
     end
     redirect_to action: "show", id: project_id
   end
-  
+
   # Author:
   #   Mohamed Tamer
-  # Description: 
+  # Description:
   #   finds the project and renders the view
   # Params:
   #   id: the project id
@@ -401,17 +395,17 @@ end
 # params:
 #   project_id, word_id, synonym_id
 # success:
-#   keyword and synonym are added to project or synonym of word updated 
+#   keyword and synonym are added to project or synonym of word updated
 # failure:
 #   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist.
   def add_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
       @word_id = Keyword.find_by_name(params[:keyword]).id
       if Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id) 
+          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id)
           @synonym_id = params[:synonym_id]
           if Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
@@ -432,7 +426,7 @@ end
         else
           @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
           if @added_word
-            flash[:success] = t(:successfully_added_word_to_project)              
+            flash[:success] = t(:successfully_added_word_to_project)
             redirect_to project_path(@project_id), flash: flash
             return
           else
@@ -449,7 +443,7 @@ end
     end
   end
 
-  
+
 # author:
 #   Khloud Khalid
 # description:
@@ -461,14 +455,14 @@ end
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
   def remove_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil 
+    if Developer.find_by_gamer_id(current_gamer.id) != nil
       @project_id = params[:project_id]
       @word_id = params[:word_id]
       @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-      @removed_word.each do |word| 
+      @removed_word.each do |word|
         if word.project_id = @project_id
           @remove = word
-        end 
+        end
       end
       if  @remove != nil
         @remove.destroy
@@ -480,7 +474,6 @@ end
       end
     end
   end
-
   # author:
   #   Khloud Khalid
   # description:
@@ -553,7 +546,28 @@ end
       redirect_to projects_path, flash: flash
     end
   end
-
+  # Author:
+  #   Noha Hesham
+  # Description:
+  #   Finds the developer and the project by their ids
+  #   and removes the developer from the developers_shared
+  #   array, removing the project from the developer's
+  #   shared projects
+  # Params:
+  #   dev_id is the id of the developer
+  #   project_id is the id of the project
+  # Success:
+  #   Project is removed from shared projects
+  # Failure:
+  #   Project is not removed 
+  def remove_project_from_developer
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    dev.projects_shared.delete(project)
+    dev.save
+    flash[:success] = t(:project_removed)
+    redirect_to :action => "index",:controller => "projects"
+  end 
   # author:
   #   Khloud Khalid
   # description:

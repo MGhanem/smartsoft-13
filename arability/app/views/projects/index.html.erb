@@ -2,7 +2,7 @@
   <a>
     <%= t(:projects_index_title)%>
   </a>
-</legend> 
+</legend>
 <div class="tabbable tabs-left">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab"><%= t(:projects_index_tab1)%></a></li>
@@ -25,25 +25,17 @@
               <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
               <br />
               <strong><%= t(:projects_index_categories)%></strong>
-              <% size = project1.categories.length %>
-              <% if size == 0 %>
+              <% if project1.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-              <% counter = 1 %>
-              <% project1.categories.each do |c| %>
-                <% if counter < size %>
-                  <%= c.name %>,
-                  <% counter = counter + 1 %>
-                <% else %>
-                  <%= c.name %>
-                <% end %>
+                  <%= project1.category.get_name_by_locale %>,
               <% end %>
-              <% end %>
+
               <br />
               <strong><%= t(:projects_index_description)%></strong>
-              <% if project1.description.size == 0 %>
+              <% if project1.description!= nil %>
               <%= t(:no_description) %>
-              <% else %>  
+              <% else %>
               <%= project1.description %>
               <% end %>
   <br />
@@ -52,6 +44,24 @@
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
+  <% if I18n.locale == :ar %>
+    <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
+  <% else %>
+   <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
+  <% end %>
+    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="modal_label"><%= t(:delete) %></h3>
+    </div>
+      <div class="modal-body">
+        <span><%= t(:confirm)%></span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
+        <%= link_to t(:submit_delete), delete_path(project1.id),class: "btn btn-danger" %>
+      </div>
+    </div>
   <br />
             </div>
           </td>
@@ -62,33 +72,45 @@
                   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
                   <br />
                   <strong><%= t(:projects_index_categories)%></strong>
-                  <% size = project2.categories.length %>
-                  <% if size == 0 %>
+                  <strong><%= t(:projects_index_categories)%></strong>
+              <% if project2.category == nil %>
               <%= t(:no_categories) %>
               <% else %>
-                  <% counter = 1 %>
-                  <% project2.categories.each do |c| %>
-                    <% if counter < size %>
-                      <%= c.name %>,
-                      <% counter = counter + 1 %>
-                    <% else %>
-                      <%= c.name %>
-                    <% end %>
-                  <% end %>
-                  <% end %>
-                  <br />
+                  <%= project2.category.get_name_by_locale %>,
+              <% end %>
+
+              <br />
                   <strong><%= t(:projects_index_description)%></strong>
                   <% if project2.description.size == 0 %>
               <%= t(:no_description) %>
-              <% else %>  
+              <% else %>
               <%= project2.description %>
               <% end %>
   <br />
   <% if I18n.locale == :ar %>
     <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
-  <% else %>
+    <%else%>
     <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
+
+   <% if I18n.locale == :ar %>
+     <a style="margin-left : 6px;" href="#delete_modal" role="button" class="btn pull-left btn-danger" onClick="modalToggle()" id="LaunchDemo"><i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
+  <% else %>
+    <a style="margin-right : 6px;" href="#delete_modal" role="button" class="btn pull-right btn-danger" onClick="modalToggle()" id="LaunchDemo"> <i class="icon-trash"></i><%= t(:projects_index_delete)%></a>
+  <% end %>
+    <div id="delete_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="modal_label"><%= t(:delete) %></h3>
+    </div>
+      <div class="modal-body">
+        <span><%= t(:confirm)%></span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal"><%= t(:close_delete) %></button>
+        <%= link_to t(:submit_delete), delete_path(project1.id),class: "btn btn-danger" %>
+      </div>
+    </div>
   <br />
                 </div>
               </td>
@@ -116,21 +138,6 @@
       <div class="well well-small" style="padding-bottom: 20px;">
         <strong><%= t(:projects_index_name)%></strong><%= link_to project1.name, :controller => "projects", :action => "show", :id =>project1 %>
         <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project1.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project1.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
   <br />
   <strong><%= t(:projects_index_description)%></strong>
   <% if project1.description.size == 0 %>
@@ -140,10 +147,28 @@
               <% end %>
   <br />
   <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+    <a class="btn pull-left" style="font-size:17px;" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% else %>
     <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
+  <% if I18n.locale == :ar %>
+   <a style="margin-left : 6px; font-size:17px;" href="#remove_modal" role="button" class="btn pull-left btn-danger" onClick="remove_modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
+  <% else %>
+  <a style="margin-right : 6px;" href="#remove_modal" role="button" class="btn pull-right btn-danger" onClick="remove_modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
+  <% end %>
+    <div id="remove_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="modal_label"><%= t(:delete_share) %></h3>
+      </div>
+      <div class="modal-body">
+        <span><%= t(:confirm_share)%></span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" style="font-size: 17px;"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger ",:style => "font-size: 17px;" %>
+      </div>
+    </div>
   <br />
 </div>
     </td>
@@ -153,21 +178,6 @@
       <div class="well well-small" style="padding-bottom: 20px;">
   <strong><%= t(:projects_index_name)%></strong><%= link_to project2.name, :controller => "projects", :action => "show", :id =>project2 %>
   <br />
-  <strong><%= t(:projects_index_categories)%></strong>
-  <% size = project2.categories.length %>
-  <% if size == 0 %>
-  <%= t(:no_categories) %>
-  <% else %>
-  <% counter = 1 %>
-  <% project2.categories.each do |c| %>
-    <% if counter < size %>
-      <%= c.name %>,
-      <% counter = counter + 1 %>
-    <% else %>
-      <%= c.name %>
-    <% end %>
-  <% end %>
-  <% end %>
   <br />
   <strong><%= t(:projects_index_description)%></strong>
   <% if project2.description.size == 0 %>
@@ -176,11 +186,29 @@
               <%= project2.description %>
               <% end %>
   <br />
-  <% if I18n.locale == :ar %>
-    <a class="btn pull-left" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+   <% if I18n.locale == :ar %>
+    <a class="btn pull-left" style="font-size:17px;" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% else %>
-    <a class="btn pull-right" href="/developers/projects/<%= project2.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
+    <a class="btn pull-right" href="/developers/projects/<%= project1.id %>/edit"><i class="icon-edit"></i><%= t(:projects_index_edit)%></a>
   <% end %>
+  <% if I18n.locale == :ar %>
+   <a style="margin-left : 6px; font-size:17px;" href="#remove_modal" role="button" class="btn pull-left btn-danger" onClick="remove_modalToggle()" id="LaunchDemo"><i class="icon-remove"></i><%= t(:unshare)%></a>
+  <% else %>
+  <a style="margin-right : 6px;" href="#remove_modal" role="button" class="btn pull-right btn-danger" onClick="remove_modalToggle()" id="LaunchDemo"> <i class="icon-remove"></i><%= t(:unshare)%></a>
+  <% end %>
+    <div id="remove_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 id="modal_label"><%= t(:delete_share) %></h3>
+      </div>
+      <div class="modal-body">
+        <span><%= t(:confirm_share)%></span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" style="font-size: 17px;"><%= t(:close_share) %></button>
+        <%= link_to t(:submit_remove), "/developers/projects/remove_project_from_developer?dev_id=#{@developer.id}&project_id=#{project1.id}",:class => "btn btn-danger ",:style => "font-size: 17px;" %>
+      </div>
+    </div>
   <br />
 </div>
     </td>
@@ -194,3 +222,9 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+<%= render "remove.js" %>
+</script>
+<script type="text/javascript">
+ <%= render "delete.js" %>
+</script>
