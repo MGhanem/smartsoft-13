@@ -240,7 +240,7 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   returns nil if gamer is not found
   def self.get_gamer_rank(current_gamer)
-    gamers = Gamer.find(:all, order: "highest_score DESC")
+    gamers = Gamer.where(is_guest: [nil, false]).find(:all, order: "highest_score DESC")
     current_gamer_rank = nil
     rank = 1
     gamers.each do |user|

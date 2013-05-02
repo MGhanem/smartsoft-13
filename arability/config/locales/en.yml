@@ -650,4 +650,3 @@ en:
               blank: "category cant be empty"
               invalid: "The category can only consist of only english and arabic characters"
               taken: "This category already exists in the database"
->>>>>>> a77037aa4d6ba852369910473e83122a72c9a459
