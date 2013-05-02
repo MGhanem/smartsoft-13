@@ -3,6 +3,8 @@
     :
     <%= @project.name %>
   </h3>
+  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
+  <br>
   <br>
   <form>
     <div class="container well" align="center" style="width:900px">
@@ -120,6 +122,7 @@
       <p id="illustration"></br></p>
     </div>
   </form>
+  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
 <script type="text/javascript" charset="utf-8">
   $("#selected_keyword").change(function (){
     load_synonyms();

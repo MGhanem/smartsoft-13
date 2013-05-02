@@ -153,4 +153,8 @@ it "views recommended words" do
   response.code.should eq("200")
 end
 
+it "views recommended words" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+
 end
