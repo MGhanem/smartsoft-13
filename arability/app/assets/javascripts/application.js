@@ -16,6 +16,7 @@
 //= require highcharts
 //= require game
 //= require gameRelated
+//= require yamli
 
 
 // author:
