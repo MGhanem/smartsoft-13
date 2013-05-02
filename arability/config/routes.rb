@@ -29,6 +29,9 @@ Arability::Application.routes.draw do
     match "/add_category" => "admin#add_category"
     match "/view_categories" => "admin#view_categories"
     match "/delete_category"=>"admin#delete_category", :as => "delete_category"
+    match "/ignore_report"=>"admin#ignore_report", :as => "ignore_report"
+    match "/unapprove_word"=>"admin#unapprove_word", :as => "unapprove_word"
+    match "/view_reports" => "admin#view_reports"
     match "/view_subscription_models" => "admin#view_subscription_models"
     match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
     put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
@@ -40,10 +43,16 @@ Arability::Application.routes.draw do
 
     # required for routing by the devise module(gem)
 
-    devise_for :gamers do 
+    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
+    devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
       post "/social_registrations/social_sign_in"
+      get "/gamers/sign_in" => "devise/sessions#new"
+      post "/gamers/confirmation" => "devise/confirmations#create"
+      get "/gamers/confirmation/new" => "devise/confirmations#new", :as => "new_confirmation"
+      get "/gamers/confirmation" => "devise/confirmations#show"
     end
 
     match '/game' => 'games#game'
@@ -71,6 +80,10 @@ Arability::Application.routes.draw do
     match '/tweet/tweet_score' => "tweet#tweet_score"
     match '/auth/failure', :to => 'authentications#callback_failure'
     match "/post_score"=>'games#post', :as => "post_facebook"
+    match "guest/sign_up" => "guest#sign_up", as: "guest_sign_up"
+    post "guest/signing_up" => "guest#signing_up", :as => "guest_signing_up"
+    match "guest/continue_sign_up" => "guest#continue_sign_up", as: "guest_continue_sign_up"
+    post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
     match "/games/post_facebook" => "games#post"
 
@@ -134,6 +147,17 @@ Arability::Application.routes.draw do
       match '/developers/create' => "developer#create"
     end
   end
+
+  get "gamers/sign_in" => redirect("/en/gamers/sign_in")
+  get "gamers/sign_in" => redirect("/ar/gamers/sign_in")
+
+  get "gamers/gamers/confirmation/new" => redirect("/en/gamers/confirmation/new")
+  get "gamers/gamers/confirmation/new" => redirect("/ar/gamers/confirmation/new")
+  
+
+  get "/en/gamers/password" => redirect("/en/gamers/password/edit")
+
+  get "/ar/gamers/password" => redirect("/ar/gamers/password/edit")
 
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
