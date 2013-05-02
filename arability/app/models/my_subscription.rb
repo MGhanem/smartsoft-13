@@ -3,7 +3,6 @@
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, presence: true
-
   # Author:
   #   Noha Hesham
   # Description:
@@ -104,7 +103,7 @@
   #   None 
   def can_add_word(proj_id)
     developer = self.developer
-    add=PreferedSynonym.where(project_id: proj_id)
+    add=PreferedSynonym.where(project_id: proj_id )
     if add.count < self.word_add
       return true
     else

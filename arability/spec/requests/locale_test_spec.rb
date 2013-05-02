@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "change locale" do
+describe "change locale", mohamed: true do
   it "Shows default locale of arabic" do
     get "/"
     I18n.locale.should eq(:ar)

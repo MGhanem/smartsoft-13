@@ -51,45 +51,45 @@ namespace :db do
     word3.save
 
     Synonym.delete_all
-    a=Synonym.create(name: "دوس", keyword_id: click.id, approved: true)
-    b=Synonym.create(name: "إضغط", keyword_id:  click.id, approved: true)
-    c=Synonym.create(name: "انقر", keyword_id:  click.id, approved: true)
-    d=Synonym.create(name: "تسجيل الدخول", keyword_id: sign_in.id, approved: true)
-    e=Synonym.create(name: "دخول", keyword_id: sign_in.id, approved: true)
-    f=Synonym.create(name: "إنشاء حساب", keyword_id: sign_up.id, approved: true)
-    g=Synonym.create(name: "رفع", keyword_id: upload.id, approved: true)
-    h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true)
-    i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true)
+    a=Synonym.create(name: "دوس", keyword_id: click.id, approved: true, is_formal: false)
+    b=Synonym.create(name: "إضغط", keyword_id:  click.id, approved: true, is_formal: true)
+    c=Synonym.create(name: "انقر", keyword_id:  click.id, approved: true, is_formal: true)
+    d=Synonym.create(name: "تسجيل الدخول", keyword_id: sign_in.id, approved: true, is_formal: true)
+    e=Synonym.create(name: "دخول", keyword_id: sign_in.id, approved: true, is_formal: true)
+    f=Synonym.create(name: "إنشاء حساب", keyword_id: sign_up.id, approved: true, is_formal: true)
+    g=Synonym.create(name: "رفع", keyword_id: upload.id, approved: true, is_formal: true)
+    h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true, is_formal: true)
+    i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true, is_formal: true)
 
-    j=Synonym.create(name: "تحميل", keyword_id: loading.id, approved: true)
-    k=Synonym.create(name: "استني", keyword_id: loading.id, approved: true)
-    l=Synonym.create(name: "شارك", keyword_id: share.id, approved: true)
-    m=Synonym.create(name: "اشترك", keyword_id: share.id, approved: true)
-    n=Synonym.create(name: "بووست", keyword_id: post.id, approved: true)
-    o=Synonym.create(name: "يلكز", keyword_id: poke.id, approved: true)
-    p=Synonym.create(name: "تابع", keyword_id: subscribe.id, approved: true)
-    q=Synonym.create(name: "اشترك", keyword_id: subscribe.id, approved: true)
-    w=Synonym.create(name: "انتشروا", keyword_id: broadcast.id, approved: true)
-    x=Synonym.create(name: "كومبيل", keyword_id: compile.id, approved: true)
-    y=Synonym.create(name: "يعجبني", keyword_id: like.id, approved: true)
-    z=Synonym.create(name: "احبه", keyword_id: like.id, approved: true)
+    j=Synonym.create(name: "تحميل", keyword_id: loading.id, approved: true, is_formal: true)
+    k=Synonym.create(name: "استني", keyword_id: loading.id, approved: true, is_formal: false)
+    l=Synonym.create(name: "شارك", keyword_id: share.id, approved: true, is_formal: true)
+    m=Synonym.create(name: "اشترك", keyword_id: share.id, approved: true, is_formal: true)
+    n=Synonym.create(name: "بووست", keyword_id: post.id, approved: true, is_formal: false)
+    o=Synonym.create(name: "يلكز", keyword_id: poke.id, approved: true, is_formal: true)
+    p=Synonym.create(name: "تابع", keyword_id: subscribe.id, approved: true, is_formal: true)
+    q=Synonym.create(name: "اشترك", keyword_id: subscribe.id, approved: true, is_formal: true)
+    w=Synonym.create(name: "انتشروا", keyword_id: broadcast.id, approved: true, is_formal: true)
+    x=Synonym.create(name: "كومبيل", keyword_id: compile.id, approved: true, is_formal: false)
+    y=Synonym.create(name: "يعجبني", keyword_id: like.id, approved: true, is_formal: true)
+    z=Synonym.create(name: "احبه", keyword_id: like.id, approved: true, is_formal: true)
 
-    a1=Synonym.create(name: "ابحث", keyword_id: find.id, approved: true)
-    a2=Synonym.create(name: "دور", keyword_id: find.id, approved: true)
-    a3=Synonym.create(name: "دولي", keyword_id: search.id, approved: true)
-    a4=Synonym.create(name: "سيرش", keyword_id: search.id, approved: true)
-    a5=Synonym.create(name: "انشر", keyword_id: onshor.id, approved: true)
-    a6=Synonym.create(name: "اضغط", keyword_id: doss.id, approved: true)
-    a7=Synonym.create(name: "احب ده", keyword_id: yagebony.id, approved: true)
-    a8=Synonym.create(name: "مركبة", keyword_id: arbya.id, approved: true)
-    a9=Synonym.create(name: "سيتنجس", keyword_id: edadat.id, approved: true)
-    a9=Synonym.create(name: "انجاز كتير", keyword_id: engazat.id, approved: true)
-    b1=Synonym.create(name: "يحمل", keyword_id: loading.id, approved: true)
-    b2=Synonym.create(name: "لودينج", keyword_id: loading.id, approved: true)
-    b3=Synonym.create(name: "شاريكوا", keyword_id: share.id, approved: true)
-    b4=Synonym.create(name: "دوررليا", keyword_id: find.id, approved: true)
-    b5=Synonym.create(name: "ابحثلي", keyword_id: search.id, approved: true)
-    b5=Synonym.create(name: "سيرشلي", keyword_id: search.id, approved: true)
+    a1=Synonym.create(name: "ابحث", keyword_id: find.id, approved: true, is_formal: true)
+    a2=Synonym.create(name: "دور", keyword_id: find.id, approved: true, is_formal: false)
+    a3=Synonym.create(name: "دورلي", keyword_id: search.id, approved: true, is_formal: false)
+    a4=Synonym.create(name: "سيرش", keyword_id: search.id, approved: true, is_formal: false)
+    a5=Synonym.create(name: "انشر", keyword_id: onshor.id, approved: true, is_formal: true)
+    a6=Synonym.create(name: "اضغط", keyword_id: doss.id, approved: true, is_formal: true)
+    a7=Synonym.create(name: "احب ده", keyword_id: yagebony.id, approved: true, is_formal: false)
+    a8=Synonym.create(name: "مركبة", keyword_id: arbya.id, approved: true, is_formal: true)
+    a9=Synonym.create(name: "سيتنجس", keyword_id: edadat.id, approved: true, is_formal: false)
+    a9=Synonym.create(name: "انجاز كتير", keyword_id: engazat.id, approved: true, is_formal: false)
+    b1=Synonym.create(name: "يحمل", keyword_id: loading.id, approved: true, is_formal: true)
+    b2=Synonym.create(name: "لودينج", keyword_id: loading.id, approved: true, is_formal: false)
+    b3=Synonym.create(name: "شاريكوا", keyword_id: share.id, approved: true, is_formal: true)
+    b4=Synonym.create(name: "دوررليا", keyword_id: find.id, approved: true, is_formal: false)
+    b5=Synonym.create(name: "ابحثلي", keyword_id: search.id, approved: true, is_formal: true)
+    b5=Synonym.create(name: "سيرشلي", keyword_id: search.id, approved: true, is_formal: false)
 
     Gamer.delete_all
     def self.add_gamer(first, last, gender, country, age, education)
@@ -121,6 +121,11 @@ namespace :db do
     karim=add_gamer("karim", "gmail", "male", "Egypt", 77, "Graduate")
     make_admin(karim)
 
+    Report.delete_all
+    success, report1=Report.create_report(smart, upload)
+    success, report2=Report.create_report(karim, a)
+    success, report3=Report.create_report(timo, n)
+
     Developer.delete_all
     timo_dev=Developer.create(gamer_id: timo.id)
     timo_dev=Developer.create(gamer_id: smart.id)
@@ -144,9 +149,12 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
-    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20)
-    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100)
-    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300)
+
+    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20, limit: 500)
+    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100, limit: 2000)
+    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, limit: 5000)
+
+    MySubscription.choose(timo_dev.id, SubscriptionModel.first.id)
 
     project = Project.new
     project.name = "Read"

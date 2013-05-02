@@ -10,7 +10,7 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-   devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
@@ -19,7 +19,8 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin,
+                  :confirmed_at
 
   has_many :services, :dependent => :destroy
 
@@ -279,6 +280,7 @@ class Gamer < ActiveRecord::Base
       country: country,
       education_level: ed_level,
       is_local: false,
+      confirmed_at: Time.now,
       provider: provider)
     if gamer.save
       return gamer, true
@@ -324,8 +326,7 @@ end
 
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+  scope :filter_by_dob, lambda { |from, to| where date_of_birth: to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where gender: gender }
+  scope :filter_by_education, lambda { |education| where education_level: education }
 end
-
