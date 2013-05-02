@@ -7,14 +7,14 @@
     <% @vote_log.each do |vote| %>
       <tr>
         <td></td>
-        <td id = "table-row-vl"> <b class = "coloring-vl"><%= t(:you_vote) %></b><%= t(:vote_action) %><b class = "coloring-vl"><%= vote.last %></b><%= t(:chosen_action) %><b class = "coloring-vl"><%= vote.first %></b></td>
+        <td class = "table-row-vl"> <b class = "coloring-vl"><%= t(:you_vote) %></b><%= t(:vote_action) %><b class = "coloring-vl"><%= vote.last %></b><%= t(:chosen_action) %><b class = "coloring-vl"><%= vote.first %></b></td>
         <td></td>
       </tr>
     <% end %>
   <% else %>
     <tr>
       <td></td>
-      <td id = "table-row-vl"><b class = "coloring-vl"><%= t(:no_you) %></b><%= t(:no_vote_log) %></td>
+      <td class = "table-row-vl"><b class = "coloring-vl"><%= t(:no_you) %></b><%= t(:no_vote_log) %></td>
       <td></td>
     </tr>
   <% end %>
@@ -36,7 +36,7 @@
   $(document).ready(function () {
     <% if I18n.locale == :ar %>
       $("#header-vl").addClass("arabic-head-vl");
-      $("#table-row-vl").addClass("arabic-table-vl");
+      $(".table-row-vl").addClass("arabic-table-vl");
     <% end %>
   });
 </script>
