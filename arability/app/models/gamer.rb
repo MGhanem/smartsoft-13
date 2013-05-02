@@ -201,7 +201,7 @@ class Gamer < ActiveRecord::Base
   # Failure:
   #   returns 1,2,3 according to the invoked method failure scenario
   def suggest_synonym(synonym_name, keyword_id, is_formal)
-    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true , is_formal)
+    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true, is_formal)
   end
     
 
