@@ -115,9 +115,11 @@
 	function choose_formal_and_vote(){
 		var synonym_id = $("#choosen_synonym_id").val();
 		record_vote(synonym_id,"formal");
+		$('.popover').remove();
 	}
 	function choose_slang_and_vote(){
 		var synonym_id = $("#choosen_synonym_id").val();
 		record_vote(synonym_id,"slang");
+		$('.popover').remove();
 	}
 </script>
