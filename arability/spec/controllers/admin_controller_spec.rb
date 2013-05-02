@@ -103,8 +103,15 @@ describe AdminController  do
       gamer
       gamer2
       sign_in(gamer)
-      get :make_admin, id: gamer2.id
-      gamer2.admin.should eq(true)
+      post :make_admin, email: gamer2.email
+      Gamer.find_by_email(gamer2.email).admin.should eq(true)
+    end
+
+    it "should not make an admin" do
+      gamer2
+      sign_in(gamer)
+      post :make_admin, email: "karimkkk@gamil.com"
+      response.should redirect_to("http://test.host/admin/make_admin")
     end
 
     it "should list all projects" do
