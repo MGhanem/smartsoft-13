@@ -29,6 +29,9 @@ Arability::Application.routes.draw do
     match "/add_category" => "admin#add_category"
     match "/view_categories" => "admin#view_categories"
     match "/delete_category"=>"admin#delete_category", :as => "delete_category"
+    match "/ignore_report"=>"admin#ignore_report", :as => "ignore_report"
+    match "/unapprove_word"=>"admin#unapprove_word", :as => "unapprove_word"
+    match "/view_reports" => "admin#view_reports"
     match "/view_subscription_models" => "admin#view_subscription_models"
     match "/:model_id/edit_subscription_model"=>"admin#edit_subscription_model", :as => "edit_subscription_model"
     put "/:model_id/update_subscription_model" => "admin#update_subscription_model", :as => "update_model"
@@ -40,6 +43,8 @@ Arability::Application.routes.draw do
 
     # required for routing by the devise module(gem)
 
+    # devise_for :gamers, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+    devise_for :gamers
     devise_for :gamers do
       get '/gamers/sign_out' => 'devise/sessions#destroy'
       match "/social_registrations/new_social" => "social_registrations#new_social"
@@ -80,12 +85,20 @@ Arability::Application.routes.draw do
 
 
     scope "developers/" do
+      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
+      match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
+       match "/projects/:id/destroy" => "projects#destroy", :as => :delete
+      put "projects/destroy"
+      resources :projects
+
       match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
-      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      
       get "projects/remove_developer_from_project"
+      
       match "projects/:id/share" => "projects#share", :as => "share_project"
-      match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
+      
       get "projects/update"
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
@@ -96,13 +109,12 @@ Arability::Application.routes.draw do
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
 
-      match "/projects/:id/destroy" => "projects#destroy", :as => :delete
-      put "projects/destroy"
+     
 
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
 
-      resources :projects
+      
 
       match '/my_subscriptions/choose_sub' => "my_subscription#choose_sub", :as => :choose_sub
       match '/my_subscriptions/pick' => "my_subscription#pick"
@@ -137,6 +149,11 @@ Arability::Application.routes.draw do
   get "gamers/gamers/confirmation/new" => redirect("/en/gamers/confirmation/new")
   get "gamers/gamers/confirmation/new" => redirect("/ar/gamers/confirmation/new")
   
+
+  get "/en/gamers/password" => redirect("/en/gamers/password/edit")
+
+  get "/ar/gamers/password" => redirect("/ar/gamers/password/edit")
+
   get "/en/gamers" => redirect('/en/gamers/sign_up')
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
