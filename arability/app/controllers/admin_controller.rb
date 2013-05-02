@@ -55,6 +55,26 @@ class AdminController < ApplicationController
   end
 
   # Author:
+  #   karim elnaggar
+  # Description:
+  #   returns json of gamer emails matching autocompletion
+  # params:
+  #   email: a string representing the email
+  # success:
+  #   returns a json list of emails similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def keyword_autocomplete
+    search_email = params[:email]
+    similar_emails =
+      Gamer.get_similar_emails(search_email, [])
+    similar_emails.map! { |email| email.email }
+    render json: similar_emails
+  end
+
+  # Author:
   #   Karim ElNaggar
   # Description:
   #   this action lists the gamers and links to make them admins

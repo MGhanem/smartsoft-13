@@ -63,6 +63,29 @@ class Gamer < ActiveRecord::Base
   end
 
   # Description:
+  #   gets emails similar to an email and sorts 
+  #   result by relevance
+  # Author:
+  #   Nourhan Mohamed, Mohamed Ashraf
+  # params:
+  #   email: the email to be compared against
+  # Success:
+  #   returns a list of the keywords (optionally filtered by categories) 
+  #   similar to the search keyword sorted in lexicographical order
+  # Failure:
+  #   returns an empty list if the email had no matches
+  def self.get_similar_emails(email)
+    return [] if email.blank?
+    email.strip!
+    email_list = self.where("gamers.email LIKE ?", "%#{email}%")
+
+    relevant_first_list = email_list
+      .sort_by { |gamer| [gamer.email.downcase.index(email),
+        gamer.email.downcase] }
+    relevant_first_list
+  end  
+
+  # Description:
   #   makes the user an admin
   # Author:
   #   Karim el naggar

@@ -1,6 +1,7 @@
 <div class="container admin">
 	<div class="row">
 		<%= render partial: "sidebar-nav", locals: {active: "add-admin"} %>
+		<%= javascript_include_tag "search/autocomplete-script" %>
 		<div class="span9 offset3">
 			<div class="tab-content">
 				<div class="tab-pane well span7 active">
@@ -21,7 +22,7 @@
 							<div class="control-group">
 								<label class="control-label" for="inputkeyword">البريد الالكترونى</label>
 								<div class="controls">
-									<input type="text" id="inputkeyword" name="email" placeholder="البريد الالكترونى" class="span4">
+									<input type="text" id="inputkeyword" name="email" placeholder="البريد الالكترونى" class="span4 autocomplete" autocomplete="off">
 									<button type="submit" class="btn btn-primary pull-left">إضافة المشرف</button>
 								</div>
 							</div>
