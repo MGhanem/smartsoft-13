@@ -468,6 +468,8 @@ class AdminController < ApplicationController
   #   original limit_follow.
   #   subscription_model[limit_project]: new limit_project that should replace
   #   original limit_project.
+  #   subscription_model[limit]: new limit that should replace
+  #   original limit.
   # Success:
   #   Subscription model attributes gets updated with new data and go back to
   #   the view of all subscription models in database.
@@ -481,7 +483,10 @@ class AdminController < ApplicationController
     @model.limit_search = params[:subscription_model][:limit_search]
     @model.limit_follow = params[:subscription_model][:limit_follow]
     @model.limit_project = params[:subscription_model][:limit_project]
+    @model.limit = params[:subscription_model][:limit]
     if @model.save
+      flash[:success] = "لقد تم تعديل نظام الإشتراك"
+      flash.keep
       redirect_to action: "view_subscription_models"
     else
       redirect_to action: "edit_subscription_model",

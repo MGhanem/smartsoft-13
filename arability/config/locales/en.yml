@@ -295,6 +295,26 @@ en:
   male: "male"
   out_of: "from"
   keyword_not_empty: "Search Keyword can not be empty"
+  egypt: "Egypt"
+  lebanon: "Lebanon"
+  jordan: "Jordan"
+  saudi_arabia: "Saudi Arabia"
+  libya: "Libya"
+  united_arab_emirates: "United Arab Emirates"
+  qatar: "Qatar"
+  kuwait: "Kuwait"
+  iraq: "Iraq"
+  algeria: "Algeria"
+  morroco: "Morroco"
+  sudan: "Sudan"
+  somalia: "Somalia"
+  mauritania: "Mauritania"
+  bahrain: "Bahrain"
+  tunisia: "Tunisia"
+  others: "Others"
+  graduate: "Graduate"
+  school: "School"
+  university: "University"
   hide_stats: "Hide Stats"
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
@@ -524,6 +544,13 @@ en:
   close_delete: "Close"
   submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
+  views:  
+    pagination:  
+      previous: "&lt; Previous"
+      next: "Next &gt;"
+      truncate: "&hellip;"
+  connection_error: "Connection Error, please make sure you're connected to the internet"
+  no_account: "You seem to have left us. Please create a new account"
   activerecord:
     errors:
       models:
@@ -563,16 +590,7 @@ en:
   close_share: "cancel"
   sub_changed: "chane %{sm.name} "
   you_have_prizes: "You have won the following prizes!"
-<<<<<<< HEAD
-  views:  
-    pagination:  
-      previous: "&lt; Previous"
-      next: "Next &gt;"
-      truncate: "&hellip;"
-  connection_error: "Connection Error, please make sure you're connected to the internet"
-=======
   back_to_project: "<< Back to project"
->>>>>>> f1a7fa53e222359bc26e850928b06e9c091dcb48
   wrong_age_input: "Wrong age input"
   synonyms: "Synonyms:"
   school: "School"
@@ -605,3 +623,5 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  no_votes_visuals: "Sorry, no one voted for this synonym yet!"
+  no_votes_visuals_popup: "left"

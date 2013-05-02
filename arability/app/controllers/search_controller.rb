@@ -1,6 +1,7 @@
 class SearchController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
+  include SearchHelper
 
   # Author:
   #   Mohamed Ashraf, Nourhan Mohamed
@@ -39,7 +40,7 @@ class SearchController < BackendController
       Keyword.get_similar_keywords(@search_keyword, categories_array)
     @categories = categories_array
   end
-
+  
   # Author:
   #   Nourhan Mohamed
   # Description:
@@ -84,9 +85,11 @@ class SearchController < BackendController
   end
 
   # Author:
-  #   Nourhan Mohamed
+  #   Nourhan Mohamed, Nourhan Zakaria
   # Description:
-  #   search for synonyms for a particular keyword under certain filters
+  #   search for synonyms for a particular keyword under certain filters (optional)
+  #   calls the helper function that draws the piecharts of voters statistics
+  #   of certain synonym
   # params:
   #   search: a string representing the search keyword, from the params list
   #     from a textbox in the search_keywords view
@@ -99,9 +102,11 @@ class SearchController < BackendController
   # success: 
   #   returns to the search view a list of synonyms for the keyword
   #   sorted by vote count according to passed filters
+  #   and a list of hashs and in each hash the key is the synonym id
+  #   and the value is a list of four pie charts
   # failure:
-  #   returns a list of synonyms available for the search keyword, all with 0 
-  #   votes
+  #   returns a list of synonyms available for the search keyword, all with 0 votes
+  #   and no charts will be drawn if the keyword has no synonyms
   def search_with_filters
     @search_keyword = params["search"]
     @country = params["country"]
@@ -141,6 +146,14 @@ class SearchController < BackendController
 
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+
+        if !@no_synonyms_found
+          @charts = @synonyms.map{ |s| { s.id => 
+            [piechart_gender(s.id, @gender, @country, @education, @age_from, @age_to), 
+            piechart_country(s.id, @gender, @country, @education, @age_from, @age_to),
+            piechart_age(s.id, @gender, @country, @education, @age_from, @age_to), 
+            piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)] } }
+        end 
 
         if request.xhr?
           render "filtered_results.js"

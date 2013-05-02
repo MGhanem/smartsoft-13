@@ -37,16 +37,9 @@ describe AdminController  do
       gamer.password = "1234567"
       gamer.education_level = "University"
       gamer.admin = true
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
-    end
-
-    let(:word) do
-      word = Keyword.new
-      word.name = "Test"
-      word.is_english = true
-      word.save validate: false
-      word
     end
 
     let(:developer) do
@@ -67,6 +60,14 @@ describe AdminController  do
       project.owner_id = developer.id
       project.save
       project
+    end
+
+    let(:word) do
+      word = Keyword.new
+      word.name = "Test"
+      word.is_english = true
+      word.save validate: false
+      word
     end
 
     it "should list all gamers" do
