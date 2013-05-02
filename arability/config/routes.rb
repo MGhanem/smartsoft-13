@@ -91,6 +91,8 @@ Arability::Application.routes.draw do
 
     scope "developers/" do
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      get "projects/remove_developer_from_project"
+      
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
        match "/projects/:id/destroy" => "projects#destroy", :as => :delete
@@ -103,7 +105,6 @@ Arability::Application.routes.draw do
       get "projects/remove_developer_from_project"
       
       match "projects/:id/share" => "projects#share", :as => "share_project"
-      
       get "projects/update"
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project

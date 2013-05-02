@@ -228,6 +228,7 @@ class ApplicationController < ActionController::Base
     gamer.email = "guest_#{Time.now.to_i}#{rand(99)}@example.com"
     gamer.password = "1234567"
     gamer.is_guest = true
+    gamer.confirmed_at = Time.now
     if gamer.save
       session[:guest_gamer_id] = gamer.id
       return gamer, true
