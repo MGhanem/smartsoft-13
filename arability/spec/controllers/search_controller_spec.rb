@@ -68,6 +68,7 @@ describe SearchController do
       gamer.email = "nour@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "medium"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
@@ -81,6 +82,7 @@ describe SearchController do
       gamer.email = "nour@gmail.com"
       gamer.password = "1234567"
       gamer.education_level = "high"
+      gamer.confirmed_at = Time.now
       gamer.save validate: false
       gamer
     end
