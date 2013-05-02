@@ -208,3 +208,4 @@ describe 'PUT update' do
     response.code.should eq("200")
   end
 end
+end

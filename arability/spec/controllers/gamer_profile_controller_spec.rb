@@ -75,6 +75,7 @@ describe GamesController, vote_log_test: true do
     g.gender = "male"
     g.email = "trialC@example.com"
     g.password = "1234567"
+    g.confirmed_at = Time.now
     g.save validate: false
     g
   }
@@ -88,6 +89,7 @@ describe GamesController, vote_log_test: true do
     gTwo.gender = "female"
     gTwo.email = "trialD@example.com"
     gTwo.password = "1234567"
+    gTwo.confirmed_at = Time.now
     gTwo.save validate: false
     gTwo
   }
@@ -124,6 +126,7 @@ describe GamesController, vote_log_test: true do
     sThree
     sFour
     g
+    gTwo
   end
 
   describe "showProfile" do
