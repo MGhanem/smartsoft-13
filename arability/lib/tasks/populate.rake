@@ -3,9 +3,9 @@ namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.first])
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first])
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.first])
+    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.find(1),Category.find(2),Category.last])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first, Category.find(3)]
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.last])
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
