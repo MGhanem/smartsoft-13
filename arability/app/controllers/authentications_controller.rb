@@ -144,7 +144,8 @@ class AuthenticationsController < ApplicationController
           redirect_to "/gamers/edit",
           flash: {success: t(:logged_in_to_fb)}
         else
-          redirect_to root_url, flash: {notice: t(:already_connected_fb)}
+          Authentication.update_token(current_gamer.id, provider, token)
+          redirect_to "/games/post_facebook"
         end
       end
     else

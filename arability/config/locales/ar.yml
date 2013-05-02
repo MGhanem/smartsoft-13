@@ -1,4 +1,6 @@
 ar:
+  welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
+  welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
   not_existing_error: "هذه الكلمة ليست موجودة"
   empty_name_error: "هذا المعنى فارغ"
@@ -41,15 +43,15 @@ ar:
   category: "الفئة"
   categories: "الفئات"
   formality: "النوع"
-  formal: "رسمي"
-  slang: "غير رسمي"
-  age: "السن"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
   from: "من"
   to: "الى"
-  desc: "الوصف"
+  desc: "عن المشروع"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "عودة"
+  back: "<< عودة"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -121,6 +123,7 @@ ar:
   no_description: "هذا المشروع ليس له وصف"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
+  exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
   error: "اخطاء"
   cancel: "الغاء"
   prohibited_project_error: "اخطاء منعت عملية الحفظ"
@@ -142,14 +145,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
     errors:
       models:
         gamer:
@@ -178,12 +173,6 @@ ar:
               blank: "برجاء إدخال كلمة"
               invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
               taken: "هذه الكلمة موجودة بالفعل"
-        category:
-          attributes:
-            name:
-              blank: "برجاء إدخال فئة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه فئة موجودة بالفعل"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات الجنس"
@@ -233,10 +222,6 @@ ar:
   activerecord:
     models:
       developer: "مطور"
-    attributes:
-      developer:
-        first_name: "الاسم الاول"
-        last_name: "إسم العائلة"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to_facebook: "تواصل مع فيسبوك"
   disconnect_from: "افصل تواصلك مع"
@@ -292,6 +277,18 @@ ar:
   score: "النقاط"
   search: "بحث"
   search_here: "ابحث هنا"
+  guest_sign_up_title: "ادخل هذه الأربع معلومات البسيطة عنك كي تسطيع أن تلعب"
+  guest_continue_sign_up_title: "انشاء حساب عربيليتي جديد"
+  guest_error1: "يجب ملئ خانة المستوى التعليمي "
+  guest_error2: "يجب ملئ خانة البلد"
+  guest_error3: "يجب ملئ خانة النوع"
+  guest_error4: "يجب ملئ خانة تاريخ الميلاد"
+  guest_error5: "يجب ملئ خانة اسم المستخدم"
+  guest_error6: "يجب ملئ خانة البريد الإلكتروني"
+  guest_error7: "يجب ملئ خانة كلمة السر"
+  guest_error8: "يجب ملئ خانة تأكيد كلمة السر"
+  guest_error9: "كلمات المرور غير متطابقة"
+  become_member: "اشترك الآن"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
   activerecord:
     errors:
@@ -300,6 +297,19 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+  project_removed: "تم مسح المشروع المشترك"            
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  choose_sub: 'نظام الإشتراك'           
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
@@ -341,6 +351,52 @@ ar:
   not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر تغيير البيانات"
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر تغيير البيانات"
   loading: "تحميل"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  forgot_password: "هل نسيت كلمة السر؟"
+  remember_me: "ابقى متصلاً "
+  reset_password: "إعادة تعيين كلمة المرور"
+  send_reset_password: "ارسل "
+  change_password: "تغيير كلمة السر"
+  change_your_password: "تغيير كلمة السر الخاصة بك"
+  someone_has_request: "لقد قمت بطلب بيانات الدخول للحساب الخاص بك. يمكنك تغير كلمة السر الخاصة بك من خلال الرابط التالي:"
+  hello: "مرحبا"
+  ignore_this_reset: "إذا لم تقم بطلب تغير كلمة السر ، برجاء تجاهل هذه الرسالة"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "لا، شكراً"
+  routing_error: "خطأ ٤٠٤: لا توجد هذه الصفحة."
+  exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  sub_changed: "لقد غيرت نظامك "
+  caro1h: "عربلتي"
+  caro1b: "موقع سهل الاستعمال لمساعدة مطوري البرامج الناطقين باللغة العربية والغير ناطقين بها لترجمة مواقعهم بسهولة"
+  more: "معرفة المزيد"
+  feat1h: "إلعب"
+  feat1b: "ساعدنا و ساهم معنا باللعب لتطوير قاعدة البيانات."
+  feat2h: "إنشاء حساب"
+  feat2b: "جاهز لإستعمال موقعنا؟ انشئ حساب مع عربلتي للإستفادة القصوى من موقعنا."
+  feat3h: "إستخدم "
+  feat3b: "إذهب للجزء الخاص بالمطورين."
+  featdevh1: "قاعدة بيانات يعتمد عليها."
+  featdevb1: "مع قاعدة بيانات تتميز بالمرونة فالترجمة و مصنفة حسب السن و البلد و النوع يستطيع المطورون أن يجدوا بسهولة الترجمة المناسبة لأسواقهم المستهدفة."
+  featdevh2: "مشاريع تسهل حياتك."
+  featdevb2: "المطورون يستطيعوا أن ينشئوا مشاريع تجمع كلمات ذات هدف مترابط. و يمكن للمشروع بسهولة اند يصدر أو يستورد أو يشارك مع المطورين الأخرين بدغضة زر."
+  featgameh1: "لعبة ذات هدف."
+  featgameb1: "المستخدمين يمكنهم اللعب والمساهمة في بناء قاعدة البيانات. "
+  featgameh2: "شارك و نافس."
+  featgameb2: "حاول أن تهزم اصدقاءك و تشعل غيظهم بنشر نتيجتك على فيسبوك و تويتر."
+  developed_by: "سمارت سوفت"
+  gamers: "اللاعبين"
+  play: "إلعب الأن "
+  settings: "تغيير البيانات"
+  game: "اللعبة"
   connected_before: "حساب تويتر هذا متصل مع حساب عربيليتي اخر"
   confirm: "هل أنت متأكد من مسح المشروع ؟"
   delete: "مسح"
@@ -401,3 +457,19 @@ ar:
       truncate: "&hellip;"
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  unshare: " الغاء الاشتراك"
+  resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+  send: "ارسل "
+  hello: "مرحبا"
+  confirm_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
+  confirm_button: "تفعيل الحساب"
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  sub_search: "عدد الكلمات التي يمكنك البحث عنها هى:"
+  sub_follow: "عدد الكلمات التي يمكنك متابعتها هي:"
+  sub_add: "عدد الكلمات التي يمكن اضافتها إلى مشروعك هي :"
+  sub_project: "عدد المشريع التي يمكنك انشائها هي :"
+  feat4h: "تواصل"
+  feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
+  back_share: "<< عودة إلى المشروع"

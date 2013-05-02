@@ -1,0 +1,148 @@
+<em><h4 class="text-info"><%=  t(:guest_sign_up_title) %></h4></em>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well">
+        <% if I18n.locale == :en %>
+          <strong>Thanks for choosing Arability!</strong>
+          <br />
+          Why become a full member not just a guest:
+          <br />
+          <ul>
+            <li>All it takes is just an email and password</li>
+            <li>Earn prizes and trophies</li>
+            <li>Compete with your friends</li>
+            <li>Share your score on facebook and twitter</li>
+            <li>Invite your friends</li>
+            <li>Enjoy a free trial of Arability developers</li>
+          </ul>
+          To enjoy the full Arability experience <%= link_to "sign up here",  new_gamer_registration_path%>
+        <% else %>
+          <strong>شكرا لاختيار عربيليتي!</strong>
+          <br />
+          لماذا تصبح عضو دائم وليس مجرد زائر:
+          <br />
+          <ul>
+            <li>كل مايلزم هو بريد إلكتروني وكلمة سر</li>
+            <li>اكسب جوائز وإنجازات</li>
+            <li>تنافس مع اصدقائك</li>
+            <li>شارك بنتيجتك على facebook و twitter</li>
+            <li>ادعو اصدقائك</li>
+            <li>تمتع بتجربة مجانية لمطورون لعربيليتي</li>
+          </ul>
+          للتمتع بالتجربة الكاملة لعربيليتي <%= link_to "اشترك من هنا",  new_gamer_registration_path%>
+        <% end %>
+      </div>
+    </div>
+    <div class="span9">
+      <div class="well">
+<%= form_for(resource, :url => guest_signing_up_path) do |f| %>
+    <% if @errors != nil %>
+      <%if @errors.is_a?(Hash)%>
+        <div class="alert">
+          <ul>
+            <% @errors.each do |error| %>
+              <li>
+                <% if error[0] == "date_of_birth" %>
+                  <% if I18n.locale == :en %>
+                    Date of birth
+                  <%else%>
+                    تاريخ الميلاد
+                  <%end%>
+                <% end %>
+                <% if error[0] == "education_level" %>
+                  <% if I18n.locale == :en %>
+                    Education level
+                  <%else%>
+                    المستوي التعليمي
+                  <%end%>
+                <% end %>
+                <% if error[0] == "gender" %>
+                  <% if I18n.locale == :en %>
+                    Gender
+                  <%else%>
+                    النوع
+                  <%end%>
+                <% end %>
+                <% if error[0] == "country" %>
+                  <% if I18n.locale == :en %>
+                    Country
+                  <%else%>
+                    البلد
+                  <%end%>
+                <% end %>
+                <% error.delete_at(0) %>
+                <% error.each do |e|%>
+                  <%e.each do |printable|%>
+                    <%=printable%>
+                  <% end %>
+                <%end%>
+              </li>
+            <%end%>
+          </ul>
+        </div>
+      <%else%>
+        <div class="alert">
+          <ul>
+            <% @errors.each do |error| %>
+              <li><%=error%></li>
+            <%end%>
+            </ul>
+        </div>
+      <%end%>
+    <% end %>
+
+    <div class="container">
+
+
+        <div><%= f.label t(:date_of_birth), :class => "control-label" %>
+        <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+            :end_year => Time.now.year - 95, :default => @dob2}, :style => "margin-left: 10px;" %></div></br>
+
+        <div><%= f.label t(:gender), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+            <%= f.select(:gender,options_for_select([['ذكر','male'],['انثي','female']],:selected => @gender),{}, :style => "margin-left: 10px;" ) %></div></br>
+        <% else %>
+            <%= f.select(:gender,options_for_select(['male','female'], :selected => @gender),{}, :style => "margin-left: 10px;" ) %></div></br> 
+        <% end %>  
+
+        <div><%= f.label t(:country), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+                <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
+                    ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
+                    ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
+                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['اخري','others']], :selected => @country), {},
+                {:style => "margin-left: 10px;" }) %>
+            </div></br>
+        <% else %>
+            <span style="margin-left: 10px;">
+              <% if @country != nil %>
+                <%= f.country_select :country, ["#{@country}" ,"Egypt", "Lebanon", "Jordan"]%>
+              <% else %>
+                <%= f.country_select :country, ["Egypt", "Lebanon", "Jordan"]%>
+              <% end%>
+            </span></div></br>
+        <% end %>
+
+
+        <div><%= f.label t(:education_level), :class => "control-label" %>
+        <% if I18n.locale == :ar %>
+            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            ['خريج','Graduate']], :selected => @education), {}, { :style => "margin-left: 10px;" }) %></br></div>
+        <% else %>
+            <%= f.select(:education_level, options_for_select(['School','University','Graduate'], :selected => @education), {}, { :style => "margin-left: 10px;" }) %></br></div>
+        <% end %>
+
+
+        <% if I18n.locale == :ar %>
+            <div><%= f.submit "استمرار", :class => "btn btn-success" %></div>
+        <% else %>
+            <div><%= f.submit "Continue", :class => "btn btn-success" %></div>
+        <% end %>
+    </div>
+  <% end %>
+</div>
+    </div>
+  </div>
+</div>
