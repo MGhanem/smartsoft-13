@@ -9,9 +9,9 @@ namespace :db do
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
-    share=Keyword.create(name: "share", approved: true, is_english: true, categories:[Category.first])
-    post=Keyword.create(name: "post", approved: true, is_english: true, categories:[Category.last])
-    poke=Keyword.create(name: "poke", approved: true, is_english: true, categories:[Category.last])
+    share=Keyword.create(name: "share", approved: true, is_english: true)
+    post=Keyword.create(name: "post", approved: true, is_english: true)
+    poke=Keyword.create(name: "poke", approved: true, is_english: true)
     subscribe=Keyword.create(name: "subscribe", approved: true, is_english: true)
     broadcast=Keyword.create(name: "broadcast", approved: true, is_english: true)
     compile=Keyword.create(name: "compile", approved: true, is_english: true)
@@ -143,9 +143,9 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
-    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20, subscription_model_id: 1)
-    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100, subscription_model_id: 2)
-    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, subscription_model_id: 3)
+    free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20)
+    premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100)
+    deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300)
 
     project = Project.new
     project.name = "Read"

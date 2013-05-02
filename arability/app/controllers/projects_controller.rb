@@ -214,9 +214,8 @@ def show
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is not a free trial and the limit of words,
-  #   the method finds the project by its id and then calls the method
-  #   filter_keywords in Project that filters the relevant keywords.
+  #   After checking the limit of words, the method finds the project by its id
+  #   and then calls the method filter_keywords in Project that filters the relevant keywords.
   # Params:
   #   Project id
   # Success:
@@ -225,13 +224,8 @@ def show
   #   The user has exceeded the maximum limit of words to be added and hence will not be able
   #   to add any more.
   def view_recommended_words
-    if current_developer.my_subscription.subscription_model_id != 1
       @project = Project.find(params[:project_id])
       @karray = Project.filter_keywords(@project.id,@project.category_id)
-    else
-      redirect_to choose_sub_path
-      flash[:notice] = t(:trial_error)
-    end
   end
 
   # Author:

@@ -1,6 +1,6 @@
 <Legend class="container"><%= t(:recommended_for_project)%></Legend>
 <br>
-<% if @karray.size == 0 %>
+<% if @karray.size == 0 || @karray == nil %>
   <div class="well">
     <span>
       <%= t(:no_recommended_words) %>
