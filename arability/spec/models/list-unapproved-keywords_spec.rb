@@ -3,29 +3,56 @@ require "spec_helper"
 
 describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
 
-    let(:word) {word = Keyword.new
+  let(:word) {
+    word = Keyword.new
     word.name = "testkeyword"
     word.save
     word
-    }
-    let(:word2) {word = Keyword.new
+  }
+
+  let(:word2) {
+    word = Keyword.new
     word.name = "testkeywordtwo"
     word.save
     word
-    }
-    let(:word3) {word = Keyword.new
+  }
+
+  let(:word3) {
+    word = Keyword.new
     word.name = "testkeywordthree"
     word.save
     word
-    }
-    let(:word4) {word = Keyword.new
+  }
+
+  let(:word4) {
+    word = Keyword.new
     word.name = "testkeywordfour"
     word.save
     word
+  }
+
+    let(:gamer) {
+      gamer = Gamer.new
+      gamer.username = "Omar"
+      gamer.country = "Egypt"
+      gamer.gender = "male"
+      gamer.date_of_birth = "1993-10-23"
+      gamer.email = "omar@gmail.com"
+      gamer.password = "1234567"
+      gamer.education_level = "University"
+      gamer.admin = true
+      gamer.save validate: false
+      gamer
     }
 
-    
-
+  let(:report1) {
+    report = Report.new
+    report.reported_word_id = word.id
+    report.reported_word_type = "Keyword"
+    report.gamer_id = gamer.id
+    report.save
+    report
+  }
 
   it "should return the unapproved keyword only" do
     word.approved = true
@@ -109,44 +136,10 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result).to eq ([])
   end
 
-  it "should return the reported keyword only" do
-    word.reported = false
-    word.save
-    word2.reported = false
-    word2.save
-    word3.reported = false
-    word3.save
-    word4.reported = true
-    word4.save
+  it "should return a list of reported keywords" do
+    report1
     result = Keyword.list_reported_keywords
-    expect(result.first.name).to eq ("testkeywordfour")
+    expect(result.first.name).to eq ("testkeyword")
   end
 
-  it "should return an array of reported Keywords" do
-    word.reported = true
-    word.save
-    word2.reported = false
-    word2.save
-    word3.reported = true
-    word3.save
-    word4.reported = false
-    word4.save
-    result1 = Keyword.list_reported_keywords.first.name
-    result2 = Keyword.list_reported_keywords.second.name
-    expect(result1).to eq ("testkeyword")
-    expect(result2).to eq ("testkeywordthree")
-  end
-
-  it "should return an empty array because no arrays are reported" do
-    word.reported = false
-    word.save
-    word2.reported = false
-    word2.save
-    word3.reported = false
-    word3.save
-    word4.reported = false
-    word4.save
-    result = Keyword.list_reported_keywords
-    expect(result).to eq ([])
-  end
 end

@@ -167,7 +167,7 @@ class Keyword < ActiveRecord::Base
     Keyword.where(approved: true).all
   end
 
-  # author:
+  # Author:
   #   Omar Hossam
   # Description:
   #   function takes no input and returns a list of all reported keywords.
@@ -179,7 +179,12 @@ class Keyword < ActiveRecord::Base
   # Failure:
   #   returns an empty list if no words are reported.
   def self.list_reported_keywords
-    Keyword.where(reported: true).all
+    reports = Report.where(reported_word_type: "Keyword").all
+    reported_keywords = []
+    reports.each do |report|
+      reported_keywords << Keyword.find_by_id(report.reported_word_id)
+    end
+    reported_keywords
   end
 
     # Author:
