@@ -220,6 +220,31 @@ function wordLablelToolTip(){
 	}, 400);
 }
 
+function scorePopover(){
+	destroy('wordLabel');
+	$('#game-score').popover({
+		html: true,
+		trigger: 'manual',
+		content: "<p>The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word<p><button class='tutBtn btn btn-primary' id='game-score-po' onclick='callNextToolTip2(this.id)'>Next</button>",
+		title: '<h4>How Score is calculated</h4>',
+		placement: 'top'
+	});
+	setTimeout(function(){
+		$('#game-score').expose();
+	}, 300);
+	setTimeout(function(){
+		$('#game-score').popover('show')
+		$('.popover').css('z-index', '9999999');
+		$('#wordsList').css('z-index', '99999999');
+		$('#wordsList').css('position', 'relative');
+		if(JsLocale == 'ar'){
+			$('.popover').css('top', '273px');
+			$('.popover').css('left', '760px');
+			$('.popover').css('width', '422px');
+		}
+	}, 400);
+}
+
  // author:
  //   Ali El Zoheiry
  // description:
@@ -248,6 +273,7 @@ function callNextToolTip(id){
  // failure:
  //   invalid id, nothing will get destroyed
 function callNextToolTip2(id){
+	$('#wordsList').css('z-index', '0');
 	destroy(id);
 	tableToolTip();
 }
@@ -412,7 +438,15 @@ function initializeList(){
 	}
 	 for(var x = 0; x < wordsArray.length; x++){
         var listId = 'ls' + x;
-        $('#' + listId).append("<div style='float: right; color: white; display: inline-block; position: relative; margin-left: 20px;' id='ls" + x + "Counter'>1</div>");
+        if(lang == 0){
+        	var timerfloat = 'right';
+        	var margin = 'margin-left: 20px;'
+        }
+        else if(lang == 1){
+        	var timerfloat = 'left';
+        	var margin = 'margin-right: 10px;'
+        }
+        $('#' + listId).append("<div style='float: " + timerfloat + "; color: white; display: inline-block; position: relative;" + margin + "' id='ls" + x + "Counter'>1</div>");
     }
 }
 
@@ -484,7 +518,7 @@ function endTutorial(){
 	tutorialFlag = false;
 	for(var x = 0; x < wordsArray.length; x++){
 		var lsId = 'ls' + x;
-		startCounter(lsId);
+		CheckStatus(lsId);
 	}
 	showSuspense = true;
 	tutorialFlagWas = true;
@@ -518,7 +552,7 @@ function unPause(){
 	tutorialFlag = false;
 	for(var x = 0; x < wordsArray.length; x++){
 		var lsId = 'ls' + x;
-		startCounter(lsId);
+		CheckStatus(lsId);
 	}
 	if(newDrop == true){
 		newDrop = false;
@@ -1520,7 +1554,7 @@ function continuePlaying(){
 	'" data-placement="left" data-title="' + wordsListPopoverTitle +  '" id="wordsList"></ol>' + 
 	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="' + wordLabelPopoverContent +
 	'" data-title="' + wordLabelPopoverTitle + '" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
+	'<br><br><div><h3 id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	if(JsLocale == 'ar'){
@@ -1561,7 +1595,7 @@ function toNextLevel(){
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<br><br><div><h3 id="game-score"></h3></div>' +
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
