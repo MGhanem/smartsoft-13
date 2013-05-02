@@ -55,13 +55,6 @@ describe ProjectsController, type: :controller do
     my_sub
   }
 
-  it "initializes a new project" do
-    a = create_logged_in_developer
-    sign_in(a.gamer)
-    get :new
-    response.code.should eq("200")
-  end
-
   it "assigns the requested project to project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
