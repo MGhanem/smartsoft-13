@@ -155,18 +155,18 @@ class Synonym < ActiveRecord::Base
   #   Nourhan Zakaria
   # Description:
   #   This method is used to get the countries of voters who voted for certain 
-  #   synonym along with the percentage of voters belonging to each country
+  #     synonym along with the percentage of voters belonging to each country
   #   It can also get voters filtered according certain filters if they exists
   # Params: 
   #   --
   # Success: 
   #   a list of lists, each one of the inner lists consists of  
-  #   a key and value.
+  #     a key and value.
   #   The key represents the country and the value is the percentage of voters 
-  #   that belong to this country
+  #     that belong to this country
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
-  #   non of the voters satisifies filtering conditions
+  #     non of the voters satisifies filtering conditions
   def get_visual_stats_country(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
 
@@ -184,26 +184,26 @@ class Synonym < ActiveRecord::Base
     groups = voters.count(group: :country)
 
     sum = groups.sum{ |v| v.last }
-    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
-    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"), value] }
+    mapping.map { |key, value| [I18n.t(key), ((value.to_f / sum) * 100).to_i] }
   end 
 
   # Author: 
   #   Nourhan Zakaria
   # Description:
   #   This method is used to get the percentage of females and males who voted 
-  #   for certain synonym. It can also get voters filtered according certain 
-  #   filters if they exists 
+  #     for certain synonym. It can also get voters filtered according certain 
+  #     filters if they exists 
   # Params: 
   #   --
   # Success: 
   #   a list of lists, each one of the inner lists consists of 
-  #   a key and value.
+  #     a key and value.
   #   The key represents the gender and the value is the percentage of voters 
-  #   belonging to this gender.
+  #     belonging to this gender.
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
-  #   non of the voters satisifies filtering conditions
+  #     non of the voters satisifies filtering conditions
   def get_visual_stats_gender(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
 
@@ -221,26 +221,26 @@ class Synonym < ActiveRecord::Base
     groups = voters.count(group: :gender)
 
     sum = groups.sum{ |v| v.last }
-    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
-    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"), value] }
+    mapping.map { |key, value| [I18n.t(key), ((value.to_f / sum) * 100).to_i] }
   end 
 
   # Author: 
   #   Nourhan Zakaria
   # Description:
   #   This method is used to get the percentage of gamers, who voted for 
-  #   certain synonym, belonging to each age groups. It can also
-  #   get voters filtered according certain filters if they exists 
+  #     certain synonym, belonging to each age groups. It can also
+  #     get voters filtered according certain filters if they exists 
   # Params: 
   #   --
   # Success: 
   #   a list of lists, each one of the inner lists consists of 
-  #   a key and value.
+  #     a key and value.
   #   The key represents the age group and the value is the percentage of 
-  #   voters belong to this age group.
+  #     voters belong to this age group.
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
-  #   non of the voters satisifies filtering conditions
+  #     non of the voters satisifies filtering conditions
   def get_visual_stats_age(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
 
@@ -255,24 +255,24 @@ class Synonym < ActiveRecord::Base
     voters = voters
       .where("date_of_birth >= ?", age_to.years.ago.to_date) unless age_to.blank?
     
-    groupOne = voters.select('date_of_birth').group("date_of_birth")
+    groupOne = voters.select("date_of_birth").group("date_of_birth")
     .having("date_of_birth <= ? AND date_of_birth >= ?", 
     10.years.ago.to_date, 25.years.ago.to_date).count
     one = groupOne.sum{ |v| v.last }
 
-    groupTwo = voters.select('date_of_birth').group("date_of_birth")
+    groupTwo = voters.select("date_of_birth").group("date_of_birth")
     .having("date_of_birth < ? AND date_of_birth >= ?", 
     25.years.ago.to_date, 45.years.ago.to_date).count
     two = groupTwo.sum{ |v| v.last }
 
-    groupThree = voters.select('date_of_birth').group("date_of_birth")
+    groupThree = voters.select("date_of_birth").group("date_of_birth")
     .having("date_of_birth < ?", 45.years.ago.to_date).count
     three = groupThree.sum{ |v| v.last }
 
     sum = one + two + three
     if sum != 0
       list = [["10-25", one], ["26-45", two], ["46+", three]]
-      list.map { |key, value| [key,((value.to_f/sum)*100).to_i] }
+      list.map { |key, value| [key, ((value.to_f / sum) * 100).to_i] }
     else
       []
     end
@@ -282,18 +282,18 @@ class Synonym < ActiveRecord::Base
   #   Nourhan Zakaria
   # Description:
   #   This method is used to get the percentage of gamers, who voted for 
-  #   certain synonym, belonging to each educational level.It can also
-  #   get voters filtered according certain filters if they exists
+  #     certain synonym, belonging to each educational level.It can also
+  #     get voters filtered according certain filters if they exists
   # Params: 
   #   --
   # Success: 
   #   a list of lists, each one of the inner lists consists of 
-  #   a key and value.
+  #     a key and value.
   #   The key represents the education level and the value is the percentage 
-  #   of voters having this education level.
+  #     of voters having this education level.
   # Failure: 
   #   returns an empty list if no gamers voted for this synonym yet or if
-  #   non of the voters satisifies filtering conditions
+  #     non of the voters satisifies filtering conditions
   def get_visual_stats_education(gender, country, education, age_from, age_to)
     voters = Gamer.joins(:synonyms).where("synonym_id = ?", self.id)
 
@@ -311,7 +311,7 @@ class Synonym < ActiveRecord::Base
     groups = voters.count(group: :education_level)
 
     sum = groups.sum{ |v| v.last }
-    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"),value] }
-    mapping.map { |key, value| [I18n.t(key),((value.to_f/sum)*100).to_i] }
+    mapping = groups.map { |key, value| [key.downcase.tr(" ", "_"), value] }
+    mapping.map { |key, value| [I18n.t(key), ((value.to_f / sum) * 100).to_i] }
   end
 end

@@ -42,45 +42,33 @@
               </div>
               <div id="buttons<%= synonym.id %>" class="pull-right">
                 <% if @votes[synonym.id] != nil %>
-                <button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
-                      <span><%=t(:view_stats)%></span>
-                      <span style="display:none"><%=t(:hide_stats)%></span>
-                      <script type="text/javascript">
-                        function reduce_div_height(){
-                          $('.centered_div .highcharts-container').css('height', '250px');
-                        }
-                      </script>
-                </button>
-                <%else%>
-                <button id="bstats<%= synonym.id %>" class="btn btn-mini disabled why-disabled" style="display:inline;">
-                <%=t(:view_stats)%>
+                  <button id="bstats<%= synonym.id %>" class="btn btn-mini" style="display:inline;" data-toggle="collapse" href="#collapse<%= synonym.id %>" onClick="reduce_div_height()">
+                    <span><%= t(:view_stats) %></span>
+                    <span style="display:none"><%= t(:hide_stats) %></span>
+                    <script type="text/javascript">
+                      function reduce_div_height(){
+                        $(".centered_div .highcharts-container").css("height", "250px");
+                      }
+                    </script>
+                  </button>
+                <% else %>
+                <button id="bstats<%= synonym.id %>" class="btn btn-mini disabled why-disabled" style="display: inline;">
+                <%= t(:view_stats) %>
                 </button>
                 <% end %>
-                    <script type="text/javascript">
-                      $(".why-disabled").popover({
-                          placement: function () {
-                            <% if I18n.locale == :ar %>
-                              return "right";
-                            <% else %>
-                              return "left";
-                            <% end %>
-                          }, 
-                          content :function () {
-                            <% if I18n.locale == :ar %>
-                             return "عفوا, لا يوجد اصوات لهذه الكلمة";
-                            <% else %>
-                             return "Sorry, no one voted for this synonym yet!";
-                            <% end %>
-                          },
-                          trigger: "hover",
-                          template: '<div class="popover"><div class="arrow"></div><div class="popover-inner myclass"><div class="popover-content"><p></p></div></div></div>'
-                      });
-                    </script>
-                    <style type="text/css">
-                    .myclass {
-                      width:230px;
-                    }
-                    </style>
+                <script type="text/javascript">
+                  $(".why-disabled").popover({
+                    placement: "<%= t(:no_votes_visuals_popup) %>", 
+                    content : "<%= t(:no_votes_visuals) %>",
+                    trigger: "hover",
+                    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner myclass"><div class="popover-content"><p></p></div></div></div>'
+                  });
+                </script>
+                <style type="text/css">
+                  .myclass {
+                    width:230px;
+                  }
+                </style>
                 <%= button_tag(:type => "submit", :class => "btn btn-mini",:style => "display:inline;") do %>
                 <%= link_to t(:add_to_project), {action: "add_word", controller: "projects", project_id: @project_id, synonym_id: synonym.id, keyword: @search_keyword}, {style:"color:#000000", class: "css_class"}  %>
                 <% end %>
@@ -96,7 +84,7 @@
               </script>
               <script>
                 $("#bstats<%=synonym.id%>").click(function() {
-                  $("span",this).toggle();
+                  $("span", this).toggle();
                 });
               </script>
             </div>
@@ -205,14 +193,13 @@
   <% end %>
 
 <style type="text/css">
-.arabic-charts-centered {
-  width:680px;
-}
-.english-charts-centered {
-  width: 880px;
-}
+  .arabic-charts-centered {
+    width:680px;
+  }
+  .english-charts-centered {
+    width: 880px;
+  }
 </style>
-
 <script type="text/javascript">
   $(document).ready(function () {
     <% if I18n.locale == :ar %>

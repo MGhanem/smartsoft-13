@@ -3,34 +3,34 @@ require 'spec_helper'
 
 describe Synonym, synonym_spec: true  do 
 
-    let(:k){
+    let(:k) {
       k = Keyword.new
-      k.name ="trialKeyword"
-      k.is_english = "true"
+      k.name = "trialKeyword"
+      k.is_english = true
       k.approved = true
       k.save
       k
     }
 
-    let(:s){
+    let(:s) {
       s = Synonym.new
-      s.name =  "معني"
-      s.keyword_id =  k.id
+      s.name = "معني"
+      s.keyword_id = k.id
       s.approved = true
       s.save
       s
     }
 
-    let(:sTwo){
+    let(:sTwo) {
       s = Synonym.new
-      s.name =  "معني ثاني"
-      s.keyword_id =  k.id
+      s.name = "معني ثاني"
+      s.keyword_id = k.id
       s.approved = true
       s.save
       s
     }
 
-    let(:g){
+    let(:g) {
       g = Gamer.new
       g.username = "trialGamer"
       g.country = "Egypt"
@@ -44,7 +44,7 @@ describe Synonym, synonym_spec: true  do
       g
     }
 
-    let(:gTwo){
+    let(:gTwo) {
       gTwo = Gamer.new
       gTwo.username = "trialGTwo"
       gTwo.country = "Lebanon"
@@ -58,7 +58,7 @@ describe Synonym, synonym_spec: true  do
       gTwo
     }
 
-    let(:gThree){
+    let(:gThree) {
       gTwo = Gamer.new
       gTwo.username = "trialGThree"
       gTwo.country = "Egypt"
@@ -72,7 +72,7 @@ describe Synonym, synonym_spec: true  do
       gTwo
     }
 
-    let(:gFour){
+    let(:gFour) {
       gTwo = Gamer.new
       gTwo.username = "trialGFour"
       gTwo.country = "Egypt"
@@ -85,7 +85,7 @@ describe Synonym, synonym_spec: true  do
       gTwo
     }
 
-    let(:v){
+    let(:v) {
       v = Vote.new
       v.synonym_id = s.id
       v.gamer_id = g.id
@@ -93,7 +93,7 @@ describe Synonym, synonym_spec: true  do
       v
     }
 
-    let(:vTwo){
+    let(:vTwo) {
       vTwo = Vote.new
       vTwo.synonym_id = s.id
       vTwo.gamer_id = gTwo.id
@@ -101,7 +101,7 @@ describe Synonym, synonym_spec: true  do
       vTwo
     }
 
-    let(:unvoted_synonym){
+    let(:unvoted_synonym) {
       unvoted_synonym = Synonym.new
       unvoted_synonym.name = "لا"
       unvoted_synonym.keyword_id = "100"
@@ -123,27 +123,27 @@ describe Synonym, synonym_spec: true  do
 
     it "returns the genders of voters and correponding percenteges of 
       voters belong to each gender" do
-     s.get_visual_stats_gender(nil, nil, nil, nil, nil)
-      .should =~ [[I18n.t(:male), 50], [I18n.t(:female), 50]]
+      s.get_visual_stats_gender(nil, nil, nil, nil, nil)
+        .should =~ [[I18n.t(:male), 50], [I18n.t(:female), 50]]
     end
 
     it "returns an empty list when the synonym has no votes" do
-     unvoted_synonym.get_visual_stats_gender(nil, nil, nil, nil, nil).should =~ []
+      unvoted_synonym.get_visual_stats_gender(nil, nil, nil, nil, nil).should =~ []
     end
 
     it "applies gender filter to voters if it exists" do
-     s.get_visual_stats_gender("male", nil, nil, nil, nil)
-      .should =~ [[I18n.t(:male), 100]]
+      s.get_visual_stats_gender("male", nil, nil, nil, nil)
+        .should =~ [[I18n.t(:male), 100]]
     end
 
     it "applies country filter to voters if it exists" do
-     s.get_visual_stats_gender(nil, "Lebanon", nil, nil, nil)
-      .should =~ [[I18n.t(:female), 100]]
+      s.get_visual_stats_gender(nil, "Lebanon", nil, nil, nil)
+        .should =~ [[I18n.t(:female), 100]]
     end
 
     it "applies education filter to voters if it exists" do
-     s.get_visual_stats_gender(nil, nil, "Graduate", nil, nil)
-      .should =~ [[I18n.t(:female), 100]]
+      s.get_visual_stats_gender(nil, nil, "Graduate", nil, nil)
+        .should =~ [[I18n.t(:female), 100]]
     end
 
     it "applies upper age limit filter if it exists" do
@@ -162,27 +162,27 @@ describe Synonym, synonym_spec: true  do
 
     it "returns the list of countries of voters and correponding percenteges of 
       voters from each country" do
-     s.get_visual_stats_country(nil, nil, nil, nil, nil)
-      .should =~ [[I18n.t(:egypt), 50], [I18n.t(:lebanon), 50]]
+      s.get_visual_stats_country(nil, nil, nil, nil, nil)
+        .should =~ [[I18n.t(:egypt), 50], [I18n.t(:lebanon), 50]]
     end
 
     it "returns an empty list when the synonym has no votes" do
-     unvoted_synonym.get_visual_stats_country(nil, nil, nil, nil, nil).should =~ []
+      unvoted_synonym.get_visual_stats_country(nil, nil, nil, nil, nil).should =~ []
     end
 
     it "applies gender filter to voters if it exists" do
-     s.get_visual_stats_country("male", nil, nil, nil, nil)
-      .should =~ [[I18n.t(:egypt), 100]]
+      s.get_visual_stats_country("male", nil, nil, nil, nil)
+        .should =~ [[I18n.t(:egypt), 100]]
     end
 
     it "applies country filter to voters if it exists" do
-     s.get_visual_stats_country(nil, "Lebanon", nil, nil, nil)
-      .should =~ [[I18n.t(:lebanon), 100]]
+      s.get_visual_stats_country(nil, "Lebanon", nil, nil, nil)
+        .should =~ [[I18n.t(:lebanon), 100]]
     end
 
     it "applies education filter to voters if it exists" do
-     s.get_visual_stats_country(nil, nil, "Graduate", nil, nil)
-      .should =~ [[I18n.t(:lebanon), 100]]
+      s.get_visual_stats_country(nil, nil, "Graduate", nil, nil)
+        .should =~ [[I18n.t(:lebanon), 100]]
     end
 
     it "applies upper age limit filter if it exists" do
@@ -206,7 +206,7 @@ describe Synonym, synonym_spec: true  do
     end
 
     it "returns an empty list when the synonym has no votes" do
-     unvoted_synonym.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ []
+      unvoted_synonym.get_visual_stats_age(nil, nil, nil, nil, nil).should =~ []
     end
 
     it "returns an empty list when the voter or voters of synonym has date of birth nil" do
@@ -215,18 +215,18 @@ describe Synonym, synonym_spec: true  do
     end
 
     it "applies gender filter to voters if it exists" do
-     s.get_visual_stats_age("male", nil, nil, nil, nil)
-      .should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
+      s.get_visual_stats_age("male", nil, nil, nil, nil)
+        .should =~ [["10-25", 100], ["26-45", 0], ["46+", 0]]
     end
 
     it "applies country filter to voters if it exists" do
-     s.get_visual_stats_age(nil, "Lebanon", nil, nil, nil)
-      .should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
+      s.get_visual_stats_age(nil, "Lebanon", nil, nil, nil)
+        .should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
     end
 
     it "applies education filter to voters if it exists" do
-     s.get_visual_stats_age(nil, nil, "Graduate", nil, nil)
-      .should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
+      s.get_visual_stats_age(nil, nil, "Graduate", nil, nil)
+        .should =~ [["10-25", 0], ["26-45", 100], ["46+", 0]]
     end
 
     it "applies upper age limit filter if it exists" do
@@ -245,22 +245,22 @@ describe Synonym, synonym_spec: true  do
 
     it "returns the list of education levels of voters and correponding percenteges of 
       voters belong to each level" do
-     s.get_visual_stats_education(nil, nil, nil, nil, nil)
-      .should =~ [[I18n.t(:university), 50], [I18n.t(:graduate), 50]]
+      s.get_visual_stats_education(nil, nil, nil, nil, nil)
+        .should =~ [[I18n.t(:university), 50], [I18n.t(:graduate), 50]]
     end
 
     it "returns an empty list when the synonym has no votes" do
-    unvoted_synonym.get_visual_stats_education(nil, nil, nil, nil, nil).should =~ []
+      unvoted_synonym.get_visual_stats_education(nil, nil, nil, nil, nil).should =~ []
     end
 
-      it "applies gender filter to voters if it exists" do
-     s.get_visual_stats_education("male", nil, nil, nil, nil)
-      .should =~ [[I18n.t(:university), 100]]
+    it "applies gender filter to voters if it exists" do
+      s.get_visual_stats_education("male", nil, nil, nil, nil)
+        .should =~ [[I18n.t(:university), 100]]
     end
 
     it "applies country filter to voters if it exists" do
-     s.get_visual_stats_education(nil, "Lebanon", nil, nil, nil)
-      .should =~ [[I18n.t(:graduate), 100]]
+      s.get_visual_stats_education(nil, "Lebanon", nil, nil, nil)
+        .should =~ [[I18n.t(:graduate), 100]]
     end
 
     it "applies education filter to voters if it exists" do

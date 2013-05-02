@@ -563,3 +563,5 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
+  no_votes_visuals_popup: "right"

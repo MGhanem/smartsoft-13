@@ -148,11 +148,11 @@ class SearchController < BackendController
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
 
         if !@no_synonyms_found
-          @charts = @synonyms.map{|s| {s.id => 
+          @charts = @synonyms.map{ |s| { s.id => 
             [piechart_gender(s.id, @gender, @country, @education, @age_from, @age_to), 
             piechart_country(s.id, @gender, @country, @education, @age_from, @age_to),
             piechart_age(s.id, @gender, @country, @education, @age_from, @age_to), 
-            piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)]}}
+            piechart_education(s.id, @gender, @country, @education, @age_from,@age_to)] } }
         end 
 
         if request.xhr?
