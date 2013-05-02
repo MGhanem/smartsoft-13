@@ -108,7 +108,8 @@ Arability::Application.routes.draw do
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
       match "/projects/:id/destroy" => "projects#destroy", :as => :delete
-      put "projects/destroy"
+      post "projects/destroy"
+      get "projects/get_recommended_words"
       match "/projects/:project_id/view_recommended_words" => "projects#view_recommended_words", :as => :view_recommended_words
       match "/projects/:project_id/get_recommended_words" => "projects#get_recommended_words", :as => :get_recommended_words
 

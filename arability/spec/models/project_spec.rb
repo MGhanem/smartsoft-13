@@ -13,51 +13,51 @@ describe Project do
 
   let(:cat){
     cat = Category.new
-    cat.id=1
     cat.english_name = "Music"
     cat.arabic_name = "مبروك"
-    cat.save
+    cat.save validate: false
     cat
   }
 
   let(:project){
     project = Project.new
     project.name = "Project Test"
-    project.id=1
     project.formal = true
     project.minAge = 18
     project.maxAge = 60
     project.owner_id = developer.id
     project.category = cat
     project.description = "This project has a description"
-    project.save
+    project.save validate: false
     project
   }
 
-
-  let(:keyword1){
-    keyword1 = Keyword.new
-    keyword1.id=1
-    keyword1.name = "Art"
-    keyword1.synonyms = [Synonym.create(name: "hey", approved: true)]
-    keyword1.categories = [cat]
-    keyword1.approved = "true"
-    keyword1.save
-    keyword1
+  let(:s) {
+      s = Synonym.new
+      s.name = "شروع"
+      s.approved = true
+      s.save validate: false
+      s
   }
 
   let(:keyword2){
     keyword2 = Keyword.new
-    keyword2.id=2
     keyword2.name = "Trans"
-    keyword2.synonyms = [Synonym.create(name: "bus", approved: true)]
+    keyword2.synonyms = [s]
     keyword2.categories = [cat]
     keyword2.approved = "true"
-    keyword2.save
+    keyword2.save validate: false
     keyword2
   }
 
 #Salma's tests
+  before (:each) do
+    developer
+    cat
+    project
+    keyword2
+    s
+  end
 
   it "Should have a name" do
     project.name = nil
@@ -111,7 +111,7 @@ describe Project do
 
   it "should filter relevant keywords for a project" do
     result = Project.filter_keywords(project.id,cat.id)
-    result.should eq([])
+    result.should include(keyword2)
   end
 
 end

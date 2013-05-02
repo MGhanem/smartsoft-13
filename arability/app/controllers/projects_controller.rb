@@ -210,6 +210,7 @@ def show
     @words.push(word)
     @synonyms.push(syn)
   end
+end
 
   # Author:
   #   Salma Farag
@@ -777,5 +778,4 @@ def show
       redirect_to projects_path, flash: flash
     end
   end
-end
 end
