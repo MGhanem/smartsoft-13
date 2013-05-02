@@ -68,7 +68,7 @@ class GamesController < ApplicationController
         redirect_to "/gamers/edit"
       else
         begin
-          if Authentication.exists?(id: current_gamer.id, provider: "facebook")
+          if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
             token = Authentication.get_token(current_gamer.id, "facebook")
             @graph = Koala::Facebook::API.new(token)
             @graph.put_wall_post(
@@ -132,17 +132,23 @@ class GamesController < ApplicationController
   #   will appear explaining the situation
   #   The user is not signed in: S/He'll be redirected to the sign in page
   def post_score_facebook
+    score = params[:score]
     if current_gamer
       if !Authentication.is_connected_to_facebook(current_gamer.id)
         flash[:error] = t(:connect_your_account) 
         redirect_to "/gamers/edit"
       else
         begin
-          token = Authentication.get_token(current_gamer.id, "facebook")
-          @graph = Koala::Facebook::API.new(token)
-          @graph.put_wall_post(
-            "لقد حصلت على #{score} نقطة في عربيلتي")
-          render "games/share-facebook"
+          if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
+            token = Authentication.get_token(current_gamer.id, "facebook")
+            @graph = Koala::Facebook::API.new(token)
+            @graph.put_wall_post(
+              "لقد حصلت على #{score} نقطة في عربيلتي على http://localhost:3000/")
+            render "games/share-facebook"
+          else
+            flash[:error] = t(:you_need_to_connect_fb)
+            redirect_to "/gamers/edit"
+          end
         rescue Koala::Facebook::AuthenticationError
           redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
