@@ -79,20 +79,15 @@ class ApplicationController < ActionController::Base
   #   --
   def error_render_method(exception)
     path = request.path
-    UserMailer.generic_email("mostafa.a.hassaan@gmail.com",
+    UserMailer.generic_email("arability.smartsoft@gmail.com",
         exception, exception.backtrace.join("\n")).deliver
     if path.include? "developers/"
-      redirect_to projects_path, flash: { error: t(:exception) }
-      return
+      if !path.include? "developers/projects"
+        redirect_to project_path, flash: { error: t(:exception) }
+        return
+      end
     end
-    if path.include? "developers/projects"
-      redirect_to get_root, flash: { error: t(:exception) }
-      return
-    end
-    if path.include? "game"
-      redirect_to get_root, flash: { error: t(:exception) }
-      return
-    end
+    redirect_to root_path, flash: { error: t(:exception) }
   end
 
   # author:
@@ -196,6 +191,7 @@ class ApplicationController < ActionController::Base
     gamer.password = password
     gamer.show_tutorial = guest_gamer.show_tutorial
     gamer.highest_score = guest_gamer.highest_score
+    gamer.confirmed_at = nil
     if gamer.save
       logging_in(gamer.id)
       session[:guest_gamer_id] = nil
