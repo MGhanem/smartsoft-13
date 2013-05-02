@@ -1,0 +1,87 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: "sidebar-nav", locals: {active: "add-prize"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active" id="admin-add-prize">
+					<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+						<fieldset>
+							<legend>
+								<a>
+									إضافة جائزة جديدة
+								</a>
+							</legend>
+							<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+							<div class="control-group<%= flash[:error] && flash[:error][:name]? ' error' : ''%>">
+								<label class="control-label" for="inputprizeName">إسم الجائزة</label>
+								<div class="controls">
+									<input type="text" id="inputprizeName" placeholder="إسم الجائزة" name="name" value="<%= @name %>" class="span4">
+									<% if flash[:error] && flash[:error][:name] %>
+										<% flash[:error][:name].each do |er| %>
+											<span class="help-block"><%= er %></span>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+							<div class="control-group<%= flash[:error] && flash[:error][:level]? ' error' : ''%>">
+								<label class="control-label" for="inputprizeScore">المستوى</label>
+								<div class="controls">
+									<input type="text" id="inputprizeScore" placeholder="المستوى المطلوب للحصول على الجائزة" name="level" value="<%= @level %>" class="span4">
+									<% if flash[:error] && flash[:error][:level] %>
+										<% flash[:error][:level].each do |er| %>
+											<span class="help-block"><%= er %></span>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+							<div class="control-group<%= flash[:error] && flash[:error][:score]? ' error' : ''%>">
+								<label class="control-label" for="inputprizeRank">مجموع النقاط</label>
+								<div class="controls">
+									<input type="text" id="inputprizeRank" placeholder="مجموع النقاط المطلوب للحصول على الجائزة" name="score" value="<%= @score %>" class="span4">
+									<% if flash[:error] && flash[:error][:score] %>
+										<% flash[:error][:score].each do |er| %>
+											<span class="help-block"><%= er %></span>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+							<div class="control-group<%= flash[:error] && (flash[:error][:image] || flash[:error][:image_content_type] || flash[:error][:image_file_size])? ' error' : ''%>">
+								<label class="control-label">الصورة</label>
+								<div class="controls">
+									<div class="uploader-controls">
+										<div class="uploader-preview fileupload-preview thumbnail">
+											<img src="/assets/noimage.gif" id="prizepre">
+										</div>
+										<div class="uploader-side">
+											<button class="btn uploader-button" type="button">إختيار الصورة</button>
+											<div class="uploader-file-input">
+												<input type="file" accept="image/*" name="image" onchange="readURL(this, '#prizepre');">
+											</div>
+											<p class="uploader-help" dir="ltr">Maximum size of 1MB. PNG, JPEG, GIF.</p>
+										</div>
+									</div>
+									<br>
+									<% if flash[:error] && flash[:error][:image] %>
+										<% flash[:error][:image].each do |er| %>
+											<span class="help-block"><%= er %></span>
+										<% end %>
+									<% end %>
+									<% if flash[:error] && flash[:error][:image_file_size] %>
+										<% flash[:error][:image_file_size].each do |er| %>
+											<span class="help-block"><%= er %></span>
+										<% end %>
+									<% end %>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<button type="submit" class="btn btn-large btn-primary pull-left">إضافة الجائزة</button> 
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

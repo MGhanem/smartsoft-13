@@ -1,10 +1,11 @@
-class MySubscription < ActiveRecord::Base
+ class MySubscription < ActiveRecord::Base
   belongs_to :subscription_model
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
-  validates :subscription_model_id, :presence => true
+  validates :subscription_model_id, presence: true
+
   # Author:
-  #  Noha Hesham
+  #   Noha Hesham
   # Description:
   #  it finds the chosen subscription model by the developer 
   #  and sets the limits in the subscription model
@@ -31,6 +32,7 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
+
   # Author:
   #   Noha hesham
   # Description:
@@ -51,6 +53,7 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
+
   # Author:
   #  Noha Hesham
   # Description:
@@ -66,6 +69,7 @@ class MySubscription < ActiveRecord::Base
     developer = self.developer
     count_follow=developer.keywords.count   
   end
+
   # Author:
   #   Noha Hesham
   # Description:
@@ -86,6 +90,7 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
+
   # Author:
   #   Noha Hesham
   # Description:
@@ -106,6 +111,7 @@ class MySubscription < ActiveRecord::Base
       return false
     end
   end
+
   # Author:
   #   Noha Hesham
   # Description:
@@ -123,12 +129,15 @@ class MySubscription < ActiveRecord::Base
   count_num=self.word_add-add
   return count_num
   end
+
   # Author:
   #   Noha Hesham
   # Description:
   #   It takes the word id and checks if the developer has searched for it before
   #   if no it checks if the developer has passed the search limit and
   #   gives permission accordingly
+  # Params:
+  #   word_id is the id of the keyword
   # Success:
   #   Gives permission to search
   # Failure:
@@ -149,5 +158,4 @@ class MySubscription < ActiveRecord::Base
         return false
       end
     end
-  end
 end

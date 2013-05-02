@@ -2,15 +2,19 @@
 class Category < ActiveRecord::Base
   attr_accessible :english_name, :arabic_name
   has_and_belongs_to_many :keywords
-  has_and_belongs_to_many :projects
+  has_many :projects
 
-  validates_uniqueness_of :english_name
-  validates_presence_of :english_name
-  validates_format_of :english_name, with: /^([a-zA-Z ]+)$/
-
-  validates_uniqueness_of :arabic_name
-  validates_presence_of :arabic_name
-  validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/
+  validates_uniqueness_of :english_name,
+    message: "هذا الإسم بالإنجليزية للفئة يوجد بلفعل"
+  validates_presence_of :english_name, message: "لا يمكن تسجيل إسم فئة إنجليزي فارغ"
+  validates_format_of :english_name, with: /^([a-zA-Z ]+)$/,
+    message: "هذا الإسم الإنجليزي للفئة ليس بالإنجليزية"
+  validates_uniqueness_of :arabic_name,
+    message: "هذا الإسم بالعربية للفئة يوجد بلفعل"
+  validates_presence_of :arabic_name,
+    message: "لا يمكن تسجيل إسم فئة عربي فارغ"
+  validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/,
+    message: "هذا الإسم العربي للفئة ليس بالعربية" 
 
   class << self
     include StringHelper
