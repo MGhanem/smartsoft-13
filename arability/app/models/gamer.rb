@@ -19,14 +19,14 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :show_tutorial, :admin, :is_local
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
 
   has_many :services, :dependent => :destroy
 
   validates :gender , :presence => true, :format => { :with => /\A^(male|female)\Z/i }
 
-  validates :username, presence: true, uniqueness: true,
-    length: { minimum: 3, maximum: 20 }
+  validates :username, :presence => true, :length => { :minimum => 3, :maximum => 20 }
+
 
   validates :username, :format => { :with => /^[A-Za-z]([\._]?[A-Za-z0-9]+)*$/, }
 

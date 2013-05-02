@@ -1,5 +1,4 @@
-<% a = Vote.get_unvoted_keywords(current_gamer.id, params[:count].to_i, params[:lang].to_i) %>
-
+<% a = Vote.get_unvoted_keywords(current_or_guest_gamer.id, params[:count].to_i, params[:lang].to_i) %>
 
 <% if a.count == 0 %>
 	wordsInDb = false;

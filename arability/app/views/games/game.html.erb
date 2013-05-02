@@ -1,9 +1,15 @@
 <%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-  tutorialFlag = <%= current_gamer.show_tutorial %>;
+  tutorialFlag = <%= current_or_guest_gamer.show_tutorial %>;
   var words;
   var cache = "";
   var nav_locked = false;
+
+  <% if current_gamer == nil %>
+  isGuest = true;
+  <% else %>
+  isGuest = false;
+  <% end %>
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -27,9 +33,14 @@
 
   function check_empty_words(){
     if(words.length == 0){
-        if(win == true){
+      if(win == true){
+        if(isGuest == true){
+          nextLevel();
+        }
+        else{
          getTrophies(level, score);
-      }
+        }
+     }
       else{
         getScoreOnly(score);
       }
