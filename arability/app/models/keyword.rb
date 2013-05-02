@@ -1,4 +1,3 @@
-
 #encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
@@ -275,9 +274,20 @@ class Keyword < ActiveRecord::Base
   #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
   #   returns empty hash if the synonyms of the given keyword have no votes
-    def get_keyword_synonym_visual(keyword_id)
-      votes = Synonym.where(keyword_id: keyword_id, approved: true)
+    def get_keyword_synonym_visual(keyword_id, type)
+      if type == nil
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
         .joins(:votes).count(group: "synonym_id")
+      end
+      if type == 1
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
+        .joins(:votes).where(is_formal: true).count(group: "synonym_id")
+      end
+      if type == 2
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
+        .joins(:votes).where(is_formal: false).count(group: "synonym_id")
+      end
+      return 0 if votes == nil
       sum = votes.sum{|v| v.last}
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}

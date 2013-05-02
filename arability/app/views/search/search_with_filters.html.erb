@@ -282,22 +282,6 @@
         </span>
       </span>
     </div>
-    <div id="collective" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        <% key_id = getID(@search_keyword) %>
-        <% result = Keyword.get_keyword_synonym_visual(key_id) %>
-        <% if  result != [] %>
-          <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
-                  <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                  <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-              <% end %>
-            <% else %>
-                <p>
-                  <%= t(:no_votes_for_word)%>
-                </p>
-            <% end %>
-      </div>
-    </div>
     <div class="alert alert-block alert-success" id="add_success" style="display:none;">
         <button type="button" class="close" onclick="restore()">
           ×
