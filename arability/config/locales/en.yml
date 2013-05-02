@@ -188,7 +188,7 @@ en:
   upload_file_error3: "This file is corrupted"
   upload_file_error4: "This file is not in csv format"
   upload_file_error5: "There are no words to be added to this project"
-  upload_file_error6: "You can't add anymore keywords to this projects due to your subscription model"
+  upload_file_error6: "You can't add anymore keywords to this project due to your subscription model"
   projects_index_error1: "Please sign up as a developer first"
   projects_index_error2: "Please sign in first"
   projects_index_title: "Projects"

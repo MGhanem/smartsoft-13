@@ -131,7 +131,7 @@ ar:
   upload_file_error3: "يوجد خطأ بهذا الملف"
   upload_file_error4: "هذا الملف ليس CSV"
   upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
-  upload_file_error6: "ليس بإمكانك اضافة كلمات أخرى لهذا المشروع نتيجة لنظام اشتراكاك"
+  upload_file_error6: "ليس بإمكانك اضافة كلمات أخرى لهذا المشروع نتيجة لنظام اشتراكك"
   projects_index_error1: "من فضلك سجل كمطور"
   projects_index_error2: "من فضلك قم بالدخول"
   projects_index_title: "مشاريع"
