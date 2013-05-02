@@ -173,8 +173,9 @@ class GamesController < ApplicationController
     @score = params[:score].to_i
     @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @bool_won_prizes = Prize.new_prizes_for_gamer?(current_gamer.id,
-                                                   @score, @level)
+    @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id,
+                                                 @score, @level)
+
     if @score > current_gamer.highest_score.to_i
       current_gamer.update_attributes!(highest_score: @score)
     end

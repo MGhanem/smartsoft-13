@@ -1,12 +1,16 @@
 # encoding: UTF-8
 class ProjectsController < BackendController
   include ApplicationHelper
+  include SearchHelper
   # GET /projects
   # GET /projects.json
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
-  before_filter :developer_can_see_this_project?, 
+  before_filter :developer_can_see_this_project?,
   only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
+  before_filter :can_access_project?,
+  only: [:add_word_inside_project, 
+  :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
  # author:Noha hesham
  # Description:
@@ -26,6 +30,68 @@ class ProjectsController < BackendController
       format.html { redirect_to action: "index",controller: "projects"}
       format.json { head :no_content }
       flash[:success] = t(:project_delete)
+    end
+  end
+
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   Tests whether this the current_developer has followed this keyword
+  #   or not.
+  # Params:
+  #   project_id: containing the id of the project from this keyword has
+  #   been searched for.
+  #   keyword: containing the nae of the keyword for the which the user might
+  #   follow
+  # Success:
+  #   returns true if the keyword has been followed and the it's id
+  # Failure:
+  #   returns false if the keyword is not followed by the developer and it's id
+  def test_followed_keyword
+    @project_id = params[:project_id]
+    keyword = params[:keyword]
+    if keyword
+      searched_keyword = Keyword.where(name: keyword).first
+      @searched_keyword_id = searched_keyword.id
+      @is_followed = is_following(@searched_keyword_id)
+    end 
+    render "projects/test_followed_keyword.js"
+  end
+
+  # Author:
+  #   Kareem Ali
+  # Description:
+  #   follows or unfollows a keyword which has no synonyms when the developer
+  #   searches for it inside the project
+  # Params:
+  #   project_id: containing the id of the project from this keyword has
+  #   been searched for.
+  #   keyword_id: containing the id of the keyword for the which the user might
+  #   follow
+  #   is_followed: a string containing "true" if the keyword is previously
+  #   followed or "false" if the keyword is not followed
+  # Success:
+  #   returns the flash of the keyword has been successfully unfollowed and
+  #   redirects to the project page
+  # Failure:
+  #   returns the flash of the keyword has been successfully followed and
+  #   redirects to the project page
+  def follow_unfollow
+    project_id = params[:project_id]
+    developer = current_developer
+    is_followed = params[:is_followed]
+    if params[:keyword_id] != nil
+      keyword_ids = developer.keyword_ids
+      keyword = Keyword.find(params[:keyword_id])
+      if is_followed == "true"
+        developer.unfollow(params[:keyword_id])
+        flash[:success] = t(:unfollow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash: flash
+      elsif is_followed == "false"
+        developer.follow(params[:keyword_id])
+        flash[:success] = t(:follow_keyword_alert) + " " + keyword.name
+        redirect_to project_path(project_id), flash: flash
+      end
     end
   end
     
@@ -416,62 +482,199 @@ end
     current_project = Project.find(params[:id])
   end
 
-# author:
-#   Khloud Khalid
-# description:
-#   method adds a keyword and a synonym to an existing project and if word already exists in the project updates
-#   its synonym
-# params:
-#   project_id, word_id, synonym_id
-# success:
-#   keyword and synonym are added to project or synonym of word updated
-# failure:
-#   object not valid (no project or word id), word already exists in project, keyword or synonym does not exist.
-  def add_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      @project_id = params[:project_id]
+  # author:
+  #   Khloud Khalid, Kareem Ali
+  # description:
+  #   method adds a keyword and a synonym to an existing project and if word already 
+  #   exists in the project updates its synonym and if the adds the categories of 
+  #   the project to the keyword's categories if not present.
+  # params:
+  #   project_id, word_id, synonym_id
+  # success:
+  #   keyword and synonym are added to project and/or synonym of word updated 
+  # failure:
+  #   object not valid (no project or word id), word already exists in project, 
+  #   keyword or synonym does not exist, word add limit exceeded.
+  def add_word_inside_project
+    @project_id = params[:project_id]
+    if !(@project_id.blank?)
       @word_id = Keyword.find_by_name(params[:keyword]).id
-      if Keyword.find_by_id(@word_id) != nil
+      if @word_id != nil && Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.find_by_keyword_id(@word_id)
+          @edited_word = PreferedSynonym.where(project_id: @project_id, 
+            keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
-          if Synonym.find_by_id(@synonym_id) != nil
+          if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save
-              flash[:success] = t(:Synonym_changed_successfully)
-              redirect_to project_path(@project_id), flash: flash
-              return
+              respond_to do |format|
+                format.html {
+                flash[:success] = t(:Synonym_changed_successfully)
+                redirect_to project_path(@project_id), flash: flash
+                return
+              }
+                format.json { render json: [t(:Synonym_changed_successfully)] }
+              end
             else
-              flash[:notice] = t(:Failed_to_update_synonym)
-              redirect_to project_path(@project_id), flash: flash
-              return
+              respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:Failed_to_update_synonym)
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json { render json: [t(:Failed_to_update_synonym)] }
+              end
             end
           else
-            flash[:notice] = t(:synonym_does_not_exist)
-            redirect_to project_path(@project_id), flash: flash
-            return
+            respond_to do |format|
+                format.html {
+                  flash[:error] = t(:synonym_does_not_exist)
+                  redirect_to :back, flash: flash
+                  return
+                }
+                format.json { render json: [t(:synonym_does_not_exist)] }
+            end
           end
         else
-          @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(@synonym_id, @word_id, @project_id)
-          if @added_word
-            flash[:success] = t(:successfully_added_word_to_project)
-            redirect_to project_path(@project_id), flash: flash
-            return
+          @my_subscription =
+           MySubscription.where(developer_id: current_developer.id).first
+          if @my_subscription.can_add_word(@project_id)
+            @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
+              @synonym_id, @word_id, @project_id)
+            if @added_word
+              project_category = Project.find(@project_id).category
+              new_keyword = Keyword.find(@word_id)
+              if project_category and 
+                not new_keyword.categories.include?(project_category) 
+                new_keyword.categories << project_category
+                new_keyword.save
+              end
+              respond_to do |format|
+                format.html {
+                  flash[:success] = t(:successfully_added_word_to_project)              
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json { render json: [t(:successfully_added_word_to_project)] }
+              end 
+            else
+              respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:failed_to_add_word_to_project)
+                  redirect_to project_path(@project_id), flash: flash
+                  return
+                }
+                format.json { render json: [t(:failed_to_add_word_to_project)] }
+              end
+            end
           else
-            flash[:notice] = t(:failed_to_add_word_to_project)
-            redirect_to project_path(@project_id), flash: flash
-            return
+            respond_to do |format|
+                format.html {
+                  flash[:notice] = t(:exceeds_word_limit)
+                  redirect_to project_path(@project_id), flash: flash
+                }
+                format.json { render json: [t(:exceeds_word_limit)] }
+              end
           end
         end
       else
-        flash[:notice] = t(:word_does_not_exist)
-        redirect_to project_path(@project_id), flash: flash
-        return
+        respond_to do |format|
+          format.html {
+            flash[:notice] = t(:word_does_not_exist)
+            redirect_to project_path(@project_id), flash: flash
+            return
+          }
+          format.json { render json: [t(:word_does_not_exist)] }
+        end  
+      end
+    else
+      respond_to do |format|
+        format.html {
+          flash[:error] = t(:choose_project)
+          redirect_to :back, flash: flash
+        }
+        format.json { render json: [t(:choose_project)] }
       end
     end
   end
 
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Updates the prefered synonym to a specific keyword inside the project 
+  # params:
+  #   project_id, word_id, synonym_id
+  # success:
+  #   redirects to the add_word_inside_project method inside the controller 
+  #   to update the synonym
+  # failure:
+  #   will redirect to the add_word_inside_project to handle the incorrect object
+  def change_synonym
+    @project_id = params[:project_id].to_i
+    @synonym_id = params[:synonym_id].to_i
+    keyword_object = Synonym.find(@synonym_id).keyword
+    @keyword = keyword_object.name
+    redirect_to add_word_inside_project_path(project_id: @project_id, 
+      synonym_id: @synonym_id, keyword: @keyword )
+  end
+
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Used to load the synonyms in the dropdown menu next to the keyword 
+  #   inside the project to change the synonym
+  # params:
+  #   project_id, word
+  # success:
+  #   renders the javascript of loading synonyms to update the 
+  #   dropdown menu next to the keyowrd
+  # failure:
+  #   no Failure
+  def load_synonyms
+    project_id = params[:project_id].to_i
+    @project = Project.find(project_id)
+    keyword = params[:word]
+    keyword_object = Keyword.find_by_name(keyword)
+    @keyword_synonyms = []
+    if keyword_object
+      @keyword_synonyms = Synonym.where(keyword_id: keyword_object.id)
+    end
+    render "load_synonyms.js.erb"
+  end 
+
+  # author:
+  #   Kareem Ali
+  # description:
+  #   Used for autocomplete textbox in the project view to autocomplete 
+  #   the words given by the user
+  # params:
+  #   keyword_search: for which the user writes in the textbox , project_id
+  # success:
+  #   returns an array of the similar words which are sorted according 
+  #   to the categories of the keywords, keywords with has one or more 
+  #   of project categories comes first and make sure that 
+  #   duplicates are removed.
+  # failure:
+  #   no keyword match the entered character(s), will return empty array  
+  def project_keyword_autocomplete
+    keyword = params[:keyword_search]
+    project_category = Project.find(params[:project_id]).category
+    similar_keywords = []
+    if project_category != nil
+      project_category = project_category.get_name_by_locale
+      similar_keywords = Keyword.get_similar_keywords(
+        keyword, [project_category])
+      similar_keywords = similar_keywords.uniq
+    end
+      match_category_count = similar_keywords.count 
+      similar_keywords = similar_keywords.concat(
+        Keyword.get_similar_keywords(keyword,[]))
+      similar_keywords = similar_keywords.uniq 
+      similar_keywords.map! { |keyword| keyword.name }
+      similar_keywords.push(match_category_count)
+      render json: similar_keywords
+  end 
 
 # author:
 #   Khloud Khalid
@@ -483,17 +686,16 @@ end
 #   word removed successfully
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
-  def remove_word
-    if Developer.find_by_gamer_id(current_gamer.id) != nil
-      @project_id = params[:project_id]
-      @word_id = params[:word_id]
-      @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-      @removed_word.each do |word|
-        if word.project_id = @project_id
-          @remove = word
-        end
-      end
-      if  @remove != nil
+  def remove_word 
+    @project_id = params[:project_id]
+    @word_id = params[:word_id]
+    @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
+    @removed_word.each do |word| 
+      if word.project_id = @project_id
+        @remove = word
+      end 
+    end
+      if @remove != nil
         @remove.destroy
         flash[:success] = t(:word_removed_successfully)
         redirect_to project_path(@project_id), flash: flash
@@ -502,7 +704,6 @@ end
         redirect_to project_path(@project_id), flash: flash
       end
     end
-  end
 
   # author:
   #   Khloud Khalid
@@ -617,10 +818,17 @@ end
       json_string = "{   "
       if @exported_data != []
         @exported_data.each do |word|
-          @keyword = Keyword.find(word.keyword_id).name
-          @synonym = Synonym.find(word.synonym_id).name
-          json_string << "\"word\": \"" +
-          @keyword + "\", \"translation\": \"" + @synonym + "\"" + ", "
+          if(word == @exported_data.first)
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            json_string << "\"word\": \"" +
+            @keyword + "\", \"translation\": \"" + @synonym + "\""
+          else 
+            @keyword = Keyword.find(word.keyword_id).name
+            @synonym = Synonym.find(word.synonym_id).name
+            json_string << ", \"word\": \"" +
+            @keyword + "\", \"translation\": \"" + @synonym + "\"" 
+          end
         end
         json_string << "   }"
       else

@@ -44,7 +44,9 @@
   # Failure:
   #   None
   def get_permission_follow
-    if(self.word_follow > 0)
+    developer = self.developer
+    count_follow=developer.keywords.count   
+    if(count_follow < self.word_follow)
       return true
     else
       return false
@@ -62,8 +64,8 @@
   # Failure:
   #  None 
   def count_follow
-    @developer = Developer.find(self.developer_id)
-    @count_follow=@developer.Keywords.count   
+    developer = self.developer
+    count_follow=developer.keywords.count   
   end
   # Author:
   #   Noha Hesham
@@ -96,7 +98,7 @@
   #   Gives permission to add words
   # Failure:
   #   None 
-  def max_add_word(proj_id)
+  def can_add_word(proj_id)
     developer = self.developer
     add=PreferedSynonym.where(project_id: proj_id )
     if add.count < self.word_add
@@ -116,7 +118,7 @@
   #   Returns number of words 
   # Failure:
   #   None 
-  def max_add_word_count(proj_id)
+  def can_add_word_count(proj_id)
   developer = self.developer
   add=PreferedSynonym.where(project_id: proj_id ).count
   count_num=self.word_add-add
@@ -132,7 +134,7 @@
   #   Gives permission to search
   # Failure:
   #   None
-  def get_max_words(word_id)
+  def can_search_word(word_id)
     developer = self.developer
     word = Search.joins(:keyword).where(keyword_id: word_id)
     if word!= nil
@@ -140,6 +142,9 @@
     else
       if self.word_search > Search.where(developer_id: self.developer).count
         search=Search.new
+        search.developer_id=developer
+        search.synonym_id=word_id
+        search.save
         return true
       else
         return false

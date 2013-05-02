@@ -90,11 +90,13 @@ Arability::Application.routes.draw do
     match "/games/post_facebook" => "games#post"
     match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
-
-    scope "developers/" do
-      match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+    scope "developers/" do 
+      match 'projects' => "projects#index", :as => :projects
+      match "/" => "backend#home", :as => "backend_home"
+      match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
       get "projects/remove_developer_from_project"
-      
+      match "projects/:id/share" => "projects#share", :as => "share_project"
+
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
        match "/projects/:id/destroy" => "projects#destroy", :as => :delete
@@ -110,8 +112,7 @@ Arability::Application.routes.draw do
       get "projects/update"
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
       match "/projects/upload" => "projects#upload", :as => :upload_csv_project
-      match "/projects/:project_id/add_word" => "projects#add_word", :as => "projects_add_word"
-      match '/projects/:project_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
+      match '/projects/:project_id/:word_id/remove_word' => "projects#remove_word", :as => "projects_remove_word"
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
@@ -167,8 +168,22 @@ Arability::Application.routes.draw do
 
   get "/ar/gamers" => redirect('/ar/gamers/sign_up')
 
-  match "*path", :to => "application#routing_error"
+  match "/developers/projects/:project_id/change_synonym" => "projects#change_synonym", :as => "change_synonym"
 
+  match "/developers/projects/:project_id/quick_add" => "projects#quick_add", :as => "quick_add"
+
+  match "/developers/projects/load_synonyms" => "projects#load_synonyms"
+
+  match "developers/projects/:project_id/project_keyword_autocomplete" => "projects#project_keyword_autocomplete"
+ 
+  match "/developers/projects/:project_id/add_word_inside_project" => "projects#add_word_inside_project", as: "add_word_inside_project"
+
+  match "/developers/projects/:project_id/test_followed_keyword" => "projects#test_followed_keyword"
+
+  match "/developers/projects/:project_id/follow_unfollow" => "projects#follow_unfollow", :as => "follow_unfollow"
+  
+  match "*path", :to => "application#routing_error"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # Sample of regular route:
