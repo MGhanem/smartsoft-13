@@ -40,8 +40,8 @@ class ProjectsController < BackendController
   # Failure:
   #   None
   def index  
-    @developer = Developer.where(:gamer_id => current_gamer.id).first
-    @my_projects = Project.where(:owner_id => @developer.id)
+    @developer = Developer.where(gamer_id: current_gamer.id).first
+    @my_projects = Project.where(owner_id: @developer.id)
     @shared_projects = @developer.projects_shared
   end
   # Author:
