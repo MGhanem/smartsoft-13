@@ -1,4 +1,6 @@
 ar:
+  welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
+  welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
   not_existing_error: "هذه الكلمة ليست موجودة"
   empty_name_error: "هذا المعنى فارغ"
@@ -39,17 +41,41 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
-  categories: "الفئات"
-  formality: "النوع"
+  please_select: "الرجاء الاختيار"
+  formality: "اللغة"
   formal: "فصحى"
   slang: "عامي"
   age: "الفئة العمرية"
   from: "من"
   to: "الى"
   desc: "عن المشروع"
+  target: "هذا المشروع يستهدف الفئة التالية:"
+  target_country: "البلد"
+  target_age: "الفئة العمرية"
+  target_education_level: "المستوى التعليمي"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
-  back: "<< عودة"
+  back: "<< العودة"
+  egypt: "مصر"
+  lebanon: "لبنان"
+  jordan: "الاردن"
+  saudi_arabia: "السعودية"
+  libya: "ليبيا"
+  united_arab_emirates: "الامارات"
+  qatar: "قطر"
+  kuwait: "الكويت"
+  iraq: "العراق"
+  algeria: "الجزأئر"
+  morocco: "المغرب"
+  bahrain: "البحرين"
+  mauritania: "موريتانيا"
+  somalia: "الصومال"
+  sudan: "السودان"
+  tunisia: "تونس"
+  others: "اخري"
+  school: "مدرسة"
+  university: "جامعة"
+  graduate: "خريج"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -112,13 +138,22 @@ ar:
   projects_index_tab2: "مشاريع مشتركة معي"
   projects_index_add: " إضافة مشروع"
   projects_index_name: "اسم: "
-  projects_index_categories: "فئات: "
+  projects_index_categories: "فئة: "
   projects_index_description: "وصف: "
+  projects_index_country: "البلد: "
+  projects_index_formal_slang: "اللغة: "
+  projects_index_age: "الفئة العمرية: "
+  projects_index_education_level: "المستوي التعليمي: "
+  projects_index_owner: "صاحب المشروع: "
+  no_country: "ليس محدد"
+  no_formal: "ليس محدد"
+  no_age: "ليس محدد"
+  no_education_level: "ليس محدد"
   projects_index_edit: " تعديل"
-  projects_index_delete: " مسح"
+  projects_index_delete2: " مسح"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
-  no_categories: "هذا المشروع ليس له فئات"
-  no_description: "هذا المشروع ليس له وصف"
+  no_categories: "ليس محدد"
+  no_description: "ليس محدد"
   description_choose_keywords: "المرادف الاحمر سيتم استخدامه في مشروعك"
   select subscription: "إختر"
   exceeded_project_limit: "عذرا لا يمكنك انشاء مشاريع اخرى. برجاء الاشتراك في انظمة بريميوم او ديلوكس"
@@ -153,8 +188,7 @@ ar:
     project:
        flash_messages:
          project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم تعديل المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح'
+         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -275,6 +309,18 @@ ar:
   score: "النقاط"
   search: "بحث"
   search_here: "ابحث هنا"
+  guest_sign_up_title: "ادخل هذه الأربع معلومات البسيطة عنك كي تسطيع أن تلعب"
+  guest_continue_sign_up_title: "انشاء حساب عربيليتي جديد"
+  guest_error1: "يجب ملئ خانة المستوى التعليمي "
+  guest_error2: "يجب ملئ خانة البلد"
+  guest_error3: "يجب ملئ خانة النوع"
+  guest_error4: "يجب ملئ خانة تاريخ الميلاد"
+  guest_error5: "يجب ملئ خانة اسم المستخدم"
+  guest_error6: "يجب ملئ خانة البريد الإلكتروني"
+  guest_error7: "يجب ملئ خانة كلمة السر"
+  guest_error8: "يجب ملئ خانة تأكيد كلمة السر"
+  guest_error9: "كلمات المرور غير متطابقة"
+  become_member: "اشترك الآن"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
   activerecord:
     errors:
@@ -282,7 +328,7 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   project_removed: "تم مسح المشروع المشترك"            
   activerecord:
     attributes:
@@ -291,8 +337,7 @@ ar:
         minAge: 'السن'
         maxAge: 'السن'
         categories: "الفئات"
-        description: "الوصف"
-        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+        description: "الوصف" 
   choose_sub: 'نظام الإشتراك'           
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
@@ -320,12 +365,32 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
+  project_removed: "تم مسح المشروع المشترك"            
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+  project_delete: "تم مسح المشروع بنجاح"
   add_twitter_connection: "تم التواصل مع تويتر بنجاح!"
   remove_social_connection: "تم إلغاء التواصل بنجاح!"
   connection_failure: "فشل التواصل!"
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  forgot_password: "هل نسيت كلمة السر؟"
+  remember_me: "ابقى متصلاً "
+  reset_password: "إعادة تعيين كلمة المرور"
+  send_reset_password: "ارسل "
+  change_password: "تغيير كلمة السر"
+  change_your_password: "تغيير كلمة السر الخاصة بك"
+  someone_has_request: "لقد قمت بطلب بيانات الدخول للحساب الخاص بك. يمكنك تغير كلمة السر الخاصة بك من خلال الرابط التالي:"
+  hello: "مرحبا"
+  ignore_this_reset: "إذا لم تقم بطلب تغير كلمة السر ، برجاء تجاهل هذه الرسالة"
   Email_dont: "هذا البريد الالكتروني غير صحيح"
   Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
   you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
@@ -335,6 +400,7 @@ ar:
   delete_share: "الغاء الاشتراك"
   confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
   submit_remove: "الغاء الاشتراك"
+
   close_share: "لا، شكراً"
   routing_error: "خطأ ٤٠٤: لا توجد هذه الصفحة."
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
@@ -418,8 +484,52 @@ ar:
   school: "مدرسة"
   university: "جامعة"
   graduate: "خريج"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  projects_index_delete: " الغاء الاشتراك"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك ,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "إلغاء"
+  confirm: "هل أنت متأكد من مسح المشروع ؟"
+  delete: "مسح"
+  close_delete: "الغاء"
+  submit_delete: "مسح"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+  send: "ارسل "
+  hello: "مرحبا"
+  confirm_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
+  confirm_button: "تفعيل الحساب"
   expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
   sub_search: "عدد الكلمات التي يمكنك البحث عنها هى:"
   sub_follow: "عدد الكلمات التي يمكنك متابعتها هي:"
@@ -427,6 +537,14 @@ ar:
   sub_project: "عدد المشريع التي يمكنك انشائها هي :"
   feat4h: "تواصل"
   feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
-  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"  
+  you_vote: ""
+  vote_action: "لقد اخترت "
+  chosen_action: " كأنسب بديل لكلمة "
+  vote_log: "اصواتك السابقة" 
+  no_you: "انت "
+  no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"
+  back_log: "اللعبة"
+  vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"

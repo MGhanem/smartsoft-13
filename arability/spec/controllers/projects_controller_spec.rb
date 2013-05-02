@@ -1,11 +1,11 @@
 #encoding: UTF-8
 require "spec_helper"
 require "request_helpers"
-include RequestHelpers
 include Warden::Test::Helpers
+include RequestHelpers
 
-describe ProjectsController, type: :controller do
-
+describe ProjectsController do
+  include Devise::TestHelpers
 
   let(:gamer1){
 	  gamer = Gamer.new
@@ -16,7 +16,7 @@ describe ProjectsController, type: :controller do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mohamedtamer5@gmail.com"
     gamer.password = "1234567"
-    gamer.save
+    gamer.save validate: false
     gamer
   }
 
@@ -51,20 +51,40 @@ describe ProjectsController, type: :controller do
     syn
   }
 
-  it "a developer can open the link of import of one of his projects" do
-    sign_in developer1.gamer
-    get :import_csv, :project_id => project.id
-    page.should have_content(I18n.t(:import_csv_title))
-  end
-end
+  #Timo's tests
+  describe "GET #index" do
 
-describe "GET #new" do
-  it "initializes a new project" do
-    a = create_logged_in_developer
-    sign_in(a.gamer)
-    get :new
+    it "populates an array of projects", timo: true do 
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      get :index
+      assigns(:my_projects).should eq([project2])
+    end
+
+    it "renders the :index view", timo: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :index
+      response.should render_template :index
+    end
+
   end
-end
+  #End of Timo's tests
+
+  #Salma's Tests
+  describe "GET #new" do
+    it "initializes a new project" do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      get :new
+    end
+  end
 
 describe "GET #create" do
   context "with valid attributes" do
@@ -151,6 +171,8 @@ describe 'PUT update' do
       put :update, id: @project, project: Factory.attributes_for(:invalid_project)
       response.should render_template :edit
     end
+  end
+
 
   # Noha's test
   it "should make developer remove a project shared with him" do
@@ -164,6 +186,7 @@ describe 'PUT update' do
     put :destroy, id: project.id
     response.code.should eq("302")
   end
+
   #khloud's tests
 
   it "redirects to project path after calling export_to_csv if project empty" do
@@ -186,7 +209,7 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_csv with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_csv, project_id: p.id
     response.code.should eq("200")
@@ -194,7 +217,7 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_xml with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_xml, project_id: p.id
     response.code.should eq("200")
@@ -202,9 +225,10 @@ describe 'PUT update' do
 
   it "responds with ok code after calling export_to_json with valid project" do
     p = create_project
-    ps = 
+    ps =
     PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
     get :export_to_json, project_id: p.id
     response.code.should eq("200")
   end
+end
 end
