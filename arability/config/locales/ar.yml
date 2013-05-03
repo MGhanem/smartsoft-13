@@ -1,4 +1,8 @@
 ar:
+  request_button: "إضغط هنا"
+  posting_success: "لقد شاركت نقاطك على فيسبوك"
+  post_on_fb: "لقد حصلت على "
+  post_on_fb_2: " نقطة في عربيلتي على http://localhost:3000/"
   welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
   welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
