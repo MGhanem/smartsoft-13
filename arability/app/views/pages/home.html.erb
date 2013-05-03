@@ -209,10 +209,32 @@
             </div>
           </div>
         </div>
+        <div class="item">
+          <img src="../assets/home_caro3.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1><%= t(:caro1h) %></h1>
+              <p class="lead"><%= t(:caro1b) %></p>
+              <a class="btn btn-primary arabicfont" href="#more"><%= t(:more) %></a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="../assets/home_caro2.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1><%= t(:caro1h) %></h1>
+              <p class="lead"><%= t(:caro1b) %></p>
+              <a class="btn btn-primary arabicfont" href="#more"><%= t(:more) %></a>
+            </div>
+          </div>
+        </div>
       </div>
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
+    </div>
+
+    <!-- /.carousel -->
 
     <div class="container marketing">
 
@@ -280,4 +302,12 @@
   <% if I18n.locale == :ar %>
     $(".arabicfont").attr("style", "font-size: 16px;");
   <% end %>
+</script>
+<script>
+  !function ($) {
+    $(function(){
+      // carousel demo
+      $('#myCarousel').carousel()
+    })
+  }(window.jQuery)
 </script>
