@@ -603,7 +603,7 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
-  sub_changed: "chane %{sm.name} "
+  sub_changed: "You have successfully changed your subscription model "
   you_have_prizes: "You have won the following prizes!"
   no_account: "You seem to have left us. Please create a new account"
   trial_error: "Sorry, you cannot use this service. Please subscribe to Premium or Deluxe to continue"

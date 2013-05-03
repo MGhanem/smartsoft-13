@@ -7,7 +7,8 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update, :share]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update,
+    :view_recommended_words, :get_recommended_words, :share]
   before_filter :can_access_project?,
   only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
@@ -24,6 +25,12 @@ class ProjectsController < BackendController
  #   project is not deleted
   def destroy
     @project = Project.find(params[:id])
+    temp_projects = Project.where(owner_id: current_developer.id)
+    if !temp_projects.include?(@project)
+      flash[:error] = t(:developer_cant_see_project)
+      redirect_to projects_path
+      return
+    end
     @project.destroy
     respond_to do |format|
       format.html { redirect_to action: "index",controller: "projects"}
