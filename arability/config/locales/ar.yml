@@ -199,11 +199,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  views:
-    project:
-       flash_messages:
-         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -609,13 +604,17 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; قبل"
       next: "بعد &gt;"
       first: "الاولى"
       last: "الاخيرة"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+        project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   activerecord:
