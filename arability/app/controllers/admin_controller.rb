@@ -415,6 +415,28 @@ class AdminController < ApplicationController
   # Author:
   #   Omar Hossam
   # Description:
+  #   As an admin, I could delete any subscription model from database by
+  #   choosing it from the view table and clicking the trash icon.
+  # Parameters:
+  #   model_id: id of subscription model to be deleted.
+  # Success:
+  #   Subscription model is deleted from database and subscription models' view
+  #   appears without the deleted subscription model, and a flash appears
+  #   indicating the success of deletion.
+  # Failure: 
+  #   None.
+  def delete_subscription_model
+    model_id = params[:model_id]
+    model = SubscriptionModel.find(model_id)
+    model.delete
+    flash[:success] = "لقد تم مسح نظام الإشتراك بنجاح"
+    flash.keep
+    redirect_to action: "view_subscription_models"
+  end 
+
+  # Author:
+  #   Omar Hossam
+  # Description:
   #   As an admin, I should be able to view all the attributes of the
   #   subscription model needed to be edited, and the data they have.
   # Parameters:
@@ -429,6 +451,25 @@ class AdminController < ApplicationController
     @errors = params[:errors]
     model_id = params[:model_id].to_i
     @model = SubscriptionModel.find_by_id(model_id)
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I should be able to view all the attributes of the
+  #   category needed to be edited, and the data they have.
+  # Parameters:
+  #   errors: list of error messages of category trying to edit.
+  #   category_id: id of category to be edited.
+  # Success:
+  #   error messages appear on top of page, and attributes of category
+  #   to be edited appear on page, with their original data.
+  # Failure: 
+  #   None.
+  def edit_category
+    @errors = params[:errors]
+    category_id = params[:category_id].to_i
+    @category = Category.find_by_id(category_id)
   end
 
   # Author:
@@ -458,7 +499,10 @@ class AdminController < ApplicationController
   #   As an admin, I should be able edit data of a subscription model.
   # Parameters:
   #   model_id: id of subscription model to be edited.
-  #   subscription_model[name]: new name that should replace original name
+  #   subscription_model[name_en]: new english name that should replace original
+  #   english name.
+  #   subscription_model[name_ar]: new arabic name that should replace original
+  #   arabic name.
   #   subscription_model[limit_search]: new limit_search that should replace
   #   original limit_search.
   #   subscription_model[limit_follow]: new limit_follow that should replace
@@ -482,12 +526,42 @@ class AdminController < ApplicationController
     @model.limit_project = params[:subscription_model][:limit_project]
     @model.limit = params[:subscription_model][:limit]
     if @model.save
-      flash[:success] = "لقد تم تعديل نظام الإشتراك"
+      flash[:success] = "لقد تم تعديل نظام الإشتراك بنجاح"
       flash.keep
       redirect_to action: "view_subscription_models"
     else
       redirect_to action: "edit_subscription_model",
         errors: @model.errors.messages, model_id: @model.id
+    end
+  end
+
+  # Author:
+  #   Omar Hossam
+  # Description:
+  #   As an admin, I should be able edit data of a category.
+  # Parameters:
+  #   category_id: id of category to be edited.
+  #   category[english_name]: new english name that should replace original
+  #   english name.
+  #   category[arabic_name]: new arabic name that should replace original
+  #   arabic name.
+  # Success:
+  #   Category attributes gets updated with new data and go back to
+  #   the view of all categories in database.
+  # Failure: 
+  #   Some of the category's validation prevents the model to be
+  #   edited, and the errors appear on the top of the page.
+  def update_category
+    @category = Category.find(params[:category_id])
+    @category.english_name = params[:category][:english_name]
+    @category.arabic_name = params[:category][:arabic_name]
+    if @category.save
+      flash[:success] = "لقد تم تعديل الفئة بنجاح"
+      flash.keep
+      redirect_to action: "view_categories"
+    else
+      redirect_to action: "edit_category",
+        errors: @category.errors.messages, category_id: @category.id
     end
   end
 

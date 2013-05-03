@@ -668,9 +668,3 @@ en:
               blank: "cant be empty"
               invalid: "can only consist of only english and arabic characters"
               taken: "already exists in the database"
-        category:
-          attributes:
-            name:
-              blank: "category cant be empty"
-              invalid: "The category can only consist of only english and arabic characters"
-              taken: "This category already exists in the database"

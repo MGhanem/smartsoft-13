@@ -1,0 +1,43 @@
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "edit-subscription-models"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+            <legend>
+                تعديل فئة
+            </legend>
+            <%= form_for (@category),:url => update_category_path(@category) do |f| %>
+              <% if @errors != nil %>
+                <div id="error_explanation" class="req">
+                  <ul>
+                    <% @errors.each do |msg| %>
+                      <li><%= msg[1][0] %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <div class="control-group">
+                <%= f.label :إسم_الفئة_بالعربية, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :arabic_name, :placeholder => "الإسم العربي" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :إسم_الفئة_بالإنجليزية, :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :english_name, :placeholder => "English name" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button class="btn btn-info btn-large" type="submit" style="margin-right: 20px"><%= "تعديل" %></button>
+                  <a class="btn btn-large" href="/admin/view_categories" style="margin-left: 20px"><%= "رجوع" %></a>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
