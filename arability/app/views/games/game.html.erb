@@ -226,7 +226,8 @@ function setButtons(){
   // Success:
   //   view the hall of fame successfully
   // Failure:
-  //   internet connection
+  //   internet connection failure: a message is displayed upon clicking to view facebook/twitter friends' 
+  //   hall of fame telling the user to check his internet connection
   function hallOfFame(){
     if(nav_locked) {
       return;
@@ -235,11 +236,15 @@ function setButtons(){
       cache = document.getElementById("zone").innerHTML;
     }    
     clear();
-    $('.zone').append('<div id="loading-server" class="progress"><div class="bar" style="width: 60%;"></div></div>');
-    $.get("/games/fame");
-    $(window).load(function(){
-      $('#loading-server').fadeOut();
-    });
+    if(isGuest == true) {
+      $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:have_to_sign_in) %></p></div>');
+    } else {
+      $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:loading) %></p><img src="/assets/ajax-loader.gif" alt="loading.." /></div>');
+      setTimeout(function(){$.get("/games/fame")},100);
+    }
+    // $($.get("/games/fame")).load(function(){
+    //   $("#loading").fadeOut();  
+    // });
   }
 
   function showProfile(){
@@ -299,7 +304,7 @@ function setButtons(){
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()"><%= t(:rank) %></div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>

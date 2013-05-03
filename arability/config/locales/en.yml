@@ -616,6 +616,7 @@ en:
     you searched for before.
   score_popover_content: "The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word"
   score_popover_title: "How the Score is calculated"
+  have_to_sign_in: "You have to sign in to view this page"
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
