@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require select2
  */
 #navbar {
   padding-top: 60px;
@@ -68,6 +69,21 @@ div.d5pxup input {
   min-width: 232px;
 }
 
+#gender {
+  min-height:41px;
+  max-height:41px;
+  min-width: 116px;
+  max-width: 116px;
+}
+
+#key {
+  margin:0px;
+  min-height:35px;
+  max-height:35px;
+  min-width: 250px;
+  max-width: 250px;
+}
+
 .validation {
 border: 1px solid;
 margin: 10px 0px;
@@ -77,3 +93,4 @@ background-position: 10px center;
 color: #D63301;
 background-color: #FFCCBA;
 }
+

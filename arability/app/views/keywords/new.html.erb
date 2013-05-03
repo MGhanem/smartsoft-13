@@ -1,7 +1,30 @@
-<%= form_for @keyword, :url => { :action => "create" }, :html => {:class => "form-inline"} do |f| %>
+<%= form_for @keyword, url: { action: "create" }, html: {:class => "form-inline"} do |f| %>
     <span><%= t :enter_keyword %>:</span>
     <div class="input-append">
-      <%= f.text_field :name %>
-      <%= f.submit "Create", :class=>"btn btn-primary" %>
+      <%= f.text_field :name, tabindex: "1" %>
+      <% if I18n.locale == :ar %>
+        <%= f.submit t(:add_word), :class => "btn btn-primary", style: "font-size: 18px;",
+        tabindex: "3" %>
+      <% else %>
+        <%= f.submit t(:add_word), :class => "btn btn-primary", tabindex: "3" %>
+      <% end %>
     </div>
+    <input type="hidden" name="override_categories" value="true">
+    <select name="category_ids[]" id="categories-autocomplete" multiple="true" style="width: 500px" tabindex="2">
+      <% @categories_by_locale.each do |id, name| %>
+        <option value="<%= id %>"><%= name %></option>
+      <% end %>
+    </select>
 <% end %>
+<script>
+  $(document).ready(function() {
+    $("#categories-autocomplete").select2({
+      placeholder: "<%= t(:tag_using_categories) %>",
+      width: "resolve",
+    }).val(preloaded).trigger("change");
+  });
+
+  function preloaded() {
+    return <%= raw @category_ids.to_s || [] %>
+  }
+</script>

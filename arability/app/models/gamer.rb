@@ -10,7 +10,7 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-   devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
@@ -19,7 +19,8 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin,
+                  :confirmed_at
 
   has_many :services, :dependent => :destroy
 
@@ -175,8 +176,13 @@ class Gamer < ActiveRecord::Base
   #   returns true when a vote is saved for the selected synonym
   # Failure:
   #   returns false when the vote is not saved
-  def select_synonym(synonym_id)
+  def select_synonym(synonym_id, is_formal = nil)
     if Vote.record_vote(self.id,synonym_id)[0]
+      if is_formal != nil
+        synonym = Synonym.find(synonym_id)
+        synonym.is_formal = is_formal
+        synonym.save
+      end
       return true
     else
       return false
@@ -190,12 +196,14 @@ class Gamer < ActiveRecord::Base
   # Params:
   #   synonym_name: which is the synonym name the gamer suggested in the  
   #                 vote form.
+  #   keyword_id: is the id of keyword for which the synonym is being added
+  #   is_formal: determine whether the synonym is formal or slang
   # Success:
   #   returns 0 returned by the invoked method meaning saved new synonym
   # Failure:
   #   returns 1,2,3 according to the invoked method failure scenario
-  def suggest_synonym(synonym_name, keyword_id)
-    return Synonym.record_suggested_synonym(synonym_name, keyword_id)
+  def suggest_synonym(synonym_name, keyword_id, is_formal)
+    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true, is_formal)
   end
     
 
@@ -279,6 +287,7 @@ class Gamer < ActiveRecord::Base
       country: country,
       education_level: ed_level,
       is_local: false,
+      confirmed_at: Time.now,
       provider: provider)
     if gamer.save
       return gamer, true

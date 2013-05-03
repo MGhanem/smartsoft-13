@@ -32,7 +32,7 @@
                 <% if I18n.locale == :ar %>
                 <div><%= f.check_box :remember_me, :class => "pull-right" %> <%= label_tag :remember_me, t(:remember_me), :class => "pull-right", style: "color:white;margin-right: 10px;" %></div>
                 <br /><br />
-                <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px; color:white;", class: "pull-right" %><br />
+                <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px; color:white; margin-right: -18px;", class: "pull-right" %><br />
                 <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 16px;", class: "btn btn-primary" %>
                 <% else %>
                 <div><%= f.check_box :remember_me, :class => "pull-left" %> <%= label_tag :remember_me, t(:remember_me), :class => "pull-left", style: "margin-left: 10px; color:white;" %></div>
@@ -40,8 +40,10 @@
                 <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px; color:white;", class: "pull-left" %><br />
                 <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary arabicfontdrop" %>
                 <% end %>
-                <div style="padding-top:5px; text-align:center; font-style:italic;">
-                  <span><%= t(:or) %></span>
+                <div style="padding-top:5px; text-align:center;">
+                  <b>
+                    <span><%= t(:or) %></span>
+                  </b>
                 </div>
                   <div style="padding:5px; text-align:center;">
                   <span><%= t(:existing_account) %></span>
@@ -53,7 +55,7 @@
                   <a href="/auth/twitter" style="width:50px; padding:0px;margin:0px; display:inline-block;">
                     <img src="/assets/twitter-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
-                  <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                  <a href="/auth/google_oauth2" style="width:50px; padding:0px;margin:0px; display:inline-block;">
                     <img src="/assets/google-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
                 </div>

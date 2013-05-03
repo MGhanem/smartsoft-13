@@ -1,9 +1,10 @@
 #encoding: UTF-8
 class Synonym < ActiveRecord::Base
-  belongs_to :keyword
   attr_accessible :approved, :name, :keyword_id, :is_formal
-  has_many :votes
-  has_many :gamers, :through => :vote
+
+  belongs_to :keyword
+  has_many :votes, uniq: true
+  has_many :gamers, through: :vote, uniq: true
 
   def existing?
     if !Keyword.exists?(id: keyword_id)
@@ -35,16 +36,22 @@ class Synonym < ActiveRecord::Base
   # Failure:
   #   returns 1 when the synonym written by the gamer is blank
   #   returns 2 when the synonym is already existing
-  def self.record_suggested_synonym(synonym_name, keyword_id, approved= false)
+  #   returns 4 when the gamer didn't choose formal or slang to the synonym
+  def self.record_suggested_synonym(synonym_name, keyword_id, approved = true, is_formal)
     if synonym_name.blank?
       return  1
     elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)
       return  2
+    elsif synonym_name.match(/^([\u0621-\u0652 ])+$/) == nil
+        return 3
+    elsif is_formal == nil
+      return 4
     elsif Keyword.exists?(id: keyword_id)
         new_synonym = Synonym.new
         new_synonym.name = synonym_name
         new_synonym.keyword_id = keyword_id
         new_synonym.approved = approved
+        new_synonym.is_formal = is_formal
         if new_synonym.save
           return 0
         else
@@ -80,38 +87,6 @@ class Synonym < ActiveRecord::Base
       word = Keyword.find(keyword_id)
       synonym = Synonym.where("name = ? AND keyword_id = ?", synonym_name, keyword_id).first
     end
-
-
-  def get_visual_stats_country(synonym_id)
-        voters = Gamer.joins(:synonyms).where("synonym_id = ?", synonym_id)
-  end
-    # Author: 
-    #   Nourhan Mohamed
-    # Description:
-    #   retrieved approved synonyms for a given keyword
-    # Parameters:
-    #   keyword: a string representing the keyword for which the synonyms will
-    #     be retrieved
-    # Success:
-    #   returns a list of synonyms for the passed keyword
-    # Failure:
-    #   returns an empty list if the keyword doesn't exist or if no approved
-    #   synonyms where found for the keyword  
-      def retrieve_synonyms(keyword)
-        if(Keyword.is_english_keyword(keyword))
-          keyword.downcase!
-        end
-        keyword_model = Keyword.where(:name => keyword, :approved => true)
-        if(!keyword_model.exists?)
-          return []
-        end
-        keyword_id = keyword_model.first.id
-        synonym_list = Synonym
-          .where(:keyword_id => keyword_id, :approved => true)
-        synonym_list = synonym_list.sort_by { |synonym| synonym.get_votes }
-          .reverse!
-        return synonym_list
-      end
   end
 
   # Author:

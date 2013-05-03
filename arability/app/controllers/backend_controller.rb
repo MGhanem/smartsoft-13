@@ -17,7 +17,6 @@ class BackendController < ApplicationController
   def authenticate_developer!
     developer = Developer.where(:gamer_id => current_gamer.id).first
   	if developer == nil
-  		flash[:notice] = t(:register_developer)
   		redirect_to choose_sub_path
   	end
   end
@@ -40,6 +39,27 @@ class BackendController < ApplicationController
     if !projects_owned.include?(current_project) && !projects_shared1.include?(current_project)
       flash[:error] = t(:developer_cant_see_project)
       redirect_to projects_path
+    end  
+  end
+
+  # Author:
+  #   Khloud Khalid
+  # Description
+  #   checks if the project can be accessed by developer
+  # Params:
+  #   project_id
+  # Success: 
+  #   developer can access project
+  # Failure:
+  #   redirects to projects path with flash error
+  def can_access_project?
+    developer = Developer.where(gamer_id: current_gamer.id).first
+    owned = Project.where(owner_id: developer.id)
+    shared = developer.projects_shared
+    current_project = Project.find(params[:project_id])
+    if !owned.include?(current_project) && !shared.include?(current_project)
+      flash[:error] = t(:developer_cant_see_project)
+      redirect_to projects_path, flash: flash
     end  
   end
 end

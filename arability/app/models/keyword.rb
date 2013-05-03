@@ -1,11 +1,11 @@
 #encoding: UTF-8
 class Keyword < ActiveRecord::Base
   has_many :synonyms
-  has_and_belongs_to_many :developers
+  has_and_belongs_to_many :developers, uniq: true
   attr_accessible :approved, :is_english, :name
-  has_and_belongs_to_many :categories
-  validates_presence_of :name 
-  validates_format_of :name, :with => /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
+  has_and_belongs_to_many :categories, uniq: true
+  validates_presence_of :name
+  validates_format_of :name, with: /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
 
   # Author: 
@@ -63,13 +63,15 @@ class Keyword < ActiveRecord::Base
     synonyms_with_no_votes
       .reject! { |synonym| synonym.is_formal != is_formal } unless is_formal == nil
     synonym_list = synonym_list + synonyms_with_no_votes
+
     [synonym_list, votes_count]
-  end  
+  end
 
   class << self
     require "string_helper"
     include StringHelper
   end
+
   # Author:
   #   Mohamed Ashraf
   # Description:
@@ -83,28 +85,22 @@ class Keyword < ActiveRecord::Base
   #   the first return is true and the second is the saved keyword
   # failure:
   #   the first return is false and the second is the unsaved keyword
-  def self.add_keyword_to_database(name, approved = false, is_english = nil, categories = [])
+  def self.add_keyword_to_database(name, approved = true, is_english = nil, categories = [])
     name.strip!
+    name.downcase!
+    name = name.split(" ").join(" ")
+
     keyword = where(name: name).first_or_create
     keyword.approved = approved
-    name.downcase! if is_english_string(name)
-    if is_english != nil
-      keyword.is_english = is_english
-    else
-      keyword.is_english = is_english_string(name)
-    end
+    keyword.is_english = is_english != nil ? is_english : is_english_string(name)
 
     if keyword.save
-      categories.each do |category_name|
-        success, category =
-          Category.add_category_to_database_if_not_exists(category_name)
-        if success
-          category.keywords << keyword
-        end
+      categories.each do |category|
+        category.keywords << keyword
       end
-      return true, keyword
+      [true, keyword]
     else
-      return false, keyword
+      [false, keyword]
     end
   end
 
@@ -121,8 +117,8 @@ class Keyword < ActiveRecord::Base
   def self.find_by_name(name)
     name.strip!
     name.downcase!
-    keyword = Keyword.where(name: name).first
-    return keyword
+    name = name.split(" ").join(" ")
+    Keyword.where(name: name).first
   end
 
   # Author:
@@ -143,10 +139,6 @@ class Keyword < ActiveRecord::Base
       return keyword.save
     end
     return false
-  end
-  
-  class << self
-
   end
 
   # author:
@@ -201,11 +193,9 @@ class Keyword < ActiveRecord::Base
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
-  	#Description:
+    # Description:
     #   gets words similar to a search keyword (in a certain category) and sorts 
     #   result by relevance
-    # Author:
-    #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:
   	#		search_word: a string representing the search keyword that should 
     #     be retrieved if found in the database
@@ -227,18 +217,16 @@ class Keyword < ActiveRecord::Base
     	keyword_list = self.where("keywords.name LIKE ?", "%#{search_word}%")
         .where(approved: true)
 
-      category_name = I18n.locale == :en ? :english_name : :arabic_name
-
       if categories != []
-        keyword_list = 
+        keyword_list =
           keyword_list.joins(:categories)
-            .where("categories.#{category_name}" => categories)
+            .where("categories.id" => categories.map{ |c| c.id })
       end
 
     	relevant_first_list = keyword_list
         .sort_by { |keyword| [keyword.name.downcase.index(search_word),
           keyword.name.downcase] }
-    	relevant_first_list
+    	relevant_first_list.uniq
     end
 
   class << self
@@ -271,19 +259,6 @@ class Keyword < ActiveRecord::Base
       return Keyword.joins(:synonyms).where("synonyms.approved" => false).all
     end
 
-
-    # finds a keyword by name from the database
-    # @author Mohamed Ashraf
-    # @params name [string] the search string
-    # ==returns
-    #   success: An instance of Keyword
-    #   failure: nil
-    def find_by_name(name)
-      name.strip!
-      keyword = Keyword.where(name: name).first
-      return keyword
-    end
-
   # author:
   #   Mostafa Hassaan
   # description:
@@ -297,14 +272,19 @@ class Keyword < ActiveRecord::Base
   #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
   #   returns empty hash if the synonyms of the given keyword have no votes
-    def get_keyword_synonym_visual(keyword_id)
-      votes = Synonym.where(keyword_id: keyword_id)
+    def get_keyword_synonym_visual(keyword_id, type)
+      if type == nil
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
         .joins(:votes).count(group: "synonym_id")
+      else
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
+        .joins(:votes).where(is_formal: type).count(group: "synonym_id")
+      end
       sum = votes.sum{|v| v.last}
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-
+  end
   # author:
   #   Mostafa Hassaan
   # description:
@@ -324,6 +304,5 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
-  end
   end
 end

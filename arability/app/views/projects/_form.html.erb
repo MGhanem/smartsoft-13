@@ -1,10 +1,8 @@
 <%= link_to t(:back), {action: "index", controller: "projects"} %>
 <div class = "container well" >
-    <p class="req"><%= t(:required) %></p>
     <%= form_for @project, html: {class: "form-horizontal"} do |f| %>
       <% if @project.errors.any? %>
-        <div id="error_explanation" class="req">
-           <h2 class="req"><%= pluralize(@project.errors.count, "") %> <%= t(:prohibited_project_error) %></h2>
+        <div id="error_explanation" class="req alert">
            <ul>
                <% @project.errors.full_messages.each do |msg| %>
                  <li><%= msg %></li>
@@ -12,6 +10,8 @@
            </ul>
         </div>
       <% end %>
+    <p class="req"><%= t(:required) %></p>
+    <br>
     <div class="control-group">
         <%= f.label t(:name), class: "control-label" %>
         <div class="controls">
@@ -26,7 +26,7 @@
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true }, { id:"cat" }) %>
         <% else %>
         <% if @project.category_id != nil %>
-          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i,:include_blank => t(:please_select) }, { id:"cat" } ) %>
+          <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: @select_value, selected: @project.category_id.to_i, include_blank: t(:please_select) }, { id:"cat" } ) %>
         <% else %>
           <%= f.collection_select(:category, Category.all, :id, :get_name_by_locale, { prompt: true, selected: @project.category_id.to_i }, { id:"cat" } ) %>
           <% end %>
@@ -53,12 +53,20 @@
    <div class="control-group">
     <%= f.label t(:target_country), :class => "control-label", id: "project_name" %>
     <% if params[:action] == "new" %>
-      <%= f.select(:country, ([t(:egypt),t(:lebanon),
-      t(:jordan),t(:saudi_arabia),t(:libya),t(:united_arab_emirates),t(:qatar),t(:kuwait),t(:iraq),t(:algeria),t(:morocco),t(:bahrain),t(:mauritania),t(:somalia),t(:sudan),t(:tunisia),t(:others)]), {}, { id:"cat" }) %>
+      <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"others"]]), {}, { id:"cat" }) %>
      <% else %>
-      <%= f.select(:country, ([t(:egypt),t(:lebanon),
-      t(:jordan),t(:saudi_arabia),t(:libya),t(:united_arab_emirates),t(:qatar),t(:kuwait),t(:iraq),t(:algeria),t(:morocco),t(:bahrain),t(:mauritania),t(:somalia),t(:sudan),t(:tunisia),t(:others)]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
+      <%= f.select(:country, ([[t(:egypt),"Egypt"],[t(:lebanon),"Lebanon"],
+      [t(:jordan),"Jordan"],[t(:saudi_arabia),"Saudi Arabia"],[t(:libya),"Libya"],[t(:united_arab_emirates),"United Arab Emirates"],[t(:qatar),"Qatar"],[t(:kuwait),"Kuwait"],[t(:iraq),"Iraq"],[t(:algeria),"Algeria"],[t(:morocco),"Morocco"],[t(:bahrain),"Bahrain"],[t(:mauritania),"Mauritania"],[t(:somalia),"Somalia"],[t(:sudan),"Sudan"],[t(:tunisia),"Tunisia"],[t(:others),"others"]]),  { prompt: @select_value, selected: @project.country }, { id:"cat" }) %>
     <% end %>
+  </div>
+  <div class="control-group">
+      <%= f.label t(:pro_gender), :class => "control-label", id: "project_name"%>
+      <% if params[:action] == "new" %>
+        <%= f.select(:gender, (['',[t(:pro_male),"male"],[t(:pro_female),"female"]]), {}, { id:"gender" }) %>
+      <% else %>
+        <%= f.select(:gender, (['',[t(:pro_male),"male"],[t(:pro_female),"female"]]),  { prompt: @select_value, selected: @project.gender }, { id:"gender" }) %>
+      <% end %>
   </div>
   <div class="control-group">
       <label class="control-label">
@@ -72,28 +80,27 @@
   <div class="control-group">
     <%= f.label t(:education_level), :class => "control-label", id: "project_name"%>
     <% if params[:action] == "new" %>
-      <%= f.select(:education_level, (['',t(:school),t(:university),t(:graduate)]), {}, { id:"cat" }) %>
+      <%= f.select(:education_level, (['',[t(:school),"School"],[t(:university),"University"],[t(:graduate),"Graduate"]]), {}, { id:"cat" }) %>
     <% else %>
-      <%= f.select(:education_level, (['',t(:school),t(:university),t(:graduate)]),  { prompt: @select_value, selected: @project.education_level }, { id:"cat" }) %>
+      <%= f.select(:education_level, (['',[t(:school),"School"],[t(:university),"University"],[t(:graduate),"Graduate"]]),  { prompt: @select_value, selected: @project.education_level }, { id:"cat" }) %>
     <% end %>
   </div>
   <br>
   <h5><%= t(:desc) %>:</h5>
   <div class="control-group">
-      <div class="controls">
-          <%= f.text_area :description, id: "desc" %>
-      </div>
+   <%= f.label t(:desc2), :class => "control-label", id: "project_name"%>
+    <%= f.text_area :description, id: "desc" %>
   </div>
   <div class="control-group">
     <% if I18n.locale == :en %>
     <div class="controls">
-      <span3><a class="btn pull-right btn-medium" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-      <button class="btn btn-info pull-right btn-medium" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
+      <span3><a class="btn pull-right" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-right" type="submit" style="margin-right: 20px"><%= t(:save_project) %></button>
     </div>
     <% else %>
     <div class="controls">
-      <span3><a class="btn pull-left btn-large" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
-      <button class="btn btn-info pull-left btn-large" type="submit" style="margin-right: 20px; font-size=100"><%= t(:save_project) %></button>
+      <span3><a class="btn pull-left" href="/developers/projects" style="margin-right: 20px"> <%= t(:cancel) %> </a></span3>
+      <button class="btn btn-info pull-left" type="submit" style="margin-right: 20px; font-size=100"><%= t(:save_project) %></button>
     </div>
     <% end %>
 <% end %>

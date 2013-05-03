@@ -9,7 +9,7 @@ describe SearchController do
   describe "GET search" do
   include Devise::TestHelpers
     let(:c) do
-      success, category = Category.add_category_to_database_if_not_exists("test", "سنبنتش")
+      success, category = Category.add_category("test", "سنبنتش")
       category
     end
 
@@ -88,6 +88,18 @@ describe SearchController do
       gamer
     end
 
+    let(:my_sub) do
+      my_sub = MySubscription.new
+      my_sub.word_search = 1
+      my_sub.save validate:false
+      my_sub
+    end
+
+    before :each do
+      k
+      k2
+    end
+
     let(:gamer3) do
       gamer = Gamer.new
       gamer.username = "Nourhan"
@@ -130,17 +142,8 @@ describe SearchController do
       vote
     }
 
-    it "should get only keywords in category" do
+    it "should get all keywords if no category specified", mohamed: true do
       c.keywords << k
-      a = create_logged_in_developer
-      sign_in(a.gamer)
-      get :search_keywords, :categories => "سنبنتش", :search => "test"
-      assigns(:similar_keywords).should =~ [k]
-    end
-
-    it "should get all keywords if no category specified" do
-      c.keywords << k
-      k2
       a = create_logged_in_developer
       sign_in(a.gamer)
       get :search_keywords, :search => "test"
@@ -165,6 +168,12 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
+
       get :search_with_filters, search: "test    ", synonym_type: 0
       assigns(:synonyms).should eq([s, s1])
       assigns(:votes)[1].should eq(1)
@@ -179,6 +188,9 @@ describe SearchController do
       s1
       s2
       gamer_vote_s
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
 
       get :search_with_filters, search: "test", country: "Qattar", age_from: "40",
         age_to: "19", education: "high", gender: "female", synonym_type: 0 
@@ -227,6 +239,27 @@ describe SearchController do
       response.should redirect_to(search_keywords_path)
     end
 
+    it "should redirect to search_keywords path if search limit is exceeded",
+      nourhan_mohamed: true do
+      d = create_logged_in_developer
+      sign_in(d.gamer)
+      k
+      k2
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
+      
+      xhr :post, :search_with_filters, search: "test"
+      response.code.should eq("200")
+      
+      get :search_with_filters, search: "testing"
+      response.code.should eq("302")
+      response.should redirect_to(search_keywords_path)
+
+      get :search_with_filters, search: "test"
+      response.code.should eq("200")
+    end
+
     it "get the four pie charts corresponding to each synonym without filters", 
       nourhan_zakaria_test: true do
       d = create_logged_in_developer
@@ -240,6 +273,9 @@ describe SearchController do
       gamer4
       gamer3_vote_s
       gamer4_vote_s1
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
 
       get :search_with_filters, search: "test"
 
@@ -296,6 +332,9 @@ describe SearchController do
       gamer4
       gamer3_vote_s
       gamer4_vote_s1
+      my_sub
+      my_sub.developer_id = d.id
+      my_sub.save validate: false
 
       get :search_with_filters, search: "test", country: "Lebanon", age_from: "10",
           age_to: "50", gender: "female", education: "University"
@@ -318,8 +357,7 @@ describe SearchController do
       charts[3].first[:title][:text].should match(I18n.t(:stats_education))
       charts[3].data.first[:data]
         .should =~ (s.get_visual_stats_education("female", "Lebanon", "University", 10, 50))
-      charts[3].data.first[:data].should_not =~ []     
-
+      charts[3].data.first[:data].should_not =~ []
     end
 
     it "should return json containing similar keywords" do
