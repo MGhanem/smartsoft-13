@@ -27,9 +27,10 @@ class SearchController < BackendController
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
+      if Keyword.find_by_name(@search_keyword)
+        redirect_to search_path, search: @search_keyword
+      end
     end
-    @similar_keywords =
-      Keyword.get_similar_keywords(@search_keyword)
   end
   
   # Author:

@@ -60,14 +60,17 @@ module SearchHelper
   #   creates the pie chart in view
   # failure:
   #   fails to show a chart if synonyms have no votes
-  def chart_keyword_synonym(keyword_id, synonym_type)
-    stats = Keyword.get_keyword_synonym_visual(keyword_id, synonym_type)
+  def chart_keyword_synonym(votes, synonyms, keyword_name)
+    votes = votes.reject {|key, value| !synonyms.include? key }
+    sum = votes.sum{|v| v.last}
+    stats = votes.map {|key, value| [Synonym.find(key).name, value]}
+    stats = stats.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     if stats == 0
       @availble = false
     else
       @availble = true
     end
-    name1 = Keyword.find(keyword_id).name
+    name1 = keyword_name
     chart = LazyHighCharts::HighChart.new('pie') do |f|
       f.chart({defaultSeriesType:"pie" , margin: [50, 200, 60, 170]} )
         series = {

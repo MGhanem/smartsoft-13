@@ -53,9 +53,11 @@
             </li>
           </ul>
         </div>
+        <% if @can_share == true %>
         <div class="btn-group">
           <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
         </div>
+        <% end %>
       </div>
       <br>
       <table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">

@@ -1,16 +1,19 @@
 <div id="synonym_results">
   <div id="collective" class="accordion-body collapse in" dir="ltr">
-    <div class="accordion-inner">
+    <div class="accordion-inner" style="border: 1px solid #e5e5e5; border-radius: 5px;">
       <% key_id = getID(@search_keyword) %>
-      <% result = Keyword.get_keyword_synonym_visual(key_id, @synonym_type) %>
-      <% if result.present? %>
-            <%= high_chart("my_id4", chart_keyword_synonym(key_id, @synonym_type)) do |c| %>
+      <% if @synonyms.present? && @votes.present? %>
+            <%= high_chart("my_id4", chart_keyword_synonym(@votes, @synonyms.map { |synonym| synonym.id }, @search_keyword)) do |c| %>
                 <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}" %>
                 <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
             <% end %>
           <% else %>
               <p>
-                <%= t(:no_votes_for_word)%>
+                <% if I18n.locale == :ar %>
+                  <div dir="rtl"><%= t(:no_votes_for_word)%></div>
+                <% else %>
+                  <%= t(:no_votes_for_word)%>
+                <% end %>
               </p>
           <% end %>
     </div>

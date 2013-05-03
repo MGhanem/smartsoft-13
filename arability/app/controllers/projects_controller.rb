@@ -12,16 +12,17 @@ class ProjectsController < BackendController
   only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json,
     :view_recommended_words, :get_recommended_words]
 
- # author:Noha hesham
+ # Author:
+ #  Noha hesham
  # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
+ #   Finds the project by its id then destroys it
+ # Params:
+ #   None
+ # Success:
+ #   A pop up appears and makes sure the user wants to
  #   delete the project by choosing ok the
  #   project is successfully deleted
- # failure:
+ # Failure:
  #   project is not deleted
   def destroy
     @project = Project.find(params[:id])
@@ -182,13 +183,13 @@ class ProjectsController < BackendController
   # Author:
   #  Noha Hesham
   # Description:
-  #  finds the project by the params id
+  #  Finds the project by the params id
   # Params:
-  #  none
-  # success:
-  #  project is found
-  # failure:
-  #  none
+  #  None
+  # Success:
+  #  Project is found
+  # Failure:
+  #  None
   def share
     @project = Project.find(params[:id])
     temp_projects = Project.where(owner_id: current_developer.id)
@@ -279,6 +280,10 @@ class ProjectsController < BackendController
 
 def show
   @project = Project.find(params[:id])
+  @can_share = true
+  if current_developer.id != @project.owner_id
+    @can_share = false
+  end
   @words = []
   @synonyms = []
   @words_synonyms = PreferedSynonym.where(project_id: params[:id])
@@ -336,16 +341,6 @@ end
     end
     redirect_to project_path(@project.id)
   end
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
 
   # Author:
   #   Mohamed Tamer
@@ -597,6 +592,18 @@ end
           @edited_word = PreferedSynonym.where(project_id: @project_id,
             keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
+          #raise Exception, @edited_word.inspect
+          if @edited_word.synonym_id == @synonym_id.to_i
+              respond_to do |format|
+                format.html {
+                flash[:success] = t(:Synonym_already_there)
+                redirect_to project_path(@project_id), flash: flash
+                return
+              }
+                format.json { render json: [t(:Synonym_already_there)]
+                  return}
+              end
+          end
           if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save

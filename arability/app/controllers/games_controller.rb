@@ -323,11 +323,25 @@ class GamesController < ApplicationController
   # Failure: 
   #   --
   def showprofile
-    @count, @vote_log = current_gamer.get_votes
+    @count, @vote_log = current_or_guest_gamer.get_votes
     respond_to do |format|
       format.js
     end
   end
+
+  def fame
+  end
+
+  def main_hall_of_fame
+    render "mainhall.js"
+  end
+
+  def facebook_hall_of_fame
+    render "facebook.js"
+  end
+
+  def twitter_hall_of_fame
+    render "twitter.js"
+  end
+
 end
-
-

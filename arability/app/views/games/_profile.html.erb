@@ -1,6 +1,6 @@
 <div class = "main-div-vl">
 <h3 id = "header-vl" class = "heading-vl"><%= t(:vote_log) %>
-<a class = "btn btn-success btn-game-vl" onClick = "backToGame()"><%= t(:back_log) %></a>
+<a class = "btn btn-success buttony-vl" onClick = "backToGame()"><%= t(:back_log) %></a>
 </h3>
 <table class = "table table-bordered table-striped styling-center-table-vl">
   <% if !@vote_log.blank? %>
@@ -37,6 +37,9 @@
     <% if I18n.locale == :ar %>
       $("#header-vl").addClass("arabic-head-vl");
       $(".table-row-vl").addClass("arabic-table-vl");
+      $(".buttony-vl").addClass("btn-game-arabic-vl");
+    <% else %>
+      $(".buttony-vl").addClass("btn-game-english-vl");
     <% end %>
   });
 </script>

@@ -234,21 +234,32 @@ function setButtons(){
     nav_locked = false;
   }
 
+  // Author:
+  //   Mirna Yacout
+  // Description:
+  //   views the hall of fame of all arability gamers showing their last 3 trophies, rank and highest score
+  //   giving the user the option to filter with his facebook or twitter friends and view his rank
+  // Parameters:
+  //   None.
+  // Success:
+  //   view the hall of fame successfully
+  // Failure:
+  //   internet connection failure: a message is displayed upon clicking to view facebook/twitter friends' 
+  //   hall of fame telling the user to check his internet connection
   function hallOfFame(){
     show_menu_item('<%= t(:rank) %>');
     if(nav_locked == true){
       return;
     }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }    
     clear();
-    <% if I18n.locale==:en %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
-    <% else I18n.locale==:ar %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
-    <% end %>
-    $('#loading-server').fadeTo(0,0);
-    $('#loading-server').fadeTo(1000,1);
-    $('#loading-server').fadeTo(1000,0);
-    $.get("/games/halloffame");
+    if(isGuest == true) {
+      $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:have_to_sign_in) %></p></div>');
+    } else {
+      setTimeout(function(){$.get("/games/fame")},0);
+    }
   }
 
   function showProfile(){
@@ -307,27 +318,27 @@ function setButtons(){
   <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 110px; height: 50px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
+       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 115px; height: 27px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
         <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
         <center id="selected_item"></center>
-        <ul class="dropdown-menu" style="margin-top: -5px; margin-right: 12px;">
+        <ul class="dropdown-menu" style="margin-top: -25px; margin-right: 12px;">
          <li><a href="#"onclick="hallOfFame()">
-              <span>الرتبة</span>
+              <span style="font-size: 18px;">الرتبة</span>
              </a></li>
          <li><a href="#" onclick="showPrizes()">
-             جوائز
+            <span style="font-size: 18px;">جوائز</span> 
           </a></li>
          <li> <a href="#" onclick="showTrophies()">
-                الإنجازات
+                <span style="font-size: 18px;">الإنجازات</span>
               </a></li>
          <li><a href="#" onclick="showProfile()">
-          اصوات
+          <span style="font-size: 18px;">اصوات</span>
              </a>
          </li>
          <li> <a href="#" onclick="inviteFriends()">
-         دعوات
+         <span style="font-size: 18px;">دعوات</span>
          </a>
           </li>
         </ul>
@@ -340,12 +351,12 @@ function setButtons(){
    <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width : 110px; height: 50px; margin-top:15px; border: medium none; margin-left: 20px;"><i class="icon-align-justify"></i>
+       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width : 115px; height: 27px; margin-top:15px; border: medium none; margin-left: 20px;"><i class="icon-align-justify"></i>
         <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
         <center id="selected_item"></center>
-        <ul class="dropdown-menu" style="margin-left: 20px;">
+        <ul class="dropdown-menu" style="margin-left: 20px; margin-top:-20px;">
          <li ><a href="#"onclick="hallOfFame()">
               <span style="margin-right: 90px;">Rank</span>
              </a></li>

@@ -83,9 +83,13 @@ Arability::Application.routes.draw do
     get "games/show_prizes"
     get "games/get_score_only"
     post "games/record_synonym"
+    get "/games/fame"
     get "/games/halloffame"
     get "games/disableTutorial"
     get "games/showprofile"
+    get "games/facebook_hall_of_fame"
+    get "games/twitter_hall_of_fame"
+    get "games/main_hall_of_fame"
 
     match "/share_on_facebook"=>'games#post_score_facebook', :as => "share_on_facebook"
     get "/games/disconnect_facebook"

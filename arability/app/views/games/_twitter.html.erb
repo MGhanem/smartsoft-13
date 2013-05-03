@@ -1,0 +1,37 @@
+  <p>
+    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" />
+  </p>
+  <% common = Authentication.get_common_twitter_friends(current_gamer) %>
+  <% if common.nil? %>
+    <p style="color:white;"><%= t(:not_connected_to_twitter) %></p>
+  <% else %>
+    <% if !common %>
+      <p style="color:white;"><%= t(:connection_error) %></p>
+    <% else %>
+      <table class="table table-bordered" style = "background-color:white; margin-top:20px">
+        <thead align="center" style="font-weight:bold;">
+          <tr>
+            <td><%= t(:rank) %></td>
+            <td><%= t(:name) %></td>
+            <td><%= t(:highest_score) %></td>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+          <% @gamers.each do |user| %>
+            <% if user == current_gamer %>
+              <tr style="background-color: #DDDDDD">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= rank = Gamer.get_twitter_rank(user) %></td>
+              <td><%= user.username %></td>
+              <td><%= user.highest_score %></td>
+            </tr>
+            <br>
+          <% end %>
+        </tbody>
+      </table>
+      <div align="center"><%= paginate @gamers %></div>
+    <% end %>
+  <% end %>

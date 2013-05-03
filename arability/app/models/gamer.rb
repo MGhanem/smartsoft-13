@@ -230,34 +230,89 @@ class Gamer < ActiveRecord::Base
     end
   end
 
-  class << self
-    # Author:
-    #  Mirna Yacout
-    # Description:
-    #  This method is to retrieve the list of common arability friends and Facebook friends
-    # Parameters:
-    #  current_gamer: the record in Gamer table for the current user
-    # Success:
-    #  returns the list of common followers
-    # Failure:
-    #  returns nil if no gamer token is found
-    def get_common_facebook_friends(current_gamer)
-      if (current_gamer.token.nil?)
-        return nil
-      end
-      @graph = Koala::Facebook::API.new(current_gamer.get_token)
-      friends = @graph.get_connections("me", "friends")
-      common = Array.new
-      i = 0
-      while i<friends.count
-        if Gamer.exists?(:uid => friends.at(i)["id"], :provider => "facebook")
-          common.push(Gamer.find_by_uid_and_provider(friends.at(i), "facebook").id)
-          common.push(current_gamer.id)
-        end
-        i = i + 1
-        return common
-      end
+  #scopes defined for advanced search aid
+  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
+  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where :gender => gender }
+  scope :filter_by_education, lambda { |education| where :education_level => education }
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_gamer_rank(current_gamer)
+    gamers = Gamer.where(is_guest: [nil, false]).find(:all, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+     if user == current_gamer
+        current_gamer_rank = rank
+     end
+     rank = rank + 1
     end
+    return current_gamer_rank
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  #   within his facebook friends
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_facebook_rank(current_gamer)
+    common = Authentication.get_common_facebook_friends(current_gamer)
+    if common.nil?
+      return nil
+    end
+    gamers = Gamer.find(common, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+      if user == current_gamer
+        current_gamer_rank = rank
+      end
+      rank = rank + 1
+    end
+    return current_gamer_rank
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  #   within his twitter friends
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_twitter_rank(current_gamer)
+    common = Authentication.get_common_twitter_friends(current_gamer)
+    if common.nil?
+      return nil
+    end
+    gamers = Gamer.find(common, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+      if user == current_gamer
+        current_gamer_rank = rank
+      end
+    rank = rank + 1
+    end
+    return current_gamer_rank
   end
 
   # Author:
