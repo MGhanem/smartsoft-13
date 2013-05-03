@@ -579,7 +579,7 @@ ar:
   both_popover_title: "<h4>زر كلاهما</h4>"
   words_list_popover_content: "<p>هذه القائمة تحتوي على الكلمات التي يجب عليك تكوينها. الكلمات ذات اللون البرتقالي جاهزة للتكوين، بعكس السوداء.<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>التالي</button>"
   words_list_popover_title: "<h4>قائمة الكلمات</h4>"
-  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
+  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='scorePopover(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
   word_label_popover_title: "<h4>مكان الحروف</h4>"
   table_popover_content: "لكي تشكل كلمة، يجب أن تضغط على الحروف التي على الشاشة، و لاحظ أن الحروف لا يجب أن تكون بجانب بعضها، و يجب تشكيل جميع الكلمات المطلوبة قبل وصول الحروف إلى القمة. حاول الضغط على حرف الأن"
   table_popover_title: "تشكيل الكلمات"
