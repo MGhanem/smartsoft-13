@@ -185,10 +185,10 @@ function setButtons(){
     }
     clear();
     <%if I18n.locale == :ar %>
-      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:game) %>');
       $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share_ar.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share_ar.png" style="height:150px;"></a></div>')
     <% else I18n.locale == :en %>
-      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<a style="margin: 14px; float: right; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:game) %>');
       $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=check out the new Arability game. Visit http://localhost:3000/ via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;"></a></div>')
     <% end %>
   }
