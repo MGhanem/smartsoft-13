@@ -68,8 +68,8 @@
 				<button class="btn btn-primary" type="submit" id="suggest_synonym_button" onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>, $('#select_formality option:selected').val())"><%= t(:suggest_this_synonym)%></button>
 			</td>
 		</tr>
-		<tr>
-			<td colspan="2" style="width:460px; height: 100px;">
+		<tr style="height: 70px;">
+			<td colspan="2" style="width:460px;">
 				<div id="vote_error_messages"></div>
 			</td>
 			<td></td>
@@ -80,7 +80,11 @@
 			<td style="width:230px; text-align:center;">
 				<button class="btn btn-primary"  id="skip_button" type="submit" onclick="skip_keyword()"><%= t(:skip_this_keyword) %></button>
 			</td>
-			<td style="width:230px; text-align:center;">
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td style="width:230px; text-align:center; padding-top:10px;">
 				<a href="#report_modal" role="button" class="btn btn-danger" onClick="modalToggle()" id="launch_report"><%= t(:report_game) %></a>
 			</td>
 		</tr>
