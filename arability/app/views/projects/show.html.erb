@@ -102,7 +102,7 @@
                 <% end %>
               </td>
               <td style="text-align:center">
-                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%' }) %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:90%; height:90%' }) %>
               </td>
               <td style="text-align:center" >
 

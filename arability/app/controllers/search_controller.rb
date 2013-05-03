@@ -30,6 +30,8 @@ class SearchController < BackendController
       if Keyword.find_by_name(@search_keyword)
         redirect_to search_path, search: @search_keyword
       end
+      @similar_keywords =
+        Keyword.get_similar_keywords(@search_keyword, [])
     end
   end
   
