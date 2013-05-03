@@ -24,6 +24,7 @@ en:
   both_button: "Both"
   arabic: "العربية"
   search: "Search Keywords"
+  no_cat: "none"
   search_here: "search keywords here"
   keyword_add_success: "Keyword added to our database successfully"
   keyword_pending: "Sorry, Keyword pending for approval"

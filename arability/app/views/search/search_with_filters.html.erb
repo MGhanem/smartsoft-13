@@ -14,9 +14,13 @@
       <% end %>
 
   <div style="margin-top:5px; display: inline;">
-      <%= t :category_tags %>:
+    <%= t :category_tags %>:
+    <% if @categories.present? %>
       <a href="#" onclick="submit_category_form();return false;"><%= @categories.join(", ") %></a>
-    </div>
+    <% else %> 
+      <a href="#" onclick="submit_category_form();return false;"><%= t :no_cat %></a> 
+    <% end %>
+  </div>
       <script type="text/javascript">
        function onhovering(button){
           $button = $(button);
