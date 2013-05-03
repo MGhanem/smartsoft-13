@@ -274,11 +274,19 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
+     @is_formal = params[:is_formal]
+    if @is_formal == "formal"
+      formality = true
+    elsif @is_formal == "slang"
+      formality = false
+    else
+      formality = nil
+    end
     @record_output = current_or_guest_gamer.suggest_synonym(params[:synonym_name], 
-      params[:keyword_id]) 
-  	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
+    params[:keyword_id], formality) 
+    @already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
-  end
+   end
 
   # Author:
   #   Ali El Zoheiry
