@@ -1,4 +1,8 @@
 ar:
+  request_button: "إضغط هنا"
+  posting_success: "لقد شاركت نقاطك على فيسبوك"
+  post_on_fb: "لقد حصلت على "
+  post_on_fb_2: " نقطة في عربيلتي على http://localhost:3000/"
   welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
   welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
@@ -43,8 +47,9 @@ ar:
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
+  formality: "النوع"
   formal: "فصحى"
-  slang: "عامي"
+  slang: "عامية"
   age: "الفئة العمرية"
   from: "من"
   to: "الى"
@@ -64,8 +69,7 @@ ar:
   pro_gender: "النوع"
   pro_male: "ذكر"
   pro_female: "انثي"
-  new_project: "مشروع جديد"
-  create_project: "انشاء مشروع"
+  back: "<< عودة"
   target: "هذا المشروع يستهدف الفئة التالية:"
   target_country: "البلد"
   target_age: "الفئة العمرية"
@@ -199,11 +203,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  views:
-    project:
-       flash_messages:
-         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -302,8 +301,6 @@ ar:
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
-  enter_categories: "ابحث في التصنيفات"
-  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة. لمتابعة  كلمة ابحث عنها ثم إضغط تابع."
   egypt: "مصر"
   lebanon: "لبنان"
   jordan: "الاردن"
@@ -325,6 +322,7 @@ ar:
   school: "مدرسة"
   university: "جامعة"
   enter_categories:  "التصفية حسب الفئات"
+  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
@@ -350,6 +348,18 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  prizes: "الجوائز"
+  trophies: "الإنجازات"
+  invite: "دعوات"
+  rank: "الرتبة"
+  tag_using_categories: "إختر التصنيفات المناسبة"
+  keyword_exists: "هذه الكلمة موجودة بالفعل"
+  keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
+  category_tags: "التصنيفات"
+  won_prizes_title: "الجوائز التي تم الحصول عليها "
+  not_won_prizes_title: "الجوائز المتاحة "
+  no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
+  all_prizes: "لقد فزت بجميع الجوائز"
   project_removed: "تم مسح المشروع المشترك"
   activerecord:
     attributes:
@@ -417,8 +427,8 @@ ar:
         maxAge: 'السن'
         categories: "الفئات"
         description: "الوصف"
-  project_delete: "تم مسح المشروع بنجاح"
   project_removed: "تم مسح المشروع المشترك"
+  project_delete: "تم مسح المشروع بنجاح"
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
@@ -434,7 +444,6 @@ ar:
   your_twitter_friends: "أصدقائك في تويتر"
   rank: "الرتبة"
   highest_score: "أعلى نقاط"
-  trophies: "الجوائز"
   no_trophies_won: "لا يوجد جوائز"
   not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر "
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر "
@@ -529,7 +538,7 @@ ar:
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
   you_have_prizes: "لقد ربحت الجوائز التالية"
   sub_changed: "لقد غيرت نظامك "
-  caro1h: "عربلتي"
+  caro1h: "عربيليتي"
   caro1b: "موقع سهل الاستعمال لمساعدة مطوري البرامج الناطقين باللغة العربية والغير ناطقين بها لترجمة مواقعهم بسهولة"
   more: "معرفة المزيد"
   feat1h: "إلعب"
@@ -586,15 +595,15 @@ ar:
   game_over: "انتهت اللعبة"
   lose_score: "لقد سجلت النقاط التالية"
   pick_lang: "إختر اللغة التي تريد اللعب بها"
-  english_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  english_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
   english_popover_title: "<h4>الزر الانجليزي</h4>"
-  arabic_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات عربية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  arabic_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>التالي</button>"
   arabic_popover_title: "<h4>الزر العربي</h4>"
-  both_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  both_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
   both_popover_title: "<h4>زر كلاهما</h4>"
   words_list_popover_content: "<p>هذه القائمة تحتوي على الكلمات التي يجب عليك تكوينها. الكلمات ذات اللون البرتقالي جاهزة للتكوين، بعكس السوداء.<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>التالي</button>"
   words_list_popover_title: "<h4>قائمة الكلمات</h4>"
-  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='scorePopover(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
+  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
   word_label_popover_title: "<h4>مكان الحروف</h4>"
   table_popover_content: "لكي تشكل كلمة، يجب أن تضغط على الحروف التي على الشاشة، و لاحظ أن الحروف لا يجب أن تكون بجانب بعضها، و يجب تشكيل جميع الكلمات المطلوبة قبل وصول الحروف إلى القمة. حاول الضغط على حرف الأن"
   table_popover_title: "تشكيل الكلمات"
@@ -609,13 +618,17 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; قبل"
       next: "بعد &gt;"
       first: "الاولى"
       last: "الاخيرة"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+        project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   activerecord:
@@ -755,6 +768,9 @@ ar:
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
+  menu: "اللعبة"
+  profile: "بروفيل"
+  vote: "اصوات"
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
   Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
@@ -782,9 +798,9 @@ ar:
         project:
           attributes:
             minAge:
-              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
             maxAge:
-              maxAge_range: "يجب ان يكون بين رقما ١٠ و ١٠٠ سنة"
+              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
               less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
         gamer:
           attributes:

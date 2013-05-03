@@ -17,6 +17,7 @@ Arability::Application.routes.draw do
     post "/add_prize"
 
     match "" => "admin#index", :via => [:get]
+    match "autocomplete" => "admin#gamer_email_autocomplete"
     scope "/add" do
       match "/word" => "admin#add_word", :via => [:get, :post]
       match "/trophy" => "admin#add_trophy", :via => [:get, :post]
@@ -28,7 +29,6 @@ Arability::Application.routes.draw do
       match "/gamers" => "admin#list_gamers", :via => [:get]
       match "/developers" => "admin#list_developers", :via => [:get]
       match "/admins" => "admin#list_admins", :via => [:get]
-      match "/projects" => "admin#list_projects", :via => [:get]
     end
     scope "/delete" do
       match "/trophy" => "admin#delete_trophy", :via => [:get]
@@ -37,7 +37,8 @@ Arability::Application.routes.draw do
     scope "/import" do
       match "/csvfile" => "admin#upload", :via => [:get, :post]
     end
-    match "/make_admin" => "admin#make_admin", :via => [:get]
+    match "/list_developer_projects", :via => [:get]
+    match "/make_admin" => "admin#make_admin", :via => [:get, :post]
     match "/remove_admin" => "admin#remove_admin", :via => [:get]
     match "/add_category" => "admin#add_category"
     match "/view_categories" => "admin#view_categories"
@@ -106,13 +107,10 @@ Arability::Application.routes.draw do
     post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
     match "/games/post_facebook" => "games#post"
+    match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
     scope "developers/" do
-      match "/" => "backend#home", :as => "backend_home"
       match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
-      get "projects/remove_developer_from_project"
-      match "/auth/google_oauth2/callback" => "authentications#google_callback"
-
       get "projects/remove_developer_from_project"
       match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
@@ -127,9 +125,6 @@ Arability::Application.routes.draw do
 
       match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
-
-      get "projects/remove_developer_from_project"
-
       get "projects/update"
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project

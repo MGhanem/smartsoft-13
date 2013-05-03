@@ -12,16 +12,17 @@ class ProjectsController < BackendController
   only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json,
     :view_recommended_words, :get_recommended_words]
 
- # author:Noha hesham
+ # Author:
+ #  Noha hesham
  # Description:
- #   finds the project by its id then destroys it
- # params:
- #   none
- # success:
- #   a pop up appears and makes sure the user wants to
+ #   Finds the project by its id then destroys it
+ # Params:
+ #   None
+ # Success:
+ #   A pop up appears and makes sure the user wants to
  #   delete the project by choosing ok the
  #   project is successfully deleted
- # failure:
+ # Failure:
  #   project is not deleted
   def destroy
     @project = Project.find(params[:id])
@@ -182,15 +183,21 @@ class ProjectsController < BackendController
   # Author:
   #  Noha Hesham
   # Description:
-  #  finds the project by the params id
+  #  Finds the project by the params id
   # Params:
-  #  none
-  # success:
-  #  project is found
-  # failure:
-  #  none
+  #  None
+  # Success:
+  #  Project is found
+  # Failure:
+  #  None
   def share
     @project = Project.find(params[:id])
+    temp_projects = Project.where(owner_id: current_developer.id)
+    if !temp_projects.include?(@project)
+      flash[:error] = t(:developer_cant_see_project)
+      redirect_to project_path
+      return
+    end
     gamers_ids = Developer.pluck(:gamer_id)
     @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
@@ -334,16 +341,6 @@ end
     end
     redirect_to project_path(@project.id)
   end
-
-  def remove_developer_from_project
-    dev = Developer.find(params[:dev_id])
-    project = Project.find(params[:project_id])
-    project.developers_shared.delete(dev)
-    project.save
-    flash[:notice] = "Developer Unshared!"
-   redirect_to "/projects"
-  end
-
 
   # Author:
   #   Mohamed Tamer

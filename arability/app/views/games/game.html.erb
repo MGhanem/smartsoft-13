@@ -96,6 +96,7 @@
   }
 
   function showPrizes() {
+     show_menu_item('<%= t(:prizes) %>');
     if(nav_locked) {
       return;
     }
@@ -107,6 +108,7 @@
   }
 
   function showTrophies() {
+    show_menu_item('<%= t(:trophies) %>');
     if(nav_locked) {
       return;
     }
@@ -174,6 +176,7 @@ function setButtons(){
   // Failure:
   //   None
   function inviteFriends(){
+    show_menu_item('<%= t(:invite) %>');
     if(nav_locked) {
       return;
     }
@@ -205,15 +208,26 @@ function setButtons(){
   }
 
   function disableNav() {
-    var lists = $("[id*='navItems']");
-    lists.addClass("disabled");
-    nav_locked = true;
+    $('#ingamenav').addClass('disabled');
+  }
+
+  function show_menu_item(title)
+  {
+    
+    var item_html = '<h3 style="margin-top: -50px; font-size: 40px;"> \
+    ' + title + ' \
+    </h3>';
+    $(".btn-group span.new").text(title);
+    //$(".btn-group span.caret").html(item_html);
+
+
+    //$("#selected_item").hide();
+    //$("#selected_item").html(item_html);
+    //$("#selected_item").show();
   }
 
   function enableNav() {
-    var lists = $("[id*='navItems']");
-    lists.removeClass("disabled");
-    nav_locked = false;
+    $('#ingamenav').removeClass('disabled');
   }
 
   // Author:
@@ -229,7 +243,8 @@ function setButtons(){
   //   internet connection failure: a message is displayed upon clicking to view facebook/twitter friends' 
   //   hall of fame telling the user to check his internet connection
   function hallOfFame(){
-    if(nav_locked) {
+    show_menu_item('<%= t(:rank) %>');
+    if(nav_locked == true){
       return;
     }
     if(cache == "") {
@@ -244,6 +259,7 @@ function setButtons(){
   }
 
   function showProfile(){
+    show_menu_item('<%= t(:vote) %>');
     if(cache == "") {
       cache = document.getElementById("zone").innerHTML;
     } 
@@ -292,21 +308,76 @@ function setButtons(){
     modalYesButton = "<%= t(:modal_yes_button) %>";
     modalNoButton = "<%= t(:modal_no_button) %>";
   }
-
 </script>
-
-
-
-
+<% if I18n.locale==:ar %>
 <div class="game-zone">
-  <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()"><%= t(:rank) %></div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
-    <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
+  <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
+    <% if current_gamer != nil %>
+    <div class="btn-group" style="height: 66px;">
+       <button type="submit" id="ingamenav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 115px; height: 27px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
+        <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
+        
+       </button>
+        <center id="selected_item"></center>
+        <ul class="dropdown-menu" style="margin-top: -25px; margin-right: 12px;">
+         <li><a href="#"onclick="hallOfFame()">
+              <span style="font-size: 18px;">الرتبة</span>
+             </a></li>
+         <li><a href="#" onclick="showPrizes()">
+            <span style="font-size: 18px;">جوائز</span> 
+          </a></li>
+         <li> <a href="#" onclick="showTrophies()">
+                <span style="font-size: 18px;">الإنجازات</span>
+              </a></li>
+         <li><a href="#" onclick="showProfile()">
+          <span style="font-size: 18px;">اصوات</span>
+             </a>
+         </li>
+         <li> <a href="#" onclick="inviteFriends()">
+         <span style="font-size: 18px;">دعوات</span>
+         </a>
+          </li>
+        </ul>
+        
+    </div>
+    <% end %>
   </div>
+  <% else I18n.locale==:en %>
+  <div class="game-zone" style="text-align:left;">
+   <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
+    <% if current_gamer != nil %>
+    <div class="btn-group" style="height: 66px;">
+       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width : 115px; height: 27px; margin-top:15px; border: medium none; margin-left: 20px;"><i class="icon-align-justify"></i>
+        <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
+        
+       </button>
+        <center id="selected_item"></center>
+        <ul class="dropdown-menu" id="ingamenav" style="margin-left: 20px; margin-top:-20px;">
+         <li ><a href="#"onclick="hallOfFame()">
+              <span style="margin-right: 90px;">Rank</span>
+             </a></li>
+         <li><a href="#" onclick="showPrizes()">
+             <span style="margin-right: 90px;">Prizes</span>
+          </a></li>
+         <li> <a href="#" onclick="showTrophies()">
+                <span style="margin-right: 90px;">Trophies</span>
+              </a></li>
+         <li><a href="#" onclick="showProfile()">
+          <span style="margin-right: 90px;">Votes</span>
+             </a>
+         </li>
+         <li> <a href="#" onclick="inviteFriends()">
+              <span style="margin-right: 90px;">Invitations</span>
+         </a>
+          </li>
+        </ul>
+        
+    </div>
+    <% end %>
+  </div>
+  
+  <%end%>
+ 
 
   <% if I18n.locale == :ar %>
     <div class="zone" id="zone" style="text-align:right; direction: rtl;">

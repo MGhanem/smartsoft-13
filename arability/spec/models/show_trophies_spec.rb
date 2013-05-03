@@ -12,6 +12,7 @@ describe "Get Prizes" do
     gamer_adam.email = "ag@gmail.com"
     gamer_adam.password = "password"
     gamer_adam.password_confirmation = "password"
+    gamer_adam.confirmed_at = Time.now
     gamer_adam.save validate: false
     gamer_adam
   }
@@ -27,6 +28,7 @@ describe "Get Prizes" do
     gamer_yahya.password = "password"
     gamer_yahya.password_confirmation = "password"
     gamer_yahya.email = "ym@gmail.com"
+    gamer_yahya.confirmed_at = Time.now
     gamer_yahya.save validate: false
     gamer_yahya
   }

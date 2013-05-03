@@ -1,0 +1,38 @@
+<div class="container admin">
+	<div class="row">
+		<%= render partial: "sidebar-nav", locals: {active: "add-admin"} %>
+		<div class="span9 offset3">
+			<div class="tab-content">
+				<div class="tab-pane well span7 active">
+					<%= form_tag("", method: "post", :class => "form-horizontal") do %>
+						<fieldset>
+							<legend>
+									إضافة مشرف جديدة
+							</legend>
+							<% if flash[:error] %>
+								<div class="alert alert-error">
+						    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+						    	<div>
+						    		<%= flash[:error] %>
+						    	</div>
+						  	</div>
+							<% end %>
+							<input type="hidden" value="<%= form_authenticity_token %>" name="authenticity_token">
+							<div class="control-group">
+								<label class="control-label" for="inputkeyword">البريد الالكترونى</label>
+								<div class="controls">
+									<%= text_field_tag("email", "",
+	  									placeholder: "البريد الالكترونى",
+	  									:class => "span4 autocomplete",
+	  									autocomplete: "off",
+	  									id: "inputkeyword") %>
+									<button type="submit" class="btn btn-primary pull-left">إضافة المشرف</button>
+								</div>
+							</div>
+						</fieldset>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

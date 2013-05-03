@@ -9,14 +9,14 @@
 			<li <%= active == "list-developers"? "class=active" : "" %>>
 				<a href="/admin/list/developers">عرض المطوريين</a>
 			</li>
+			<li <%= active == "add-admin"? "class=active" : "" %>>
+				<a href="/admin/make_admin">اضافة مشرف</a>
+			</li>
 			<li <%= active == "list-admins"? "class=active" : "" %>>
 				<a href="/admin/list/admins">عرض المشرفيين</a>
 			</li>
 			<li class="nav-header">إدارة المشارييع</li>
 			<li class="divider"></li>
-			<li <%= active == "list-projects"? "class=active" : "" %>>
-				<a href="/admin/list/projects">عرض المشارييع</a>
-			</li>
 			<li <%= active == "add-category"? "class=active" : "" %>>
 				<a href="/admin/add_category">إضافة فئة جديدة</a>
 			</li>
