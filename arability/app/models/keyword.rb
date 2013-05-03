@@ -7,6 +7,7 @@ class Keyword < ActiveRecord::Base
   validates_presence_of :name
   validates_format_of :name, with: /^([\u0621-\u0652 ]+|[a-zA-Z ]+)$/
   validates_uniqueness_of :name
+  validates_length_of :name, minimum: 3, maximum: 24
 
   # Author: 
   #   Nourhan Mohamed

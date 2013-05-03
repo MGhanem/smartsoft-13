@@ -210,9 +210,9 @@ ar:
         keyword:
           attributes:
             name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
+              blank: "لا يمكن أن تكون فارغة"
+              invalid: "يجب أن تتكون من حروف عربية أو إنجليزية فقط"
+              taken: "موجودة بالفعل"
         category:
           attributes:
             english_name:
