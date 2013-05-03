@@ -14,7 +14,8 @@ describe "Get Prizes" do
     gamer_adam.email = "ag@gmail.com"
     gamer_adam.password = "password"
     gamer_adam.password_confirmation = "password"
-    gamer_adam.save(:validate => false)
+    gamer_adam.confirmed_at = Time.now
+    gamer_adam.save validate: false
     gamer_adam
   }
 
@@ -29,7 +30,8 @@ describe "Get Prizes" do
     gamer_yahya.password = "password"
     gamer_yahya.password_confirmation = "password"
     gamer_yahya.email = "ym@gmail.com"
-    gamer_yahya.save
+    gamer_yahya.confirmed_at = Time.now
+    gamer_yahya.save validate: false
     gamer_yahya
   }
 
@@ -38,7 +40,7 @@ describe "Get Prizes" do
     prize1.name = "جأجأزجأج"
     prize1.level = 1
     prize1.score = 100
-    prize1.save
+    prize1.save validate: false
     prize1
   }
  
@@ -47,7 +49,7 @@ describe "Get Prizes" do
     prize2.name = "جأزةجأ"
     prize2.level = 1
     prize2.score = 100
-    prize2.save
+    prize2.save validate: false
     prize2
   }
 
@@ -56,7 +58,7 @@ describe "Get Prizes" do
     prize3.name = "جأجأأزة"
     prize3.level = 1
     prize3.score = 100
-    prize3.save
+    prize3.save validate: false
     prize3
   }
 
@@ -65,7 +67,7 @@ describe "Get Prizes" do
     prize4.name = "ججأأزة"
     prize4.level = 1
     prize4.score = 100
-    prize4.save
+    prize4.save validate: false
     prize4
   }
  
@@ -74,7 +76,7 @@ describe "Get Prizes" do
     prize5.name = "جأجأجأ"
     prize5.level = 1
     prize5.score = 100
-    prize5.save
+    prize5.save validate: false
     prize5
   }
 
@@ -83,7 +85,7 @@ describe "Get Prizes" do
     prize6.name = "جأجأأجأجأ"
     prize6.level = 3
     prize6.score = 1000
-    prize6.save
+    prize6.save validate: false
     prize6
   }
 
@@ -92,7 +94,7 @@ describe "Get Prizes" do
     prize7.name = "شسيضصثف"
     prize7.level = 3
     prize7.score = 2000
-    prize7.save
+    prize7.save validate: false
     prize7
   }
 
