@@ -37,7 +37,7 @@ class Synonym < ActiveRecord::Base
   #   returns 1 when the synonym written by the gamer is blank
   #   returns 2 when the synonym is already existing
   #   returns 4 when the gamer didn't choose formal or slang to the synonym
-  def self.record_suggested_synonym(synonym_name, keyword_id, approved= true, is_formal)
+  def self.record_suggested_synonym(synonym_name, keyword_id, approved = true, is_formal)
     if synonym_name.blank?
       return  1
     elsif Synonym.exists?(name: synonym_name, keyword_id: keyword_id)

@@ -2,7 +2,7 @@ var words=get_words();
 var translation="";
 
 function record_vote(syn_id, is_formal){
-	$.post("/games/record_vote", {synonym_id: syn_id, is_formal:is_formal } );
+	$.post("/games/record_vote", {synonym_id: syn_id, is_formal: is_formal } );
 }
 
 function display_next_word(){

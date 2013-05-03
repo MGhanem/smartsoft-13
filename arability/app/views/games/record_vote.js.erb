@@ -1,8 +1,8 @@
 <% if params[:is_formal] == "formal" %>
-  <% current_or_guest_gamer.select_synonym(params[:synonym_id], true) %>
+	<% current_or_guest_gamer.select_synonym(params[:synonym_id], true) %>
 <% elsif params[:is_formal] == "slang" %>
-  <% current_or_guest_gamer.select_synonym(params[:synonym_id], false) %>
+	<% current_or_guest_gamer.select_synonym(params[:synonym_id], false) %>
 <% else %>
-	 <% current_or_guest_gamer.select_synonym(params[:synonym_id]) %>
+	<% current_or_guest_gamer.select_synonym(params[:synonym_id]) %>
 <% end %>
 display_next_word();
