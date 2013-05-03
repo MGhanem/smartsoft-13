@@ -95,7 +95,7 @@
             <% if @votes[synonym.id] != nil %>
               <% visuals = @charts.select { |f| f[synonym.id] } %>
               <% charts = visuals.first[synonym.id] %>
-              <div class="centered_div" style="background-color: white; margin: 0 auto;" dir ="ltr">
+              <div class="centered_div" style="background-color: white; width:880px; margin: 0 auto;" dir ="ltr">
                 <div class="container-fluid">
                   <div class="row-fluide">
                     <div class="span2">    
@@ -191,24 +191,6 @@
       </div>
     </div>
   <% end %>
-
-<style type="text/css">
-  .arabic-charts-centered {
-    width:680px;
-  }
-  .english-charts-centered {
-    width: 880px;
-  }
-</style>
-<script type="text/javascript">
-  $(document).ready(function () {
-    <% if I18n.locale == :ar %>
-      $(".centered_div").addClass("arabic-charts-centered");
-    <% else %>
-      $(".centered_div").addClass("english-charts-centered");
-    <% end %>
-  });
-</script>
 
   <div class="alert alert-error" id="age_error" style="display:none;">
     <div style="text-align:center;"><%= t(:wrong_age_input) %></div>
