@@ -273,6 +273,10 @@ class ProjectsController < BackendController
 
 def show
   @project = Project.find(params[:id])
+  @can_share = true
+  if current_developer.id != @project.owner_id
+    @can_share = false
+  end
   @words = []
   @synonyms = []
   @words_synonyms = PreferedSynonym.where(project_id: params[:id])
