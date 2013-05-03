@@ -263,7 +263,7 @@ function setButtons(){
 
   function generateEmptyDbMsg(){
     <% if I18n.locale == :ar %>
-      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك مواصلة اللعب بدون تصويت"
     <% else %>
       return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
@@ -274,14 +274,16 @@ function setButtons(){
     wordsListPopoverTitle = "<%= t(:words_list_popover_title) %>";
     wordLabelPopoverContent = "<%= t(:word_label_popover_content) %>";
     wordLabelPopoverTitle = "<%= t(:word_label_popover_title) %>";
-    tablePopoverContent = "<%= t(:table_popover_content) %>"
-    tablePopoverTitle = "<%= t(:table_popover_title) %>"
+    tablePopoverContent = "<%= t(:table_popover_content) %>";
+    tablePopoverTitle = "<%= t(:table_popover_title) %>";
     clickedButtonPopoverContent = "<%= t(:clicked_button_popover_content) %>";
     clickedButtonPopoverTitle = "<%= t(:clicked_button_popover_title) %>";
     clickedButtonPopoverButton = "<%= t(:clicked_button_popover_button) %>";
-    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>"
-    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>"
-    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>"
+    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>";
+    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>";
+    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>";
+    scorePopoverContent = "<%= t(:score_popover_content) %>";
+    scorePopoverTitle = "<%= t(:score_popover_title) %>";
   }
 
   function setModalTranslations(){

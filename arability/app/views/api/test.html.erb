@@ -1,0 +1,25 @@
+<span style="direction: rtl">
+  <form accept-charset="UTF-8" action="/en/gamers/sign_in" class="form-signin"
+    id="new_gamer" method="post">
+    <div style="margin:0;padding:0;display:inline">
+      <input name="utf8" type="hidden" value="✓">
+      <input name="authenticity_token" type="hidden"
+        value="fgm7/OopQV39Be92ejPAvobcAFncumxP4xNbiK66YlU=">
+    </div>
+    <h2 class="form-signin-heading" data-arabize="sign in">Sign In</h2>
+    <input class="input-block-level" id="gamer_login" name="gamer[login]"
+      data-arabize="username" placeholder="Username or email" size="30" type="text" value="">
+    <input class="input-block-level" id="gamer_password" name="gamer[password]"
+      data-arabize="password" placeholder="Password" size="30" type="password">
+    <br><br>
+    <div>
+      <input class="btn btn-large btn-primary pull-right" name="commit"
+        data-arabize="sign in" style="margin-top:-7px; padding-top:4px; padding-bottom:4px;"
+        type="submit" value="Sign In" />
+    </div>
+  </form>
+</span>
+<script src="http://localhost:3000/developers/api/arabize.js"></script>
+<script>
+    $.arabize({ api_key: "a6b0325b42d263376abdf8f9fb81ae36" })
+</script>
