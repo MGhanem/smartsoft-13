@@ -8,10 +8,27 @@
 						<div class="pull-left pagination">
 							<%= paginate @list, :remote => true %>
 						</div>
-						<a>
-							عرض المشرفيين
-						</a>
+						عرض المشرفيين
 					</legend>
+					<% if flash[:success] %>
+						<div class="alert alert-success">
+					    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+					    	<div>
+					    		<%= flash[:success] %>
+					    	</div>
+					  	</div>
+					<% end %>
+					<% if flash[:error] %>
+						<div class="alert alert-error">
+					    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+					    	<div>
+					    		<%= flash[:error] %>
+					    	</div>
+					  	</div>
+					<% end %>
+					<% if @list.length-1 == 0 %>
+						لا يوجد مشرفيين غيرك
+					<% else %>
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -22,14 +39,33 @@
 						</thead>
 						<tbody>
 							<% for item in @list %>
-								<tr>
-									<td><%= item.username %></td>
-									<td><%= item.email %></td>
-									<td><a href="/admin/remove_admin?id=<%= item.id %>">مسح</a></td>
-								</tr>
+								<% if item.id != current_gamer.id %>
+									<div id="myModal<%= item.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							            <div class="modal-header">
+							              	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							              	<h3 id="myModalLabel">تأكيد المسح</h3>
+							            </div>
+							            <div class="modal-body">
+							              	<p>هل أنت متأكد من مسح المشرف</p>
+							              	<strong><%= item.username %></strong>
+							            </div>
+							            <div class="modal-footer">
+							              	<button class="btn" data-dismiss="modal" aria-hidden="true">غلق</button>
+							              	<a class="btn btn-danger" href="/admin/remove_admin?id=<%= item.id %>">مسح</a>
+							            </div>
+							        </div>
+									<tr>
+										<td><%= item.username %></td>
+										<td><%= item.email %></td>
+										<td>
+											<a href="#myModal<%= item.id %>" data-toggle="modal">مسح</a>
+										</td>
+									</tr>
+								<% end %>
 							<% end %>
 						</tbody>
 					</table>
+					<% end %>
 				</div>
 			</div>
 		</div>

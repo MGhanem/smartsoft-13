@@ -31,5 +31,19 @@
 	<%= javascript_include_tag "jquery.validate" %>
 	<%= javascript_include_tag "bootstrap-fileupload.min" %>
 	<%= javascript_include_tag "admin" %>
+	<script>
+	$(".autocomplete").typeahead({
+		source: fetch_keywords,
+		items: 4,
+		highlighter: function(item) {
+		    return item
+		}
+	});
+	function fetch_keywords(keyword, callback){
+		$.get("/admin/autocomplete", { search: keyword }, function(data, _, _){
+		    callback(data);
+		})
+	}
+	</script>
 </body>
 </html>
