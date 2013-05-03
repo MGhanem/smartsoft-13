@@ -424,7 +424,7 @@ class Gamer < ActiveRecord::Base
     if gamer.save
       UserMailer.generic_email(gamer.email,
         "Arability password",
-        "Dear #{gamer.username},"
+        "Dear #{gamer.username}," +
         "\n\nWelcome to Arability." +
         "\n\nSeen as you have signed up with an existing account " +
         "and you do not have a password, here is a token that you can " +
