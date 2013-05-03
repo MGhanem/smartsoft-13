@@ -1,0 +1,87 @@
+<script type="text/javascript" charset="utf-8">
+
+  function display(clicked_id)
+  {
+    if(clicked_id == 1)
+    {
+      $("#twitter").css("visibility", "hidden");
+      $("#facebook").css("visibility", "hidden");
+      $("#mainhall").css("visibility", "visible");
+      $("#twitter").css("position", "fixed");
+      $("#facebook").css("position", "fixed");
+      $("#mainhall").css("position", "relative");
+    }
+    else
+    {
+      if(clicked_id == 2)
+      {
+        $("#twitter").css("visibility", "hidden");
+        $("#facebook").css("visibility", "visible");
+        $("#mainhall").css("visibility", "hidden");
+        $("#twitter").css("position", "fixed");
+        $("#facebook").css("position", "relative");
+        $("#mainhall").css("position", "fixed");
+      }
+      else
+      {
+        $("#twitter").css("visibility", "visible");
+        $("#facebook").css("visibility", "hidden");
+        $("#mainhall").css("visibility", "hidden");
+        $("#twitter").css("position", "relative");
+        $("#facebook").css("position", "fixed");
+        $("#mainhall").css("position", "fixed");
+      }
+    }
+  }
+  $(document).ready(function() {
+    $("#mainhall br, #facebook br, #twitter br").remove();
+  });
+</script>
+
+<div style="display:block">
+  <% if I18n.locale == :en %>
+    <a class="pull-right btn btn-success" style="padding: 5px; margin-right: 12px; margin-top: 28px;" onclick="backToGame()">Back to game</a>
+  <% else %>
+    <a class="pull-left btn btn-success" style="padding: 5px; margin-left: 28px; margin-top: 28px;" onclick="backToGame()">رجوع الى اللعبة</a>
+  <% end %>  
+</div>
+
+<div align="center">
+  <div id="all" class="btn-group" data-toggle="buttons-radio" style = "padding-top:20px; padding-bottom:20px; width:500px" align="center">
+    <button id = "1" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+      <%= t(:hall_of_fame) %></button>
+    <button id = "2" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+      <%= t(:your_facebook_friends) %></button>
+    <button id = "3" type="button" class="btn" data-toggle="button" onclick="display(this.id)" style="font-size:20px;">
+      <%= t(:your_twitter_friends) %></button>
+  </div>
+</div>
+
+<div id="loading" align="center" vertical-align="center">
+  <p style="color:white;"><%= t(:loading) %></p>
+  <img src="/assets/ajax-loader.gif" alt="loading.." />
+</div>
+
+<div id="mainhall" style = "width:770px; margin:0 auto;" align="center">
+</div>
+
+<div id = "twitter" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
+</div>
+
+<div id = "facebook" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
+</div>
+
+<script type="text/javascript">
+  $.ajax({
+  url: "/games/main_hall_of_fame",
+    async: "true"
+  });
+  $.ajax({
+  url: "/games/twitter_hall_of_fame",
+    async: "true"
+  });
+  $.ajax({
+  url: "/games/facebook_hall_of_fame",
+    async: "true"
+  });
+</script>

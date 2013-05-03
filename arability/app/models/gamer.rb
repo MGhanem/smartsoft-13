@@ -63,6 +63,58 @@ class Gamer < ActiveRecord::Base
     end
   end
 
+  # Author:
+  #   Nourhan Mohamed, Mohamed Ashraf, Karim Elnaggar
+  # Description:
+  #   gets emails similar to an email and sorts 
+  #   result by relevance
+  # params:
+  #   email: the email to be compared against
+  # Success:
+  #   returns a list of the keywords (optionally filtered by categories) 
+  #   similar to the search keyword sorted in lexicographical order
+  # Failure:
+  #   returns an empty list if the email had no matches
+  def self.get_similar_emails(email)
+    return [] if email.blank?
+    email.strip!
+    email_list = self.where("gamers.email LIKE ?", "#{email}%")
+    relevant_first_list = email_list
+      .sort_by { |gamer| [gamer.email.downcase.index(email),
+        gamer.email.downcase] }
+    relevant_first_list
+  end  
+
+  # Description:
+  #   makes the user an admin
+  # Author:
+  #   Karim el naggar
+  # Params:
+  #   user: the user to be converted
+  # Success:
+  #   the user is now admin
+  # Failure:
+  #   none
+  def make_admin
+    self.admin = true
+    self.save
+  end
+
+  # Description:
+  #   removes the user from the admins
+  # Author:
+  #   Karim el naggar
+  # Params:
+  #   user: the user to be converted
+  # Success:
+  #   the user is now not an admin
+  # Failure:
+  #   none
+  def remove_admin
+    self.admin = false
+    self.save
+  end
+
   # Description:
   #   Takes in a trophy id and adds it the gamers trophies array
   # Author:
@@ -176,8 +228,13 @@ class Gamer < ActiveRecord::Base
   #   returns true when a vote is saved for the selected synonym
   # Failure:
   #   returns false when the vote is not saved
-  def select_synonym(synonym_id)
+  def select_synonym(synonym_id, is_formal = nil)
     if Vote.record_vote(self.id,synonym_id)[0]
+      if is_formal != nil
+        synonym = Synonym.find(synonym_id)
+        synonym.is_formal = is_formal
+        synonym.save
+      end
       return true
     else
       return false
@@ -191,12 +248,14 @@ class Gamer < ActiveRecord::Base
   # Params:
   #   synonym_name: which is the synonym name the gamer suggested in the  
   #                 vote form.
+  #   keyword_id: is the id of keyword for which the synonym is being added
+  #   is_formal: determine whether the synonym is formal or slang
   # Success:
   #   returns 0 returned by the invoked method meaning saved new synonym
   # Failure:
   #   returns 1,2,3 according to the invoked method failure scenario
-  def suggest_synonym(synonym_name, keyword_id)
-    return Synonym.record_suggested_synonym(synonym_name, keyword_id)
+  def suggest_synonym(synonym_name, keyword_id, is_formal)
+    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true, is_formal)
   end
     
 
@@ -251,6 +310,86 @@ class Gamer < ActiveRecord::Base
         return common
       end
     end
+    
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_gamer_rank(current_gamer)
+    gamers = Gamer.where(is_guest: [nil, false]).find(:all, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+     if user == current_gamer
+        current_gamer_rank = rank
+     end
+     rank = rank + 1
+    end
+    return current_gamer_rank
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  #   within his facebook friends
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_facebook_rank(current_gamer)
+    common = Authentication.get_common_facebook_friends(current_gamer)
+    if common.nil?
+      return nil
+    end
+    gamers = Gamer.find(common, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+      if user == current_gamer
+        current_gamer_rank = rank
+      end
+      rank = rank + 1
+    end
+    return current_gamer_rank
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to get the rank of the current gamer based on the highest score
+  #   within his twitter friends
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns rank number of the gamer
+  # Failure:
+  #   returns nil if gamer is not found
+  def self.get_twitter_rank(current_gamer)
+    common = Authentication.get_common_twitter_friends(current_gamer)
+    if common.nil?
+      return nil
+    end
+    gamers = Gamer.find(common, order: "highest_score DESC")
+    current_gamer_rank = nil
+    rank = 1
+    gamers.each do |user|
+      if user == current_gamer
+        current_gamer_rank = rank
+      end
+    rank = rank + 1
+    end
+    return current_gamer_rank
   end
 
   # Author:

@@ -42,12 +42,112 @@ describe AdminController  do
       gamer
     end
 
+    let(:gamer2) do
+      gamer = Gamer.new
+      gamer.username = "ahmed"
+      gamer.country = "Egypt"
+      gamer.gender = "male"
+      gamer.date_of_birth = "1993-10-23"
+      gamer.email = "ahmed@gmail.com"
+      gamer.password = "1234567"
+      gamer.education_level = "University"
+      gamer.confirmed_at = Time.now
+      gamer.save validate: false
+      gamer
+    end
+
+    let(:developer) do
+      gamer
+      developer = Developer.new
+      developer.gamer_id = gamer.id
+      developer.save
+      developer
+    end
+
+    let(:project) do
+      gamer
+      developer
+      project = Project.new
+      project.name = "first project"
+      project.minAge = 50
+      project.maxAge = 60
+      project.owner_id = developer.id
+      project.save
+      project
+    end
+
     let(:word) do
       word = Keyword.new
       word.name = "Test"
       word.is_english = true
       word.save validate: false
       word
+    end
+
+    it "should list all gamers" do
+      gamer
+      sign_in(gamer)
+      get :list_gamers
+      assigns(:list).should =~ [gamer]
+    end
+
+    it "should list all developers" do
+      gamer
+      developer
+      sign_in(gamer)
+      get :list_developers
+      assigns(:list).should =~ [developer]
+    end
+
+    it "should make ahmed an admin" do 
+      gamer
+      gamer2
+      sign_in(gamer)
+      post :make_admin, email: gamer2.email
+      Gamer.find_by_email(gamer2.email).admin.should eq(true)
+    end
+
+    it "should not make an admin" do
+      gamer2
+      sign_in(gamer)
+      post :make_admin, email: "karimkkk@gamil.com"
+      response.should redirect_to("http://test.host/admin/make_admin")
+    end
+
+    it "should remove the current existing admin" do
+      gamer
+      gamer2
+      sign_in(gamer)
+      post :make_admin, email: gamer2.email
+      Gamer.find_by_email(gamer2.email).admin.should eq(true)
+      get :remove_admin, id: gamer2.id
+      Gamer.find_by_id(gamer2.id).admin.should eq(false)
+    end
+
+    it "should not remove the not existing admin" do
+      gamer
+      gamer2
+      sign_in(gamer)
+      get :remove_admin, id: gamer2.id
+      Gamer.find_by_id(gamer2.id).admin.should eq(false)
+      response.should redirect_to("http://test.host/admin/list/admins")
+    end
+
+    it "should not remove yourself from admins" do
+      gamer
+      sign_in(gamer)
+      get :remove_admin, id: gamer.id
+      Gamer.find_by_id(gamer.id).admin.should eq(true)
+      response.should redirect_to("http://test.host/admin/list/admins")
+    end
+
+    it "should list all developer's projects" do
+      gamer
+      developer
+      project
+      sign_in(gamer)
+      get :list_developer_projects, id: developer.id
+      assigns(:list).should =~ [project]
     end
 
     it "list all subscription models" do

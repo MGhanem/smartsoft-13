@@ -1,4 +1,8 @@
 ar:
+  request_button: "إضغط هنا"
+  posting_success: "لقد شاركت نقاطك على فيسبوك"
+  post_on_fb: "لقد حصلت على "
+  post_on_fb_2: " نقطة في عربيلتي على http://localhost:3000/"
   welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
   welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
@@ -35,6 +39,7 @@ ar:
   follow: "تابع"
   following: "متابع"
   backend: "المطورون"
+  rec_back: "العودة"
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"
@@ -96,6 +101,9 @@ ar:
   export: "تصدير"
   add_words: "اضف كلمات"
   recommended_words: "الكلمات المرشحة"
+  recommended_for_project: "الكلمات المرشحة لمشروعك"
+  select_words: "اختر الكلمات التي تريد اضافتها في المشروع"
+  no_recommended_words: "عذرا,لا توجد كلمات مرشحة لهذا المشروع"
   share: "مشاركة"
   delete: "مسح"
   word: "الكلمة"
@@ -193,11 +201,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  views:
-    project:
-       flash_messages:
-         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -342,7 +345,11 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  prizes: "الجوائز" 
+  trophies: "الإنجازات" 
+  invite: "دعوات" 
+  rank: "الرتبة"          
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
@@ -361,7 +368,24 @@ ar:
         categories: "الفئات"
         description: "الوصف"
         before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-  choose_sub: 'نظام الإشتراك'           
+  choose_sub: 'نظام الإشتراك'
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  enter_word_first: "ادخل كلمة اولآ"
+  project_removed: "تم مسح المشروع المشترك"
+  choose_sub: 'نظام الإشتراك'
+  tag_using_categories: "إختر التصنيفات المناسبة"
+  keyword_exists: "هذه الكلمة موجودة بالفعل"
+  keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
+  category_tags: "التصنيفات"
+  won_prizes_title: "الجوائز التي تم الحصول عليها "
+  not_won_prizes_title: "الجوائز المتاحة "
+  no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
+  all_prizes: "لقد فزت بجميع الجوائز"
+  project_removed: "تم مسح المشروع المشترك"
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
   twitter_signin: "تسجيل دخول بتويتر"
@@ -370,7 +394,7 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
-  project_removed: "تم مسح المشروع المشترك"            
+  project_removed: "تم مسح المشروع المشترك"
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -392,7 +416,7 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
-  project_removed: "تم مسح المشروع المشترك"            
+  project_removed: "تم مسح المشروع المشترك"
   activerecord:
     attributes:
       project:
@@ -412,6 +436,23 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
+  hall_of_fame: "قاعة الشهرة"
+  your_rank: "ترتيبك"
+  your_facebook_friends: "أصدقائك في فيسبوك"
+  your_twitter_friends: "أصدقائك في تويتر"
+  rank: "الرتبة"
+  highest_score: "أعلى نقاط"
+  no_trophies_won: "لا يوجد جوائز"
+  not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر "
+  not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر "
+  loading: "جاري التحميل، برجاء الانتظار"
+  add_to: "أضف إلى"
+  with: "مع"
+  synonym: "معنى"
+  add: "أضف"
+  exceeds_word_limit: "لقد تجاوزت حد الكلمات المسموح بها لنظام اشتراكك."
+  choose_project: "من فضلك إختر مشروع لإضافة الكلمة."
+  you_have_prizes: "لقد ربحت الجوائز التالية"
   Email_dont: "هذا البريد الالكتروني غير صحيح"
   Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
   you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
@@ -495,7 +536,7 @@ ar:
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
   you_have_prizes: "لقد ربحت الجوائز التالية"
   sub_changed: "لقد غيرت نظامك "
-  caro1h: "عربلتي"
+  caro1h: "عربيليتي"
   caro1b: "موقع سهل الاستعمال لمساعدة مطوري البرامج الناطقين باللغة العربية والغير ناطقين بها لترجمة مواقعهم بسهولة"
   more: "معرفة المزيد"
   feat1h: "إلعب"
@@ -575,6 +616,50 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  views:
+    pagination:
+      previous: "&lt; قبل"
+      next: "بعد &gt;"
+      first: "الاولى"
+      last: "الاخيرة"
+      truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+        project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
+  connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
+  no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون رقما بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+  enter_a_synonym: "ادخل معني جديد"
+  skip_this_keyword: "تخطي هذا المعني"
+  suggest_this_synonym: "سجل هذا المعني"
+  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>رسمي</button>&nbsp او &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>غير رسمي</button></p>"
+  is_this_translation: "هل هذا المعني"
+  must_specify_formality: "يجب ان تختار سواء كان المعني فصحي او عامي"
+  choose_formality: "اختر"
+  report_game: "إبلاغ"
   add_to: "أضف إلى"
   with: "مع"
   synonym: "معنى"
@@ -609,6 +694,30 @@ ar:
   back_to_project: "<< عودة إلى المشروع"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  trial_error: "عفوا لا يمكنك استخدام هذه الخدمة. بالرجاء الاشتراك في نظام  بريميوم او ديلوكس"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين رقما بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
   no_translation_popover_title: "لا يوجد معاني لهذه الكلمة حاليا "
   no_translation_popover_content: "تبيمسب،"
   you_can: "تستطيع ان "
@@ -617,7 +726,9 @@ ar:
   project_keyword_unfollow: "تلغي متابعة"
   you_followed_word: "لقد تابعت هذه الكلمة من قبل"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+  resend_text: "لم تتلقى رسالة التفعيل؟ إعادة إرسال"
   send: "ارسل "
+  no_cat: "بدون فئات"
   hello: "مرحبا"
   confirm_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
   confirm_button: "تفعيل الحساب"
@@ -645,11 +756,22 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  have_to_sign_in: "يجب عليك تسجيل الدخول لتتمكن من رؤية هذه الصفحة"
+  followmaxtip: "لقد وصلت الحد المسموح لإتباع الكلمات."
+  search_not_allowed: >
+    عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في
+    البحث عن الكلمات التي بحثت عنها مسبقا.
+  score_popover_content: "كلما طول الكلمة زاد، سوف يزيد مجموع نقاطك أيضاً، وأيضاً يعتمد مجموع النقاط على سرعة تجميعك للكلمة. تستطيع أن تتبع السرعة من العداد الذي يقع بجانب الكلمات"
+  score_popover_title: "كيف تحتسب النقاط"
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
+  menu: "اللعبة"
+  profile: "بروفيل"
+  vote: "اصوات"
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
+  Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
   activerecord:
     models:
       developer: "مطور"

@@ -2,7 +2,7 @@
 class Developer < ActiveRecord::Base
   belongs_to :gamer 
   has_one :my_subscription
-  has_and_belongs_to_many :keywords
+  has_many :api_keys
 
   has_many :shared_projects
   has_many :projects_shared, :through => :shared_projects, :source => "project"

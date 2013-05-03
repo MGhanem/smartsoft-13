@@ -1,6 +1,6 @@
 #encoding: UTF-8
-class SubscriptionModel < ActiveRecord::Base	
-  has_many :my_subscriptions
+class SubscriptionModel < ActiveRecord::Base
+	has_many :my_subscriptions
   attr_accessible :name_en, :name_ar, :limit_search, :limit_follow, :limit_project ,:limit
 
   validates_presence_of :name_en, message: "لا يمكن أن يكون الإسم الإنجليزي فارغ"
