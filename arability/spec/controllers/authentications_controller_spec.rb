@@ -13,6 +13,7 @@ describe AuthenticationsController do
     current_gamer.date_of_birth = 1993-03-23
     current_gamer.email = "test@gmail.com"
     current_gamer.password = "1234567"
+    current_gamer.confirmed_at = Time.now
     current_gamer.save validate: false
     current_gamer
   }
