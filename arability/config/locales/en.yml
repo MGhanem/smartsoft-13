@@ -2,7 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  request_button: "GO"
+  request_button: "click here"
   posting_success: "You have posted your score on facebook"
   post_on_fb: "I have scored "
   post_on_fb_2: " points at arability game on http://localhost:3000/"

@@ -161,7 +161,6 @@ class GamesController < ApplicationController
           @redirect =  "/auth/facebook"
         rescue Koala::Facebook::ClientError
           @message = t(:error_fb)
-          @redirect = "/game"
         end
       end
     else
