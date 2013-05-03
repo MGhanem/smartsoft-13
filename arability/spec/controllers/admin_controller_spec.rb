@@ -23,6 +23,7 @@ describe AdminController  do
       model.limit_search = "300"
       model.limit_follow = "200"
       model.limit_project = "100"
+      model.limit = "1000"
       model.save validate: false
       model
     end
@@ -82,6 +83,14 @@ describe AdminController  do
       word.is_english = true
       word.save validate: false
       word
+    end
+
+    let(:synonym) do
+      synonym = Synonym.new
+      synonym.name = "منمن"
+      synonym.keyword_id = word.id
+      synonym.save
+      synonym
     end
 
     it "should list all gamers" do
@@ -150,7 +159,7 @@ describe AdminController  do
       assigns(:list).should =~ [project]
     end
 
-    it "list all subscription models" do
+    it "list all subscription models", omar: true do
       model1
       gamer
       sign_in(gamer)
@@ -158,7 +167,7 @@ describe AdminController  do
       assigns(:models).should =~ [model1]
     end
 
-    it "should view subscription model needed to be tested" do
+    it "should view subscription model needed to be tested", omar: true do
       model1
       gamer
       sign_in(gamer)
@@ -166,20 +175,31 @@ describe AdminController  do
       assigns(:model).should eq model1  
     end
 
-    it "should edit subscription model" do
+    it "should edit subscription model", omar: true do
       model1
-      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "Try", name_ar: "محاولة", limit_search: "100", limit_follow: "200", limit_project: "300"}
-      assigns(:model).should_not eq model1
+      gamer
+      sign_in(gamer)
+      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "Try", name_ar: "محاولة", limit_search: "100", limit_follow: "200", limit_project: "300", limit: "400"}
+      expect(SubscriptionModel.find_by_id(model1.id).name_en).to_not eq model1.name_en
+      response.should redirect_to("http://test.host/admin/view_subscription_models?locale=ar")
     end
 
-    it "should add category" do
+    it "should add category", omar: true do
       gamer
       sign_in(gamer)
       post :add_category, english_name: "trial", arabic_name: "تجربة"
-      assigns(:success).should eq (true)  
+      assigns(:success).should eq (true)
+      response.should redirect_to("http://test.host/admin/view_categories")
     end
 
-    it "list all categories" do
+    it "should not add category for incorrect data", omar: true do
+      gamer
+      sign_in(gamer)
+      post :add_category, english_name: "نمنم", arabic_name: "nmnm"
+      assigns(:success).should eq (false)
+    end
+
+    it "list all categories", omar: true do
       cat1
       gamer
       sign_in(gamer)
@@ -187,22 +207,26 @@ describe AdminController  do
       assigns(:categories).should =~ [cat1]
     end
 
-    it "delete category" do
+    it "delete category", omar: true do
       cat1
       gamer
       sign_in(gamer)
       expect{
       get :delete_category, category_id: cat1.id
       }.to change(Category,:count).by(-1)
+      response.should redirect_to("http://test.host/admin/view_categories?locale=ar")
     end   
 
-    it "should not edit subscription model due to wrong data" do
+    it "should not edit subscription model due to wrong data", omar: true do
       model1
-      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "", name_ar: "", limit_search: "100", limit_follow: "200", limit_project: "300"}
-      assigns(:model).should eq nil
+      gamer
+      sign_in(gamer)
+      put :update_subscription_model, model_id: model1.id, subscription_model: {name_en: "", name_ar: "", limit_search: "100", limit_follow: "200", limit_project: "300", limit: "flfl"}
+      assigns(:model).should eq model1
+      response.should redirect_to("http://test.host/admin/1/edit_subscription_model?errors%5Blimit%5D%5B%5D=%D9%8A%D8%AC%D8%A8+%D8%A3%D9%86+%D9%8A%D9%83%D9%88%D9%86+%D8%A7%D9%84%D8%AD%D8%AF+%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D9%89+%D8%B1%D9%82%D9%85&errors%5Bname_ar%5D%5B%5D=%D9%84%D8%A7+%D9%8A%D9%85%D9%83%D9%86+%D8%A3%D9%86+%D9%8A%D9%83%D9%88%D9%86+%D8%A7%D9%84%D8%A5%D8%B3%D9%85+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A+%D9%81%D8%A7%D8%B1%D8%BA&errors%5Bname_ar%5D%5B%5D=%D9%87%D8%B0%D8%A7+%D8%A7%D9%84%D8%A5%D8%B3%D9%85+%D9%84%D9%8A%D8%B3+%D8%A8%D8%A7%D9%84%D9%84%D8%BA%D8%A9+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9&errors%5Bname_en%5D%5B%5D=%D9%84%D8%A7+%D9%8A%D9%85%D9%83%D9%86+%D8%A3%D9%86+%D9%8A%D9%83%D9%88%D9%86+%D8%A7%D9%84%D8%A5%D8%B3%D9%85+%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A+%D9%81%D8%A7%D8%B1%D8%BA&errors%5Bname_en%5D%5B%5D=%D9%87%D8%B0%D8%A7+%D8%A7%D9%84%D8%A5%D8%B3%D9%85+%D9%84%D9%8A%D8%B3+%D8%A8%D8%A7%D9%84%D9%84%D8%BA%D8%A9+%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9&locale=ar")
     end
 
-    it "list all reports" do
+    it "list all reports", omar: true do
       word
       gamer
       sign_in(gamer)
@@ -211,7 +235,7 @@ describe AdminController  do
       assigns(:reports).should =~ [report]
     end
 
-    it "remove report but keep word approved" do
+    it "remove report but keep word approved", omar: true do
       word
       gamer
       sign_in(gamer)
@@ -220,13 +244,24 @@ describe AdminController  do
       assigns(:reportAll).should eq []
     end
 
-    it "remove report and unapprove word" do
+    it "remove report and unapprove keyword", omar: true do
       word
       gamer
       sign_in(gamer)
       success , reported = Report.create_report(gamer, word)
       get :unapprove_word, report_id: reported.id
       result = Keyword.find_by_id(word.id).approved
+      expect(result).to eq (false)
+      assigns(:reportAll).should eq []
+    end
+
+    it "remove report and unapprove synonym", omar: true do
+      synonym
+      gamer
+      sign_in(gamer)
+      success , reported = Report.create_report(gamer, synonym)
+      get :unapprove_word, report_id: reported.id
+      result = Synonym.find_by_id(synonym.id).approved
       expect(result).to eq (false)
       assigns(:reportAll).should eq []
     end
