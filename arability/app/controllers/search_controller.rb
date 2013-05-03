@@ -20,7 +20,7 @@ class SearchController < BackendController
   #   returns an empty list if the search keyword had no matches or no
   #   similar keywords were found
   def search_keywords
-    @develope r_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
     @projects = Project.where(owner_id: @developer_id).all
     @project_id = params[:project_id]
     @search_keyword = params["search"]
