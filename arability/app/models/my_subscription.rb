@@ -7,7 +7,7 @@
   # Author:
   #   Noha Hesham
   # Description:
-  #  it finds the chosen subscription model by the developer 
+  #  it finds the chosen subscription model by the developer
   #  and sets the limits in the subscription model
   #  to the developers my subscription
   # success:
@@ -46,7 +46,7 @@
   #   None
   def get_permission_follow
     developer = self.developer
-    count_follow = developer.keywords.count   
+    count_follow = developer.keywords.count
     if(count_follow < self.word_follow)
       return true
     else
@@ -64,10 +64,10 @@
   # Success:
   #  Gets the correct number of words counted
   # Failure:
-  #  None 
+  #  None
   def count_follow
     developer = self.developer
-    count_follow = developer.keywords.count   
+    count_follow = developer.keywords.count
   end
 
   # Author:
@@ -80,7 +80,7 @@
   # Success:
   #   Gives permission
   # Failure:
-  #   None 
+  #   None
   def get_projects_limit
     developer = self.developer
     projects_count = Project.where(owner_id: developer.id).count
@@ -101,7 +101,7 @@
   # Success:
   #   Gives permission to add words
   # Failure:
-  #   None 
+  #   None
   def can_add_word(proj_id)
     developer = self.developer
     add=PreferedSynonym.where(project_id: proj_id)
@@ -120,9 +120,9 @@
   # Params:
   #   Proj_id is the id of the project
   # Success:
-  #   Returns number of words 
+  #   Returns number of words
   # Failure:
-  #   None 
+  #   None
   def can_add_word_count(proj_id)
     developer = self.developer
     add = PreferedSynonym.where(project_id: proj_id ).count
@@ -158,5 +158,5 @@
         return false
       end
     end
-  end
+end
 end

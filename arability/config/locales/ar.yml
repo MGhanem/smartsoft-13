@@ -42,7 +42,6 @@ ar:
   name: "الاسم"
   category: "الفئة"
   categories: "الفئات"
-  formality: "النوع"
   formal: "فصحى"
   slang: "عامي"
   age: "الفئة العمرية"
@@ -53,6 +52,17 @@ ar:
   create_project: "انشاء مشروع"
   back: "<< عودة"
   please_select: "الرجاء الاختيار"
+  formality: "اللغة"
+  formal: "فصحى"
+  slang: "عامي"
+  age: "الفئة العمرية"
+  from: "من"
+  to: "الى"
+  desc: "عن المشروع"
+  desc2: "الوصف"
+  pro_gender: "النوع"
+  pro_male: "ذكر"
+  pro_female: "انثي"
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
   target: "هذا المشروع يستهدف الفئة التالية:"
@@ -335,6 +345,8 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  project_removed: "تم مسح المشروع المشترك"
+  choose_sub: 'نظام الإشتراك'
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
@@ -343,19 +355,12 @@ ar:
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
-  project_removed: "تم مسح المشروع المشترك"            
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
-        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-  choose_sub: 'نظام الإشتراك'           
+  project_removed: "تم مسح المشروع المشترك"
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
@@ -368,9 +373,9 @@ ar:
   report_sent: "تم تقديم التقرير بنجاح. سوف يتم ابلاغك بالايميل عند إتخاذ تصرف"
   report_abusive: "حدد الكلمات غير اللائقة"
   report: "إبلغ من هنا"
-  help_us_through_reporting: > 
-    ساعدونا في تحديد الكلمات غير اللائقة عن طريق إختيار الكلمات. عند ملئك هذه 
-    الإستمارة يتم عرض الكلمات على الأدمن و يتم إخطارك عن طريق الايميل في حال 
+  help_us_through_reporting: >
+    ساعدونا في تحديد الكلمات غير اللائقة عن طريق إختيار الكلمات. عند ملئك هذه
+    الإستمارة يتم عرض الكلمات على الأدمن و يتم إخطارك عن طريق الايميل في حال
     إتخاذ موقف من الطلب.
   words_in_page: "الكلمات التي يمكن اختيارها بالصفحة:"
   close: "إغلاق"
@@ -380,15 +385,6 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
-  project_removed: "تم مسح المشروع المشترك"            
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
   project_removed: "تم مسح المشروع المشترك"
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
@@ -621,11 +617,11 @@ ar:
   logged_in_to_google: "حسابك الآن متصل بـجوجل"
   connected_to_google: "انت متصل بجوجل بالفعل"
   oops_error_google: "واجهتنا مشاكل حين حولنا التواصل مع جوجل من فضلك حاول التواصل مرة أخرى"
-  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"  
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
   you_vote: ""
   vote_action: "لقد اخترت "
   chosen_action: " كأنسب بديل لكلمة "
-  vote_log: "اصواتك السابقة" 
+  vote_log: "اصواتك السابقة"
   no_you: "انت "
   no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"
   back_log: "اللعبة"
@@ -633,7 +629,7 @@ ar:
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
   search_not_allowed: >
-    عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في 
+    عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في
     البحث عن الكلمات التي بحثت عنها مسبقا.
   score_popover_content: "كلما طول الكلمة زاد، سوف يزيد مجموع نقاطك أيضاً، وأيضاً يعتمد مجموع النقاط على سرعة تجميعك للكلمة. تستطيع أن تتبع السرعة من العداد الذي يقع بجانب الكلمات"
   score_popover_title: "كيف تحتسب النقاط"
@@ -666,14 +662,14 @@ ar:
         project:
           attributes:
             minAge:
-              minAge_range: "يجب ان يكون بين ٩ و ٩٩ سنة"
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
             maxAge:
-              maxAge_range: "يجب ان يكون بين ١٠ و ١٠٠ سنة"
+              maxAge_range: "يجب ان يكون بين رقما ١٠ و ١٠٠ سنة"
               less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
         keyword:
           attributes:
             name:

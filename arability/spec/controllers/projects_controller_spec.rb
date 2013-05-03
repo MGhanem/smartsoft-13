@@ -1,11 +1,16 @@
 #encoding: UTF-8
 require "spec_helper"
 require "request_helpers"
-include Warden::Test::Helpers
 include RequestHelpers
+<<<<<<< HEAD
+include Warden::Test::Helpers
+
+describe ProjectsController, type: :controller do
+=======
 include Devise::TestHelpers
 
 describe ProjectsController, :type => :controller do
+>>>>>>> e911d20003f4af3e36ed320e172ac399d1e19e0c
 
   let(:gamer1){
 	  gamer = Gamer.new
@@ -135,6 +140,8 @@ describe ProjectsController, :type => :controller do
   end
   #End of Timo's tests
 
+<<<<<<< HEAD
+=======
 #   #Salma's Tests
   describe "GET #new" do
     it "initializes a new project" do
@@ -230,7 +237,12 @@ describe 'PUT update' do
       response.should render_template :edit
     end
   end
+<<<<<<< HEAD
+
+>>>>>>> 850e0b676c29d8e91a9de2868b390c0609ae6be0
+=======
 end
+>>>>>>> e911d20003f4af3e36ed320e172ac399d1e19e0c
 
 
 
@@ -247,6 +259,55 @@ end
     response.code.should eq("302")
   end
 
+<<<<<<< HEAD
+  #khloud's tests
+
+  it "redirects to project path after calling export_to_csv if project empty" do
+    p = create_project
+    get :export_to_csv, project_id: p.id
+    response.should redirect_to project_path(p.id)
+  end
+
+  it "redirects to project path after calling export_to_xml if project empty" do
+    p = create_project
+    get :export_to_xml, project_id: p.id
+    response.should redirect_to project_path(p.id)
+  end
+
+  it "redirectsto project path after calling export_to_json if project empty" do
+    p = create_project
+    get :export_to_json, project_id: p.id
+    response.should redirect_to project_path(p.id)
+  end
+
+  it "responds with ok code after calling export_to_csv with valid project" do
+    p = create_project
+    ps =
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    get :export_to_csv, project_id: p.id
+    response.code.should eq("200")
+  end
+
+  it "responds with ok code after calling export_to_xml with valid project" do
+    p = create_project
+    ps =
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    get :export_to_xml, project_id: p.id
+    response.code.should eq("200")
+  end
+
+  it "responds with ok code after calling export_to_json with valid project" do
+    p = create_project
+    ps =
+    PreferedSynonym.add_keyword_and_synonym_to_project(syn.id, word.id, p.id)
+    get :export_to_json, project_id: p.id
+    response.code.should eq("200")
+  end
+
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> e911d20003f4af3e36ed320e172ac399d1e19e0c
   #Kareem Ali tests
 
   let(:test_gamer){
@@ -434,4 +495,5 @@ end
     flash[:success].should eq("لقد تم إلغاء متابعة هذه الكلمة: #{keyword_without_synonyms.name}")
     response.should redirect_to project_path(test_project.id)
   end 
+>>>>>>> 850e0b676c29d8e91a9de2868b390c0609ae6be0
 end

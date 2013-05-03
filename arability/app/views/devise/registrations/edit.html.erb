@@ -32,14 +32,14 @@
   <div class="control-group"><%= f.label :email, :class => "control-label" %>
   <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
-  <div class="control-group"><%= f.label :password, :class => "control-label" %> 
+  <div class="control-group"><%= f.label :password, :class => "control-label" %>
   <%= f.password_field :password, :placeholder => "Password", :style => "margin-left: 10px;" %><i>&nbsp;(leave blank if you don't want to change it)</i></div>
 
   <div class="control-group"><%= f.label :password_confirmation, :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "Confirm Password", :style => "margin-left: 10px;" %></div>
 
   <div><%= f.label :date_of_birth, :class => "control-label" %>
-    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year,
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
          <div><%= f.label :gender, :class => "control-label" %>
             <%= f.select(:gender,options_for_select(['male','female']),{}, :style => "margin-left: 10px;" ) %></div></br>
@@ -53,7 +53,7 @@
   <div><%= f.label :education_level, :class => "control-label" %>
     <%= f.select(:education_level, options_for_select(['','School','University','Graduate ']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
-  <div class="control-group"><%= f.label :current_password, :class => "control-label" %> 
+  <div class="control-group"><%= f.label :current_password, :class => "control-label" %>
   <%= f.password_field :current_password, :placeholder => "Current Password", :style => "margin-left: 10px;" %><i>&nbsp;(we need your current password to confirm your changes)</i></div>
 
   <div><%= f.submit "Update", :class => "btn btn-success" %></div>
@@ -65,14 +65,14 @@
   <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
   <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
-  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %>
   <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;(ضعها فارغة إذا لم تريد تغيرها)</i></div>
 
   <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
 
   <div><%= f.label t(:date_of_birth), :class => "control-label" %>
-    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year,
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
         <div><%= f.label t(:gender), :class => "control-label" %>
@@ -87,7 +87,7 @@
   <div><%= f.label t(:education_level), :class => "control-label" %>
             <%= f.select(:education_level, options_for_select(['','مدرسة','جامعة','خريج']), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
-  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %>
 
   <%= f.password_field :current_password, :placeholder => "كلمت السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;(نحتاج كلمة سرك الحالية لتأكيد التغيرات)</i></div>
 
@@ -103,21 +103,21 @@
   <div class="control-group"><%= f.label t(:email), :class => "control-label" %>
   <%= f.email_field :email, :placeholder => "Example@example.com", :style => "margin-left: 10px;" %></div>
 
-  <div class="control-group"><%= f.label t(:password), :class => "control-label" %> 
+  <div class="control-group"><%= f.label t(:password), :class => "control-label" %>
   <%= f.password_field :password, :placeholder => "كلمة السر", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
 
   <div class="control-group"><%= f.label t(:password_confirmation), :class => "control-label" %>
   <%= f.password_field :password_confirmation, :placeholder => "تأكيد كلمة السر", :style => "margin-left: 10px;" %></div>
 
   <div><%= f.label t(:date_of_birth), :class => "control-label" %>
-    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year, 
+    <%=  f.date_select :date_of_birth, {:start_year => Time.now.year,
         :end_year => Time.now.year - 95}, :style => "margin-left: 10px;" %></div><br>
 
             <div><%= f.label t(:country), :class => "control-label" %>
                 <%= f.select(:country, options_for_select([['مصر','Egypt'],['لبنان','Lebanon'],
                     ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
                     ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
-                    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+                    ['موريتانيا','Mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
                     ['اخري','others']]), {},
                 {:style => "margin-left: 10px;" }) %>
             </div></br>
@@ -128,7 +128,7 @@
             <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
             ['خريج','graduate']]), {}, { :style => "margin-left: 10px;" }) %></br></div><br>
 
-  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %> 
+  <div class="control-group"><%= f.label t(:current_password), :class => "control-label" %>
   <%= f.password_field :current_password, :placeholder => "كلمة السر الحالية", :style => "margin-left: 10px;" %><i>&nbsp;</i></div>
 
   <div><%= f.submit "جدد", :class => "btn btn-success" %></div>
@@ -149,7 +149,7 @@
               <% else %>
                 <img alt="Facebook" class="border-none" src="/assets/facebook_link.png" width="50px" height="50px"/>
                 <span font="20" style="position:relative; padding:40px;">
-                  <%= link_to t(:connect_to_facebook), "/auth/facebook" %> 
+                  <%= link_to t(:connect_to_facebook), "/auth/facebook" %>
                 </span>
               <% end %>
             </div>
@@ -164,7 +164,7 @@
               <% else %>
                 <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="50px" height="50px"/>
                 <span font="20" style="position:relative; padding:40px;">
-                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %> 
+                  <%= link_to t(:connect_to_twitter), "/auth/twitter?use_authorize=true" %>
                 </span>
               <% end %>
             </div>
@@ -183,7 +183,7 @@
 <table>
     <tr>
      <% if I18n.locale==:en %>
-       <span>your current subscription model is <%= developer.my_subscription.subscription_model.name_en%></span> 
+       <span>your current subscription model is <%= developer.my_subscription.subscription_model.name_en%></span>
       <%else%>
        <span>نظامك الحالى هو <%= developer.my_subscription.subscription_model.name_ar%></span>
       <%end%>
@@ -197,7 +197,7 @@
   end%>
       <td width="300px">
   <div class="well" style="margin-left: 30px; box-shadow: 0 4px 2px #ccc;">
-  <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %> 
+  <p><%= radio_button_tag(:my_subscription, sm.id, sm.id == selected_sub_id) %>
    <%= sm.name %><br />
     <% if I18n.locale==:en %>
     <h5>The number of words you can search for is:</h5>
@@ -225,7 +225,7 @@
     <%=sm.limit_project%>
   </p>
     </div>
-            </td>       
+            </td>
 <% end %>
 <tr>
     </table>
@@ -241,12 +241,12 @@
 <% end %>
     </div>
   </div>
-  </div>    
+  </div>
      <% else %>
         <span style="color: red"><strong><%=t(:developer_before_subscription)%></strong></span>
       <%end %>
     <%else%>
       <% flash[:error] = t(:projects_index_error2) %>
-      <% redirect_to new_gamer_session_path %>    
+      <% redirect_to new_gamer_session_path %>
     <%end %>
 </div>

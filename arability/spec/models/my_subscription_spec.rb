@@ -20,7 +20,7 @@ describe MySubscription do
     project.maxAge = 25
     project.owner_id = developer.id
     project.save
-    project   
+    project
   }
 
   let(:submodel){
@@ -56,12 +56,11 @@ describe MySubscription do
     expect(result).to eq(true)
   end
 
-  it "add permission is given" do 
+   it "add permission is given" do
     result = my_sub.can_add_word(project.id)
     expect(result).to eq(true)
   end
-
-  it "search permission is given" do 
+   it "search permission is given" do
     keyword = Keyword.create(name: "click", approved: true)
     result = my_sub.can_search_word(keyword.id)
     expect(result).to eq(true)
