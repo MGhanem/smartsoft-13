@@ -630,6 +630,7 @@ en:
   unshare: "Unshare"
   no_account: "You seem to have left us. Please create a new account"
   resend_confirmation: "Resend confirmation instructions"
+  resend_text: "Didn't receive your confirmation email? Resend"
   send: "Send"
   hello: "Hello"
   confirm_body: "You can confirm your account email through the link below"

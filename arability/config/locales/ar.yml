@@ -696,6 +696,7 @@ ar:
   project_keyword_unfollow: "تلغي متابعة"
   you_followed_word: "لقد تابعت هذه الكلمة من قبل"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+  resend_text: "لم تتلقى رسالة التفعيل؟ إعادة إرسال"
   send: "ارسل "
   hello: "مرحبا"
   confirm_body: " يمكنك تأكيد حساب البريد الإلكتروني الخاص بك من خلال الرابط"
