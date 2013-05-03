@@ -239,12 +239,8 @@ function setButtons(){
     if(isGuest == true) {
       $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:have_to_sign_in) %></p></div>');
     } else {
-      $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:loading) %></p><img src="/assets/ajax-loader.gif" alt="loading.." /></div>');
-      setTimeout(function(){$.get("/games/fame")},100);
+      setTimeout(function(){$.get("/games/fame")},0);
     }
-    // $($.get("/games/fame")).load(function(){
-    //   $("#loading").fadeOut();  
-    // });
   }
 
   function showProfile(){

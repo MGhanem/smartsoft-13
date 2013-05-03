@@ -84,6 +84,8 @@ class Authentication < ActiveRecord::Base
       return common
     rescue SocketError
       return false
+    rescue OpenURI::HTTPError 
+      return false
     end
   end
 

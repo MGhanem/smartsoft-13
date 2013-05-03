@@ -1,4 +1,3 @@
-$.ajaxSetup({async: false});
 var dimension = 10;
 var table;
 var cells;
