@@ -112,7 +112,11 @@ Arability::Application.routes.draw do
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
       match "projects/remove_project_from_developer" => "projects#remove_project_from_developer", :via => :get , :as => :remove
       match "/projects/:id/destroy" => "projects#destroy", :as => :delete
-      put "projects/destroy"
+      post "projects/destroy"
+      get "projects/get_recommended_words"
+      match "/projects/:project_id/view_recommended_words" => "projects#view_recommended_words", :as => :view_recommended_words
+      match "/projects/:project_id/get_recommended_words" => "projects#get_recommended_words", :as => :get_recommended_words
+
       resources :projects
 
       match 'projects' => "projects#index", :as => :projects
@@ -128,9 +132,6 @@ Arability::Application.routes.draw do
       match '/projects/:project_id/export_csv' => "projects#export_to_csv", :as => "projects_export_csv"
       match '/projects/:id/import_csv' => "projects#import_csv", :as => :import_csv_project
       match '/projects/:id/choose_keywords' => "projects#choose_keywords", :as => :choose_keywords_project
-
-
-
       match '/projects/:project_id/export_xml' => "projects#export_to_xml", :as => "projects_export_xml"
       match '/projects/:project_id/export_json' => "projects#export_to_json", :as => "projects_export_json"
 

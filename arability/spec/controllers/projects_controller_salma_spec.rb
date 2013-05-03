@@ -8,23 +8,10 @@ include Devise::TestHelpers
 
 describe ProjectsController, type: :controller do
 
-  let(:gamer1){
-    gamer = Gamer.new
-    gamer.username = "Nourhan"
-    gamer.country = "Egypt"
-    gamer.education_level = "high"
-    gamer.gender = "female"
-    gamer.date_of_birth = "1993-03-23"
-    gamer.email = "mohamedtamer5@gmail.com"
-    gamer.password = "1234567"
-    gamer.save
-    gamer
-  }
-
-  let(:developer1){
+  let(:developer){
     developer = Developer.new
-    developer.gamer_id = gamer1.id
-    developer.save
+    developer.gamer_id = 1
+    developer.save validate: false
     developer
   }
 
@@ -33,32 +20,49 @@ describe ProjectsController, type: :controller do
     project.name = "banking"
     project.minAge = 19
     project.maxAge = 25
-    project.owner_id = developer1.id
+    project.owner_id = developer.id
     project.save
     project
   }
 
-   let(:submodel){
-    submodel = SubscriptionModel.new
-    submodel.limit=50
-    submodel.limit_search=50
-    submodel.limit_follow=50
-    submodel.limit_project=1
-    submodel.save
-    submodel
-  }
+let(:cat){
+  cat = Category.new
+  cat.id = "13"
+  cat.english_name = "Music"
+  cat.arabic_name = "hey"
+  cat.save validate: false
+  cat
+}
 
-  let(:my_sub){
-    MySubscription.choose(developer1.id, submodel.id)
-    puts "dev_id : #{developer1.id}"
-    my_sub = MySubscription.where(:developer_id => developer1.id).first
-    my_sub
-  }
+let(:s) {
+  s = Synonym.new
+  s.name = "hello"
+  s.approved = true
+  s.save validate: false
+  s
+}
+
+  let(:keyword1){
+  keyword1 = Keyword.new
+  keyword1.name = "Art"
+  keyword1.synonyms = [s]
+  keyword1.categories = [cat]
+  keyword1.approved = "true"
+  keyword1.save validate: false
+  keyword1
+}
+
+  before (:each) do
+    developer
+    cat
+    project
+    keyword1
+    s
+  end
 
   it "assigns the requested project to project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
-    project
     get :edit, id: project
     assigns(:project).should eq(project)
   end
@@ -66,7 +70,6 @@ describe ProjectsController, type: :controller do
   it "located the requested project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
-    project
     put :update, id: project.id, project: { name: "hospital", category:"" }
     assigns(:project).should eq(project)
   end
@@ -74,7 +77,6 @@ describe ProjectsController, type: :controller do
   it "changes project's attributes" do
     a = create_logged_in_developer
     sign_in(a.gamer)
-    project
     put :update, id: project,
     project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
     project.reload
@@ -86,7 +88,6 @@ describe ProjectsController, type: :controller do
   it "redirects to the project index" do
     a = create_logged_in_developer
     sign_in(a.gamer)
-    project
     put :update, id: project, project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
     response.should redirect_to projects_path
   end
@@ -94,7 +95,6 @@ describe ProjectsController, type: :controller do
   it "locates the requested project" do
     a = create_logged_in_developer
     sign_in(a.gamer)
-    project
     put :update, id: project, project: { name: "Pro", minAge:"23", maxAge:"50",category:"" }
     assigns(:project).should eq(project)
   end
@@ -102,7 +102,6 @@ describe ProjectsController, type: :controller do
   it "does not change project's attributes" do
    a = create_logged_in_developer
    sign_in(a.gamer)
-   project
    put :update, id: project,
    project: { name: "Pro", minAge:"500", maxAge:"50",category:"" }
    project.reload
@@ -114,7 +113,6 @@ describe ProjectsController, type: :controller do
  it "re-renders the edit method" do
   a = create_logged_in_developer
   sign_in(a.gamer)
-  project
   put :update, id: project, project: { name: "Pro", minAge:"500", maxAge:"50",category:"" }
   response.should render_template :edit
 end
@@ -122,8 +120,21 @@ end
 it "renders the #show view" do
   a = create_logged_in_developer
   sign_in(a.gamer)
-  project
   get :show, id: project
   response.should render_template project
+end
+
+it "views recommended words" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+  get :view_recommended_words, project_id: project
+  response.code.should eq("200")
+end
+
+it "gets recommended words" do
+  a = create_logged_in_developer
+  sign_in(a.gamer)
+  get :get_recommended_words, project_id: project.id, synonyms: { "1" => "1" }
+  response.code.should redirect_to project_path(project.id)
 end
 end

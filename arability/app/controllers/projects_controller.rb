@@ -7,8 +7,7 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update,
-    :view_recommended_words, :get_recommended_words, :share]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update, :share]
   before_filter :can_access_project?,
   only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
@@ -140,7 +139,7 @@ class ProjectsController < BackendController
   # Author:
   #   Salma Farag
   # Description:
-  #   After checking that the user is signed in, the method that calls method createproject
+  #   After checking that the user is signed in, the method that calls method create_project
   #   that creates the project and redirects to the project page and prints
   #   an error if the data entered is invalid.
   # Params:
@@ -165,12 +164,12 @@ class ProjectsController < BackendController
         format.html { redirect_to "/developers/projects",
           flash: { success: I18n.t('views.project.flash_messages.project_was_successfully_created') } }
           format.json { render json: @project, status: :created, location: @project }
-        else
+      else
           format.html { render action: "new" }
           format.json { render json: @project.errors, status: :unprocessable_entity }
-        end
       end
     end
+  end
 
 
   # Author:
@@ -264,6 +263,7 @@ class ProjectsController < BackendController
   #   An project will be showed with its words and synonyms.
   # Failure:
   #   None.
+
 def show
   @project = Project.find(params[:id])
   @words = []
@@ -276,6 +276,63 @@ def show
     @synonyms.push(syn)
   end
 end
+
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After checking the limit of words, the method finds the project by its id
+  #   and then calls the method filter_keywords in Project that filters the relevant keywords.
+  # Params:
+  #   Project id
+  # Success:
+  #   Getting an array of keywords relevant to the project
+  # Failure:
+  #   The user has exceeded the maximum limit of words to be added and hence will not be able
+  #   to add any more.
+  def view_recommended_words
+      @project = Project.find(params[:project_id])
+      @karray = Project.filter_keywords(@project.id,@project.category_id)
+  end
+
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After the users chooses the words he would like to add to his project from the recommended
+  #   words list, the method gets the chosen keyword ids,with their synonyms ids and the project
+  #   the words will be added to. The words and their synonyms will be added after checking some
+  #   authorization validations.
+  # Params:
+  #   Project id
+  #   A hash of the keywords and their synonyms
+  # Success:
+  #   The words will be successfully added to the project
+  # Failure:
+  #   The user has exceeded the maximum limit of words to be added and hence will not be able
+  #   to add any more.
+  def get_recommended_words
+    @project = Project.find(params[:project_id])
+    if params[:synonym] != nil
+      params[:synonym].each do |key, syn|
+        @word_id = Keyword.find((key.to_i)).id
+        @synonym_id = syn.to_i
+        if current_developer.my_subscription.can_add_word(@project.id)
+          @added_word = PreferedSynonym.add_keyword_and_synonym_to_project(
+            @synonym_id, @word_id, @project.id)
+        end
+      end
+    end
+    redirect_to project_path(@project.id)
+  end
+
+  def remove_developer_from_project
+    dev = Developer.find(params[:dev_id])
+    project = Project.find(params[:project_id])
+    project.developers_shared.delete(dev)
+    project.save
+    flash[:notice] = "Developer Unshared!"
+   redirect_to "/projects"
+  end
+
 
   # Author:
   #   Mohamed Tamer

@@ -3,9 +3,9 @@ namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true)
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true)
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true)
+    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.find(1),Category.find(2),Category.last])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first, Category.find(3)]
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.last])
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
@@ -155,7 +155,6 @@ namespace :db do
     deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, limit: 5000)
 
     MySubscription.choose(timo_dev.id, SubscriptionModel.first.id)
-
     project = Project.new
     project.name = "Read"
     project.minAge = "19"
