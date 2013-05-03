@@ -1,4 +1,4 @@
-<<% flash.each do |key,msg| %>
+<% flash.each do |key,msg| %>
   <div class="alert alert-<%= key %> row" id="err">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <% if msg.respond_to? "each" %>
