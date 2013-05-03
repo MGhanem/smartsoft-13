@@ -2,6 +2,7 @@
 namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
+    Authentication.delete_all
 
     Category.delete_all
     test_category=Category.create(english_name: "Art", arabic_name: "فن")
