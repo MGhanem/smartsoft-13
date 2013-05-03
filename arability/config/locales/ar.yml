@@ -203,9 +203,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-<<<<<<< HEAD
-=======
->>>>>>> b6d1fff933e79efb142f548798890d91cba2e1f6
   controller:
     my_subscription:
         flash_messages:
