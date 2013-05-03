@@ -1,4 +1,8 @@
 ar:
+  request_button: "إضغط هنا"
+  posting_success: "لقد شاركت نقاطك على فيسبوك"
+  post_on_fb: "لقد حصلت على "
+  post_on_fb_2: " نقطة في عربيلتي على http://localhost:3000/"
   welcome_gamer: "مبروك! لقد تم تسجيلك كلاعب"
   welcome_guest: "انت الان على نسخة محدودة من اللعبة. اشترك لتتمتع بالنسخة الكاملة"
   username_or_email: "إسم المستخدم أو البريد الالكتروني"
@@ -199,11 +203,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-  views:
-    project:
-       flash_messages:
-         project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
-         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   controller:
     my_subscription:
         flash_messages:
@@ -536,7 +535,7 @@ ar:
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
   you_have_prizes: "لقد ربحت الجوائز التالية"
   sub_changed: "لقد غيرت نظامك "
-  caro1h: "عربلتي"
+  caro1h: "عربيليتي"
   caro1b: "موقع سهل الاستعمال لمساعدة مطوري البرامج الناطقين باللغة العربية والغير ناطقين بها لترجمة مواقعهم بسهولة"
   more: "معرفة المزيد"
   feat1h: "إلعب"
@@ -616,13 +615,17 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; قبل"
       next: "بعد &gt;"
       first: "الاولى"
       last: "الاخيرة"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'تم انشاء المشروع بنجاح!'
+        project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   activerecord:
@@ -762,7 +765,7 @@ ar:
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
-  menu: "اختيارات"
+  menu: "اللعبة"
   profile: "بروفيل"
   vote: "اصوات"
   congrats_you_won: "مبروك لقد ربحت "

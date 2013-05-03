@@ -143,31 +143,31 @@ class GamesController < ApplicationController
     score = params[:score]
     if current_gamer
       if !Authentication.is_connected_to_facebook(current_gamer.id)
-        flash[:error] = t(:connect_your_account) 
-        redirect_to "/gamers/edit"
+        @message = t(:connect_your_account) 
+        @redirect = "/gamers/edit"
       else
         begin
           if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
             token = Authentication.get_token(current_gamer.id, "facebook")
             @graph = Koala::Facebook::API.new(token)
             @graph.put_wall_post(
-              "لقد حصلت على #{score} نقطة في عربيلتي على http://localhost:3000/")
-            render "games/share-facebook"
+              t(:post_on_fb) + "#{score}" + t(:post_on_fb_2))
+            @message = t(:posting_success)
           else
-            flash[:error] = t(:you_need_to_connect_fb)
-            redirect_to "/gamers/edit"
+            @message = t(:you_need_to_connect_fb)
+            @redirect =  "/gamers/edit"
           end
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/auth/facebook"
+          @redirect =  "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          flash[:notice] = t(:error_fb)
-          redirect_to "/game"
+          @message = t(:error_fb)
         end
       end
     else
       flash[:error] = t(:sign_in_facebook)
-      redirect_to "/gamers/sign_in"
+      redirect_to =  "/gamers/sign_in"
     end
+    render "messages.js"
   end
 
   # Description:

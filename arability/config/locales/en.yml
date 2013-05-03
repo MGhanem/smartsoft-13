@@ -2,6 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  request_button: "click here"
+  posting_success: "You have posted your score on facebook"
+  post_on_fb: "I have scored "
+  post_on_fb_2: " points at arability game on http://localhost:3000/"
   welcome_gamer: "Congratulations! You have successfully registered as a gamer"
   welcome_guest: "You are now viewing a limited version of the game. Become a member to view the full version"
   username_or_email: "Username or email"
@@ -116,11 +120,6 @@ en:
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
   exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
-  views:
-    project:
-      flash_messages:
-        project_was_successfully_created: 'Project was successfully created.'
-        project_was_successfully_updated: 'Project was successfully updated.'
   import: "Import"
   export: "Export"
   add_words: "Add words"
@@ -259,7 +258,7 @@ en:
   won_prizes: "Congratulations! You have won these prizes"
   sign_in_first: "Sign in or register first to view this page"
   scored: "You have scored "
-  congrats_prizes: "Congratulations! You have one the following prizes"
+  congrats_prizes: "Congratulations! You have won the following prizes"
   sign_in_first: "Please sign in first to view this page"
   hello: "Hello world"
   earned_prizes: "Prizes that you have earned"
@@ -506,7 +505,7 @@ en:
   feat2b: "Ready to start using out tool? Sign up to Arability to get the most out of our tool."
   feat3h: "Use"
   feat3b: "Head over to our fully featured developer's side."
-  featdevh1: "Database to that gets the job done."
+  featdevh1: "Database that gets the job done."
   featdevb1: "With a reliable database of transalations categorized with age, country and gender, developers are able to easily find out translations for their target markets."
   featdevh2: "Projects make your life easier."
   featdevb2: "Developers are able to create projects grouping words of a single theme together. Projects can be easily imported, exported or shared to other developers with a click of a button."
@@ -582,11 +581,15 @@ en:
   close_delete: "Close"
   submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'Project was successfully created.'
+        project_was_successfully_updated: 'Project was successfully updated.'
   connection_error: "Connection Error, please make sure you're connected to the internet"
   no_account: "You seem to have left us. Please create a new account"
   activerecord:
@@ -694,7 +697,7 @@ en:
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
-  menu: "Menu"
+  menu: "Game"
   profile: "Profile"
   vote: "Votes"
   congrats_you_won: "Congratulations! You have won!"
@@ -703,7 +706,6 @@ en:
     attributes:
       developer:
         first_name: "First Name"
-
         last_name: "Last Name"
       project:
         name: 'Name'
