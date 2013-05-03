@@ -458,6 +458,10 @@ function initializeList(){
         	var timerfloat = 'left';
         	var margin = 'margin-right: 10px;'
         }
+        if(lang == 2){
+       		$('#' + listId).append("&nbsp;&nbsp&nbsp<div style='float: " + timerfloat + "; color: white; display: inline-block; position: relative;" + margin + "' id='ls" + x + "Counter'>1</div>");
+
+        }
         $('#' + listId).append("<div style='float: " + timerfloat + "; color: white; display: inline-block; position: relative;" + margin + "' id='ls" + x + "Counter'>1</div>");
     }
 }
