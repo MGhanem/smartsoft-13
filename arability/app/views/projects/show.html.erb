@@ -3,7 +3,11 @@
     :
     <%= @project.name %>
   </h3>
-  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
+  <% if I18n.locale == :ar %>
+  <a class="pull-right" href="<%= projects_path %>"> <%= t(:back) %> </a>
+  <% else %>
+  <a class="pull-left" href="<%= projects_path %>"> <%= t(:back) %> </a>
+  <% end %>
   <br>
   <br>
     <div class="container well" align="center" style="width:900px">
@@ -136,7 +140,6 @@
       <p id="illustration"></br></p>
     </div>
   </form>
-  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
 <script type="text/javascript" charset="utf-8">
   $('#selected_keyword').change(function(){$('.popover').hide()});
   $("#add_button").removeAttr('href');
