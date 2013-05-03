@@ -132,7 +132,10 @@ class SearchController < BackendController
 
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if !@search_keyword_model.blank?
-        if !current_developer.my_subscription.can_search_word(@search_keyword_model.id)
+        
+        if !current_developer.my_subscription
+          .can_search_word(@search_keyword_model.id)
+          
           flash[:error] = t(:search_not_allowed)
           redirect_to search_keywords_path, flash: flash
           return
