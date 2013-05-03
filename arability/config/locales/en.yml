@@ -629,6 +629,7 @@ en:
   graduate: "Graduate"
   unshare: "Unshare"
   resend_confirmation: "Resend confirmation instructions"
+  resend_text: "Didn't receive your confirmation email? Resend"
   send: "Send"
   hello: "Hello"
   confirm_body: "You can confirm your account email through the link below"
