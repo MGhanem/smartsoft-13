@@ -1,8 +1,8 @@
 # encoding: UTF-8
 module ApplicationHelper
-  
+
   # USAGE:
-  # To include any of these helper methods in your controllers make 
+  # To include any of these helper methods in your controllers make
   # sure you write "include ApplicationHelper" at the top of the file
 
   # Checks if current signed in gamer has a developer account
@@ -29,35 +29,35 @@ module ApplicationHelper
   end
 
   def developer_unauthorized
-    flash.now[:error] = "You are not authorized to view this page" 
+    flash.now[:error] = "You are not authorized to view this page"
   end
 
   # Author:
   #   Mohamed Tamer
   # Description
-  #   Finds guest_user object associated with the current session 
+  #   Finds guest_user object associated with the current session
   #   and caches the value the first time it's gotten.
   # Params:
   #   guest_gamer_id: id of the guest gamer
-  # Success: 
+  # Success:
   #   Returns guest gamer
   # Failure:
   #   None
   def guest_gamer
     @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id])
 
-  rescue ActiveRecord::RecordNotFound 
+  rescue ActiveRecord::RecordNotFound
     session[:guest_gamer_id] = nil
     guest_gamer
   end
-  
+
   # Author:
   #   Mohamed Tamer
   # Description
   #   Gets the current gamer currently on the sysytem either a signed in gamer or guest
   # Params:
   #   current_gamer: the currently logged in gamer
-  # Success: 
+  # Success:
   #   Returns current_gamer if there is a gamer signed in or guest_gamer
   # Failure:
   #   None
@@ -75,7 +75,7 @@ module ApplicationHelper
   #   Gets country name based on locale
   # Params:
   #   country: the english name for country
-  # Success: 
+  # Success:
   #    Returns arabic or english country name. Will be None if the country is not in the database
   # Failure:
   #   None
@@ -83,7 +83,7 @@ module ApplicationHelper
     countries = [['مصر','Egypt'],['لبنان','Lebanon'],
     ['الاردن','Jordan'],['السعودية','Saudi Arabia'],['ليبيا','Libya'],['الامارات','United Arab Emirates'],['قطر','Qatar'],['الكويت','Kuwait'],
     ['العراق','Iraq'],['الجزأئر','Algeria'],['المغرب','Morocco'],['البحرين','Bahrain'],
-    ['موريتانيا','mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
+    ['موريتانيا','Mauritania'],['الصومال','Somalia'],['السودان','Sudan'],['تونس','Tunisia'],
     ['اخري','others']]
     countries.each do |c|
       if c[1] == country
@@ -107,7 +107,7 @@ module ApplicationHelper
   #   Gets education level based on locale
   # Params:
   #   education_level: the english name for education_level
-  # Success: 
+  # Success:
   #   Returns arabic or english education level. Will be "None" if the education level is not in the database
   # Failure:
   #   None

@@ -14,9 +14,13 @@
       <% end %>
 
   <div style="margin-top:5px; display: inline;">
-      <%= t :category_tags %>:
+    <%= t :category_tags %>:
+    <% if @categories.present? %>
       <a href="#" onclick="submit_category_form();return false;"><%= @categories.join(", ") %></a>
-    </div>
+    <% else %> 
+      <a href="#" onclick="submit_category_form();return false;"><%= t :no_cat %></a> 
+    <% end %>
+  </div>
       <script type="text/javascript">
        function onhovering(button){
           $button = $(button);
@@ -50,6 +54,7 @@
           } 
         }
         function add_keyword_with_synonym(){
+            restore();
             var synonym_id = $("#synonym_select option:selected").val();
             var project_id = $("#project_select option:selected").val();
             var msg = "";
@@ -121,9 +126,9 @@
       </script>
 
       <% if !is_following(@search_keyword_model.id) %>
-        <span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 75px"><%= t(:follow) %></a></span>
       <% else %>
-        <span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 75px" ><%= t(:following) %></a></span>
       <% end %>
 
       <script type="text/javascript">
@@ -200,7 +205,16 @@
                     <button id="slang" type="button" class="btn" onclick="invert_color(this, formal)">
                       <%= t(:slang) %>
                     </button>
-                  </div>  
+                  </div> 
+                  <script type="text/javascript">
+                      <% if I18n.locale == :ar %>
+                        $("#formal").css("font-size","16px");
+                        $("#slang").css("font-size","16px");
+                      <% elsif I18n.locale == :en %>
+                        $("#formal").css("font-size","14px");
+                        $("#slang").css("font-size","14px");
+                      <% end %>
+                    </script>  
                 </div>
               </div>
             </div>
@@ -270,33 +284,28 @@
 <% if !@synonyms.blank? %>
   <div class="accordion-group">
     <div class="accordion-heading">
-      <span class="accordion-toggle" data-toggle="false" href="#collective">
+      <span class="accordion-toggle" style="cursor:auto;" data-toggle="false" href="#collective">
         <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
-        <span class="form-search form-horizontal" style="margin: 440px">
+        <span class="form-search form-horizontal" id = "add_span">
           <%= t(:add_to) %>
-          <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ include_blank: t(:project) }, { class: "input", name: "project_id", id: "project_select", style: "width:10%; margin:10px;" }) %>
+          <% if @project_id != "" %>
+            <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name, { selected: @project_id }, { class: "input", name: "project_id", id: "project_select", style: "width:150px; margin:10px;" }) %>
+          <% else %>
+            <%= collection_select(:project , :project_id, @projects.collect{ |project| project }, :id, :name,{ selected: @projects.first }, { class: "input", name: "project_id", id: "project_select", style: "width:150px; margin:10px;" }) %>
+          <% end %>
           <%= t(:with) %>
-          <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { include_blank: t(:synonym) }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:10%; margin:10px;" }) %>
+          <%= collection_select(:synonym , :synonym_id, @synonyms.collect{ |synonym| synonym }, :id, :name, { selected: @synonyms.first }, { class: "input", name: "synonym_id", id: "synonym_select", style: "width:150px; margin:10px;" }) %>
           <input class="btn btn-primary" id="add_button" type="submit" style="font-size:15px; text-align:center;" onclick="add_keyword_with_synonym()" value="<%= t(:add) %>" >
           </input>
         </span>
+        <script type="text/javascript">
+          <% if I18n.locale == :ar %>
+            $("#add_span").css("margin", "32%");
+          <% else %>
+            $("#add_span").css("margin", "33%");
+          <% end %>
+        </script>
       </span>
-    </div>
-    <div id="collective" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        <% key_id = getID(@search_keyword) %>
-        <% result = Keyword.get_keyword_synonym_visual(key_id) %>
-        <% if  result != [] %>
-          <%= high_chart("my_id4", chart_keyword_synonym(key_id)) do |c| %>
-                  <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                  <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-              <% end %>
-            <% else %>
-                <p>
-                  <%= t(:no_votes_for_word)%>
-                </p>
-            <% end %>
-      </div>
     </div>
     <div class="alert alert-block alert-success" id="add_success" style="display:none;">
         <button type="button" class="close" onclick="restore()">

@@ -1,4 +1,3 @@
-$.ajaxSetup({async: false});
 var dimension = 10;
 var table;
 var cells;
@@ -62,6 +61,11 @@ var modalNoButton;
 var letterPickerArray = [];
 var intPickerArray = [];
 var initialIntValues = [];
+var listCountersArray = [];
+var listCountersTimeouts = [];
+var alreadyCounting = [];
+var scorePopoverContent;
+var scorePopoverTitle;
 
  // author:
  //   Ali El Zoheiry
@@ -213,8 +217,40 @@ function wordLablelToolTip(){
 		$('.label-div').expose();
 	}, 300);
 	setTimeout(function(){
-		$('#wordLabel').popover('show')
+		$('#wordLabel').popover('show');
 		$('.popover').css('z-index', '9999999');
+	}, 400);
+}
+
+function scorePopover(){
+	var scoreButton;
+	if(JsLocale == "en"){
+		scoreButton = "Next";
+	}
+	else{
+		scoreButton = "التالي";
+	}
+	destroy('wordLabel');
+	$('#game-score').popover({
+		html: true,
+		trigger: 'manual',
+		content: "<p>" + scorePopoverContent + "<p><button class='tutBtn btn btn-primary' id='game-score-po' onclick='callNextToolTip2(this.id)'>" + scoreButton + "</button>",
+		title: '<h4>' + scorePopoverTitle + '</h4>',
+		placement: 'top'
+	});
+	setTimeout(function(){
+		$('#game-score').expose();
+	}, 300);
+	setTimeout(function(){
+		$('#game-score').popover('show')
+		$('.popover').css('z-index', '9999999');
+		$('#wordsList').css('z-index', '99999999');
+		$('#wordsList').css('position', 'relative');
+		if(JsLocale == 'ar'){
+			$('.popover').css('top', '322px');
+			$('.popover').css('left', '760px');
+			$('.popover').css('width', '422px');
+		}
 	}, 400);
 }
 
@@ -246,6 +282,7 @@ function callNextToolTip(id){
  // failure:
  //   invalid id, nothing will get destroyed
 function callNextToolTip2(id){
+	$('#wordsList').css('z-index', '0');
 	destroy(id);
 	tableToolTip();
 }
@@ -408,6 +445,18 @@ function initializeList(){
 		list.css('float', 'right');
 		list.css('margin-right', '20px');
 	}
+	 for(var x = 0; x < wordsArray.length; x++){
+        var listId = 'ls' + x;
+        if(lang == 0){
+        	var timerfloat = 'right';
+        	var margin = 'margin-left: 7px;'
+        }
+        else if(lang == 1){
+        	var timerfloat = 'left';
+        	var margin = 'margin-right: 10px;'
+        }
+        $('#' + listId).append("<div style='float: " + timerfloat + "; color: white; display: inline-block; position: relative;" + margin + "' id='ls" + x + "Counter'>1</div>");
+    }
 }
 
 // author:
@@ -457,6 +506,9 @@ function dropAblock(){
  // failure:
  //   --
 function pause(){
+	for(var x = 0; x < wordsArray.length; x++){
+		clearTimeout(listCountersTimeouts[x]);
+	}
 	tutorialFlag = true;
 }
 
@@ -473,6 +525,10 @@ function pause(){
  //   tutorial wasent started
 function endTutorial(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		CheckStatus(lsId);
+	}
 	showSuspense = true;
 	tutorialFlagWas = true;
 	if(newDrop == true){
@@ -503,6 +559,10 @@ function endTutorial(){
  //   game was not paused
 function unPause(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		CheckStatus(lsId);
+	}
 	if(newDrop == true){
 		newDrop = false;
 		dropAblock();
@@ -650,12 +710,14 @@ function calculatePossible(){
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).addClass('text-warning');
 				$('#' + lsId).css( "color", "orange" );
+				CheckStatus(lsId);
 			}
 			else{
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).removeClass('text-warning');
 				$('#' + lsId).css("color", "#333333");
+				stopCounter(lsId);
 			}
 			for(var l = 0; l < wordsArray[k].length; l++){
 				canBeFormed = false;
@@ -681,12 +743,14 @@ function calculatePossible(){
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).addClass('text-warning');
 			$('#' + lsId).css("color", "orange");
+			CheckStatus(lsId);
 		}
 		else{
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).removeClass('text-warning');
 			$('#' + lsId).css("color", "#333333");
+			stopCounter(lsId);
 		}
 }
 
@@ -893,17 +957,19 @@ function calculateCol(id){
 function removeAblock(){
 	var x;
 	var word = document.getElementById("wordLabel").innerHTML;
-		for(x = 0; x < wordsArray.length; x++){
-			if(wordsArray[x] == word && wordExistsInArray[x] == true){
-				removeFromLetterPicker(word);
-				for(var i = 0; i < buttonArray.length; i++){
-					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
-					$('#' + toBeRemovedId).fadeTo('slow',0.5);
-					// setTimeout(function(){document.getElementById(toBeRemovedId).innerHTML = '';}, 500);
-				}
-				setTimeout('fadeSomething(' + x + ')' , 300);
+	for(x = 0; x < wordsArray.length; x++){
+		if(wordsArray[x] == word && wordExistsInArray[x] == true){
+			removeFromLetterPicker(word);
+			var lsId = 'ls' + x
+			stopCounter(lsId);
+			alreadyCounting[x] = true;
+			for(var i = 0; i < buttonArray.length; i++){
+				var toBeRemovedId = buttonArray[i].closest('td').attr('id');
+				$('#' + toBeRemovedId).fadeTo('slow',0.5);
 			}
+			setTimeout('fadeSomething(' + x + ')' , 300);
 		}
+	}
 }
 
 // author:
@@ -930,7 +996,7 @@ function fadeSomething(x){
 	var lsId = "ls" + x;
 	var originalLi = document.getElementById(lsId).innerHTML;
 	document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
-	calculateScore();
+	calculateScore(lsId);
 	if(wordsInDb == true){
 		successfulWords.push(wordsArray[x]);
 	}
@@ -1360,6 +1426,7 @@ function suspenseCont(col){
 // failure:
 //   no words in the database.
 function getNewWords(num){
+	$.ajaxSetup({async: false});
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
 }
 
@@ -1395,6 +1462,7 @@ function setLevelAttributes(level){
 	}
 	for(var i = 0; i < wordsArray.length; i++){
 		wordExistsInArray[i] = true;
+		listCountersArray[i] = 1;
 	}
 	setLetterPicker();
 	initializeGame();
@@ -1437,8 +1505,11 @@ function setLang(l){
 //   the gamer formed a word and his score is added.
 // failure:
 //   --
-function calculateScore(){
-	score = score + (100 * level);
+function calculateScore(lsId){
+	var index = parseInt(lsId.replace('ls', ''));
+	var numLetters = wordsArray[index].length;
+	var timer = parseInt(document.getElementById(lsId + 'Counter').innerHTML);
+	score = Math.ceil(score + (((numLetters*100)/timer) * level));
 	setScoreTitle();
 }
 
@@ -1493,7 +1564,7 @@ function continuePlaying(){
 	'" data-placement="left" data-title="' + wordsListPopoverTitle +  '" id="wordsList"></ol>' + 
 	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="' + wordLabelPopoverContent +
 	'" data-title="' + wordLabelPopoverTitle + '" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
+	'<br><br><div><h3 id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	if(JsLocale == 'ar'){
@@ -1534,7 +1605,7 @@ function toNextLevel(){
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<br><br><div><h3 id="game-score"></h3></div>' +
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
@@ -1597,5 +1668,35 @@ function modalButtonClicked(answer){
 }
 
 function disableTutorial(){
+	$.ajaxSetup({async: false});
 	$.get("games/disableTutorial");
+}
+
+
+function CheckStatus(listId){
+	var index = parseInt(listId.replace('ls', ''));
+	if(alreadyCounting[index] == true || tutorialFlag == true){
+		return;
+	}
+	else{
+		alreadyCounting[index] = true;
+		startCounter(listId);
+	}
+}
+
+function startCounter(listId){
+	var index = parseInt(listId.replace('ls', ''));
+    listCountersTimeouts[index] = setTimeout(function(){
+        $('#' + listId +'Counter').empty();
+        var newVal = listCountersArray[index] + 1;
+        $('#' + listId +'Counter').append(newVal);
+        listCountersArray[index] = newVal;
+        startCounter(listId);
+    }, 1000);
+}
+
+function stopCounter(listId){
+    var index = parseInt(listId.replace('ls', ''));
+    alreadyCounting[index] = false;
+    clearTimeout(listCountersTimeouts[index]);
 }
