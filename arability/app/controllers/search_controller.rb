@@ -101,6 +101,7 @@ class SearchController < BackendController
   #   No charts will be drawn if the keyword has no synonyms
   def search_with_filters
     @search_keyword = params["search"]
+    @project_id = params["project_id"]
     @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
     @projects = Project.where(owner_id: @developer_id).all
     @country = params["country"]
