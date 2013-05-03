@@ -1,4 +1,3 @@
-$.ajaxSetup({async: false});
 var dimension = 10;
 var table;
 var cells;
@@ -1427,6 +1426,7 @@ function suspenseCont(col){
 // failure:
 //   no words in the database.
 function getNewWords(num){
+	$.ajaxSetup({async: false});
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
 }
 
@@ -1668,6 +1668,7 @@ function modalButtonClicked(answer){
 }
 
 function disableTutorial(){
+	$.ajaxSetup({async: false});
 	$.get("games/disableTutorial");
 }
 
