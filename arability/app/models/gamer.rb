@@ -63,11 +63,11 @@ class Gamer < ActiveRecord::Base
     end
   end
 
+  # Author:
+  #   Nourhan Mohamed, Mohamed Ashraf, Karim Elnaggar
   # Description:
   #   gets emails similar to an email and sorts 
   #   result by relevance
-  # Author:
-  #   Nourhan Mohamed, Mohamed Ashraf
   # params:
   #   email: the email to be compared against
   # Success:
@@ -274,30 +274,6 @@ class Gamer < ActiveRecord::Base
       return false
     end
   end
-
-# author:
-#     Salma Farag
-# description:
-#     A  method that returns a gamer with an email equal to the email signed in on Google from
-#the access token.
-# params:
-#     The access token granted from Google and a signed in resources that is equal to nil.
-# success:
-#     Returns the gamer with the matching email.
-# failure:
-#     Creates a new gamer using the email and password
-def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    gamer = Gamer.where(:email => data["email"]).first
-
-    unless gamer
-         gamer = Gamer.create(
-              email: data["email"],
-              password: Devise.friendly_token[0,20]
-             )
-    end
-    gamer
-end
 
   class << self
     # Author:
