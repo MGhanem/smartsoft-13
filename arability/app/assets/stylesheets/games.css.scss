@@ -57,7 +57,25 @@
   margin-bottom: 7px;
 }
 
-#synonym_button{
+#synonym_button0{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button1{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button2{
   height:50px;
   width:200px;
   font-size:30px;
@@ -75,18 +93,14 @@
 }
 
 #synonym_button{
-  height: 50px;
-  width: 170px;
-  font-size: 30px;
+  height:50px;
+  width:200px;
+  font-size:30px;
   margin-bottom: 20px;
   text-align: center;
-  border-radius: 7px;
-  line-height: 50px;
+  border-radius:7px;
 }
 
-#synonym_buttons_row{
-
-}
 
 #synonym_buttons{
   right:50%;
@@ -678,6 +692,26 @@ td .popover button{
   background-color: rgba(203,58,77,0.5);
 }
 
+.none-green {
+  width: 700px;
+  font-size: 190%;
+  line-height: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 12px;
+  padding-left: 12px;
+  text-align: center;
+  border-radius: 10px;
+  background-color:rgba(179,210,121,0.3);
+}
+
+.none-green:hover {
+  background-color: rgba(179,210,121,0.5);
+}
+
 // start of vote log view styling
 .main-div-vl {
   text-align: center;
@@ -713,9 +747,15 @@ td .popover button{
   font-size:38px;
 }
 
-.btn-game-vl {
+.btn-game-arabic-vl {
  position:absolute;
  top:5px;
  left:10px;
+}
+
+.btn-game-english-vl {
+ position:absolute;
+ top:5px;
+ right:13px;
 }
 // end of vote log view styling

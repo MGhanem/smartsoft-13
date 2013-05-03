@@ -183,10 +183,11 @@
 <table>
     <tr>
      <% if I18n.locale==:en %>
-       <span>your current subscription model is <%= developer.my_subscription.subscription_model.name_en%></span>
+       <span>Your current subscription model is: <%= developer.my_subscription.subscription_model.name_en%></span>
       <%else%>
-       <span>نظامك الحالى هو <%= developer.my_subscription.subscription_model.name_ar%></span>
+       <span>نظامك الحالى هو: <%= developer.my_subscription.subscription_model.name_ar%></span>
       <%end%>
+    </br>
     </br>
 <% SubscriptionModel.all.each do |sm| %>
 

@@ -84,6 +84,8 @@ class Authentication < ActiveRecord::Base
       return common
     rescue SocketError
       return false
+    rescue OpenURI::HTTPError 
+      return false
     end
   end
 
@@ -166,7 +168,12 @@ class Authentication < ActiveRecord::Base
   #   none
   def self.update_token(id, provider, new_token)
     auth = Authentication.find_by_gamer_id_and_provider(id, provider)
-    auth.update_attribute(:token, new_token)
+    if auth
+      auth.update_attribute(:token, new_token)
+      return true
+    else
+      return false
+    end
   end
 
 end

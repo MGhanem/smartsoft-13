@@ -17,7 +17,6 @@ class BackendController < ApplicationController
   def authenticate_developer!
     developer = Developer.where(:gamer_id => current_gamer.id).first
   	if developer == nil
-  		flash[:notice] = t(:register_developer)
   		redirect_to choose_sub_path
   	end
   end

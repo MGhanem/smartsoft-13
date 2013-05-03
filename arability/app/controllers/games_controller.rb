@@ -27,6 +27,9 @@ class GamesController < ApplicationController
         @synonym_list.delete_at(random_number)
         list_length = @synonym_list.length
     end
+    respond_to do |format|
+      format.js
+    end
   end
   
   # Author:
@@ -43,6 +46,9 @@ class GamesController < ApplicationController
   def record_vote
     @is_formal = params[:is_formal]
     @synonym_id = params[:synonym_id]
+    respond_to do |format|
+      format.js
+    end
   end 
 
   # Author:
@@ -137,31 +143,31 @@ class GamesController < ApplicationController
     score = params[:score]
     if current_gamer
       if !Authentication.is_connected_to_facebook(current_gamer.id)
-        flash[:error] = t(:connect_your_account) 
-        redirect_to "/gamers/edit"
+        @message = t(:connect_your_account) 
+        @redirect = "/gamers/edit"
       else
         begin
           if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
             token = Authentication.get_token(current_gamer.id, "facebook")
             @graph = Koala::Facebook::API.new(token)
             @graph.put_wall_post(
-              "لقد حصلت على #{score} نقطة في عربيلتي على http://localhost:3000/")
-            render "games/share-facebook"
+              t(:post_on_fb) + "#{score}" + t(:post_on_fb_2))
+            @message = t(:posting_success)
           else
-            flash[:error] = t(:you_need_to_connect_fb)
-            redirect_to "/gamers/edit"
+            @message = t(:you_need_to_connect_fb)
+            @redirect =  "/gamers/edit"
           end
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/auth/facebook"
+          @redirect =  "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          flash[:notice] = t(:error_fb)
-          redirect_to "/game"
+          @message = t(:error_fb)
         end
       end
     else
       flash[:error] = t(:sign_in_facebook)
-      redirect_to "/gamers/sign_in"
+      redirect_to =  "/gamers/sign_in"
     end
+    render "messages.js"
   end
 
   # Description:
@@ -274,7 +280,7 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
-     @is_formal = params[:is_formal]
+    @is_formal = params[:is_formal]
     if @is_formal == "formal"
       formality = true
     elsif @is_formal == "slang"
@@ -283,10 +289,13 @@ class GamesController < ApplicationController
       formality = nil
     end
     @record_output = current_or_guest_gamer.suggest_synonym(params[:synonym_name], 
-    params[:keyword_id], formality) 
-    @already_existing_synonym = Synonym.where(name: params[:synonym_name],
+      params[:keyword_id], formality) 
+  	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
-   end
+    respond_to do |format|
+      format.js
+    end
+  end
 
   # Author:
   #   Ali El Zoheiry
@@ -314,9 +323,25 @@ class GamesController < ApplicationController
   # Failure: 
   #   --
   def showprofile
-    @count, @vote_log = current_gamer.get_votes
+    @count, @vote_log = current_or_guest_gamer.get_votes
     respond_to do |format|
       format.js
     end
   end
+
+  def fame
+  end
+
+  def main_hall_of_fame
+    render "mainhall.js"
+  end
+
+  def facebook_hall_of_fame
+    render "facebook.js"
+  end
+
+  def twitter_hall_of_fame
+    render "twitter.js"
+  end
+
 end

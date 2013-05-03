@@ -6,10 +6,10 @@
     {
       $("#twitter").css("visibility", "hidden");
       $("#facebook").css("visibility", "hidden");
-      $("#btengana").css("visibility", "visible");
+      $("#mainhall").css("visibility", "visible");
       $("#twitter").css("position", "fixed");
       $("#facebook").css("position", "fixed");
-      $("#btengana").css("position", "relative");
+      $("#mainhall").css("position", "relative");
     }
     else
     {
@@ -17,24 +17,24 @@
       {
         $("#twitter").css("visibility", "hidden");
         $("#facebook").css("visibility", "visible");
-        $("#btengana").css("visibility", "hidden");
+        $("#mainhall").css("visibility", "hidden");
         $("#twitter").css("position", "fixed");
         $("#facebook").css("position", "relative");
-        $("#btengana").css("position", "fixed");
+        $("#mainhall").css("position", "fixed");
       }
       else
       {
         $("#twitter").css("visibility", "visible");
         $("#facebook").css("visibility", "hidden");
-        $("#btengana").css("visibility", "hidden");
+        $("#mainhall").css("visibility", "hidden");
         $("#twitter").css("position", "relative");
         $("#facebook").css("position", "fixed");
-        $("#btengana").css("position", "fixed");
+        $("#mainhall").css("position", "fixed");
       }
     }
   }
   $(document).ready(function() {
-    $("#btengana br, #facebook br, #twitter br").remove();
+    $("#mainhall br, #facebook br, #twitter br").remove();
   });
 </script>
 
@@ -57,131 +57,31 @@
   </div>
 </div>
 
-<div id="btengana" style = "width:770px; margin:0 auto;" align="center">
-  <table class="table table-bordered" style = "background-color:white; margin-top:20px">
-    <thead align="center" style="font-weight:bold; color:orange;">
-      <tr>
-        <td><%= t(:rank) %></td>
-        <td><%= t(:name) %></td>
-        <td><%= t(:highest_score) %></td>
-        <td><%= t(:trophies) %></td>
-      </tr>
-    </thead>
-    <tbody align="center">
-      <% @gamers = Gamer.order("highest_score DESC").where(is_guest: [nil, false]) %>
-      <% @gamers = @gamers.page(params[:page]).per(5) %>
-      <% @gamers.each do |user| %>
-        <% if user == current_gamer %>
-          <tr style="background-color: #DDDDDD">
-        <% else %>
-          <tr>
-        <% end %>
-          <td><%= rank = Gamer.get_gamer_rank(user) %></td>
-          <td><%= user.username %></td>
-          <td><%= user.highest_score %></td>
-          <% trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
-          <td>
-          <% if trophies.nil? %>
-            <p><%= t(:no_trophies_won) %></p>
-          <% else %>
-            <% trophies = Gamers_Trophy.select("trophy_id").where(gamer_id: user.id).order("trophy_id desc").limit(3) %>
-            <% @tr = Trophy.find_all_by_id(trophies) %>
-            <% @tr.each do |trophy| %>
-              <img alt="trophy" class="border-none" src="/assets/<%= trophy.image_file_name %>" width="25" />
-            <% end %>
-          <% end %>
-          </td>
-        </tr>
-        <br>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="pagination">
-    <%= paginate @gamers, remote: true %>
-    <ul><li>
-      <% my_rank = Gamer.get_gamer_rank(current_gamer) %>
-      <a href="/games/fame?page=<%= page = (my_rank/5.0).ceil %>" data-remote="true"><%= t(:your_rank) %></a>
-    </li></ul>
-  </div>
+<div id="loading" align="center" vertical-align="center">
+  <p style="color:white;"><%= t(:loading) %></p>
+  <img src="/assets/ajax-loader.gif" alt="loading.." />
+</div>
+
+<div id="mainhall" style = "width:770px; margin:0 auto;" align="center">
 </div>
 
 <div id = "twitter" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
-  <p>
-    <img alt="Twitter" class="border-none" src="/assets/twitter.png" width="60" />
-  </p>
-  <% common = Authentication.get_common_twitter_friends(current_gamer) %>
-  <% if common.nil? %>
-    <p style="color:white;"><%= t(:not_connected_to_twitter) %></p>
-  <% else %>
-    <% if !common %>
-      <p style="color:white;"><%= t(:connection_error) %></p>
-    <% else %>
-      <table class="table table-bordered" style = "background-color:white; margin-top:20px">
-        <thead align="center" style="font-weight:bold;">
-          <tr>
-            <td><%= t(:rank) %></td>
-            <td><%= t(:name) %></td>
-            <td><%= t(:highest_score) %></td>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
-          <% @gamers.each do |user| %>
-            <% if user == current_gamer %>
-              <tr style="background-color: #DDDDDD">
-            <% else %>
-              <tr>
-            <% end %>
-              <td><%= rank = Gamer.get_twitter_rank(user) %></td>
-              <td><%= user.username %></td>
-              <td><%= user.highest_score %></td>
-            </tr>
-            <br>
-          <% end %>
-        </tbody>
-      </table>
-      <div align="center"><%= paginate @gamers %></div>
-    <% end %>
-  <% end %>
 </div>
 
 <div id = "facebook" style = "width:770px; margin:0 auto; visibility:hidden;" align="center">
-  <br>
-  <p>
-    <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" style="padding-top:10px" />
-  </p>
-  <% common = Authentication.get_common_facebook_friends(current_gamer) %>
-  <% if common.nil? %>
-    <p style="color:white;"><%= t(:not_connected_to_facebook) %></p>
-  <% else %>
-    <% if !common %>
-      <p style="color:white;"><%= t(:connection_error) %></p>
-    <% else %>
-      <table class="table table-bordered" style = "background-color:white; margin-top:20px">
-        <thead align="center" style="font-weight:bold;">
-          <tr>
-            <td><%= t(:rank) %></td>
-            <td><%= t(:name) %></td>
-            <td><%= t(:highest_score) %></td>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
-          <% @gamers.each do |user| %>
-            <% if user == current_gamer %>
-              <tr style="background-color: #DDDDDD">
-            <% else %>
-              <tr>
-            <% end %>
-              <td><%= rank = Gamer.get_facebook_rank(user) %></td>
-              <td><%= user.username %></td>
-              <td><%= user.highest_score %></td>
-            </tr>
-            <br>
-          <% end %>
-        </tbody>
-      </table>
-      <div align="center" style="color:white;"><%= paginate @gamers %></div>
-    <% end %>
-  <% end %>
 </div>
+
+<script type="text/javascript">
+  $.ajax({
+  url: "/games/main_hall_of_fame",
+    async: "true"
+  });
+  $.ajax({
+  url: "/games/twitter_hall_of_fame",
+    async: "true"
+  });
+  $.ajax({
+  url: "/games/facebook_hall_of_fame",
+    async: "true"
+  });
+</script>

@@ -2,6 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  request_button: "click here"
+  posting_success: "You have posted your score on facebook"
+  post_on_fb: "I have scored "
+  post_on_fb_2: " points at arability game on http://localhost:3000/"
   welcome_gamer: "Congratulations! You have successfully registered as a gamer"
   welcome_guest: "You are now viewing a limited version of the game. Become a member to view the full version"
   username_or_email: "Username or email"
@@ -24,6 +28,7 @@ en:
   both_button: "Both"
   arabic: "العربية"
   search: "Search Keywords"
+  no_cat: "none"
   search_here: "search keywords here"
   keyword_add_success: "Keyword added to our database successfully"
   keyword_pending: "Sorry, Keyword pending for approval"
@@ -58,6 +63,7 @@ en:
   following: "Following"
   select_subscription: "Select Subscription"
   backend: "Developers"
+  rec_back: "Back"
   project: "Project"
   my_projects: "My Projects"
   required: "The fields marked with * are required"
@@ -109,15 +115,13 @@ en:
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
   exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
-  views:
-    project:
-      flash_messages:
-        project_was_successfully_created: 'Project was successfully created.'
-        project_was_successfully_updated: 'Project was successfully updated.'
   import: "Import"
   export: "Export"
   add_words: "Add words"
   recommended_words: "Recommended words"
+  recommended_for_project: "Recommended words for your project:"
+  select_words: "Select the words you would like to add to your project"
+  no_recommended_words: "Sorry, there are no recommended words for this project"
   share: "Share"
   delete: "Delete"
   word: "Word"
@@ -134,7 +138,8 @@ en:
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
-  stats_no_votes: "Sorry! this translation has no votes yet!"
+  stats_no_votes: "Sorry! this synonym has no votes yet!"
+  exceeded_project_limit: "You have reached the maximum number of projects allowed. Please subscribe to Premium or Deluxe to create more."
   controller:
    subscription:
      messages_errors:
@@ -224,8 +229,8 @@ en:
   no_project: "Project does not exist!"
   file: "file"
   log_in_google: "Sign In with Google"
-  no_categories: "This project has no categories"
-  no_description: "This project has no description"
+  no_categories: "None"
+  no_description: "None"
   register_developer: "Please register as a developer first"
   developer_cant_see_project: "You are not allowed to view this project"
   first_name: "First Name"
@@ -248,7 +253,7 @@ en:
   won_prizes: "Congratulations! You have won these prizes"
   sign_in_first: "Sign in or register first to view this page"
   scored: "You have scored "
-  congrats_prizes: "Congratulations! You have one the following prizes"
+  congrats_prizes: "Congratulations! You have won the following prizes"
   sign_in_first: "Please sign in first to view this page"
   hello: "Hello world"
   earned_prizes: "Prizes that you have earned"
@@ -303,6 +308,14 @@ en:
   age_range: "(Kindly enter a value between 10 and 100)"
   follow_words_info: "Follow a word to recieve an email with every update. Updates include a new translation addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Translations of"
+  activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              not_in_range: "is not in range"
+  synonyms_of: "Synonyms of"
   enter_keyword: "Enter a keyword"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -349,10 +362,10 @@ en:
   no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
   all_prizes: "Wohoo! It seems that you have won all the prizes!"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
-  help_us_through_reporting: > 
-    Help us filter abusive keywords and translations 
-    by choosing a word you find inappropriate and submitting a report using 
-    this form. An email will be sent to you upon taking action concerning 
+  help_us_through_reporting: >
+    Help us filter abusive keywords and translations
+    by choosing a word you find inappropriate and submitting a report using
+    this form. An email will be sent to you upon taking action concerning
     the submitted report.
   report_abusive: "Report here"
   report: "Report"
@@ -379,9 +392,15 @@ en:
   highest_score: "Highest Score"
   trophies: "Trophies"
   no_trophies_won: "No Trophies"
-  not_connected_to_twitter: "You are not connected to Twitter, connect from your settings"
-  not_connected_to_facebook: "You are not connected to Facebook, connect from your settings"
-  loading: "Loading"
+  not_connected_to_twitter: "You are not connected to Twitter, connect from your "
+  not_connected_to_facebook: "You are not connected to Facebook, connect from your "
+  loading: "Loading, please wait"
+  add_to: "add to"
+  with: "with"
+  synonym: "translation"
+  add: "Add"
+  exceeds_word_limit: "Sorry, you have exceeded the limit of words you can add defined by your subscription model."
+  choose_project: "Please choose a project."
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
@@ -446,7 +465,7 @@ en:
   feat2b: "Ready to start using out tool? Sign up to Arability to get the most out of our tool."
   feat3h: "Use"
   feat3b: "Head over to our fully featured developer's side."
-  featdevh1: "Database to that gets the job done."
+  featdevh1: "Database that gets the job done."
   featdevb1: "With a reliable database of transalations categorized with age, country and gender, developers are able to easily find out translations for their target markets."
   featdevh2: "Projects make your life easier."
   featdevb2: "Developers are able to create projects grouping words of a single theme together. Projects can be easily imported, exported or shared to other developers with a click of a button."
@@ -476,7 +495,6 @@ en:
   errors_prohibited: "errors prohibited you from being saved"
   sign_up_e_acc: "Sign up with an existing account"
   remove_fb_connection: "Connection to Facebook removed successfully!"
-  continue_reg_fb: "Facebook provided us with some information about you. Please fill in the rest to continue your registration"
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
@@ -514,11 +532,15 @@ en:
   close_delete: "Close"
   submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'Project was successfully created.'
+        project_was_successfully_updated: 'Project was successfully updated.'
   connection_error: "Connection Error, please make sure you're connected to the internet"
   no_account: "You seem to have left us. Please create a new account"
   activerecord:
@@ -527,9 +549,9 @@ en:
         project:
           attributes:
             minAge:
-              minAge_range: "has to be between 9 and 99 years"
+              minAge_range: "has to be a number between 9 and 99 years"
             maxAge:
-              maxAge_range: "has to be between 10 and 100 years"
+              maxAge_range: "has to be a number between 10 and 100 years"
               less_than_minAge: "can not be less than the minimum age"
     attributes:
       project:
@@ -558,8 +580,10 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
-  sub_changed: "chane %{sm.name} "
+  sub_changed: "You have successfully changed your subscription model "
   you_have_prizes: "You have won the following prizes!"
+  no_account: "You seem to have left us. Please create a new account"
+  trial_error: "Sorry, you cannot use this service. Please subscribe to Premium or Deluxe to continue"
   no_translation_popover_title: "there is no translations for this keyword"
   you_can: "you can "
   this_keyword: " this keyword"
@@ -581,8 +605,8 @@ en:
   university: "University"
   graduate: "Graduate"
   unshare: "Unshare"
-  no_account: "You seem to have left us. Please create a new account"
   resend_confirmation: "Resend confirmation instructions"
+  resend_text: "Didn't receive your confirmation email? Resend"
   send: "Send"
   hello: "Hello"
   confirm_body: "You can confirm your account email through the link below"
@@ -612,10 +636,17 @@ en:
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
   have_to_sign_in: "You have to sign in to view this page"
+  followmaxtip: "You've reach your maximum number of followed words."
+  search_not_allowed: >
+    Sorry! You have reached your search quota limit, but you can still search for words
+    you searched for before.
+  score_popover_content: "The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word"
+  score_popover_title: "How the Score is calculated"
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
-  congrats_you_won: "Congratulations! You have won!"
+  congrats_you_won: "You have won!"
+  Synonym_already_there: "Project already has this word with the specified translation."
   activerecord:
     attributes:
       developer:
