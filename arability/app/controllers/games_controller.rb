@@ -27,6 +27,9 @@ class GamesController < ApplicationController
         @synonym_list.delete_at(random_number)
         list_length = @synonym_list.length
     end
+    respond_to do |format|
+      format.js
+    end
   end
   
   # Author:
@@ -43,6 +46,9 @@ class GamesController < ApplicationController
   def record_vote
     @is_formal = params[:is_formal]
     @synonym_id = params[:synonym_id]
+    respond_to do |format|
+      format.js
+    end
   end 
 
   # Author:
@@ -286,6 +292,9 @@ class GamesController < ApplicationController
       params[:keyword_id], formality) 
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
+    respond_to do |format|
+      format.js
+    end
   end
 
   # Author:
