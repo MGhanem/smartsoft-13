@@ -5,30 +5,44 @@ namespace :db do
     Authentication.delete_all
 
     Category.delete_all
-    test_category=Category.create(english_name: "Art", arabic_name: "فن")
-    Category.create(english_name: "Beauty & Style", arabic_name: "موضة")
-    Category.create(english_name: "Business & Finance", arabic_name: "تجارة وأموال")
-    Category.create(english_name: "Cars & Transportation", arabic_name: "وسائل المواصلات")
-    Category.create(english_name: "Computers & Internet", arabic_name: "الكمبيوتر والانترنت")
-    Category.create(english_name: "Electronics", arabic_name: "إلكترونيات")
-    Category.create(english_name: "Education", arabic_name: "التعليم")
-    Category.create(english_name: "Entertainment & Music", arabic_name: "الترفيه والموسيقى")
-    Category.create(english_name: "Environment", arabic_name: "البيئة")
-    Category.create(english_name: "Family & Relationships", arabic_name: "الاسر والعلاقات")
-    Category.create(english_name: "Food & Drinks", arabic_name: "الطعام والشراب")
-    Category.create(english_name: "Games", arabic_name: "ألعاب")
-    Category.create(english_name: "Hospital", arabic_name: "مستشفى")
-    Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+    a=Category.create(english_name: "Art", arabic_name: "فن")
+    a.save
+    b=Category.create(english_name: "Beauty & Style", arabic_name: "موضة")
+    b.save
+    c=Category.create(english_name: "Business & Finance", arabic_name: "تجارة وأموال")
+    c.save
+    d=Category.create(english_name: "Cars & Transportation", arabic_name: "وسائل المواصلات")
+    d.save
+    e=Category.create(english_name: "Computers & Internet", arabic_name: "الكمبيوتر والانترنت")
+    e.save
+    f=Category.create(english_name: "Electronics", arabic_name: "إلكترونيات")
+    f.save
+    g=Category.create(english_name: "Education", arabic_name: "التعليم")
+    g.save
+    h=Category.create(english_name: "Entertainment & Music", arabic_name: "الترفيه والموسيقى")
+    h.save
+    i=Category.create(english_name: "Environment", arabic_name: "البيئة")
+    i.save
+    j=Category.create(english_name: "Family & Relationships", arabic_name: "الاسر والعلاقات")
+    j.save
+    k=Category.create(english_name: "Food & Drinks", arabic_name: "الطعام والشراب")
+    k.save
+    l=Category.create(english_name: "Games", arabic_name: "ألعاب")
+    l.save
+    m=Category.create(english_name: "Hospital", arabic_name: "مستشفى")
+    m.save
+    n=Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+    n.save
 
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.where(english_name: "Beauty & Style"), Category.where(english_name: "Electronics"), Category.last])
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first, Category.where(english_name: "Hospital"),Category.where(english_name: "Cars & Transportation")])
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.last, Category.where(english_name: "Social Networking")])
-    success, upload=Keyword.add_keyword_to_database("upload", true, categories:[Category.where(english_name: "Computers & Internet")])
-    success, download=Keyword.add_keyword_to_database("download", true, categories:[Category.where(english_name: "Education")])
-    success, loading=Keyword.add_keyword_to_database("loading", true)
-    success, username=Keyword.add_keyword_to_database("username", true)
-    success, password=Keyword.add_keyword_to_database("password", true)
+    success, click=Keyword.add_keyword_to_database("click", true, true, [b, f, n])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, true, [a, m, d])
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, true, [n, k, f])
+    success, upload=Keyword.add_keyword_to_database("upload", true, true, [e, f])
+    success, download=Keyword.add_keyword_to_database("download", true, true, [g, b])
+    success, loading=Keyword.add_keyword_to_database("loading", true, true, [l, i])
+    success, username=Keyword.add_keyword_to_database("username", true, true, [a, e])
+    success, password=Keyword.add_keyword_to_database("password", true, true, [n, j])
     share=Keyword.create(name: "share", approved: true, is_english: true)
     post=Keyword.create(name: "post", approved: true, is_english: true)
     poke=Keyword.create(name: "poke", approved: true, is_english: true)
@@ -47,7 +61,7 @@ namespace :db do
     edadat=Keyword.create(name: "إعدادات", approved: true, is_english: false)
     engazat=Keyword.create(name: "انجازات", approved: true, is_english: false)
 
-    test_category.keywords << click
+    a.keywords << click
 
     word = Keyword.new
     word.name = "play"
