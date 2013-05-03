@@ -1,0 +1,46 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#loading").remove();
+  });
+</script>
+
+  <p>
+    <img alt="Facebook" class="border-none" src="/assets/facebook_logo.png" width="40" style="padding-top:10px" />
+  </p>
+  <% common = Authentication.get_common_facebook_friends(current_gamer) %>
+  <% if common.nil? %>
+    <p style="color:white;">
+      <%= t(:not_connected_to_facebook) %>
+      <a target="_blank" href="/gamers/edit"><%= t(:settings) %></a>
+    </p>
+  <% else %>
+    <% if !common %>
+      <p style="color:white;"><%= t(:connection_error) %></p>
+    <% else %>
+      <table class="table table-bordered" style = "background-color:white; margin-top:20px">
+        <thead align="center" style="font-weight:bold;">
+          <tr>
+            <td><%= t(:rank) %></td>
+            <td><%= t(:name) %></td>
+            <td><%= t(:highest_score) %></td>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <% @gamers = Gamer.where(id: common).order("highest_score DESC").page(params[:page]).per(5) %>
+          <% @gamers.each do |user| %>
+            <% if user == current_gamer %>
+              <tr style="background-color: #DDDDDD">
+            <% else %>
+              <tr>
+            <% end %>
+              <td><%= rank = Gamer.get_facebook_rank(user) %></td>
+              <td><%= user.username %></td>
+              <td><%= user.highest_score %></td>
+            </tr>
+            <br>
+          <% end %>
+        </tbody>
+      </table>
+      <div align="center" style="color:white;"><%= paginate @gamers %></div>
+    <% end %>
+  <% end %>

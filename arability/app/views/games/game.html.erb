@@ -216,20 +216,31 @@ function setButtons(){
     nav_locked = false;
   }
 
+  // Author:
+  //   Mirna Yacout
+  // Description:
+  //   views the hall of fame of all arability gamers showing their last 3 trophies, rank and highest score
+  //   giving the user the option to filter with his facebook or twitter friends and view his rank
+  // Parameters:
+  //   None.
+  // Success:
+  //   view the hall of fame successfully
+  // Failure:
+  //   internet connection failure: a message is displayed upon clicking to view facebook/twitter friends' 
+  //   hall of fame telling the user to check his internet connection
   function hallOfFame(){
-    if(nav_locked == true){
+    if(nav_locked) {
       return;
     }
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    }    
     clear();
-    <% if I18n.locale==:en %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
-    <% else I18n.locale==:ar %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
-    <% end %>
-    $('#loading-server').fadeTo(0,0);
-    $('#loading-server').fadeTo(1000,1);
-    $('#loading-server').fadeTo(1000,0);
-    $.get("/games/halloffame");
+    if(isGuest == true) {
+      $("#zone").append('<div id="loading" align="center" vertical-align="center" style="padding-top:250px;"><p style="color:white;"><%= t(:have_to_sign_in) %></p></div>');
+    } else {
+      setTimeout(function(){$.get("/games/fame")},0);
+    }
   }
 
   function showProfile(){
@@ -289,7 +300,7 @@ function setButtons(){
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()"><%= t(:rank) %></div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>

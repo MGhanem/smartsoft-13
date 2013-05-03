@@ -428,6 +428,17 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
+  hall_of_fame: "قاعة الشهرة"
+  your_rank: "ترتيبك"
+  your_facebook_friends: "أصدقائك في فيسبوك"
+  your_twitter_friends: "أصدقائك في تويتر"
+  rank: "الرتبة"
+  highest_score: "أعلى نقاط"
+  trophies: "الجوائز"
+  no_trophies_won: "لا يوجد جوائز"
+  not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر "
+  not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر "
+  loading: "جاري التحميل، برجاء الانتظار"
   add_to: "أضف إلى"
   with: "مع"
   synonym: "معنى"
@@ -598,6 +609,14 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  views:  
+    pagination:  
+      previous: "&lt; قبل"
+      next: "بعد &gt;"
+      first: "الاولى"
+      last: "الاخيرة"
+      truncate: "&hellip;"
+  connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   activerecord:
     errors:
@@ -726,6 +745,7 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  have_to_sign_in: "يجب عليك تسجيل الدخول لتتمكن من رؤية هذه الصفحة"
   followmaxtip: "لقد وصلت الحد المسموح لإتباع الكلمات."
   search_not_allowed: >
     عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في

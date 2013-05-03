@@ -421,6 +421,17 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  hall_of_fame: "Hall Of Fame"
+  your_rank: "Your Rank"
+  your_facebook_friends: "Facebook friends"
+  your_twitter_friends: "Twitter friends"
+  rank: "Rank"
+  highest_score: "Highest Score"
+  trophies: "Trophies"
+  no_trophies_won: "No Trophies"
+  not_connected_to_twitter: "You are not connected to Twitter, connect from your "
+  not_connected_to_facebook: "You are not connected to Facebook, connect from your "
+  loading: "Loading, please wait"
   add_to: "add to"
   with: "with"
   synonym: "translation"
@@ -567,12 +578,22 @@ en:
   close_delete: "Close"
   submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
+  views:  
+    pagination:  
+      previous: "&lt; Previous"
+      next: "Next &gt;"
+      truncate: "&hellip;"
+  connection_error: "Connection Error, please make sure you're connected to the internet"
+  no_account: "You seem to have left us. Please create a new account"
   activerecord:
     errors:
       models:
         project:
           attributes:
             minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
               minAge_range: "has to be a number between 9 and 99 years"
             maxAge:
               maxAge_range: "has to be a number between 10 and 100 years"
@@ -659,6 +680,7 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  have_to_sign_in: "You have to sign in to view this page"
   followmaxtip: "You've reach your maximum number of followed words."
   search_not_allowed: >
     Sorry! You have reached your search quota limit, but you can still search for words
@@ -674,6 +696,7 @@ en:
     attributes:
       developer:
         first_name: "First Name"
+
         last_name: "Last Name"
       project:
         name: 'Name'
