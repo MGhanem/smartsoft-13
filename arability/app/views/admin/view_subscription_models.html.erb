@@ -25,10 +25,25 @@
                 <th>الحد الأقصى للمشاريع</th>
                 <th>الحد الأقصى للكلمات للمشروع الواحد</th>
                 <th>تعديل</th>
+                <th>مسح</th>
               </tr>
               </thead>
               <tbody>
               <% @models.each do |model| %>
+              <div id="myModalDelete<%= model.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabel">تأكيد المسح</h3>
+                </div>
+                <div class="modal-body">
+                  <p>هل أنت متأكد من مسح نظام الإشتراك؟</p>
+                  <div class="prize-view"></div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">لا شكراً</button>
+                  <a class="btn btn-danger" href="/admin/delete_subscription_model?model_id=<%= model.id %>">مسح</a>
+                </div>
+              </div>
                 <tr>
                   <th><%= model.name_ar %></th>
                   <th><%= model.name_en %></th>      
@@ -36,7 +51,8 @@
                   <th><%= model.limit_follow %></th>
                   <th><%= model.limit_project %></th>
                   <th><%= model.limit %></th>
-                  <th><a class="btn btn-mini" href="/admin/<%= model.id %>/edit_subscription_model"><i class="icon-edit"></i></a></th>
+                  <th><a class="btn btn-mini btn-warning" href="/admin/<%= model.id %>/edit_subscription_model"><i class="icon-edit"></i></a></th>
+                  <th><a class="btn btn-mini btn-danger" href="#myModalDelete<%= model.id %>" role="button" class="edit-link-prize" data-toggle="modal"><i class="icon-trash"></i></a></th>
                 </tr>
               <% end %>
               </tbody>

@@ -20,6 +20,7 @@
             <tr>
               <th>إسم الفئة بالإنجليزية</th>
               <th>إسم الفئة بالعربية</th>
+              <th>تعديل</th>
               <th>مسح</th>
             </tr>
             </thead>
@@ -42,6 +43,7 @@
               <tr>
                 <th><%= category.english_name %></th>
                 <th><%= category.arabic_name %></th>
+                <th><a class="btn btn-mini btn-warning" href="/admin/<%= category.id %>/edit_category"><i class="icon-edit"></i></a></th>
                 <th><a class="btn btn-mini btn-danger" href="#myModalDelete<%= category.id %>" role="button" class="edit-link-prize" data-toggle="modal"><i class="icon-trash"></i></a></th>
               </tr>
             <% end %>
