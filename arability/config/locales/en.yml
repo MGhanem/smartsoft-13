@@ -495,7 +495,7 @@ en:
   oops_error_fb: "Oops an error has occured while communicating with Facebook. Please try again"
   already_connected_fb: "You're signed in and your account is already connected to facebook"
   errors_prohibited: "errors prohibited you from being saved"
-  sign_up_e_acc: "Sign up with an existing account"
+  sign_up_e_acc: "Sign up with a social media account"
   remove_fb_connection: "Connection to Facebook removed successfully!"
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
