@@ -3,21 +3,9 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   scope "/admin" do
-    get "/login"
-    get "/logout"
-    get "/index"
-    get "/import_csv"
-    get "/delete_trophy"
-    get "/delete_prize"
-
-    post "/login"
-    post "/upload"
-    post "/add_word"
-    post "/add_trophy"
-    post "/add_prize"
-
     match "" => "admin#index", :via => [:get]
-    match "autocomplete" => "admin#gamer_email_autocomplete"
+    match "autocomplete" => "admin#gamer_email_autocomplete", 
+            as: "admin_autocomplete_email_gamer"
     scope "/add" do
       match "/word" => "admin#add_word", :via => [:get, :post]
       match "/trophy" => "admin#add_trophy", :via => [:get, :post]
@@ -110,7 +98,6 @@ Arability::Application.routes.draw do
     match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
     scope "developers/" do
-      match "/" => "backend#home", :as => "backend_home"
       match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
       get "projects/remove_developer_from_project"
       match "projects/:id/share" => "projects#share", :as => "share_project"
@@ -126,9 +113,6 @@ Arability::Application.routes.draw do
 
       match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
-
-      get "projects/remove_developer_from_project"
-
       get "projects/update"
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project

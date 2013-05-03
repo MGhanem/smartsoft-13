@@ -202,15 +202,18 @@ function setButtons(){
   }
   
   function backToGame() {
+    <% if I18n.locale==:en %>
+    document.getElementById('gamenavtitle').innerHTML = "Game"
+    <% else %>
+    document.getElementById('gamenavtitle').innerHTML = "اللعبة"
+    <% end %>
     document.getElementById("zone").innerHTML = cache;
     cache = "";
     nav_locked = false;
   }
 
   function disableNav() {
-    var lists = $("[id*='navItems']");
-    lists.addClass("disabled");
-    nav_locked = true;
+    $('.game-nav').css('display', 'none');
   }
 
   function show_menu_item(title)
@@ -229,9 +232,7 @@ function setButtons(){
   }
 
   function enableNav() {
-    var lists = $("[id*='navItems']");
-    lists.removeClass("disabled");
-    nav_locked = false;
+    $('.game-nav').css('display', '');
   }
 
   // Author:
@@ -318,8 +319,8 @@ function setButtons(){
   <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 115px; height: 27px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
-        <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
+       <button type="submit" id="ingamenav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 140px; height: 32px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
+        <span class="new" id="gamenavtitle" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
         <center id="selected_item"></center>
@@ -351,12 +352,12 @@ function setButtons(){
    <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width : 115px; height: 27px; margin-top:15px; border: medium none; margin-left: 20px;"><i class="icon-align-justify"></i>
-        <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
+       <button type="submit" id="ingamenav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width : 140px; height: 32px; margin-top:15px; border: medium none; margin-left: 20px;"><i class="icon-align-justify"></i>
+        <span class="new" id="gamenavtitle" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
         <center id="selected_item"></center>
-        <ul class="dropdown-menu" style="margin-left: 20px; margin-top:-20px;">
+        <ul class="dropdown-menu" id="ingamenav" style="margin-left: 20px; margin-top:-20px;">
          <li ><a href="#"onclick="hallOfFame()">
               <span style="margin-right: 90px;">Rank</span>
              </a></li>
@@ -414,4 +415,3 @@ function setButtons(){
       </div>
     </div>
 </div>
-
