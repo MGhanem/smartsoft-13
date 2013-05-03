@@ -104,7 +104,7 @@
   #   None 
   def can_add_word(proj_id)
     developer = self.developer
-    add = PreferedSynonym.where(project_id: proj_id)
+    add=PreferedSynonym.where(project_id: proj_id)
     if add.count < self.word_add
       return true
     else
