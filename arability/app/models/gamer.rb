@@ -176,8 +176,13 @@ class Gamer < ActiveRecord::Base
   #   returns true when a vote is saved for the selected synonym
   # Failure:
   #   returns false when the vote is not saved
-  def select_synonym(synonym_id)
+  def select_synonym(synonym_id, is_formal = nil)
     if Vote.record_vote(self.id,synonym_id)[0]
+      if is_formal != nil
+        synonym = Synonym.find(synonym_id)
+        synonym.is_formal = is_formal
+        synonym.save
+      end
       return true
     else
       return false
@@ -191,12 +196,14 @@ class Gamer < ActiveRecord::Base
   # Params:
   #   synonym_name: which is the synonym name the gamer suggested in the  
   #                 vote form.
+  #   keyword_id: is the id of keyword for which the synonym is being added
+  #   is_formal: determine whether the synonym is formal or slang
   # Success:
   #   returns 0 returned by the invoked method meaning saved new synonym
   # Failure:
   #   returns 1,2,3 according to the invoked method failure scenario
-  def suggest_synonym(synonym_name, keyword_id)
-    return Synonym.record_suggested_synonym(synonym_name, keyword_id)
+  def suggest_synonym(synonym_name, keyword_id, is_formal)
+    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true ,is_formal)
   end
     
 

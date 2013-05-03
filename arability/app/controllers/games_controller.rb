@@ -34,13 +34,15 @@ class GamesController < ApplicationController
   # Description:
   # 	makes the action of saving the vote for the gamer
   # params:
-  # 	word: takes the synonym id for which the gamer voted for
+  # 	synonym_id: takes the synonym id for which the gamer voted for
+  #   is_formal: the formality of the synonym the gamer voted for
   # success:
   # 	passes the synonym_id to the record_vote view
   # failure:
   #  	---------
   def record_vote
-    @synonym_id=params[:synonym_id]
+    @is_formal = params[:is_formal]
+    @synonym_id = params[:synonym_id]
   end 
 
   # Author:
@@ -262,6 +264,7 @@ class GamesController < ApplicationController
   # params:
   # 	synonym_name: takes the synonym name the gamer suggested
   # 	keyword_id:	takes the keyword id for the which the synonym is suggested
+  #   is_formal: which determines whether the synonym is formal or slang
   # success:
   # 	returns 0 for record_output which means saved suggestion and
   # 	the already_existing_synonym whould be nill as the synonym is not existing
@@ -271,11 +274,19 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
+     @is_formal = params[:is_formal]
+    if @is_formal == "formal"
+      formality = true
+    elsif @is_formal == "slang"
+      formality = false
+    else
+      formality = nil
+    end
     @record_output = current_or_guest_gamer.suggest_synonym(params[:synonym_name], 
-      params[:keyword_id]) 
-  	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
+    params[:keyword_id], formality) 
+    @already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
-  end
+   end
 
   # Author:
   #   Ali El Zoheiry

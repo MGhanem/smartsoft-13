@@ -1,0 +1,187 @@
+<div>
+	<% submitted_word = @word %>
+	<% keyword = @keyword%>
+	<% syn_list =  @synonym_list %>
+	<table class="vote_table" style="margin-bottom: 20px;">
+		<tr>
+			<td>
+			<% if syn_list.size > 0 %>
+				<% if I18n.locale == :ar %>
+				<p id="text" class="text_arabic" > من فضلك اختر معني لكلمة:</p></br>
+				<% end %>
+				<% if I18n.locale == :en %>
+				<p id="text" class="text_english" > please choose a translation for the word:</p></br>
+				<% end %>
+			<% end %>
+			<% if syn_list.blank? %>
+				<% if I18n.locale == :ar %>
+				<p id="text" class="text_arabic" > من فضلك ادخل معني مناسب لكلمة:</p></br>
+				<% else %>
+				<p id="text" class="text_english" > please enter a translation for the word:</p></br>
+				<% end %>
+			<% end %>
+			</td>
+		<tr>
+			<td>
+				<p style="font-weight:bold; text-align:center;" >"<%= submitted_word %>"</p>
+			</td>		
+		</tr>
+	</table>
+	<table class="vote_table">
+		<% j = 0 %>
+		<% while syn_list.size>0  && j<syn_list.length %>
+		<tr>
+			<td style="width:350px; text-align:center;">
+				<% if syn_list[j].is_formal == nil %>
+					<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+				<% else %>
+					<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote('<%= syn_list[j].id%>','nil')"><%= syn_list[j].name %></button>
+				<% end %>
+				<% j = j+1 %>
+			</td>
+			<td style="width:350px; text-align:center;">
+				<% if j<syn_list.length %>
+					<% if syn_list[j].is_formal == nil %>
+						<button data-trigger="manual" data-content="<%= t(:formal_or_slang) %>" data-placement="bottom" class="btn btn-success" id="synonym_button<%=j%>" data-html="true" type="submit" onclick="check_formality('<%= syn_list[j].id%>', '<%= syn_list[j].is_formal %>','<%= j %>')"><%= syn_list[j].name %></button>
+					<% else %>
+						<button class="btn btn-success" id="synonym_button" type="submit" onclick="record_vote('<%= syn_list[j].id%>','nil')"><%= syn_list[j].name %></button>
+					<% end %>
+					<% j = j+1 %>
+				<% end  %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+	<table class="vote_table">
+		<tr>
+			<td style="text-align:center; width:230px;">
+				<input type="text" id="suggest_synonym_textbox" placeholder="<%= t(:enter_a_synonym)%>" >
+			</td>
+			<td style="text-align:center; width:230px;">
+				<select style="width:170px;" id="select_formality">
+					<option value="nil"><%= t(:choose_formality) %></option>
+					<option value="formal"><%= t(:formal) %></option>
+					<option value="slang"><%= t(:slang) %></option>
+				</select>
+			</td>
+			<td style="text-align:center; width:230px;">
+				<button class="btn btn-primary" type="submit" id="suggest_synonym_button" onclick="suggest_synonym_to_word(<% if keyword %><%= keyword.id %><% end %>, $('#select_formality option:selected').val())"><%= t(:suggest_this_synonym)%></button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:460px; height: 100px;">
+				<div id="vote_error_messages"></div>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td style="width:230px;"></td>
+			<td style="width:230px;"></td>
+			<td style="width:230px; text-align:center;">
+				<button class="btn btn-primary"  id="skip_button" type="submit" onclick="skip_keyword()"><%= t(:skip_this_keyword) %></button>
+			</td>
+			<td style="width:230px; text-align:center;">
+				<a href="#report_modal" role="button" class="btn btn-danger" onClick="modalToggle()" id="launch_report"><%= t(:report_game) %></a>
+			</td>
+		</tr>
+	</table>
+</div>
+<input id="choosen_synonym_id" type="hidden" value="old_value"/>
+<script type="text/javascript">
+	function check_formality(syn_id, syn_is_formal,j){
+		if(syn_is_formal == "true" || syn_is_formal == "false" ){
+			record_vote(syn_id);
+		}
+		else{
+			document.getElementById('choosen_synonym_id').value=syn_id;
+			$('#synonym_button0').popover('destroy');
+			$('#synonym_button1').popover('destroy');
+			$('#synonym_button2').popover('destroy');
+			$('#synonym_button3').popover('destroy');
+			this_id = 'synonym_button'+j;
+			var translation = "<%= t(:is_this_translation) %>"
+			var title = []
+			title.push("<p>"+translation);
+			title.push("<button type='button' class='close' data-dismiss='modal' aria-hidden='true' onclick='hide()'>×</button></p>");
+			title.join();
+			$('#synonym_button'+j).popover({'title':title});
+			$('#synonym_button'+j).popover('show');
+			$('.popover').width(250);
+		}
+	}
+	function hide(){
+		$('#synonym_button0').popover('destroy');
+		$('#synonym_button1').popover('destroy');
+		$('#synonym_button2').popover('destroy');
+		$('#synonym_button3').popover('destroy');
+	}
+	function choose_formal_and_vote(){
+		var synonym_id = $("#choosen_synonym_id").val();
+		record_vote(synonym_id,"formal");
+	}
+	function choose_slang_and_vote(){
+		var synonym_id = $("#choosen_synonym_id").val();
+		record_vote(synonym_id,"slang");
+	}
+
+	<%= render "search/submit-report.js" %>
+</script>
+<div class="alert alert-success" id="report_success" style="display:none; font-size: 16px;">
+	<div style="text-align:center;"><%= t(:report_sent_success) %>
+	</div>
+</div>
+<div class="alert alert-block alert-error" id="report_failure" style="display:none; font-size: 16px;">
+	<button type="button" class="close" onclick="restoreError()">
+		×
+	</button>
+	<h4 class="alert-heading">
+		<%= t(:oh_snap) %>
+	</h4>
+	<p>
+		<%= t(:check_connection) %>
+	</p>
+</div>
+<script type="text/javascript">
+	<% if I18n.locale == :ar %>
+		$("#launch_report").css("font-size","18px");
+	<% else %>
+		$("#launch_report").css("font-size","13px");
+	<% end %>
+</script>
+<div id="report_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-size: 16px;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="modal_label">
+			<%= t(:report_abusive) %>
+		</h3>
+	</div>
+	<div class="modal-body">
+		<p>
+			<%= t(:help_us_through_reporting) %>
+		</p>
+		<hr>
+		<h4>
+			<%= t(:words_in_page)%>
+		</h4>
+		<%= check_box_tag "chkbox", [@keyword.id, "Keyword"], false, onclick: "setChecked(this)", is_checked: false %>
+		<%= @keyword.name %>
+		<br>
+		<% if !@synonym_list.blank? %>
+			<% @synonym_list.each do |synonym| %>
+			  	<%= check_box_tag "chkbox", [synonym.id, "Synonym"], false, onclick: "setChecked(this)", is_checked: false %>
+			  	<%= synonym.name %>
+			  	<br>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">
+			<%= t(:close) %>
+		</button>
+		<button class="btn btn-primary" onclick="report_submission()" data-dismiss="modal">
+			<%= t(:submit) %>
+		</button>
+	</div>
+</div>
