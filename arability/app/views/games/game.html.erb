@@ -219,7 +219,7 @@ function setButtons(){
     var item_html = '<h3 style="margin-top: -50px; font-size: 40px;"> \
     ' + title + ' \
     </h3>';
-    $(".btn-group span.caret").text(title);
+    $(".btn-group span.noha").text(title);
     //$(".btn-group span.caret").html(item_html);
 
 
@@ -252,6 +252,7 @@ function setButtons(){
   }
 
   function showProfile(){
+    show_menu_item('<%= t(:profile) %>');
     if(cache == "") {
       cache = document.getElementById("zone").innerHTML;
     } 
@@ -298,14 +299,14 @@ function setButtons(){
     modalYesButton = "<%= t(:modal_yes_button) %>";
     modalNoButton = "<%= t(:modal_no_button) %>";
   }
-
+</script>
 <% if I18n.locale==:ar %>
 <div class="game-zone">
   <div class="game-nav">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width : 130px; height: 55px; margin-top:10px; border: medium none;">
-        <span class="caret">Menu</span>
+       <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width : 110px; height: 50px; margin-top:15px; border: medium none;"><i class="icon-list"></i>
+        <span class="noha" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
         <center id="selected_item"></center>
@@ -319,7 +320,7 @@ function setButtons(){
          <li> <a href="#" onclick="showTrophies()">
                 الإنجازات
               </a></li>
-         <li><a href="#">
+         <li><a href="#" onclick="showProfile()">
           بروفيل
              </a>
          </li>
@@ -332,59 +333,49 @@ function setButtons(){
          </a>
           </li>
         </ul>
-        <% end %>
+        
     </div>
+    <% end %>
   </div>
   <% else I18n.locale==:en %>
   <div class="game-zone">
-  <div class="game-nav">
-    <div class="btn-group" >
-       <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" style="width : 130px; height: 55px; margin-top:10px; border: medium none;" href="#">
-        <span class="caret"></span>
-        <img src="/assets/gear.png"/>  
+ 
+    <% if current_gamer != nil %>
+    <div class="btn-group" style="height: 66px;">
+       <button type="submit" class="btn dropdown-toggle" data-toggle="dropdown" href="#" style="width : 110px; height: 50px; margin-top:15px; border: medium none;"><i class="icon-list"></i>
+        <span class="noha" style="font-size :20px;"><%= t(:menu) %></span>
+        
        </button>
         <center id="selected_item"></center>
-        <ul class="dropdown-menu pull-left">
-         <li><a href="#" style="text-align: left;" onclick="hallOfFame()" >
-              <span >Rank</span>
+        <ul class="dropdown-menu">
+         <li><a href="#"onclick="hallOfFame()">
+              <span>Rank</span>
              </a></li>
-         <li><a href="#" style="text-align: left;" onclick="showPrizes()">
-              <span >Prizes</span>
+         <li><a href="#" onclick="showPrizes()">
+             Prizes
           </a></li>
-         <li> <a href="#" style="text-align: left;" onclick="showTrophies()">
-               <span>Trophies</span>
+         <li> <a href="#" onclick="showTrophies()">
+                Trophies
               </a></li>
-         <li><a href="#" style="text-align: left;">
-         <span>Profile</span>
+         <li><a href="#" onclick="showProfile()">
+          Profile
              </a>
          </li>
-         <li><a href="#" style="text-align: left;">
-             <span>Settings</span>
+         <li><a href="#">
+             Invitations
              </a>
          </li>
-         <li> <a href="#" style="text-align: left;" onclick="inviteFriends()">
-         <span>Invitations</span>
+         <li> <a href="#" onclick="inviteFriends()">
+              Invitations
          </a>
           </li>
         </ul>
+        
     </div>
-  </div>
-
-<% end%>
-  <% if I18n.locale==:ar %>
-  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-
-    <% else I18n.locale==:en %>
-<div class="game-zone">
-  <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
-    <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
-  </div>
+    <% end %>
+  
   <%end%>
+ 
 
   <% if I18n.locale == :ar %>
     <div class="zone" id="zone" style="text-align:right; direction: rtl;">
@@ -417,4 +408,4 @@ function setButtons(){
       </div>
     </div>
 </div>
-</script>
+
