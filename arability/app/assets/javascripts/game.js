@@ -218,7 +218,7 @@ function wordLablelToolTip(){
 		$('.label-div').expose();
 	}, 300);
 	setTimeout(function(){
-		$('#wordLabel').popover('show')
+		$('#wordLabel').popover('show');
 		$('.popover').css('z-index', '9999999');
 	}, 400);
 }
@@ -229,7 +229,7 @@ function scorePopover(){
 		scoreButton = "Next";
 	}
 	else{
-		scoreButton = "التالي"
+		scoreButton = "التالي";
 	}
 	destroy('wordLabel');
 	$('#game-score').popover({
