@@ -82,7 +82,17 @@ class Synonym < ActiveRecord::Base
   end
 
   class << self
-
+    # Author:
+    #   Mohamed Tamer
+    # Description:
+    #   finds the synonym for a word
+    # Params:
+    #   synonym_name: the synonym name
+    #   keyword_id: the keyword id
+    # Success:
+    #   Returns the synonym model
+    # Failure:
+    #   Returns nil
     def find_by_name(synonym_name, keyword_id)
       word = Keyword.find(keyword_id)
       synonym = Synonym.where("name = ? AND keyword_id = ?", synonym_name, keyword_id).first

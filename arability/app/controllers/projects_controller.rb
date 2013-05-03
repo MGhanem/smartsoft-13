@@ -469,7 +469,7 @@ end
       end
       developer = Developer.where(gamer_id: current_gamer.id).first
       my_sub = developer.my_subscription
-      flag_continue = my_sub.max_add_word(project_id)
+      flag_continue = my_sub.can_add_word(project_id)
       if !flag_continue
         flash[:notice] = t(:upload_file_error6)
         redirect_to action: "show", id: project_id
@@ -481,7 +481,7 @@ end
       else
         developer = Developer.where(gamer_id: current_gamer.id).first
         my_sub = developer.my_subscription
-        @words_remaining = my_sub.max_add_word_count(project_id)
+        @words_remaining = my_sub.can_add_word_count(project_id)
         @words_in_database_before = Array.new
         @words_not_in_database_before = Array.new
         if @id_words_in_database_before != nil
@@ -537,12 +537,14 @@ end
     if id_words_project != nil
       words_synonyms_array = id_words_project.map {|x| x.split("|")}
       developer = Developer.where(gamer_id: current_gamer.id).first
-      my_sub = developer.my_subscription
-      words_count = my_sub.max_add_word_count(project_id)
-      if words_count < id_words_project.size
-        flash[:error] = t(:java_script_disabled)
-        redirect_to action: "show", id: project_id
-        return
+      if developer.my_subscription != nil
+        my_sub = developer.my_subscription
+        words_count = my_sub.can_add_word_count(project_id)
+        if words_count < id_words_project.size
+          flash[:error] = t(:java_script_disabled)
+          redirect_to action: "show", id: project_id
+          return
+        end
       end
       words_synonyms_array.each do |word_syn|
         if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
