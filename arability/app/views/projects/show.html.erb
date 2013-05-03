@@ -102,7 +102,7 @@
                 <% end %>
               </td>
               <td style="text-align:center">
-                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%' }) %>
+                <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:90%; height:90%' }) %>
               </td>
               <td style="text-align:center" >
 
@@ -125,7 +125,7 @@
                 <% end %>
               </td>
               <td style="text-align:center" >
-                <%= collection_select(:synonym_name , :text, [], :id, :name, { prompt: t(:enter_word_first) }, { :class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%; margin-top:10px;' }) %>
+                <%= collection_select(:synonym_name , :text, [], :id, :name, { prompt: t(:enter_word_first) }, { :class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:90%; margin-top:10px;' }) %>
               </td>
               <td style="text-align:center">
                 <%= link_to t(:add_to_project), { action:"add_word_inside_project", controller:"projects", project_id: @project.id, keyword:"download", synonym_id:395 }, { style:"font-size:15px; text-align:center; margin-top:10px;", onclick:"compute_and_click()", class:"btn btn-primary", id:"add_button",disabled:"true", type:"submit" } %>

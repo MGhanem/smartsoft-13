@@ -638,6 +638,9 @@ en:
   vote: "Votes"
   congrats_you_won: "Congratulations! You have won!"
   Synonym_already_there: "Project already has this word with the specified translation."
+  enter_a_synonym: "enter new translation"
+  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>formal</button>&nbsp or &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>slang</button></p>"
+  report_game: "report"
   activerecord:
     attributes:
       keyword:

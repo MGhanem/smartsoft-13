@@ -11,17 +11,18 @@ describe "NewDeveloper" do
     gamer.date_of_birth = "1993-08-02"
     gamer.email = "khloud.khalid7@gmail.com"
     gamer.password = "1234567"
+    gamer.confirmed_at = Time.now
     gamer.save
     gamer
     }
 
-  it "should return false if no gamer_id" do
+  it "should return false if no gamer_id", khloud: true do
     d = Developer.new
     d.verified = true
     expect(d.save).to eq (false)
   end
 
-  it "should return false if gamer_id not unique" do
+  it "should return false if gamer_id not unique", khloud: true do
     d = Developer.new
     d.verified = true
     d.gamer_id = gamer.id 
@@ -30,12 +31,5 @@ describe "NewDeveloper" do
     d2.verified = true
     d2.gamer_id = gamer.id 
     expect(d2.save).to eq (false)
-  end
-
-  it "should return return true if developer information is valid" do
-    d = Developer.new
-    d.verified = true
-    d.gamer_id = gamer.id 
-    expect(d.save).to eq (true)
   end
 end

@@ -5,30 +5,44 @@ namespace :db do
     Authentication.delete_all
 
     Category.delete_all
-    test_category=Category.create(english_name: "Art", arabic_name: "فن")
-    Category.create(english_name: "Beauty & Style", arabic_name: "موضة")
-    Category.create(english_name: "Business & Finance", arabic_name: "تجارة وأموال")
-    Category.create(english_name: "Cars & Transportation", arabic_name: "وسائل المواصلات")
-    Category.create(english_name: "Computers & Internet", arabic_name: "الكمبيوتر والانترنت")
-    Category.create(english_name: "Electronics", arabic_name: "إلكترونيات")
-    Category.create(english_name: "Education", arabic_name: "التعليم")
-    Category.create(english_name: "Entertainment & Music", arabic_name: "الترفيه والموسيقى")
-    Category.create(english_name: "Environment", arabic_name: "البيئة")
-    Category.create(english_name: "Family & Relationships", arabic_name: "الاسر والعلاقات")
-    Category.create(english_name: "Food & Drinks", arabic_name: "الطعام والشراب")
-    Category.create(english_name: "Games", arabic_name: "ألعاب")
-    Category.create(english_name: "Hospital", arabic_name: "مستشفى")
-    Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+    a=Category.create(english_name: "Art", arabic_name: "فن")
+    a.save
+    b=Category.create(english_name: "Beauty & Style", arabic_name: "موضة")
+    b.save
+    c=Category.create(english_name: "Business & Finance", arabic_name: "تجارة وأموال")
+    c.save
+    d=Category.create(english_name: "Cars & Transportation", arabic_name: "وسائل المواصلات")
+    d.save
+    e=Category.create(english_name: "Computers & Internet", arabic_name: "الكمبيوتر والانترنت")
+    e.save
+    f=Category.create(english_name: "Electronics", arabic_name: "إلكترونيات")
+    f.save
+    g=Category.create(english_name: "Education", arabic_name: "التعليم")
+    g.save
+    h=Category.create(english_name: "Entertainment & Music", arabic_name: "الترفيه والموسيقى")
+    h.save
+    i=Category.create(english_name: "Environment", arabic_name: "البيئة")
+    i.save
+    j=Category.create(english_name: "Family & Relationships", arabic_name: "الاسر والعلاقات")
+    j.save
+    k=Category.create(english_name: "Food & Drinks", arabic_name: "الطعام والشراب")
+    k.save
+    l=Category.create(english_name: "Games", arabic_name: "ألعاب")
+    l.save
+    m=Category.create(english_name: "Hospital", arabic_name: "مستشفى")
+    m.save
+    n=Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+    n.save
 
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.where(english_name: "Beauty & Style"), Category.where(english_name: "Electronics"), Category.last])
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first, Category.where(english_name: "Hospital"),Category.where(english_name: "Cars & Transportation")])
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.last, Category.where(english_name: "Social Networking")])
-    success, upload=Keyword.add_keyword_to_database("upload", true, categories:[Category.where(english_name: "Computers & Internet")])
-    success, download=Keyword.add_keyword_to_database("download", true, categories:[Category.where(english_name: "Education")])
-    success, loading=Keyword.add_keyword_to_database("loading", true)
-    success, username=Keyword.add_keyword_to_database("username", true)
-    success, password=Keyword.add_keyword_to_database("password", true)
+    success, click=Keyword.add_keyword_to_database("click", true, true, [b, f, n])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, true, [a, m, d])
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, true, [n, k, f])
+    success, upload=Keyword.add_keyword_to_database("upload", true, true, [e, f])
+    success, download=Keyword.add_keyword_to_database("download", true, true, [g, b])
+    success, loading=Keyword.add_keyword_to_database("loading", true, true, [l, i])
+    success, username=Keyword.add_keyword_to_database("username", true, true, [a, e])
+    success, password=Keyword.add_keyword_to_database("password", true, true, [n, j])
     share=Keyword.create(name: "share", approved: true, is_english: true)
     post=Keyword.create(name: "post", approved: true, is_english: true)
     poke=Keyword.create(name: "poke", approved: true, is_english: true)
@@ -47,7 +61,7 @@ namespace :db do
     edadat=Keyword.create(name: "إعدادات", approved: true, is_english: false)
     engazat=Keyword.create(name: "انجازات", approved: true, is_english: false)
 
-    test_category.keywords << click
+    a.keywords << click
 
     word = Keyword.new
     word.name = "play"
@@ -82,28 +96,28 @@ namespace :db do
     l=Synonym.create(name: "شارك", keyword_id: share.id, approved: true, is_formal: true)
     m=Synonym.create(name: "اشترك", keyword_id: share.id, approved: true, is_formal: true)
     n=Synonym.create(name: "بووست", keyword_id: post.id, approved: true, is_formal: false)
-    o=Synonym.create(name: "يلكز", keyword_id: poke.id, approved: true, is_formal: true)
+    o=Synonym.create(name: "يلكز", keyword_id: poke.id, approved: true, is_formal: nil)
     p=Synonym.create(name: "تابع", keyword_id: subscribe.id, approved: true, is_formal: true)
     q=Synonym.create(name: "اشترك", keyword_id: subscribe.id, approved: true, is_formal: true)
     w=Synonym.create(name: "انتشروا", keyword_id: broadcast.id, approved: true, is_formal: true)
-    x=Synonym.create(name: "كومبيل", keyword_id: compile.id, approved: true, is_formal: false)
+    x=Synonym.create(name: "كومبيل", keyword_id: compile.id, approved: true, is_formal: nil)
     y=Synonym.create(name: "يعجبني", keyword_id: like.id, approved: true, is_formal: true)
-    z=Synonym.create(name: "احبه", keyword_id: like.id, approved: true, is_formal: true)
+    z=Synonym.create(name: "احبه", keyword_id: like.id, approved: true, is_formal: nil)
 
     a1=Synonym.create(name: "ابحث", keyword_id: find.id, approved: true, is_formal: true)
     a2=Synonym.create(name: "دور", keyword_id: find.id, approved: true, is_formal: false)
     a3=Synonym.create(name: "دورلي", keyword_id: search.id, approved: true, is_formal: false)
-    a4=Synonym.create(name: "سيرش", keyword_id: search.id, approved: true, is_formal: false)
-    a5=Synonym.create(name: "انشر", keyword_id: onshor.id, approved: true, is_formal: true)
+    a4=Synonym.create(name: "سيرش", keyword_id: search.id, approved: true, is_formal: nil)
+    a5=Synonym.create(name: "انشر", keyword_id: onshor.id, approved: true, is_formal: nil)
     a6=Synonym.create(name: "اضغط", keyword_id: doss.id, approved: true, is_formal: true)
-    a7=Synonym.create(name: "احب ده", keyword_id: yagebony.id, approved: true, is_formal: false)
+    a7=Synonym.create(name: "احب ده", keyword_id: yagebony.id, approved: true, is_formal: nil)
     a8=Synonym.create(name: "مركبة", keyword_id: arbya.id, approved: true, is_formal: true)
     a9=Synonym.create(name: "سيتنجس", keyword_id: edadat.id, approved: true, is_formal: false)
     a9=Synonym.create(name: "انجاز كتير", keyword_id: engazat.id, approved: true, is_formal: false)
-    b1=Synonym.create(name: "يحمل", keyword_id: loading.id, approved: true, is_formal: true)
-    b2=Synonym.create(name: "لودينج", keyword_id: loading.id, approved: true, is_formal: false)
-    b3=Synonym.create(name: "شاريكوا", keyword_id: share.id, approved: true, is_formal: true)
-    b4=Synonym.create(name: "دوررليا", keyword_id: find.id, approved: true, is_formal: false)
+    b1=Synonym.create(name: "يحمل", keyword_id: loading.id, approved: true, is_formal: nil)
+    b2=Synonym.create(name: "لودينج", keyword_id: loading.id, approved: true, is_formal: nil)
+    b3=Synonym.create(name: "شاريكوا", keyword_id: share.id, approved: true, is_formal: nil)
+    b4=Synonym.create(name: "دوررليا", keyword_id: find.id, approved: true, is_formal: nil)
     b5=Synonym.create(name: "ابحثلي", keyword_id: search.id, approved: true, is_formal: true)
     b5=Synonym.create(name: "سيرشلي", keyword_id: search.id, approved: true, is_formal: false)
 

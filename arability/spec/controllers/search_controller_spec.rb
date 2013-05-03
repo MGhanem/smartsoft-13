@@ -143,9 +143,11 @@ describe SearchController do
     }
 
     it "should get all keywords if no category specified", mohamed: true do
+      k
+      k2
       c.keywords << k
       a = create_logged_in_developer
-      sign_in(a.gamer)
+      login(a.gamer)
       get :search_keywords, :search => "test"
       assigns(:similar_keywords).should =~ [k, k2]
     end

@@ -54,7 +54,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     report
   }
 
-  it "should return the unapproved keyword only" do
+  it "should return the unapproved keyword only", omar: true do
     word.approved = true
     word.save
     word2.approved = true
@@ -67,7 +67,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result.first.name).to eq ("testkeywordfour")
   end
 
-  it "should return an array of Keywords with unpproved synonyms" do
+  it "should return an array of Keywords with unpproved synonyms", omar: true do
     word.approved = true
     word.save
     word2.approved = false
@@ -82,7 +82,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result2).to eq ("testkeywordfour")
   end
 
-  it "should return an empty array because no synonyms are unapproved" do
+  it "should return an empty array because no synonyms are unapproved", omar: true do
     word.approved = true
     word.save
     word2.approved = true
@@ -95,7 +95,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result).to eq ([])
   end
 
-  it "should return the approved keyword only" do
+  it "should return the approved keyword only", omar: true do
     word.approved = false
     word.save
     word2.approved = false
@@ -108,7 +108,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result.first.name).to eq ("testkeywordfour")
   end
 
-  it "should return an array of Keywords with approved synonyms" do
+  it "should return an array of Keywords with approved synonyms", omar: true do
     word.approved = true
     word.save
     word2.approved = false
@@ -123,7 +123,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result2).to eq ("testkeywordthree")
   end
 
-  it "should return an empty array because no synonyms are approved" do
+  it "should return an empty array because no synonyms are approved", omar: true do
     word.approved = false
     word.save
     word2.approved = false
@@ -136,7 +136,7 @@ describe "ListUnapproved/Approved/ReportedKeywordsTest_Omar" do
     expect(result).to eq ([])
   end
 
-  it "should return a list of reported keywords" do
+  it "should return a list of reported keywords", omar: true do
     report1
     result = Keyword.list_reported_keywords
     expect(result.first.name).to eq ("testkeyword")

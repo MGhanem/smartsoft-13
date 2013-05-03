@@ -23,23 +23,28 @@ describe "NewMySubscription" do
     developer
   }
 
-  let(:subscription){
-    subscription = SubscriptionModel.new
-    subscription.name = "testSubscription"
-    subscription.save
-    subscription
+  let(:sm){
+    sm = SubscriptionModel.new
+    sm.name_en = "Free Trial"
+    sm.name_ar = "موريتاني"
+    sm.limit_search = 20
+    sm.limit_follow = 20
+    sm.limit_project = 20
+    sm.limit = 20
+    sm.save
+    sm
   }
 
-  it "should return false if no subscription models id" do
+  it "should return false if no subscription models id", khloud: true do
     ms = MySubscription.new
     ms.developer_id = developer.id
     expect(ms.save).to eq (false)
   end
 
-  it "should return true if all information is valid" do
+  it "should return true if all information is valid", khloud: true do
     ms = MySubscription.new
     ms.developer_id = developer.id
-    ms.subscription_model_id = subscription.id
+    ms.subscription_model_id = sm.id
     expect(ms.save).to eq (true)
   end
 end

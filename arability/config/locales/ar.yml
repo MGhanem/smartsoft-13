@@ -613,7 +613,7 @@ ar:
   enter_a_synonym: "ادخل معني جديد"
   skip_this_keyword: "تخطي هذا المعني"
   suggest_this_synonym: "سجل هذا المعني"
-  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>رسمي</button>&nbsp او &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>غير رسمي</button></p>"
+  formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'> بالفصحي </button>&nbsp او &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>بالعامية</button></p>"
   is_this_translation: "هل هذا المعني"
   must_specify_formality: "يجب ان تختار سواء كان المعني فصحي او عامي"
   choose_formality: "اختر"
@@ -706,7 +706,7 @@ ar:
   vote: "اصوات"
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
-  Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
+  Synonym_already_there: "هذة الكلمة موجودة فى المشروع بالمعني الذي اخترته"
   activerecord:
     models:
       developer: "مطور"

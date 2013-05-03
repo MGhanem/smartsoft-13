@@ -60,7 +60,7 @@ describe Vote, vote_test: true do
 
   let(:sTwo){
     s = Synonym.new
-    s.name = "الثاني"
+    s.name = "الثانيصي"
     s.keyword_id = k.id
     s.approved = true
     s.save
@@ -87,6 +87,7 @@ describe Vote, vote_test: true do
     g.gender = "male"
     g.email = "trialC@example.com"
     g.password = "1234567"
+    g.confirmed_at = Time.now
     g.save(validate: false)
     g
   }
@@ -100,6 +101,7 @@ describe Vote, vote_test: true do
     gTwo.gender = "female"
     gTwo.email = "trialD@example.com"
     gTwo.password = "123456"
+    g.confirmed_at = Time.now
     gTwo.save(validate: false)
     gTwo
   }
