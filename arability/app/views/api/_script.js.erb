@@ -26,13 +26,13 @@
         var translation = sessionStorage.getItem(word)
         if (translation != null) {
           set_translation_for_element(element, translation)
+        }
+
+        keywords = keywords.concat(word)
+        if(elements[word]) {
+          elements[word] = elements[word].concat(element)
         } else {
-          keywords = keywords.concat(word)
-          if(elements[word]) {
-            elements[word] = elements[word].concat(element)
-          } else {
-            elements[word] = [element]
-          }
+          elements[word] = [element]
         }
       }
     })
