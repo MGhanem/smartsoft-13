@@ -4,7 +4,6 @@
     <%= @project.name %>
   </h3>
   <br>
-  <form>
     <div class="container well" align="center" style="width:900px">
       <div class="btn-toolbar" style="margin: 0;">
         <div class="btn-group">
@@ -76,7 +75,22 @@
             <tr>
               <td style="text-align:center; vertical-align: middle;">
                 <% keyword = @words[count].name%>
-                <%= link_to keyword, search_path(search: keyword, project_id: @project.id), :method => :post %>
+                <%= form_tag(search_path, method: "post") do %>
+                  <input type = "hidden" value = "<%= @project.id %>" name = "project_id">
+                  <input type = "hidden" value = "<%= keyword %>" name = "search">
+                  <input type = "hidden" value = "<%= @project.country %>" name = "country">
+                  <input type = "hidden" value = "<%= @project.minAge %>" name = "age_from">
+                  <input type = "hidden" value = "<%= @project.maxAge %>" name = "age_to">
+                  <input type = "hidden" value = "<%= @project.education_level %>" name = "education">
+                  <% if @project.formal %>
+                    <input type = "hidden" value = "1" name = "synonym_type">
+                  <% elsif !@project.formal%>
+                    <input type = "hidden" value = "2" name = "synonym_type">
+                  <% else %>
+                    <input type = "hidden" value = "0" name = "synonym_type">
+                  <% end %>
+                  <input type = "submit" class = "btn-link" value = "<%= keyword %>">
+                <% end %>
               </td>
               <td style="text-align:center">
                 <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%' }) %>
@@ -111,7 +125,6 @@
       </table>
       <p id="illustration"></br></p>
     </div>
-  </form> 
 <script type="text/javascript" charset="utf-8">
   $('#selected_keyword').change(function(){$('.popover').hide()});
   $("#add_button").removeAttr('href');
