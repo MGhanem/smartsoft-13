@@ -175,7 +175,7 @@ namespace :db do
     Vote.record_vote(amr.id, h.id)
     Vote.record_vote(amr.id, f.id)
 
-    # hassan_dev.keywords << click
+    hassan_dev.keywords << click
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
