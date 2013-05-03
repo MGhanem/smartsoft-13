@@ -26,6 +26,9 @@
 					    	</div>
 					  	</div>
 					<% end %>
+					<% if @list.length-1 == 0 %>
+						<h3>عفون لا يوجد مشرفيين غيرك</h3>
+					<% else %>
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -62,6 +65,7 @@
 							<% end %>
 						</tbody>
 					</table>
+					<% end %>
 				</div>
 			</div>
 		</div>
