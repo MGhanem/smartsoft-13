@@ -40,7 +40,7 @@ describe ApiController, mohamed: true do
   end
 
   let(:developer) do
-    Developer.create(gamer_id: gamer.id)
+    create_logged_in_developer
   end
 
   let(:api) { ApiKey.create(developer_id: developer.id, website: "test.com") }
@@ -71,13 +71,13 @@ describe ApiController, mohamed: true do
   end
 
   it "should get index page if logged in" do
-    login_gamer developer.gamer
+    login developer.gamer
     get :index
     response.should be_success
   end
 
   it "should create api key if logged in" do
-    login_gamer developer.gamer
+    login developer.gamer
     get :create, api_key: { website: "www.test.com" }
     assigns(:api_key).website.should eq("www.test.com")
     assigns(:api_key).valid?.should eq(true)
