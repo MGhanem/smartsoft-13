@@ -57,7 +57,25 @@
   margin-bottom: 7px;
 }
 
-#synonym_button{
+#synonym_button0{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button1{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button2{
   height:50px;
   width:200px;
   font-size:30px;
@@ -75,18 +93,14 @@
 }
 
 #synonym_button{
-  height: 50px;
-  width: 170px;
-  font-size: 30px;
+  height:50px;
+  width:200px;
+  font-size:30px;
   margin-bottom: 20px;
   text-align: center;
-  border-radius: 7px;
-  line-height: 50px;
+  border-radius:7px;
 }
 
-#synonym_buttons_row{
-
-}
 
 #synonym_buttons{
   right:50%;

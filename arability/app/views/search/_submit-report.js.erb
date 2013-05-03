@@ -14,11 +14,11 @@ function report_submission(){
   $reported_keywords = $("#report_modal").find("[is_checked=true]");
   if($reported_keywords.length == 0)
     return;
-  words = new Array();
+  reported = new Array();
   $.each($reported_keywords, function(index, element){
-    words.push($(element).attr("value"));
+    reported.push($(element).attr("value"));
   });
-  var request = $.post("<%= send_report_path %>", { reported_words: words });
+  var request = $.post("<%= send_report_path %>", { reported_words: reported });
   $.each($("input#chkbox"), function(index, element){
     $(element).attr("checked", false);
     $(element).attr("is_checked", false);

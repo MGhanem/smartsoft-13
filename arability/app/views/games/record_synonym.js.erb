@@ -1,9 +1,9 @@
 <% if @record_output == 2 || @record_output == 0 %>
 	<% if @already_existing_synonym %>
 		<% if @is_formal == "formal" %>
-			record_vote(<%= @already_existing_synonym.id %>,true);
+			record_vote(<%= @already_existing_synonym.id %>, true);
 		<% elsif @is_formal == "slang" %>
-			record_vote(<%= @already_existing_synonym.id %>,false);
+			record_vote(<%= @already_existing_synonym.id %>, false);
 		<% end %>
 	<% end %>
 <% else %>

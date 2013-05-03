@@ -66,7 +66,7 @@ div.d5pxup input {
   min-height:41px;
   max-height:41px;
   min-width: 232px;
-  max-width: 232px;
+  min-width: 232px;
 }
 
 #gender {
@@ -74,6 +74,14 @@ div.d5pxup input {
   max-height:41px;
   min-width: 116px;
   max-width: 116px;
+}
+
+#key {
+  margin:0px;
+  min-height:35px;
+  max-height:35px;
+  min-width: 250px;
+  max-width: 250px;
 }
 
 .validation {
@@ -85,3 +93,4 @@ background-position: 10px center;
 color: #D63301;
 background-color: #FFCCBA;
 }
+
