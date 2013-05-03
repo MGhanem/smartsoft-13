@@ -3,9 +3,10 @@ require 'spec_helper'
 
 describe MySubscription do
   let(:developer){
-		developer=Developer.new
+    developer = Developer.new
+    developer.id = 1
     developer.verified = true
-    developer.gamer_id= 1
+    developer.gamer_id = 1
     developer.save
     puts "dev : #{developer.to_json}"
     developer
@@ -24,10 +25,10 @@ describe MySubscription do
 
   let(:submodel){
     submodel = SubscriptionModel.new
-    submodel.limit=50
-    submodel.limit_search=50
-    submodel.limit_follow=50
-    submodel.limit_project=1
+    submodel.limit = 50
+    submodel.limit_search = 50
+    submodel.limit_follow = 50
+    submodel.limit_project = 1
     submodel.save
     submodel
   }
@@ -43,6 +44,7 @@ describe MySubscription do
     result = MySubscription.choose(developer.id, submodel.id)
     expect(result).to eq(true)
   end
+
   it "follow permission is given" do
     result = my_sub.get_permission_follow
     expect(result).to eq(true)
@@ -53,6 +55,7 @@ describe MySubscription do
     result = my_sub.get_projects_limit
     expect(result).to eq(true)
   end
+
    it "add permission is given" do
     result = my_sub.can_add_word(project.id)
     expect(result).to eq(true)
@@ -62,11 +65,5 @@ describe MySubscription do
     result = my_sub.can_search_word(keyword.id)
     expect(result).to eq(true)
   end
-
-	it "developer can choose subscription model" do
-		result = MySubscription.choose(developer.id, submodel.id)
-		expect(result).to eq(true)
-
-	end
 
 end

@@ -149,9 +149,12 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
+
     free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20, limit: 500)
     premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100, limit: 2000)
     deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, limit: 5000)
+
+    MySubscription.choose(timo_dev.id, SubscriptionModel.first.id)
 
     project = Project.new
     project.name = "Read"

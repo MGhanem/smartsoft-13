@@ -20,25 +20,16 @@ class SearchController < BackendController
   #   returns an empty list if the search keyword had no matches or no
   #   similar keywords were found
   def search_keywords
-    @categories = params[:categories]
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     @project_id = params[:project_id]
-    if @categories.present?
-      categories_array = @categories.split(/,/)
-      categories_array.map! { |x| x.strip }
-      categories_array.map! { |x| x.downcase }
-      categories_array.reject! { |x| x.blank? }
-      categories_array.uniq!
-    else
-      categories_array = []
-    end
     @search_keyword = params["search"]
     if(!@search_keyword.blank?)
       @search_keyword = @search_keyword.strip
       @search_keyword = @search_keyword.split(" ").join(" ")
     end
     @similar_keywords =
-      Keyword.get_similar_keywords(@search_keyword, categories_array)
-    @categories = categories_array
+      Keyword.get_similar_keywords(@search_keyword)
   end
   
   # Author:
@@ -70,7 +61,7 @@ class SearchController < BackendController
   # params:
   #   reported_words: an array of keywords/synonyms to be reported
   # success:
-  #   returns submits a report with the chosen keywords/synonyms
+  #   returns a report with the chosen keywords/synonyms
   # failure:
   #   --
   def send_report
@@ -109,6 +100,8 @@ class SearchController < BackendController
   #   and no charts will be drawn if the keyword has no synonyms
   def search_with_filters
     @search_keyword = params["search"]
+    @developer_id = Developer.find_by_gamer_id(current_gamer.id).id
+    @projects = Project.where(owner_id: @developer_id).all
     @country = params["country"]
     @age_from = params["age_from"]
     @age_from = @age_from.to_i if !@age_from.blank?
@@ -146,6 +139,11 @@ class SearchController < BackendController
 
         @total_votes = 0
         @votes.each { |synonym_id, synonym_votes| @total_votes += synonym_votes }
+
+        @categories =
+          @search_keyword_model.categories.map { |c| c.get_name_by_locale }
+
+        @category_ids = @search_keyword_model.categories.map { |c| c.id }
 
         if !@no_synonyms_found
           @charts = @synonyms.map{ |s| { s.id => 

@@ -41,6 +41,16 @@ ar:
   required: "يجب ملء الفراغات المصحوبة ب*"
   name: "الاسم"
   category: "الفئة"
+  categories: "الفئات"
+  formal: "فصحى"
+  slang: "عامية"
+  age: "الفئة العمرية"
+  from: "من"
+  to: "الى"
+  desc: "عن المشروع"
+  new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
+  back: "<< عودة"
   please_select: "الرجاء الاختيار"
   formality: "اللغة"
   formal: "فصحى"
@@ -53,6 +63,9 @@ ar:
   pro_gender: "النوع"
   pro_male: "ذكر"
   pro_female: "انثي"
+  new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
+  back: "<< عودة"
   target: "هذا المشروع يستهدف الفئة التالية:"
   target_country: "البلد"
   target_age: "الفئة العمرية"
@@ -80,17 +93,6 @@ ar:
   school: "مدرسة"
   university: "جامعة"
   graduate: "خريج"
-  categories: "الفئات"
-  formality: "النوع"
-  formal: "فصحى"
-  slang: "عامية"
-  age: "الفئة العمرية"
-  from: "من"
-  to: "الى"
-  desc: "عن المشروع"
-  new_project: "مشروع جديد"
-  create_project: "انشاء مشروع"
-  back: "<< عودة"
   edit_project: "تعديل المشروع"
   save_project: "حفظ المشروع"
   import: "استيراد"
@@ -116,13 +118,12 @@ ar:
   education: "التعليم"
   gamer: "اللاعب"
   current_password: "كلمة السر الحالية"
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
   follow_word_link: "إذا لم تعجبك هذه المرادفات أو تريد متابعة هذه الكلمة"
   follow_word_end_of_search: "إضغط هنا!"
   follow_keyword_alert_fail: "هذه الكلمة متابعة:"
   no_votes_for_word: "عذراً معاني هذه الكلمة لم تحصل على أي أصوات بعد."
-  select subscription: "إختر"
+  select_subscription: "إختر"
   choose_keyword_title: "اختار من الكلمات التالية ليتم اضافتها إلى هذا المشروع"
   choose_keyword_remaining: "تبقى لك عدد"
   choose_keywords_remaining2: "كلمة"
@@ -146,6 +147,7 @@ ar:
   upload_file_error3: "يوجد خطأ بهذا الملف"
   upload_file_error4: "هذا الملف ليس CSV"
   upload_file_error5: "لا يوجد كلمات بامكانك اضافتها إلى هذا المشروع"
+  upload_file_error6: "ليس بإمكانك اضافة كلمات أخرى لهذا المشروع نتيجة لنظام اشتراكك"
   projects_index_error1: "من فضلك سجل كمطور"
   projects_index_error2: "من فضلك قم بالدخول"
   projects_index_title: "مشاريع"
@@ -165,6 +167,7 @@ ar:
   no_age: "ليس محدد"
   no_education_level: "ليس محدد"
   projects_index_edit: " تعديل"
+  projects_index_delete: " مسح"
   projects_index_delete2: " مسح"
   projects_index_no_shared_projects: "ليس لديك أي مشاريع مشتركة"
   no_categories: "ليس محدد"
@@ -193,12 +196,6 @@ ar:
     failure:
       gamer:
         invalid: "لقد ادخلت بيانات غير صحيحة، يرجى إعادة المحاولة "
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: "تاريخ الميلاد يجب ان يكون مناسب، السن يجب ان يكون ليس اقل من ١٠ سنوات و ليس آكثر من ٩٥ عاما"
   views:
     project:
        flash_messages:
@@ -214,12 +211,6 @@ ar:
          Email_doesnt_exist: 'هذا البريد الالكتروني غير صحيح'
          developer_unshared: 'مت عدم مشاركة المشروع'
          cant_share_the_project: 'لا يمكن مشاركة المشروع'
-        keyword:
-          attributes:
-            name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
   keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   stats_gender: "احصائيات النوع"
@@ -232,9 +223,8 @@ ar:
      messages_errors:
         you_have_successfully_chosen_your_model: 'لقد تم إختيار نظامك بنجاح'
         please_choose: 'من فضلك إختر نظامك'
-  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات معاني تطابق كلمة البحث. "
+  no_synonyms_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث. "
   follow_word: "تابع الكلمة"
-  keyword_not_found: "عفوا! لا توجد بقاعدة البيانات ما يطابق كلمة البحث."
   add_word: "اضف الكلمة"
   Add_words: "إضافة كلمات"
   Synonym_changed_successfully: "تم تغيير المعنى بنجاح."
@@ -243,7 +233,7 @@ ar:
   successfully_added_word_to_project: "تمت إضافة الكلمة بنجاح."
   failed_to_add_word_to_project: "فشل إضافة الكلمة لمشروعك."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
-  remove_from_project: "إزالة من المشروع"
+  remove_from_project: "إزالة"
   word_removed_successfully: "تم إزالة الكلمة بنجاح."
   word_does_not_exist: "الكلمة التي تحاول اضافتها غير موجودة"
   no_words_in_project: "لا توجد كلمات في هذا المشروع."
@@ -266,9 +256,6 @@ ar:
   done: "إنتهاء"
   first_name: "الاسم الاول"
   last_name: "إسم العائلة"
-  activerecord:
-    models:
-      developer: "مطور"
   not_in_range: "ليس في الحدود المسموح بها"
   connect_to_facebook: "تواصل مع فيسبوك"
   disconnect_from: "افصل تواصلك مع"
@@ -361,12 +348,20 @@ ar:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   project_removed: "تم مسح المشروع المشترك"
   choose_sub: 'نظام الإشتراك'
+  tag_using_categories: "إختر التصنيفات المناسبة"
+  keyword_exists: "هذه الكلمة موجودة بالفعل"
+  keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
+  category_tags: "التصنيفات"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
+  project_removed: "تم مسح المشروع المشترك"
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
@@ -402,6 +397,32 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "لا، شكراً"
+  confirm: "هل أنت متأكد من مسح المشروع ؟"
+  delete: "مسح"
+  close_delete: "الغاء"
+  submit_delete: "مسح"
+  you_have_prizes: "لقد ربحت الجوائز التالية"
+  fill_in_next: "من فضلك املأ الفراغات التالية"
+  or: "أو"
+  existing_account: "سجل بحساب اخر"
+  signed_in_exst: "تم التواصل بنجاح بإستخدام حساب اخر"
+  signed_in_fb: "تم الدخول بنجاح بإستخدام فيسبوك"
+  logged_in_to_fb: "حسابك الآن متصل بفيسبوك"
+  oops_error_fb: "واجهتنا مشاكل حين حولنا التواصل مع فيسبوك من فضلك حاول التواصل مرة أخرى"
+  already_connected_fb: "لقد قمت بتسجيل الدخول من قبل و حسابك متصل بفيسبوك بالفعل"
+  errors_prohibited: "اخطاء منعتك من التسجيل"
+  sign_up_e_acc: "سجل بحساب اخر"
+  continue_reg_fb: "لقد اعطانا فيسبوك بعض المعلومات. من فضلك املأ الفراغات لتكملة التسجيل"
   won_trophies_title: "الانجازات التي تم اكمالها"
   not_won_trophies_title: "الانجازات التي بامكانك اكمالها "
   no_trophies: "لم تكمل أي انجازات حتى الأن"
@@ -411,7 +432,31 @@ ar:
   you_have_won_these_trophies: "لقد حققت الانجازات التالية!"
   game_over: "انتهت اللعبة"
   lose_score: "لقد سجلت النقاط التالية"
+  pick_lang: "إختر اللغة التي تريد اللعب بها"
+  english_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  english_popover_title: "<h4>الزر الانجليزي</h4>"
+  arabic_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  arabic_popover_title: "<h4>الزر العربي</h4>"
+  both_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  both_popover_title: "<h4>زر كلاهما</h4>"
+  words_list_popover_content: "<p>هذه القائمة تحتوي على الكلمات التي يجب عليك تكوينها. الكلمات ذات اللون البرتقالي جاهزة للتكوين، بعكس السوداء.<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>التالي</button>"
+  words_list_popover_title: "<h4>قائمة الكلمات</h4>"
+  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
+  word_label_popover_title: "<h4>مكان الحروف</h4>"
+  table_popover_content: "لكي تشكل كلمة، يجب أن تضغط على الحروف التي على الشاشة، و لاحظ أن الحروف لا يجب أن تكون بجانب بعضها، و يجب تشكيل جميع الكلمات المطلوبة قبل وصول الحروف إلى القمة. حاول الضغط على حرف الأن"
+  table_popover_title: "تشكيل الكلمات"
+  clicked_button_popover_content: "كما تري الأن الزر لونه برتقالي، و هذا يعني إنه إذا قمت بضغطه مرة أخرى، سيتم حذفه من الكلمة. لاحظ أن الزر الأخير فقط هو الذي يمكن حذفه، وإذا كنت تريد حذف الكلمة كلها يمكنك الضغط على زر حذف الكلمة "
+  clicked_button_popover_title: "ضغط على حرف"
+  clicked_button_popover_button: "إبدأ اللعب"
+  flashing_tower_popover_content: "إنتبه أنت تقترب من القمة. أسرع"
+  flashing_tower_popover_title: "إقتراب من القمة"
+  flashing_tower_popover_button: "أكمل"
+  modal_header: "مبروك"
+  modal_body: "لقد أكملت أول مرحلة. هل تريد أن ترى هذه الخطوات التعلمية مرة أخرى في المرة القادمة؟"
+  modal_yes_button: "أجل"
+  modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  unshare: " الغاء الاشتراك"
   forgot_password: "هل نسيت كلمة السر؟"
   remember_me: "ابقى متصلاً "
   reset_password: "إعادة تعيين كلمة المرور"
@@ -458,11 +503,18 @@ ar:
   settings: "تغيير البيانات"
   game: "اللعبة"
   connected_before: "حساب تويتر هذا متصل مع حساب عربيليتي اخر"
+  Email_dont: "هذا البريد الالكتروني غير صحيح"
+  Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
+  you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
+  already_shared_project: "تم مشاركة هذا المشروع سابقا"
+  project_successfully_shared: "لقد تم مشاركة هذا المشروع بنجاح"
+  dev_unshare: "تم عدم المشاركة"
+  delete_share: "الغاء الاشتراك"
+  confirm_share: " لن تتمكن من رؤية المشروع المشترك بعد الغاء الاشتراك,هل أنت متأكد من الغاء الاشتراك ؟"
+  submit_remove: "الغاء الاشتراك"
+  close_share: "لا، شكراً"
   confirm: "هل أنت متأكد من مسح المشروع ؟"
   delete: "مسح"
-  close_delete: "الغاء"
-  submit_delete: "مسح"
-  you_have_prizes: "لقد ربحت الجوائز التالية"
   fill_in_next: "من فضلك املأ الفراغات التالية"
   or: "أو"
   existing_account: "سجل بحساب اخر"
@@ -485,15 +537,15 @@ ar:
   game_over: "انتهت اللعبة"
   lose_score: "لقد سجلت النقاط التالية"
   pick_lang: "إختر اللغة التي تريد اللعب بها"
-  english_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  english_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات إنجليزية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='eng-btn-po'onclick='destroy(this.id)'>التالي</button>"
   english_popover_title: "<h4>الزر الانجليزي</h4>"
-  arabic_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  arabic_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات عربية فقط<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='ar-btn-po'onclick='destroy(this.id)'>التالي</button>"
   arabic_popover_title: "<h4>الزر العربي</h4>"
-  both_popover_content: "<p>هذا الاختيار يجعلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
+  both_popover_content: "<p>هذا الاختيار يسمحلك أن تشكل وتصوت على كلمات عربية و إنجلزية<p> <button class='tutBtn btn btn-primary' style='width: 120px; height:30px; font-size: 20px; color: white;' id='both-btn-po'onclick='destroy(this.id)'>التالي</button>"
   both_popover_title: "<h4>زر كلاهما</h4>"
   words_list_popover_content: "<p>هذه القائمة تحتوي على الكلمات التي يجب عليك تكوينها. الكلمات ذات اللون البرتقالي جاهزة للتكوين، بعكس السوداء.<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>التالي</button>"
   words_list_popover_title: "<h4>قائمة الكلمات</h4>"
-  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
+  word_label_popover_content: "<p>هذا المكان يحتوي على الحروف التي تم الضغط عليها<p> <button onclick='scorePopover(this.id)' class='btn btn-primary' id='wordLabel-po'>التالي</button>"
   word_label_popover_title: "<h4>مكان الحروف</h4>"
   table_popover_content: "لكي تشكل كلمة، يجب أن تضغط على الحروف التي على الشاشة، و لاحظ أن الحروف لا يجب أن تكون بجانب بعضها، و يجب تشكيل جميع الكلمات المطلوبة قبل وصول الحروف إلى القمة. حاول الضغط على حرف الأن"
   table_popover_title: "تشكيل الكلمات"
@@ -508,34 +560,19 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  add_to: "أضف إلى"
+  with: "مع"
+  synonym: "معنى"
+  add: "أضف"
+  exceeds_word_limit: "لقد تجاوزت حد الكلمات المسموح بها لنظام اشتراكك."
+  choose_project: "من فضلك إختر مشروع لإضافة الكلمة."
+  choose_synonym: "من فضلك إختر معنى لإضافة الكلمة."
+  to_project: "إذهب إلى المشروع."
   wrong_age_input: "ادخلت رقم خطأ"
   synonyms: "المعاني:"
   school: "مدرسة"
   university: "جامعة"
   graduate: "خريج"
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون رقما بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
   Email_dont: "هذا البريد الالكتروني غير صحيح"
   Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
   you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
@@ -557,29 +594,13 @@ ar:
   back_to_project: "<< عودة إلى المشروع"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون بين رقما بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
+  no_translation_popover_title: "لا يوجد معاني لهذه الكلمة حاليا "
+  no_translation_popover_content: "تبيمسب،"
+  you_can: "تستطيع ان "
+  this_keyword: " هذة الكلمة"
+  project_keyword_follow: "تتابع"
+  project_keyword_unfollow: "تلغي متابعة"
+  you_followed_word: "لقد تابعت هذه الكلمة من قبل"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
   send: "ارسل "
   hello: "مرحبا"
@@ -593,6 +614,12 @@ ar:
   feat4h: "تواصل"
   feat4b: "للمزيد من الخصيات توصل مع المواقع الإجتماعية المفضلة لديك."
   expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
+  signed_in_google: "تم الدخول بنجاح بإستخدام جوجل"
+  continue_reg_google: "لقد اعطانا جوجل بعض المعلومات. من فضلك املأ الفراغات لتكملة التسجيل"
+  logged_in_to_google: "حسابك الآن متصل بـجوجل"
+  connected_to_google: "انت متصل بجوجل بالفعل"
+  oops_error_google: "واجهتنا مشاكل حين حولنا التواصل مع جوجل من فضلك حاول التواصل مرة أخرى"
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
   you_vote: ""
   vote_action: "لقد اخترت "
   chosen_action: " كأنسب بديل لكلمة "
@@ -603,5 +630,58 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  score_popover_content: "كلما طول الكلمة زاد، سوف يزيد مجموع نقاطك أيضاً، وأيضاً يعتمد مجموع النقاط على سرعة تجميعك للكلمة. تستطيع أن تتبع السرعة من العداد الذي يقع بجانب الكلمات"
+  score_popover_title: "كيف تحتسب النقاط"
+  you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
+  congrats_you_won: "مبروك لقد ربحت "
+  enter_word_first: "ادخل كلمة اولآ"
+  activerecord:
+    models:
+      developer: "مطور"
+    attributes:
+      developer:
+        first_name: "الاسم الاول"
+        last_name: "إسم العائلة"
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+      keyword:
+        name: "الكلمة"
+      category:
+        english_name: "الاسم الانجليزي"
+        arabic_name: "الاسم العربي"
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين رقما ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+        keyword:
+          attributes:
+            name:
+              blank: "برجاء إدخال كلمة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه الكلمة موجودة بالفعل"
+        category:
+          attributes:
+            english_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
+            arabic_name:
+              blank: "برجاء إدخال فئة"
+              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
+              taken: "هذه فئة موجودة بالفعل"
