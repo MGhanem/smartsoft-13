@@ -7,12 +7,8 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-<<<<<<< HEAD
   only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update,
     :view_recommended_words, :get_recommended_words, :share]
-=======
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update, :share]
->>>>>>> e5dc7a7d379477bda0f2b0526bd3ab7b9d11b239
   before_filter :can_access_project?,
   only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
