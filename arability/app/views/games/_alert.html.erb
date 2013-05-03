@@ -1,0 +1,9 @@
+<div class="alert alert-success">
+    <button type = "button" class = "close" data-dismiss = "alert">&times;</button>
+    <div> 
+    	<%= @message %> 
+    	<% if @redirect.present? %>
+    	<a target="_blank" href="<%= @redirect %>"><%= t(:request_button) %></a> 
+    	<% end %>
+	</div>
+</div>
