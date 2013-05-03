@@ -208,9 +208,7 @@ function setButtons(){
   }
 
   function disableNav() {
-    var lists = $("[id*='navItems']");
-    lists.addClass("disabled");
-    nav_locked = true;
+    $('#ingamenav').addClass('disabled');
   }
 
   function show_menu_item(title)
@@ -229,9 +227,7 @@ function setButtons(){
   }
 
   function enableNav() {
-    var lists = $("[id*='navItems']");
-    lists.removeClass("disabled");
-    nav_locked = false;
+    $('#ingamenav').removeClass('disabled');
   }
 
   // Author:
@@ -318,7 +314,7 @@ function setButtons(){
   <div class="game-nav" style="background-color: rgb(81, 104, 124); margin-bottom: -10px;">
     <% if current_gamer != nil %>
     <div class="btn-group" style="height: 66px;">
-       <button type="submit" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 115px; height: 27px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
+       <button type="submit" id="ingamenav" class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#" style="width: 115px; height: 27px; border: medium none; margin-right: 15px; margin-top: 10px;"><i class="icon-align-justify"></i>
         <span class="new" style="font-size :20px;"><%= t(:menu) %></span>
         
        </button>
@@ -356,7 +352,7 @@ function setButtons(){
         
        </button>
         <center id="selected_item"></center>
-        <ul class="dropdown-menu" style="margin-left: 20px; margin-top:-20px;">
+        <ul class="dropdown-menu" id="ingamenav" style="margin-left: 20px; margin-top:-20px;">
          <li ><a href="#"onclick="hallOfFame()">
               <span style="margin-right: 90px;">Rank</span>
              </a></li>
