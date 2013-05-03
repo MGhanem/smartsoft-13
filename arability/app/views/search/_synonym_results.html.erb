@@ -1,6 +1,6 @@
 <div id="synonym_results">
   <div id="collective" class="accordion-body collapse in" dir="ltr">
-    <div class="accordion-inner">
+    <div class="accordion-inner" style = "border: 1px solid #e5e5e5; border-radius: 5px;">
       <% key_id = getID(@search_keyword) %>
       <% result = Keyword.get_keyword_synonym_visual(key_id, @synonym_type) %>
       <% if result.present? %>
