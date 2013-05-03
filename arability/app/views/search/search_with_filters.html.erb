@@ -200,6 +200,15 @@
                     <button id="slang" type="button" class="btn" onclick="invert_color(this, formal)">
                       <%= t(:slang) %>
                     </button>
+                    <script type="text/javascript">
+                      <% if I18n.locale == :ar %>
+                        $("#formal").css("font-size","16px");
+                        $("#slang").css("font-size","16px");
+                      <% elsif I18n.locale == :en %>
+                        $("#formal").css("font-size","14px");
+                        $("#slang").css("font-size","14px");
+                      <% end %>
+                    </script>
                   </div>  
                 </div>
               </div>
