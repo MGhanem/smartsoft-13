@@ -302,6 +302,8 @@ ar:
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
+  enter_categories: "ابحث في التصنيفات"
+  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة. لمتابعة  كلمة ابحث عنها ثم إضغط تابع."
   egypt: "مصر"
   lebanon: "لبنان"
   jordan: "الاردن"
@@ -323,7 +325,6 @@ ar:
   school: "مدرسة"
   university: "جامعة"
   enter_categories:  "التصفية حسب الفئات"
-  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
@@ -349,6 +350,23 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  project_removed: "تم مسح المشروع المشترك"
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  choose_sub: 'نظام الإشتراك'
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
 
   enter_word_first: "ادخل كلمة اولآ"
   project_removed: "تم مسح المشروع المشترك"
@@ -370,6 +388,7 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  project_removed: "تم مسح المشروع المشترك"
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -391,6 +410,16 @@ ar:
   oh_snap: "عفواً، لقد حدث خطأ ما!"
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
+  project_removed: "تم مسح المشروع المشترك"
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+  project_delete: "تم مسح المشروع بنجاح"
   project_removed: "تم مسح المشروع المشترك"
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
@@ -697,6 +726,7 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  followmaxtip: "لقد وصلت الحد المسموح لإتباع الكلمات."
   search_not_allowed: >
     عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في
     البحث عن الكلمات التي بحثت عنها مسبقا.

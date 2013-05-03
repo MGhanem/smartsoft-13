@@ -60,34 +60,21 @@ module SearchHelper
   #   creates the pie chart in view
   # failure:
   #   fails to show a chart if synonyms have no votes
-  def chart_keyword_synonym(keyword_id)
-    stats = Keyword.get_keyword_synonym_visual(keyword_id)
+  def chart_keyword_synonym(keyword_id, synonym_type)
+    stats = Keyword.get_keyword_synonym_visual(keyword_id, synonym_type)
+    if stats == 0
+      @availble = false
+    else
+      @availble = true
+    end
     name1 = Keyword.find(keyword_id).name
     chart = LazyHighCharts::HighChart.new('pie') do |f|
       f.chart({defaultSeriesType:"pie" , margin: [50, 200, 60, 170]} )
-      if I18n.locale == :en
         series = {
                 type: 'pie',
                 name: 'Browser share',
                 data: stats,
         }
-      end
-      if I18n.locale ==:ar
-        series = {
-               type: 'pie',
-               name: 'Browser share',
-               data:  stats,
-               dataLabels: {
-                    align: 'center',
-                    enabled: true,
-                    x: 40
-                }
-      }
-        tooltip = {
-                  enabled: false
-        }
-        f.tooltip(tooltip)
-      end
       f.series(series)
       f.options[:title][:text] = "#{t(:synonyms_of)} #{name1}"
       f.legend(:layout=> 'vertical', style: {left: 'auto', bottom: 'auto', right: '50px', top: '100px'}) 
@@ -237,14 +224,30 @@ module SearchHelper
   # params:
   #   key_id: id for the keyword to check
   # success:
-  #   returns true if following
+  #   returns true if following, false if not following.
   # failure:
-  #   returns false if not following
+  #   --
   def is_following(key_id)
     developer = Developer.where(gamer_id: current_gamer.id).first
     keyword_ids = developer.keyword_ids
     keyword_ids.include? key_id.to_i
   end
+
+  # author:
+  #   Mostafa Hassaan
+  # description:
+  #   funtion checks whether a developer is allowed to follow a word
+  # params:
+  #   --
+  # success:
+  #   returns true if allowed, false if not allowed.
+  # failure:
+  #   --
+  def allowed
+    developer = Developer.where(gamer_id: current_gamer.id).first
+    developer.my_subscription.get_permission_follow
+  end
+
 
 end
 

@@ -22,17 +22,19 @@ class FollowController < BackendController
   #   relation failed.
   def follow
     developer = Developer.where(gamer_id: current_gamer.id).first
-    keyword_ids = developer.keyword_ids
-    word = Keyword.where(id: params[:keyword_id]).first
-    if word != nil
-      if keyword_ids.include? params[:keyword_id].to_i
-        redirect_to :search_keywords, flash: {fail: "#{t(:follow_keyword_alert_fail)} #{word.name}"}
+    if developer.my_subscription.get_permission_follow
+      keyword_ids = developer.keyword_ids
+      word = Keyword.where(id: params[:keyword_id]).first
+      if word != nil
+        if keyword_ids.include? params[:keyword_id].to_i
+          redirect_to :search_keywords, flash: {fail: "#{t(:follow_keyword_alert_fail)} #{word.name}"}
+        else
+          developer.follow(params[:keyword_id])
+          redirect_to :search_keywords, flash: {success: "#{t(:follow_keyword_alert)} #{word.name}"}
+        end
       else
-        developer.follow(params[:keyword_id])
-        redirect_to :search_keywords, flash: {success: "#{t(:follow_keyword_alert)} #{word.name}"}
+         redirect_to :search_keywords, flash: {fail: "#{t(:keyword_not_found)}"}
       end
-    else
-       redirect_to :search_keywords, flash: {fail: "#{t(:keyword_not_found)}"}
     end
   end
 

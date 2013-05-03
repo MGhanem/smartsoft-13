@@ -3,7 +3,6 @@
   attr_accessible :developer, :word_add, :word_follow, :word_search, :subscription_model_id
   belongs_to :developer
   validates :subscription_model_id, presence: true
-
   # Author:
   #   Noha Hesham
   # Description:
@@ -158,5 +157,5 @@
         return false
       end
     end
-end
+  end
 end

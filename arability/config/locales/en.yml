@@ -311,7 +311,7 @@ en:
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
   age_range: "(Kindly enter a value between 10 and 100)"
-  follow_words_info: "Follow a word to recieve an email with every update. Updates include a new translation addition to a Keyword or the top voted Synonym gets changed."
+  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword. You can follow words by searching for them and clicking the Follow button"
   synonyms_of: "Translations of"
   activerecord:
     errors:
@@ -658,6 +658,7 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  followmaxtip: "You've reach your maximum number of followed words."
   search_not_allowed: >
     Sorry! You have reached your search quota limit, but you can still search for words
     you searched for before.
