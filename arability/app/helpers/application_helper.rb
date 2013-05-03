@@ -44,7 +44,7 @@ module ApplicationHelper
   # Failure:
   #   None
   def guest_gamer
-    @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id])
+    @cached_guest_gamer ||= Gamer.find(session[:guest_gamer_id]) ||= nil
 
   rescue ActiveRecord::RecordNotFound
     session[:guest_gamer_id] = nil

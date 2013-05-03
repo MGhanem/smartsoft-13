@@ -586,7 +586,7 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
-  sub_changed: "chane %{sm.name} "
+  sub_changed: "You have successfully changed your subscription model "
   you_have_prizes: "You have won the following prizes!"
   no_translation_popover_title: "there is no translations for this keyword"
   you_can: "you can "
