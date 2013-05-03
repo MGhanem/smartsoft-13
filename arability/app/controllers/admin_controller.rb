@@ -115,7 +115,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_admins
-    @list = Gamer.where(:admin => true).order(params[:order])
+    @list = Gamer.where(admin: true).order(params[:order])
                           .page(params[:page]).per(20)
   end
 
