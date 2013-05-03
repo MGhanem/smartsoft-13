@@ -10,6 +10,9 @@
             </div>
               عرض المشارييع الخاصة ب <%= @developer.gamer.username %>
           </legend>
+          <% if @list.length == 0 %>
+            لا يوجد مشاريع
+          <% else %>
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
@@ -26,6 +29,7 @@
               <% end %>
             </tbody>
           </table>
+          <% end %>
           <a class="btn btn-large btn-primary pull-left" href="/admin/list/developers">العودة</a>
         </div>
       </div>
