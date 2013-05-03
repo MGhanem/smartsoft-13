@@ -71,10 +71,15 @@ en:
   category: "Category"
   please_select: "Please select"
   formality: "Language"
+  pro_gender: "Gender"
+  pro_male: "Male"
+  pro_female: "Female"
   formal: "Formal"
   slang: "Slang"
   from: "From"
   to: "To"
+  desc: "About the project"
+  desc2: "Description"
   desc: "About the project"
   target: "This project will target the following group:"
   target_country: "Country"
@@ -380,7 +385,7 @@ en:
   help_us_report: "See any inappropriate words?"
   oh_snap: "Oh snap! You got an error!"
   check_connection: >
-    Seems like an error was encountered and prohibited the request from completion! 
+    Seems like an error was encountered and prohibited the request from completion!
     Please, try re-submitting your request.
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_social_connection: "Connection removed successfully!"
@@ -628,11 +633,11 @@ en:
   logged_in_to_google: "Your account is now connected to Google"
   connected_to_google: "You are already signed in and connected to Google."
   oops_error_google: "Oops an error has occured while communicating with Google. Please try again"
-  you_vote: "You " 
+  you_vote: "You "
   vote_action: "voted for "
   chosen_action: " as the best translation for "
   vote_log: "Your Votes History"
-  no_you: "You " 
+  no_you: "You "
   no_vote_log: "didn't vote for any translation yet!!"
   keyword_added: "keyword added successfully"
   back_log: "Game"

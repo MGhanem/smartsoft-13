@@ -65,8 +65,10 @@ ar:
   from: "من"
   to: "الى"
   desc: "عن المشروع"
-  new_project: "مشروع جديد"
-  create_project: "انشاء مشروع"
+  desc2: "الوصف"
+  pro_gender: "النوع"
+  pro_male: "ذكر"
+  pro_female: "انثي"
   back: "<< عودة"
   target: "هذا المشروع يستهدف الفئة التالية:"
   target_country: "البلد"
@@ -346,10 +348,10 @@ ar:
           attributes:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-  prizes: "الجوائز" 
-  trophies: "الإنجازات" 
-  invite: "دعوات" 
-  rank: "الرتبة"          
+  prizes: "الجوائز"
+  trophies: "الإنجازات"
+  invite: "دعوات"
+  rank: "الرتبة"
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
@@ -358,7 +360,7 @@ ar:
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
-  project_removed: "تم مسح المشروع المشترك"            
+  project_removed: "تم مسح المشروع المشترك"
   activerecord:
     attributes:
       project:
@@ -404,9 +406,9 @@ ar:
   report_sent: "تم تقديم التقرير بنجاح. سوف يتم ابلاغك بالايميل عند إتخاذ تصرف"
   report_abusive: "حدد الكلمات غير اللائقة"
   report: "إبلغ من هنا"
-  help_us_through_reporting: > 
-    ساعدونا في تحديد الكلمات غير اللائقة عن طريق إختيار الكلمات. عند ملئك هذه 
-    الإستمارة يتم عرض الكلمات على الأدمن و يتم إخطارك عن طريق الايميل في حال 
+  help_us_through_reporting: >
+    ساعدونا في تحديد الكلمات غير اللائقة عن طريق إختيار الكلمات. عند ملئك هذه
+    الإستمارة يتم عرض الكلمات على الأدمن و يتم إخطارك عن طريق الايميل في حال
     إتخاذ موقف من الطلب.
   words_in_page: "الكلمات التي يمكن اختيارها بالصفحة:"
   close: "إغلاق"
@@ -745,11 +747,11 @@ ar:
   logged_in_to_google: "حسابك الآن متصل بـجوجل"
   connected_to_google: "انت متصل بجوجل بالفعل"
   oops_error_google: "واجهتنا مشاكل حين حولنا التواصل مع جوجل من فضلك حاول التواصل مرة أخرى"
-  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"  
+  expired_token: "يبدو ان اتصالك مع فيسبوك كان به مشكلة. و لكن لا تقلق, لقد قمنا باصلاح المشكلة"
   you_vote: ""
   vote_action: "لقد اخترت "
   chosen_action: " كأنسب بديل لكلمة "
-  vote_log: "اصواتك السابقة" 
+  vote_log: "اصواتك السابقة"
   no_you: "انت "
   no_vote_log: "لم تختار اي معني لاي كلمة حتي الان!!"
   back_log: "اللعبة"
@@ -803,7 +805,7 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
         keyword:
           attributes:
             name:
