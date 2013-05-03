@@ -104,7 +104,7 @@ class ApplicationController < ActionController::Base
   #   the file extension is not .csv, nil is returned and message is '4'
   def parseCSV(csvfile)
     begin
-      if csvfile != nil
+      if csvfile != nil && csvfile != ""
         file_ext = File.extname(csvfile.original_filename)
         if file_ext == ".csv"
           content = File.read(csvfile.tempfile)
