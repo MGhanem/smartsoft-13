@@ -4,7 +4,8 @@ Arability::Application.routes.draw do
 
   scope "/admin" do
     match "" => "admin#index", :via => [:get]
-    match "autocomplete" => "admin#gamer_email_autocomplete"
+    match "autocomplete" => "admin#gamer_email_autocomplete", 
+            as: "admin_autocomplete_email_gamer"
     scope "/add" do
       match "/word" => "admin#add_word", :via => [:get, :post]
       match "/trophy" => "admin#add_trophy", :via => [:get, :post]
