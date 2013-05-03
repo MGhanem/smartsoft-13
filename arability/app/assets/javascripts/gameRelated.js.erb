@@ -1,6 +1,7 @@
- var words;
+  var words;
   var cache = "";
   var nav_locked = false;
+  var JsLocale = "<%= I18n.locale %>";
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -24,9 +25,14 @@
 
   function check_empty_words(){
     if(words.length == 0){
-        if(win == true){
+      if(win == true){
+        if(isGuest == true){
+          nextLevel();
+        }
+        else{
          getTrophies(level, score);
-      }
+        }
+     }
       else{
         getScoreOnly(score);
       }
@@ -34,7 +40,7 @@
     }else{
       return false;
     }
-  } 
+  }
 
   function have_to_sign_in(){
     $.post("/games/vote_errors.js");
@@ -66,43 +72,20 @@
     }
   }
 
-
-
   function getTrophies(level, score) {
     clear();
-    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    request_string = "/games/get_trophies/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
   function getPrizes(level, score) {
     clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
+    request_string = "/games/get_prizes/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
   function getScore() {
     return 123456;
   }
 
-  function showPrizes() {
-    if(nav_locked) {
-      return;
-    }
-    if(cache == "") {
-      cache = document.getElementById("zone").innerHTML;
-    }    
-    clear();
-    $.get("/games/showprizes");
-  }
-
-  function showTrophies() {
-    if(nav_locked) {
-      return;
-    }
-    if(cache == "") {
-      cache = document.getElementById("zone").innerHTML;
-    }
-    clear();
-    $.get("/games/showtrophies");
-  }
   // function  setLevelTitle(){
   //   <% if I18n.locale==:ar %>
   //   levelTitle = "<span onclick='nextLevel()' style='color: #155B84;'>مرحلة رقم " + level +"</span>";
@@ -114,22 +97,15 @@
 
 
 function setButtons(){
-    <% if I18n.locale==:ar %>
-    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    <% if I18n.locale == :ar %>
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">حذف الكلمة</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
     continuePlayingBtn = "الاستمرار في اللعب"
-    <% else I18n.locale==:en %>
+    <% else %>
     gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">Clear Word</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">Restart Game</a>';
     continuePlayingBtn = "Continue Playing"
     <% end %>
-  }
-
-
-  function getPrizes(level, score) {
-    clear();
-    request_string = "/games/getprizes/?level=" + level + "&score=" + score;
-    $.get(request_string);
   }
 
   function getScore() {
@@ -138,17 +114,40 @@ function setButtons(){
 
 
   function setLevelPopUpTitle(){
-    <% if I18n.locale==:ar %>
+    <% if I18n.locale == :ar %>
     levelPopUpTitle = 'مرحلة رقم';
-    <% else I18n.locale==:en %>
+    <% else %>
     levelPopUpTitle = 'Level';
     <% end %> 
   }
- 
+  // Author:
+  //   Omar Hossam.
+  // Description:
+  //   a twitter image is placed on page and links to twitter to tweet an
+  //   invitation to the website's link.
+  // Parameters:
+  //   None.
+  // Success:
+  //   Gamer presses on the image and goes to twitter page to tweet an
+  //   invitation to the website
+  // Failure:
+  //   None.
+  // Author:
+  //   Amr Abdel-raouf
+  // Description:
+  //   Displays the static html where a user can invite from facebook
+  // Params:
+  //   None
+  // Success:
+  //   The html is rendered and a button appears where on click it posts
+  //   an invitation on facebook
+  // Failure:
+  //   None
+
   function setScoreTitle(){
     <% if I18n.locale==:ar %>
     document.getElementById('game-score').innerHTML = score + ' :نقاط'
-    <% else I18n.locale==:en %>
+    <% else %>
     document.getElementById('game-score').innerHTML = 'Score: ' + score;
     <% end %>
   }
@@ -160,40 +159,48 @@ function setButtons(){
   }
 
   function disableNav() {
-    var lists = $("[id*='navItems']");
-    lists.addClass("disabled");
-    nav_locked = true;
+    $('#ingamenav').addClass('disabled');
+  }
+
+  function show_menu_item(title)
+  {
+    
+    var item_html = '<h3 style="margin-top: -50px; font-size: 40px;"> \
+    ' + title + ' \
+    </h3>';
+    $(".btn-group span.new").text(title);
+    //$(".btn-group span.caret").html(item_html);
+
+
+    //$("#selected_item").hide();
+    //$("#selected_item").html(item_html);
+    //$("#selected_item").show();
   }
 
   function enableNav() {
-    var lists = $("[id*='navItems']");
-    lists.removeClass("disabled");
-    nav_locked = false;
+    $('#ingamenav').removeClass('disabled');
   }
 
-  function hallOfFame(){
-    if(nav_locked == true){
-      return;
-    }
-    clear();
-    <% if I18n.locale==:en %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">Loading</p></div>');
-    <% else I18n.locale==:ar %>
-    $('.zone').append('<div id = "loading-server"><p style = " position:absolute; margin-top: 150px; margin-left: 150px; margin-right: 150px; font-size: 1000%; color: white; ">تحميل</p></div>');
-    <% end %>
-    $('#loading-server').fadeTo(0,0);
-    $('#loading-server').fadeTo(1000,1);
-    $('#loading-server').fadeTo(1000,0);
-    $.get("/games/halloffame");
-  }
-
-
+  // Author:
+  //   Mirna Yacout
+  // Description:
+  //   views the hall of fame of all arability gamers showing their last 3 trophies, rank and highest score
+  //   giving the user the option to filter with his facebook or twitter friends and view his rank
+  // Parameters:
+  //   None.
+  // Success:
+  //   view the hall of fame successfully
+  // Failure:
+  //   internet connection failure: a message is displayed upon clicking to view facebook/twitter friends' 
+  //   hall of fame telling the user to check his internet connection
+  
+ 
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
     gameOverFontSize = '150px';
     return "Game Over";
-    <% else I18n.locale == :ar %>
+    <% else %>
     gameOverFontSize = '300px';
     return "النهاية";
     <% end %>
@@ -201,30 +208,32 @@ function setButtons(){
 
   function generateEmptyDbMsg(){
     <% if I18n.locale == :ar %>
-      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
-    <% else I18n.locale == :en %>
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك مواصلة اللعب بدون تصويت"
+    <% else %>
       return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
   }
 
   function setPopoverAttributes(){
-    wordsListPopoverContent = "<%= I18n.t(:words_list_popover_content) %>";
-    wordsListPopoverTitle = "<%= I18n.t(:words_list_popover_title) %>";
-    wordLabelPopoverContent = "<%= I18n.t(:word_label_popover_content) %>";
-    wordLabelPopoverTitle = "<%= I18n.t(:word_label_popover_title) %>";
-    tablePopoverContent = "<%= I18n.t(:table_popover_content) %>"
-    tablePopoverTitle = "<%= I18n.t(:table_popover_title) %>"
-    clickedButtonPopoverContent = "<%= I18n.t(:clicked_button_popover_content) %>";
-    clickedButtonPopoverTitle = "<%= I18n.t(:clicked_button_popover_title) %>";
-    clickedButtonPopoverButton = "<%= I18n.t(:clicked_button_popover_button) %>";
-    flashingTowerPopoverContent = "<%= I18n.t(:flashing_tower_popover_content) %>"
-    flashingTowerPopoverTitle = "<%= I18n.t(:flashing_tower_popover_title) %>"
-    flashingTowerPopoverButton = "<%= I18n.t(:flashing_tower_popover_button) %>"
+    wordsListPopoverContent = "<%=I18n.t(:words_list_popover_content) %>";
+    wordsListPopoverTitle = "<%=I18n.t(:words_list_popover_title) %>";
+    wordLabelPopoverContent = "<%=I18n.t(:word_label_popover_content) %>";
+    wordLabelPopoverTitle = "<%=I18n.t(:word_label_popover_title) %>";
+    tablePopoverContent = "<%=I18n.t(:table_popover_content) %>";
+    tablePopoverTitle = "<%=I18n.t(:table_popover_title) %>";
+    clickedButtonPopoverContent = "<%=I18n.t(:clicked_button_popover_content) %>";
+    clickedButtonPopoverTitle = "<%=I18n.t(:clicked_button_popover_title) %>";
+    clickedButtonPopoverButton = "<%=I18n.t(:clicked_button_popover_button) %>";
+    flashingTowerPopoverContent = "<%=I18n.t(:flashing_tower_popover_content) %>";
+    flashingTowerPopoverTitle = "<%=I18n.t(:flashing_tower_popover_title) %>";
+    flashingTowerPopoverButton = "<%=I18n.t(:flashing_tower_popover_button) %>";
+    scorePopoverContent = "<%=I18n.t(:score_popover_content) %>";
+    scorePopoverTitle = "<%=I18n.t(:score_popover_title) %>";
   }
 
   function setModalTranslations(){
-    modalHeader = "<%= I18n.t(:modal_header) %>";
-    modalBody = "<%= I18n.t(:modal_body) %>";
-    modalYesButton = "<%= I18n.t(:modal_yes_button) %>";
-    modalNoButton = "<%= I18n.t(:modal_no_button) %>";
+    modalHeader = "<%=I18n.t(:modal_header) %>";
+    modalBody = "<%=I18n.t(:modal_body) %>";
+    modalYesButton = "<%=I18n.t(:modal_yes_button) %>";
+    modalNoButton = "<%=I18n.t(:modal_no_button) %>";
   }

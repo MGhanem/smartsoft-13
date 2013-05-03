@@ -9,6 +9,7 @@ describe "Allowing gamer to signin with username or email" do
     gamer_adam.email = "ag@developer.com"
     gamer_adam.password = "password123"
     gamer_adam.password_confirmation = "password123"
+    gamer_adam.confirmed_at = Time.now
     gamer_adam.save validate: false
     gamer_adam
   }

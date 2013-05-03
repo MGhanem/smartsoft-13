@@ -341,13 +341,6 @@ ar:
   guest_error9: "كلمات المرور غير متطابقة"
   become_member: "اشترك الآن"
   keyword_added: "لقد تم تسجيل %{keyword} بنجاح"
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   prizes: "الجوائز"
   trophies: "الإنجازات"
   invite: "دعوات"
@@ -361,15 +354,6 @@ ar:
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
   project_removed: "تم مسح المشروع المشترك"
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
-        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
@@ -419,14 +403,6 @@ ar:
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
   project_removed: "تم مسح المشروع المشترك"
-  activerecord:
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'السن'
-        maxAge: 'السن'
-        categories: "الفئات"
-        description: "الوصف"
   project_removed: "تم مسح المشروع المشترك"
   project_delete: "تم مسح المشروع بنجاح"
   choose_sub: 'نظام الإشتراك'
@@ -631,29 +607,6 @@ ar:
         project_was_successfully_updated: 'تم حفظ المشروع بنجاح!'
   connection_error: "فشل الاتصال بالانترنت، تأكد من الاتصال"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون رقما بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
   enter_a_synonym: "ادخل معني جديد"
   skip_this_keyword: "تخطي هذا المعني"
   suggest_this_synonym: "سجل هذا المعني"
@@ -697,29 +650,6 @@ ar:
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
   trial_error: "عفوا لا يمكنك استخدام هذه الخدمة. بالرجاء الاشتراك في نظام  بريميوم او ديلوكس"
-  activerecord:
-    errors:
-      models:
-        gamer:
-          attributes:
-            date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
-            maxAge:
-              maxAge_range: "يجب ان يكون بين رقما بين ١٠ و ١٠٠ سنة"
-              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
-    attributes:
-      project:
-        name: 'الاسم'
-        minAge: 'الحد الادنى للسن'
-        maxAge: 'الحد الاقصى للسن'
-        categories: "الفئات"
-        description: "الوصف"
   no_translation_popover_title: "لا يوجد معاني لهذه الكلمة حاليا "
   no_translation_popover_content: "تبيمسب،"
   you_can: "تستطيع ان "
@@ -787,7 +717,6 @@ ar:
         maxAge: 'الحد الاقصى للسن'
         categories: "الفئات"
         description: "الوصف"
-        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
       keyword:
         name: "الكلمة"
       category:
@@ -809,9 +738,9 @@ ar:
         keyword:
           attributes:
             name:
-              blank: "برجاء إدخال كلمة"
-              invalid: "برجاء أدخال حروف عربية أو إنجليزية فقط"
-              taken: "هذه الكلمة موجودة بالفعل"
+              blank: "لا يمكن أن تكون فارغة"
+              invalid: "يجب أن تتكون من حروف عربية أو إنجليزية فقط"
+              taken: "موجودة بالفعل"
         category:
           attributes:
             english_name:

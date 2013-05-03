@@ -108,15 +108,15 @@ describe Keyword do
     end
 
     it "should downcase keyword before adding to database" do
-      success, keyword = Keyword.add_keyword_to_database("Dj")
+      success, keyword = Keyword.add_keyword_to_database("Djk")
       success.should eq(true)
-      keyword.name.should eq("dj")
+      keyword.name.should eq("djk")
     end
 
     it "should find keyword by name" do
-      success, keyword = Keyword.add_keyword_to_database("dj")
+      success, keyword = Keyword.add_keyword_to_database("djk")
       success.should eq(true)
-      keyword2 = Keyword.find_by_name("dj")
+      keyword2 = Keyword.find_by_name("djk")
       keyword2.id.should eq(keyword.id)
     end
   end

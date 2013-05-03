@@ -154,6 +154,9 @@ class AdminController < ApplicationController
           flash[:success] = "#{user.username} مشرف بالفعل"
         else
           user.make_admin
+          UserMailer.generic_email(params[:email],
+            "Arability's newest admin xD",
+            "Dear #{user.username}, \nWe would like to inform you that you are now \n An admin of Arability").deliver
           flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
         end
         flash.keep
@@ -183,6 +186,10 @@ class AdminController < ApplicationController
         redirect_to "/admin/list/admins"
       else
         user.remove_admin
+        UserMailer.generic_email(user.email,
+          "Removal from Arability admins",
+          "Dear #{user.username}, \nWe would like to inform you that you are removed \n from the list of admins of Arability").deliver
+        flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
         flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
         flash.keep
         redirect_to "/admin/list/admins"
