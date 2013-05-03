@@ -107,13 +107,11 @@ Arability::Application.routes.draw do
     post "guest/continue_signing_up" => "guest#continue_signing_up", :as => "guest_continue_signing_up"
     match '/auth/facebook/callback' => 'authentications#facebook_callback'
     match "/games/post_facebook" => "games#post"
+    match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
     scope "developers/" do
       match "/" => "backend#home", :as => "backend_home"
       match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
-      get "projects/remove_developer_from_project"
-      match "/auth/google_oauth2/callback" => "authentications#google_callback"
-
       get "projects/remove_developer_from_project"
       match "projects/:id/share" => "projects#share", :as => "share_project"
       match "projects/share_project_with_developer" => "developer#share_project_with_developer", :via => :put
