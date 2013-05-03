@@ -7,10 +7,10 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update,
-    :view_recommended_words, :get_recommended_words, :share]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update, :share]
   before_filter :can_access_project?,
-  only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
+  only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json,
+    :view_recommended_words, :get_recommended_words]
 
  # author:Noha hesham
  # Description:
