@@ -141,14 +141,6 @@ describe AdminController  do
       response.should redirect_to("http://test.host/admin/list/admins")
     end
 
-    it "should list all projects" do
-      project
-      gamer
-      sign_in(gamer)
-      get :list_projects
-      assigns(:list).should =~ [project]
-    end
-
     it "should list all developer's projects" do
       gamer
       developer
