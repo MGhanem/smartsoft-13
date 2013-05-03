@@ -35,7 +35,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_trophies
-    @trophies_list = Trophy.order(params[:order]).page(params[:page]).per(2)
+    @trophies_list = Trophy.order(params[:order]).page(params[:page]).per(12)
   end
 
   # Author:
@@ -50,7 +50,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_prizes
-    @prizes_list = Prize.order(params[:order]).page(params[:page]).per(2)
+    @prizes_list = Prize.order(params[:order]).page(params[:page]).per(12)
   end
 
   # Author:
@@ -85,7 +85,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_gamers
-    @list = Gamer.order(params[:order]).page(params[:page]).per(5)
+    @list = Gamer.order(params[:order]).page(params[:page]).per(20)
   end
 
   # Author:
@@ -100,7 +100,7 @@ class AdminController < ApplicationController
   # Failure: 
   #   none
   def list_developers
-    @list = Developer.order(params[:order]).page(params[:page]).per(5)
+    @list = Developer.order(params[:order]).page(params[:page]).per(20)
   end
 
   # Author:
@@ -116,22 +116,7 @@ class AdminController < ApplicationController
   #   none
   def list_admins
     @list = Gamer.where(:admin => true).order(params[:order])
-                          .page(params[:page]).per(5)
-  end
-
-  # Author:
-  #   Karim ElNaggar
-  # Description:
-  #   this action lists the projects
-  # Params
-  #   order: the order of the list
-  #   page: the current page of the pagination
-  # Success: 
-  #   refreshes the page and displays projects
-  # Failure: 
-  #   none
-  def list_projects
-    @list = Project.order(params[:order]).page(params[:page]).per(5)
+                          .page(params[:page]).per(20)
   end
 
   # Author:
@@ -148,7 +133,7 @@ class AdminController < ApplicationController
   #   the user is not a valid developer so an error is displayed
   def list_developer_projects
     @developer = Developer.find_by_id(params[:id])
-    @list = @developer.projects.order(params[:order]).page(params[:page]).per(5)
+    @list = @developer.projects.order(params[:order]).page(params[:page]).per(20)
   end
 
   # Author:

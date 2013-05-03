@@ -18,6 +18,14 @@
 					    	</div>
 					  	</div>
 					<% end %>
+					<% if flash[:error] %>
+						<div class="alert alert-error">
+					    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+					    	<div>
+					    		<%= flash[:error] %>
+					    	</div>
+					  	</div>
+					<% end %>
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
