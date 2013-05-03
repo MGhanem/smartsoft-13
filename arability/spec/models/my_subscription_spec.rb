@@ -65,9 +65,6 @@ describe MySubscription do
     result = my_sub.can_search_word(keyword.id)
     expect(result).to eq(true)
   end
-    my_sub = MySubscription.where(developer_id: developer.id).first
-    my_sub
-	}
 
 	it "developer can choose subscription model" do
 		result = MySubscription.choose(developer.id, submodel.id)
