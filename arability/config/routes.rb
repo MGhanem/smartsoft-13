@@ -110,7 +110,6 @@ Arability::Application.routes.draw do
     match "/auth/google_oauth2/callback" => "authentications#google_callback"
 
     scope "developers/" do
-      match "/" => "backend#home", :as => "backend_home"
       match 'projects/remove_developer_from_project' => 'developer#remove_developer_from_project'
       get "projects/remove_developer_from_project"
       match "projects/:id/share" => "projects#share", :as => "share_project"
@@ -126,9 +125,6 @@ Arability::Application.routes.draw do
 
       match 'projects' => "projects#index", :as => :projects
       match "/" => "backend#home", :as => "backend_home"
-
-      get "projects/remove_developer_from_project"
-
       get "projects/update"
 
       put '/projects/:id/add_from_csv_keywords' => "projects#add_from_csv_keywords", :as => :add_from_csv_keywords_project
