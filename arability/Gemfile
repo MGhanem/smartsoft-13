@@ -72,6 +72,7 @@ gem "koala"
 
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
 gem 'twitter'
 gem 'fb_graph'
 
@@ -82,6 +83,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'meta_request'
 end
 
 group :test do
@@ -91,7 +93,6 @@ group :test do
   gem "simplecov"
 end
 
-
-gem 'certified'
+gem "geocoder"
 
 gem 'kaminari'

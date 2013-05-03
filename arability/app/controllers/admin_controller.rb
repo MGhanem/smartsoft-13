@@ -1,6 +1,5 @@
 #encoding: UTF-8
 class AdminController < ApplicationController
-  protect_from_forgery
   layout "admin"
   require "csv"
   include AdminHelper
@@ -29,13 +28,14 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the trophies and links to remove trophies
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays trophies
   # Failure: 
   #   none
   def list_trophies
-    @trophies_list = Trophy.order(params[:order]).page(params[:page]).per(2)
+    @trophies_list = Trophy.order(params[:order]).page(params[:page]).per(12)
   end
 
   # Author:
@@ -43,54 +43,150 @@ class AdminController < ApplicationController
   # Description:
   #   this action lists the prizes and links to remove trophies
   # Params
-  #  none
+  #   order: the order of the list
+  #   page: the current page of the pagination
   # Success: 
   #   refreshes the page and displays prizes
   # Failure: 
   #   none
   def list_prizes
-    @prizes_list = Prize.order(params[:order]).page(params[:page]).per(2)
+    @prizes_list = Prize.order(params[:order]).page(params[:page]).per(12)
   end
 
+  # Author:
+  #   karim elnaggar
+  # Description:
+  #   returns json of gamer emails matching autocompletion
+  # params:
+  #   search: a string representing the email
+  # success:
+  #   returns a json list of emails similar to what's currently typed
+  #   in the search textbox
+  # failure:
+  #   returns an empty list if what's currently typed in the search textbox
+  #   had no matches
+  def gamer_email_autocomplete
+    search_email = params[:search]
+    similar_emails =
+      Gamer.get_similar_emails(search_email)
+    similar_emails.map! { |email| email.email }
+    render json: similar_emails
+  end
+
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the gamers and links to make them admins
+  # Params
+  #   order: the order of the list
+  #   page: the current page of the pagination
+  # Success: 
+  #   refreshes the page and displays gamers
+  # Failure: 
+  #   none
   def list_gamers
-    @list = Gamer.order(params[:order]).page(params[:page]).per(5)
+    @list = Gamer.order(params[:order]).page(params[:page]).per(20)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the developers
+  # Params
+  #   order: the order of the list
+  #   page: the current page of the pagination
+  # Success: 
+  #   refreshes the page and displays developers
+  # Failure: 
+  #   none
   def list_developers
-    @list = Developer.order(params[:order]).page(params[:page]).per(5)
+    @list = Developer.order(params[:order]).page(params[:page]).per(20)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the admins and links to remove them
+  # Params
+  #   order: the order of the list
+  #   page: the current page of the pagination
+  # Success: 
+  #   refreshes the page and displays admins
+  # Failure: 
+  #   none
   def list_admins
-    @list = Gamer.where(:admin => true).order(params[:order])
-                          .page(params[:page]).per(5)
+    @list = Gamer.where(admin: true).order(params[:order])
+                          .page(params[:page]).per(20)
   end
 
-  def list_projects
-    @list = Project.order(params[:order]).page(params[:page]).per(5)
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action lists the projects of a user
+  # Params
+  #   developer_id: the id of the developer
+  #   order: the order of the list
+  #   page: the current page of the pagination
+  # Success: 
+  #   views a table with the projects of that user
+  # Failure: 
+  #   the user is not a valid developer so an error is displayed
+  def list_developer_projects
+    @developer = Developer.find_by_id(params[:id])
+    @list = @developer.projects.order(params[:order]).page(params[:page]).per(20)
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action makes a gamer an admin
+  # Params
+  #   id: the id of the gamer to be admin
+  # Success: 
+  #   redirects the new admin to list admins view and display success message
+  # Failure: 
+  #   the user is not a valid user so an error is displayed
   def make_admin
-    user = Gamer.find_by_id(params[:id])
-    if user != nil
-      user.admin = true
-      user.save
-      flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
-      flash.keep
-      redirect_to "/admin/list/admins"
-    else
-      flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
-      redirect_to "/admin/list/gamers"
+    if request.post?
+      user = Gamer.find_by_email(params[:email])
+      if user != nil
+        if user.admin?
+          flash[:success] = "#{user.username} مشرف بالفعل"
+        else
+          user.make_admin
+          flash[:success] = "لقد تم اضافة #{user.username} كمشرف"
+        end
+        flash.keep
+        redirect_to "/admin/list/admins"
+      else
+        flash[:error] = "لم يتم العثورعلى الحساب الذي اختارته"
+        redirect_to "/admin/make_admin"
+      end
     end
   end
 
+  # Author:
+  #   Karim ElNaggar
+  # Description:
+  #   this action removes an admin from the admins
+  # Params
+  #   id: the id of the admin to be removed from admins
+  # Success: 
+  #   removes the admin and redirects to list admins view
+  # Failure: 
+  #   the user is not a valid admin so an error is displayed
   def remove_admin
     user = Gamer.find_by_id(params[:id])
     if user.admin
-      user.admin = false
-      user.save
-      flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
-      flash.keep
-      redirect_to "/admin/list/admins"
+      if user.id == current_gamer.id
+        flash[:error] = "لا يمكن مسح نفسك"
+        redirect_to "/admin/list/admins"
+      else
+        user.remove_admin
+        flash[:success] = "لقد تم مسح #{user.username} من المشرفيين"
+        flash.keep
+        redirect_to "/admin/list/admins"
+      end
     else
       flash[:error] = "لم يتم العثورعلى الحساب الزى اختارته"
       redirect_to "/admin/list/admins"
@@ -269,7 +365,7 @@ class AdminController < ApplicationController
       arabic_name = params[:arabic_name]
       @arabic_name = arabic_name
       @english_name = english_name
-      @success, @category = Category.add_category_to_database_if_not_exists(english_name, arabic_name)
+      @success, @category = Category.add_category(english_name, arabic_name)
       if @success
         flash[:success] = "لقد تم ادخال فئة #{@category.english_name}
           /#{@category.arabic_name} بنجاح"

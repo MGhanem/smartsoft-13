@@ -15,16 +15,14 @@
             </div>
             <div class="modal-footer">
               <button class="btn" data-dismiss="modal" aria-hidden="true">غلق</button>
-              <a class="btn btn-warning">مسح</a>
+              <a class="btn btn-danger">مسح</a>
             </div>
           </div>
           <legend>
             <div class="pull-left pagination">
               <%= paginate @prizes_list, :remote => true %>
             </div>
-            <a>
               عرض الجوائز
-            </a>
           </legend>
           <% if flash[:successtype] && (flash[:successtype] == "addprize" || flash[:successtype] == "deleteprize") && flash[:success] %>
                 <div class="alert alert-success">

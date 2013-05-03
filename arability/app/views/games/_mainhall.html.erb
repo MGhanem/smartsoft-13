@@ -1,0 +1,51 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#mainhall br").remove();
+  });
+</script>
+
+<table class="table table-bordered" style = "background-color:white; margin-top:20px">
+    <thead align="center" style="font-weight:bold; color:orange;">
+      <tr>
+        <td><%= t(:rank) %></td>
+        <td><%= t(:name) %></td>
+        <td><%= t(:highest_score) %></td>
+        <td><%= t(:trophies) %></td>
+      </tr>
+    </thead>
+    <tbody align="center">
+      <% @gamers = Gamer.order("highest_score DESC").where(is_guest: [nil, false]) %>
+      <% @gamers = @gamers.page(params[:page]).per(5) %>
+      <% @gamers.each do |user| %>
+        <% if user == current_gamer %>
+          <tr style="background-color: #DDDDDD">
+        <% else %>
+          <tr>
+        <% end %>
+          <td><%= rank = Gamer.get_gamer_rank(user) %></td>
+          <td><%= user.username %></td>
+          <td><%= user.highest_score %></td>
+          <% trophies = Gamers_Trophy.find_by_gamer_id(user.id) %>
+          <td>
+          <% if trophies.nil? %>
+            <p><%= t(:no_trophies_won) %></p>
+          <% else %>
+            <% trophies = Gamers_Trophy.select("trophy_id").where(gamer_id: user.id).order("trophy_id desc").limit(3) %>
+            <% @tr = Trophy.find_all_by_id(trophies) %>
+            <% @tr.each do |trophy| %>
+              <img alt="trophy" class="border-none" src="/assets/<%= trophy.image_file_name %>" width="25" />
+            <% end %>
+          <% end %>
+          </td>
+        </tr>
+        <br>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <%= paginate @gamers, remote: true %>
+    <ul><li>
+      <% my_rank = Gamer.get_gamer_rank(current_gamer) %>
+      <a href="/games/main_hall_of_fame?page=<%= page = (my_rank/5.0).ceil %>" data-remote="true"><%= t(:your_rank) %></a>
+    </li></ul>
+  </div>

@@ -53,32 +53,75 @@ class Authentication < ActiveRecord::Base
   end
 
   # Author:
-  #  Mirna Yacout
+  #   Mirna Yacout
   # Description:
-  #  This method is to retrieve the list of common arability friends and Twitter followers
+  #   This method is to retrieve the list of common arability friends and Twitter friends
   # Parameters:
-  #  current_gamer: the record in Gamer table for the current user
+  #   current_gamer: the record in Gamer table for the current user
   # Success:
-  #  returns the list of common followers
+  #   returns the list of common friends
   # Failure:
-  #  returns nil if no authentication is found
-  def self.get_common_twitter_followers(current_gamer)
-    auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id, "twitter")
-    if (auth.nil?)
-      return nil
-    end
-    result = JSON.parse(open("https://api.twitter.com/1/followers/ids.json?user_id=#{auth.gid}").read)
-    followers = Array.new(result["ids"])
-    common = Array.new
-    i = 0
-    while i<followers.count
-      if Authentication.exists?(gid: followers.at(i), provider: "twitter")
-        common.push(Authentication.find_by_gid_and_provider(followers.at(i), "twitter").gamer_id)
-        common.push(current_gamer.id)
+  #   returns nil if no authentication is found
+  def self.get_common_twitter_friends(current_gamer)
+    begin
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
+       "twitter")
+      if (auth.nil?)
+        return nil
       end
-      i = i + 1
+      result = JSON.parse(open("https://api.twitter.com/1/friends/ids.json?user_id=#{auth.gid}").read)
+      followers = Array.new(result["ids"])
+      common = Array.new
+      i = 0
+      while i < followers.count
+        if Authentication.exists?(gid: followers.at(i), provider: "twitter")
+          common.push(Authentication.find_by_gid_and_provider(followers.at(i),
+           "twitter").gamer_id)
+        end
+        i = i + 1
+      end
+      common.push(current_gamer.id)
+      return common
+    rescue SocketError
+      return false
+    rescue OpenURI::HTTPError 
+      return false
     end
-    return common
+  end
+
+  # Author:
+  #   Mirna Yacout
+  # Description:
+  #   This method is to retrieve the list of common arability friends and Facebook friends
+  # Parameters:
+  #   current_gamer: the record in Gamer table for the current user
+  # Success:
+  #   returns the list of common followers
+  # Failure:
+  #   returns nil if no gamer token is found
+  def self.get_common_facebook_friends(current_gamer)
+    begin
+      auth = Authentication.find_by_gamer_id_and_provider(current_gamer.id,
+       "facebook")
+      if auth.nil?
+        return nil
+      end
+      @graph = Koala::Facebook::API.new(auth.token)
+      friends = @graph.get_connections("me", "friends")
+      common = Array.new
+      i = 0
+      while i < friends.count
+        if Authentication.exists?(gid: friends.at(i)["id"], provider: "facebook")
+          common.push(Authentication.find_by_gid_and_provider(friends.at(i)["id"],
+           "facebook").gamer_id)
+        end
+        i = i + 1
+      end
+      common.push(current_gamer.id)
+      return common
+    rescue Faraday::Error::ConnectionFailed
+      return false
+    end
   end
 
   # Author
@@ -125,7 +168,12 @@ class Authentication < ActiveRecord::Base
   #   none
   def self.update_token(id, provider, new_token)
     auth = Authentication.find_by_gamer_id_and_provider(id, provider)
-    auth.update_attribute(:token, new_token)
+    if auth
+      auth.update_attribute(:token, new_token)
+      return true
+    else
+      return false
+    end
   end
 
 end

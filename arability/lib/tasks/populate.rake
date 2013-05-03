@@ -2,13 +2,33 @@
 namespace :db do
   desc "Insert random data into the database"
   task populate: :environment do
+    Authentication.delete_all
+
+    Category.delete_all
+    test_category=Category.create(english_name: "Art", arabic_name: "فن")
+    Category.create(english_name: "Beauty & Style", arabic_name: "موضة")
+    Category.create(english_name: "Business & Finance", arabic_name: "تجارة وأموال")
+    Category.create(english_name: "Cars & Transportation", arabic_name: "وسائل المواصلات")
+    Category.create(english_name: "Computers & Internet", arabic_name: "الكمبيوتر والانترنت")
+    Category.create(english_name: "Electronics", arabic_name: "إلكترونيات")
+    Category.create(english_name: "Education", arabic_name: "التعليم")
+    Category.create(english_name: "Entertainment & Music", arabic_name: "الترفيه والموسيقى")
+    Category.create(english_name: "Environment", arabic_name: "البيئة")
+    Category.create(english_name: "Family & Relationships", arabic_name: "الاسر والعلاقات")
+    Category.create(english_name: "Food & Drinks", arabic_name: "الطعام والشراب")
+    Category.create(english_name: "Games", arabic_name: "ألعاب")
+    Category.create(english_name: "Hospital", arabic_name: "مستشفى")
+    Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
+
     Keyword.delete_all
-    success, click=Keyword.add_keyword_to_database("click", true)
-    success, sign_in=Keyword.add_keyword_to_database("sign in", true)
-    success, sign_up=Keyword.add_keyword_to_database("sign up", true)
-    success, upload=Keyword.add_keyword_to_database("upload", true)
-    success, download=Keyword.add_keyword_to_database("download", true)
+    success, click=Keyword.add_keyword_to_database("click", true, categories:[Category.where(english_name: "Beauty & Style"), Category.where(english_name: "Electronics"), Category.last])
+    success, sign_in=Keyword.add_keyword_to_database("sign in", true, categories:[Category.first, Category.where(english_name: "Hospital"),Category.where(english_name: "Cars & Transportation")])
+    success, sign_up=Keyword.add_keyword_to_database("sign up", true, categories:[Category.last, Category.where(english_name: "Social Networking")])
+    success, upload=Keyword.add_keyword_to_database("upload", true, categories:[Category.where(english_name: "Computers & Internet")])
+    success, download=Keyword.add_keyword_to_database("download", true, categories:[Category.where(english_name: "Education")])
     success, loading=Keyword.add_keyword_to_database("loading", true)
+    success, username=Keyword.add_keyword_to_database("username", true)
+    success, password=Keyword.add_keyword_to_database("password", true)
     share=Keyword.create(name: "share", approved: true, is_english: true)
     post=Keyword.create(name: "post", approved: true, is_english: true)
     poke=Keyword.create(name: "poke", approved: true, is_english: true)
@@ -26,12 +46,6 @@ namespace :db do
     marhala=Keyword.create(name: "مرحلة", approved: true, is_english: false)
     edadat=Keyword.create(name: "إعدادات", approved: true, is_english: false)
     engazat=Keyword.create(name: "انجازات", approved: true, is_english: false)
-
-    Category.delete_all
-    test_category = Category.create(english_name: "test", arabic_name: "إختبار")
-    Category.create(english_name: "Banking", arabic_name: "بنكية")
-    Category.create(english_name: "Hospital", arabic_name: "مستشفى")
-    Category.create(english_name: "Social Networking", arabic_name: "تواصل إجتماعي")
 
     test_category.keywords << click
 
@@ -60,6 +74,8 @@ namespace :db do
     g=Synonym.create(name: "رفع", keyword_id: upload.id, approved: true, is_formal: true)
     h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true, is_formal: true)
     i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true, is_formal: true)
+    j=Synonym.create(name: "أسم المستخدم", keyword_id: username.id, approved: true, is_formal: true)
+    j=Synonym.create(name: "كلمة السر", keyword_id: password.id, approved: true, is_formal: true)
 
     j=Synonym.create(name: "تحميل", keyword_id: loading.id, approved: true, is_formal: true)
     k=Synonym.create(name: "استني", keyword_id: loading.id, approved: true, is_formal: false)
@@ -149,10 +165,12 @@ namespace :db do
     hassan_dev.keywords << sign_in
 
     SubscriptionModel.delete_all
+
     free=SubscriptionModel.create(name_en: "Free", name_ar: "مجاني", limit_search: 20, limit_follow: 20, limit: 20, limit_project: 20, limit: 500)
     premium=SubscriptionModel.create(name_en: "Premium", name_ar: "ممتاز", limit_search: 200, limit_follow: 200, limit: 20, limit_project: 100, limit: 2000)
     deluxe=SubscriptionModel.create(name_en: "Deluxe", name_ar: "فاخر", limit_search: 300, limit_follow: 300, limit: 20, limit_project: 300, limit: 5000)
 
+    MySubscription.choose(timo_dev.id, SubscriptionModel.first.id)
     project = Project.new
     project.name = "Read"
     project.minAge = "19"

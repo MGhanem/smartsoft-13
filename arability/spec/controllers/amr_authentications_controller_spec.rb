@@ -25,6 +25,7 @@ describe AuthenticationsController do
     g.date_of_birth = "1993-11-23"
     g.email = "email@mock.com"
     g.password = "123456"
+    g.confirmed_at = Time.now
     g.save validate: false
     I18n.locale = :ar
     get :facebook_callback
@@ -41,6 +42,7 @@ describe AuthenticationsController do
     g.date_of_birth = "1993-11-23"
     g.email = "email@mock.com"
     g.password = "123456"
+    g.confirmed_at = Time.now
     g.save validate: false
     Authentication.create_with_omniauth(
       "facebook",
@@ -63,6 +65,7 @@ describe AuthenticationsController do
     g.date_of_birth = "1993-11-23"
     g.email = "email@mock.com"
     g.password = "123456"
+    g.confirmed_at = Time.now
     g.save validate: false
     login_gamer(g)
     I18n.locale = :ar

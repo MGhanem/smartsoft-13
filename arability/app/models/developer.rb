@@ -2,10 +2,7 @@
 class Developer < ActiveRecord::Base
   belongs_to :gamer 
   has_one :my_subscription
-
-
-  has_and_belongs_to_many :keywords
-
+  has_many :api_keys
 
   has_many :shared_projects
   has_many :projects_shared, :through => :shared_projects, :source => "project"
@@ -13,11 +10,7 @@ class Developer < ActiveRecord::Base
   has_many :own_projects, class_name: "Project"
 
   attr_accessible :verified, :gamer_id
-
   validates :gamer_id, presence: true, uniqueness: true
-
-
-
 
   # author:
   #   Mostafa Hassaan

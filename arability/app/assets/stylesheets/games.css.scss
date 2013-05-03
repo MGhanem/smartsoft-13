@@ -17,7 +17,6 @@
 }
 
 .game-nav {
-  direction: rtl;
   width: 780px;
   padding: 0;
   height: 70px;
@@ -39,6 +38,10 @@
   
   
 }
+.vote_form1{
+  position:relative;
+}
+
 .vote_form {
   float: right;
   margin-right: 20px;
@@ -48,24 +51,55 @@
   height:50px;
 }
 
+#synonym_select{
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+#synonym_button0{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button1{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
+#synonym_button2{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+#synonym_button3{
+  height:50px;
+  width:200px;
+  font-size:30px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius:7px;
+}
+
 #synonym_button{
   height:50px;
-  width:150px;
+  width:200px;
   font-size:30px;
-  padding:20px;
-  padding-bottom:40px;
-  margin:20px;
+  margin-bottom: 20px;
   text-align: center;
-  border-top-left-radius:4px;
-  border-bottom-left-radius:4px;
-  border-top-right-radius:4px;
-  border-bottom-right-radius:4px;
-  margin-right:150px;
+  border-radius:7px;
 }
 
-#synonym_buttons_row{
-
-}
 
 #synonym_buttons{
   right:50%;
@@ -73,25 +107,24 @@
 }
 
 #skip_button{
-  float:left;
-  margin-left:-100;
-  font-size:25px;
-}
-
-#suggest_synonym_textbox_arabic{
-  margin-right: 40px;
-}
-
-#suggest_synonym_button_arabic{
-  margin-right: 70px;
-  font-size: 21px;
+  font-size:20px;
+  border-radius: 10px;
+  width:190px;
 }
 
 
-#suggest_synonym_button_english{
-  margin-left: 70px;
-  font-size: 19px;
+#suggest_synonym_textbox{
+  width:200px;
 }
+
+#suggest_synonym_button{
+  width: 210px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  height: 35px;
+  font-size: 20px;
+}
+
 
 .zone {
   height: 530px;
@@ -101,6 +134,10 @@
   border-top-left-radius:6px;
   border-bottom-right-radius:6px;
   border-bottom-left-radius:6px;
+}
+.vote_table{
+  width:700px;
+  margin-right: 20px;
 }
 
 .table1 .btn:not(.tutBtn){
@@ -196,6 +233,10 @@ margin-left: 80px;
 
 .divaya{
   padding-top: 20px;
+}
+
+.vote_table.popover{
+  width:250px;
 }
 
 #btn-clear{
@@ -428,6 +469,7 @@ margin-left: 80px;
 .text_english{
   color: white;
   font-size: 30px;
+  text-align:center;
 }
 
 .text_arabic{
@@ -535,6 +577,7 @@ td .popover button{
 
 .award-new {
   padding-top: 8px;
+  padding-bottom: 8px;
   float: left;
   width: 150px;
   height: 150px;
@@ -634,6 +677,7 @@ td .popover button{
   line-height: 40px;
   margin-right: auto;
   margin-left: auto;
+  margin-bottom: 14px;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-right: 12px;
@@ -645,6 +689,26 @@ td .popover button{
 
 .none:hover {
   background-color: rgba(203,58,77,0.5);
+}
+
+.none-green {
+  width: 700px;
+  font-size: 190%;
+  line-height: 40px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 12px;
+  padding-left: 12px;
+  text-align: center;
+  border-radius: 10px;
+  background-color:rgba(179,210,121,0.3);
+}
+
+.none-green:hover {
+  background-color: rgba(179,210,121,0.5);
 }
 
 // start of vote log view styling
@@ -682,9 +746,15 @@ td .popover button{
   font-size:38px;
 }
 
-.btn-game-vl {
+.btn-game-arabic-vl {
  position:absolute;
  top:5px;
  left:10px;
+}
+
+.btn-game-english-vl {
+ position:absolute;
+ top:5px;
+ right:13px;
 }
 // end of vote log view styling

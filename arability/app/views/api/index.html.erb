@@ -1,0 +1,123 @@
+<p><%= t :help_text %> <a href="<%= api_help_path %>"><%= t :help_page %></a></p>
+<fieldset>
+  <legend><%= t :generate_api_key %></legend>
+
+  <% if @api_key.errors.present? %>
+    <div class="alert alert-error">
+      <ul class="unstyled">
+        <% @api_key.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for @api_key, url: { action: "create" },
+    html: { :class => "form-horizontal" }, method: :post do |f| %>
+
+    <div class="control-group">
+      <label class="control-label" for="website"><%= t :website %>:</label>
+      <div class="controls">
+        <%= f.text_field :website, id: "website", placeholder: "www.example.com" %>
+        <small><%= t :website_small_text %></small>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="website"><%= t :project %>:</label>
+      <div class="controls">
+        <%= f.collection_select :project_id, @projects, :id, :name, include_blank: true %>
+        <small><%= t :project_small_text %></small>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit t(:generate), :class => "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</fieldset>
+
+<%
+  if I18n.locale == :ar
+    direction = "left"
+    klass = "english-ar"
+  else
+    direction = "right"
+    klass = "arabic-en"
+  end
+%>
+<style>
+.english-ar {
+  font-size: 15px;
+}
+</style>
+
+<% if @api_keys.present? %>
+  <h4 id="api-list-text"><%= t :your_api_keys %>:</h4>
+  <% @api_keys.each do |api_key| %>
+    <div class="well span5 api-entry" id="api-entry-<%= api_key.id %>" style="">
+        <button class="btn btn-danger delete-btn"
+          style="display:none; float:<%= direction %>"
+            onclick="show_delete_modal(<%= api_key.id %>)"><%= t :delete %></button>
+      <span style="padding-left: -30px;">
+        <dl class="dl-horizontal">
+          <dt><%= t :api_key %>:</dt> <dd class="<%= klass %>"><%= api_key.token %></dd>
+          <dt><%= t :website %>:</dt> <dd class="<%= klass %>"><%= api_key.website %></dd>
+          <dt><%= t :project %>:</dt>
+          <% if api_key.project.present? %>
+          <dd><%= link_to api_key.project.name, project_path(api_key.project) %></dd>
+          <% else %>
+          <dd><%= "--" %></dd>
+          <% end %>
+        </dl>
+      <span>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="modal hide fade" id="delete-modal">
+  <div class="modal-header">
+    <button type="button" class="close"
+      data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><%= t :confirm %></h3>
+  </div>
+  <div class="modal-body">
+    <p><%= t :are_you_sure %></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true"><%= t :close %></a>
+    <a href="#" class="btn btn-danger" id="delete-api-btn"
+      data-dismiss="modal" aria-hidden="true"><%= t :delete %></a>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".api-entry").hover(function() {
+      $(this).find(".delete-btn").show();
+    }, function() {
+      $(this).find(".delete-btn").hide();
+    })
+  });
+
+  function delete_api_entry(api_id) {
+    $.get("<%= api_key_delete_path %>", {
+      "api_key_id" : api_id
+    }, function() {
+      $("#api-entry-"+api_id).remove();
+      if($(".api-entry").length == 0) {
+        $("#api-list-text").remove();
+      }
+    });
+  }
+
+  function show_delete_modal(api_id) {
+    $("#delete-api-btn").click(function() {
+      delete_api_entry(api_id)
+    });
+    $("#delete-modal").modal("show");
+  }
+  <%= render "script.js" %>
+</script>

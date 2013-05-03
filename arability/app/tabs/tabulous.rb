@@ -60,6 +60,7 @@ Tabulous.setup do |config|
       [    :projects_tab    ,    t(:projects)          ,    projects_path               ,    true        ,    true        ],
       [    :search_tab      ,    t(:search)            ,    search_path                 ,    true        ,    true        ],
       [    :follow_tab      ,    t(:followed_words)    ,    list_followed_words_path    ,    true        ,    true        ],
+      [    :api_tab         ,    t(:api)               ,    api_keys_list_path          ,    true        ,    true        ],
       #-------------------------------------------------------------------------------------------------------------------#
       #    TAB NAME         |    DISPLAY TEXT          |    PATH                        |    VISIBLE?    |    ENABLED?    #
       #-------------------------------------------------------------------------------------------------------------------#
@@ -89,6 +90,7 @@ Tabulous.setup do |config|
       [    :search       ,    :all_actions    ,    :search_tab      ],
       [    :follow       ,    :all_actions    ,    :follow_tab      ],
       [    :keywords     ,    :all_actions    ,    :search_tab      ],
+      [    :api          ,    :all_actions    ,    :api_tab         ],
       #-------------------------------------------------------------#
       #    CONTROLLER    |    ACTION          |    TAB              #
       #-------------------------------------------------------------#

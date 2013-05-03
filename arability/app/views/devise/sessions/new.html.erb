@@ -8,3 +8,6 @@
   <%= link_to t(:forgot_password), new_password_path(resource_name), style: "display: block; margin-top: -14px;", :class => "pull-left" %><br />
   <div><%= f.submit t(:sign_in), :class => "btn btn-large btn-primary pull-right", style: "margin-top:-37px; padding-top:10px; padding-bottom:10px;" %></div>
 <% end %>
+<center>
+  <%= link_to t(:resend_text), '/gamers/confirmation/new' %><br />
+</center>
