@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :arabic_name,
     message: "لا يمكن تسجيل إسم فئة عربي فارغ"
   validates_format_of :arabic_name, with: /^([\u0621-\u0652 ]+)$/,
-    message: "هذا الإسم العربي للفئة ليس بالعربية" 
+    message: "هذا الإسم العربي للفئة ليس بالعربية"
 
   class << self
     include StringHelper

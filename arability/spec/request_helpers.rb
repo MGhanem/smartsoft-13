@@ -1,4 +1,4 @@
-# spec/support/request_helpers.rb
+  # spec/support/request_helpers.rb
 require 'spec_helper'
 include Warden::Test::Helpers
 
