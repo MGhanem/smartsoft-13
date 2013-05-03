@@ -74,8 +74,12 @@ class KeywordsController < BackendController
         flash[:success] = t(:keyword_added, keyword: @keyword.name)
         redirect_to search_path(search: @keyword.name), flash: flash
       else
-        flash[:error] = @keyword.errors.messages[:name]
-        redirect_to keywords_new_path, flash: flash, name: name
+        flash[:error] = @keyword.errors.full_messages
+
+        @categories_by_locale = Category.all.map { |c| [c.id, c.get_name_by_locale] }
+        @category_ids = params[:category_ids] || ""
+        @category_ids = @category_ids.split(",")
+        render :new, flash: flash, name: name
       end
     end
   end

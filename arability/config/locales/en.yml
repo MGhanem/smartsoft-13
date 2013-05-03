@@ -313,13 +313,6 @@ en:
   age_range: "(Kindly enter a value between 10 and 100)"
   follow_words_info: "Follow a word to recieve an email with every update. Updates include a new translation addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Translations of"
-  activerecord:
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              not_in_range: "is not in range"
   synonyms_of: "Synonyms of"
   enter_keyword: "Enter a keyword"
   username: "Username"
@@ -552,23 +545,6 @@ en:
         project_was_successfully_updated: 'Project was successfully updated.'
   connection_error: "Connection Error, please make sure you're connected to the internet"
   no_account: "You seem to have left us. Please create a new account"
-  activerecord:
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "has to be a number between 9 and 99 years"
-            maxAge:
-              maxAge_range: "has to be a number between 10 and 100 years"
-              less_than_minAge: "can not be less than the minimum age"
-    attributes:
-      project:
-        name: "Name"
-        minAge: "The minimum age"
-        maxAge: "The maximum age"
-        categories: "Categories"
-        description: "Description"
   choose_sub: "Subscription model"
   developer_before_subscription: 'Please sign up as a developer to view this page'
   keyword_added: "keyword added successfully"
@@ -661,6 +637,8 @@ en:
   Synonym_already_there: "Project already has this word with the specified translation."
   activerecord:
     attributes:
+      keyword:
+        name: "Word"
       developer:
         first_name: "First Name"
         last_name: "Last Name"
@@ -684,9 +662,9 @@ en:
         keyword:
           attributes:
             name:
-              blank: "word cant be empty"
-              invalid: "The word can only consist of only english and arabic characters"
-              taken: "This word already exists in the database"
+              blank: "cant be empty"
+              invalid: "can only consist of only english and arabic characters"
+              taken: "already exists in the database"
         category:
           attributes:
             name:
