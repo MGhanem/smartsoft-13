@@ -163,6 +163,42 @@ describe GamesController, :type => :controller do
     trophy7
   }
 
+  let(:test_keyword){
+    test_keyword = Keyword.new
+    test_keyword.name = "airplane"
+    test_keyword.approved = true
+    test_keyword.is_english = true
+    test_keyword.save
+    test_keyword
+  }
+
+  let(:synonym1){
+      synonym1 = Synonym.new
+      synonym1.name = "ايربلان"
+      synonym1.approved = true
+      synonym1.keyword_id = test_keyword.id
+      synonym1.save
+      synonym1
+  }
+
+  let(:test_keyword2){
+    test_keyword = Keyword.new
+    test_keyword.name = "hide"
+    test_keyword.approved = true
+    test_keyword.is_english = true
+    test_keyword.save
+    test_keyword
+  }
+
+  let(:synonym2){
+      synonym1 = Synonym.new
+      synonym1.name = "استخبي"
+      synonym1.approved = true
+      synonym1.keyword_id = test_keyword2.id
+      synonym1.save
+      synonym1
+  }
+
   before(:each) do
     gamer_adam
     gamer_yahya
@@ -180,6 +216,10 @@ describe GamesController, :type => :controller do
     prize5
     prize6
     prize7
+    test_keyword
+    synonym1
+    test_keyword2
+    synonym2
   end
 
   describe "GET show_prizes" do
@@ -278,5 +318,36 @@ describe GamesController, :type => :controller do
     end
   end
 
+  describe "vote page" do
+
+    it "should render the vote page when the gamer end the game", kareem: true do
+      sign_in(gamer_adam)
+      post :vote, word: test_keyword.name, format: :js
+      assigns(:synonym_list).size.should eq(1)
+      response.should render_template(:vote)
+    end
+
+    it "should render record vote in the vote form after the user has played the game", kareem: true do
+      sign_in(gamer_adam)
+      post :record_vote , synonym_id: synonym1.id, is_formal: "formal", format: :js
+      assigns(:is_formal).should eq("formal")
+      response.should render_template(:record_vote)
+    end
+
+    it "should render suggest vote in the vote form after playing game and add vote if valid suggestion", kareem: true do
+      sign_in(gamer_adam)
+      post :record_synonym, keyword_id: test_keyword2.id, synonym_name: "ساقنتياب", is_formal: "slang", format: :js
+      assigns(:record_output).should eq(0)
+      response.should render_template(:record_synonym)
+    end
+
+    it "should render suggest vote in the vote form after playing game and not add if not valid suggestion", kareem: true do
+      sign_in(gamer_adam)
+      post :record_synonym, keyword_id: test_keyword.id, synonym_name:  "kareem", is_formal: "slang", format: :js
+      assigns(:record_output).should eq(3)
+      response.should render_template(:record_synonym)
+    end
+
+  end
 end
 
