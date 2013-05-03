@@ -193,11 +193,9 @@ class Keyword < ActiveRecord::Base
 
     # Author:
     #   Nourhan Mohamed, Mohamed Ashraf
-  	#Description:
+    # Description:
     #   gets words similar to a search keyword (in a certain category) and sorts 
     #   result by relevance
-    # Author:
-    #   Nourhan Mohamed, Mohamed Ashraf
   	#	params:
   	#		search_word: a string representing the search keyword that should 
     #     be retrieved if found in the database
@@ -274,14 +272,19 @@ class Keyword < ActiveRecord::Base
   #   percentage of vote, ie. {["synonym", 75], ["synonymtwo", 25]}
   # failure:
   #   returns empty hash if the synonyms of the given keyword have no votes
-    def get_keyword_synonym_visual(keyword_id)
-      votes = Synonym.where(keyword_id: keyword_id)
+    def get_keyword_synonym_visual(keyword_id, type)
+      if type == nil
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
         .joins(:votes).count(group: "synonym_id")
+      else
+        votes = Synonym.where(keyword_id: keyword_id, approved: true)
+        .joins(:votes).where(is_formal: type).count(group: "synonym_id")
+      end
       sum = votes.sum{|v| v.last}
       v = votes.map {|key, value| [Synonym.find(key).name, value]}
       return v.map {|key, value| [key,((value.to_f/sum)*100).to_i]}
     end
-
+  end
   # author:
   #   Mostafa Hassaan
   # description:
@@ -301,6 +304,5 @@ class Keyword < ActiveRecord::Base
       developers.each do |dev|
         UserMailer.follow_notification(dev, keyword, synonym).deliver
       end
-  end
   end
 end

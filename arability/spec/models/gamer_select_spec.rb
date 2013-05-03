@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'spec_helper'
 
-describe "gamer suggestion" do
+describe "gamer voting" do
 	let(:test_gamer){
 		test_gamer = Gamer.new
         test_gamer.username = "kareem"

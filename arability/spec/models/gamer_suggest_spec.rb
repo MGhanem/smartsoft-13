@@ -11,7 +11,8 @@ describe "gamer suggestion" do
         test_gamer.date_of_birth = "1993-03-23"
         test_gamer.email = "kareem@gmail.com"
         test_gamer.password = "kareem"
-        test_gamer.save
+        test_gamer.confirmed_at = Time.now
+        test_gamer.save validate: false
         test_gamer
 	}
 

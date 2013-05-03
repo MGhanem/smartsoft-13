@@ -7,10 +7,10 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :destroy, :edit, :update,
+    :view_recommended_words, :get_recommended_words, :share]
   before_filter :can_access_project?,
-  only: [:add_word_inside_project, 
-  :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
+  only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
 
  # author:Noha hesham
  # Description:
@@ -19,8 +19,8 @@ class ProjectsController < BackendController
  #   none
  # success:
  #   a pop up appears and makes sure the user wants to
- #   delete the project by choosing ok the 
- #   project is successfully deleted 
+ #   delete the project by choosing ok the
+ #   project is successfully deleted
  # failure:
  #   project is not deleted
   def destroy
@@ -54,7 +54,7 @@ class ProjectsController < BackendController
       searched_keyword = Keyword.where(name: keyword).first
       @searched_keyword_id = searched_keyword.id
       @is_followed = is_following(@searched_keyword_id)
-    end 
+    end
     render "projects/test_followed_keyword.js"
   end
 
@@ -94,8 +94,8 @@ class ProjectsController < BackendController
       end
     end
   end
-    
-  # author: 
+
+  # author:
   #   Mohamed Tamer
   # description:
   #   Function shows all the projects that a certain developer owns and the projects shared with him
@@ -105,42 +105,10 @@ class ProjectsController < BackendController
   #   Returns array of projects that the developer own and the projects shared with him
   # Failure:
   #   None
-  def index  
+  def index
     @developer = Developer.where(gamer_id: current_gamer.id).first
     @my_projects = Project.where(owner_id: @developer.id)
     @shared_projects = @developer.projects_shared
-  end
-  # Author:
-  #   Salma Farag
-  # Description:
-  #   After checking that the user is signed in, the method that calls method createproject
-  #   that creates the project and redirects to the project page and prints
-  #   an error if the data entered is invalid.
-  # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name
-  # Success:
-  #   Creates a new project and views it in the index page
-  # Failure:
-  #   Gives status errors
-  def create
-    if developer_signed_in?
-      @project = Project.new(params[:project].except(:category))
-      @project = Project.createproject(params[:project], current_developer.id)
-      respond_to do |format|
-        if @project.save
-          format.html { redirect_to "/developers/projects",
-            flash: { :success => I18n.t('views.project.flash_messages.project_was_successfully_created') } }
-          format.json { render json: @project, status: :created, location: @project }
-          @project.save
-        else
-          format.html { render action: "new" }
-          format.json { render json: @project.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-     developer_unauthorized
-     render 'pages/home'
-    end
   end
 
   # Author:
@@ -157,22 +125,53 @@ class ProjectsController < BackendController
   #   If not signed in he will be redirected to the sign in page.
   #   If he's exceeded the max number for projects, he will be redirected to the subscription model page.
   def new
-    if developer_signed_in?
-      # if current_developer.my_subscription.get_projects
-        @project = Project.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @project }
-        end
-      # else
-      #   format.html { redirect_to "/my_subscriptions/choose_sub",
-      #   notice: I18n.t('exceeded_project_limit: ') }
-      # end
+    if current_developer.my_subscription.get_projects_limit
+      @project = Project.new
+      respond_to do |format|
+        format.html
+        format.json { render json: @project }
+      end
     else
-      developer_unauthorized
-      render 'pages/home'
+        redirect_to choose_sub_path
+        flash[:notice] = t(:exceeded_project_limit)
     end
   end
+
+  # Author:
+  #   Salma Farag
+  # Description:
+  #   After checking that the user is signed in, the method that calls method createproject
+  #   that creates the project and redirects to the project page and prints
+  #   an error if the data entered is invalid.
+  # Params:
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
+  # Success:
+  #   Creates a new project and views it in the index page
+  # Failure:
+  #   Gives status errors
+  def create
+    @project = Project.new(params[:project].except(:category))
+    @project = Project.createproject(params[:project],current_developer.id)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to "/developers/projects",
+          flash: { success: I18n.t('views.project.flash_messages.project_was_successfully_created') } }
+          format.json { render json: @project, status: :created, location: @project }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
 
   # Author:
   #  Noha Hesham
@@ -195,7 +194,15 @@ class ProjectsController < BackendController
   # Description:
   #   A method that specifies an already existing project by its ID
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   A form that contains the existing data of the project will open from the views.
   # Failure:
@@ -211,8 +218,15 @@ class ProjectsController < BackendController
   #   If yes, the new values will replace the old ones otherwise nothing will happen.
   #   Then calls method createcategories that changes the category.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
-  #   and its category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An existing project will be updated.
   # Failure:
@@ -231,13 +245,21 @@ class ProjectsController < BackendController
 
 
   # Author:
-  #    Salma Farag
+  #   Salma Farag
   # Description:
   #   A method that finds the projects of the current developer and then checks for a certain project
   #   and finds the words and synonyms of this project then inserts each into an array then redirects to the
   #   projects index.
   # Params:
-  #   Parameters of a project including :description, :formal, :maxAge, :minAge, :name, :category
+  #   :description: about the project
+  #   :formal: formal/slang boolean value
+  #   :maxAge: maximum age
+  #   :minAge: minimum age
+  #   :name: name of the project
+  #   :category: project category
+  #   :country
+  #   :education_level
+  #   :gender m/f boolean value
   # Success:
   #   An project will be showed with its words and synonyms.
   # Failure:
@@ -323,7 +345,7 @@ end
                 if counter > 0
                   old_num_syns =  @num_synonyms_words_in_database_before[index].to_i
                   @num_synonyms_words_in_database_before[index] = counter + old_num_syns
-                end  
+                end
               else
                 index = @id_words_not_in_database_before.index(keywrd.id)
                 index2 = 0
@@ -342,7 +364,7 @@ end
                   old_num_syns =  @num_synonyms_words_not_in_database_before[index].to_i
                   @num_synonyms_words_not_in_database_before[index] = counter + old_num_syns
                 end
-              end           
+              end
             else
               for i in 1..row.size
                 synonm = Synonym.find_by_name(row[i], keywrd.id)
@@ -386,7 +408,7 @@ end
       if !flag_continue
         flash[:notice] = t(:upload_file_error6)
         redirect_to action: "show", id: project_id
-        return 
+        return
       end
       if @id_words_in_database_before.empty? && @id_words_not_in_database_before.empty?
         flash[:notice] = t(:upload_file_error5)
@@ -485,15 +507,15 @@ end
   # author:
   #   Khloud Khalid, Kareem Ali
   # description:
-  #   method adds a keyword and a synonym to an existing project and if word already 
-  #   exists in the project updates its synonym and if the adds the categories of 
+  #   method adds a keyword and a synonym to an existing project and if word already
+  #   exists in the project updates its synonym and if the adds the categories of
   #   the project to the keyword's categories if not present.
   # params:
   #   project_id, word_id, synonym_id
   # success:
-  #   keyword and synonym are added to project and/or synonym of word updated 
+  #   keyword and synonym are added to project and/or synonym of word updated
   # failure:
-  #   object not valid (no project or word id), word already exists in project, 
+  #   object not valid (no project or word id), word already exists in project,
   #   keyword or synonym does not exist, word add limit exceeded.
   def add_word_inside_project
     @project_id = params[:project_id]
@@ -502,7 +524,7 @@ end
       if @word_id != nil && Keyword.find_by_id(@word_id) != nil
         @synonym_id = params[:synonym_id]
         if PreferedSynonym.find_word_in_project(@project_id, @word_id)
-          @edited_word = PreferedSynonym.where(project_id: @project_id, 
+          @edited_word = PreferedSynonym.where(project_id: @project_id,
             keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
           if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
@@ -545,19 +567,19 @@ end
             if @added_word
               project_category = Project.find(@project_id).category
               new_keyword = Keyword.find(@word_id)
-              if project_category and 
-                not new_keyword.categories.include?(project_category) 
+              if project_category and
+                not new_keyword.categories.include?(project_category)
                 new_keyword.categories << project_category
                 new_keyword.save
               end
               respond_to do |format|
                 format.html {
-                  flash[:success] = t(:successfully_added_word_to_project)              
+                  flash[:success] = t(:successfully_added_word_to_project)
                   redirect_to project_path(@project_id), flash: flash
                   return
                 }
                 format.json { render json: [t(:successfully_added_word_to_project)] }
-              end 
+              end
             else
               respond_to do |format|
                 format.html {
@@ -586,7 +608,7 @@ end
             return
           }
           format.json { render json: [t(:word_does_not_exist)] }
-        end  
+        end
       end
     else
       respond_to do |format|
@@ -602,11 +624,11 @@ end
   # author:
   #   Kareem Ali
   # description:
-  #   Updates the prefered synonym to a specific keyword inside the project 
+  #   Updates the prefered synonym to a specific keyword inside the project
   # params:
   #   project_id, word_id, synonym_id
   # success:
-  #   redirects to the add_word_inside_project method inside the controller 
+  #   redirects to the add_word_inside_project method inside the controller
   #   to update the synonym
   # failure:
   #   will redirect to the add_word_inside_project to handle the incorrect object
@@ -615,19 +637,19 @@ end
     @synonym_id = params[:synonym_id].to_i
     keyword_object = Synonym.find(@synonym_id).keyword
     @keyword = keyword_object.name
-    redirect_to add_word_inside_project_path(project_id: @project_id, 
+    redirect_to add_word_inside_project_path(project_id: @project_id,
       synonym_id: @synonym_id, keyword: @keyword )
   end
 
   # author:
   #   Kareem Ali
   # description:
-  #   Used to load the synonyms in the dropdown menu next to the keyword 
+  #   Used to load the synonyms in the dropdown menu next to the keyword
   #   inside the project to change the synonym
   # params:
   #   project_id, word
   # success:
-  #   renders the javascript of loading synonyms to update the 
+  #   renders the javascript of loading synonyms to update the
   #   dropdown menu next to the keyowrd
   # failure:
   #   no Failure
@@ -641,22 +663,22 @@ end
       @keyword_synonyms = Synonym.where(keyword_id: keyword_object.id)
     end
     render "load_synonyms.js.erb"
-  end 
+  end
 
   # author:
   #   Kareem Ali
   # description:
-  #   Used for autocomplete textbox in the project view to autocomplete 
+  #   Used for autocomplete textbox in the project view to autocomplete
   #   the words given by the user
   # params:
   #   keyword_search: for which the user writes in the textbox , project_id
   # success:
-  #   returns an array of the similar words which are sorted according 
-  #   to the categories of the keywords, keywords with has one or more 
-  #   of project categories comes first and make sure that 
+  #   returns an array of the similar words which are sorted according
+  #   to the categories of the keywords, keywords with has one or more
+  #   of project categories comes first and make sure that
   #   duplicates are removed.
   # failure:
-  #   no keyword match the entered character(s), will return empty array  
+  #   no keyword match the entered character(s), will return empty array
   def project_keyword_autocomplete
     keyword = params[:keyword_search]
     project_category = Project.find(params[:project_id]).category
@@ -667,14 +689,14 @@ end
         keyword, [project_category])
       similar_keywords = similar_keywords.uniq
     end
-      match_category_count = similar_keywords.count 
+      match_category_count = similar_keywords.count
       similar_keywords = similar_keywords.concat(
         Keyword.get_similar_keywords(keyword,[]))
-      similar_keywords = similar_keywords.uniq 
+      similar_keywords = similar_keywords.uniq
       similar_keywords.map! { |keyword| keyword.name }
       similar_keywords.push(match_category_count)
       render json: similar_keywords
-  end 
+  end
 
 # author:
 #   Khloud Khalid
@@ -686,14 +708,14 @@ end
 #   word removed successfully
 # failure:
 #   keyword does not exist or is not in the project, not registered developer.
-  def remove_word 
+  def remove_word
     @project_id = params[:project_id]
     @word_id = params[:word_id]
     @removed_word = PreferedSynonym.where(keyword_id: @word_id).all
-    @removed_word.each do |word| 
+    @removed_word.each do |word|
       if word.project_id = @project_id
         @remove = word
-      end 
+      end
     end
       if @remove != nil
         @remove.destroy
@@ -791,7 +813,7 @@ end
   # Success:
   #   Project is removed from shared projects
   # Failure:
-  #   Project is not removed 
+  #   Project is not removed
   def remove_project_from_developer
     dev = Developer.find(params[:dev_id])
     project = Project.find(params[:project_id])
@@ -799,7 +821,7 @@ end
     dev.save
     flash[:success] = t(:project_removed)
     redirect_to :action => "index",:controller => "projects"
-  end 
+  end
 
   # author:
   #   Khloud Khalid
@@ -823,11 +845,11 @@ end
             @synonym = Synonym.find(word.synonym_id).name
             json_string << "\"word\": \"" +
             @keyword + "\", \"translation\": \"" + @synonym + "\""
-          else 
+          else
             @keyword = Keyword.find(word.keyword_id).name
             @synonym = Synonym.find(word.synonym_id).name
             json_string << ", \"word\": \"" +
-            @keyword + "\", \"translation\": \"" + @synonym + "\"" 
+            @keyword + "\", \"translation\": \"" + @synonym + "\""
           end
         end
         json_string << "   }"
