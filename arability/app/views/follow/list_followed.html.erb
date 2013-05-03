@@ -9,18 +9,27 @@
   </thead>
   <tbody>
   <% @keywords.each do |keyword| %>
-    <tr>
-        <td><%= keyword.name %></td>
-        <% if I18n.locale==:en %>
-        <td><span class="pull-right"><%= link_to t(:unfollow), unfollow_word_path(keyword.id), :class => "btn btn-primary" %></span></td>
-        <% else %>
-        <td><span class="pull-left"><%= link_to t(:unfollow), unfollow_word_path(keyword.id), :class => "btn btn-primary" %></span></td>
-        <% end %>
+    <tr id="<%= keyword.id %>">
+      <td><%= keyword.name %></td>
+      <td><span class="unfollowbtn"><a href="#" class="btn btn-primary" onclick="clickunfollow(<%= keyword.id %>);"><%= t(:unfollow) %></a></span></td>
     </tr>
   <% end %> 
   </tbody>
-</table>
+</table>  
 </div>
 <% else %>
-<h4><%= t(:no_followed_words) %></h4>
-<% end %> 
+  <div class="well" style="font-weight: bold; text-align:center;"><%= t(:follow_words_info)%></div>
+  <h4><%= t(:no_followed_words) %></h4>
+<% end %>
+
+<script>
+  <% if I18n.locale == :ar %>
+    $(".unfollowbtn").attr("class", "pull-left");
+  <% else %>
+    $(".unfollowbtn").attr("class", "pull-right");
+  <% end %>
+  function clickunfollow(id){
+    $.get("/developers/unfollow/" + id);
+    $('#'+id).fadeOut();
+  }
+</script>

@@ -1,18 +1,30 @@
   <h3>
     <%= t(:project) %>
-    : 
+    :
     <%= @project.name %>
   </h3>
+  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
+  <br>
   <br>
     <div class="container well" align="center" style="width:900px">
       <div class="btn-toolbar" style="margin: 0;">
         <div class="btn-group">
+          <button class="btn">
+            <i class="icon-plus-sign">
+            </i>
+            <a href="/developers/search_keywords/?project_id=<%= @project.id %>" class="css_class" style="color:#000"><%= t(:Add_words)%></a>
+            <span>
+            </span>
+          </button>
+        </div>
+        <div class="btn-group">
+          <a class="btn" href="<%= view_recommended_words_path(project_id: @project.id, controller: "projects") %>"><i class="icon-thumbs-up"></i> <%= t(:recommended_words) %></a>
         </div>
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">
             <i class="icon-file">
-            </i> 
-            <%= t(:import) %> 
+            </i>
+            <%= t(:import) %>
             <span class="caret">
             </span>
           </button>
@@ -27,8 +39,8 @@
         <div class="btn-group">
           <button class="btn dropdown-toggle" data-toggle="dropdown">
             <i class="icon-briefcase">
-            </i> 
-            <%= t(:export) %> 
+            </i>
+            <%= t(:export) %>
             <span class="caret">
             </span>
           </button>
@@ -45,10 +57,8 @@
           </ul>
         </div>
         <div class="btn-group">
-
-        <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
-      </div>
-        
+          <a class="btn" href="<%= share_project_path %>"><i class="icon-share"></i> <%= t(:share) %></a>
+        </div>
       </div>
       <br>
       <table class="table table-hover table-bordered table-condensed"style="width:800px;background-color:white">
@@ -56,11 +66,11 @@
         <col style="width:20%">
         <col style="width:15%">
         <% if @words.count == 0 %>
-          <div class="well">
-              <span>
-                <%= t(:no_words_in_project) %>
-              </span>
-          </div>
+        <div class="well">
+          <span>
+            <%= t(:no_words_in_project) %>
+          </span>
+        </div>
         <% else %>
           <th style="text-align:center">
             <%= t(:word) %>
@@ -96,8 +106,8 @@
                 <%= collection_select(:synonym_name , :text, @words[count].synonyms.collect {|syn| syn} , :id, :name, { selected: @synonyms[count].id}, {:class => 'select_change', name: 'normalSelect', id: 'synonym_select', style:'width:50%' }) %>
               </td>
               <td style="text-align:center" >
-                
-                <a href="<%= projects_remove_word_path(project_id: @project.id, word_id: @words[count].id) %>" class= "btn btn-danger" style="vertical-align:middle;"><%= t(:remove_from_project) %></a>  
+
+                <a href="<%= projects_remove_word_path(project_id: @project.id, word_id: @words[count].id) %>" class= "btn btn-danger" style="vertical-align:middle;"><%= t(:remove_from_project) %></a>
               </td>
               <% count = count + 1 %>
             </tr>
@@ -114,10 +124,10 @@
                   <input type="text" class="search-query autocomplete" name="keyword_search" id ="selected_keyword" autocomplete="off" placeholder="ابحث عن كلمة هنا") ></input>
                 </div>
                 <% end %>
-              </td> 
+              </td>
               <td style="text-align:center" >
                 <%= collection_select(:synonym_name , :text, [], :id, :name, { prompt: t(:enter_word_first) }, { :class=>'input_synonym', name: 'select_menu', id: 'selected_synonym', disabled: true, style:'width:70%; margin-top:10px;' }) %>
-              </td> 
+              </td>
               <td style="text-align:center">
                 <%= link_to t(:add_to_project), { action:"add_word_inside_project", controller:"projects", project_id: @project.id, keyword:"download", synonym_id:395 }, { style:"font-size:15px; text-align:center; margin-top:10px;", onclick:"compute_and_click()", class:"btn btn-primary", id:"add_button",disabled:"true", type:"submit" } %>
              </td>
@@ -125,6 +135,8 @@
       </table>
       <p id="illustration"></br></p>
     </div>
+  </form>
+  <a class="btn pull-right" href="/developers/projects"> <%= t(:rec_back) %> </a>
 <script type="text/javascript" charset="utf-8">
   $('#selected_keyword').change(function(){$('.popover').hide()});
   $("#add_button").removeAttr('href');
@@ -134,16 +146,16 @@
         type: "GET",
         url: "/developers/projects/"+"<%= @project.id %>"+"/change_synonym",
         data: { synonym_id: new_synonym_id, keyword: "download", project_id: "<%= @project.id %>" },
-        success: function(){ 
-          update_adding_synonym_alerts("<%= t(:Synonym_changed_successfully) %>"); 
+        success: function(){
+          update_adding_synonym_alerts("<%= t(:Synonym_changed_successfully) %>");
         }
       })
     });
-  
+
   $("#selected_keyword").change(function (){
     load_synonyms();
   });
-  
+
   $(".autocomplete").typeahead({
     source: fetch_keywords,
     items: 10,
@@ -158,11 +170,11 @@
      return item;
     }
   });
-  
+
   function fetch_keywords(keyword, callback){
     $.post("/developers/projects/"+"<%= @project.id %>"+"/project_keyword_autocomplete", { keyword_search: keyword, project_id: "<%= @project.id %>" }, function(data){
       length = data[Object.keys(data).length-1];
-      data = data.slice(0,-1); 
+      data = data.slice(0,-1);
       for(var i = 0; i < Object.keys(data).length; i++){
         if(i >= length){
          data[i] = data[i]+"   *".fontcolor("red") ;
@@ -177,11 +189,26 @@
     })
   }
 
+  $(".input").change(function(){
+    var new_synonym_id = $(this).val();
+      $.post("/developers/projects/"+"<%= @project.id %>"+"/change_synonym", { synonym_id: new_synonym_id, keyword: "download",project_id: "<%= @project.id %>" });
+  });
+  function add_keyword_with_synonym(){
+    var keyword_name = $("#selected_keyword").val();
+    var synonym_id = $("#selected_synonym option:selected").val();
+    if(keyword_name != "" && synonym_id != undefined && synonym_id !="0"){
+        $.ajax({
+          type: "POST",
+          url: "/developers/projects/"+"<%= @project.id %>"+"/quick_add",
+          data: {synonym_id: synonym_id, keyword:keyword_name ,project_id: "<%= @project.id %>" }
+        });
+      }
+  }
   function load_synonyms(){
     var keyword = $("#selected_keyword").val();
     $.post("/developers/projects/load_synonyms",{word:keyword, project_id: "<%= @project.id %>"} );
   }
-  
+
   function compute_and_click(){
     $("#add_button").removeAttr('href');
     var keyword_name = $("#selected_keyword").val();
@@ -190,7 +217,7 @@
     var locale_in_params = "&locale="+"<%= I18n.locale %>";
     var synonym_id_in_params = "&synonym_id="+synonym_id;
     var url = "/developers/projects/"+"<%= @project.id %>"+"/add_word_inside_project?";
-    var complete_url = url + keyword_in_params + locale_in_params + synonym_id_in_params; 
+    var complete_url = url + keyword_in_params + locale_in_params + synonym_id_in_params;
     if($("#add_button").attr("disabled") == "disabled" ){
       return;
     }
@@ -226,7 +253,7 @@
         html: 'true',
         title: '<%= t(:no_translation_popover_title) %>'+'<button type="button" class="close" data-dismiss="popover" aria-hidden="true" onclick="$(\'.popover\').hide()">&times;</button>',
         content: paragraph + "<%= t(:you_can)%>" +button + "<%= t(:this_keyword)%>",
-        placement:'bottom' 
+        placement:'bottom'
       });
     $('#selected_synonym').popover('show');
     $('.popover').width(350);
