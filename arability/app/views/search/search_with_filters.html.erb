@@ -285,7 +285,7 @@
   <div class="accordion-group">
     <div class="accordion-heading">
       <span class="accordion-toggle" style="cursor:auto;" data-toggle="false" href="#collective">
-        <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
+        <span  class="view-collective"><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
         <span class="form-search form-horizontal" id = "add_span">
           <%= t(:add_to) %>
           <% if @project_id != "" %>
@@ -300,9 +300,17 @@
         </span>
         <script type="text/javascript">
           <% if I18n.locale == :ar %>
-            $("#add_span").css("margin", "32%");
+            $("#add_span").css("float", "left");
+            $("#collective").css("width", "100%");
+            $(".accordion-group").css("height", "60px");
+            $(".view-collective").css("position", "relative");
+            $(".view-collective").css("top", "13px");
           <% else %>
-            $("#add_span").css("margin", "33%");
+            $("#add_span").css("float", "right");
+            $("#collective").css("width", "100%");
+            $(".accordion-group").css("height", "60px");
+            $(".view-collective").css("position", "relative");
+            $(".view-collective").css("top", "13px");
           <% end %>
         </script>
       </span>
