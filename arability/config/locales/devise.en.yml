@@ -15,7 +15,8 @@ en:
     failure:
       already_authenticated: 'You are already signed in.'
       unauthenticated: 'You need to sign in or sign up before continuing.'
-      unconfirmed: "You have to confirm your account before continuing. Didn't receive your confirmation email? <a href='/en/gamers/confirmation/new'>Resend</a>"
+      unconfirmed: "You have to confirm your account before continuing."
+      resend_text: "Didn't receive your confirmation email? Resend"
       resend: "Resend"
       locked: 'Your account is locked.'
       invalid: "Invalid credentials."

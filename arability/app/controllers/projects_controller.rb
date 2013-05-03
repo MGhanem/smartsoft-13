@@ -7,10 +7,10 @@ class ProjectsController < BackendController
   before_filter :authenticate_gamer!
   before_filter :authenticate_developer!
   before_filter :developer_can_see_this_project?,
-  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update,
-    :view_recommended_words, :get_recommended_words, :share]
+  only: [:import_csv, :show, :add_from_csv_keywords, :choose_keywords, :edit, :update, :share]
   before_filter :can_access_project?,
-  only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json]
+  only: [:add_word_inside_project, :removed_word, :export_to_csv, :export_to_xml, :export_to_json,
+    :view_recommended_words, :get_recommended_words]
 
  # author:Noha hesham
  # Description:
@@ -591,6 +591,18 @@ end
           @edited_word = PreferedSynonym.where(project_id: @project_id,
             keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
+          #raise Exception, @edited_word.inspect
+          if @edited_word.synonym_id == @synonym_id.to_i
+              respond_to do |format|
+                format.html {
+                flash[:success] = t(:Synonym_already_there)
+                redirect_to project_path(@project_id), flash: flash
+                return
+              }
+                format.json { render json: [t(:Synonym_already_there)]
+                  return}
+              end
+          end
           if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save

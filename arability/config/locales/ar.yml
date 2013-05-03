@@ -627,7 +627,7 @@ ar:
   suggest_this_synonym: "سجل هذا المعني"
   formal_or_slang: "<p style='font-size:20px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>رسمي</button>&nbsp او &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>غير رسمي</button></p>"
   is_this_translation: "هل هذا المعني"
-  must_specify_formality: "يجب ان تختار سواء كان المعني رسمي او غير رسمي"
+  must_specify_formality: "يجب ان تختار سواء كان المعني فصحي او عامي"
   choose_formality: "اختر"
   report_game: "إبلاغ"
   add_to: "أضف إلى"
@@ -696,6 +696,7 @@ ar:
   project_keyword_unfollow: "تلغي متابعة"
   you_followed_word: "لقد تابعت هذه الكلمة من قبل"
   resend_confirmation: "إعادة إرسال تعليمات التفعيل"
+  resend_text: "لم تتلقى رسالة التفعيل؟ إعادة إرسال"
   send: "ارسل "
   no_cat: "بدون فئات"
   hello: "مرحبا"
@@ -736,6 +737,7 @@ ar:
   no_votes_visuals_popup: "right"
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
+  Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
   activerecord:
     models:
       developer: "مطور"
