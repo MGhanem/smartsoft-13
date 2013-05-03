@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   require 'csv'
   rescue_from Exception, with: :error_render_method
-
   # Author:
   #   Mohamed Ashraf
   # Desciption:
