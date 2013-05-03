@@ -1,7 +1,6 @@
 #encoding: UTF-8
 class MySubscriptionController < ApplicationController
   before_filter :authenticate_gamer!
-  #before_filter :prepare_subscriptions, :only => [:choose_sub, :pick]
 # author:
 #   Khloud Khalid
 # description:
