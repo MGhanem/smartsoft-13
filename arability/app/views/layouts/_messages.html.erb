@@ -15,9 +15,17 @@
   </div>
 <% end %>
 <script type="text/javascript">
-  $("#err").css("position", "fixed");
-  $("#err").css("top", "50px");
-  $("#err").css("left", "10%");
-  $("#err").css("right", "10%");
-  $("#err").css("z-index", "100");
+  var $element = $("#err")
+  $element.css("position", "fixed");
+  $element.css("border-style", "solid");
+  $element.css("border-color", "black");
+  $element.css("color", "black");
+  $element.css("bottom", "25px");
+  $element.css("left", "10%");
+  $element.css("right", "10%");
+  $element.css("z-index", "100");
+  setTimeout(function(){
+    $element.not(".alert-error").fadeOut(1000);
+  }, 3000);
+
 </script>

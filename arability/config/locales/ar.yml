@@ -44,17 +44,6 @@ ar:
   categories: "الفئات"
   formality: "النوع"
   formal: "فصحى"
-  slang: "عامية"
-  age: "الفئة العمرية"
-  from: "من"
-  to: "الى"
-  desc: "عن المشروع"
-  new_project: "مشروع جديد"
-  create_project: "انشاء مشروع"
-  back: "<< عودة"
-  please_select: "الرجاء الاختيار"
-  formality: "اللغة"
-  formal: "فصحى"
   slang: "عامي"
   age: "الفئة العمرية"
   from: "من"
@@ -63,6 +52,9 @@ ar:
   new_project: "مشروع جديد"
   create_project: "انشاء مشروع"
   back: "<< عودة"
+  please_select: "الرجاء الاختيار"
+  new_project: "مشروع جديد"
+  create_project: "انشاء مشروع"
   target: "هذا المشروع يستهدف الفئة التالية:"
   target_country: "البلد"
   target_age: "الفئة العمرية"
@@ -342,7 +334,7 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
@@ -367,10 +359,6 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
-  twitter_signin: "تسجيل دخول بتويتر"
-  go_to_twitter: "إذهب إلى تويتر"
-  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
-  project_removed: "تم مسح المشروع المشترك"            
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -402,7 +390,6 @@ ar:
         categories: "الفئات"
         description: "الوصف"
   project_removed: "تم مسح المشروع المشترك"
-  project_delete: "تم مسح المشروع بنجاح"
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
@@ -645,6 +632,9 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  search_not_allowed: >
+    عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في 
+    البحث عن الكلمات التي بحثت عنها مسبقا.
   score_popover_content: "كلما طول الكلمة زاد، سوف يزيد مجموع نقاطك أيضاً، وأيضاً يعتمد مجموع النقاط على سرعة تجميعك للكلمة. تستطيع أن تتبع السرعة من العداد الذي يقع بجانب الكلمات"
   score_popover_title: "كيف تحتسب النقاط"
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"

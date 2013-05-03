@@ -121,9 +121,9 @@
       </script>
 
       <% if !is_following(@search_keyword_model.id) %>
-        <span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px"><%= t(:follow) %></a></span>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-default" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 75px"><%= t(:follow) %></a></span>
       <% else %>
-        <span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 60px" ><%= t(:following) %></a></span>
+        <span id="followbtn"><a href="#" class="btn btnfollow btn-info" onmouseover="onhovering(this);" onmouseout="offhovering(this);" onclick="clickfollow(this);" style="width: 75px" ><%= t(:following) %></a></span>
       <% end %>
 
       <script type="text/javascript">
@@ -200,7 +200,16 @@
                     <button id="slang" type="button" class="btn" onclick="invert_color(this, formal)">
                       <%= t(:slang) %>
                     </button>
-                  </div>  
+                  </div> 
+                  <script type="text/javascript">
+                      <% if I18n.locale == :ar %>
+                        $("#formal").css("font-size","16px");
+                        $("#slang").css("font-size","16px");
+                      <% elsif I18n.locale == :en %>
+                        $("#formal").css("font-size","14px");
+                        $("#slang").css("font-size","14px");
+                      <% end %>
+                    </script>  
                 </div>
               </div>
             </div>
@@ -270,7 +279,7 @@
 <% if !@synonyms.blank? %>
   <div class="accordion-group">
     <div class="accordion-heading">
-      <span class="accordion-toggle" data-toggle="false" href="#collective">
+      <span class="accordion-toggle" style="cursor:auto;" data-toggle="false" href="#collective">
         <span><%= t(:view_collectives) %><i><b><%= @search_keyword %></b></i></span>
         <span class="form-search form-horizontal" id = "add_span">
           <%= t(:add_to) %>

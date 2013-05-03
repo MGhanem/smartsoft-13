@@ -96,8 +96,9 @@ class SearchController < BackendController
   #   and a list of hashs and in each hash the key is the synonym id
   #   and the value is a list of four pie charts
   # failure:
-  #   returns a list of synonyms available for the search keyword, all with 0 votes
-  #   and no charts will be drawn if the keyword has no synonyms
+  #   returns a list of synonyms available for the search keyword, all with 0 
+  #   votes or returns to search keywords page if quota was exceeded
+  #   No charts will be drawn if the keyword has no synonyms
   def search_with_filters
     @search_keyword = params["search"]
     @project_id = params["project_id"]
@@ -132,6 +133,15 @@ class SearchController < BackendController
 
       @search_keyword_model = Keyword.find_by_name(@search_keyword)
       if !@search_keyword_model.blank?
+        
+        if !current_developer.my_subscription
+          .can_search_word(@search_keyword_model.id)
+          
+          flash[:error] = t(:search_not_allowed)
+          redirect_to search_keywords_path, flash: flash
+          return
+        end
+
         @synonyms, @votes =
           @search_keyword_model.retrieve_synonyms(@country, @age_from, 
             @age_to, @gender, @education, @synonym_type)

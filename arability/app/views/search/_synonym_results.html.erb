@@ -1,20 +1,20 @@
 <div id="synonym_results">
-  <div id="collective" class="accordion-body collapse in">
-      <div class="accordion-inner">
-        <% key_id = getID(@search_keyword) %>
-        <% result = Keyword.get_keyword_synonym_visual(key_id, @synonym_type) %>
-        <% if result != 0 %>
-              <%= high_chart("my_id4", chart_keyword_synonym(key_id, @synonym_type)) do |c| %>
-                  <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-                  <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-              <% end %>
-            <% else %>
-                <p>
-                  <%= t(:no_votes_for_word)%>
-                </p>
+  <div id="collective" class="accordion-body collapse in" dir="ltr">
+    <div class="accordion-inner">
+      <% key_id = getID(@search_keyword) %>
+      <% result = Keyword.get_keyword_synonym_visual(key_id, @synonym_type) %>
+      <% if result.present? %>
+            <%= high_chart("my_id4", chart_keyword_synonym(key_id, @synonym_type)) do |c| %>
+                <%= raw "options.tooltip.formatter = function() {return '<b>'+ this.point.name +'</b>: '+'<p>'+ '%'+ this.y +'</p>';}" %>
+                <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
             <% end %>
-      </div>
+          <% else %>
+              <p>
+                <%= t(:no_votes_for_word)%>
+              </p>
+          <% end %>
     </div>
+  </div>
   <% @synonyms.each do |synonym| %>
     <div class="accordion-group">
       <div class="accordion-heading">
