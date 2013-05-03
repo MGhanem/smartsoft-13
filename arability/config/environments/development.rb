@@ -50,4 +50,7 @@ Arability::Application.configure do
     :enable_starttls_auto => true
   }
   config.action_mailer.default_url_options = { host: "localhost:3000" }
+
+  ENV['GOOGLE_ID'] = "758114528235-3b33edh32qsu3mfnqpqd3n1v9e3ov4ql.apps.googleusercontent.com";
+  ENV['GOOGLE_SECRET'] = "ittGQy5A3HcGMG2lXnNQ3t_X";
 end

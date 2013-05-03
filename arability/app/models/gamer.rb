@@ -10,7 +10,7 @@ class Gamer < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 
-   devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
@@ -19,7 +19,8 @@ class Gamer < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :username, :country, :education_level, :date_of_birth,
                   :provider, :gid, :gprovider, :provider, :uid, :highest_score, :gender,
-                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin
+                  :login, :is_guest, :highest_score, :is_local, :show_tutorial, :admin,
+                  :confirmed_at
 
   has_many :services, :dependent => :destroy
 
@@ -175,8 +176,13 @@ class Gamer < ActiveRecord::Base
   #   returns true when a vote is saved for the selected synonym
   # Failure:
   #   returns false when the vote is not saved
-  def select_synonym(synonym_id)
+  def select_synonym(synonym_id, is_formal = nil)
     if Vote.record_vote(self.id,synonym_id)[0]
+      if is_formal != nil
+        synonym = Synonym.find(synonym_id)
+        synonym.is_formal = is_formal
+        synonym.save
+      end
       return true
     else
       return false
@@ -190,12 +196,14 @@ class Gamer < ActiveRecord::Base
   # Params:
   #   synonym_name: which is the synonym name the gamer suggested in the  
   #                 vote form.
+  #   keyword_id: is the id of keyword for which the synonym is being added
+  #   is_formal: determine whether the synonym is formal or slang
   # Success:
   #   returns 0 returned by the invoked method meaning saved new synonym
   # Failure:
   #   returns 1,2,3 according to the invoked method failure scenario
-  def suggest_synonym(synonym_name, keyword_id)
-    return Synonym.record_suggested_synonym(synonym_name, keyword_id)
+  def suggest_synonym(synonym_name, keyword_id, is_formal)
+    return Synonym.record_suggested_synonym(synonym_name, keyword_id, true ,is_formal)
   end
     
 
@@ -221,12 +229,6 @@ class Gamer < ActiveRecord::Base
       return false
     end
   end
-
-  #scopes defined for advanced search aid
-  scope :filter_by_country, lambda { |country| where(:country.casecmp(country) == 0) }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
 
   class << self
     # Author:
@@ -285,6 +287,7 @@ class Gamer < ActiveRecord::Base
       country: country,
       education_level: ed_level,
       is_local: false,
+      confirmed_at: Time.now,
       provider: provider)
     if gamer.save
       return gamer, true
@@ -308,10 +311,29 @@ def is_local_account
   is_local
 end
 
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method get all votes given by a given gamer
+  # Params:
+  #   gamer_id: The ID of the gamer to get his/her votes
+  # Success: 
+  #   returns the count of votes by this gamer
+  #   and a list of lists of given keywords and corresponding chosen synonym
+  # Failure: 
+  #   returns 0 and empty list if gamer has no votes
+  def get_votes
+    voted_synonyms = Vote.where("gamer_id = ?", self.id).select("synonym_id")
+    count = voted_synonyms.count
+    voted_synonyms = voted_synonyms.map{ |syn| syn.synonym_id }
+    vote_log = Synonym.where("id in (?)", voted_synonyms).select("keyword_id, id")
+    [count, vote_log.map{ |s| [Keyword.where("id = ?", s.keyword_id)
+      .first.name, Synonym.where("id = ?", s.id).first.name] }]
+  end
+
   #scopes defined for advanced search aid
   scope :filter_by_country, lambda { |country| where 'country LIKE ?', country }
-  scope :filter_by_dob, lambda { |from, to| where :date_of_birth => to.years.ago..from.years.ago }
-  scope :filter_by_gender, lambda { |gender| where :gender => gender }
-  scope :filter_by_education, lambda { |education| where :education_level => education }
+  scope :filter_by_dob, lambda { |from, to| where date_of_birth: to.years.ago..from.years.ago }
+  scope :filter_by_gender, lambda { |gender| where gender: gender }
+  scope :filter_by_education, lambda { |education| where education_level: education }
 end
-

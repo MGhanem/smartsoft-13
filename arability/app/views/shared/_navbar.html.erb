@@ -40,8 +40,10 @@
                 <%= link_to t(:forgot_password), new_password_path(Gamer), :style => "margin-top: -14px; color:white;", class: "pull-left" %><br />
                 <%= f.submit t(:sign_in), style: "clear: left; width: 100%; height: 32px; font-size: 13px;", class: "btn btn-primary arabicfontdrop" %>
                 <% end %>
-                <div style="padding-top:5px; text-align:center; font-style:italic;">
-                  <span><%= t(:or) %></span>
+                <div style="padding-top:5px; text-align:center;">
+                  <b>
+                    <span><%= t(:or) %></span>
+                  </b>
                 </div>
                   <div style="padding:5px; text-align:center;">
                   <span><%= t(:existing_account) %></span>
@@ -53,7 +55,7 @@
                   <a href="/auth/twitter" style="width:50px; padding:0px;margin:0px; display:inline-block;">
                     <img src="/assets/twitter-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
-                  <a href="#" style="width:50px; padding:0px;margin:0px; display:inline-block;">
+                  <a href="/auth/google_oauth2" style="width:50px; padding:0px;margin:0px; display:inline-block;">
                     <img src="/assets/google-lgn.png" width="50px" style="padding-top:4px; padding-bottom:4px; padding-right:2px; padding-left:2px; display: inline-block">
                   </a>
                 </div>
@@ -69,7 +71,6 @@
           <li><%= link_to t(:backend), backend_home_path %></li>
         <% end %>
         <% if I18n.locale==:en %>
-          <li><a href="/gamers/edit">Settings</a></li>
         <% if current_gamer.try(:admin?) %>
           <li><a href="/admin">Arability Control Panel</a></li>
         <% end %>

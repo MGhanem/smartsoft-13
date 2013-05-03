@@ -4,6 +4,7 @@
   var words;
   var cache = "";
   var nav_locked = false;
+  var JsLocale = "<%= I18n.locale %>";
 
   <% if current_gamer == nil %>
   isGuest = true;
@@ -182,10 +183,10 @@ function setButtons(){
     clear();
     <%if I18n.locale == :ar %>
       $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share_ar.png" style="height:150px;padding:10px;"></a><a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share_ar.png" style="height:150px;"></a></div>')
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share_ar.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share_ar.png" style="height:150px;"></a></div>')
     <% else I18n.locale == :en %>
       $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share.png" style="height:150px;padding:10px;"></a><a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;"></a></div>')
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=check out the new Arability game. Visit http://localhost:3000/ via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;"></a></div>')
     <% end %>
   }
   
@@ -231,7 +232,13 @@ function setButtons(){
     $.get("/games/halloffame");
   }
 
-
+  function showProfile(){
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    } 
+    clear();
+    $.get("/games/showprofile");
+  }
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
@@ -245,7 +252,7 @@ function setButtons(){
 
   function generateEmptyDbMsg(){
     <% if I18n.locale == :ar %>
-      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك تكملة اللعب بدون تصويت"
+      return "مبروك لقد صوت على كل كلماتنا، شكراً لمساهمتكم، يمكنك مواصلة اللعب بدون تصويت"
     <% else %>
       return "Congratulations you have voted on every word in our database, we are very thankful for your contribution, You can continue playing the game without voting, although you will be seeing the same words you have voted on before"
     <% end %>
@@ -256,14 +263,16 @@ function setButtons(){
     wordsListPopoverTitle = "<%= t(:words_list_popover_title) %>";
     wordLabelPopoverContent = "<%= t(:word_label_popover_content) %>";
     wordLabelPopoverTitle = "<%= t(:word_label_popover_title) %>";
-    tablePopoverContent = "<%= t(:table_popover_content) %>"
-    tablePopoverTitle = "<%= t(:table_popover_title) %>"
+    tablePopoverContent = "<%= t(:table_popover_content) %>";
+    tablePopoverTitle = "<%= t(:table_popover_title) %>";
     clickedButtonPopoverContent = "<%= t(:clicked_button_popover_content) %>";
     clickedButtonPopoverTitle = "<%= t(:clicked_button_popover_title) %>";
     clickedButtonPopoverButton = "<%= t(:clicked_button_popover_button) %>";
-    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>"
-    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>"
-    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>"
+    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>";
+    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>";
+    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>";
+    scorePopoverContent = "<%= t(:score_popover_content) %>";
+    scorePopoverTitle = "<%= t(:score_popover_title) %>";
   }
 
   function setModalTranslations(){
@@ -279,12 +288,11 @@ function setButtons(){
 
 
 <div class="game-zone">
-
   <div class="game-nav">
     <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
     <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
-    <div class="nav-box btn btn-inverse" id="navItems">بروفيل</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
     <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
     <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
   </div>

@@ -15,7 +15,7 @@ describe ProjectsController, type: :controller do
     gamer.date_of_birth = "1993-03-23"
     gamer.email = "mohamedtamer5@gmail.com"
     gamer.password = "1234567"
-    gamer.save validate: false
+    gamer.save
     gamer
   }
 
@@ -52,8 +52,7 @@ describe ProjectsController, type: :controller do
 
   #Timo's tests
   describe "GET #index" do
-
-    it "populates an array of projects", timo: true do
+    it "populates an array of projects" do
       a = create_logged_in_developer
       sign_in(a.gamer)
       project2 = Project.new
@@ -73,6 +72,65 @@ describe ProjectsController, type: :controller do
       response.should render_template :index
     end
 
+  end
+
+  describe "GET #import_csv" do
+    it "should render the :import_csv view", timo2: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      get :import_csv, id: project2.id
+      response.should render_template :import_csv
+    end
+  end
+
+  describe "PUT #add_from_csv_keywords", timo2: true do
+    it "should add keyword and synonym to project" do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      word2 = Keyword.new
+      word2.name = "testkeyword"
+      word2.save validate: false
+      syn2 = Synonym.new
+      syn2.name = "كلمة"
+      syn2.keyword_id = word.id
+      syn2.save validate: false
+      expect{
+        put :add_from_csv_keywords, words_ids: [word2.id|syn2.id], id: project2.id
+      }.to change(PreferedSynonym,:count).by(1)
+    end
+
+    it "should not add keyword and synonym to project", timo2: true do
+      a = create_logged_in_developer
+      sign_in(a.gamer)
+      project2 = Project.new
+      project2.name = "banking"
+      project2.minAge = 19
+      project2.maxAge = 25
+      project2.owner_id = (a.gamer).id
+      project2.save validate: false
+      word2 = Keyword.new
+      word2.name = "testkeyword"
+      word2.save validate: false
+      syn2 = Synonym.new
+      syn2.name = "كلمة"
+      syn2.keyword_id = word.id
+      syn2.save validate: false
+      expect{
+        put :add_from_csv_keywords, words_ids: [], id: project2.id
+      }.to_not change(PreferedSynonym,:count)
+    end
   end
   #End of Timo's tests
 
@@ -137,6 +195,20 @@ describe ProjectsController, type: :controller do
 
   #Kareem Ali tests
 
+  let(:test_gamer){
+    gamer = Gamer.new
+    gamer.username = "kareem"
+    gamer.country = "Egypt"
+    gamer.education_level = "school"
+    gamer.gender = "male"
+    gamer.date_of_birth = "1993-03-23"
+    gamer.email = "kareemali@gmail.com"
+    gamer.password = "1234567"
+    gamer.confirmed_at = Time.now
+    gamer.save validate: false
+    gamer
+  }
+
   let(:test_keyword){
     test_keyword = Keyword.new
     test_keyword.name = "desk"
@@ -153,6 +225,15 @@ describe ProjectsController, type: :controller do
     test_keyword.is_english = true
     test_keyword.save
     test_keyword
+  }
+
+  let(:keyword_without_synonyms){
+    keyword_without_synonyms = Keyword.new
+    keyword_without_synonyms.name = "hide"
+    keyword_without_synonyms.approved = true
+    keyword_without_synonyms.is_english = true
+    keyword_without_synonyms.save
+    keyword_without_synonyms
   }
 
   let(:synonym1){
@@ -179,7 +260,7 @@ describe ProjectsController, type: :controller do
     project.formal = true
     project.minAge = 10
     project.maxAge = 90
-    project.owner_id = developer1.id
+    project.owner_id = developer.id
     project.description = "this is a test project"
     project.save
     project
@@ -202,9 +283,17 @@ describe ProjectsController, type: :controller do
     category
   }
 
+  let(:developer){
+    developer = Developer.new
+    developer.gamer_id = test_gamer.id
+    developer.save
+    developer
+  }
+
+
   before(:each) do
-    developer = create_logged_in_developer
-    sign_in(developer.gamer)
+    login_gamer (developer.gamer)
+    test_gamer
     test_keyword
     synonym1
     synonym2
@@ -215,18 +304,23 @@ describe ProjectsController, type: :controller do
   end
 
   it "should add a keyword and a prefered synonym in a project and redirects to project view", kareem: true do
-    post :add_word_inside_project, project_id: project.id, keyword: word.name, synonym_id: syn.id
-    prefered_synonyms = PreferedSynonym.where(project_id: project.id)
-    saved_prefered_synonym = prefered_synonyms.where(keyword_id: word.id).first
-    saved_prefered_synonym.synonym_id.should eq(syn.id)
-    response.should redirect_to project_path(project.id)
+    post :add_word_inside_project, project_id: test_project.id, keyword: test_keyword.name, synonym_id: synonym1.id
+    prefered_synonyms = PreferedSynonym.where(project_id: test_project.id)
+    saved_prefered_synonym = prefered_synonyms.where(keyword_id: test_keyword.id).first
+    saved_prefered_synonym.synonym_id.should eq(synonym1.id)
+    response.should redirect_to project_path(test_project.id)
   end
 
   it "should redirects to project view when new synonym to an existing keyword",
    kareem:true do
-    post :quick_add, project_id: test_project.id, keyword: test_keyword.name, synonym_id: synonym2.id
+    ps = PreferedSynonym.new
+    ps.keyword_id = test_keyword.id
+    ps.synonym_id = synonym1.id
+    ps.save
+    post :add_word_inside_project, project_id: test_project.id, keyword: test_keyword.name, synonym_id: synonym2.id
     prefered_synonyms = PreferedSynonym.where(project_id: test_project.id)
     saved_prefered_synonym = prefered_synonyms.where(keyword_id: test_keyword.id).first
+    saved_prefered_synonym.synonym_id.should eq(synonym2.id)
     response.should redirect_to project_path(test_project.id)
   end
 
@@ -249,11 +343,41 @@ describe ProjectsController, type: :controller do
 
   it "shoud succed on sending a keyword for autocomplete", kareem: true do
     post :project_keyword_autocomplete, keyword_search:"d", project_id: test_project.id
-    test_project.categories << category
+    test_project.category = category
     test_keyword.categories << category
-    similar_keyword = [test_keyword.name, test_keyword2.name, 2]
+    similar_keyword = [test_keyword.name, test_keyword2.name,0]
     response.body.should == similar_keyword.to_json
     response.should be_success
   end
 
+  it "should return false for followed word", kareem: true do
+    keyword_without_synonyms
+    developer.follow(keyword_without_synonyms.id)
+    get :test_followed_keyword, project_id: test_project.id, keyword: keyword_without_synonyms.name
+    response.should render_template("projects/test_followed_keyword")
+    response.should be_success
+    developer.keyword_ids.include?(keyword_without_synonyms.id).should eq(true)
+  end
+
+  it "should return true for unfollowed word", kareem: true do
+    keyword_without_synonyms
+    get :test_followed_keyword, project_id: test_project.id, keyword: keyword_without_synonyms.name
+    response.should render_template("projects/test_followed_keyword")
+    developer.keyword_ids.include?(keyword_without_synonyms.id).should eq(false)
+  end
+
+  it "should redirects to project view when follow a word", kareem: true do
+    is_following = developer.keyword_ids.include?(keyword_without_synonyms.id).to_s
+    get :follow_unfollow, project_id: test_project.id, is_followed: is_following, keyword_id: keyword_without_synonyms.id
+    flash[:success].should eq("لقد تم متابعة هذه الكلمة: #{keyword_without_synonyms.name}")
+    response.should redirect_to project_path(test_project.id)
+  end
+
+  it "should redirects to project view when unfollow a word", kareem: true do
+    developer.follow(keyword_without_synonyms.id)
+    is_following = developer.keyword_ids.include?(keyword_without_synonyms.id).to_s
+    get :follow_unfollow, project_id: test_project.id, is_followed: is_following, keyword_id: keyword_without_synonyms.id
+    flash[:success].should eq("لقد تم إلغاء متابعة هذه الكلمة: #{keyword_without_synonyms.name}")
+    response.should redirect_to project_path(test_project.id)
+  end
 end

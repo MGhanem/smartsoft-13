@@ -16,6 +16,7 @@ function update_synonym_list(synonym_names, synonym_ids){
 			$("#selected_synonym").html("<option value='0'>لا يوجد معاني</option>");
 		<% end %>
 		document.getElementById("selected_synonym").disabled=true;
+		follow_popover();
 	}
 	else {
 		$('#add_button').attr("disabled", false);

@@ -14,7 +14,7 @@ module RequestHelpers
     gamer.password = "testing"
     gamer.confirmed_at = Time.now
     gamer.save validate: false
-    login(gamer)
+    login_gamer(gamer)
     gamer
   end
 
@@ -37,7 +37,6 @@ module RequestHelpers
 
   def create_project
     d = create_logged_in_developer()
-    sign_in(d.gamer)
     project = Project.new
     project.name = "banking"
     project.minAge = 19

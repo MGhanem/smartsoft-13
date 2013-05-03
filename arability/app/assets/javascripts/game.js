@@ -59,6 +59,14 @@ var modalHeader;
 var modalBody;
 var modalYesButton;
 var modalNoButton;
+var letterPickerArray = [];
+var intPickerArray = [];
+var initialIntValues = [];
+var listCountersArray = [];
+var listCountersTimeouts = [];
+var alreadyCounting = [];
+var scorePopoverContent;
+var scorePopoverTitle;
 
  // author:
  //   Ali El Zoheiry
@@ -210,8 +218,40 @@ function wordLablelToolTip(){
 		$('.label-div').expose();
 	}, 300);
 	setTimeout(function(){
-		$('#wordLabel').popover('show')
+		$('#wordLabel').popover('show');
 		$('.popover').css('z-index', '9999999');
+	}, 400);
+}
+
+function scorePopover(){
+	var scoreButton;
+	if(JsLocale == "en"){
+		scoreButton = "Next";
+	}
+	else{
+		scoreButton = "التالي";
+	}
+	destroy('wordLabel');
+	$('#game-score').popover({
+		html: true,
+		trigger: 'manual',
+		content: "<p>" + scorePopoverContent + "<p><button class='tutBtn btn btn-primary' id='game-score-po' onclick='callNextToolTip2(this.id)'>" + scoreButton + "</button>",
+		title: '<h4>' + scorePopoverTitle + '</h4>',
+		placement: 'top'
+	});
+	setTimeout(function(){
+		$('#game-score').expose();
+	}, 300);
+	setTimeout(function(){
+		$('#game-score').popover('show')
+		$('.popover').css('z-index', '9999999');
+		$('#wordsList').css('z-index', '99999999');
+		$('#wordsList').css('position', 'relative');
+		if(JsLocale == 'ar'){
+			$('.popover').css('top', '322px');
+			$('.popover').css('left', '760px');
+			$('.popover').css('width', '422px');
+		}
 	}, 400);
 }
 
@@ -243,6 +283,7 @@ function callNextToolTip(id){
  // failure:
  //   invalid id, nothing will get destroyed
 function callNextToolTip2(id){
+	$('#wordsList').css('z-index', '0');
 	destroy(id);
 	tableToolTip();
 }
@@ -302,6 +343,7 @@ function newGame(){
 //   setLevelAttrivutes is called successfuly and control is handed.
 // failure:
 //   --
+
 function startGame(){
 	levelTitle = $('#level');
 	table = $('#main-table');
@@ -309,7 +351,6 @@ function startGame(){
 	cells = table.find('td');
 	buttons = table.find('button');
 	setLevelAttributes(level);
-	
 }
 // author:
 //   Ali El Zoheiry.
@@ -322,7 +363,6 @@ function startGame(){
 //   table is created successfuly with buttons and letters inside the button.
 // failure:
 //   --(because no words in the database is handled in the newGame function).
-
 function initializeGame(){
 	var trHtml = [];
 	var letter;
@@ -341,7 +381,12 @@ function initializeGame(){
 					trHtml.push('-');
 					trHtml.push(x);
 					trHtml.push('">');
-					letter = generateLetter();
+					while(true){
+						letter = generateLetter();
+						if (letter != -1){
+							break;
+						}
+					}
 					trHtml.push(letter);
 					trHtml.push('</button></td>');
 				}
@@ -360,7 +405,6 @@ function initializeGame(){
 	table.append($(trHtml));
 }
 
-
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -374,7 +418,12 @@ function initializeGame(){
 function initializeList(){
 	var lsHtml = [];
 	for(var i = 0; i < wordsArray.length; i++){
-		lsHtml.push("<li id='ls");
+		if(lang == 1){
+			lsHtml.push("<li style='font-size: 22px;' id='ls");
+		}
+		else{
+			lsHtml.push("<li id='ls");
+		}
 		lsHtml.push(i);
 		lsHtml.push("'>");
 		lsHtml.push(wordsArray[i]);
@@ -385,6 +434,30 @@ function initializeList(){
 	if(tutorialFlag == true){
 		wordsListToolTip();
 	}
+	if(lang == 0){
+		list.css('float', 'left');
+		list.css('direction', 'ltr');
+		list.css('margin-left', '10px');
+		list.css('text-align', 'left');
+	}
+	else if(lang == 1){
+		list.css('direction', 'rtl');
+		list.css('text-align', 'right');
+		list.css('float', 'right');
+		list.css('margin-right', '20px');
+	}
+	 for(var x = 0; x < wordsArray.length; x++){
+        var listId = 'ls' + x;
+        if(lang == 0){
+        	var timerfloat = 'right';
+        	var margin = 'margin-left: 7px;'
+        }
+        else if(lang == 1){
+        	var timerfloat = 'left';
+        	var margin = 'margin-right: 10px;'
+        }
+        $('#' + listId).append("<div style='float: " + timerfloat + "; color: white; display: inline-block; position: relative;" + margin + "' id='ls" + x + "Counter'>1</div>");
+    }
 }
 
 // author:
@@ -406,7 +479,13 @@ function dropAblock(){
 	if( gameOver == true ){
 		return;
 	}
-	letter = generateLetter();
+	while(true){
+		letter = generateLetter();	
+		if(letter != -1){
+			break;
+		}
+	}
+	
 	var randNum = Math.floor(Math.random()*dimension);
 	var clss = 'col0-' + randNum;
 	var newButton = "<button id='btn" + blockId + "' onclick= 'callMethods(this.id)' class= 'btn btn-inverse'>" + letter + "</button>";
@@ -428,6 +507,9 @@ function dropAblock(){
  // failure:
  //   --
 function pause(){
+	for(var x = 0; x < wordsArray.length; x++){
+		clearTimeout(listCountersTimeouts[x]);
+	}
 	tutorialFlag = true;
 }
 
@@ -444,6 +526,10 @@ function pause(){
  //   tutorial wasent started
 function endTutorial(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		CheckStatus(lsId);
+	}
 	showSuspense = true;
 	tutorialFlagWas = true;
 	if(newDrop == true){
@@ -474,6 +560,10 @@ function endTutorial(){
  //   game was not paused
 function unPause(){
 	tutorialFlag = false;
+	for(var x = 0; x < wordsArray.length; x++){
+		var lsId = 'ls' + x;
+		CheckStatus(lsId);
+	}
 	if(newDrop == true){
 		newDrop = false;
 		dropAblock();
@@ -621,12 +711,14 @@ function calculatePossible(){
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).addClass('text-warning');
 				$('#' + lsId).css( "color", "orange" );
+				CheckStatus(lsId);
 			}
 			else{
 				var postfixNum = k - 1;
 				lsId = "ls" + postfixNum;
 				$('#' + lsId).removeClass('text-warning');
-				$('#' + lsId).css( "color", "#333333" );
+				$('#' + lsId).css("color", "#333333");
+				stopCounter(lsId);
 			}
 			for(var l = 0; l < wordsArray[k].length; l++){
 				canBeFormed = false;
@@ -651,7 +743,15 @@ function calculatePossible(){
 			var postfixNum = k - 1;
 			lsId = "ls" + postfixNum;
 			$('#' + lsId).addClass('text-warning');
-			$('#' + lsId).css( "color", "orange" );
+			$('#' + lsId).css("color", "orange");
+			CheckStatus(lsId);
+		}
+		else{
+			var postfixNum = k - 1;
+			lsId = "ls" + postfixNum;
+			$('#' + lsId).removeClass('text-warning');
+			$('#' + lsId).css("color", "#333333");
+			stopCounter(lsId);
 		}
 }
 
@@ -728,6 +828,7 @@ function generateWord(){
 		var oldLetters = document.getElementById("wordLabel").innerHTML;
 		document.getElementById("wordLabel").innerHTML = newWord;
 }
+
 
 // author:
 //   Ali El Zoheiry.
@@ -857,16 +958,19 @@ function calculateCol(id){
 function removeAblock(){
 	var x;
 	var word = document.getElementById("wordLabel").innerHTML;
-		for(x = 0; x < wordsArray.length; x++){
-			if(wordsArray[x] == word && wordExistsInArray[x] == true){
-				for(var i = 0; i < buttonArray.length; i++){
-					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
-					$('#' + toBeRemovedId).fadeTo('slow',0.5);
-					// setTimeout(function(){document.getElementById(toBeRemovedId).innerHTML = '';}, 500);
-				}
-				setTimeout('fadeSomething(' + x + ')' , 300);
+	for(x = 0; x < wordsArray.length; x++){
+		if(wordsArray[x] == word && wordExistsInArray[x] == true){
+			removeFromLetterPicker(word);
+			var lsId = 'ls' + x
+			stopCounter(lsId);
+			alreadyCounting[x] = true;
+			for(var i = 0; i < buttonArray.length; i++){
+				var toBeRemovedId = buttonArray[i].closest('td').attr('id');
+				$('#' + toBeRemovedId).fadeTo('slow',0.5);
 			}
+			setTimeout('fadeSomething(' + x + ')' , 300);
 		}
+	}
 }
 
 // author:
@@ -884,51 +988,50 @@ function removeAblock(){
 //   the game is not over yet, and the buttons are successfuly removed from the board.
 // failure:
 //   the game is over, the gamer will lose.
-
 function fadeSomething(x){
-				for(var i = 0; i < buttonArray.length; i++){
-					var toBeRemovedId = buttonArray[i].closest('td').attr('id');
-					document.getElementById(toBeRemovedId).innerHTML = '';
-					$('#' + toBeRemovedId).fadeTo('fast',1);
-				}
-				var lsId = "ls" + x;
-				var originalLi = document.getElementById(lsId).innerHTML;
-				document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
-				calculateScore();
-				if(wordsInDb == true){
-					successfulWords.push(wordsArray[x]);
-				}
-				wordExistsInArray[x] = false;
-				calculatePossible();
-				win = true;
-				for(var finished = 0; finished < wordExistsInArray.length; finished++){
-					if(wordExistsInArray[finished] == true){
-						win = false;
-					}
-				}
-				if(win == true){
-					if(tutorialFlagWas == true && level == 1){
-						tutorialflagwas = false;
-						buttonArray = [];
-						removeAblock();
-						pause();
-						setModalTranslations();
-						$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
-						$('.modal').css('z-index', '999999999999999')
-						$('.modal').on('hidden', function () {
-							winTheGame();
-						})
-						$('.modal').modal('show');
-					}
-					else{
-						winTheGame();
-					}
-				}		
-				else{
-					buttonArray = [];
-					generateWord();
-					removeAblockCont();
-				}
+	for(var i = 0; i < buttonArray.length; i++){
+		var toBeRemovedId = buttonArray[i].closest('td').attr('id');
+		document.getElementById(toBeRemovedId).innerHTML = '';
+		$('#' + toBeRemovedId).fadeTo('fast',1);
+	}
+	var lsId = "ls" + x;
+	var originalLi = document.getElementById(lsId).innerHTML;
+	document.getElementById(lsId).innerHTML = "<strike style='color: red;'>" + originalLi + "</strike>";
+	calculateScore(lsId);
+	if(wordsInDb == true){
+		successfulWords.push(wordsArray[x]);
+	}
+	wordExistsInArray[x] = false;
+	calculatePossible();
+	win = true;
+	for(var finished = 0; finished < wordExistsInArray.length; finished++){
+		if(wordExistsInArray[finished] == true){
+			win = false;
+		}
+	}
+	if(win == true){
+		if(tutorialFlagWas == true && level == 1){
+			tutorialflagwas = false;
+			buttonArray = [];
+			removeAblock();
+			pause();
+			setModalTranslations();
+			$('.zone').append('<div class="modal hide fade "><div class="modal-header"><h3>' + modalHeader + '</h3></div><div class="modal-body"><p>' + modalBody + '</p></div><div class="modal-footer"><button class="btn" style="width: 100px;" onclick="modalButtonClicked(true)">' + modalYesButton + '</button><button class="btn btn-success" style="width: 100px;" onclick="modalButtonClicked(false)">' + modalNoButton + '</button></div></div>');
+			$('.modal').css('z-index', '999999999999999')
+			$('.modal').on('hidden', function () {
+				winTheGame();
+			})
+			$('.modal').modal('show');
+		}
+		else{
+			winTheGame();
+		}
+	}		
+	else{
+		buttonArray = [];
+		generateWord();
+		removeAblockCont();
+	}
 }
 
 // author:
@@ -993,7 +1096,6 @@ function removeAblockCont(){
 //   the blocks were pulled successfuly and all gaps were filled.
 // failure:
 //   the game ended before the blocks were pulled.
-
 function startPulling(r, c, count){
 	// alert('testing');
 	var place = "col"+ r + "-" + c;
@@ -1005,6 +1107,55 @@ function startPulling(r, c, count){
 
 }
 
+// author:
+//   Ali El Zoheiry.
+// description:
+//   set the values of the letterPickerArray which will contain the letters of all the words in the list
+//   and sets their default drop value to 1 
+// params:
+//   --
+// success:
+//   the 2 arrays are set successfully and are not empty
+// failure:
+//   the game has not started yet or there are no words in the game.
+function setLetterPicker(){
+	var totalLetters = 0;
+	letterPickerArray = [];
+	intPickerArray = [];
+	for(var i = 0; i < wordsArray.length; i++){
+		for(var j = 0; j < wordsArray[i].length; j++){
+			letterPickerArray[totalLetters] = wordsArray[i].charAt(j);
+			intPickerArray[totalLetters] = 1;
+			totalLetters++;
+		}
+	}
+	for(var x = 0; x < intPickerArray.length; x++){
+		initialIntValues[x] = intPickerArray[x];
+	}
+}
+
+// author:
+//   Ali El Zoheiry.
+// description:
+//   once a word is formed its letters are marked as -1 in the intPicker array
+//   so they wont be picked again
+// params:
+//   word: the word that the gamer has just formed
+// success:
+//   all the letters in the above word are marked as -1 intPicker array
+// failure:
+//   the word is not valid or does not exists in the database.
+function removeFromLetterPicker(word){
+	for(var i = 0; i < word.length; i++){
+		var howManyLeft = countCurrentWords();
+		var toBeRemovedIndex = jQuery.inArray(word.charAt(i), letterPickerArray);
+		if(toBeRemovedIndex == -1 || howManyLeft < 2){
+			return;
+		}
+		letterPickerArray.splice(toBeRemovedIndex, 1);
+		intPickerArray.splice(toBeRemovedIndex, 1);
+	}
+}
 
 // author:
 //   Ali El Zoheiry.
@@ -1017,22 +1168,76 @@ function startPulling(r, c, count){
 //   the word list contains words and a random letter is generated.
 // failure:
 //   no words in the words list.
-
 function generateLetter(){
 	var letter;
-	var stringOfWords = '';
-	for(var i = 0; i < wordsArray.length; i++){
-		if(wordExistsInArray[i] == true){
-			for(var j = 0; j < wordsArray[i].length; j++){
-				stringOfWords =stringOfWords +  wordsArray[i].charAt(j);
-			}
-		}	
+	length = letterPickerArray.length;
+	var randIndex = Math.floor(Math.random() * length);
+	if(intPickerArray[randIndex] == 1){
+		intPickerArray[randIndex] = 0;
+		letter = letterPickerArray[randIndex];
+		return letter;
 	}
-	length = stringOfWords.length;
-	var randNumber = Math.floor(Math.random() * length);
-	letter = stringOfWords.charAt(randNumber);
-	return letter;
+	else{
+		if(intPickerArray[randIndex] == 0){
+			var nextEntry = nextValidEntry();
+			if(nextEntry == false){
+				intPickerArray[randIndex] = 1;
+				return - 1;
+			}
+			else{
+				intPickerArray[nextEntry] = 0;
+				letter = letterPickerArray[nextEntry];
+				return letter;
+			}
+		}
+	}
 }
+
+// author:
+//   Ali El Zoheiry.
+// description:
+//   the function is given a letter and checks whether that same letter is repeated again in the letters array
+// params:
+//   currentEntry: the current letter being checked
+// success:
+//   Either there is a next entry of the same level, then that entry will be returned
+//   or there that letter is not repeated again, therfore false will be returneds
+// failure:
+//   invalid argument passed.
+function nextValidEntry(currentEntry){
+	var nextEntry;
+	nextEntry = jQuery.inArray(letterPickerArray[currentEntry],letterPickerArray, currentEntry + 1);
+	if(nextEntry == -1){
+		return false;
+	}
+	else if(intPickerArray[nextEntry] == 1){
+		return nextEntry;
+	}
+	else{
+		checkNextValidEntry(nextEntry);
+	}
+}
+
+// author:
+//   Ali El Zoheiry.
+// description:
+//   counts the number of words remaining that the gamer has not formed yet.
+// params:
+//   --
+// success:
+//   successfully returns the number of words left.
+// failure:
+//   The game has not started yet, therfore there will be no words.
+function countCurrentWords(){
+	var count = 0;
+	for(var i = 0; i < wordExistsInArray.length; i++){
+		if(wordExistsInArray[i] == true){
+			count++;
+		}
+	}
+	return count;
+}
+
 
 // author:
 //   Ali El Zoheiry.
@@ -1045,7 +1250,6 @@ function generateLetter(){
 //   there was a word in the midst of formation, it will be successfuly cleared.
 // failure:
 //   no buttons were clicked.
-
 function clearWord(){
 	document.getElementById('wordLabel').innerHTML = '';
 	for(var i = 0; i < buttonArray.length; i++){
@@ -1069,7 +1273,6 @@ function clearWord(){
 //   there exists a next level, it will be started.
 // failure:
 //   there is no next level, then the user will be promted that he has finished all the levels.
-
 function nextLevel(){
 	getNewWords(1);
 	if(wordsInDb == true){
@@ -1101,8 +1304,6 @@ function nextLevel(){
 //   the board is not empty and the height of the column is calculated successfuly.
 // failure:
 //   the board is empty.
-
-
 function highestTower(){
 	var towerHeight;
 	var heighestSoFar = 0;
@@ -1134,8 +1335,6 @@ function highestTower(){
 //   a column has reached a height of 8 or greater it will start flashing.
 // failure:
 //   no column reached the height of 7 or greater or this tower is already flashing.
-
-
 function suspense(){
 	var enter = false;
 	for(x = 0; x < dimension; x++){
@@ -1184,7 +1383,6 @@ function suspense(){
 //   a tower was flashing and then dropped in height it will stop flashing.
 // failure:
 //   no column was flashing or no column reached the required height.
-
 function stopSuspense(){
 	for(x = 0; x < booleanSuspense.length; x++){
 		if(booleanSuspense[x] == true){
@@ -1209,7 +1407,6 @@ function stopSuspense(){
 //   the height of this column is greater than 7, it will start flashing.
 // failure:
 //   --
-
 function suspenseCont(col){
 		suspenseTimerArray[col] = setTimeout(function(){
 			var suffix = "-" + col;
@@ -1229,7 +1426,6 @@ function suspenseCont(col){
 //   there are words in the database, they will be put in the javascript variable wordsArray.
 // failure:
 //   no words in the database.
-
 function getNewWords(num){
 	$.get("/games/getnewwords/?count=" + num +"&lang=" + lang);
 }
@@ -1242,84 +1438,38 @@ function getNewWords(num){
 // params:
 //   level: the current level the gamer is at.
 // success:
-//   the level is between the available levels in the game, this function will be called upon new level to set the criteria.
+//   the game is started and the level block speed and number of words are chosen correctly
+//   depending on the levels
 // failure:
 //   --
-
 function setLevelAttributes(level){
-if(level == 1){
-	getNewWords(2);
+	if(level >= 8){
+		waitTime = 500;
+		fallingTime = 95;
+	}
+	else{
+		waitTime = 1000 - ((level - 1) * 70);
+		fallingTime = 200 - ((level - 1) * 15);
+	}
+	if(level >= 9){
+		getNewWords(10);
+	}
+	else{
+		getNewWords(level + 1);
+	}
 	for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
+		wordsArray[x] = wordsArray[x].toUpperCase();
 	}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
+	for(var i = 0; i < wordsArray.length; i++){
+		wordExistsInArray[i] = true;
+		listCountersArray[i] = 1;
+	}
+	setLetterPicker();
+	initializeGame();
+	initializeList();
+	calculatePossible();
+	dropAblock();
 }
-
-
-if(level == 6){
-		alert("Thank You for Playing, you're Awesome!!");
-		return;
-	}
-	if(level == 2){
-		getNewWords(3);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 3){
-		getNewWords(4);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 4){
-		getNewWords(5);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-	if(level == 5){
-		getNewWords(5);
-		for(var x = 0; x < wordsArray.length; x++){
-			wordsArray[x] = wordsArray[x].toUpperCase();
-		}
-		for(var i = 0; i < wordsArray.length; i++){
-			wordExistsInArray[i] = true;
-		}
-		initializeGame();
-		initializeList();
-		calculatePossible();
-		dropAblock();
-	}
-}
-
 // author:
 //   Ali El Zoheiry.
 // description:
@@ -1330,7 +1480,6 @@ if(level == 6){
 //   the button is clicked and the language is set.
 // failure:
 //   --
-
 function setLang(l){
 	if(lockLangButtons == true){
 		return;
@@ -1356,10 +1505,11 @@ function setLang(l){
 //   the gamer formed a word and his score is added.
 // failure:
 //   --
-
-
-function calculateScore(){
-	score = score + (100 * level);
+function calculateScore(lsId){
+	var index = parseInt(lsId.replace('ls', ''));
+	var numLetters = wordsArray[index].length;
+	var timer = parseInt(document.getElementById(lsId + 'Counter').innerHTML);
+	score = Math.ceil(score + (((numLetters*100)/timer) * level));
 	setScoreTitle();
 }
 
@@ -1414,9 +1564,17 @@ function continuePlaying(){
 	'" data-placement="left" data-title="' + wordsListPopoverTitle +  '" id="wordsList"></ol>' + 
 	'<div class="label-div"><label data-trigger="manual" data-html="true" data-content="' + wordLabelPopoverContent +
 	'" data-title="' + wordLabelPopoverTitle + '" data-placement="bottom" id="wordLabel" class="label1"></label></div></div>'+
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' + 
+	'<br><br><div><h3 id="game-score"></h3></div>' + 
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>'+
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px; margin-right:30px;">' + levelPopUpTitle + ' ' + level  +'</div>');
+	if(JsLocale == 'ar'){
+		$('#game-score').css('text-align', 'right');
+		$('#game-score').css('direction', 'ltr');
+		$('#game-score').css('margin-right', '20px');
+	}
+	if(lang == 1){
+		$('#wordLabel').css('font-size', '22px');
+	}
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
 	$('#level-popup').fadeTo(1500,0);
@@ -1439,18 +1597,15 @@ function continuePlaying(){
 //   the gamer has finished the level and is redirected to the next level
 // failure:
 //   --
-
 function toNextLevel(){
 	disableNav();
 	level++;
-	fallingTime = fallingTime - 15;
-	waitTime = waitTime - 70;
 	$('.zone').empty();
 	$('.zone').append('<div><table class="table1" id="main-table"></table></div>' +
 	'<div id="list-div" class="well" ><ol id="wordsList"></ol>' + 
 	'<div class="label-div"><label id="wordLabel" class="label1"></label></div></div>' +
 	'<div class="buttons-div">' + gameButtonClear + gameButtonRestart +'</div>' +
-	'<br><br><div><h3 onclick="nextLevel()" id="game-score"></h3></div>' +
+	'<br><br><div><h3 id="game-score"></h3></div>' +
 	'<div id ="level-popup" style="font-size: 180px; color: white; position: absolute; margin-top: 120px;">' + levelPopUpTitle + ' ' + level  +'</div>');
 	$('#level-popup').fadeTo(0,0);
 	$('#level-popup').fadeTo(1500,1);
@@ -1514,4 +1669,33 @@ function modalButtonClicked(answer){
 
 function disableTutorial(){
 	$.get("games/disableTutorial");
+}
+
+
+function CheckStatus(listId){
+	var index = parseInt(listId.replace('ls', ''));
+	if(alreadyCounting[index] == true || tutorialFlag == true){
+		return;
+	}
+	else{
+		alreadyCounting[index] = true;
+		startCounter(listId);
+	}
+}
+
+function startCounter(listId){
+	var index = parseInt(listId.replace('ls', ''));
+    listCountersTimeouts[index] = setTimeout(function(){
+        $('#' + listId +'Counter').empty();
+        var newVal = listCountersArray[index] + 1;
+        $('#' + listId +'Counter').append(newVal);
+        listCountersArray[index] = newVal;
+        startCounter(listId);
+    }, 1000);
+}
+
+function stopCounter(listId){
+    var index = parseInt(listId.replace('ls', ''));
+    alreadyCounting[index] = false;
+    clearTimeout(listCountersTimeouts[index]);
 }
