@@ -345,7 +345,11 @@ ar:
         gamer:
           attributes:
             date_of_birth:
-              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام' 
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  prizes: "الجوائز" 
+  trophies: "الإنجازات" 
+  invite: "دعوات" 
+  rank: "الرتبة"          
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
   keyword_added_to_categories: "تم إدراج %{keyword} في التصنيفات %{categories}"
@@ -354,7 +358,7 @@ ar:
   not_won_prizes_title: "الجوائز المتاحة "
   no_prizes: "لم تلعب بمافيه كفاية حتى يظهر لك الجوائز التي تم الحصول عليها"
   all_prizes: "لقد فزت بجميع الجوائز"
-  project_removed: "تم مسح المشروع المشترك"
+  project_removed: "تم مسح المشروع المشترك"            
   activerecord:
     attributes:
       project:
@@ -438,7 +442,6 @@ ar:
   your_twitter_friends: "أصدقائك في تويتر"
   rank: "الرتبة"
   highest_score: "أعلى نقاط"
-  trophies: "الجوائز"
   no_trophies_won: "لا يوجد جوائز"
   not_connected_to_twitter: "أنت غير متصل بتويتر، يمكنك التواصل عبر "
   not_connected_to_facebook: "أنت غير متصل بفيس بوك، يمكنك التواصل عبر "
@@ -763,7 +766,10 @@ ar:
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
-  congrats_you_won: "لقد ربحت "
+  menu: "اللعبة"
+  profile: "بروفيل"
+  vote: "اصوات"
+  congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
   Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
   activerecord:
