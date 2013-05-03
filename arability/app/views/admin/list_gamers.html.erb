@@ -8,9 +8,7 @@
 						<div class="pull-left pagination">
 							<%= paginate @list, :remote => true %>
 						</div>
-						<a>
 							عرض اللاعبيين
-						</a>
 					</legend>
 					<table class="table table-bordered table-hover">
 						<thead>
@@ -20,7 +18,6 @@
 								<td>عدد الانجازات</td>
 								<td>عدد الجوائز</td>
 								<td>عدد الاصوات</td>
-								<td>تحويل الى مشرف</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -31,13 +28,6 @@
 									<td><%= item.trophies.count %></td>
 									<td><%= item.prizes.count %></td>
 									<td><%= item.votes.count %></td>
-									<td>
-										<% if !item.admin %>
-											<a href="/admin/make_admin?id=<%= item.id %>">التحوييل</a>
-										<% else %>
-											مشرف بالفعل
-										<% end %>
-									</td>
 								</tr>
 							<% end %>
 						</tbody>

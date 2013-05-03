@@ -8,9 +8,7 @@
 						<div class="pull-left pagination">
 							<%= paginate @list, :remote => true %>
 						</div>
-						<a>
 							عرض المطوريين
-						</a>
 					</legend>
 					<table class="table table-bordered table-hover">
 						<thead>
@@ -26,7 +24,7 @@
 								<tr>
 									<td><%= item.gamer.username %></td>
 									<td><%= item.gamer.email %></td>
-									<td><%= item.projects.count %></td>
+									<td><a href="/admin/list_developer_projects?id=<%= item.id%>"><%= item.projects.count %></a></td>
 									<td><%= item.keywords.count %></td>
 								</tr>
 							<% end %>

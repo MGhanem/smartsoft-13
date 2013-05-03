@@ -34,8 +34,6 @@ $(document).ready(function() {
 				.html() + "</div>");
 		$("div#myModalPrize div.prize-view a").remove();
 	});
-
-	
 	
 });
 
