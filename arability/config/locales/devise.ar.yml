@@ -18,6 +18,7 @@ ar:
         date_of_birth: "تاريخ الميلاد"
         gender: "النوع"
         current_password: "كلمت السر الحالية"
+        confirmation_token: "رمز التأكيد"
     models:
       gamer: "اللاعب"
 
