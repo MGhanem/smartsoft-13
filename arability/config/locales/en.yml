@@ -59,22 +59,17 @@ en:
   select_subscription: "Select Subscription"
   backend: "Developers"
   project: "Project"
-  projects: "Projects"
   my_projects: "My Projects"
   required: "The fields marked with * are required"
   name: "Name"
   category: "Category"
   please_select: "Please select"
   formality: "Language"
-  pro_gender: "Gender"
-  pro_male: "Male"
-  pro_female: "Female"
   formal: "Formal"
   slang: "Slang"
   from: "From"
   to: "To"
   desc: "About the project"
-  desc2: "Description"
   target: "This project will target the following group:"
   target_country: "Country"
   target_age: "Age"
@@ -139,13 +134,12 @@ en:
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
-  exceeded_project_limit: "You have reached the maximum number of projects allowed. Please subscribe to Premium or Deluxe to create more."
   stats_no_votes: "Sorry! this translation has no votes yet!"
   controller:
-    subscription:
-      messages_errors:
+   subscription:
+     messages_errors:
         you_have_successfully_chosen_your_model: 'you have successfully chosen your model'
-    please_choose: 'please choose your subscription model'
+        please_choose: 'please choose your subscription model'
   already_registered_developer: "You are already registered as a developer. Don't you remember?"
   failed_developer_registration: "Failed to complete registration: Please make sure you entered valid information."
   no_developer: "Please register as a developer before you choose your subscription model."
@@ -307,7 +301,7 @@ en:
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
   age_range: "(Kindly enter a value between 10 and 100)"
-  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword. You can follow words by searching for them and clicking the Follow button"
+  follow_words_info: "Follow a word to recieve an email with every update. Updates include a new translation addition to a Keyword or the top voted Synonym gets changed."
   synonyms_of: "Translations of"
   enter_keyword: "Enter a keyword"
   username: "Username"
@@ -323,30 +317,6 @@ en:
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
   you_have_prizes: "You have won the following prizes!"
-  activerecord:
-    errors:
-      models:
-        keyword:
-          attributes:
-            name:
-              blank: "keyword cant be empty"
-              invalid: "The keyword can only consist of only english and arabic characters"
-              taken: "This keyword already exists in the database"
-        category:
-          attributes:
-            name:
-              blank: "category cant be empty"
-              invalid: "The category can only consist of only english and arabic characters"
-              taken: "This category already exists in the database"
-    errors:
-      models:
-        project:
-          attributes:
-            minAge:
-              minAge_range: "has to be a number between 9 and 99 years"
-            maxAge:
-              maxAge_range: "has to be a number between 10 and 100 years"
-              less_than_minAge: "can not be less than the minimum age"
   enter_keyword: "Enter a keyword"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -361,13 +331,6 @@ en:
   project_removed: "Project removed"
   project_delete: "Project successfully deleted"
   keyword_added: "keyword added successfully"
-  enter_keyword: "Enter a keyword"
-  username: "Username"
-  password_confirmation: "Password confirmation"
-  education_level: "Education level"
-  date_of_birth: "Date of Birth"
-  back_to_game: "Back"
-  project_removed: "Project removed"
   won_prizes_title: "Earned Prizes"
   not_won_prizes_title: "Available Prizes"
   no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
@@ -386,10 +349,10 @@ en:
   no_prizes: "Oh oh! You seem you haven't played the game enough to win any prizes! Play now to get them!"
   all_prizes: "Wohoo! It seems that you have won all the prizes!"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
-  help_us_through_reporting: >
-    Help us filter abusive keywords and synonyms
-    by choosing a word you find inappropriate and submitting a report using
-    this form. An email will be sent to you upon taking action concerning
+  help_us_through_reporting: > 
+    Help us filter abusive keywords and translations 
+    by choosing a word you find inappropriate and submitting a report using 
+    this form. An email will be sent to you upon taking action concerning 
     the submitted report.
   report_abusive: "Report here"
   report: "Report"
@@ -400,7 +363,7 @@ en:
   help_us_report: "See any inappropriate words?"
   oh_snap: "Oh snap! You got an error!"
   check_connection: >
-    Seems like an error that was encountered and prohibited the request from completion!
+    Seems like an error was encountered and prohibited the request from completion! 
     Please, try re-submitting your request.
   add_twitter_connection: "Connected to Twitter successfully!"
   remove_social_connection: "Connection removed successfully!"
@@ -532,7 +495,7 @@ en:
   both_popover_title: "<h4>Both Button</h4>"
   words_list_popover_content: "<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it can't be formed yet, or orange indicating that it could be formed<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>Next</button>"
   words_list_popover_title: "<h4>Words List</h4>"
-  word_label_popover_content: "<p>This Label Contains the letters that are clicked<p> <button onclick='scorePopover(this.id)' class='btn btn-primary' id='wordLabel-po'>Next</button>"
+  word_label_popover_content: "<p>This Label Contains the letters that are clicked<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>Next</button>"
   word_label_popover_title: "<h4>Letters Label</h4>"
   table_popover_content: "To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now"
   table_popover_title: "Forming Words"
@@ -546,15 +509,6 @@ en:
   modal_body: "You have finished the first Level. Would you like to see this Tutorial again the next time you play the game?"
   modal_yes_button: "Yes"
   modal_no_button: "No"
-  you_have_prizes: "You have won the following prizes!"
-  enter_a_synonym: "enter a new synonym"
-  skip_this_keyword: "skip this keyword"
-  suggest_this_synonym: "save new translation"
-  formal_or_slang: "<p style='font-size:15px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>formal</button>&nbsp or &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>slang</button></p>"
-  is_this_translation: "Is this translation"
-  must_specify_formality: "you need to choose whether translation is formal or slang"
-  choose_formality: "choose formality"
-  report_game: "Report"
   confirm: " Are you sure you want to delete the project?"
   delete: "Delete"
   close_delete: "Close"
@@ -576,9 +530,6 @@ en:
               minAge_range: "has to be between 9 and 99 years"
             maxAge:
               maxAge_range: "has to be between 10 and 100 years"
-              minAge_range: "has to be a number between 9 and 99 years"
-            maxAge:
-              maxAge_range: "has to be a number between 10 and 100 years"
               less_than_minAge: "can not be less than the minimum age"
     attributes:
       project:
@@ -649,23 +600,17 @@ en:
   logged_in_to_google: "Your account is now connected to Google"
   connected_to_google: "You are already signed in and connected to Google."
   oops_error_google: "Oops an error has occured while communicating with Google. Please try again"
-  you_vote: "You "
+  you_vote: "You " 
   vote_action: "voted for "
   chosen_action: " as the best translation for "
   vote_log: "Your Votes History"
-  no_you: "You "
+  no_you: "You " 
   no_vote_log: "didn't vote for any translation yet!!"
   keyword_added: "keyword added successfully"
   back_log: "Game"
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
-  followmaxtip: "You've reach your maximum number of followed words."
-  search_not_allowed: >
-    Sorry! You have reached your search quota limit, but you can still search for words 
-    you searched for before.
-  score_popover_content: "The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word"
-  score_popover_title: "How the Score is calculated"
   have_to_sign_in: "You have to sign in to view this page"
   you_need_to_connect_fb: "You need to connect to facebook first"
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
@@ -686,6 +631,13 @@ en:
       developer: "Developer"
     errors:
       models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "has to be between 9 and 99 years"
+            maxAge:
+              maxAge_range: "has to be between 10 and 100 years"
+              less_than_minAge: "can not be less than the minimum age"
         keyword:
           attributes:
             name:
