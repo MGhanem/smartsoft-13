@@ -104,6 +104,8 @@ Arability::Application.routes.draw do
     scope "developers/" do
       match "/" => "backend#home", :as => "backend_home"
       match "projects/remove_developer_from_project" => "developer#remove_developer_from_project"
+      match 'projects' => "projects#index", :as => :projects
+      match "/" => "backend#home", :as => "backend_home"
       get "projects/remove_developer_from_project"
       match "/auth/google_oauth2/callback" => "authentications#google_callback"
 

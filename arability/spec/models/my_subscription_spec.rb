@@ -66,4 +66,9 @@ describe MySubscription do
     expect(result).to eq(true)
   end
 
+	it "developer can choose subscription model" do
+		result = MySubscription.choose(developer.id, submodel.id)
+		expect(result).to eq(true)
+
+	end
 end
