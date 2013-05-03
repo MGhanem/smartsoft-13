@@ -3,7 +3,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <% if msg.respond_to? "each" %>
         <div>
-          <ul class="unstyled">
+          <ul class="unstyled" id="err">
           <% msg.each do |item| %>
               <li><%= "#{item}" %></li>
           <% end %>
@@ -14,4 +14,10 @@
       <% end %>
   </div>
 <% end %>
-
+<script type="text/javascript">
+  $("#err").css("position", "fixed");
+  $("#err").css("top", "50px");
+  $("#err").css("left", "10%");
+  $("#err").css("right", "10%");
+  $("#err").css("z-index", "100");
+</script>
