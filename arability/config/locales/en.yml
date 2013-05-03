@@ -120,11 +120,6 @@ en:
   cancel: "Cancel"
   prohibited_project_error: "errors prohibited this project from being saved:"
   exceeded_project_limit: "Sorry, you cannot create anymore projects. Please subscribe to Premium or Deluxe"
-  views:
-    project:
-      flash_messages:
-        project_was_successfully_created: 'Project was successfully created.'
-        project_was_successfully_updated: 'Project was successfully updated.'
   import: "Import"
   export: "Export"
   add_words: "Add words"
@@ -582,11 +577,15 @@ en:
   close_delete: "Close"
   submit_delete: "okay"
   you_have_prizes: "You have won the following prizes!"
-  views:  
-    pagination:  
+  views:
+    pagination:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "&hellip;"
+    project:
+      flash_messages:
+        project_was_successfully_created: 'Project was successfully created.'
+        project_was_successfully_updated: 'Project was successfully updated.'
   connection_error: "Connection Error, please make sure you're connected to the internet"
   no_account: "You seem to have left us. Please create a new account"
   activerecord:
@@ -700,7 +699,6 @@ en:
     attributes:
       developer:
         first_name: "First Name"
-
         last_name: "Last Name"
       project:
         name: 'Name'
