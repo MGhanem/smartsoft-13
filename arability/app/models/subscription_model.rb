@@ -1,6 +1,11 @@
 #encoding: UTF-8
+<<<<<<< HEAD
+class SubscriptionModel < ActiveRecord::Base
+	has_many :my_subscriptions
+=======
 class SubscriptionModel < ActiveRecord::Base	
   has_many :my_subscriptions
+>>>>>>> 212c21f561baa2c063f9d000dd129b18ade3a9e2
   attr_accessible :name_en, :name_ar, :limit_search, :limit_follow, :limit_project ,:limit
 
   validates_presence_of :name_en, message: "لا يمكن أن يكون الإسم الإنجليزي فارغ"
@@ -28,8 +33,11 @@ class SubscriptionModel < ActiveRecord::Base
   validates_uniqueness_of :name_en, message: "هذا الإسم الإنجليزي موجود بالفعل"
   validates_uniqueness_of :name_ar, message: "هذا الإسم العربي موجود بالفعل"
 
+<<<<<<< HEAD
+=======
   def name
     self.send("name_#{I18n.locale}")
   end
 
+>>>>>>> 212c21f561baa2c063f9d000dd129b18ade3a9e2
 end

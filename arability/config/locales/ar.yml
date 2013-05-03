@@ -35,6 +35,7 @@ ar:
   follow: "تابع"
   following: "متابع"
   backend: "المطورون"
+  rec_back: "العودة"
   project: "مشروع"
   projects: "مشاريع"
   my_projects: "مشاريعي"
@@ -98,6 +99,9 @@ ar:
   export: "تصدير"
   add_words: "اضف كلمات"
   recommended_words: "الكلمات المرشحة"
+  recommended_for_project: "الكلمات المرشحة لمشروعك"
+  select_words: "اختر الكلمات التي تريد اضافتها في المشروع"
+  no_recommended_words: "عذرا,لا توجد كلمات مرشحة لهذا المشروع"
   share: "مشاركة"
   delete: "مسح"
   word: "الكلمة"
@@ -298,6 +302,8 @@ ar:
   male: "ذكر"
   out_of: "من"
   keyword_not_empty: "يجب الا يكون مكان الكلمة فارغ"
+  enter_categories: "ابحث في التصنيفات"
+  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة. لمتابعة  كلمة ابحث عنها ثم إضغط تابع."
   egypt: "مصر"
   lebanon: "لبنان"
   jordan: "الاردن"
@@ -319,7 +325,6 @@ ar:
   school: "مدرسة"
   university: "جامعة"
   enter_categories:  "التصفية حسب الفئات"
-  follow_words_info: "إتبع كلمات لتلقي بريد إلكتروني بمعلومات جديدة عن كلماتك. سيصلك بريد إن حصلت كلمة على مرادفات جديدة أو إحدى المرادفات حصلت على أكثر عدد من أصوات."
   synonyms_of: "مرادفات كلمة"
   age_range: "(من فضلك ادخل رقم من 10 الي 100)"
   enter_keyword: "أدخل كلمة"
@@ -346,6 +351,23 @@ ar:
             date_of_birth:
               before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
   project_removed: "تم مسح المشروع المشترك"
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+        before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+  choose_sub: 'نظام الإشتراك'
+  developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
+  per_month: "/شهر"
+  twitter_signin: "تسجيل دخول بتويتر"
+  go_to_twitter: "إذهب إلى تويتر"
+  twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  enter_word_first: "ادخل كلمة اولآ"
+  project_removed: "تم مسح المشروع المشترك"
   choose_sub: 'نظام الإشتراك'
   tag_using_categories: "إختر التصنيفات المناسبة"
   keyword_exists: "هذه الكلمة موجودة بالفعل"
@@ -364,6 +386,7 @@ ar:
   twitter_signin: "تسجيل دخول بتويتر"
   go_to_twitter: "إذهب إلى تويتر"
   twitter_signin_success: "تم تسجيل الدخول بتويتر بنجاح"
+  project_removed: "تم مسح المشروع المشترك"
   project_delete: "تم مسح المشروع بنجاح"
   won_prizes_title: "الجوائز التي تم الحصول عليها "
   not_won_prizes_title: "الجوائز المتاحة "
@@ -386,6 +409,16 @@ ar:
   check_connection: >
     يبدو أن هناك خطأ منع إستكمال طلبك. من فضلك عاود المحاولة.
   project_removed: "تم مسح المشروع المشترك"
+  activerecord:
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'السن'
+        maxAge: 'السن'
+        categories: "الفئات"
+        description: "الوصف"
+  project_delete: "تم مسح المشروع بنجاح"
+  project_removed: "تم مسح المشروع المشترك"
   choose_sub: 'نظام الإشتراك'
   developer_before_subscription: 'من فضلك سجل كمطور لتتمكن من رؤية هذه الصفحة '
   per_month: "/شهر"
@@ -395,6 +428,13 @@ ar:
   already_connected: "التواصل بالفعل موجود!"
   remove_connection: "إلغاء الاتصال"
   connect_to_twitter: "تواصل مع تويتر"
+  add_to: "أضف إلى"
+  with: "مع"
+  synonym: "معنى"
+  add: "أضف"
+  exceeds_word_limit: "لقد تجاوزت حد الكلمات المسموح بها لنظام اشتراكك."
+  choose_project: "من فضلك إختر مشروع لإضافة الكلمة."
+  you_have_prizes: "لقد ربحت الجوائز التالية"
   Email_dont: "هذا البريد الالكتروني غير صحيح"
   Email_for_a_gamer: "هذا البريد الالكتروني ليس لمطور"
   you_cant_share_with_yourself: "لا يمكنك مشاركة هذا المشروع مع نفسك"
@@ -558,6 +598,30 @@ ar:
   modal_yes_button: "أجل"
   modal_no_button: "لا"
   you_have_prizes: "لقد ربحت الجوائز التالية"
+  no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون رقما بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
   enter_a_synonym: "ادخل معني جديد"
   skip_this_keyword: "تخطي هذا المعني"
   suggest_this_synonym: "سجل هذا المعني"
@@ -600,6 +664,30 @@ ar:
   back_to_project: "<< عودة إلى المشروع"
   unshare: " الغاء الاشتراك"
   no_account: "يبدو انك تركتنا. من فضلك سجل الدخول بحساب جديد."
+  trial_error: "عفوا لا يمكنك استخدام هذه الخدمة. بالرجاء الاشتراك في نظام  بريميوم او ديلوكس"
+  activerecord:
+    errors:
+      models:
+        gamer:
+          attributes:
+            date_of_birth:
+              before_or_equal_to: 'يجب أن يكون أكثر من عشر سنوات وأقل  من تسعون عام'
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              minAge_range: "يجب ان يكون رقما بين ٩ و ٩٩ سنة"
+            maxAge:
+              maxAge_range: "يجب ان يكون بين رقما بين ١٠ و ١٠٠ سنة"
+              less_than_minAge: "لا يمكن ان يكون اصغر من الحد الادنى للسن"
+    attributes:
+      project:
+        name: 'الاسم'
+        minAge: 'الحد الادنى للسن'
+        maxAge: 'الحد الاقصى للسن'
+        categories: "الفئات"
+        description: "الوصف"
   no_translation_popover_title: "لا يوجد معاني لهذه الكلمة حاليا "
   no_translation_popover_content: "تبيمسب،"
   you_can: "تستطيع ان "
@@ -636,6 +724,7 @@ ar:
   vote_log_button: "الأصوات"
   mail_place: "من فضلك إدخل الاسم أو البريد الالكتروني "
   back_share: "<< عودة إلى المشروع"
+  followmaxtip: "لقد وصلت الحد المسموح لإتباع الكلمات."
   search_not_allowed: >
     عفوا! لقد استنفذت الكلمات التي يمكنك البحث عنها، و لكن يمكنك الاستمرار في
     البحث عن الكلمات التي بحثت عنها مسبقا.

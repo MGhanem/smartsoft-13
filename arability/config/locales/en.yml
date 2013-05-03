@@ -58,6 +58,7 @@ en:
   following: "Following"
   select_subscription: "Select Subscription"
   backend: "Developers"
+  rec_back: "Back"
   project: "Project"
   projects: "Projects"
   my_projects: "My Projects"
@@ -123,6 +124,9 @@ en:
   export: "Export"
   add_words: "Add words"
   recommended_words: "Recommended words"
+  recommended_for_project: "Recommended words for your project:"
+  select_words: "Select the words you would like to add to your project"
+  no_recommended_words: "Sorry, there are no recommended words for this project"
   share: "Share"
   delete: "Delete"
   word: "Word"
@@ -139,8 +143,8 @@ en:
   stats_country: "Country Statistics"
   stats_age: "Age Statistics"
   stats_education: "Education Statistics"
+  stats_no_votes: "Sorry! this synonym has no votes yet!"
   exceeded_project_limit: "You have reached the maximum number of projects allowed. Please subscribe to Premium or Deluxe to create more."
-  stats_no_votes: "Sorry! this translation has no votes yet!"
   controller:
     subscription:
       messages_errors:
@@ -230,8 +234,8 @@ en:
   no_project: "Project does not exist!"
   file: "file"
   log_in_google: "Sign In with Google"
-  no_categories: "This project has no categories"
-  no_description: "This project has no description"
+  no_categories: "None"
+  no_description: "None"
   register_developer: "Please register as a developer first"
   developer_cant_see_project: "You are not allowed to view this project"
   first_name: "First Name"
@@ -307,8 +311,16 @@ en:
   enter_categories: "filter by categories"
   register_developer: "Please register as a developer first"
   age_range: "(Kindly enter a value between 10 and 100)"
-  follow_words_info: "Follow a word to recieve an email with every update. Updates include a new translation addition to a Keyword or the top voted Synonym gets changed."
+  follow_words_info: "Follow a word to recieve an update email whenever a new Synonym is added to the Keyword. You can follow words by searching for them and clicking the Follow button"
   synonyms_of: "Translations of"
+  activerecord:
+    errors:
+      models:
+        project:
+          attributes:
+            minAge:
+              not_in_range: "is not in range"
+  synonyms_of: "Synonyms of"
   enter_keyword: "Enter a keyword"
   username: "Username"
   password_confirmation: "Password confirmation"
@@ -387,7 +399,7 @@ en:
   all_prizes: "Wohoo! It seems that you have won all the prizes!"
   report_sent: "Your report was successfully submitted. You'll be notified via e-mail upon taking action"
   help_us_through_reporting: >
-    Help us filter abusive keywords and synonyms
+    Help us filter abusive keywords and translations
     by choosing a word you find inappropriate and submitting a report using
     this form. An email will be sent to you upon taking action concerning
     the submitted report.
@@ -408,6 +420,12 @@ en:
   already_connected: "already connected to Twitter!"
   remove_connection: "Remove Connection"
   connect_to_twitter: "Connect to Twitter"
+  add_to: "add to"
+  with: "with"
+  synonym: "translation"
+  add: "Add"
+  exceeds_word_limit: "Sorry, you have exceeded the limit of words you can add defined by your subscription model."
+  choose_project: "Please choose a project."
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
@@ -502,7 +520,6 @@ en:
   errors_prohibited: "errors prohibited you from being saved"
   sign_up_e_acc: "Sign up with an existing account"
   remove_fb_connection: "Connection to Facebook removed successfully!"
-  continue_reg_fb: "Facebook provided us with some information about you. Please fill in the rest to continue your registration"
   won_trophies_title: "Earned Trophies"
   not_won_trophies_title: "Available Trophies"
   no_trophies: "Oh oh! It seems that you haven't played the game enough and you still haven't won any trophies! Go Play now!"
@@ -586,15 +603,10 @@ en:
   confirm_share: "You won't be able to view the shared project anymore,Are you sure you want to remove the shared project?"
   submit_remove: "unshare"
   close_share: "cancel"
-  sub_changed: "chane %{sm.name} "
+  sub_changed: "You have successfully changed your subscription model "
   you_have_prizes: "You have won the following prizes!"
-  enter_a_synonym: "enter a new synonym"
-  skip_this_keyword: "skip this keyword"
-  suggest_this_synonym: "save new translation"
-  formal_or_slang: "<p style='font-size:15px;'><button class='btn btn-primary' id='formal_button' onclick='choose_formal_and_vote()'>formal</button>&nbsp or &nbsp<button class='btn btn-primary' id='slang_button' onclick='choose_slang_and_vote()'>slang</button></p>"
-  is_this_translation: "Is this translation"
-  must_specify_formality: "you need to choose whether translation is formal or slang"
-  choose_formality: "choose formality"
+  no_account: "You seem to have left us. Please create a new account"
+  trial_error: "Sorry, you cannot use this service. Please subscribe to Premium or Deluxe to continue"
   no_translation_popover_title: "there is no translations for this keyword"
   you_can: "you can "
   this_keyword: " this keyword"
@@ -616,7 +628,6 @@ en:
   university: "University"
   graduate: "Graduate"
   unshare: "Unshare"
-  no_account: "You seem to have left us. Please create a new account"
   resend_confirmation: "Resend confirmation instructions"
   send: "Send"
   hello: "Hello"
@@ -646,8 +657,9 @@ en:
   vote_log_button: "Votes"
   mail_place: "Please enter name or email"
   back_share: "<< Back to projects"
+  followmaxtip: "You've reach your maximum number of followed words."
   search_not_allowed: >
-    Sorry! You have reached your search quota limit, but you can still search for words 
+    Sorry! You have reached your search quota limit, but you can still search for words
     you searched for before.
   score_popover_content: "The bigger the word is, the higher your score will be, and the faster you form the  word, the higher your score will be, you can keep track of how fast you are forming the word from the timer next to each word"
   score_popover_title: "How the Score is calculated"
