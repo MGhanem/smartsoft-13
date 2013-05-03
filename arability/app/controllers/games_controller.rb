@@ -323,7 +323,7 @@ class GamesController < ApplicationController
   # Failure: 
   #   --
   def showprofile
-    @count, @vote_log = current_gamer.get_votes
+    @count, @vote_log = current_or_guest_gamer.get_votes
     respond_to do |format|
       format.js
     end
