@@ -3,7 +3,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <% if msg.respond_to? "each" %>
         <div>
-          <ul class="unstyled">
+          <ul class="unstyled" id="err">
           <% msg.each do |item| %>
               <li><%= "#{item}" %></li>
           <% end %>
@@ -14,4 +14,18 @@
       <% end %>
   </div>
 <% end %>
+<script type="text/javascript">
+  var $element = $("#err")
+  $element.css("position", "fixed");
+  $element.css("border-style", "solid");
+  $element.css("border-color", "black");
+  $element.css("color", "black");
+  $element.css("bottom", "25px");
+  $element.css("left", "10%");
+  $element.css("right", "10%");
+  $element.css("z-index", "100");
+  setTimeout(function(){
+    $element.not(".alert-error").fadeOut(1000);
+  }, 3000);
 
+</script>
