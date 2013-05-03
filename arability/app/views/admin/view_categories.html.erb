@@ -1,0 +1,56 @@
+<div class="container admin">
+  <div class="row">
+    <%= render partial: "sidebar-nav", locals: {active: "view-categories"} %>
+    <div class="span9 offset3">
+      <div class="tab-content">
+        <div class="tab-pane well span7 active">
+          <legend>
+            <a>
+              عرض الفئات
+            </a>
+          </legend>
+          <table class="table table-striped table-hover">
+            <% if flash[:success] %>
+              <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div>
+                  <%= flash[:success] %>
+                </div>
+              </div>
+            <% end %>
+            <thead>
+            <tr>
+              <th>إسم الفئة بالإنجليزية</th>
+              <th>إسم الفئة بالعربية</th>
+              <th>مسح</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @categories.each do |category| %>
+              <div id="myModalDelete<%= category.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h3 id="myModalLabel">تأكيد المسح</h3>
+                </div>
+                <div class="modal-body">
+                  <p>هل أنت متأكد من مسح الفئة؟</p>
+                  <div class="prize-view"></div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">لا شكراً</button>
+                  <a class="btn btn-danger" href="/admin/delete_category?category_id=<%= category.id %>">مسح</a>
+                </div>
+              </div>
+              <tr>
+                <th><%= category.english_name %></th>
+                <th><%= category.arabic_name %></th>
+                <th><a class="btn btn-mini btn-danger" href="#myModalDelete<%= category.id %>" role="button" class="edit-link-prize" data-toggle="modal"><i class="icon-trash"></i></a></th>
+              </tr>
+            <% end %>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,14 @@
-<h2>Resend confirmation instructions</h2>
+<%= form_for(resource, as: resource_name,
+             url: confirmation_path(resource_name),
+             html: { method: :post, class: "form-signin",
+                        style: "min-width: 520px;" }) do |f| %>
+  <h2><%= t(:resend_confirmation) %></h2>
+  <% if resource.errors.any? %>
+      <div class="alert"><%= devise_error_messages! %></div>
+  <% end %>
 
-<%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= f.text_field :email, placeholder: t(:email), class: "input-block-level" %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+  <div><%= f.submit t(:send), class: "btn btn-large btn-primary",
+    style: "padding-top: 4px; padding-bottom: 4px;" %></div>
 <% end %>
-
-<%= render "links" %>

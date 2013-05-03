@@ -1,0 +1,58 @@
+<script type="text/javascript" charset="utf-8">
+</script>
+<div class="award-zone" >
+  <div class="won" style="padding-bottom:0px;">
+    <% arabic_class = "pull-left btn btn-success" %>
+    <% english_class = "pull-right btn btn-success" %>
+    <% english_style = "padding: 5px; margin-right: 12px; margin-top: 28px;" %>
+    <% arabic_style = "padding: 5px; margin-left:28px; margin-top: 28px;" %>
+    <a class="<%= I18n.locale == :en ? english_class : arabic_class %>" style="<%= I18n.locale == :en ? english_style : arabic_style %>" onclick="nextLevel()"><%= t(:to_next_level) %></a>
+    <% if I18n.locale == :ar %>
+      <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a style="margin-right: -40px" target="_blank" href="http://www.twitter.com/share?text=لقد حصلت على <%= @score %> نقطة على http://localhost:3000/ via @SmartSoft2013"><img src="/assets/tweet-button.jpg" style="height:26px; width:100px;"></a><a style="margin-right: 100px" target="_blank" href="/share_on_facebook/?score=<%= @score %>"><img src="/assets/fb.png" style="height:30px; width:100px"></a></h3>
+    <% else %>
+      <h3 class="title-head"><%= t(:you_have_score) %><br><br> <%= @score %><br><br><%= t(:share_your_score) %><br><br><a style="margin-left: -40px" target="_blank" href="http://www.twitter.com/share?text=I've scored <%= @score %> points on http://localhost:3000/ via @SmartSoft2013"><img src="/assets/tweet-button.jpg" style="height:26px; width:100px;"></a><a style="margin-left: 100px" target="_blank" href="/share_on_facebook/?score=<%= @score %>"><img src="/assets/fb.png" style="height:30px; width:100px"></a></h3>
+    <% end %>
+  </div>
+  <% if !@won_trophies.blank? %>
+  <div class="won">
+    <h3 class="title-head" style="border-top: none;"><%= t(:congrats_you_won) %></h3>
+     <% @won_trophies.each do |trophy| %>
+          <div class="award-new">
+            <div class="award-image">
+              <center>
+                <img src="<%= trophy.image %>" width="60" height="60"/>
+              </center>
+            </div>
+            <div class="award-new-name">
+              <%= trophy.name %>
+            </div>
+            <div class="award-new-req">
+              <%= t(:level) %> <%= trophy.level %>
+            </div>
+            <div class="award-new-req">
+              <%= t(:score) %> <%= trophy.score %>
+            </div>
+          </div>
+        <% end %>
+        <% if !@won_prizes.blank? %>
+         <% @won_prizes.each do |prize| %>
+            <div class="award-new">
+              <div class="award-image">
+                <center>
+                  <img src="<%= prize.image %>" width="60" height="60"/>
+                </center>
+              </div>
+              <div class="award-new-name">
+                <%= prize.name %>
+              </div>
+              <div class="award-new-req">
+                <%= t(:level) %> <%= prize.level %>
+              </div>
+              <div class="award-new-req">
+                <%= t(:score) %> <%= prize.score %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+  <% end %>
+</div>

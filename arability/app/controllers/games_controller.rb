@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class GamesController < ApplicationController
-  before_filter :authenticate_gamer!
+  before_filter :authenticate_gamer_or_guest!
 
   def game
   end
@@ -62,43 +62,34 @@ class GamesController < ApplicationController
   #   will appear explaining the situation
   #   The user is not signed in: S/He'll be redirected to the sign in page
   def post
-    if current_gamer != nil
-      if !current_gamer.is_connected_to_facebook 
-        redirect_to "/gamers/edit",
-        flash: {notice: t(:connect_your_account)}
+    if current_gamer
+      if !Authentication.is_connected_to_facebook(current_gamer.id)
+        flash[:error] = t(:connect_your_account) 
+        redirect_to "/gamers/edit"
       else
         begin
-          token = current_gamer.get_token
-          @graph = Koala::Facebook::API.new(token)
-          @graph.put_wall_post(
-            "Checkout the new Arability game @ www.arability.net")
-          redirect_to "/game", flash: {success: t(:shared_on_fb)}
+          if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
+            token = Authentication.get_token(current_gamer.id, "facebook")
+            @graph = Koala::Facebook::API.new(token)
+            @graph.put_wall_post(
+              "Checkout the new Arability game @ localhost:3000/game")
+            flash[:success] = t(:shared_on_fb)
+            redirect_to "/game"
+          else
+            flash[:error] = t(:you_need_to_connect_fb)
+            redirect_to "/gamers/edit"
+          end
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/gamers/auth/facebook"
+          redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          redirect_to "/game", flash: {notice: t(:error_fb)}
+          flash[:notice] = t(:error_fb)
+          redirect_to "/game"
         end
       end
     else
-      redirect_to "/gamers/sign_in",
-      flash: {notice: t(:sign_in_facebook)}
+      flash[:error] = t(:sign_in_facebook)
+      redirect_to "/gamers/sign_in"
     end
-  end
-
-  # Author:
-  #   Amr Abdelraouf
-  # Description:
-  #   When called the gammer will disconnect his/her account from facebook
-  # Params:
-  #   None
-  # Success:
-  #   The user's facebook data will be deleted and a flash notice will appear
-  #   to ensure the user that he's disconnected
-  # Failure:
-  #   None
-  def disconnect_facebook
-    current_gamer.disconnect_from_facebook
-    redirect_to "/gamers/edit", flash: {alert: t(:logged_out_of_fb)}
   end
 
   # Description:
@@ -141,26 +132,33 @@ class GamesController < ApplicationController
   #   will appear explaining the situation
   #   The user is not signed in: S/He'll be redirected to the sign in page
   def post_score_facebook
-    if current_gamer != nil
-      if !current_gamer.is_connected_to_facebook 
-        redirect_to "/gamers/edit",
-        flash: {notice: t(:connect_your_account)}
+    score = params[:score]
+    if current_gamer
+      if !Authentication.is_connected_to_facebook(current_gamer.id)
+        flash[:error] = t(:connect_your_account) 
+        redirect_to "/gamers/edit"
       else
         begin
-          token = current_gamer.get_token
-          @graph = Koala::Facebook::API.new(token)
-          score = params[:score]
-          @graph.put_wall_post("لقد حصلت على #{score} نقطة في عربيلتي")
-          render "games/share-facebook"
+          if Authentication.exists?(gamer_id: current_gamer.id, provider: "facebook")
+            token = Authentication.get_token(current_gamer.id, "facebook")
+            @graph = Koala::Facebook::API.new(token)
+            @graph.put_wall_post(
+              "لقد حصلت على #{score} نقطة في عربيلتي على http://localhost:3000/")
+            render "games/share-facebook"
+          else
+            flash[:error] = t(:you_need_to_connect_fb)
+            redirect_to "/gamers/edit"
+          end
         rescue Koala::Facebook::AuthenticationError
-          redirect_to "/gamers/auth/facebook"
+          redirect_to "/auth/facebook"
         rescue Koala::Facebook::ClientError
-          redirect_to "/game", flash: {notice: t(:error_fb)}
+          flash[:notice] = t(:error_fb)
+          redirect_to "/game"
         end
       end
     else
-      redirect_to "/gamers/sign_in",
-      flash: {notice: t(:sign_in_facebook)}
+      flash[:error] = t(:sign_in_facebook)
+      redirect_to "/gamers/sign_in"
     end
   end
 
@@ -176,15 +174,16 @@ class GamesController < ApplicationController
   #   success: lists out the trophies the gamer wins and a score in a rendered js erb view 
   #            and sets the new high score if the new score is higher than the older one
   #   failure: the doesn't win any trophies and only sees his score in a rendered js erb view
-  def gettrophies
+  def get_trophies
     @level = params[:level].to_i
     @score = params[:score].to_i
-    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id, 
+    @won_trophies = Trophy.get_new_trophies_for_gamer(current_gamer.id,
                                                       @score, @level)
-    @won_prizes = current_gamer.won_prizes?(@score, @level)
-    @won_trophies.map { |nt| current_gamer.trophies << nt }
+    @won_prizes = Prize.get_new_prizes_for_gamer(current_gamer.id,
+                                                 @score, @level)
+
     if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+      current_gamer.update_attributes!(highest_score: @score)
     end
     respond_to do |format|
       format.js
@@ -207,8 +206,8 @@ class GamesController < ApplicationController
   #   failure: none
   def get_score_only
     @score = params[:score].to_i
-    if @score > current_gamer.highest_score.to_i
-      current_gamer.update_attributes!(:highest_score => @score)
+    if @score > current_or_guest_gamer.highest_score.to_i
+      current_or_guest_gamer.update_attributes!(:highest_score => @score)
     end
     respond_to do |format|
       format.js
@@ -248,7 +247,7 @@ class GamesController < ApplicationController
   #   success: renders out a view using js erb view with the 
   #   earned trophies in a list and the trophies that haven't been 
   #   earned in another
-  def showtrophies
+  def show_trophies
     @won_trophies = current_gamer.get_won_trophies
     @not_won_trophies = current_gamer.get_available_trophies
     respond_to do |format|
@@ -272,9 +271,43 @@ class GamesController < ApplicationController
   # 	returns 2 for record_output is already existing and 
   # 	the second return variable would be the synonym object already existing.  
   def record_synonym
-    @record_output = current_gamer.suggest_synonym(params[:synonym_name], 
+    @record_output = current_or_guest_gamer.suggest_synonym(params[:synonym_name], 
       params[:keyword_id]) 
   	@already_existing_synonym = Synonym.where(name: params[:synonym_name],
       keyword_id: params[:keyword_id]).first 
   end
+
+  # Author:
+  #   Ali El Zoheiry
+  # Description:
+  #   updates the value of the show_tutorial column to false
+  # params:
+  #   none
+  # success:
+  #   the value of the column is successfuly changed to false
+  # failure:
+  #   none
+  def disableTutorial
+    current_or_guest_gamer.update_attributes!(show_tutorial: false)
+  end
+  # Author: 
+  #   Nourhan Zakaria
+  # Description:
+  #   This method calls get_vote on the current gamer to get
+  #   all votes given by a given gamer
+  # Params:
+  #   it just needs the current gamer 
+  # Success: 
+  #   renders a js view of the gamer vote log showing either
+  #   their votes histroy or no votes if he/she didn't vote yet
+  # Failure: 
+  #   --
+  def showprofile
+    @count, @vote_log = current_gamer.get_votes
+    respond_to do |format|
+      format.js
+    end
+  end
 end
+
+

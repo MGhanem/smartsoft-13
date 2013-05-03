@@ -1,8 +1,16 @@
+<%= javascript_include_tag "jquery.tools.min" %>
 <script type="text/javascript" charset="utf-8">
-
+  tutorialFlag = <%= current_or_guest_gamer.show_tutorial %>;
   var words;
   var cache = "";
   var nav_locked = false;
+  var JsLocale = "<%= I18n.locale %>";
+
+  <% if current_gamer == nil %>
+  isGuest = true;
+  <% else %>
+  isGuest = false;
+  <% end %>
 
   function setWordsArray(){
     for(var x=0; x < successfulWords.length;x++){
@@ -26,9 +34,14 @@
 
   function check_empty_words(){
     if(words.length == 0){
-        if(win == true){
+      if(win == true){
+        if(isGuest == true){
+          nextLevel();
+        }
+        else{
          getTrophies(level, score);
-      }
+        }
+     }
       else{
         getScoreOnly(score);
       }
@@ -70,7 +83,7 @@
 
   function getTrophies(level, score) {
     clear();
-    request_string = "/games/gettrophies/?level=" + level + "&score=" + score;
+    request_string = "/games/get_trophies/?level=" + level + "&score=" + score;
     $.get(request_string);
   }
   function getPrizes(level, score) {
@@ -101,7 +114,7 @@
       cache = document.getElementById("zone").innerHTML;
     }
     clear();
-    $.get("/games/showtrophies");
+    $.get("/games/show_trophies");
   }
   // function  setLevelTitle(){
   //   <% if I18n.locale==:ar %>
@@ -115,7 +128,7 @@
 
 function setButtons(){
     <% if I18n.locale == :ar %>
-    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">مسح الكلمة</button>';
+    gameButtonClear = '<button id="btn-clear" class="btn btn-success" onclick="clearWord()">حذف الكلمة</button>';
     gameButtonRestart = '<a id="btn-restart" class="btn btn-success" href="/game">إعادة اللعبة</a>';
     continuePlayingBtn = "الاستمرار في اللعب"
     <% else %>
@@ -169,14 +182,12 @@ function setButtons(){
     }
     clear();
     <%if I18n.locale == :ar %>
-    $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-    $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;right:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;right:190px;"></a>')
-     <% else I18n.locale == :en %>
-     $('#zone').append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
-     $('#zone').append('<a href="/post_score"><img src="/assets/facebook_share.png" style="height:150px; position:relative;top:70px;left:190px;"></a>');
-     $("#zone").append('<a href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;position:relative;top:70px;left:190px;"></a>')
-     <% end %>
+      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share_ar.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=http://localhost:3000/ تعالى إلعب معي على via @SmartSoft2013"><img src="/assets/twitter_share_ar.png" style="height:150px;"></a></div>')
+    <% else I18n.locale == :en %>
+      $("#zone").append('<a style="margin: 14px; padding:4px;" class="btn btn-success pull-left" onclick="backToGame()"><%= t(:back_to_game) %>');
+      $("#zone").append('<div class="provider_buttons" style="text-align:center; display:inline-block;"><a href="/games/post_facebook"><img src="/assets/facebook_share.png" style="height:150px;padding:10px;"></a><a target="_blank" href="http://www.twitter.com/share?text=check out the new Arability game. Visit http://localhost:3000/ via @SmartSoft2013"><img src="/assets/twitter_share.png" style="height:150px;"></a></div>')
+    <% end %>
   }
   
   function setScoreTitle(){
@@ -221,7 +232,13 @@ function setButtons(){
     $.get("/games/halloffame");
   }
 
-
+  function showProfile(){
+    if(cache == "") {
+      cache = document.getElementById("zone").innerHTML;
+    } 
+    clear();
+    $.get("/games/showprofile");
+  }
 
   function generateGameOverPopUp(){
     <% if I18n.locale == :en %>
@@ -241,7 +258,27 @@ function setButtons(){
     <% end %>
   }
 
+  function setPopoverAttributes(){
+    wordsListPopoverContent = "<%= t(:words_list_popover_content) %>";
+    wordsListPopoverTitle = "<%= t(:words_list_popover_title) %>";
+    wordLabelPopoverContent = "<%= t(:word_label_popover_content) %>";
+    wordLabelPopoverTitle = "<%= t(:word_label_popover_title) %>";
+    tablePopoverContent = "<%= t(:table_popover_content) %>"
+    tablePopoverTitle = "<%= t(:table_popover_title) %>"
+    clickedButtonPopoverContent = "<%= t(:clicked_button_popover_content) %>";
+    clickedButtonPopoverTitle = "<%= t(:clicked_button_popover_title) %>";
+    clickedButtonPopoverButton = "<%= t(:clicked_button_popover_button) %>";
+    flashingTowerPopoverContent = "<%= t(:flashing_tower_popover_content) %>"
+    flashingTowerPopoverTitle = "<%= t(:flashing_tower_popover_title) %>"
+    flashingTowerPopoverButton = "<%= t(:flashing_tower_popover_button) %>"
+  }
 
+  function setModalTranslations(){
+    modalHeader = "<%= t(:modal_header) %>";
+    modalBody = "<%= t(:modal_body) %>";
+    modalYesButton = "<%= t(:modal_yes_button) %>";
+    modalNoButton = "<%= t(:modal_no_button) %>";
+  }
 
 </script>
 
@@ -250,52 +287,42 @@ function setButtons(){
 
 <div class="game-zone">
   <div class="game-nav">
-    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">
-      الرتبة
-    </div>
-
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">
-      جوائز
-  </div>
-    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">
-      الإنجازات
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-     بروفيل
-    </div>
-    <div class="nav-box btn btn-inverse" id="navItems">
-
-     إعدادات
-    </div>
-    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">
-      دعوات
-    </div>
-
+    <div class="nav-box btn btn-inverse" id ="navItems" onclick="hallOfFame()">الرتبة</div>
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="showPrizes()">جوائز</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showTrophies()">الإنجازات</div>
+    <div class="nav-box btn btn-inverse" id="navItems" onclick="showProfile()"><%= t(:vote_log_button) %></div>
+    <div class="nav-box btn btn-inverse" id="navItems">إعدادات</div>
+    <div class="nav-box btn btn-inverse" id = "navItems" onclick="inviteFriends()">دعوات</div>
   </div>
 
   <% if I18n.locale == :ar %>
-  <div class="zone" id="zone" style="text-align:right; direction: rtl;">
-
-    <% else %>
+    <div class="zone" id="zone" style="text-align:right; direction: rtl;">
+  <% else %>
     <div class="zone" id="zone">
-      <% end %> 
-    <div class="divaya">
-      <% if I18n.locale == :ar %>
-    <h2 class="lang-header">إختر اللغة التي تريد اللعب بها</h2><br>
-    <div class="game-lang">
-      <button class="btn btn-info eng-btn" onclick="setLang(0)">الانجليزية</button><br><br><br><br>
-      <button class="btn btn-success ar-btn" onclick="setLang(1)">العربية</button><br><br><br><br>
-      <button class="btn btn-warning both-btn" onclick="setLang(2)">كلاهما</button>
-    </div>
-    <% else %>
-    <h2 class="lang-header">Pick the language you want to play with</h2><br>
-    <div class="game-lang">
-      <button class="btn btn-info eng-btn" onclick="setLang(0)">English</button><br><br><br><br>
-      <button class="btn btn-success ar-btn" onclick="setLang(1)">Arabic</button><br><br><br><br>
-      <button class="btn btn-warning both-btn" onclick="setLang(2)">Both</button>
-    </div>
-    <% end %>
-    </div>
+  <% end %> 
+      <div class="divaya">
+        <h2 class="lang-header"><%= t(:pick_lang) %></h2><br>
+        <div class="game-lang">
 
-  </div>
+          <div id="exposedEngBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:english_popover_content) %>" data-placement="left" data-title="<%= t(:english_popover_title) %>" data-html="true" id = "eng-btn" class="btn btn-info eng-btn" onclick="setLang(0)">
+              <%= t(:english_button) %>
+            </button>
+          </div>
+          <br><br><br><br>
+          <div id="exposedArBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:arabic_popover_content) %>" data-placement="right" data-title="<%= t(:arabic_popover_title) %>" data-html="true" id = "ar-btn" class="btn btn-success ar-btn" onclick="setLang(1)">
+              <%= t(:arabic_button) %>
+            </button>
+          </div>
+          <br><br><br><br>
+          <div id="exposedBothBtnDiv">
+            <button data-trigger="manual" data-content="<%= t(:both_popover_content) %>" data-placement="left" data-title="<%= t(:both_popover_title) %>" data-html="true" id = "both-btn" class="btn btn-warning both-btn" onclick="setLang(2)">
+              <%= t(:both_button) %>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
 </div>
