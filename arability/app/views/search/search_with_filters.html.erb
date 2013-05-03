@@ -50,6 +50,7 @@
           } 
         }
         function add_keyword_with_synonym(){
+            restore();
             var synonym_id = $("#synonym_select option:selected").val();
             var project_id = $("#project_select option:selected").val();
             var msg = "";
