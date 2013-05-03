@@ -668,6 +668,7 @@ en:
   no_votes_visuals: "Sorry, no one voted for this synonym yet!"
   no_votes_visuals_popup: "left"
   congrats_you_won: "Congratulations! You have won!"
+  Synonym_already_there: "Project already has this word with the specified translation."
   activerecord:
     attributes:
       developer:

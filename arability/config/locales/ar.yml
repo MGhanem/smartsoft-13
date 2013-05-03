@@ -736,6 +736,7 @@ ar:
   no_votes_visuals_popup: "right"
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
+  Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
   activerecord:
     models:
       developer: "مطور"
