@@ -191,6 +191,12 @@ class ProjectsController < BackendController
   #  none
   def share
     @project = Project.find(params[:id])
+    temp_projects = Project.where(owner_id: current_developer.id)
+    if !temp_projects.include?(@project)
+      flash[:error] = t(:developer_cant_see_project)
+      redirect_to project_path
+      return
+    end
     gamers_ids = Developer.pluck(:gamer_id)
     @usernames_and_emails = Gamer.where(:id => gamers_ids).map{|gamer|gamer.username + " " + gamer.email}
   end
