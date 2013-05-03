@@ -6,7 +6,7 @@
   # Author:
   #   Noha Hesham
   # Description:
-  #  it finds the chosen subscription model by the developer 
+  #  it finds the chosen subscription model by the developer
   #  and sets the limits in the subscription model
   #  to the developers my subscription
   # success:
@@ -20,10 +20,10 @@
       my_sub = MySubscription.new
     end
     my_sub.developer_id = dev_id
-    my_sub.word_search=submodel.limit_search
-    my_sub.word_add=submodel.limit
-    my_sub.word_follow=submodel.limit_follow
-    my_sub.project=submodel.limit_project
+    my_sub.word_search = submodel.limit_search
+    my_sub.word_add = submodel.limit
+    my_sub.word_follow = submodel.limit_follow
+    my_sub.project = submodel.limit_project
     my_sub.subscription_model_id = submodel.id
     if my_sub.save
       return true
@@ -45,7 +45,7 @@
   #   None
   def get_permission_follow
     developer = self.developer
-    count_follow=developer.keywords.count   
+    count_follow = developer.keywords.count
     if(count_follow < self.word_follow)
       return true
     else
@@ -63,10 +63,10 @@
   # Success:
   #  Gets the correct number of words counted
   # Failure:
-  #  None 
+  #  None
   def count_follow
     developer = self.developer
-    count_follow=developer.keywords.count   
+    count_follow = developer.keywords.count
   end
 
   # Author:
@@ -79,7 +79,7 @@
   # Success:
   #   Gives permission
   # Failure:
-  #   None 
+  #   None
   def get_projects_limit
     developer = self.developer
     projects_count = Project.where(owner_id: developer.id).count
@@ -100,10 +100,10 @@
   # Success:
   #   Gives permission to add words
   # Failure:
-  #   None 
+  #   None
   def can_add_word(proj_id)
     developer = self.developer
-    add=PreferedSynonym.where(project_id: proj_id )
+    add=PreferedSynonym.where(project_id: proj_id)
     if add.count < self.word_add
       return true
     else
@@ -119,14 +119,14 @@
   # Params:
   #   Proj_id is the id of the project
   # Success:
-  #   Returns number of words 
+  #   Returns number of words
   # Failure:
-  #   None 
+  #   None
   def can_add_word_count(proj_id)
-  developer = self.developer
-  add=PreferedSynonym.where(project_id: proj_id ).count
-  count_num=self.word_add-add
-  return count_num
+    developer = self.developer
+    add = PreferedSynonym.where(project_id: proj_id ).count
+    count_num = self.word_add-add
+    return count_num
   end
 
   # Author:
@@ -143,14 +143,14 @@
   #   None
   def can_search_word(word_id)
     developer = self.developer
-    word = Search.joins(:keyword).where(keyword_id: word_id)
+    word = Search.where(keyword_id: word_id).first
     if word!= nil
       return true
     else
-      if self.word_search > Search.where(developer_id: self.developer).count
-        search=Search.new
-        search.developer_id=developer
-        search.synonym_id=word_id
+      if self.word_search > Search.where(developer_id: self.developer_id).count
+        search = Search.new
+        search.developer_id = developer.id
+        search.keyword_id = word_id
         search.save
         return true
       else

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   before_filter :set_locale
   require 'csv'
-  rescue_from Exception, :with => :error_render_method
+  rescue_from Exception, with: :error_render_method
   # Author:
   #   Mohamed Ashraf
   # Desciption:
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def routing_error
     redirect_to "/404"
   end
-  
+
   # author:
   #   Mostafa Hassaan
   # description:
@@ -78,17 +78,17 @@ class ApplicationController < ActionController::Base
   #   --
   def error_render_method(exception)
     path = request.path
-    UserMailer.generic_email("arability.smartsoft@gmail.com", 
+    UserMailer.generic_email("arability.smartsoft@gmail.com",
         exception, exception.backtrace.join("\n")).deliver
     if path.include? "developers/"
       if !path.include? "developers/projects"
         redirect_to projects_path, flash: { error: t(:exception) }
-        return 
+        return
       end
     end
     redirect_to root_path, flash: { error: t(:exception) }
   end
-  
+
   # author:
   #   Amr Abdelraouf
   # description:
@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base
   # Params:
   #   id: id of the user
   #   guest_gamer: the guest gamer
-  # Success: 
+  # Success:
   #   Changes ids of the votes where the id was of the guest_gamer to the id from the parameters
   # Failure:
   #   None
@@ -175,7 +175,7 @@ class ApplicationController < ActionController::Base
   #   email: the email of a the gamer
   #   password: the password of the gamer
   #   username: the username of the gamer
-  # Success: 
+  # Success:
   #   Returns the created gamer and true
   # Failure:
   #   Returns the gamer instance that wasn't created and false
@@ -209,7 +209,7 @@ class ApplicationController < ActionController::Base
   #   country: the country of the guest
   #   gender: the gender of the guest
   #   dob: the date of birth
-  # Success: 
+  # Success:
   #   Returns the created guest and true
   # Failure:
   #   Returns the gamer instance that wasn't created and false
@@ -239,8 +239,8 @@ class ApplicationController < ActionController::Base
   # Params:
   #   gamer_session: the session of a signed up regular user
   #   session[:guest_gamer_id]: the session of the guest gamer
-  # Success: 
-  #   Continues as normal to the page requested if the user is a guest or gamer 
+  # Success:
+  #   Continues as normal to the page requested if the user is a guest or gamer
   # Failure:
   #   Redirects to sign up as guest
   def authenticate_gamer_or_guest!
