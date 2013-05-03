@@ -591,6 +591,18 @@ end
           @edited_word = PreferedSynonym.where(project_id: @project_id,
             keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
+          #raise Exception, @edited_word.inspect
+          if @edited_word.synonym_id == @synonym_id.to_i
+              respond_to do |format|
+                format.html {
+                flash[:success] = t(:Synonym_already_there)
+                redirect_to project_path(@project_id), flash: flash
+                return
+              }
+                format.json { render json: [t(:Synonym_already_there)]
+                  return}
+              end
+          end
           if @synonym_id != nil && Synonym.find_by_id(@synonym_id) != nil
             @edited_word.synonym_id = @synonym_id
             if @edited_word.save
