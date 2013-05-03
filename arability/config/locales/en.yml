@@ -515,7 +515,7 @@ en:
   both_popover_title: "<h4>Both Button</h4>"
   words_list_popover_content: "<p>This List contains the words that you are required to form, and the words can have 1 of 2 colors, Either black indicating that it can't be formed yet, or orange indicating that it could be formed<p> <button onclick='callNextToolTip(this.id)' class='tutBtn btn btn-primary' id='wordsList-po'>Next</button>"
   words_list_popover_title: "<h4>Words List</h4>"
-  word_label_popover_content: "<p>This Label Contains the letters that are clicked<p> <button onclick='callNextToolTip2(this.id)' class='btn btn-primary' id='wordLabel-po'>Next</button>"
+  word_label_popover_content: "<p>This Label Contains the letters that are clicked<p> <button onclick='scorePopover(this.id)' class='btn btn-primary' id='wordLabel-po'>Next</button>"
   word_label_popover_title: "<h4>Letters Label</h4>"
   table_popover_content: "To Form a Word all you need to do is simply click the buttons on the board. Note that the buttons dont have to be next to each other, and you must form all the required words before the blocks reach the top. Try Clicking a Button Now"
   table_popover_title: "Forming Words"
