@@ -80,6 +80,9 @@ var scorePopoverTitle;
  // failure:
  //   --
 $(function(){
+	if(isGuest == true){
+		$('.game-nav').css('display', 'none');
+	}
 	if(tutorialFlag == false){
 		lockLangButtons = false;
 		return;
@@ -247,7 +250,7 @@ function scorePopover(){
 		$('#wordsList').css('z-index', '99999999');
 		$('#wordsList').css('position', 'relative');
 		if(JsLocale == 'ar'){
-			$('.popover').css('top', '322px');
+			$('.popover').css('top', '250px');
 			$('.popover').css('left', '760px');
 			$('.popover').css('width', '422px');
 		}
