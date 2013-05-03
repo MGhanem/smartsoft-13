@@ -35,12 +35,12 @@
   <div class="not-won">
     <h3 class="title-head"><%= t(:not_won_prizes_title) %></h3>
     <% if @not_won_prizes.blank? %>
-    <div class="none">
+    <div class="none-green">
       <%= t(:all_prizes) %>
     </div>
     <% else %>
       <% @not_won_prizes.each do |prize| %>
-        <div class="award-new-not">
+        <div class="award-new">
           <div class="award-image">
             <center>
               <img src="<%= prize.image %>" width="60" height="60"/>

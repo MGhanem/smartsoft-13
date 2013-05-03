@@ -533,7 +533,7 @@ ar:
   exception: "هناك خطأ في الصفحة. لقد تم إبلاغ شخص مسؤول."
   you_have_prizes: "لقد ربحت الجوائز التالية"
   sub_changed: "لقد غيرت نظامك "
-  caro1h: "عربلتي"
+  caro1h: "عربيليتي"
   caro1b: "موقع سهل الاستعمال لمساعدة مطوري البرامج الناطقين باللغة العربية والغير ناطقين بها لترجمة مواقعهم بسهولة"
   more: "معرفة المزيد"
   feat1h: "إلعب"
@@ -759,7 +759,7 @@ ar:
   you_need_to_connect_fb: "يجب ان تكون متصلا بفيسبوك"
   no_votes_visuals: "عفوا, لا يوجد اصوات لهذه الكلمة"
   no_votes_visuals_popup: "right"
-  congrats_you_won: "مبروك لقد ربحت "
+  congrats_you_won: "لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
   Synonym_already_there: "هذة الكلمة موجودة فس المشروع بالمعني الذي اخترته"
   activerecord:
