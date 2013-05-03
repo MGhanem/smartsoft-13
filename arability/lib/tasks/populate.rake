@@ -9,6 +9,8 @@ namespace :db do
     success, upload=Keyword.add_keyword_to_database("upload", true)
     success, download=Keyword.add_keyword_to_database("download", true)
     success, loading=Keyword.add_keyword_to_database("loading", true)
+    success, username=Keyword.add_keyword_to_database("username", true)
+    success, password=Keyword.add_keyword_to_database("password", true)
     share=Keyword.create(name: "share", approved: true, is_english: true)
     post=Keyword.create(name: "post", approved: true, is_english: true)
     poke=Keyword.create(name: "poke", approved: true, is_english: true)
@@ -60,6 +62,8 @@ namespace :db do
     g=Synonym.create(name: "رفع", keyword_id: upload.id, approved: true, is_formal: true)
     h=Synonym.create(name: "تحميل", keyword_id: download.id, approved: true, is_formal: true)
     i=Synonym.create(name: "تنزيل", keyword_id: download.id, approved: true, is_formal: true)
+    j=Synonym.create(name: "أسم المستخدم", keyword_id: username.id, approved: true, is_formal: true)
+    j=Synonym.create(name: "كلمة السر", keyword_id: password.id, approved: true, is_formal: true)
 
     j=Synonym.create(name: "تحميل", keyword_id: loading.id, approved: true, is_formal: true)
     k=Synonym.create(name: "استني", keyword_id: loading.id, approved: true, is_formal: false)

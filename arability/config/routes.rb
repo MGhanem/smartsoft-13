@@ -51,6 +51,8 @@ Arability::Application.routes.draw do
     resources :subscription_models
   end
 
+  match "/api/translate" => "api#get_synonyms", as: :api_translate
+
   # Only two languages are accepted: Arabic and English
   scope "(:locale)", :locale => /en|ar/ do
 
@@ -163,6 +165,20 @@ Arability::Application.routes.draw do
 
       match '/developers/new' => "developer#new"
       match '/developers/create' => "developer#create"
+
+      scope "/api" do
+        match "/" => "api#index", as: :api_keys_list
+
+        match "create" => "api#create", as: :api_key_create
+        match "delete" => "api#delete", as: :api_key_delete
+
+        match "help" => "api#help", as: :api_help
+
+        match "/test" => "api#test", as: :api_test
+
+        match "/arabize" => "api#script", as: :api_script
+      end
+
     end
   end
 
