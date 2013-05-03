@@ -209,10 +209,42 @@
             </div>
           </div>
         </div>
+        <div class="item">
+          <img src="../assets/home_caro4.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1><%= t(:caro4h) %></h1>
+              <p class="lead"><%= t(:caro4b) %></p>
+              <a class="btn btn-primary arabicfont" href="<%= game_path %>"><%= t(:play) %></a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="../assets/home_caro3.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1><%= t(:caro3h) %></h1>
+              <p class="lead"><%= t(:caro3b) %></p>
+              <a class="btn btn-primary arabicfont" href="<%= search_path %>"><%= t(:moresearch) %></a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="../assets/home_caro2.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1><%= t(:caro2h) %></h1>
+              <p class="lead"><%= t(:caro2b) %></p>
+              <a class="btn btn-primary arabicfont" href="<%= projects_path %>"><%= t(:moredevelopers) %></a>
+            </div>
+          </div>
+        </div>
       </div>
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
+    </div>
+
+    <!-- /.carousel -->
 
     <div class="container marketing">
 
@@ -280,4 +312,12 @@
   <% if I18n.locale == :ar %>
     $(".arabicfont").attr("style", "font-size: 16px;");
   <% end %>
+</script>
+<script>
+  !function ($) {
+    $(function(){
+      // carousel demo
+      $('#myCarousel').carousel()
+    })
+  }(window.jQuery)
 </script>

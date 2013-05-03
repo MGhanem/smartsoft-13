@@ -6,7 +6,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="/"><%= t(:arability) %></a>
+      <% if controller.request.path.include? "developers/" %>
+        <a href="/"><img class ="brand" src="/assets/logo-devs.png" alt="" style="height: 25px;"></a>
+      <% else %>
+        <a href="/"><img class ="brand" src="/assets/logol.png" alt="" style="height: 25px;"></a>
+      <% end %>
+      <!-- <a class="brand" href="/"><%= t(:arability) %></a> -->
       <div class="nav-collapse">
       <ul class="nav pull-right">
         <% if I18n.locale == :ar %>
@@ -68,7 +73,12 @@
         <% if path.include? "developers/" %>
           <li><%= link_to t(:game), game_path %></li>
         <% else %>
-          <li><%= link_to t(:backend), backend_home_path %></li>
+          <% if path.include? "game" %>
+            <li><%= link_to t(:backend), backend_home_path %></li>
+          <% else %>
+            <li><%= link_to t(:game), game_path %></li>
+            <li><%= link_to t(:backend), backend_home_path %></li>
+          <% end %>
         <% end %>
         <% if I18n.locale==:en %>
         <% if current_gamer.try(:admin?) %>

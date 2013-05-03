@@ -333,3 +333,12 @@ div.field_with_errors input {
 .btn-mini {
   font-size: 16px;
 }
+
+.navbar {
+  .navbar-inner {
+    min-height: 30px;
+    max-height: 30px;
+    background-color: black;
+    background-image: none;
+  }
+}
