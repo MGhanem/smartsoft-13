@@ -3,19 +3,6 @@ Arability::Application.routes.draw do
   root :to => 'pages#home'
 
   scope "/admin" do
-    get "/login"
-    get "/logout"
-    get "/index"
-    get "/import_csv"
-    get "/delete_trophy"
-    get "/delete_prize"
-
-    post "/login"
-    post "/upload"
-    post "/add_word"
-    post "/add_trophy"
-    post "/add_prize"
-
     match "" => "admin#index", :via => [:get]
     match "autocomplete" => "admin#gamer_email_autocomplete"
     scope "/add" do
