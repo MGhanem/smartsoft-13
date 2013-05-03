@@ -73,7 +73,7 @@
                 <% if project1.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
-                  <%= project1.description %>
+                  <%= project1.description.truncate(60, :separator => ' ') %>
                 <% end %>
                 <br />
                 <br />
@@ -164,7 +164,7 @@
                 <% if project2.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
-                  <%= project2.description %>
+                  <%= project2.description.truncate(60, :separator => ' ') %>
                 <% end %>
                   <br />
                   <br />
@@ -271,7 +271,7 @@
                     <% if project1.description.blank? %>
                       <%= t(:no_description) %>
                     <% else %>
-                      <%= project1.description %>
+                      <%= project1.description.truncate(60, :separator => ' ') %>
                     <% end %>
                     <br />
                     <strong><%= t(:projects_index_owner)%></strong>
@@ -365,7 +365,7 @@
                 <% if project2.description.blank? %>
                   <%= t(:no_description) %>
                 <% else %>
-                  <%= project2.description %>
+                  <%= project2.description.truncate(60, :separator => ' ') %>
                 <% end %>
                 <br />
                 <strong><%= t(:projects_index_owner)%></strong>
