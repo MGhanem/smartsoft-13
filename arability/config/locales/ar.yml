@@ -712,6 +712,7 @@ ar:
   congrats_you_won: "مبروك لقد ربحت "
   enter_word_first: "ادخل كلمة اولآ"
   Synonym_already_there: "هذة الكلمة موجودة فى المشروع بالمعني الذي اخترته"
+  signed_up_but_unconfirmed: "تم إرسال رسالة تحتوي على رابط تأكيد إلى بريدك الإلكتروني. يرجى فتح الرابط لتفعيل حسابك."
   activerecord:
     models:
       developer: "مطور"
