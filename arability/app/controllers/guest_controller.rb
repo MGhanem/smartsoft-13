@@ -96,9 +96,8 @@ class GuestController < ApplicationController
         redirect_to action: "continue_sign_up", errors: gamer.errors.messages, username: username, email: email
         return
       end
-      sign_in gamer
-      flash[:success] = t(:welcome_gamer)
-      redirect_to ("/game")
+      flash[:notice] = t(:signed_up_but_unconfirmed)
+      redirect_to new_gamer_session_path
       return
     end
     redirect_to action: "continue_sign_up", errors: errors, username: username, email: email

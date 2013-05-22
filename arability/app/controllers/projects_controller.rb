@@ -546,11 +546,13 @@ end
           return
         end
       end
+      current_project_category = Project.find_by_id(project_id).category
       words_synonyms_array.each do |word_syn|
         if PreferedSynonym.add_keyword_and_synonym_to_project(word_syn[1], word_syn[0], project_id)
           flag, current_keyword = PreferedSynonym.find_word_in_project(project_id, word_syn[0], true)
-          current_project_category = Project.find_by_id(project_id).category
-          current_keyword.categories << current_project_category
+          if current_project_category != nil
+            current_keyword.categories << current_project_category
+          end
         end
       end
     end

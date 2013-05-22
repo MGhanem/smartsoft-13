@@ -128,7 +128,7 @@
 
         <div><%= f.label t(:education_level), :class => "control-label" %>
         <% if I18n.locale == :ar %>
-            <%= f.select(:education_level, options_for_select(['',['مدرسة','School'],['جامعة','University'],
+            <%= f.select(:education_level, options_for_select([['مدرسة','School'],['جامعة','University'],
             ['خريج','Graduate']], :selected => @education), {}, { :style => "margin-left: 10px;" }) %></br></div>
         <% else %>
             <%= f.select(:education_level, options_for_select(['School','University','Graduate'], :selected => @education), {}, { :style => "margin-left: 10px;" }) %></br></div>
