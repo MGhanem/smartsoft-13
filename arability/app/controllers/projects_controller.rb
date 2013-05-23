@@ -594,7 +594,6 @@ end
           @edited_word = PreferedSynonym.where(project_id: @project_id,
             keyword_id: @word_id).first
           @synonym_id = params[:synonym_id]
-          #raise Exception, @edited_word.inspect
           if @edited_word.synonym_id == @synonym_id.to_i
               respond_to do |format|
                 format.html {
@@ -763,7 +762,6 @@ end
     project_category = Project.find(params[:project_id]).category
     similar_keywords = []
     if project_category != nil
-      project_category = project_category.get_name_by_locale
       similar_keywords = Keyword.get_similar_keywords(
         keyword, [project_category])
       similar_keywords = similar_keywords.uniq
