@@ -14,6 +14,9 @@
   # failure:
   #  the limits are not put in the my subscription of the developer
   def self.choose(dev_id,sub_id)
+    if sub_id == nil || dev_id == nil
+      return false
+    end
     submodel = SubscriptionModel.find(sub_id)
     my_sub = MySubscription.where(:developer_id => dev_id).first
     if(my_sub == nil)
